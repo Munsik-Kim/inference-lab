@@ -1,0 +1,43 @@
+{
+  "model_id": "RedHatAI/Qwen2.5-0.5B-Instruct-quantized.w8a8",
+  "revision": "2379f83cfb42ec0905ac46b68b234d36013c843d",
+  "cutlass_sha256": {
+    "before": "d01b6fe09e3c3fa3991045f6ac7b469a58a550c56426ffd8900badbbe7e5355b",
+    "after": "3a8f87ccb7d5d00598b2f816329ddfd3f640ad97ab425eb0940fc797d9066562"
+  },
+  "engine": {
+    "trust_remote_code": false,
+    "quantization": "compressed-tensors",
+    "tensor_parallel_size": 1,
+    "dtype": "bfloat16",
+    "max_model_len": 1024,
+    "max_num_seqs": 1,
+    "max_num_batched_tokens": 1024,
+    "gpu_memory_utilization": 0.2,
+    "enforce_eager": true,
+    "seed": 0,
+    "cpu_offload_gb": 0,
+    "generation_config": "vllm",
+    "enable_prefix_caching": false
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "max_tokens": 32
+  },
+  "messages": [
+    {
+      "role": "user",
+      "content": "In one short sentence, what is the capital of France?"
+    }
+  ],
+  "expected_quantized_layers": 96,
+  "expected_fused_layers": 48,
+  "scope": "One real 0.5B W8A8 model; same pinned checkpoint and configuration before/after. Execution validation only.",
+  "runtime_versions": {
+    "python": "3.12.14",
+    "torch": "2.13.0+cu130",
+    "vllm": "0.29.0",
+    "triton": "3.7.1",
+    "torch_cuda_build": "13.0"
+  }
+}

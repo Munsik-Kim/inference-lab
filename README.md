@@ -1,0 +1,21 @@
+# Inference Lab
+
+Reproducible case studies of local LLM execution on an **RTX 5080 16GB**. The project investigates execution compatibility, memory use, latency, and task quality through recorded experiments and inspectable evidence.
+
+**One completed case is currently published.** It covers execution compatibility; memory, latency, and quality comparisons are planned work.
+
+| Case | Question | Recorded result | Materials |
+|---|---|---|---|
+| 001 — Validating vLLM W8A8 INT8 fallback on RTX 5080 | Can an existing kernel-selection guard unblock a real W8A8 model on SM120? | Before: initialization error, exit 1. After: text generation, exit 0; 96 INT8 modules selected the Triton kernel class. | [Case and reproduction instructions](cases/001-sm120-int8-fallback/README.md) · [Download ZIP](downloads/step04_sm120_int8_repro.zip) |
+
+The unmodified vLLM 0.29.0 wheel selected a CUTLASS implementation that does not support INT8 on SM120. Applying the Python runtime guard from [hclsys's PR #54316](https://github.com/vllm-project/vllm/pull/54316) let the selector use the existing Triton implementation. The pinned `RedHatAI/Qwen2.5-0.5B-Instruct-quantized.w8a8` model then generated “The capital of France is Paris.” and exited normally, with 8 generated tokens including EOS.
+
+The recorded setup was WSL2 Ubuntu 24.04.4, TP=1, a single-process V1 runner, eager execution, and one short request. Only the PR's runtime hunk was applied to the official wheel; the complete PR checkout was not built or tested. The 96-module observation records `TritonInt8ScaledMMLinearKernel` and INT8 weights on CUDA, not GPU kernel call counts. Performance and task quality were not measured.
+
+The case includes the tested patch, dependency locks, model preparation and run commands, and separate [original](cases/001-sm120-int8-fallback/evidence/original.json) and [replay](cases/001-sm120-int8-fallback/evidence/replay.json) evidence with logs. The replay reused the same PC's existing environments and checkpoint; it is not an independent reproduction or a fresh installation. Model weights are obtained separately. Exact revisions, hashes, and settings are in the case files.
+
+The [posted RTX 5080 validation comment](https://github.com/vllm-project/vllm/pull/54316#issuecomment-5614091211) connects this case to the upstream discussion and [issue #54311](https://github.com/vllm-project/vllm/issues/54311). The repository and download contain the reviewed documentation revision; executable files and execution evidence are unchanged from the earlier ZIP attached to that comment.
+
+The next planned case will compare quantization configurations for one local model using memory, latency, and task-quality measurements. Those comparisons have **not been run**. The [case template](cases/TEMPLATE.md) provides a starting point for recording future work.
+
+The original guard and its branch tests are hclsys's work. This project's contribution is RTX 5080 execution validation and reproducible evidence. OpenAI Codex assisted with the reproducer and documentation. See the case [NOTICE](cases/001-sm120-int8-fallback/NOTICE.md) for attribution and the [Apache-2.0 license](LICENSE).

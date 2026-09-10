@@ -1,0 +1,53 @@
+{
+  "model_id": "RedHatAI/Qwen2.5-0.5B-Instruct-quantized.w8a8",
+  "revision": "2379f83cfb42ec0905ac46b68b234d36013c843d",
+  "quantization_config": {
+    "config_groups": {
+      "group_0": {
+        "input_activations": {
+          "actorder": null,
+          "block_structure": null,
+          "dynamic": true,
+          "group_size": null,
+          "num_bits": 8,
+          "observer": "memoryless",
+          "observer_kwargs": {},
+          "strategy": "token",
+          "symmetric": true,
+          "type": "int"
+        },
+        "output_activations": null,
+        "targets": [
+          "Linear"
+        ],
+        "weights": {
+          "actorder": null,
+          "block_structure": null,
+          "dynamic": false,
+          "group_size": null,
+          "num_bits": 8,
+          "observer": "minmax",
+          "observer_kwargs": {},
+          "strategy": "channel",
+          "symmetric": true,
+          "type": "int"
+        }
+      }
+    },
+    "format": "int-quantized",
+    "global_compression_ratio": 1.2385454731579797,
+    "ignore": [
+      "lm_head"
+    ],
+    "kv_cache_scheme": null,
+    "quant_method": "compressed-tensors",
+    "quantization_status": "compressed",
+    "version": "0.6.0"
+  },
+  "architecture": [
+    "Qwen2ForCausalLM"
+  ],
+  "base_model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "base_revision_in_provider_config": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "preparation": "Downloaded public prequantized snapshot; no local calibration, quantization, or training performed. Provider calibration seed/tool provenance beyond its files was not independently established. Inference seed is 0."
+}

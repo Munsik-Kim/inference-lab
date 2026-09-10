@@ -1,0 +1,3019 @@
+{
+  "stage": "STEP03 original, not the STEP04 replay",
+  "runs": {
+    "before": {
+      "run_id": "20260910T034745.187033Z_step03_model_before",
+      "runtime": {
+        "phase": "before",
+        "python": "<ENV_BEFORE>/bin/python",
+        "python_version": "3.12.14 (main, Sep  2 2026, 23:27:36) [GCC 15.3.0]",
+        "torch": "2.13.0+cu130",
+        "torch_cuda_build": "13.0",
+        "torch_import": "<ENV_BEFORE>/lib/python3.12/site-packages/torch/__init__.py",
+        "vllm": "0.29.0",
+        "vllm_import": "<ENV_BEFORE>/lib/python3.12/site-packages/vllm/__init__.py",
+        "gpu_name": "NVIDIA GeForce RTX 5080",
+        "compute_capability": [
+          12,
+          0
+        ],
+        "cutlass_support_sm120": [
+          true,
+          null
+        ],
+        "cutlass_file_sha256": "d01b6fe09e3c3fa3991045f6ac7b469a58a550c56426ffd8900badbbe7e5355b"
+      },
+      "status": {
+        "status": "REPRODUCED_W8A8_MODEL_SM120_ERROR",
+        "exit_code": 1
+      },
+      "exception": {
+        "stage": "engine_initialization",
+        "exception_type": "RuntimeError",
+        "exception": "dispatch_scaled_mm, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/scaled_mm_helper.hpp:34, Int8 not supported on SM120. Use FP8 quantization instead, or run on older arch (SM < 100).",
+        "traceback": "Traceback (most recent call last):\n  File \"<PROJECT>/scripts/smoke_w8a8_model.py\", line 94, in main\n    llm = LLM(model=str(model_path), tokenizer=str(model_path), **config[\"engine\"])\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/entrypoints/llm.py\", line 343, in __init__\n    self.llm_engine = LLMEngine.from_engine_args(\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/v1/engine/llm_engine.py\", line 179, in from_engine_args\n    return cls(\n           ^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/v1/engine/llm_engine.py\", line 105, in __init__\n    self.engine_core = EngineCoreClient.make_client(\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/v1/engine/core_client.py\", line 112, in make_client\n    return InprocClient(vllm_config, executor_class, log_stats)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/v1/engine/core_client.py\", line 317, in __init__\n    self.engine_core = EngineCore(*args, **kwargs)\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/v1/engine/core.py\", line 145, in __init__\n    kv_cache_config = self._initialize_kv_caches(vllm_config)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/tracing/otel.py\", line 178, in sync_wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/v1/engine/core.py\", line 308, in _initialize_kv_caches\n    available_gpu_memory = self.model_executor.determine_available_memory()\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/v1/executor/abstract.py\", line 149, in determine_available_memory\n    return self.collective_rpc(\"determine_available_memory\")\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/v1/executor/uniproc_executor.py\", line 103, in collective_rpc\n    result = run_method(self.driver_worker, method, args, kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/v1/serial_utils.py\", line 510, in run_method\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/torch/utils/_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/v1/worker/gpu_worker.py\", line 557, in determine_available_memory\n    self.model_runner.profile_run()\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/v1/worker/gpu_model_runner.py\", line 6574, in profile_run\n    hidden_states, last_hidden_states = self._dummy_run(\n                                        ^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/torch/utils/_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/v1/worker/gpu_model_runner.py\", line 6222, in _dummy_run\n    outputs = self.model(\n              ^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1778, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1789, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/model_executor/models/qwen2.py\", line 490, in forward\n    hidden_states = self.model(\n                    ^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/compilation/decorators.py\", line 509, in __call__\n    return self.forward(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/model_executor/models/qwen2.py\", line 419, in forward\n    hidden_states, residual = layer(positions, hidden_states, residual)\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1778, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1789, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/model_executor/models/qwen2.py\", line 301, in forward\n    hidden_states = self.self_attn(\n                    ^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1778, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1789, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/model_executor/models/qwen2.py\", line 211, in forward\n    qkv, _ = self.qkv_proj(hidden_states)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1778, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1789, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/model_executor/layers/linear.py\", line 600, in forward\n    output_parallel = self.quant_method.apply(self, input_, bias)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors.py\", line 1028, in apply\n    return scheme.apply_weights(layer, x, bias=bias)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_w8a8_int8.py\", line 112, in apply_weights\n    return self.kernel.apply_weights(layer, x, bias)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/model_executor/kernels/linear/scaled_mm/cutlass.py\", line 151, in apply_weights\n    return ops.cutlass_scaled_mm(\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/vllm/_custom_ops.py\", line 870, in cutlass_scaled_mm\n    torch.ops._C.cutlass_scaled_mm(out, a, b, scale_a, scale_b, bias)\n  File \"<ENV_BEFORE>/lib/python3.12/site-packages/torch/_ops.py\", line 1279, in __call__\n    return self._op(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: dispatch_scaled_mm, /workspace/csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/scaled_mm_helper.hpp:34, Int8 not supported on SM120. Use FP8 quantization instead, or run on older arch (SM < 100).\n"
+      },
+      "execution": {
+        "exit_code": 1,
+        "elapsed_seconds": 8.579413641997235
+      },
+      "input": {
+        "model_id": "RedHatAI/Qwen2.5-0.5B-Instruct-quantized.w8a8",
+        "revision": "2379f83cfb42ec0905ac46b68b234d36013c843d",
+        "model_path": "<MODEL_SNAPSHOT>",
+        "environments": {
+          "before": "<ENV_BEFORE>",
+          "after": "<ENV_AFTER>"
+        },
+        "cutlass_sha256": {
+          "before": "d01b6fe09e3c3fa3991045f6ac7b469a58a550c56426ffd8900badbbe7e5355b",
+          "after": "3a8f87ccb7d5d00598b2f816329ddfd3f640ad97ab425eb0940fc797d9066562"
+        },
+        "engine": {
+          "trust_remote_code": false,
+          "quantization": "compressed-tensors",
+          "tensor_parallel_size": 1,
+          "dtype": "bfloat16",
+          "max_model_len": 1024,
+          "max_num_seqs": 1,
+          "max_num_batched_tokens": 1024,
+          "gpu_memory_utilization": 0.2,
+          "enforce_eager": true,
+          "seed": 0,
+          "cpu_offload_gb": 0,
+          "generation_config": "vllm",
+          "enable_prefix_caching": false,
+          "download_dir": "<PROJECT>/.cache/step03/huggingface/hub"
+        },
+        "sampling": {
+          "temperature": 0.0,
+          "max_tokens": 32
+        },
+        "messages": [
+          {
+            "role": "user",
+            "content": "In one short sentence, what is the capital of France?"
+          }
+        ],
+        "expected_quantized_layers": 96,
+        "expected_fused_layers": 48,
+        "scope": "One real 0.5B W8A8 model; same pinned checkpoint and configuration before/after. Execution validation only."
+      },
+      "environment_overrides": {
+        "PYTHONNOUSERSITE": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONUNBUFFERED": "1",
+        "CUDA_VISIBLE_DEVICES": "0",
+        "CUDA_HOME": "<ENV_BEFORE>/lib/python3.12/site-packages/nvidia/cu13",
+        "VLLM_HOST_IP": "127.0.0.1",
+        "VLLM_NO_USAGE_STATS": "1",
+        "DO_NOT_TRACK": "1",
+        "HF_HUB_DISABLE_TELEMETRY": "1",
+        "HF_HUB_OFFLINE": "1",
+        "TRANSFORMERS_OFFLINE": "1",
+        "HF_HUB_DISABLE_IMPLICIT_TOKEN": "1",
+        "HF_HOME": "<PROJECT>/.cache/step03/huggingface",
+        "HF_HUB_CACHE": "<PROJECT>/.cache/step03/huggingface/hub",
+        "XDG_CACHE_HOME": "<PROJECT>/.cache/step03",
+        "VLLM_CACHE_ROOT": "<PROJECT>/.cache/step03/vllm",
+        "VLLM_CONFIG_ROOT": "<PROJECT>/.config/step03",
+        "TORCH_HOME": "<PROJECT>/.cache/step03/torch",
+        "TRITON_CACHE_DIR": "<PROJECT>/.cache/step03/triton",
+        "TORCHINDUCTOR_CACHE_DIR": "<PROJECT>/.cache/step03/torchinductor",
+        "CUDA_CACHE_PATH": "<PROJECT>/.cache/step03/cuda",
+        "NUMBA_CACHE_DIR": "<PROJECT>/.cache/step03/numba",
+        "FLASHINFER_WORKSPACE_BASE": "<PROJECT>/.cache/step03/flashinfer",
+        "VLLM_USE_V2_MODEL_RUNNER": "0",
+        "VLLM_USE_FLASHINFER_SAMPLER": "0",
+        "VLLM_ENABLE_V1_MULTIPROCESSING": "0",
+        "VLLM_ALLOW_INSECURE_SERIALIZATION": "0",
+        "OMP_NUM_THREADS": "2",
+        "TMPDIR": "<PROJECT>/.cache/step03/tmp/c03163e2d0"
+      },
+      "exit_code": 1
+    },
+    "after": {
+      "run_id": "20260910T034826.798225Z_step03_model_after",
+      "runtime": {
+        "phase": "after",
+        "python": "<ENV_AFTER>/bin/python",
+        "python_version": "3.12.14 (main, Sep  2 2026, 23:27:36) [GCC 15.3.0]",
+        "torch": "2.13.0+cu130",
+        "torch_cuda_build": "13.0",
+        "torch_import": "<ENV_AFTER>/lib/python3.12/site-packages/torch/__init__.py",
+        "vllm": "0.29.0",
+        "vllm_import": "<ENV_AFTER>/lib/python3.12/site-packages/vllm/__init__.py",
+        "gpu_name": "NVIDIA GeForce RTX 5080",
+        "compute_capability": [
+          12,
+          0
+        ],
+        "cutlass_support_sm120": [
+          false,
+          "CUTLASS int8 w8a8 is not supported on SM100+ (Blackwell); use the Triton int8 kernel."
+        ],
+        "cutlass_file_sha256": "3a8f87ccb7d5d00598b2f816329ddfd3f640ad97ab425eb0940fc797d9066562"
+      },
+      "status": {
+        "status": "PASS_W8A8_MODEL_SMOKE",
+        "exit_code": 0
+      },
+      "result": {
+        "status": "PASS_W8A8_MODEL_SMOKE",
+        "model_id": "RedHatAI/Qwen2.5-0.5B-Instruct-quantized.w8a8",
+        "revision": "2379f83cfb42ec0905ac46b68b234d36013c843d",
+        "phase": "after",
+        "rendered_prompt": "<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\nIn one short sentence, what is the capital of France?<|im_end|>\n<|im_start|>assistant\n",
+        "prompt_token_ids": [
+          151644,
+          8948,
+          198,
+          2610,
+          525,
+          1207,
+          16948,
+          11,
+          3465,
+          553,
+          54364,
+          14817,
+          13,
+          1446,
+          525,
+          264,
+          10950,
+          17847,
+          13,
+          151645,
+          198,
+          151644,
+          872,
+          198,
+          641,
+          825,
+          2805,
+          11652,
+          11,
+          1128,
+          374,
+          279,
+          6722,
+          315,
+          9625,
+          30,
+          151645,
+          198,
+          151644,
+          77091,
+          198
+        ],
+        "generated_text": "The capital of France is Paris.",
+        "generated_token_ids": [
+          785,
+          6722,
+          315,
+          9625,
+          374,
+          12095,
+          13,
+          151645
+        ],
+        "generated_tokens": 8,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "kernel_counts": {
+          "TritonInt8ScaledMMLinearKernel": 96
+        },
+        "quantized_layers": 96,
+        "fused_layers": 48,
+        "load_wall_seconds": 5.606826589002594,
+        "request_wall_seconds": 42.659969632000866,
+        "timing_note": "One cold smoke request; includes JIT and is not a performance benchmark."
+      },
+      "model_audit": [
+        {
+          "worker_python": "<ENV_AFTER>/bin/python",
+          "gpu_name": "NVIDIA GeForce RTX 5080",
+          "compute_capability": [
+            12,
+            0
+          ],
+          "model_class": "Qwen2ForCausalLM",
+          "kernel_counts": {
+            "TritonInt8ScaledMMLinearKernel": 96
+          },
+          "quantized_layer_count": 96,
+          "fused_layer_count": 48,
+          "layers": [
+            {
+              "name": "model.layers.0.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.0.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.0.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.0.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.1.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.1.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.1.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.1.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.2.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.2.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.2.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.2.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.3.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.3.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.3.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.3.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.4.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.4.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.4.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.4.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.5.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.5.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.5.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.5.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.6.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.6.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.6.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.6.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.7.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.7.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.7.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.7.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.8.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.8.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.8.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.8.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.9.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.9.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.9.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.9.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.10.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.10.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.10.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.10.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.11.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.11.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.11.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.11.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.12.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.12.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.12.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.12.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.13.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.13.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.13.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.13.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.14.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.14.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.14.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.14.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.15.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.15.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.15.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.15.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.16.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.16.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.16.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.16.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.17.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.17.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.17.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.17.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.18.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.18.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.18.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.18.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.19.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.19.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.19.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.19.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.20.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.20.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.20.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.20.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.21.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.21.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.21.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.21.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.22.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.22.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.22.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.22.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.23.self_attn.qkv_proj",
+              "module_class": "QKVParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                1152
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                1152,
+                1
+              ],
+              "logical_widths": [
+                896,
+                128,
+                128
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.23.self_attn.o_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                896
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.23.mlp.gate_up_proj",
+              "module_class": "MergedColumnParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                896,
+                9728
+              ],
+              "weight_stride": [
+                1,
+                896
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                9728,
+                1
+              ],
+              "logical_widths": [
+                4864,
+                4864
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            },
+            {
+              "name": "model.layers.23.mlp.down_proj",
+              "module_class": "RowParallelLinear",
+              "scheme_class": "CompressedTensorsW8A8Int8",
+              "kernel_class": "TritonInt8ScaledMMLinearKernel",
+              "weight_dtype": "torch.int8",
+              "weight_device": "cuda:0",
+              "weight_shape": [
+                4864,
+                896
+              ],
+              "weight_stride": [
+                1,
+                4864
+              ],
+              "scale_dtype": "torch.float32",
+              "scale_shape": [
+                896,
+                1
+              ],
+              "logical_widths": [
+                896
+              ],
+              "is_channelwise": true,
+              "is_static_input_scheme": false,
+              "input_symmetric": true
+            }
+          ]
+        }
+      ],
+      "execution": {
+        "exit_code": 0,
+        "elapsed_seconds": 52.64113567700042
+      },
+      "input": {
+        "model_id": "RedHatAI/Qwen2.5-0.5B-Instruct-quantized.w8a8",
+        "revision": "2379f83cfb42ec0905ac46b68b234d36013c843d",
+        "model_path": "<MODEL_SNAPSHOT>",
+        "environments": {
+          "before": "<ENV_BEFORE>",
+          "after": "<ENV_AFTER>"
+        },
+        "cutlass_sha256": {
+          "before": "d01b6fe09e3c3fa3991045f6ac7b469a58a550c56426ffd8900badbbe7e5355b",
+          "after": "3a8f87ccb7d5d00598b2f816329ddfd3f640ad97ab425eb0940fc797d9066562"
+        },
+        "engine": {
+          "trust_remote_code": false,
+          "quantization": "compressed-tensors",
+          "tensor_parallel_size": 1,
+          "dtype": "bfloat16",
+          "max_model_len": 1024,
+          "max_num_seqs": 1,
+          "max_num_batched_tokens": 1024,
+          "gpu_memory_utilization": 0.2,
+          "enforce_eager": true,
+          "seed": 0,
+          "cpu_offload_gb": 0,
+          "generation_config": "vllm",
+          "enable_prefix_caching": false,
+          "download_dir": "<PROJECT>/.cache/step03/huggingface/hub"
+        },
+        "sampling": {
+          "temperature": 0.0,
+          "max_tokens": 32
+        },
+        "messages": [
+          {
+            "role": "user",
+            "content": "In one short sentence, what is the capital of France?"
+          }
+        ],
+        "expected_quantized_layers": 96,
+        "expected_fused_layers": 48,
+        "scope": "One real 0.5B W8A8 model; same pinned checkpoint and configuration before/after. Execution validation only."
+      },
+      "environment_overrides": {
+        "PYTHONNOUSERSITE": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONUNBUFFERED": "1",
+        "CUDA_VISIBLE_DEVICES": "0",
+        "CUDA_HOME": "<ENV_AFTER>/lib/python3.12/site-packages/nvidia/cu13",
+        "VLLM_HOST_IP": "127.0.0.1",
+        "VLLM_NO_USAGE_STATS": "1",
+        "DO_NOT_TRACK": "1",
+        "HF_HUB_DISABLE_TELEMETRY": "1",
+        "HF_HUB_OFFLINE": "1",
+        "TRANSFORMERS_OFFLINE": "1",
+        "HF_HUB_DISABLE_IMPLICIT_TOKEN": "1",
+        "HF_HOME": "<PROJECT>/.cache/step03/huggingface",
+        "HF_HUB_CACHE": "<PROJECT>/.cache/step03/huggingface/hub",
+        "XDG_CACHE_HOME": "<PROJECT>/.cache/step03",
+        "VLLM_CACHE_ROOT": "<PROJECT>/.cache/step03/vllm",
+        "VLLM_CONFIG_ROOT": "<PROJECT>/.config/step03",
+        "TORCH_HOME": "<PROJECT>/.cache/step03/torch",
+        "TRITON_CACHE_DIR": "<PROJECT>/.cache/step03/triton",
+        "TORCHINDUCTOR_CACHE_DIR": "<PROJECT>/.cache/step03/torchinductor",
+        "CUDA_CACHE_PATH": "<PROJECT>/.cache/step03/cuda",
+        "NUMBA_CACHE_DIR": "<PROJECT>/.cache/step03/numba",
+        "FLASHINFER_WORKSPACE_BASE": "<PROJECT>/.cache/step03/flashinfer",
+        "VLLM_USE_V2_MODEL_RUNNER": "0",
+        "VLLM_USE_FLASHINFER_SAMPLER": "0",
+        "VLLM_ENABLE_V1_MULTIPROCESSING": "0",
+        "VLLM_ALLOW_INSECURE_SERIALIZATION": "0",
+        "OMP_NUM_THREADS": "2",
+        "TMPDIR": "<PROJECT>/.cache/step03/tmp/1812568f2d"
+      },
+      "exit_code": 0
+    }
+  },
+  "comparability": {
+    "checked_at_utc": "2026-09-10T03:50:25.409482+00:00",
+    "protected_files_checked": 10009,
+    "protected_changed": [],
+    "protected_missing": [],
+    "model_files_checked": 11,
+    "model_files_changed": [],
+    "identical_before_after_artifacts": {
+      "smoke_w8a8_model.py": true,
+      "run_step03.py": true,
+      "smoke-w8a8-step03.json": true,
+      "input.json": true
+    },
+    "environment_differences": {
+      "CUDA_HOME": [
+        "<ENV_BEFORE>/lib/python3.12/site-packages/nvidia/cu13",
+        "<ENV_AFTER>/lib/python3.12/site-packages/nvidia/cu13"
+      ],
+      "TMPDIR": [
+        "<PROJECT>/.cache/step03/tmp/c03163e2d0",
+        "<PROJECT>/.cache/step03/tmp/1812568f2d"
+      ]
+    },
+    "model_layer_type_counts": {
+      "qkv_proj": 24,
+      "o_proj": 24,
+      "gate_up_proj": 24,
+      "down_proj": 24
+    },
+    "quantized_layers": 96,
+    "fused_layers": 48
+  },
+  "package_comparison": {
+    "before_count": 198,
+    "after_count": 201,
+    "changed_inference_packages": {},
+    "test_only_extras": {
+      "iniconfig": "2.3.0",
+      "pluggy": "1.6.0",
+      "pytest": "9.0.2"
+    },
+    "packages_installed_in_step03": []
+  },
+  "observation_kind": "Read-only module-class/device inspection plus real generation, not an Nsight/CUPTI GPU kernel profile."
+}
