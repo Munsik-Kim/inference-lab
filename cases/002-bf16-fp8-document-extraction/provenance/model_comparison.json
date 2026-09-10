@@ -1,0 +1,10 @@
+{
+  "config_differences": [
+    "quantization_config"
+  ],
+  "tokenizer_json_identical": true,
+  "tokenizer_config_identical": true,
+  "merges_difference": "FP8 merges.txt adds a #version: 0.2 header; remaining merges are identical. All 120 rendered requests produce identical token IDs with the pinned fast tokenizers.",
+  "generation_config_semantically_identical": true,
+  "comparison_scope": "Official BF16 and FP8 deployment checkpoints. The model card identifies FP8 as the quantized variant, but exact original tensor conversion history is not independently established."
+}

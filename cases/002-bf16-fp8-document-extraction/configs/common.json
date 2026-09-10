@@ -1,0 +1,47 @@
+{
+  "version": 3,
+  "environment": {
+    "VLLM_USE_V2_MODEL_RUNNER": "0",
+    "VLLM_USE_FLASHINFER_SAMPLER": "0"
+  },
+  "engine_args": [
+    "--dtype",
+    "bfloat16",
+    "--kv-cache-dtype",
+    "bfloat16",
+    "--kv-cache-memory-bytes",
+    "1073741824",
+    "--max-model-len",
+    "5120",
+    "--max-num-seqs",
+    "1",
+    "--tensor-parallel-size",
+    "1",
+    "--cpu-offload-gb",
+    "0",
+    "--gpu-memory-utilization",
+    "0.8",
+    "--no-enable-prefix-caching",
+    "--no-enable-chunked-prefill",
+    "--no-async-scheduling",
+    "--max-num-batched-tokens",
+    "5120",
+    "--attention-backend",
+    "FLASH_ATTN",
+    "--generation-config",
+    "vllm",
+    "--seed",
+    "20260910"
+  ],
+  "sampling": {
+    "temperature": 0,
+    "seed": 20260910,
+    "top_p": 1.0,
+    "top_k": -1,
+    "max_tokens": 256,
+    "stop_token_ids": [
+      151645,
+      151643
+    ]
+  }
+}

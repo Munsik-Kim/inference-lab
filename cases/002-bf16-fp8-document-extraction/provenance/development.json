@@ -1,0 +1,63 @@
+{
+  "startup_attempts": [
+    {
+      "run_id": "dev-initial-dev-r0-1-bf16",
+      "outcome": "startup failure",
+      "first_error": "RuntimeError: UVA is not available",
+      "action": "Use V1 runner for both models; retain normal API server process separation."
+    },
+    {
+      "run_id": "dev-v1-dev-r0-1-bf16",
+      "outcome": "startup failure",
+      "first_error": "FileNotFoundError: No such file or directory: ninja",
+      "action": "Prepend the isolated environment bin directory to the server PATH; ninja was already installed."
+    },
+    {
+      "run_id": "dev-v1-path-dev-r0-1-bf16",
+      "outcome": "startup failure",
+      "first_error": "FlashInfer sampler JIT link failure: cannot find -lcudart and -lcuda",
+      "action": "Disable FlashInfer sampling for both models; preserve compile/CUDA graph defaults."
+    }
+  ],
+  "prompt_history": [
+    {
+      "version": 1,
+      "target_id_position": "before document",
+      "bf16_dev_document_correct": 7,
+      "fp8_dev_document_correct": 7,
+      "n_each": 20
+    },
+    {
+      "version": 2,
+      "change": "Move target ID after document; explicitly forbid filling fields from other requests; clarify missing values. Same prompt for both models.",
+      "bf16_dev_document_correct": 7,
+      "fp8_dev_document_correct": 7,
+      "n_each": 20
+    }
+  ],
+  "prompt_adjustment_count": 1,
+  "data_change": "Documents, structured facts, events and gold remained byte/record-identical. Only input-token metadata changed for prompt version 2. Evaluation has not yet been run.",
+  "resolved_common_settings": {
+    "runner": "V1; API server with separate EngineCore process",
+    "attention_backend": "FLASH_ATTN, FlashAttention version 2",
+    "enforce_eager": false,
+    "compilation_mode": "VLLM_COMPILE",
+    "cuda_graph_mode": "FULL_AND_PIECEWISE",
+    "cuda_graph_capture_sizes": [
+      1,
+      2
+    ],
+    "prefix_caching": false,
+    "chunked_prefill": false,
+    "async_scheduling": false,
+    "speculative_decoding": null,
+    "constrained_decoding": false,
+    "dtype": "bfloat16",
+    "kv_cache_dtype": "bfloat16",
+    "kv_cache_memory_bytes": 1073741824,
+    "kv_cache_capacity_tokens": 7280,
+    "kv_cache_capacity_note": "7280 * 36 layers * 2(K,V) * 8 heads * 128 head_dim * 2 bytes = 1073479680 tensor bytes; block-rounded capacity. 262144 bytes of the explicit budget remain below the next allocation block.",
+    "background_memory": "Whole-GPU NVML idle baseline includes Windows display/background memory; per-process nvidia-smi listing is unavailable/empty under this WSL setup."
+  },
+  "preservation": "Original development logs and sources remain private. Public evidence copies retain warnings/errors with local path labels."
+}

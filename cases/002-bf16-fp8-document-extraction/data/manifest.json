@@ -1,0 +1,44 @@
+{
+  "version": 2,
+  "facts_version": 1,
+  "prompt_version": 2,
+  "seed": 20260910,
+  "synthetic": true,
+  "human_review": false,
+  "construction": "Structured facts and confirmed versioned events determine gold before model execution. Rendering is deterministic. No model output or LLM judge determines gold. Shared generation grammar across splits. Documents/gold unchanged after the one dev-only prompt revision; input-token metadata recalculated.",
+  "normalization": "Unicode NFC and strip on strings only",
+  "length_includes": "user instruction, target ID, document, pinned chat template and generation prompt",
+  "token_counts": {
+    "dev_short": {
+      "n": 10,
+      "min": 500,
+      "max": 558,
+      "mean": 525.2
+    },
+    "dev_long": {
+      "n": 10,
+      "min": 4012,
+      "max": 4071,
+      "mean": 4043.1
+    },
+    "eval_short": {
+      "n": 50,
+      "min": 498,
+      "max": 559,
+      "mean": 526.68
+    },
+    "eval_long": {
+      "n": 50,
+      "min": 4009,
+      "max": 4069,
+      "mean": 4041.82
+    }
+  },
+  "files_sha256": {
+    "dev_gold.jsonl": "92b3fe3b757508173bd6d69afcb18e0150962d21e68b0a445cff982f8b0e8051",
+    "dev_inputs.jsonl": "5cb9e9f0bba53d37bdf210e9ba826cf52fd3527d74132ef06dd30c8b92640ca2",
+    "eval_gold.jsonl": "22ffa4747c8832b413564365f51fcc9b9a73628d96a83ba80df7cfad5eb6cce2",
+    "eval_inputs.jsonl": "9ee5099b499f3acb0c703e9659e43fd9af538974596b808fc95906746a6b44de",
+    "facts.jsonl": "10d0accc2909786dadced4d142c8216df57d65ba36461d1617584db118534ad5"
+  }
+}

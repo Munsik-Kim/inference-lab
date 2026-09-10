@@ -2,11 +2,12 @@
 
 Reproducible case studies of local LLM execution on an **RTX 5080 16GB**. The project investigates execution compatibility, memory use, latency, and task quality through recorded experiments and inspectable evidence.
 
-**One completed case is currently published.** It covers execution compatibility; memory, latency, and quality comparisons are planned work.
+**Two completed cases are available in this checkout.** They cover execution compatibility and an official BF16/FP8 comparison on synthetic Korean document extraction.
 
 | Case | Question | Recorded result | Materials |
 |---|---|---|---|
 | 001 — Validating vLLM W8A8 INT8 fallback on RTX 5080 | Can an existing kernel-selection guard unblock a real W8A8 model on SM120? | Before: initialization error, exit 1. After: text generation, exit 0; 96 INT8 modules selected the Triton kernel class. | [Case and reproduction instructions](cases/001-sm120-int8-fallback/README.md) · [Download ZIP](downloads/step04_sm120_int8_repro.zip) |
+| 002 — Official BF16 vs FP8 Qwen3-4B document extraction | Does the FP8 deployment reduce memory and latency without a clear accuracy loss on this synthetic task? | BF16 31/100 vs FP8 32/100 correct; difference +1 pp, 95% paired interval −2 to +5 pp. FP8 used less memory and had lower median latency; both accuracies were too low for unattended extraction. | [Case, results and reproduction](cases/002-bf16-fp8-document-extraction/README.md) · [Download ZIP](downloads/case002_bf16_fp8_document_extraction.zip) |
 
 The unmodified vLLM 0.29.0 wheel selected a CUTLASS implementation that does not support INT8 on SM120. Applying the Python runtime guard from [hclsys's PR #54316](https://github.com/vllm-project/vllm/pull/54316) let the selector use the existing Triton implementation. The pinned `RedHatAI/Qwen2.5-0.5B-Instruct-quantized.w8a8` model then generated “The capital of France is Paris.” and exited normally, with 8 generated tokens including EOS.
 
@@ -16,6 +17,10 @@ The case includes the tested patch, dependency locks, model preparation and run 
 
 The [posted RTX 5080 validation comment](https://github.com/vllm-project/vllm/pull/54316#issuecomment-5614091211) connects this case to the upstream discussion and [issue #54311](https://github.com/vllm-project/vllm/issues/54311). The repository and download contain the reviewed documentation revision; executable files and execution evidence are unchanged from the earlier ZIP attached to that comment.
 
-The next planned case will compare quantization configurations for one local model using memory, latency, and task-quality measurements. Those comparisons have **not been run**. The [case template](cases/TEMPLATE.md) provides a starting point for recording future work.
+Case 002 used 100 fixed evaluation documents and three paired timing rounds on the same RTX 5080. With a shared 1 GiB BF16 KV cache, whole-device sampled peak was about 11.62 GiB for BF16 and 8.21 GiB for FP8. The [case](cases/002-bf16-fp8-document-extraction/README.md) reports output lengths, null-field errors and uncertainty alongside latency. This is a completed comparison, not a recommendation to deploy either setup unchanged.
+
+Future work may address extraction reliability or compare other configurations under separately frozen protocols; no additional comparison has been run. The [case template](cases/TEMPLATE.md) provides a starting point.
 
 The original guard and its branch tests are hclsys's work. This project's contribution is RTX 5080 execution validation and reproducible evidence. OpenAI Codex assisted with the reproducer and documentation. See the case [NOTICE](cases/001-sm120-int8-fallback/NOTICE.md) for attribution and the [Apache-2.0 license](LICENSE).
+
+Case 002 uses synthetic data and independent fact-derived gold. Codex assisted with its code, local execution and analysis; see its [NOTICE](cases/002-bf16-fp8-document-extraction/NOTICE.md).
