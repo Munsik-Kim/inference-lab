@@ -1,0 +1,695 @@
+{
+  "scope": "Publication audit from saved public row records, plus existing small numerical tests and a CPU scalar counterexample. No full model/GPU evaluation, calibration rerun, human or third-party replication.",
+  "audited_original_commit": "634ef3e4dbe905767b185c738e1401db8e322d20",
+  "remote_main_base": "87fae28f005d093210c75f9a5dc7be2cda686a17",
+  "original_spec_sha256": "75b3d0e9ed46a22425bbf4b3d8c96affcd8e8faa5229a4f3f331eb84da0fcfdf",
+  "post_hoc_plan_sha256": "11721356421f8dd3b9e127bfc9bbf050ff84b6fdf440b8a00fed9e63c102dd0d",
+  "fixed_experiment_and_measurements": "Preserved byte-for-byte; package SHA256SUMS is regenerated for derived publication files separately.",
+  "numeric_tests": {
+    "command": "python tests/test_numerics.py",
+    "run": 12,
+    "passed": 12,
+    "skipped": 0,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "independent_analysis": {
+    "command": "python scripts/publication_audit.py --output-dir <new-output-directory>",
+    "exit_codes": [
+      0,
+      0
+    ],
+    "deterministic_outputs": {
+      "status": "PASS",
+      "files": {
+        "README.md": "e9e02c0524cdf2f6def0859834ce439799cb1fa2d425e9f162bf857388832193",
+        "ANALYSIS.md": "40b7f7f44e42c0391bd0cdc86f31238ef89930f03a52f65127c73be966bd49c6",
+        "results/comparison_decomposition.json": "ca2bc455361e09a3c1b2a04ac11a2cd72f8f05c83cf680186518589e4b57c88d",
+        "results/comparison_decomposition.png": "43af9fdc2929a1c25d20ad0d5ddb454c6d546c9a64b9459e36fa5862cda12ceb"
+      },
+      "scalar_check_identical": true
+    },
+    "material_mismatches": [],
+    "max_unit_rounding_delta": 1.8430911297162567e-08
+  },
+  "reported_claim_cross_checks": [
+    {
+      "quantity": "FP32 online maximum unit error",
+      "recomputed": 5.941277431697652e-07,
+      "previously_reported": 5.941e-07,
+      "difference": 2.774316976525442e-11,
+      "rounding_tolerance": 5e-11,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "calibration candidates",
+      "recomputed": 49,
+      "previously_reported": 49,
+      "difference": 0,
+      "rounding_tolerance": 0,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "dev calibration subset percent",
+      "recomputed": 5.792084258105783,
+      "previously_reported": 5.792,
+      "difference": 8.425810578316373e-05,
+      "rounding_tolerance": 0.0005,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "eval calibration subset percent",
+      "recomputed": 5.82730341232365,
+      "previously_reported": 5.827,
+      "difference": 0.00030341232364961,
+      "rounding_tolerance": 0.0005,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "EFQ-Mean worst unit percent",
+      "recomputed": 35.84881750062254,
+      "previously_reported": 35.85,
+      "difference": -0.0011824993774638415,
+      "rounding_tolerance": 0.005,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "same-scale nearest at Mean worst unit percent",
+      "recomputed": 16.557931934723904,
+      "previously_reported": 16.56,
+      "difference": -0.0020680652760951546,
+      "rounding_tolerance": 0.005,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "calibrated worst unit percent",
+      "recomputed": 18.875004550152234,
+      "previously_reported": 18.88,
+      "difference": -0.004995449847765343,
+      "rounding_tolerance": 0.005,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "maximum calibrated / same-scale nearest unit ratio",
+      "recomputed": 3.235323491368652,
+      "previously_reported": 3.24,
+      "difference": -0.004676508631348053,
+      "rounding_tolerance": 0.005,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "maximum layer x length median ratio",
+      "recomputed": 1.3094028699997968,
+      "previously_reported": 1.309,
+      "difference": 0.0004028699997968843,
+      "rounding_tolerance": 0.0005,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "calibrated row Spearman removed_reference_mass",
+      "recomputed": 0.5592531907521101,
+      "previously_reported": 0.559,
+      "difference": 0.00025319075211005515,
+      "rounding_tolerance": 0.0005,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "calibrated row Spearman entropy_nats",
+      "recomputed": 0.5109562571790203,
+      "previously_reported": 0.511,
+      "difference": -4.3742820979741914e-05,
+      "rounding_tolerance": 0.0005,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "calibrated row Spearman top_logit_gap",
+      "recomputed": -0.4053294265551171,
+      "previously_reported": -0.405,
+      "difference": -0.00032942655511708496,
+      "rounding_tolerance": 0.0005,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "scalar key 170 reference_probability",
+      "recomputed": 0.06970032024464166,
+      "previously_reported": 0.0697,
+      "difference": 3.202446416661342e-07,
+      "rounding_tolerance": 5e-06,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "scalar key 170 efq_mean_probability",
+      "recomputed": 0.10880161502397301,
+      "previously_reported": 0.1088,
+      "difference": 1.6150239730144955e-06,
+      "rounding_tolerance": 5e-06,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "scalar key 170 nearest_probability",
+      "recomputed": 0.07553293501512134,
+      "previously_reported": 0.07553,
+      "difference": 2.9350151213441977e-06,
+      "rounding_tolerance": 5e-06,
+      "within_tolerance": true
+    },
+    {
+      "quantity": "removed reference mass percent",
+      "recomputed": 0.355860341705144,
+      "previously_reported": 0.356,
+      "difference": -0.00013965829485595993,
+      "rounding_tolerance": 0.0005,
+      "within_tolerance": true
+    }
+  ],
+  "scalar_counterexample": {
+    "command": "python scripts/check_counterexample.py --output <new-check-result.json>",
+    "exit_code": 0,
+    "result": {
+      "status": "PASS",
+      "scope": "Independent scalar reconstruction of one probability row; no model or full GPU reevaluation.",
+      "fixture_sha256": "a3660431db8a87219da2b4c1ef58f8ce8cd67fbbaffcfc242667c25341ed5c7f",
+      "key_170": {
+        "reference_probability": 0.06970032024464166,
+        "efq_mean_probability": 0.10880161502397301,
+        "nearest_probability": 0.07553293501512134,
+        "efq_code": 7,
+        "nearest_code": 6,
+        "scale_exponent": -6,
+        "residual": -0.2083910068115431,
+        "efq_code7_lower_boundary": -0.45130434782608697,
+        "nearest_code7_lower_boundary": -0.1823215567939546
+      },
+      "removed_reference_mass": 0.0035586034170514403,
+      "max_row_update_after_initialization": 0.0,
+      "probability_absolute_tolerance": 2e-06,
+      "original_record_comparisons": [
+        {
+          "key": 0,
+          "field": "reference_probability",
+          "recorded_fp32": 0.9157280325889587,
+          "scalar_fp64": 0.9157281428237474,
+          "difference": 1.102347886305921e-07
+        },
+        {
+          "key": 0,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.8704129457473755,
+          "scalar_fp64": 0.8704129201917841,
+          "difference": -2.5555591420811652e-08
+        },
+        {
+          "key": 0,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.9063951969146729,
+          "scalar_fp64": 0.9063952201814561,
+          "difference": 2.3266783277797742e-08
+        },
+        {
+          "key": 170,
+          "field": "reference_probability",
+          "recorded_fp32": 0.06970036029815674,
+          "scalar_fp64": 0.06970032024464166,
+          "difference": -4.005351507407884e-08
+        },
+        {
+          "key": 170,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.10880161821842194,
+          "scalar_fp64": 0.10880161502397301,
+          "difference": -3.1944489276014565e-09
+        },
+        {
+          "key": 170,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0755329355597496,
+          "scalar_fp64": 0.07553293501512134,
+          "difference": -5.446282591581308e-10
+        },
+        {
+          "key": 169,
+          "field": "reference_probability",
+          "recorded_fp32": 0.004398657940328121,
+          "scalar_fp64": 0.004398658810726548,
+          "difference": 8.703984269442522e-10
+        },
+        {
+          "key": 169,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.009066801518201828,
+          "scalar_fp64": 0.009066801251997752,
+          "difference": -2.6620407614363906e-10
+        },
+        {
+          "key": 169,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0094416169449687,
+          "scalar_fp64": 0.009441616876890168,
+          "difference": -6.807853239476636e-11
+        },
+        {
+          "key": 165,
+          "field": "reference_probability",
+          "recorded_fp32": 0.0007651207852177322,
+          "scalar_fp64": 0.0007651205721058208,
+          "difference": -2.131119113644997e-10
+        },
+        {
+          "key": 165,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 165,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 159,
+          "field": "reference_probability",
+          "recorded_fp32": 0.0007200717809610069,
+          "scalar_fp64": 0.0007200713919917831,
+          "difference": -3.889692238006476e-10
+        },
+        {
+          "key": 159,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.0008500126423314214,
+          "scalar_fp64": 0.0008500126173747891,
+          "difference": -2.495663224688638e-11
+        },
+        {
+          "key": 159,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0008851515594869852,
+          "scalar_fp64": 0.0008851515822084533,
+          "difference": 2.2721468044724358e-11
+        },
+        {
+          "key": 133,
+          "field": "reference_probability",
+          "recorded_fp32": 0.0006235345499590039,
+          "scalar_fp64": 0.0006235346549233546,
+          "difference": 1.0496435068774873e-10
+        },
+        {
+          "key": 133,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.0008500126423314214,
+          "scalar_fp64": 0.0008500126173747891,
+          "difference": -2.495663224688638e-11
+        },
+        {
+          "key": 133,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0008851515594869852,
+          "scalar_fp64": 0.0008851515822084533,
+          "difference": 2.2721468044724358e-11
+        },
+        {
+          "key": 168,
+          "field": "reference_probability",
+          "recorded_fp32": 0.0005033008637838066,
+          "scalar_fp64": 0.0005033004977899016,
+          "difference": -3.6599390499606616e-10
+        },
+        {
+          "key": 168,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 168,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 134,
+          "field": "reference_probability",
+          "recorded_fp32": 0.00048352256999351084,
+          "scalar_fp64": 0.0004835225804897594,
+          "difference": 1.0496248564317162e-11
+        },
+        {
+          "key": 134,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.0008500126423314214,
+          "scalar_fp64": 0.0008500126173747891,
+          "difference": -2.495663224688638e-11
+        },
+        {
+          "key": 134,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0005901010590605438,
+          "scalar_fp64": 0.0005901010548056355,
+          "difference": -4.254908274672897e-12
+        },
+        {
+          "key": 166,
+          "field": "reference_probability",
+          "recorded_fp32": 0.0004081311635673046,
+          "scalar_fp64": 0.0004081312730527607,
+          "difference": 1.0948545607451787e-10
+        },
+        {
+          "key": 166,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 166,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 160,
+          "field": "reference_probability",
+          "recorded_fp32": 0.00037516746670007706,
+          "scalar_fp64": 0.00037516751737302103,
+          "difference": 5.067294397672131e-11
+        },
+        {
+          "key": 160,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 160,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 158,
+          "field": "reference_probability",
+          "recorded_fp32": 0.0003434999962337315,
+          "scalar_fp64": 0.0003434998447383753,
+          "difference": -1.51495356190412e-10
+        },
+        {
+          "key": 158,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.0005666750948876143,
+          "scalar_fp64": 0.0005666750782498595,
+          "difference": -1.663775475897744e-11
+        },
+        {
+          "key": 158,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0004425757797434926,
+          "scalar_fp64": 0.0004425757911042266,
+          "difference": 1.1360734022362179e-11
+        },
+        {
+          "key": 164,
+          "field": "reference_probability",
+          "recorded_fp32": 0.0002931880299001932,
+          "scalar_fp64": 0.000293188136757091,
+          "difference": 1.0685689778768687e-10
+        },
+        {
+          "key": 164,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 164,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 167,
+          "field": "reference_probability",
+          "recorded_fp32": 0.00023819887428544462,
+          "scalar_fp64": 0.00023819889154194632,
+          "difference": 1.7256501701765417e-11
+        },
+        {
+          "key": 167,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 167,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 163,
+          "field": "reference_probability",
+          "recorded_fp32": 0.00022305423044599593,
+          "scalar_fp64": 0.00022305426024222597,
+          "difference": 2.9796230044919214e-11
+        },
+        {
+          "key": 163,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 163,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0,
+          "scalar_fp64": 0.0,
+          "difference": 0.0
+        },
+        {
+          "key": 153,
+          "field": "reference_probability",
+          "recorded_fp32": 0.0002186515339417383,
+          "scalar_fp64": 0.00021865145858706325,
+          "difference": -7.535467505515557e-11
+        },
+        {
+          "key": 153,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.0004250063211657107,
+          "scalar_fp64": 0.00042500630868739456,
+          "difference": -1.247831612344319e-11
+        },
+        {
+          "key": 153,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0002950505295302719,
+          "scalar_fp64": 0.00029505052740281775,
+          "difference": -2.1274541373364486e-12
+        },
+        {
+          "key": 141,
+          "field": "reference_probability",
+          "recorded_fp32": 0.00021399160323198885,
+          "scalar_fp64": 0.00021399158816778584,
+          "difference": -1.506420300458576e-11
+        },
+        {
+          "key": 141,
+          "field": "method_effective_probability",
+          "recorded_fp32": 0.0004250063211657107,
+          "scalar_fp64": 0.00042500630868739456,
+          "difference": -1.247831612344319e-11
+        },
+        {
+          "key": 141,
+          "field": "nearest_same_scale_probability",
+          "recorded_fp32": 0.0002950505295302719,
+          "scalar_fp64": 0.00029505052740281775,
+          "difference": -2.1274541373364486e-12
+        }
+      ]
+    }
+  },
+  "original_figures": {
+    "command": "python scripts/analyze.py (in a scratch copy)",
+    "exit_code": 0,
+    "byte_identical": [
+      "results/aggregate.json",
+      "results/length_summary.csv",
+      "results/length_error.png",
+      "results/layer_error.png",
+      "results/error_associations.png",
+      "results/representative_failure.png"
+    ]
+  },
+  "source_check": {
+    "transformers_modeling_qwen3_sha256": "cbb7f2dc274c2f5592746c0dc6985ca50353efa07376f92cc922b77680a74f69",
+    "sequence": "Q/K projection, per-head RMSNorm, RoPE, then attention interface receiving recorded scaling. Captured SDPA arguments therefore include normalization and RoPE."
+  },
+  "checker_correction": {
+    "scope": "New publication-audit checker only; no experiment code or data changed.",
+    "failure": "Exact Python float equality rejected equivalent 128**(-0.5) and 1/sqrt(128).",
+    "resolution": "Use 1e-15 relative tolerance for this metadata comparison; both represent the same recorded attention scale.",
+    "original_spec_unchanged": true
+  },
+  "audit_execution_records": [
+    {
+      "execution_label": "original_12_numerical_tests",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-11T02:56:01.324127+00:00",
+      "elapsed_seconds": 3.6870276650006417
+    },
+    {
+      "execution_label": "independent_analysis_final_a",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-11T03:03:19.239297+00:00",
+      "elapsed_seconds": 2.454385397000806
+    },
+    {
+      "execution_label": "independent_analysis_final_b",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-11T03:03:21.713004+00:00",
+      "elapsed_seconds": 2.1705045090002386
+    },
+    {
+      "execution_label": "scalar_counterexample_public_fixture",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-11T03:03:23.903080+00:00",
+      "elapsed_seconds": 0.022236205000808695
+    },
+    {
+      "execution_label": "original_figures_recreated",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-11T03:04:16.963889+00:00",
+      "elapsed_seconds": 6.065997529000015
+    }
+  ],
+  "execution_logs": "Full host command logs are retained privately; the portable commands, exit codes and key check outcomes above are the public record.",
+  "historical_records": "publication_review.json and artifact_validation.json describe the initial local preparation before this audit. Their historical external_publication_performed=false value is retained, not a statement about current GitHub visibility.",
+  "attribution": "EFQ equations and public parameters belong to the paper authors. Codex assisted this independent implementation and publication audit.",
+  "publication_static_checks": {
+    "status": "PASS",
+    "frozen_files_unchanged": 50,
+    "syntax_checked_python_files": 13,
+    "relative_links_checked": 47,
+    "privacy_pattern_matches": 0,
+    "generated_documents_match_row_analysis": true,
+    "case001_002_unchanged": true,
+    "git_diff_check_exit_code": 0,
+    "rendering": "Markdown tables and inline mathematical code render as HTML. The new comparison figure was visually inspected; all four original figures were recreated byte-for-byte."
+  },
+  "file_roles": {
+    "original_frozen_experiment": "configs/experiment_spec.json plus its 50 named hashes; unchanged.",
+    "unchanged_initial_files": {
+      ".gitattributes": "6485e54f911cf3bba5229d8a006b6253e289b230b6c37f1349eb5f916c2a085c",
+      "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "NOTICE.md": "d387164e63e1712edd63b6f00bcda2677c94f5c9b7b8a17e41ac800f569636a9",
+      "configs/development_plan.json": "3ddccba89d9c784b49e575ed7a4eced724f4ba589cf4e79086cd6ea18b0d18a2",
+      "configs/experiment_spec.json": "75b3d0e9ed46a22425bbf4b3d8c96affcd8e8faa5229a4f3f331eb84da0fcfdf",
+      "configs/experiment_spec.sha256": "cd199e5cd869d9e243475444a492849a9cc533f28d79cb9c64680b48fec6cc8f",
+      "inputs/dev-00.txt": "242e41bb9eab56f8d9e7616ff44ea1b4e5db2d57f837bafb2ee367cfa280053a",
+      "inputs/dev-01.txt": "43abfb386997e8a4d30e04411361e4e117680473818e18d31a5a8cd1fd1de675",
+      "inputs/dev-02.txt": "e00dc8edf7e049a8c2a69eb89df2f5f780e1ab45c33d004c49ddbb20039f81e3",
+      "inputs/dev-03.txt": "79ac0f03cbffa206e5505db8cdd697279b2e857ef396649fa9678de7f371c66d",
+      "inputs/dev-04.txt": "0fde31ee2da4ca5465260a04288498133f6742214ccb454339bac4111d8350d6",
+      "inputs/dev-05.txt": "befc545bdbfce2363331875f5e35e363f7d883875f5b69b1034c25dc373a5b91",
+      "inputs/dev-06.txt": "e332a43d9bc2e62a6e5c40abf5be2f08360c17ab5345bc83e89319e37882c944",
+      "inputs/dev-07.txt": "53904887ffd2147c711b9aa51ee1ba8ef7809dc8083d02af694a45304a9e03d1",
+      "inputs/eval-00.txt": "21e6c7b833d3ffb402fc751e57a6b962f84df9afa674e5b916c46f03b27b6566",
+      "inputs/eval-01.txt": "14bb88fe5a613282e3e8295cdb1be011fc4e2e5beef78e1d3f74900ab16ba5c3",
+      "inputs/eval-02.txt": "3f292c956c0b12e7e92cc7589554d2e5c110d818c52ce410dafa82de574270a5",
+      "inputs/eval-03.txt": "139b574d347f2f7974a66a5d034c9477e49859597c2f3e3cdaf32e526fdcdce1",
+      "inputs/eval-04.txt": "0825f9bc09eac27930aa39e5132428621e9eebd039d41d6ed226c1e1f688a86d",
+      "inputs/eval-05.txt": "4fbf3d4205c49d648a0ac1ddb1159ac22a044a5051821a0e5914d53a753af4d1",
+      "inputs/eval-06.txt": "f7186c9a0b3a217fb0f618b351f024aafa26dccfd1ebabc381f4243257e64db1",
+      "inputs/eval-07.txt": "86a4b11a9287f32b57c50778a2e73b8e9b7f63cb94a06ddd8572882e78f31523",
+      "inputs/eval-08.txt": "a5920425c56a9a63ab72d381efde3210c723ffc0b2cc49a5f4e95f443d111834",
+      "inputs/eval-09.txt": "24d5a90803b6f3f92e51b434f96681c758a7450eff33c71e49f4fb4ad9370476",
+      "inputs/eval-10.txt": "b2d978db5864212562369d2b7ee9f18dbd74d270167a21b6b97851ad9e6ef2c1",
+      "inputs/eval-11.txt": "9e01ffe1a159b9df1cf62fc81d4d3aca2257d4c844db2fc9ae289d0e92f2aca3",
+      "inputs/eval-12.txt": "57ff635ea0fa04fd5ace5f3645c00ecef42a563f8977b39447235d550ea059a8",
+      "inputs/eval-13.txt": "d7723bcb71c978080c81691ccb8ec0f4af26276295e3089a78c411b92d985480",
+      "inputs/eval-14.txt": "191dae7652d268120fa0d5f546f9623f55ce93f0fe71a8a6a36a709e60b7124d",
+      "inputs/eval-15.txt": "f9ccdbf3340f8f328128e3a431411221d78841ebc76a99183a037ca0bcb657c3",
+      "inputs/manifest.json": "b092918db9202a7f057fff004ae6bf062d9a432b008015fd8c465472337d761d",
+      "provenance/REPRODUCE.md": "c733abc72bbc8e62771463509d9507cc9d4783b809de91e303dd31166f05f741",
+      "provenance/artifact_validation.json": "c92224827c5a759db9d41fb3bb01bc40082da38db90f4ebe7985b578c449f0c7",
+      "provenance/dev_traces.json": "aba753e5baab238c040b40a87a0f3dae31eb758890a9333625b094adbf542123",
+      "provenance/development_corrections.json": "e20742767671fd3f7a69626576fb57f5ce77c65955c7f60ba342a9861ee51950",
+      "provenance/environment.json": "26567227e1206aff92445aec777220d368e650e0104770682c337ff869e73247",
+      "provenance/eval_traces.json": "2e06042f4c31e88e4acec09c2554dffe7cc2df7bc397f2a299362268d4572afb",
+      "provenance/evaluation_execution.json": "5caec006e4654059c6171f7567392527e0262d6ab356594715e4705c0bd2a570",
+      "provenance/model.json": "43ede54cec234038cd1f23bdf9de19b6df4f5b5fcae676cbfd3548c62664e399",
+      "provenance/model_LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+      "provenance/model_config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+      "provenance/model_generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+      "provenance/numerical_tests.json": "4240355a2be68016543ffac4990bf74f7767ce4b031d68c74322217a4a545c84",
+      "provenance/package_versions.txt": "5e6f57103cb3481ec03f691d93124e60ea4f5a7690aadce1641b541896af6bae",
+      "provenance/paper_audit.json": "9f33543680350a96a2564d8ed77adf7d66629bfe6a03b523a0f732b0439e901d",
+      "provenance/publication_review.json": "40d02544151694e85c5c2ab8d3f1f450d9c49bd3ce8e91127df88ebfa28fab76",
+      "provenance/trace_validation.json": "09f2d37528ed11b9d8170e7c50f6ad797826282fbfc8b3e39d817d636301581d",
+      "results/aggregate.json": "ce50cac5e364ea1c483ab9d930a3642e84d5cae3955c3c3141374f8a992ceecd",
+      "results/calibration.json": "912cacce6d2d76c08be45046b37410d19687230c72d25f342985abe0d79b3255",
+      "results/dev_rows.csv.gz": "264e96540a7d6000614c8c49928368b1de169007b50fcdb85590e075d55dd3a5",
+      "results/dev_run.json": "4c3c9ccef7fbb23c34a57987f764a7cf4750d1c276c4c5022068021754993c3a",
+      "results/dev_units.jsonl": "0e18dc186b852f4e57f6c8577116de7d911f82fae174a434154c215382b6601b",
+      "results/error_associations.png": "e1aa7f48dff253abfa1e88b35656e022e69bfb28115b4a92e819e5380aaf3e9e",
+      "results/eval_rows.csv.gz": "ffdcee226bde71453db629dfb29e856910ce55aaa07af01a5b2a192dd892aefe",
+      "results/eval_run.json": "3b9fe322bb57222bb32a818994558aa1504d55258225d0374097b52a118b19b1",
+      "results/eval_units.jsonl": "f63e90fba679f4d5e5d6fb5651a4cdf8107ceb8c25b876bb71922ac20b71d03b",
+      "results/layer_error.png": "16c2224a09936924fc77c471bf6462362b1305dcd0bf273285875f96ccd7edbc",
+      "results/layer_head_length.json": "2779cdf52b5efea1e5c773d3a4faf8a75b6e6a3c9ea8d2ffe8ba0ded47a3b94b",
+      "results/length_error.png": "59a2d2dffc0467c516e3ba42f7676733ca3f3557fee1e6f17f52cc97fd693f1f",
+      "results/length_summary.csv": "431bf77745d196243a596299762042783b02e9125da89e24bc72007c0487b688",
+      "results/representative_cases.md": "721dc8553847656d7d31d550f89ac09e81d0a513155bb53dc93d6eca090df4d6",
+      "results/representative_details.json": "27256c92ad9aa887b14462ed94b76133ed4563e20ede014e743bd117abff3719",
+      "results/representative_failure.png": "e584d1306326ec1e089a09172cfec101c2260f66800c78e27e888c696da7cfe3",
+      "results/synthetic-dev_rows.csv.gz": "50147abd44dfda913eeeec2c849e9494ee100643d98674dc08dccd8d8c3120ac",
+      "results/synthetic-dev_run.json": "531902318130210de7a543d1d60454d30171c50f6a3b2cb35c5cdadba70dce0c",
+      "results/synthetic-dev_units.jsonl": "0ea0b8f5d6954670bc579da8dbbaf105ae0308e17146879939d43fa1fe05a9d9",
+      "results/synthetic-eval_rows.csv.gz": "d3bf2b7e6f546190e2d41f7cdf7cef8264148fcad3556092931040ab9f52abd5",
+      "results/synthetic-eval_run.json": "450e2876a50935ff65388bb334be064220e8536fa06ed5b227082d3ad4e4af19",
+      "results/synthetic-eval_units.jsonl": "c886e35fc1ffcbef4196f5d8d34130fb5deae05cca5adc5bc489c9faba02625c",
+      "scripts/analyze.py": "152b62d05005bc15ed4cd60d77ff493337683a00408e41e620a2840974d89283",
+      "scripts/audit.py": "15b16df5d6fac885e6778f3930461567097cf252e4e7a451a188e632fa7538f7",
+      "scripts/extract_traces.py": "32d781fcb15c99c6d3700fac091792254fd2955ab86b60048e42446105c1aa68",
+      "scripts/inspect_failure.py": "bb719b8b7823bc207d4b5ace05db2ff7dce95ecff865785a1a343e62f3e3486b",
+      "scripts/numerics.py": "68fda0a2066785af58a980db67f2343a3b461a3733f9fc293dbfa7b6552a412d",
+      "scripts/prepare.py": "17eee23d3fd4fcc70925a3a516f1acd41f6c89707b56e8cd5d74e71f294b9834",
+      "scripts/record_tests.py": "b6e1a8a84530b3c9b36e95bd2632ff3ec64e4712834989503d54978e9af1534d",
+      "scripts/reproduce.py": "a15836ab00e19de8d0007d71b5c542af7b95be4978a60b7ac235680f31a758c0",
+      "scripts/verify_artifacts.py": "371ea9cc12d7789318ccd1c8a63dbe5f1ddcbc6761276e79de27000256af6d07",
+      "scripts/write_report.py": "c19ec807699f135c9b5feae4926aaf25ebf2a99a31fb4ff95a3278008f7f4712",
+      "tests/fixtures/qwen_dev_small.npz": "fbac5fdf0b2a1552ea1efabac29c0a13db2fac7f6e41d83d4e58c52c31135da5",
+      "tests/test_numerics.py": "3c779f1241279d36ed669167d11b28e1a96b019cb09e6058850b5bcdc485cec7"
+    },
+    "post_hoc_derived": [
+      "configs/publication_audit_plan.json",
+      "scripts/publication_audit.py",
+      "scripts/check_counterexample.py",
+      "tests/fixtures/efq_mean_counterexample.json",
+      "results/comparison_decomposition.json",
+      "results/comparison_decomposition.png",
+      "ANALYSIS.md",
+      "provenance/publication_audit.json"
+    ],
+    "updated_narrative": [
+      "README.md",
+      "METHODS.md"
+    ],
+    "package_index": "SHA256SUMS covers current publication files other than itself; it is not the original experiment-spec manifest."
+  }
+}

@@ -1,111 +1,100 @@
 # Methods and reproduction
 
-## What this experiment changes
+## Scope and paper-to-code audit
 
-The audit implements EFQ-Softmax from [Han et al., v1](https://arxiv.org/html/2609.09721v1), independently of the authors' code. It changes the unnormalized probability operand inside tiled attention. Every method receives the same FP32 score tensor, value tensor and causal mask. QK is calculated once from recorded BF16 Q/K promoted to FP32; V is also promoted to FP32. TF32 is disabled. The E2M1 operand is decoded to FP32 before multiplication and summation. This is not a packed FP4 kernel, a model-quality evaluation, or an A5 performance reproduction.
+This is an independent equation implementation of [Han et al., EFQ-Softmax v1](https://arxiv.org/html/2609.09721v1). Probability operands are decoded to FP32 and multiplied by a common FP32 V. The original authors' packed kernel and hardware baseline were not recovered. “Paper-exact” below means the finite-input mathematical rule matches v1, not that the authors' code or bitwise execution was reproduced.
 
-The formal definitions in sections II–III take precedence over loose descriptions of a “16-level” LUT elsewhere in the paper. The LUT has 16 intermediate indices and eight final E2M1 values. The paper's Balance operating point comes from vision-language evaluation; using it here is a transfer check on a smaller text model. No author repository was identified in the v1 body/abstract or the recorded title search. See [paper audit](provenance/paper_audit.json) for scope and source hashes. The complete paper is not redistributed.
+| Item | Classification | Local implementation / paper reference |
+|---|---|---|
+| Nonnegative E2M1 codebook | paper-exact | `[0, .5, 1, 1.5, 2, 3, 4, 6]`; section II-B; `numerics.E2M1` |
+| EFQ exponent scale | paper-exact | Equation 8 in `numerics.operand`, before the explicit finite-range policy |
+| Residual log normalization | paper-exact | Equation 10 in `numerics.operand` |
+| Affine floor, then +1, then clip | paper-exact | Equation 11 in `numerics.affine_codes` |
+| MMLU, Mean, Balance parameters | paper-exact | Section IV-A values in `numerics.PUBLIC`; their original task objectives differ |
+| LUT index and 16→8 folding | paper-exact | Section II-D in `affine_codes`; formal definition takes precedence over the loose “16-level E2M1” description in IV-A |
+| Mask before maxima/code generation | paper-exact | Section III-D; causal `-Inf` scores in `audit.load_trace` before `online` |
+| Online maximum and historical rescaling | paper-exact | Equations 4–7 / Algorithm 2; both accumulated numerator and denominator use `exp(old_max-new_max)` |
+| Shared operand and final normalization | paper-exact | The same decoded `p` updates PV and row sum in `numerics.online`; final A/l |
+| Decoded FP32 probability/PV simulation | reasonable independent implementation choice | Functional numerical model only; no packed FP4 execution |
+| Tile 128; per-row contiguous block 32 | reasonable independent implementation choice | Blocks never cross query rows or heads; reset at each tile. Sizes 16/64 are sensitivity analyses only |
+| Headroom nearest scale and tie handling | reasonable independent implementation choice | Explicit scale rule below; nearest midpoint ties choose even code index |
+| Finite exponent / masks / final partial block | reasonable independent implementation choice | Clamp exponents to [-127,127]; masked padding is zero; all-masked row policy below |
+| Authors' exact operand layout and MXFP4 baseline details | unresolved ambiguity | v1 allows a layout-compatible block partition but does not specify enough to establish equivalence to these local baselines |
 
-## Probability methods
+No author repository was identified in the recorded v1 paper/abstract check. That is not a claim that no code exists elsewhere. The equations, parameters and method are the authors' contribution; this project supplies numerical simulation and evidence.
 
-The nonnegative E2M1 values are `[0, 0.5, 1, 1.5, 2, 3, 4, 6]`. For shifted block maximum `M`, EFQ selects `k=floor((M+ln(2/9))/ln(2))`, uses scale `2**k`, and computes `z=x-k*ln(2)-ln(6)`. Its code is `clip(floor((z-tau)*h)+1, 0, 7)`.
+## Exact local probability rules
 
-| Method | Rule |
-|---|---|
-| FP32 dense | Stable softmax over all valid keys, then PV |
-| FP32 online | Tiled stable attention without quantization |
-| Nearest, headroom scale | Explicit exp, `k=ceil((M-ln(6))/ln(2))`, nearest E2M1 |
-| Nearest, EFQ scale | Explicit exp and nearest E2M1 using exactly EFQ's scale |
-| EFQ-MMLU | tau=-2.90, h=2.00 |
-| EFQ-Mean | tau=-3.06, h=2.30 |
-| EFQ-Balance | tau=-2.10, h=2.70 |
-| EFQ-LUT | tau=ln(1/24), h=14/ln(24); clip intermediate code to 0–15, then fold |
-| EFQ calibrated | One candidate chosen only from the fixed development grid |
+For each tile, set `new_max=max(old_max, max(masked_scores_in_tile))`, then `x=score-new_max`. For one microscaling block let `M=max(x)` and let `C=[0,.5,1,1.5,2,3,4,6]`.
 
-The LUT folding table is `[0,1,1,1,1,1,2,2,3,3,4,5,5,6,7,7]`. Nearest-rounding midpoint ties choose the even code index. Affine thresholds use floor directly; there is no nearest-rounding tie rule on that path.
+- **EFQ scale (equation 8):** `k=floor((M+ln(2/9))/ln(2))`.
+- **Headroom scale (independent reference):** `k=ceil((M-ln(6))/ln(2))`. Within the represented exponent range this places the exact local maximum at or below `6 * 2**k`.
+- **Finite representation:** clamp k to `[-127,127]`, then `s=2**k`. Codes use this represented scale; below-range blocks and represented zero scales are counted.
+- **Nearest mapping:** calculate `exp(x)/s` and choose the nearest C value. Boundaries are `[.25,.75,1.25,1.75,2.5,3.5,5]`; an exact midpoint chooses the even code index. Both nearest references use this mapping.
+- **EFQ mapping:** `z=x-k*ln(2)-ln(6)`; `c=clip(floor((z-tau)*h)+1,0,7)`; the decoded operand is `s*C[c]`.
+- **LUT mapping:** `j=clip(floor((z-ln(1/24))*(14/ln(24)))+1,0,15)`; fold using `[0,1,1,1,1,1,2,2,3,3,4,5,5,6,7,7]` and decode `s*C[fold[j]]`.
 
-The headroom-scale method is an **MXFP4 numerical reference**, not a verified copy of the paper's MXFP4 baseline. Its scale rule differs from EFQ, so the same-scale nearest method is the primary control and engineering-screen baseline. It separates scale selection from the affine mapping effect.
+| Operating point | tau | h |
+|---|---:|---:|
+| EFQ-MMLU | -2.90 | 2.00 |
+| EFQ-Mean | -3.06 | 2.30 |
+| EFQ-Balance | -2.10 | 2.70 |
 
-Each attention tile has 128 keys. Each microscaling block covers 32 consecutive keys **within one query row and head**, resetting at the tile boundary. [MXFP4's block-of-32 convention](https://research.nvidia.com/labs/eai/blogs/pushing-intelligence-to-4-bit/) motivates the primary size. Blocks of 16 and 64 are sensitivity experiments on the numerical mapping, not claims about matching a particular hardware operand layout. Only nearest/EFQ-scale, EFQ-Mean and the calibrated setting are included in that sensitivity analysis.
+The headroom reference is an independent MXFP4 numerical reference, not a verified implementation of the paper's MXFP4 baseline. The same-scale nearest reference controls scale choice while testing the affine mapping.
 
-The paper does not completely fix layout or finite-range edge policies. This implementation clamps scale exponents to [-127,127], then calculates codes using the represented scale. It counts below-range blocks and represented zero scales. Incomplete blocks are padded with masked entries. Masked elements always produce zero. An entirely masked block makes no contribution; an entirely masked row returns a zero output with `valid=false`. A valid row with denominator zero or nonfinite output remains a recorded failure rather than being repaired. NaN or positive-infinite input scores are rejected. These are explicit independent implementation choices.
+Block padding uses `-Inf` and produces zero codes. An all-masked block contributes nothing; an all-masked row returns zero output and `valid=false`. Valid rows with denominator zero or nonfinite output remain failures. NaN and positive-infinite scores are rejected. No epsilon repairs an invalid denominator.
 
-## Online state and diagnostic probabilities
+Online A and l both rescale by `exp(old_max-new_max)` and consume the same tile operand. Diagnostic probabilities multiply each tile operand by `exp(tile_max-final_max)` before global normalization. Their PV reconstruction was checked against online output at relative tolerance 5e-5. JS therefore uses the effective online distribution, not a separate dense approximation. Initial maximum updates from `-Inf` are excluded from the finite max-jump statistic.
 
-At each tile, both accumulators are rescaled by `exp(old_row_max-new_row_max)`. The very same reconstructed tile operand contributes to the numerator PV and denominator sum. The output is the accumulated numerator divided by the accumulated denominator. No high-precision substitute denominator is used.
+## Trace capture and sampling
 
-For JS and top-k diagnostics, each recorded tile operand is multiplied by `exp(tile_row_max-final_row_max)`. Those effective weights are concatenated and normalized. Their PV reconstruction is checked against the online output, with relative tolerance 5e-5. This is an online-path diagnostic, not a separate dense EFQ approximation. The row-max jump statistic excludes the initial update from negative infinity.
+The official BF16 checkpoint is `Qwen/Qwen3-0.6B` at revision `c1899de289a04d12100db370d81485cdf75e47ca`. [Model provenance](provenance/model.json) records file hashes and BF16 tensors. Transformers' `AutoModel` backbone does not use the checkpoint's output head. No text generation or task scoring is performed.
 
-## Model and inputs
+A temporary process-local wrapper intercepts the actual Transformers SDPA inputs after QK RMSNorm and RoPE, then restores the original function. Batch size is one, inference mode is enabled, dropout is zero and cache reuse is disabled. Layers 0/13/27 and query heads 0/5/10/15 are sampled. Two query heads share each KV head, yielding KV heads 0/2/5/7.
 
-The model is `Qwen/Qwen3-0.6B`, revision `c1899de289a04d12100db370d81485cdf75e47ca`. All checkpoint tensors were BF16. Transformers loads the backbone through `AutoModel`; the checkpoint's language-model output-head tensor is unused. No tokens are generated and no task score is measured. The snapshot's tokenizer converts plain text without a chat template or extra special tokens. Exact token IDs and prefix hashes are preserved in [input manifest](inputs/manifest.json).
+At sequence length N in `[512,2048,4096]`, query positions are `floor(i*(N-1)/15)`, i=0..15. Every key from 0 through that query position is used. Selected Q/K/V are stored privately on CPU. `audit.load_trace` forms the score tensor once per trace, applies the causal mask, and supplies that same score tensor and V to every method. Original capture/source hashes, per-row common reference norms and metadata support this correspondence; row summaries alone do not contain the full vectors.
 
-There are eight development documents and sixteen evaluation documents, created before execution from independent scenario IDs and seeds. They include English prose, Korean prose and code. All documents are self-authored synthetic material, with shared generation rules; they do not represent general natural-language or code distributions. Both text hashes and 512-token prefixes are unique across document IDs. Prefixes of length 512, 2048 and 4096 from the same document overlap and are **not independent samples**.
+A separate 128-token development check compared reconstructed attention with native BF16 output. The same SDPA calculation matched exactly; FP32 reconstruction differed by 0.142–0.186%, within the recorded 0.02 tolerance. The BF16 same-backend tolerance was 0.01. The small original development fixture remains in [tests/fixtures](tests/fixtures).
 
-Batch size is one, inference mode is enabled, dropout and cache reuse are disabled. The native backbone uses Transformers' SDPA path. A temporary in-process wrapper intercepts its actual query/key/value arguments after QK RMSNorm and RoPE. No installed source is patched. Layers are 0, 13 and 27; query heads are 0, 5, 10 and 15. Qwen uses two query heads per KV head, so the selected KV heads are 0, 2, 5 and 7.
+## Inputs, calibration and freeze
 
-For each length N, query positions are `floor(i*(N-1)/15)` for i=0..15. Each selected query uses **every key from 0 through its position**. Only these sixteen rows per head are evaluated. The full sequence still passes through the original backbone. Q/K/V for selected layers/heads are copied to CPU files, one layer at a time; full attention matrices for all layers are never retained.
+[Inputs](inputs/manifest.json) contain exact tokenizer IDs and hashes for eight development documents (3 English / 3 Korean / 2 code) and sixteen evaluation documents (5 / 5 / 6). They are self-authored synthetic texts with unique scenario IDs, text hashes and 512-token prefixes across document IDs. Longer prefixes of the same document overlap. Shared generation rules limit population interpretation. Input is plain text without a chat template or added special tokens.
 
-A separate 128-token development input checks captured Q/K/V against the actual native attention output. Reapplying the same BF16 SDPA backend must have relative error <=0.01; FP32 dense reconstruction must have error <=0.02 against native BF16 output. These tolerances were specified before the check. The fixture is a small subset of that development trace, not an evaluation example.
+The calibration grid is tau `[-3.6,-3.3,-3.06,-2.9,-2.6,-2.3,-2.1]` × h `[1.7,2,2.3,2.5,2.7,3,3.3]`. Each of the 49 candidates uses all eight development documents at length 2048, layer 13, heads 0/10 and the fixed sixteen queries. The objective is `sqrt(sum squared output differences / sum squared reference outputs)` across that subset. The first grid minimum wins; no refinement follows. The selected point equals EFQ-MMLU.
 
-## Calibration and freeze
+The recorded [specification](configs/experiment_spec.json) and its 50 frozen input/code/provenance hashes precede evaluation extraction. Its SHA256 remains `75b3d0e9ed46a22425bbf4b3d8c96affcd8e8faa5229a4f3f331eb84da0fcfdf`. This is a recorded before-evaluation specification, not external preregistration. A [development-only JS correction](provenance/development_corrections.json) explains calibration's earlier plan hash: only diagnostic metric text/code changed; the grid, attention output objective and selected setting were unchanged. The original unit records were byte-identical across that correction.
 
-The 49-candidate grid is the Cartesian product of tau `[-3.6,-3.3,-3.06,-2.9,-2.6,-2.3,-2.1]` and h `[1.7,2.0,2.3,2.5,2.7,3.0,3.3]`. Calibration uses all eight development documents at length 2048, layer 13, heads 0 and 10, and the fixed sixteen query rows. Its objective is the relative Frobenius error of the concatenated outputs: square root of total squared error divided by total squared reference norm. All candidates use the same subset. The first minimum in listed grid order wins; no refinement follows.
+## Metrics and aggregation
 
-Published parameters remain separate methods. EFQ-Mean and the development-selected setting are the prespecified primary comparisons. The matched-subset development/evaluation objective uses the same length/layer/head definition, changing only document split. It is distinct from the all-head/length median table.
+The primary unit is document × length × layer × head, pooling sixteen query outputs. Its error is `norm(O-Oref)_F / norm(Oref)_F`. Reference RMS <=1e-6 makes relative error null; absolute error and the count remain available. No epsilon is added. Main tables summarize 192 repeated units per length using median, linear-interpolated p95 and maximum; there are 16 independent document IDs, not 192 independent samples.
 
-After tests, trace validation, calibration and development measurements, [experiment_spec.json](configs/experiment_spec.json) freezes the plan, selected parameters and input/code/provenance hashes. Evaluation trace extraction starts only afterward. A development-only JS precision correction is documented in [development corrections](provenance/development_corrections.json); prior files were preserved privately, and QK/PV/output errors and parameter selection were unchanged.
+Rows retain absolute error, relative error, cosine, JS, top-8 overlap, ties, zero-code fraction, removed reference mass, score statistics and denominator status. JS is in nats, with both effective distributions normalized in FP64. Its stable log1p/even-series diagnostic does not change FP32 attention arithmetic. Top-k uses min(8, valid keys) and ascending key index for ties. The tie fraction counts equal adjacent effective probabilities after sorting, including zeros. E2M1 zero fraction is measured before historical rescaling; removed mass uses the dense reference probability at zero-code keys. Undefined gap/cosine fields remain missing.
 
-## Measurements and decision rule
+The prespecified screen compares calibrated EFQ with **nearest under the same EFQ scale**: median <=1.10× and p95 <=1.25× at each length, zero valid-row numerical failures and no layer×length median >2×. Baseline error <=1e-5 holds a ratio; near-zero/missing cases cannot silently pass. The original document-paired bootstrap describes mean per-document error differences with 2,000 draws. It is retained unchanged.
 
-The main unit is one document × length × layer × head, containing sixteen query outputs. Relative error is `||O-Oref||_F / ||Oref||_F`; absolute Frobenius error and both squared norms are also saved. When reference RMS <=1e-6, relative error is null and the unit is counted separately. No epsilon is added to disguise a small denominator.
+## Publication audit and counterexample
 
-Row records include absolute/relative output error, cosine similarity, normalized JS in nats, top-8 overlap, zero-code fraction and the reference mass removed at zero-code keys. Top-k uses k=min(8, valid keys), breaking probability ties by ascending key index. The tie fraction is the number of equal adjacent effective probabilities after sorting divided by valid_keys-1; zero ties are included. This measures ties in the effective quantized distribution, not equal codes across unrelated scales. The FP32 references have no E2M1 zero-code statistic.
+The [post-hoc plan](configs/publication_audit_plan.json) defines an independent row-norm reconstruction, comparison decomposition and 5,000-draw document-cluster bootstrap. This new bootstrap recalculates medians for all layer/head units in each resampled document and uses the same draws at all lengths. It reports median differences and ratios, not an independent-row significance test. The screen remains unchanged. Exploratory Spearman correlations also use dependent rows; no p-values are reported.
 
-JS diagnostics renormalize probabilities in FP64. A stable log1p formulation uses its even series through r^8 for |r|<.01, with remainder below 1.2e-22. No negative-divergence clipping is used. All primary attention arithmetic remains FP32. Cosine is undefined for zero vectors and is retained as null. Missing/nonfinite metrics and failed rows are counted, not silently removed from the screen.
+Diagnostic flags for high-error rows are defined before their post-hoc tally. They are overlapping descriptions, not assignments of a dominant cause. Global nonzero-code-boundary attribution is unsupported by the row summaries. A representative case is checked separately using a [171-score fixture](tests/fixtures/efq_mean_counterexample.json). It contains only one query's valid scores, reconstructed with CPU FP64 dot products from archived BF16 Q/K. The [scalar checker](scripts/check_counterexample.py) independently reconstructs probabilities, rescaling and code boundaries and compares them with original FP32 key records at absolute probability tolerance 2e-6. No new model inference is involved.
 
-Tables report median, p95 (linear interpolation) and maximum across head units, including layer×length and head×length breakdowns. Bootstrap draws 16 paired document IDs with replacement 2,000 times, retaining every head/layer and overlapping length prefix of each drawn document. The interval describes the mean per-document error difference, calibrated minus same-scale nearest, separately by length. Row correlations are exploratory pooled Spearman associations without independent-sample p-values or causal interpretation.
+## Reproduction and verification commands
 
-The engineering screen requires calibrated EFQ to have median error <=1.10× and p95 <=1.25× the same-scale nearest reference at each length, no valid-row numerical failures, and no layer×length median >2× baseline. Ratios are held if baseline error <=1e-5; near-zero/missing cases cannot silently pass. Passing only motivates consideration of limited kernel feasibility. It does not establish model quality, speedup or packed-FP4 correctness.
-
-Synthetic stress uses independent development/evaluation seeds, nine families and two replicas per family at each length. Families cover near-uniform scores, three Gaussian spreads, a single peak, several close peaks, clipped heavy tails, causal masking and large late row-max jumps. Values are fixed random FP32 vectors shared by methods. These tests are reported separately from model traces.
-
-## Commands
-
-Use Python 3.12 with the recorded PyTorch CUDA build, Transformers, NumPy, safetensors and matplotlib versions in [environment](provenance/environment.json). The actual environment reused CASE 002 packages read-only through a separate venv and added plotting dependencies there. [Package versions](provenance/package_versions.txt) are provenance, not a claim of a clean-machine install test. vLLM is not used by this audit.
-
-From this case directory, set `MODEL_CACHE` and `WORK` to your own directories. The latter holds model-derived traces and private logs, outside Git. Set `PYTHON` to your prepared environment's Python.
-
-```bash
-hf download Qwen/Qwen3-0.6B config.json generation_config.json tokenizer_config.json tokenizer.json vocab.json merges.txt model.safetensors README.md LICENSE --revision c1899de289a04d12100db370d81485cdf75e47ca --cache-dir "$MODEL_CACHE"
-mkdir -p "$WORK/traces/dev" "$WORK/traces/eval"
-"$PYTHON" scripts/prepare.py --model-cache "$MODEL_CACHE"
-"$PYTHON" scripts/extract_traces.py --stage validate --model-cache "$MODEL_CACHE" --work-dir "$WORK"
-"$PYTHON" scripts/record_tests.py
-"$PYTHON" scripts/extract_traces.py --stage dev --model-cache "$MODEL_CACHE" --work-dir "$WORK"
-"$PYTHON" scripts/audit.py --stage calibrate --work-dir "$WORK"
-"$PYTHON" scripts/audit.py --stage dev --work-dir "$WORK"
-"$PYTHON" scripts/audit.py --stage synthetic-dev --work-dir "$WORK"
-"$PYTHON" scripts/audit.py --stage freeze --work-dir "$WORK"
-```
-
-Those preparation commands belong in a **new reproduction working copy**: the supplied case already contains a frozen specification and result files, and measurement commands refuse to overwrite existing results. The recorded numerical-test JSON must be regenerated by the included test-recording command before making a new freeze. Keep prior runs in a different directory rather than deleting their evidence.
-
-To reproduce the recorded evaluation with the supplied immutable inputs/specification, use a separate output copy and keep the original as an audit reference. `extract_traces.py --stage eval` verifies the frozen file hashes; it needs the supplied frozen code/input files unchanged. Full clean-copy orchestration is described in [reproduction notes](provenance/REPRODUCE.md).
+Use the pinned environment in [provenance](provenance/REPRODUCE.md); it was tested locally, not on a freshly installed third-party machine. No new packages are required for this audit. From this case directory:
 
 ```bash
-"$PYTHON" scripts/extract_traces.py --stage eval --model-cache "$MODEL_CACHE" --work-dir "$WORK"
-"$PYTHON" scripts/audit.py --stage eval --work-dir "$WORK"
-"$PYTHON" scripts/audit.py --stage synthetic-eval --work-dir "$WORK"
-"$PYTHON" scripts/analyze.py
+# Supplied numerical evidence: CPU reanalysis, no model download.
+python scripts/publication_audit.py --output-dir /path/to/new-derived-output
+python scripts/check_counterexample.py --output /path/to/new-counterexample-check.json
+python tests/test_numerics.py
+
+# Recreate the original four figures in a scratch COPY of the case.
+python scripts/analyze.py
+
+# Full original workflow only when intentionally starting a separate experiment.
+python scripts/reproduce.py --mode full --model-cache /path/to/model-cache --work-dir /path/to/new-private-work --output-dir /path/to/new-case-output
 ```
 
-Tables and the four PNG figures can be regenerated without a GPU from the saved unit JSONL and compressed row CSV files by running only `scripts/analyze.py` with the analysis dependencies available. Model weights and full activations are deliberately excluded.
+The publication script imports neither the original analysis nor its numeric summary functions. It calculates from compressed row records before reading unit/aggregate files as comparators. It writes only new derived outputs to the requested directory. Both analysis paths were checked in scratch copies so the supplied original measurements and plots remain unchanged. `write_report.py` is the initial narrative renderer; the current README and ANALYSIS are generated by `publication_audit.py`.
 
-## Verify the supplied evidence
-
-Run `python scripts/verify_artifacts.py` for a static check of the recorded package. It checks frozen hashes, document/prefix identities, trace metadata, row/unit correspondence, summary statistics, the engineering screen, local links and fixture CRC. It uses only the standard library and does not run the GPU. Its output is [artifact_validation.json](provenance/artifact_validation.json). The checks target the supplied experiment and its recorded counts, not arbitrary future experiments.
-
-`inspect_failure.py`, `write_report.py` and `verify_artifacts.py` were added after the evaluation to inspect or present saved results. They did not change the frozen arithmetic, inputs, parameters or evaluation criteria. The representative-case inspection checked its recomputed units against the saved unit errors. The English report renderer contains this run's interpretation; it is not an automatic conclusion generator for a different result.
-
-The reproduction wrapper leaves the original narrative and supplemental publication records in the copied directory as historical context. New measurements are the trace manifests and files produced by `extract_traces.py`, `audit.py` and `analyze.py`. Copied `evaluation_execution.json`, artifact-validation records, package checksums and narrative do not attest to a new run. Preserve your own command/output logs and label new measurements separately when sharing a reproduction. The individual stages ran locally; the wrapper was statically inspected and was not used to repeat the completed experiment.
+[Publication audit records](provenance/publication_audit.json) distinguish current checks from the initial numerical run. [Package hashes](SHA256SUMS) cover publication files; the fixed experiment spec separately covers its original frozen inputs/code. Model weights, full activations, environments and private logs are excluded.

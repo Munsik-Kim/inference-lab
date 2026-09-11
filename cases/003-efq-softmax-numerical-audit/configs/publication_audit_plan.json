@@ -1,0 +1,48 @@
+{
+  "status": "Post-hoc publication audit; original experiment specification and screen unchanged.",
+  "created_at_utc": "2026-09-11T02:49:05.619284+00:00",
+  "original_commit": "634ef3e4dbe905767b185c738e1401db8e322d20",
+  "inputs": "Lowest public row CSV norms first; unit JSONL, original aggregate and initial README used only as validation comparators after calculation.",
+  "unit_reconstruction": "sqrt(sum(row abs_error squared)/sum(row reference_norm squared)); rounded FP32 row norms are promoted to float64.",
+  "unit_error_absolute_tolerance": 2e-06,
+  "reported_percent_rounding_tolerance_pp": 0.005,
+  "bootstrap": {
+    "name": "post-hoc clustered uncertainty analysis",
+    "seed": 470011,
+    "replicates": 5000,
+    "cluster": "16 evaluation document IDs, paired across methods; all 3 layers x 4 heads included per draw; same draws for all lengths",
+    "statistics": [
+      "median error difference in percentage points",
+      "ratio of method median errors"
+    ],
+    "interval": "percentile 2.5/97.5, descriptive; no p-values, equivalence or screen modification"
+  },
+  "contrasts": [
+    [
+      "mapping",
+      "efq_calibrated",
+      "nearest_efq_scale"
+    ],
+    [
+      "scale",
+      "nearest_efq_scale",
+      "nearest_ceil"
+    ],
+    [
+      "full",
+      "efq_calibrated",
+      "nearest_ceil"
+    ]
+  ],
+  "failure_diagnostics": {
+    "population": "Block 32 EFQ-Mean and calibrated valid rows with relative output error >=0.20",
+    "row_error_threshold": 0.2,
+    "removed_mass_flag": 0.1,
+    "normalized_entropy_flag": 0.8,
+    "row_max_jump_flag": 8.0,
+    "nearest_scale_error_ratio_flag": 1.5,
+    "nearest_scale_error_difference_flag": 0.01,
+    "interpretation": "Overlapping descriptive flags only. These do not establish dominant mechanisms. Global nonzero-boundary classification is unavailable without per-key score/code records. Dominant attribution remains unresolved; inspect the recorded representative case separately."
+  },
+  "changes_allowed": "New derived analysis, prose and manifests only; no original measurements, frozen files, parameters or screen changes."
+}
