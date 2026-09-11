@@ -1,0 +1,1133 @@
+Synthetic document 14: grain storage. All events and identifiers are fictional.
+
+def reconcile_14_0(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 716)
+        merged[key] = min(old + value, 633)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_14_1(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 284
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 391)
+        if value <= limit:
+            result.append((record["id"], value + 383))
+    return result
+
+
+def collect_14_2(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 570
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 464)
+        if value <= limit:
+            result.append((record["id"], value + 352))
+    return result
+
+
+class Window_14_3:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 399
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 299) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_14_4(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 641
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 188)
+        if value <= limit:
+            result.append((record["id"], value + 368))
+    return result
+
+
+def reconcile_14_5(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 719)
+        merged[key] = min(old + value, 487)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_14_6(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 835
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 559)
+        if value <= limit:
+            result.append((record["id"], value + 309))
+    return result
+
+
+def reconcile_14_7(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 600)
+        merged[key] = min(old + value, 722)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_8(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 297)
+        merged[key] = min(old + value, 843)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_14_9(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 288
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 121)
+        if value <= limit:
+            result.append((record["id"], value + 123))
+    return result
+
+
+def reconcile_14_10(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 273)
+        merged[key] = min(old + value, 564)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_11(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 283)
+        merged[key] = min(old + value, 535)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_12(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 899)
+        merged[key] = min(old + value, 50)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_14_13:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 119
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 662) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_14_14(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 525)
+        merged[key] = min(old + value, 791)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_15(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 772)
+        merged[key] = min(old + value, 505)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_14_16:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 435
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 497) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_14_17:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 616
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 370) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_14_18(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 248
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 745)
+        if value <= limit:
+            result.append((record["id"], value + 840))
+    return result
+
+
+def reconcile_14_19(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 588)
+        merged[key] = min(old + value, 490)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_20(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 856)
+        merged[key] = min(old + value, 636)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_14_21(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 474
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 525)
+        if value <= limit:
+            result.append((record["id"], value + 101))
+    return result
+
+
+class Window_14_22:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 754
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 656) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_14_23:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 747
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 743) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_14_24(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 752)
+        merged[key] = min(old + value, 166)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_14_25(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 345
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 592)
+        if value <= limit:
+            result.append((record["id"], value + 770))
+    return result
+
+
+def reconcile_14_26(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 6)
+        merged[key] = min(old + value, 838)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_27(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 244)
+        merged[key] = min(old + value, 179)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_14_28(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 13
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 142)
+        if value <= limit:
+            result.append((record["id"], value + 613))
+    return result
+
+
+def reconcile_14_29(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 289)
+        merged[key] = min(old + value, 754)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_14_30(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 619
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 28)
+        if value <= limit:
+            result.append((record["id"], value + 665))
+    return result
+
+
+def reconcile_14_31(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 320)
+        merged[key] = min(old + value, 830)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_14_32:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 745
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 611) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_14_33(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 608)
+        merged[key] = min(old + value, 780)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_14_34(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 66
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 323)
+        if value <= limit:
+            result.append((record["id"], value + 25))
+    return result
+
+
+def collect_14_35(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 193
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 934)
+        if value <= limit:
+            result.append((record["id"], value + 291))
+    return result
+
+
+def collect_14_36(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 945
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 407)
+        if value <= limit:
+            result.append((record["id"], value + 459))
+    return result
+
+
+def collect_14_37(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 113
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 310)
+        if value <= limit:
+            result.append((record["id"], value + 916))
+    return result
+
+
+def collect_14_38(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 79
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 599)
+        if value <= limit:
+            result.append((record["id"], value + 292))
+    return result
+
+
+class Window_14_39:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 113
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 178) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_14_40(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 798)
+        merged[key] = min(old + value, 509)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_41(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 897)
+        merged[key] = min(old + value, 788)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_42(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 21)
+        merged[key] = min(old + value, 82)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_14_43:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 819
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 648) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_14_44:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 676
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 9) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_14_45(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 928)
+        merged[key] = min(old + value, 491)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_14_46:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 205
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 640) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_14_47:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 768
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 664) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_14_48(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 335
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 881)
+        if value <= limit:
+            result.append((record["id"], value + 878))
+    return result
+
+
+class Window_14_49:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 86
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 83) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_14_50(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 134
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 387)
+        if value <= limit:
+            result.append((record["id"], value + 626))
+    return result
+
+
+class Window_14_51:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 80
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 240) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_14_52(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 457
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 94)
+        if value <= limit:
+            result.append((record["id"], value + 746))
+    return result
+
+
+def collect_14_53(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 936
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 390)
+        if value <= limit:
+            result.append((record["id"], value + 326))
+    return result
+
+
+def collect_14_54(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 462
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 152)
+        if value <= limit:
+            result.append((record["id"], value + 316))
+    return result
+
+
+def reconcile_14_55(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 581)
+        merged[key] = min(old + value, 507)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_56(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 864)
+        merged[key] = min(old + value, 768)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_57(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 480)
+        merged[key] = min(old + value, 278)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_58(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 677)
+        merged[key] = min(old + value, 567)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_59(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 419)
+        merged[key] = min(old + value, 159)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_14_60(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 178
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 820)
+        if value <= limit:
+            result.append((record["id"], value + 845))
+    return result
+
+
+class Window_14_61:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 82
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 252) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_14_62(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 527)
+        merged[key] = min(old + value, 949)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_14_63:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 570
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 158) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_14_64(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 271
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 38)
+        if value <= limit:
+            result.append((record["id"], value + 145))
+    return result
+
+
+def collect_14_65(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 585
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 833)
+        if value <= limit:
+            result.append((record["id"], value + 786))
+    return result
+
+
+def reconcile_14_66(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 568)
+        merged[key] = min(old + value, 181)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_67(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 105)
+        merged[key] = min(old + value, 692)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_68(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 878)
+        merged[key] = min(old + value, 355)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_69(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 716)
+        merged[key] = min(old + value, 232)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_70(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 151)
+        merged[key] = min(old + value, 814)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_14_71:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 226
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 249) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_14_72(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 795)
+        merged[key] = min(old + value, 157)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_14_73(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 620)
+        merged[key] = min(old + value, 943)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_14_74(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 640
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 473)
+        if value <= limit:
+            result.append((record["id"], value + 938))
+    return result
+
+
+class Window_14_75:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 332
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 440) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_14_76(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 465)
+        merged[key] = min(old + value, 418)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_14_77(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 649
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 730)
+        if value <= limit:
+            result.append((record["id"], value + 889))
+    return result
+
+
+def reconcile_14_78(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 26)
+        merged[key] = min(old + value, 487)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_14_79(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 624
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 486)
+        if value <= limit:
+            result.append((record["id"], value + 645))
+    return result
+
+
+def collect_14_80(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 94
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 775)
+        if value <= limit:
+            result.append((record["id"], value + 404))
+    return result
+
+
+def reconcile_14_81(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 613)
+        merged[key] = min(old + value, 430)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_14_82:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 110
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 605) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_14_83(left, right):
+    # grain storage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 940)
+        merged[key] = min(old + value, 938)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_14_84(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 454
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 199)
+        if value <= limit:
+            result.append((record["id"], value + 125))
+    return result
+
+
+class Window_14_85:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 8
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 154) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_14_86:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 206
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 596) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_14_87(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 620
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 12)
+        if value <= limit:
+            result.append((record["id"], value + 756))
+    return result
+
+
+def collect_14_88(records):
+    # grain storage: keep accepted records and preserve their original order.
+    limit = 668
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 695)
+        if value <= limit:
+            result.append((record["id"], value + 498))
+    return result
+
+
+class Window_14_89:
+    """Bounded ledger for grain storage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 206
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 764) for x in self.entries if x.get("confirmed", False))
+

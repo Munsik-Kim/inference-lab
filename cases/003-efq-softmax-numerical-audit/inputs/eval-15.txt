@@ -1,0 +1,1142 @@
+Synthetic document 23: weather station. All events and identifiers are fictional.
+
+class Window_23_0:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 593
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 87) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_23_1:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 802
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 54) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_23_2(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 603)
+        merged[key] = min(old + value, 452)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_23_3(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 223
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 37)
+        if value <= limit:
+            result.append((record["id"], value + 925))
+    return result
+
+
+class Window_23_4:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 755
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 262) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_23_5(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 733)
+        merged[key] = min(old + value, 62)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_23_6(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 558)
+        merged[key] = min(old + value, 617)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_23_7:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 949
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 948) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_23_8(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 64)
+        merged[key] = min(old + value, 753)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_23_9(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 949)
+        merged[key] = min(old + value, 576)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_23_10(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 367)
+        merged[key] = min(old + value, 352)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_23_11(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 131
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 788)
+        if value <= limit:
+            result.append((record["id"], value + 673))
+    return result
+
+
+class Window_23_12:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 107
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 273) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_23_13(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 771
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 201)
+        if value <= limit:
+            result.append((record["id"], value + 433))
+    return result
+
+
+def collect_23_14(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 233
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 894)
+        if value <= limit:
+            result.append((record["id"], value + 510))
+    return result
+
+
+def reconcile_23_15(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 232)
+        merged[key] = min(old + value, 598)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_23_16(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 349
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 225)
+        if value <= limit:
+            result.append((record["id"], value + 616))
+    return result
+
+
+def collect_23_17(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 814
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 678)
+        if value <= limit:
+            result.append((record["id"], value + 100))
+    return result
+
+
+def collect_23_18(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 529
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 118)
+        if value <= limit:
+            result.append((record["id"], value + 236))
+    return result
+
+
+def reconcile_23_19(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 856)
+        merged[key] = min(old + value, 157)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_23_20:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 389
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 301) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_23_21(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 248
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 572)
+        if value <= limit:
+            result.append((record["id"], value + 852))
+    return result
+
+
+def collect_23_22(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 196
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 925)
+        if value <= limit:
+            result.append((record["id"], value + 690))
+    return result
+
+
+def collect_23_23(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 595
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 332)
+        if value <= limit:
+            result.append((record["id"], value + 516))
+    return result
+
+
+def collect_23_24(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 627
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 304)
+        if value <= limit:
+            result.append((record["id"], value + 148))
+    return result
+
+
+class Window_23_25:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 134
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 257) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_23_26(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 588
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 557)
+        if value <= limit:
+            result.append((record["id"], value + 894))
+    return result
+
+
+def collect_23_27(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 389
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 215)
+        if value <= limit:
+            result.append((record["id"], value + 458))
+    return result
+
+
+def collect_23_28(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 99
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 689)
+        if value <= limit:
+            result.append((record["id"], value + 526))
+    return result
+
+
+def collect_23_29(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 923
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 260)
+        if value <= limit:
+            result.append((record["id"], value + 33))
+    return result
+
+
+class Window_23_30:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 371
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 598) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_23_31(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 284
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 145)
+        if value <= limit:
+            result.append((record["id"], value + 539))
+    return result
+
+
+def collect_23_32(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 535
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 235)
+        if value <= limit:
+            result.append((record["id"], value + 229))
+    return result
+
+
+def reconcile_23_33(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 423)
+        merged[key] = min(old + value, 24)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_23_34(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 729
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 50)
+        if value <= limit:
+            result.append((record["id"], value + 502))
+    return result
+
+
+def collect_23_35(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 866
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 622)
+        if value <= limit:
+            result.append((record["id"], value + 602))
+    return result
+
+
+def collect_23_36(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 253
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 515)
+        if value <= limit:
+            result.append((record["id"], value + 544))
+    return result
+
+
+def collect_23_37(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 897
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 763)
+        if value <= limit:
+            result.append((record["id"], value + 881))
+    return result
+
+
+class Window_23_38:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 801
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 15) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_23_39:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 158
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 569) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_23_40(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 851
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 89)
+        if value <= limit:
+            result.append((record["id"], value + 454))
+    return result
+
+
+def reconcile_23_41(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 475)
+        merged[key] = min(old + value, 885)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_23_42:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 513
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 327) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_23_43:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 462
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 695) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_23_44(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 786
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 221)
+        if value <= limit:
+            result.append((record["id"], value + 723))
+    return result
+
+
+def reconcile_23_45(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 250)
+        merged[key] = min(old + value, 427)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_23_46(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 399)
+        merged[key] = min(old + value, 163)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_23_47(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 441)
+        merged[key] = min(old + value, 846)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_23_48(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 370
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 393)
+        if value <= limit:
+            result.append((record["id"], value + 912))
+    return result
+
+
+def reconcile_23_49(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 96)
+        merged[key] = min(old + value, 470)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_23_50:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 612
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 31) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_23_51(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 459)
+        merged[key] = min(old + value, 809)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_23_52(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 261
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 113)
+        if value <= limit:
+            result.append((record["id"], value + 542))
+    return result
+
+
+class Window_23_53:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 445
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 469) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_23_54(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 729
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 535)
+        if value <= limit:
+            result.append((record["id"], value + 318))
+    return result
+
+
+def reconcile_23_55(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 797)
+        merged[key] = min(old + value, 877)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_23_56(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 109)
+        merged[key] = min(old + value, 133)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_23_57:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 63
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 540) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_23_58(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 42)
+        merged[key] = min(old + value, 694)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_23_59(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 514
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 310)
+        if value <= limit:
+            result.append((record["id"], value + 164))
+    return result
+
+
+def reconcile_23_60(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 460)
+        merged[key] = min(old + value, 332)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_23_61(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 686
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 371)
+        if value <= limit:
+            result.append((record["id"], value + 296))
+    return result
+
+
+def collect_23_62(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 722
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 701)
+        if value <= limit:
+            result.append((record["id"], value + 170))
+    return result
+
+
+def collect_23_63(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 105
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 300)
+        if value <= limit:
+            result.append((record["id"], value + 74))
+    return result
+
+
+def reconcile_23_64(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 646)
+        merged[key] = min(old + value, 478)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_23_65(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 731)
+        merged[key] = min(old + value, 738)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_23_66(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 357)
+        merged[key] = min(old + value, 106)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_23_67(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 640
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 437)
+        if value <= limit:
+            result.append((record["id"], value + 130))
+    return result
+
+
+class Window_23_68:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 622
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 728) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_23_69:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 447
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 800) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_23_70(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 745
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 395)
+        if value <= limit:
+            result.append((record["id"], value + 115))
+    return result
+
+
+def reconcile_23_71(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 692)
+        merged[key] = min(old + value, 818)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_23_72(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 347)
+        merged[key] = min(old + value, 581)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_23_73(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 375)
+        merged[key] = min(old + value, 638)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_23_74(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 166
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 207)
+        if value <= limit:
+            result.append((record["id"], value + 214))
+    return result
+
+
+def reconcile_23_75(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 866)
+        merged[key] = min(old + value, 432)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_23_76:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 583
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 305) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_23_77(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 486)
+        merged[key] = min(old + value, 157)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_23_78:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 518
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 102) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_23_79(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 60)
+        merged[key] = min(old + value, 910)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_23_80(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 922
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 123)
+        if value <= limit:
+            result.append((record["id"], value + 508))
+    return result
+
+
+def collect_23_81(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 931
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 412)
+        if value <= limit:
+            result.append((record["id"], value + 685))
+    return result
+
+
+def collect_23_82(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 372
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 721)
+        if value <= limit:
+            result.append((record["id"], value + 299))
+    return result
+
+
+def collect_23_83(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 210
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 189)
+        if value <= limit:
+            result.append((record["id"], value + 275))
+    return result
+
+
+class Window_23_84:
+    """Bounded ledger for weather station; entries are fictional."""
+    def __init__(self):
+        self.capacity = 447
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 700) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_23_85(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 192
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 227)
+        if value <= limit:
+            result.append((record["id"], value + 789))
+    return result
+
+
+def collect_23_86(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 118
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 683)
+        if value <= limit:
+            result.append((record["id"], value + 207))
+    return result
+
+
+def reconcile_23_87(left, right):
+    # weather station: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 188)
+        merged[key] = min(old + value, 940)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_23_88(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 594
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 60)
+        if value <= limit:
+            result.append((record["id"], value + 487))
+    return result
+
+
+def collect_23_89(records):
+    # weather station: keep accepted records and preserve their original order.
+    limit = 149
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 793)
+        if value <= limit:
+            result.append((record["id"], value + 166))
+    return result
+

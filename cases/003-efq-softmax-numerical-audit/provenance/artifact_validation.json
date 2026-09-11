@@ -1,0 +1,42 @@
+{
+  "scope": "Static artifact validation only; no new GPU execution or external replication.",
+  "status": "PASS",
+  "spec_sha256": "75b3d0e9ed46a22425bbf4b3d8c96affcd8e8faa5229a4f3f331eb84da0fcfdf",
+  "frozen_files_verified": 50,
+  "documents": {
+    "dev": 8,
+    "eval": 16
+  },
+  "measurement_counts": {
+    "dev": {
+      "head_units": 2592,
+      "rows": 41472
+    },
+    "synthetic-dev": {
+      "head_units": 486,
+      "rows": 7776
+    },
+    "eval": {
+      "head_units": 8640,
+      "rows": 138240
+    },
+    "synthetic-eval": {
+      "head_units": 810,
+      "rows": 12960
+    }
+  },
+  "relative_markdown_links_checked": 30,
+  "checks": [
+    "Frozen hashes and pre-evaluation chronology",
+    "Document and tokenizer-prefix identity",
+    "Trace metadata and GQA head mapping",
+    "Numerical-test and native-check records",
+    "Candidate minimum and selected parameters",
+    "Row/unit correspondence and squared norms",
+    "Normalized JS nonnegativity and numerical failure counts",
+    "Primary medians, p95, worst and README table values",
+    "Screen recomputed from saved units",
+    "MMLU/calibrated exact unit equality",
+    "Python syntax, local links and fixture CRC"
+  ]
+}

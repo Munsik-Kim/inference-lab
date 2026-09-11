@@ -1,0 +1,64 @@
+{
+  "stage": "Development, before any evaluation trace execution",
+  "reason": "FP32 direct KL sum produced tiny negative JS from cancellation: min dev -3.98e-8 and synthetic-dev -1.61e-7.",
+  "change": "FP64 normalized JS with stable log1p and even-series expression; no epsilon denominator or negative-value clipping.",
+  "unaffected": "Q/K/V, attention arithmetic, output error objective and selected tau/h unchanged. Calibration not repeated.",
+  "before_files": [
+    {
+      "file": "scripts/numerics.py",
+      "sha256": "54268550f47e6f8eca93727f561c022c3b5aae55eed3034bb37ba1cfcc81e15d"
+    },
+    {
+      "file": "scripts/prepare.py",
+      "sha256": "34bf074b4b906bf741010de48a2745584d994c88f7ba03d697cb5a0115598a61"
+    },
+    {
+      "file": "tests/test_numerics.py",
+      "sha256": "df7f72c08bf323fcf6582a2a5bb5ffea8ea1c81a1ed35e7fde5729bf0e7fdbeb"
+    },
+    {
+      "file": "configs/development_plan.json",
+      "sha256": "67028525e1fd2c8f417c3326a8bb21bd75a58f98194c7c47f32f7db9d4f7d332"
+    },
+    {
+      "file": "provenance/numerical_tests.json",
+      "sha256": "fac84c3b87b6b2f8592eb611169f9478c22d5da9c700d53a71bc3ea29a7ecda4"
+    },
+    {
+      "file": "results/dev_units.jsonl",
+      "sha256": "0e18dc186b852f4e57f6c8577116de7d911f82fae174a434154c215382b6601b"
+    },
+    {
+      "file": "results/dev_rows.csv.gz",
+      "sha256": "b78c429636ec2b3bf27f6eb4330fe4af3aec42b02d039330028b45cd71e3f999"
+    },
+    {
+      "file": "results/dev_run.json",
+      "sha256": "63344238f78ea5ed7b8e602c04b17b1162650b1e43b05bc1ef79fa08b4612a2f"
+    },
+    {
+      "file": "results/synthetic-dev_units.jsonl",
+      "sha256": "0ea0b8f5d6954670bc579da8dbbaf105ae0308e17146879939d43fa1fe05a9d9"
+    },
+    {
+      "file": "results/synthetic-dev_rows.csv.gz",
+      "sha256": "fbbef176ae56aeada9251bcadf5cb2a9b75c65cecc3f4d6b3dcca3bccfb9d7b4"
+    },
+    {
+      "file": "results/synthetic-dev_run.json",
+      "sha256": "b787cac86e8f4e8f648143175e323d0152edcfe3d1a7f2b43d13d5e3a9472ec1"
+    }
+  ],
+  "private_archive_role": "$WORK/development_before_js_precision_fix",
+  "after_plan_sha256": "3ddccba89d9c784b49e575ed7a4eced724f4ba589cf4e79086cd6ea18b0d18a2",
+  "post_fix_verification": {
+    "attention_unit_jsonl_byte_identical": {
+      "dev": true,
+      "synthetic-dev": true
+    },
+    "minimum_js": 0.0,
+    "negative_js_count": 0,
+    "numerical_tests": 12,
+    "skipped": 0
+  }
+}

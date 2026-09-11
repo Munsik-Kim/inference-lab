@@ -1,0 +1,276 @@
+{
+  "experiment_id": "case003-efq-v1-20260911",
+  "frozen_at_utc": "2026-09-11T01:21:16.036533+00:00",
+  "plan": {
+    "paper": "https://arxiv.org/html/2609.09721v1",
+    "model_id": "Qwen/Qwen3-0.6B",
+    "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "lengths": [
+      512,
+      2048,
+      4096
+    ],
+    "layers": [
+      0,
+      13,
+      27
+    ],
+    "heads": [
+      0,
+      5,
+      10,
+      15
+    ],
+    "query_positions": {
+      "512": [
+        0,
+        34,
+        68,
+        102,
+        136,
+        170,
+        204,
+        238,
+        272,
+        306,
+        340,
+        374,
+        408,
+        442,
+        476,
+        511
+      ],
+      "2048": [
+        0,
+        136,
+        272,
+        409,
+        545,
+        682,
+        818,
+        955,
+        1091,
+        1228,
+        1364,
+        1501,
+        1637,
+        1774,
+        1910,
+        2047
+      ],
+      "4096": [
+        0,
+        273,
+        546,
+        819,
+        1092,
+        1365,
+        1638,
+        1911,
+        2184,
+        2457,
+        2730,
+        3003,
+        3276,
+        3549,
+        3822,
+        4095
+      ]
+    },
+    "tile": 128,
+    "primary_block": 32,
+    "sensitivity_blocks": [
+      16,
+      64
+    ],
+    "methods": [
+      "dense_fp32",
+      "online_fp32",
+      "nearest_ceil",
+      "nearest_efq_scale",
+      "efq_mmlu",
+      "efq_mean",
+      "efq_balance",
+      "efq_lut",
+      "efq_calibrated"
+    ],
+    "primary_methods": [
+      "efq_mean",
+      "efq_calibrated"
+    ],
+    "sensitivity_methods": [
+      "nearest_efq_scale",
+      "efq_mean",
+      "efq_calibrated"
+    ],
+    "calibration": {
+      "tau": [
+        -3.6,
+        -3.3,
+        -3.06,
+        -2.9,
+        -2.6,
+        -2.3,
+        -2.1
+      ],
+      "h": [
+        1.7,
+        2.0,
+        2.3,
+        2.5,
+        2.7,
+        3.0,
+        3.3
+      ],
+      "candidate_count": 49,
+      "length": 2048,
+      "layer": 13,
+      "heads": [
+        0,
+        10
+      ],
+      "documents": 8,
+      "objective": "sqrt(sum squared output errors / sum squared FP32 reference outputs), pooled over the fixed development subset",
+      "ties": "First minimum in ascending listed tau then h order; no refinement."
+    },
+    "dtype": {
+      "checkpoint_and_trace": "bfloat16",
+      "audit_qk_probability_v_and_accumulators": "float32",
+      "small_oracle": "float64",
+      "tf32": false
+    },
+    "scale": {
+      "layout": "Consecutive key elements within one head/query row, reset at each attention tile.",
+      "exponent_range": [
+        -127,
+        127
+      ],
+      "out_of_range": "Clamp exponent, recompute code with that scale; count below-range blocks and represented zero scales.",
+      "nearest_ceil": "ceil((local shifted maximum - ln(6))/ln(2)); headroom scale. Independent MXFP4 numerical reference, not verified paper baseline.",
+      "nearest_efq_scale": "Nearest E2M1 under exactly paper Eq. 8; midpoint ties to even code index.",
+      "efq": "floor((local shifted maximum + ln(2/9))/ln(2))",
+      "masked_or_padding": "Masked entries get zero codes; all-masked blocks do not contribute; partial blocks padded with masked entries."
+    },
+    "metrics": {
+      "unit": "document x length x layer x query head; Frobenius norm across 16 sampled query outputs, all valid keys per query",
+      "relative_error": "norm(O-Oref)_F / norm(Oref)_F; no epsilon denominator",
+      "reference_norm_floor_rms": 1e-06,
+      "near_zero": "Relative error null when reference RMS <= 1e-6; retain absolute Frobenius and count.",
+      "js": "Natural logs, FP64-renormalized historical-rescaled effective probabilities; stable log1p/even-series calculation. Attention arithmetic stays FP32.",
+      "top_k": 8,
+      "top_k_ties": "Stable descending probability sort, ascending key index; k=min(8, number of valid keys).",
+      "tie_fraction": "Adjacent equal effective probabilities after sorting / (valid keys - 1), includes zero ties; 0 for one valid key.",
+      "zero_fraction": "Generated E2M1 zero codes among valid keys, before historical rescaling.",
+      "removed_mass": "Dense reference probability mass at generated zero-code keys.",
+      "max_jump": "Largest finite increase after a previous finite online row maximum; excludes initialization.",
+      "aggregation": "Median/p95/max over head units, also per length/layer/head. Repeated prefixes/rows are not independent documents.",
+      "bootstrap": {
+        "resamples": 2000,
+        "seed": 330011,
+        "unit": "16 paired evaluation document IDs",
+        "statistic": "Mean per-document unit error difference calibrated minus nearest_same_scale, separately per length."
+      }
+    },
+    "screen": {
+      "baseline": "nearest_efq_scale",
+      "median_ratio_limit": 1.1,
+      "p95_ratio_limit": 1.25,
+      "layer_length_median_ratio_limit": 2.0,
+      "baseline_relative_error_floor": 1e-05,
+      "numeric_failures_allowed": 0,
+      "near_zero_or_missing_policy": "Count/report; cannot silently pass. Hold ratio when baseline is at floor.",
+      "meaning": "Project engineering screen only; no quality preservation or acceleration claim."
+    },
+    "errors": {
+      "input_nonfinite": "Reject NaN/+Inf scores; -Inf is masking.",
+      "fully_masked_row": "Return zero output and valid=false; count separately.",
+      "valid_zero_denominator": "Preserve failure/NaN, do not repair; screen fails.",
+      "execution_error": "Save stage and traceback; no silent retries."
+    },
+    "synthetic": {
+      "dev_seed": 340011,
+      "eval_seed": 350011,
+      "lengths": [
+        512,
+        2048,
+        4096
+      ],
+      "rows": 16,
+      "families": [
+        "uniform",
+        "gaussian_low",
+        "gaussian_medium",
+        "gaussian_high",
+        "single_peak",
+        "multiple_peaks",
+        "heavy_tail",
+        "causal",
+        "max_jump"
+      ],
+      "replicates_per_family": 2,
+      "not_model_quality": true
+    },
+    "trace_validation": {
+      "small_length": 128,
+      "same_backend_relative_tolerance": 0.01,
+      "fp32_vs_native_bf16_relative_tolerance": 0.02
+    },
+    "split_policy": "Extract only development until numerical tests, small native trace check and calibration pass; freeze spec before first evaluation extraction."
+  },
+  "calibrated_parameters": {
+    "tau": -2.9,
+    "h": 2.0
+  },
+  "frozen_files": {
+    "configs/development_plan.json": "3ddccba89d9c784b49e575ed7a4eced724f4ba589cf4e79086cd6ea18b0d18a2",
+    "inputs/dev-00.txt": "242e41bb9eab56f8d9e7616ff44ea1b4e5db2d57f837bafb2ee367cfa280053a",
+    "inputs/dev-01.txt": "43abfb386997e8a4d30e04411361e4e117680473818e18d31a5a8cd1fd1de675",
+    "inputs/dev-02.txt": "e00dc8edf7e049a8c2a69eb89df2f5f780e1ab45c33d004c49ddbb20039f81e3",
+    "inputs/dev-03.txt": "79ac0f03cbffa206e5505db8cdd697279b2e857ef396649fa9678de7f371c66d",
+    "inputs/dev-04.txt": "0fde31ee2da4ca5465260a04288498133f6742214ccb454339bac4111d8350d6",
+    "inputs/dev-05.txt": "befc545bdbfce2363331875f5e35e363f7d883875f5b69b1034c25dc373a5b91",
+    "inputs/dev-06.txt": "e332a43d9bc2e62a6e5c40abf5be2f08360c17ab5345bc83e89319e37882c944",
+    "inputs/dev-07.txt": "53904887ffd2147c711b9aa51ee1ba8ef7809dc8083d02af694a45304a9e03d1",
+    "inputs/eval-00.txt": "21e6c7b833d3ffb402fc751e57a6b962f84df9afa674e5b916c46f03b27b6566",
+    "inputs/eval-01.txt": "14bb88fe5a613282e3e8295cdb1be011fc4e2e5beef78e1d3f74900ab16ba5c3",
+    "inputs/eval-02.txt": "3f292c956c0b12e7e92cc7589554d2e5c110d818c52ce410dafa82de574270a5",
+    "inputs/eval-03.txt": "139b574d347f2f7974a66a5d034c9477e49859597c2f3e3cdaf32e526fdcdce1",
+    "inputs/eval-04.txt": "0825f9bc09eac27930aa39e5132428621e9eebd039d41d6ed226c1e1f688a86d",
+    "inputs/eval-05.txt": "4fbf3d4205c49d648a0ac1ddb1159ac22a044a5051821a0e5914d53a753af4d1",
+    "inputs/eval-06.txt": "f7186c9a0b3a217fb0f618b351f024aafa26dccfd1ebabc381f4243257e64db1",
+    "inputs/eval-07.txt": "86a4b11a9287f32b57c50778a2e73b8e9b7f63cb94a06ddd8572882e78f31523",
+    "inputs/eval-08.txt": "a5920425c56a9a63ab72d381efde3210c723ffc0b2cc49a5f4e95f443d111834",
+    "inputs/eval-09.txt": "24d5a90803b6f3f92e51b434f96681c758a7450eff33c71e49f4fb4ad9370476",
+    "inputs/eval-10.txt": "b2d978db5864212562369d2b7ee9f18dbd74d270167a21b6b97851ad9e6ef2c1",
+    "inputs/eval-11.txt": "9e01ffe1a159b9df1cf62fc81d4d3aca2257d4c844db2fc9ae289d0e92f2aca3",
+    "inputs/eval-12.txt": "57ff635ea0fa04fd5ace5f3645c00ecef42a563f8977b39447235d550ea059a8",
+    "inputs/eval-13.txt": "d7723bcb71c978080c81691ccb8ec0f4af26276295e3089a78c411b92d985480",
+    "inputs/eval-14.txt": "191dae7652d268120fa0d5f546f9623f55ce93f0fe71a8a6a36a709e60b7124d",
+    "inputs/eval-15.txt": "f9ccdbf3340f8f328128e3a431411221d78841ebc76a99183a037ca0bcb657c3",
+    "inputs/manifest.json": "b092918db9202a7f057fff004ae6bf062d9a432b008015fd8c465472337d761d",
+    "provenance/REPRODUCE.md": "c733abc72bbc8e62771463509d9507cc9d4783b809de91e303dd31166f05f741",
+    "provenance/dev_traces.json": "aba753e5baab238c040b40a87a0f3dae31eb758890a9333625b094adbf542123",
+    "provenance/development_corrections.json": "e20742767671fd3f7a69626576fb57f5ce77c65955c7f60ba342a9861ee51950",
+    "provenance/environment.json": "26567227e1206aff92445aec777220d368e650e0104770682c337ff869e73247",
+    "provenance/model.json": "43ede54cec234038cd1f23bdf9de19b6df4f5b5fcae676cbfd3548c62664e399",
+    "provenance/model_LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "provenance/model_config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "provenance/model_generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+    "provenance/numerical_tests.json": "4240355a2be68016543ffac4990bf74f7767ce4b031d68c74322217a4a545c84",
+    "provenance/package_versions.txt": "5e6f57103cb3481ec03f691d93124e60ea4f5a7690aadce1641b541896af6bae",
+    "provenance/paper_audit.json": "9f33543680350a96a2564d8ed77adf7d66629bfe6a03b523a0f732b0439e901d",
+    "provenance/trace_validation.json": "09f2d37528ed11b9d8170e7c50f6ad797826282fbfc8b3e39d817d636301581d",
+    "results/calibration.json": "912cacce6d2d76c08be45046b37410d19687230c72d25f342985abe0d79b3255",
+    "results/dev_run.json": "4c3c9ccef7fbb23c34a57987f764a7cf4750d1c276c4c5022068021754993c3a",
+    "results/synthetic-dev_run.json": "531902318130210de7a543d1d60454d30171c50f6a3b2cb35c5cdadba70dce0c",
+    "scripts/analyze.py": "152b62d05005bc15ed4cd60d77ff493337683a00408e41e620a2840974d89283",
+    "scripts/audit.py": "15b16df5d6fac885e6778f3930461567097cf252e4e7a451a188e632fa7538f7",
+    "scripts/extract_traces.py": "32d781fcb15c99c6d3700fac091792254fd2955ab86b60048e42446105c1aa68",
+    "scripts/numerics.py": "68fda0a2066785af58a980db67f2343a3b461a3733f9fc293dbfa7b6552a412d",
+    "scripts/prepare.py": "17eee23d3fd4fcc70925a3a516f1acd41f6c89707b56e8cd5d74e71f294b9834",
+    "scripts/record_tests.py": "b6e1a8a84530b3c9b36e95bd2632ff3ec64e4712834989503d54978e9af1534d",
+    "scripts/reproduce.py": "a15836ab00e19de8d0007d71b5c542af7b95be4978a60b7ac235680f31a758c0",
+    "tests/fixtures/qwen_dev_small.npz": "fbac5fdf0b2a1552ea1efabac29c0a13db2fac7f6e41d83d4e58c52c31135da5",
+    "tests/test_numerics.py": "3c779f1241279d36ed669167d11b28e1a96b019cb09e6058850b5bcdc485cec7"
+  }
+}

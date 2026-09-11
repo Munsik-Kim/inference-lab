@@ -1,0 +1,1143 @@
+Synthetic document 17: railway signage. All events and identifiers are fictional.
+
+class Window_17_0:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 115
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 223) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_17_1(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 851
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 344)
+        if value <= limit:
+            result.append((record["id"], value + 346))
+    return result
+
+
+def reconcile_17_2(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 225)
+        merged[key] = min(old + value, 701)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_17_3(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 763
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 396)
+        if value <= limit:
+            result.append((record["id"], value + 283))
+    return result
+
+
+def collect_17_4(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 716
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 444)
+        if value <= limit:
+            result.append((record["id"], value + 695))
+    return result
+
+
+def reconcile_17_5(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 619)
+        merged[key] = min(old + value, 584)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_17_6(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 59)
+        merged[key] = min(old + value, 813)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_17_7(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 279)
+        merged[key] = min(old + value, 445)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_17_8:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 610
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 607) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_17_9(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 153
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 119)
+        if value <= limit:
+            result.append((record["id"], value + 815))
+    return result
+
+
+def reconcile_17_10(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 587)
+        merged[key] = min(old + value, 812)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_17_11:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 206
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 785) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_17_12(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 776)
+        merged[key] = min(old + value, 915)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_17_13(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 180)
+        merged[key] = min(old + value, 571)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_17_14(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 340)
+        merged[key] = min(old + value, 418)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_17_15(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 907
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 202)
+        if value <= limit:
+            result.append((record["id"], value + 414))
+    return result
+
+
+def reconcile_17_16(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 325)
+        merged[key] = min(old + value, 387)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_17_17:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 839
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 557) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_17_18(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 531
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 723)
+        if value <= limit:
+            result.append((record["id"], value + 220))
+    return result
+
+
+def collect_17_19(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 613
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 235)
+        if value <= limit:
+            result.append((record["id"], value + 111))
+    return result
+
+
+def reconcile_17_20(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 947)
+        merged[key] = min(old + value, 278)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_17_21:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 896
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 179) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_17_22(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 244)
+        merged[key] = min(old + value, 162)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_17_23:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 323
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 568) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_17_24(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 136)
+        merged[key] = min(old + value, 358)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_17_25(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 61
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 319)
+        if value <= limit:
+            result.append((record["id"], value + 18))
+    return result
+
+
+class Window_17_26:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 148
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 57) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_17_27:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 419
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 515) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_17_28(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 48)
+        merged[key] = min(old + value, 11)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_17_29(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 407
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 756)
+        if value <= limit:
+            result.append((record["id"], value + 911))
+    return result
+
+
+class Window_17_30:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 399
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 57) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_17_31(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 665)
+        merged[key] = min(old + value, 657)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_17_32(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 441
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 555)
+        if value <= limit:
+            result.append((record["id"], value + 818))
+    return result
+
+
+def collect_17_33(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 549
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 921)
+        if value <= limit:
+            result.append((record["id"], value + 808))
+    return result
+
+
+def collect_17_34(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 97
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 342)
+        if value <= limit:
+            result.append((record["id"], value + 338))
+    return result
+
+
+class Window_17_35:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 692
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 883) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_17_36(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 434)
+        merged[key] = min(old + value, 644)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_17_37(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 699)
+        merged[key] = min(old + value, 228)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_17_38(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 297
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 163)
+        if value <= limit:
+            result.append((record["id"], value + 675))
+    return result
+
+
+class Window_17_39:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 802
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 765) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_17_40(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 550
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 763)
+        if value <= limit:
+            result.append((record["id"], value + 692))
+    return result
+
+
+def reconcile_17_41(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 51)
+        merged[key] = min(old + value, 432)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_17_42:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 428
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 40) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_17_43:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 278
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 624) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_17_44(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 376)
+        merged[key] = min(old + value, 489)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_17_45:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 897
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 199) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_17_46(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 227
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 429)
+        if value <= limit:
+            result.append((record["id"], value + 139))
+    return result
+
+
+def collect_17_47(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 345
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 432)
+        if value <= limit:
+            result.append((record["id"], value + 795))
+    return result
+
+
+class Window_17_48:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 724
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 690) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_17_49(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 629
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 405)
+        if value <= limit:
+            result.append((record["id"], value + 599))
+    return result
+
+
+def collect_17_50(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 666
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 559)
+        if value <= limit:
+            result.append((record["id"], value + 146))
+    return result
+
+
+class Window_17_51:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 525
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 278) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_17_52:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 574
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 860) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_17_53:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 141
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 745) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_17_54(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 401
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 721)
+        if value <= limit:
+            result.append((record["id"], value + 701))
+    return result
+
+
+def collect_17_55(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 167
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 180)
+        if value <= limit:
+            result.append((record["id"], value + 269))
+    return result
+
+
+class Window_17_56:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 751
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 487) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_17_57:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 436
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 128) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_17_58(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 74
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 199)
+        if value <= limit:
+            result.append((record["id"], value + 946))
+    return result
+
+
+def reconcile_17_59(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 199)
+        merged[key] = min(old + value, 889)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_17_60(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 136
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 800)
+        if value <= limit:
+            result.append((record["id"], value + 732))
+    return result
+
+
+class Window_17_61:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 890
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 870) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_17_62(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 473)
+        merged[key] = min(old + value, 291)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_17_63(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 726
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 311)
+        if value <= limit:
+            result.append((record["id"], value + 522))
+    return result
+
+
+def reconcile_17_64(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 307)
+        merged[key] = min(old + value, 245)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_17_65:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 502
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 629) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_17_66(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 531
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 146)
+        if value <= limit:
+            result.append((record["id"], value + 136))
+    return result
+
+
+def reconcile_17_67(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 899)
+        merged[key] = min(old + value, 881)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_17_68:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 120
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 601) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_17_69(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 213
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 828)
+        if value <= limit:
+            result.append((record["id"], value + 683))
+    return result
+
+
+def reconcile_17_70(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 863)
+        merged[key] = min(old + value, 911)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_17_71(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 39
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 415)
+        if value <= limit:
+            result.append((record["id"], value + 768))
+    return result
+
+
+def collect_17_72(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 357
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 464)
+        if value <= limit:
+            result.append((record["id"], value + 513))
+    return result
+
+
+def reconcile_17_73(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 55)
+        merged[key] = min(old + value, 674)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_17_74(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 693)
+        merged[key] = min(old + value, 690)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_17_75(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 246)
+        merged[key] = min(old + value, 488)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_17_76(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 355
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 724)
+        if value <= limit:
+            result.append((record["id"], value + 714))
+    return result
+
+
+class Window_17_77:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 111
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 171) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_17_78(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 65)
+        merged[key] = min(old + value, 423)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_17_79:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 633
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 24) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_17_80(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 134
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 855)
+        if value <= limit:
+            result.append((record["id"], value + 258))
+    return result
+
+
+def collect_17_81(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 645
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 791)
+        if value <= limit:
+            result.append((record["id"], value + 18))
+    return result
+
+
+def collect_17_82(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 335
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 565)
+        if value <= limit:
+            result.append((record["id"], value + 661))
+    return result
+
+
+def collect_17_83(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 730
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 703)
+        if value <= limit:
+            result.append((record["id"], value + 278))
+    return result
+
+
+def collect_17_84(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 783
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 537)
+        if value <= limit:
+            result.append((record["id"], value + 34))
+    return result
+
+
+class Window_17_85:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 165
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 84) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_17_86(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 140
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 401)
+        if value <= limit:
+            result.append((record["id"], value + 549))
+    return result
+
+
+class Window_17_87:
+    """Bounded ledger for railway signage; entries are fictional."""
+    def __init__(self):
+        self.capacity = 351
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 803) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_17_88(left, right):
+    # railway signage: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 903)
+        merged[key] = min(old + value, 305)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_17_89(records):
+    # railway signage: keep accepted records and preserve their original order.
+    limit = 511
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 267)
+        if value <= limit:
+            result.append((record["id"], value + 14))
+    return result
+

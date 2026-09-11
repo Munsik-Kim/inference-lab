@@ -1,0 +1,82 @@
+{
+  "paper_url": "https://arxiv.org/html/2609.09721v1",
+  "title": "EFQ-Softmax: Exp-Free Quantization for Softmax",
+  "authors": "Haohui Han et al.",
+  "version": "v1, submitted 2026-09-09",
+  "latest_version_observed": "v1 on 2026-09-11; versionless abstract lists only v1",
+  "private_source_sha256": "6a56426e715b7488f7c39d932035a4ff8b64afb7d45a5ee4287b8835e92afc0f",
+  "source_redistributed": false,
+  "license_note": "arXiv perpetual non-exclusive license; cite the paper, do not include its full text.",
+  "checked_sections": [
+    "II-B E2M1 and Eq. 8 scale",
+    "II-B Eq. 10 residual",
+    "II-C Eq. 11 code",
+    "II-D LUT",
+    "III-A shared operand and online recurrence",
+    "Algorithms 1-3",
+    "IV-A parameter selection"
+  ],
+  "parameters": {
+    "EFQ-MMLU": {
+      "tau": -2.9,
+      "h": 2.0,
+      "reported_workload": "Qwen3-8B language tasks"
+    },
+    "EFQ-Mean": {
+      "tau": -3.06,
+      "h": 2.3,
+      "reported_workload": "Qwen3-8B language tasks"
+    },
+    "EFQ-Balance": {
+      "tau": -2.1,
+      "h": 2.7,
+      "reported_workload": "Qwen3-VL-8B-Instruct vision-language evaluation"
+    }
+  },
+  "e2m1": [
+    0,
+    0.5,
+    1,
+    1.5,
+    2,
+    3,
+    4,
+    6
+  ],
+  "scale_equation": "k=floor((M+ln(2/9))/ln(2)); scale=2**k",
+  "residual": "z=x-k*ln(2)-ln(6)",
+  "code": "clip(floor((z-tau)*h)+1,0,7)",
+  "lut": {
+    "tau": "ln(1/24)",
+    "h": "14/ln(24)",
+    "fold": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      4,
+      5,
+      5,
+      6,
+      7,
+      7
+    ]
+  },
+  "implementation_choices_not_fixed_by_v1": [
+    "Per-row contiguous key blocks; B=32, sensitivities 16 and 64",
+    "Attention tile 128",
+    "Finite E8M0 exponent clamp [-127,127] and explicit underflow counters",
+    "Nearest midpoint ties to even code index",
+    "Fully masked row returns zero and invalid flag",
+    "Ceil headroom scale for independent MXFP4 numerical reference"
+  ],
+  "code_availability": "No author implementation/repository link identified in v1 body or abstract; a title-plus-GitHub search found the paper but no author code. Not a claim that no code exists anywhere.",
+  "layout_reference": "https://research.nvidia.com/labs/eai/blogs/pushing-intelligence-to-4-bit/",
+  "scope": "Independent equation implementation and numerical audit on Qwen3-0.6B; not full paper quality, author implementation, packed FP4 or A5 speed reproduction."
+}

@@ -1,0 +1,216 @@
+{
+  "paper": "https://arxiv.org/html/2609.09721v1",
+  "model_id": "Qwen/Qwen3-0.6B",
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "lengths": [
+    512,
+    2048,
+    4096
+  ],
+  "layers": [
+    0,
+    13,
+    27
+  ],
+  "heads": [
+    0,
+    5,
+    10,
+    15
+  ],
+  "query_positions": {
+    "512": [
+      0,
+      34,
+      68,
+      102,
+      136,
+      170,
+      204,
+      238,
+      272,
+      306,
+      340,
+      374,
+      408,
+      442,
+      476,
+      511
+    ],
+    "2048": [
+      0,
+      136,
+      272,
+      409,
+      545,
+      682,
+      818,
+      955,
+      1091,
+      1228,
+      1364,
+      1501,
+      1637,
+      1774,
+      1910,
+      2047
+    ],
+    "4096": [
+      0,
+      273,
+      546,
+      819,
+      1092,
+      1365,
+      1638,
+      1911,
+      2184,
+      2457,
+      2730,
+      3003,
+      3276,
+      3549,
+      3822,
+      4095
+    ]
+  },
+  "tile": 128,
+  "primary_block": 32,
+  "sensitivity_blocks": [
+    16,
+    64
+  ],
+  "methods": [
+    "dense_fp32",
+    "online_fp32",
+    "nearest_ceil",
+    "nearest_efq_scale",
+    "efq_mmlu",
+    "efq_mean",
+    "efq_balance",
+    "efq_lut",
+    "efq_calibrated"
+  ],
+  "primary_methods": [
+    "efq_mean",
+    "efq_calibrated"
+  ],
+  "sensitivity_methods": [
+    "nearest_efq_scale",
+    "efq_mean",
+    "efq_calibrated"
+  ],
+  "calibration": {
+    "tau": [
+      -3.6,
+      -3.3,
+      -3.06,
+      -2.9,
+      -2.6,
+      -2.3,
+      -2.1
+    ],
+    "h": [
+      1.7,
+      2.0,
+      2.3,
+      2.5,
+      2.7,
+      3.0,
+      3.3
+    ],
+    "candidate_count": 49,
+    "length": 2048,
+    "layer": 13,
+    "heads": [
+      0,
+      10
+    ],
+    "documents": 8,
+    "objective": "sqrt(sum squared output errors / sum squared FP32 reference outputs), pooled over the fixed development subset",
+    "ties": "First minimum in ascending listed tau then h order; no refinement."
+  },
+  "dtype": {
+    "checkpoint_and_trace": "bfloat16",
+    "audit_qk_probability_v_and_accumulators": "float32",
+    "small_oracle": "float64",
+    "tf32": false
+  },
+  "scale": {
+    "layout": "Consecutive key elements within one head/query row, reset at each attention tile.",
+    "exponent_range": [
+      -127,
+      127
+    ],
+    "out_of_range": "Clamp exponent, recompute code with that scale; count below-range blocks and represented zero scales.",
+    "nearest_ceil": "ceil((local shifted maximum - ln(6))/ln(2)); headroom scale. Independent MXFP4 numerical reference, not verified paper baseline.",
+    "nearest_efq_scale": "Nearest E2M1 under exactly paper Eq. 8; midpoint ties to even code index.",
+    "efq": "floor((local shifted maximum + ln(2/9))/ln(2))",
+    "masked_or_padding": "Masked entries get zero codes; all-masked blocks do not contribute; partial blocks padded with masked entries."
+  },
+  "metrics": {
+    "unit": "document x length x layer x query head; Frobenius norm across 16 sampled query outputs, all valid keys per query",
+    "relative_error": "norm(O-Oref)_F / norm(Oref)_F; no epsilon denominator",
+    "reference_norm_floor_rms": 1e-06,
+    "near_zero": "Relative error null when reference RMS <= 1e-6; retain absolute Frobenius and count.",
+    "js": "Natural logs, FP64-renormalized historical-rescaled effective probabilities; stable log1p/even-series calculation. Attention arithmetic stays FP32.",
+    "top_k": 8,
+    "top_k_ties": "Stable descending probability sort, ascending key index; k=min(8, number of valid keys).",
+    "tie_fraction": "Adjacent equal effective probabilities after sorting / (valid keys - 1), includes zero ties; 0 for one valid key.",
+    "zero_fraction": "Generated E2M1 zero codes among valid keys, before historical rescaling.",
+    "removed_mass": "Dense reference probability mass at generated zero-code keys.",
+    "max_jump": "Largest finite increase after a previous finite online row maximum; excludes initialization.",
+    "aggregation": "Median/p95/max over head units, also per length/layer/head. Repeated prefixes/rows are not independent documents.",
+    "bootstrap": {
+      "resamples": 2000,
+      "seed": 330011,
+      "unit": "16 paired evaluation document IDs",
+      "statistic": "Mean per-document unit error difference calibrated minus nearest_same_scale, separately per length."
+    }
+  },
+  "screen": {
+    "baseline": "nearest_efq_scale",
+    "median_ratio_limit": 1.1,
+    "p95_ratio_limit": 1.25,
+    "layer_length_median_ratio_limit": 2.0,
+    "baseline_relative_error_floor": 1e-05,
+    "numeric_failures_allowed": 0,
+    "near_zero_or_missing_policy": "Count/report; cannot silently pass. Hold ratio when baseline is at floor.",
+    "meaning": "Project engineering screen only; no quality preservation or acceleration claim."
+  },
+  "errors": {
+    "input_nonfinite": "Reject NaN/+Inf scores; -Inf is masking.",
+    "fully_masked_row": "Return zero output and valid=false; count separately.",
+    "valid_zero_denominator": "Preserve failure/NaN, do not repair; screen fails.",
+    "execution_error": "Save stage and traceback; no silent retries."
+  },
+  "synthetic": {
+    "dev_seed": 340011,
+    "eval_seed": 350011,
+    "lengths": [
+      512,
+      2048,
+      4096
+    ],
+    "rows": 16,
+    "families": [
+      "uniform",
+      "gaussian_low",
+      "gaussian_medium",
+      "gaussian_high",
+      "single_peak",
+      "multiple_peaks",
+      "heavy_tail",
+      "causal",
+      "max_jump"
+    ],
+    "replicates_per_family": 2,
+    "not_model_quality": true
+  },
+  "trace_validation": {
+    "small_length": 128,
+    "same_backend_relative_tolerance": 0.01,
+    "fp32_vs_native_bf16_relative_tolerance": 0.02
+  },
+  "split_policy": "Extract only development until numerical tests, small native trace check and calibration pass; freeze spec before first evaluation extraction."
+}
