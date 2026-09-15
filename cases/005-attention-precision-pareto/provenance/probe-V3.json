@@ -1,0 +1,71 @@
+{
+  "config_id": "V3",
+  "started_at_utc": "2026-09-15T05:23:15.172607+00:00",
+  "settings": {
+    "function": "sageattn_qk_int8_pv_fp8_cuda",
+    "requested_kwargs": {
+      "tensor_layout": "HND",
+      "qk_quant_gran": "per_warp",
+      "smooth_k": true,
+      "return_lse": false,
+      "pv_accum_dtype": "fp32",
+      "smooth_v": true
+    },
+    "effective_kwargs": {
+      "tensor_layout": "HND",
+      "qk_quant_gran": "per_warp",
+      "smooth_k": true,
+      "return_lse": false,
+      "pv_accum_dtype": "fp32",
+      "smooth_v": true
+    },
+    "qk_dtype": "INT8",
+    "p_dtype": "E4M3",
+    "v_dtype": "E4M3",
+    "v_scale_max": 448.0,
+    "output_dtype": "BF16",
+    "bundle": "Accumulation option also changes V quantization scale from anchor; V3 adds V centering; V4 changes PV format and casts V inside call",
+    "gqa": "Native H16/H8; no full KV expansion; upstream may repeat the sequence-mean vector"
+  },
+  "checks": [
+    {
+      "causal": true,
+      "oracle": {
+        "relative_output_error": 0.028187675302649748,
+        "absolute_rms_error": 0.0135617348010061,
+        "cosine": 0.9996037783373015,
+        "invalid_rows": 0,
+        "near_zero": false,
+        "status": "OK",
+        "error_squared_sum": 3.0133559429172427,
+        "reference_squared_sum": 3792.5552298868242,
+        "actual_squared_sum": 3800.954144033228,
+        "dot_sum": 3795.2480089885676
+      },
+      "output_dtype": "torch.bfloat16",
+      "layout": "contiguous BHND"
+    },
+    {
+      "causal": false,
+      "oracle": {
+        "relative_output_error": 0.032958221516686426,
+        "absolute_rms_error": 0.009116039570035489,
+        "cosine": 0.999457858427637,
+        "invalid_rows": 0,
+        "near_zero": false,
+        "status": "OK",
+        "error_squared_sum": 1.361546075217147,
+        "reference_squared_sum": 1253.4436250323495,
+        "actual_squared_sum": 1255.8503135171463,
+        "dot_sum": 1253.9661962371392
+      },
+      "output_dtype": "torch.bfloat16",
+      "layout": "contiguous BHND"
+    }
+  ],
+  "warnings": [],
+  "status": "IMPLEMENTATION_ERROR",
+  "error": "Traceback (most recent call last):\n  File \"<local-path>\", line 33, in main\n    err=float((got.float()-expected.float()).norm()/expected.float().norm());assert err<.03,'GQA mismatch'\n                                                                                    ^^^^^^^\nAssertionError: GQA mismatch\n",
+  "error_type": "AssertionError",
+  "completed_at_utc": "2026-09-15T05:23:16.289743+00:00"
+}

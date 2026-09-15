@@ -1,0 +1,196 @@
+{
+  "path_labels": "CASE005_PYTHON existing GPU environment; ANALYSIS_PYTHON NumPy/Matplotlib interpreter; DEV_TRACES verified full traces; CASE005_WORK private output directory",
+  "commands": [
+    {
+      "label": "probe-B",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-15T05:23:05.925370+00:00",
+      "elapsed_seconds": 2.456865624000784,
+      "command": [
+        "CASE005_PYTHON",
+        "-B",
+        "scripts/probe_backend.py",
+        "--config",
+        "B"
+      ]
+    },
+    {
+      "label": "probe-A_PUBLIC",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-15T05:23:08.401946+00:00",
+      "elapsed_seconds": 1.8684854099992663,
+      "command": [
+        "CASE005_PYTHON",
+        "-B",
+        "scripts/probe_backend.py",
+        "--config",
+        "A_PUBLIC"
+      ]
+    },
+    {
+      "label": "probe-V1",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-15T05:23:10.289892+00:00",
+      "elapsed_seconds": 2.189193530000921,
+      "command": [
+        "CASE005_PYTHON",
+        "-B",
+        "scripts/probe_backend.py",
+        "--config",
+        "V1"
+      ]
+    },
+    {
+      "label": "probe-V2",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-15T05:23:12.498638+00:00",
+      "elapsed_seconds": 1.8595815490007226,
+      "command": [
+        "CASE005_PYTHON",
+        "-B",
+        "scripts/probe_backend.py",
+        "--config",
+        "V2"
+      ]
+    },
+    {
+      "label": "probe-V3",
+      "exit_code": 2,
+      "started_at_utc": "2026-09-15T05:23:14.377450+00:00",
+      "elapsed_seconds": 2.1707209079977474,
+      "command": [
+        "CASE005_PYTHON",
+        "-B",
+        "scripts/probe_backend.py",
+        "--config",
+        "V3"
+      ]
+    },
+    {
+      "label": "probe-V4",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-15T05:23:16.567977+00:00",
+      "elapsed_seconds": 2.2442384589994617,
+      "command": [
+        "CASE005_PYTHON",
+        "-B",
+        "scripts/probe_backend.py",
+        "--config",
+        "V4"
+      ]
+    },
+    {
+      "label": "v3-diagnostic",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-15T05:24:11.000765+00:00",
+      "elapsed_seconds": 2.2958112790001906,
+      "command": [
+        "CASE005_PYTHON",
+        "-B",
+        "scripts/diagnose_v3.py"
+      ]
+    },
+    {
+      "label": "dev-round-0",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-15T05:28:50.847395+00:00",
+      "elapsed_seconds": 8.51999885999976,
+      "command": [
+        "CASE005_PYTHON",
+        "-B",
+        "scripts/benchmark.py",
+        "--stage",
+        "dev",
+        "--round",
+        "0",
+        "--traces",
+        "DEV_TRACES"
+      ]
+    },
+    {
+      "label": "dev-round-1",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-15T05:29:20.374077+00:00",
+      "elapsed_seconds": 8.053132814999117,
+      "command": [
+        "CASE005_PYTHON",
+        "-B",
+        "scripts/benchmark.py",
+        "--stage",
+        "dev",
+        "--round",
+        "1",
+        "--traces",
+        "DEV_TRACES"
+      ]
+    },
+    {
+      "label": "dev-analysis",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-15T05:29:37.118840+00:00",
+      "elapsed_seconds": 2.018502967999666,
+      "command": [
+        "ANALYSIS_PYTHON",
+        "-B",
+        "scripts/analyze.py",
+        "--stage",
+        "dev",
+        "--output",
+        "CASE005_WORK/dev-analysis"
+      ]
+    },
+    {
+      "label": "independent-audit",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-15T05:31:21.394376+00:00",
+      "elapsed_seconds": 1.266714631998184,
+      "command": [
+        "ANALYSIS_PYTHON",
+        "-B",
+        "scripts/verify_results.py",
+        "--summary",
+        "results/dev_summary.json",
+        "--output",
+        "provenance/result_audit.json"
+      ]
+    },
+    {
+      "label": "cpu-final",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-15T05:36:16.997265+00:00",
+      "elapsed_seconds": 0.28457530299783684,
+      "command": [
+        "ANALYSIS_PYTHON",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ]
+    },
+    {
+      "label": "deterministic-reanalysis",
+      "exit_code": 0,
+      "started_at_utc": "2026-09-15T05:36:17.301790+00:00",
+      "elapsed_seconds": 2.0244172160018934,
+      "command": [
+        "ANALYSIS_PYTHON",
+        "-B",
+        "scripts/analyze.py",
+        "--stage",
+        "dev",
+        "--output",
+        "CASE005_WORK/reanalysis"
+      ]
+    }
+  ],
+  "initial_cpu_tests_before_gpu": {
+    "tests": 30,
+    "exit_code": 0
+  },
+  "source_audit_exit_code": 0,
+  "deterministic_reanalysis": "Raw-derived JSON, CSV and original plot PNGs byte-identical across two runs; final plot layout adjusted only by write_report.py",
+  "final_cpu_tests": 38
+}

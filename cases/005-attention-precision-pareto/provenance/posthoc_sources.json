@@ -1,0 +1,83 @@
+{
+  "review_date": "2026-09-15",
+  "source_type": "Primary papers and official repositories only",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "SageAttention2++ paper, v1",
+      "url": "https://arxiv.org/html/2505.21136v1",
+      "sections": "Table 2; Table 3; Appendix A.2",
+      "scope": "Observed cosine/relative L1 and downstream metrics, not a universal local relative-L2 acceptance rule.",
+      "download_url": "https://arxiv.org/html/2505.21136v1",
+      "accessed_utc": "2026-09-15T05:49:24.151268+00:00",
+      "download_sha256": "ac7e7c7314c61505ac8ef457c685f395f61696d6d5a5c6b4c11d0c75f1ac5a80"
+    },
+    {
+      "id": "S2",
+      "title": "FlashAttention-3 paper, v1",
+      "url": "https://arxiv.org/html/2407.08608v1",
+      "sections": "Section 4.3, Table 3",
+      "scope": "FP64-referenced absolute RMSE for synthetic inputs with outliers; not a percentage tolerance.",
+      "download_url": "https://arxiv.org/html/2407.08608v1",
+      "accessed_utc": "2026-09-15T05:49:24.269335+00:00",
+      "download_sha256": "bcc1deb07e53fee2f5ec67bdb0ff386d22370da69df08619ed8cdc2062a49b3f"
+    },
+    {
+      "id": "S3",
+      "title": "FlashAttention numerical tests",
+      "url": "https://github.com/Dao-AILab/flash-attention/blob/0dc2cb48e484894c48a6cc5c6503fa5cded350c3/tests/test_flash_attn.py#L702-L704",
+      "sections": "Forward maximum absolute error assertion",
+      "scope": "Implementation error compared with a low-precision PyTorch reference; not document/head relative Frobenius error.",
+      "download_url": "https://raw.githubusercontent.com/Dao-AILab/flash-attention/0dc2cb48e484894c48a6cc5c6503fa5cded350c3/tests/test_flash_attn.py",
+      "accessed_utc": "2026-09-15T05:54:07.151235+00:00",
+      "download_sha256": "71984b919237657da4c8dea7a14728104c848a6122dc551302dbd8470745e878"
+    },
+    {
+      "id": "S4",
+      "title": "FlashAttention Hopper numerical tests",
+      "url": "https://github.com/Dao-AILab/flash-attention/blob/0dc2cb48e484894c48a6cc5c6503fa5cded350c3/hopper/test_flash_attn.py#L184-L285",
+      "sections": "Quantized reference inputs, intermediate_dtype and forward error assertion",
+      "scope": "FP8 test reference inputs already reflect FP8 rounding; not the original-BF16-to-quantized-operator boundary used by Case 005.",
+      "download_url": "https://raw.githubusercontent.com/Dao-AILab/flash-attention/0dc2cb48e484894c48a6cc5c6503fa5cded350c3/hopper/test_flash_attn.py",
+      "accessed_utc": "2026-09-15T05:54:07.156332+00:00",
+      "download_sha256": "61c61341e2a871cb65934d503e252a2ba023a2c11703e1558a61adff020c71cf"
+    },
+    {
+      "id": "S5",
+      "title": "TransformerEngine FP8 attention tests",
+      "url": "https://github.com/NVIDIA/TransformerEngine/blob/51317b440be0378f570ca6cc7dec2962f6e3f8df/tests/pytorch/attention/test_attention.py",
+      "sections": "Lines 78-85 (SM120 exclusion), 2999-3013 (MHA), 3267-3282 (DPA)",
+      "scope": "DPA rmse_tol=0.11, MHA=0.15; exact interpretation requires helper S6. This snapshot excludes compute capability >=12 from the FP8 attention test availability gate.",
+      "download_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/51317b440be0378f570ca6cc7dec2962f6e3f8df/tests/pytorch/attention/test_attention.py",
+      "accessed_utc": "2026-09-15T05:54:07.372913+00:00",
+      "download_sha256": "2e03083736a3024b0a78c9fe2626befc99f95a9e2dc6fd9096f527f31a62cbe8"
+    },
+    {
+      "id": "S6",
+      "title": "TransformerEngine comparison helper",
+      "url": "https://github.com/NVIDIA/TransformerEngine/blob/51317b440be0378f570ca6cc7dec2962f6e3f8df/tests/pytorch/utils.py#L240-L266",
+      "sections": "compare_and_assert",
+      "scope": "FP8 hard assertion uses RMSE < tolerance times combined output range; assert_close exceptions are logged rather than re-raised.",
+      "download_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/51317b440be0378f570ca6cc7dec2962f6e3f8df/tests/pytorch/utils.py",
+      "accessed_utc": "2026-09-15T05:55:12.697174+00:00",
+      "download_sha256": "54b641767ea1232963d95d03c1c1b69a784bfdcf5dc353f5cb7f13d0b67335f9"
+    },
+    {
+      "id": "S7",
+      "title": "SageAttention tested runtime source",
+      "url": "https://github.com/thu-ml/SageAttention/blob/d1a57a546c3d395b1ffcbeecc66d81db76f3b4b5/sageattention/core.py",
+      "sections": "Explicit FP8/FP16 APIs and SM120 dispatch",
+      "scope": "Pinned Case 005 source audit; this review did not execute or alter it.",
+      "evidence_basis": "Preserved Case 005 source audit and diagnostics, reviewed without a new GPU run"
+    },
+    {
+      "id": "S8",
+      "title": "SageAttention tested mean/scale kernel",
+      "url": "https://github.com/thu-ml/SageAttention/blob/d1a57a546c3d395b1ffcbeecc66d81db76f3b4b5/csrc/fused/fused.cu#L385-L418",
+      "sections": "MeanScaleKernel",
+      "scope": "Source mechanism cross-referenced with preserved V3 diagnostics; no patch was tested.",
+      "evidence_basis": "Preserved Case 005 source audit and diagnostics, reviewed without a new GPU run"
+    }
+  ],
+  "version_note": "Hugging Face paper markdown was used for discovery, but differed from pinned v1 HTML in table entries/version. All paper numbers in the report use the downloaded arXiv v1 HTML. Downloaded full third-party texts remain private and are not redistributed."
+}

@@ -1,0 +1,177 @@
+{
+  "status": "PASS",
+  "scope": "Publication finalization; original STOP_DEV_SCREEN and evidence preserved",
+  "cpu_tests": {
+    "passed": 44,
+    "failed": 0
+  },
+  "independent_verifier": "provenance/result_audit.json",
+  "original_tests": 38,
+  "original_files": 72,
+  "frozen_files": 43,
+  "original_zip_sha256": "60a5013e039d61cefa1586a3af90a4b4822f07c4bbc4f9cdaab0915330c642a2",
+  "original_vs_publication": "Original validation.json/cpu_tests.log/result_audit.json remain historical; this file records publication checks",
+  "changed_original_files": [
+    "ANALYSIS.md",
+    "METHODS.md",
+    "NOTICE.md",
+    "README.md",
+    "SHA256SUMS",
+    "scripts/package.py",
+    "scripts/write_report.py"
+  ],
+  "added_files": [
+    "LICENSE",
+    "POSTHOC_THRESHOLD_REVIEW.md",
+    "provenance/posthoc_sources.json",
+    "provenance/publication_validation.json",
+    "results/posthoc_review.json",
+    "scripts/recalculate_posthoc.py",
+    "tests/test_publication.py"
+  ],
+  "checks": [
+    {
+      "check": "original_changes_are_publication_only",
+      "status": "PASS",
+      "changed": [
+        "ANALYSIS.md",
+        "METHODS.md",
+        "NOTICE.md",
+        "README.md",
+        "SHA256SUMS",
+        "scripts/package.py",
+        "scripts/write_report.py"
+      ]
+    },
+    {
+      "check": "prior_cases_template_downloads_and_other_tracked_files",
+      "status": "PASS",
+      "unchanged_files": 305,
+      "differences": []
+    },
+    {
+      "check": "phase_a_spec_and_all_frozen_files",
+      "status": "PASS",
+      "frozen_files": 43
+    },
+    {
+      "check": "all_original_results_preserved",
+      "status": "PASS"
+    },
+    {
+      "check": "historical_zip_preserved",
+      "status": "PASS",
+      "sha256": "60a5013e039d61cefa1586a3af90a4b4822f07c4bbc4f9cdaab0915330c642a2",
+      "bytes": 1259153
+    },
+    {
+      "check": "byte_regeneration_dev_summary.json",
+      "status": "PASS"
+    },
+    {
+      "check": "byte_regeneration_dev_comparison.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "byte_regeneration_result_audit.json",
+      "status": "PASS"
+    },
+    {
+      "check": "byte_regeneration_posthoc_review.json",
+      "status": "PASS"
+    },
+    {
+      "check": "original_figure_regeneration_median",
+      "status": "PASS"
+    },
+    {
+      "check": "original_figure_regeneration_p95",
+      "status": "PASS"
+    },
+    {
+      "check": "original_render_layout_difference_documented",
+      "status": "PASS",
+      "reason": "Frozen analyze.py uses earlier plot labels/margins. The publication renderer reproduces distributed figure bytes exactly; raw values are identical."
+    },
+    {
+      "check": "cpu_tests",
+      "status": "PASS",
+      "passed": 44,
+      "failed": 0,
+      "original_tests": 38,
+      "new_publication_tests": 6
+    },
+    {
+      "check": "official_source_index_unchanged_from_verified_review",
+      "status": "PASS"
+    },
+    {
+      "check": "markdown_relative_links_and_anchors",
+      "status": "PASS",
+      "links": 61,
+      "missing": []
+    },
+    {
+      "check": "markdown_tables_parse",
+      "status": "PASS",
+      "tables": 9,
+      "expected": "Root 1, README 2, METHODS 1, ANALYSIS 3, post-hoc review 2"
+    },
+    {
+      "check": "main_table_html_has_all_configs",
+      "status": "PASS"
+    },
+    {
+      "check": "public_privacy_and_credentials_scan",
+      "status": "PASS",
+      "hits": [],
+      "scope": "Root README and all case files; public GitHub owner and synthetic document identities are intentional"
+    },
+    {
+      "check": "no_weights_full_tensor_env_cache_or_large_dump",
+      "status": "PASS",
+      "excluded": [],
+      "max_file_bytes": 1795199
+    },
+    {
+      "check": "licenses_and_attribution",
+      "status": "PASS"
+    },
+    {
+      "check": "no_phase_b_fresh_or_gpu_research",
+      "status": "PASS",
+      "new_gpu_runs": 0
+    },
+    {
+      "check": "package_helper_smoke",
+      "status": "PASS",
+      "source_modified": false,
+      "command": "python3 -B scripts/package.py --zip <NEW_ZIP> --record <NEW_RECORD>",
+      "exit_code": 0
+    }
+  ],
+  "new_gpu_runs": 0,
+  "commit_push_upload_count": 0,
+  "commands": [
+    {
+      "command": "python -B -m unittest discover -s tests -v",
+      "exit_code": 0
+    },
+    {
+      "command": "python -B scripts/analyze.py --stage dev --output <SEPARATE_OUTPUT>",
+      "exit_code": 0
+    },
+    {
+      "command": "python -B scripts/verify_results.py --summary results/dev_summary.json --output <SEPARATE_AUDIT_JSON>",
+      "exit_code": 0
+    },
+    {
+      "command": "python -B scripts/recalculate_posthoc.py --case . --output <SEPARATE_POSTHOC_JSON>",
+      "exit_code": 0
+    },
+    {
+      "command": "python -B scripts/write_report.py --output <SEPARATE_PRESENTATION_DIRECTORY>",
+      "exit_code": 0
+    }
+  ]
+}

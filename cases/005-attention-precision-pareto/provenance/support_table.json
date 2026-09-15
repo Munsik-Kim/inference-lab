@@ -1,0 +1,223 @@
+{
+  "configs": [
+    {
+      "config_id": "B",
+      "function": "torch.nn.functional.scaled_dot_product_attention",
+      "backend": "default fused SDPA, inherited Case004 choice",
+      "input_dtype": "BF16",
+      "output_dtype": "BF16",
+      "status": "EXECUTABLE_VERIFIED",
+      "evidence": "provenance/probe-B.json",
+      "reason": "Executed and semantic fixture verified",
+      "observed_kernel": [
+        "aten::_scaled_dot_product_flash_attention",
+        "aten::scaled_dot_product_attention"
+      ],
+      "binary_sha256": {
+        "_qattn_sm89.cpython-312-x86_64-linux-gnu.so": "99606dd4a325b30cbe4b01239ce83832e0294cd2517b35c0d05a85baffbad5c7",
+        "_fused.cpython-312-x86_64-linux-gnu.so": "976681eb2500673219bdb1d584d3f726c7358b7244c68c07a7cd31f929d7c2d7",
+        "_qattn_sm80.cpython-312-x86_64-linux-gnu.so": "9f4121d57d1bd362d39c4947e318568f12271ece013b960bf9a14bb8db2b648c"
+      },
+      "source_sha256": "e475182fc55d6a683499e1eb4d8886fc06e050ed938d8563b090773eede2a99e"
+    },
+    {
+      "config_id": "A_PUBLIC",
+      "function": "sageattn_qk_int8_pv_fp8_cuda",
+      "requested_kwargs": {
+        "tensor_layout": "HND",
+        "qk_quant_gran": "per_warp",
+        "smooth_k": true,
+        "return_lse": false,
+        "pv_accum_dtype": "fp32+fp16",
+        "smooth_v": false
+      },
+      "effective_kwargs": {
+        "tensor_layout": "HND",
+        "qk_quant_gran": "per_warp",
+        "smooth_k": true,
+        "return_lse": false,
+        "pv_accum_dtype": "fp32+fp16",
+        "smooth_v": false
+      },
+      "qk_dtype": "INT8",
+      "p_dtype": "E4M3",
+      "v_dtype": "E4M3",
+      "v_scale_max": 2.25,
+      "output_dtype": "BF16",
+      "bundle": "Accumulation option also changes V quantization scale from anchor; V3 adds V centering; V4 changes PV format and casts V inside call",
+      "gqa": "Native H16/H8; no full KV expansion; upstream may repeat the sequence-mean vector",
+      "status": "EXECUTABLE_VERIFIED",
+      "evidence": "provenance/probe-A_PUBLIC.json",
+      "reason": "Executed and semantic fixture verified",
+      "observed_kernel": [
+        "sageattention_sm89::qk_int8_sv_f8_accum_f16_fuse_v_scale_attn_inst_buf"
+      ],
+      "binary_sha256": {
+        "_qattn_sm89.cpython-312-x86_64-linux-gnu.so": "99606dd4a325b30cbe4b01239ce83832e0294cd2517b35c0d05a85baffbad5c7",
+        "_fused.cpython-312-x86_64-linux-gnu.so": "976681eb2500673219bdb1d584d3f726c7358b7244c68c07a7cd31f929d7c2d7",
+        "_qattn_sm80.cpython-312-x86_64-linux-gnu.so": "9f4121d57d1bd362d39c4947e318568f12271ece013b960bf9a14bb8db2b648c"
+      },
+      "source_sha256": "e475182fc55d6a683499e1eb4d8886fc06e050ed938d8563b090773eede2a99e"
+    },
+    {
+      "config_id": "V1",
+      "function": "sageattn_qk_int8_pv_fp8_cuda",
+      "requested_kwargs": {
+        "tensor_layout": "HND",
+        "qk_quant_gran": "per_warp",
+        "smooth_k": true,
+        "return_lse": false,
+        "pv_accum_dtype": "fp32",
+        "smooth_v": false
+      },
+      "effective_kwargs": {
+        "tensor_layout": "HND",
+        "qk_quant_gran": "per_warp",
+        "smooth_k": true,
+        "return_lse": false,
+        "pv_accum_dtype": "fp32",
+        "smooth_v": false
+      },
+      "qk_dtype": "INT8",
+      "p_dtype": "E4M3",
+      "v_dtype": "E4M3",
+      "v_scale_max": 448.0,
+      "output_dtype": "BF16",
+      "bundle": "Accumulation option also changes V quantization scale from anchor; V3 adds V centering; V4 changes PV format and casts V inside call",
+      "gqa": "Native H16/H8; no full KV expansion; upstream may repeat the sequence-mean vector",
+      "status": "EXECUTABLE_VERIFIED",
+      "evidence": "provenance/probe-V1.json",
+      "reason": "Executed and semantic fixture verified",
+      "observed_kernel": [
+        "sageattention_sm89::qk_int8_sv_f8_accum_f32_fuse_v_scale_attn"
+      ],
+      "binary_sha256": {
+        "_qattn_sm89.cpython-312-x86_64-linux-gnu.so": "99606dd4a325b30cbe4b01239ce83832e0294cd2517b35c0d05a85baffbad5c7",
+        "_fused.cpython-312-x86_64-linux-gnu.so": "976681eb2500673219bdb1d584d3f726c7358b7244c68c07a7cd31f929d7c2d7",
+        "_qattn_sm80.cpython-312-x86_64-linux-gnu.so": "9f4121d57d1bd362d39c4947e318568f12271ece013b960bf9a14bb8db2b648c"
+      },
+      "source_sha256": "e475182fc55d6a683499e1eb4d8886fc06e050ed938d8563b090773eede2a99e"
+    },
+    {
+      "config_id": "V2",
+      "function": "sageattn_qk_int8_pv_fp8_cuda",
+      "requested_kwargs": {
+        "tensor_layout": "HND",
+        "qk_quant_gran": "per_warp",
+        "smooth_k": true,
+        "return_lse": false,
+        "pv_accum_dtype": "fp32+fp32",
+        "smooth_v": false
+      },
+      "effective_kwargs": {
+        "tensor_layout": "HND",
+        "qk_quant_gran": "per_warp",
+        "smooth_k": true,
+        "return_lse": false,
+        "pv_accum_dtype": "fp32+fp32",
+        "smooth_v": false
+      },
+      "qk_dtype": "INT8",
+      "p_dtype": "E4M3",
+      "v_dtype": "E4M3",
+      "v_scale_max": 448.0,
+      "output_dtype": "BF16",
+      "bundle": "Accumulation option also changes V quantization scale from anchor; V3 adds V centering; V4 changes PV format and casts V inside call",
+      "gqa": "Native H16/H8; no full KV expansion; upstream may repeat the sequence-mean vector",
+      "status": "EXECUTABLE_VERIFIED",
+      "evidence": "provenance/probe-V2.json",
+      "reason": "Executed and semantic fixture verified",
+      "observed_kernel": [
+        "sageattention_sm89::qk_int8_sv_f8_accum_f32_fuse_v_scale_attn_inst_buf"
+      ],
+      "binary_sha256": {
+        "_qattn_sm89.cpython-312-x86_64-linux-gnu.so": "99606dd4a325b30cbe4b01239ce83832e0294cd2517b35c0d05a85baffbad5c7",
+        "_fused.cpython-312-x86_64-linux-gnu.so": "976681eb2500673219bdb1d584d3f726c7358b7244c68c07a7cd31f929d7c2d7",
+        "_qattn_sm80.cpython-312-x86_64-linux-gnu.so": "9f4121d57d1bd362d39c4947e318568f12271ece013b960bf9a14bb8db2b648c"
+      },
+      "source_sha256": "e475182fc55d6a683499e1eb4d8886fc06e050ed938d8563b090773eede2a99e"
+    },
+    {
+      "config_id": "V3",
+      "function": "sageattn_qk_int8_pv_fp8_cuda",
+      "requested_kwargs": {
+        "tensor_layout": "HND",
+        "qk_quant_gran": "per_warp",
+        "smooth_k": true,
+        "return_lse": false,
+        "pv_accum_dtype": "fp32",
+        "smooth_v": true
+      },
+      "effective_kwargs": {
+        "tensor_layout": "HND",
+        "qk_quant_gran": "per_warp",
+        "smooth_k": true,
+        "return_lse": false,
+        "pv_accum_dtype": "fp32",
+        "smooth_v": true
+      },
+      "qk_dtype": "INT8",
+      "p_dtype": "E4M3",
+      "v_dtype": "E4M3",
+      "v_scale_max": 448.0,
+      "output_dtype": "BF16",
+      "bundle": "Accumulation option also changes V quantization scale from anchor; V3 adds V centering; V4 changes PV format and casts V inside call",
+      "gqa": "Native H16/H8; no full KV expansion; upstream may repeat the sequence-mean vector",
+      "status": "IMPLEMENTATION_ERROR",
+      "evidence": "provenance/probe-V3.json",
+      "reason": "Zero-scale/nonfinite after V smoothing on constant channels; excluded without patch",
+      "observed_kernel": [],
+      "binary_sha256": {
+        "_qattn_sm89.cpython-312-x86_64-linux-gnu.so": "99606dd4a325b30cbe4b01239ce83832e0294cd2517b35c0d05a85baffbad5c7",
+        "_fused.cpython-312-x86_64-linux-gnu.so": "976681eb2500673219bdb1d584d3f726c7358b7244c68c07a7cd31f929d7c2d7",
+        "_qattn_sm80.cpython-312-x86_64-linux-gnu.so": "9f4121d57d1bd362d39c4947e318568f12271ece013b960bf9a14bb8db2b648c"
+      },
+      "source_sha256": "e475182fc55d6a683499e1eb4d8886fc06e050ed938d8563b090773eede2a99e"
+    },
+    {
+      "config_id": "V4",
+      "function": "sageattn_qk_int8_pv_fp16_cuda",
+      "requested_kwargs": {
+        "tensor_layout": "HND",
+        "qk_quant_gran": "per_warp",
+        "smooth_k": true,
+        "return_lse": false,
+        "pv_accum_dtype": "fp32",
+        "smooth_v": false
+      },
+      "effective_kwargs": {
+        "tensor_layout": "HND",
+        "qk_quant_gran": "per_warp",
+        "smooth_k": true,
+        "return_lse": false,
+        "pv_accum_dtype": "fp32",
+        "smooth_v": false
+      },
+      "qk_dtype": "INT8",
+      "p_dtype": "FP16",
+      "v_dtype": "FP16",
+      "v_scale_max": null,
+      "output_dtype": "BF16",
+      "bundle": "Accumulation option also changes V quantization scale from anchor; V3 adds V centering; V4 changes PV format and casts V inside call",
+      "gqa": "Native H16/H8; no full KV expansion; upstream may repeat the sequence-mean vector",
+      "status": "EXECUTABLE_VERIFIED",
+      "evidence": "provenance/probe-V4.json",
+      "reason": "Executed and semantic fixture verified",
+      "observed_kernel": [
+        "sageattention::qk_int8_sv_f16_accum_f32_attn"
+      ],
+      "binary_sha256": {
+        "_qattn_sm89.cpython-312-x86_64-linux-gnu.so": "99606dd4a325b30cbe4b01239ce83832e0294cd2517b35c0d05a85baffbad5c7",
+        "_fused.cpython-312-x86_64-linux-gnu.so": "976681eb2500673219bdb1d584d3f726c7358b7244c68c07a7cd31f929d7c2d7",
+        "_qattn_sm80.cpython-312-x86_64-linux-gnu.so": "9f4121d57d1bd362d39c4947e318568f12271ece013b960bf9a14bb8db2b648c"
+      },
+      "source_sha256": "e475182fc55d6a683499e1eb4d8886fc06e050ed938d8563b090773eede2a99e"
+    },
+    {
+      "config_id": "A_MATCHED",
+      "status": "ALIAS_OF_OTHER_CONFIG",
+      "alias_of": "A_PUBLIC",
+      "reason": "Case004 already calls explicit lower FP8 API with same options"
+    }
+  ]
+}

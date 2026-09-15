@@ -1,0 +1,162 @@
+{
+  "protocol_version": 1,
+  "phase": "A",
+  "frozen_at_utc": "2026-09-15T05:28:33.419025+00:00",
+  "registration": "Local protocol fixed before DEV real-trace comparison; not external preregistration",
+  "environment_fingerprint": "c683296ce8cc108b248491f346cb5cd09df49544afd3642110eaad02e91b62ff",
+  "model_id": "Qwen/Qwen3-0.6B",
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "geometry": {
+    "batch": 1,
+    "hq": 16,
+    "hkv": 8,
+    "dim": 128,
+    "layer_zero_based": 13,
+    "causal": true,
+    "primary_length": 4096,
+    "secondary_lengths": [
+      512,
+      2048
+    ]
+  },
+  "candidate_priority": [
+    "V1",
+    "V2",
+    "V3",
+    "V4"
+  ],
+  "executable_configs": [
+    "B",
+    "A_PUBLIC",
+    "V1",
+    "V2",
+    "V4"
+  ],
+  "aliases": {
+    "A_MATCHED": "A_PUBLIC"
+  },
+  "bf16_backend": "default, inherited frozen Case004 choice at every Qwen length",
+  "screen": {
+    "median_error_max": 0.01,
+    "p95_error_max": 0.03,
+    "full_output_nonfinite_max": 0,
+    "reference_rms_floor": 1e-06,
+    "speedup_min": 1.5,
+    "confirmation_speedup_ci_lower_strict": 1.0,
+    "undefined": "INCONCLUSIVE, no epsilon or dropped unit"
+  },
+  "selection": "Choose eligible NEW variant with highest DEV paired median speedup; tie lower p95 error, then config_id; no runner-up on fresh",
+  "reference": {
+    "dtype": "BF16 inputs to FP32 score/softmax/PV",
+    "tf32": false,
+    "reduced_precision_reduction": false,
+    "query_positions": "floor(i*(N-1)/31), i=0..31",
+    "query_chunk": 8,
+    "all_causal_valid_keys": true,
+    "unit": "document x head over 32 sampled query vectors",
+    "quantile": "NumPy linear",
+    "primary_round": 0
+  },
+  "data": {
+    "dev_documents": 8,
+    "dev_manifest_sha256": "29c599617204af9f4a995ee62423c19fdf0698442d46d52405200a05711d1622",
+    "historical_role": "16 Case004 observed confirmation docs, no fresh label or unnecessary rerun",
+    "fresh_documents": 16,
+    "fresh_languages": {
+      "en": 5,
+      "ko": 5,
+      "code": 6
+    },
+    "fresh_rule": "fresh_inputs.document index=100+i; IDs c005-fresh-00..15; fixed archive generator, deterministic no RNG; plain tokenizer without special tokens",
+    "fresh_uniqueness": "ID, text SHA256, first512 exact-token hash disjoint from all Case004 DEV/HISTORICAL and within fresh",
+    "fresh_gpu_gate": "Only if one DEV finalist qualifies; otherwise no generation/capture/evaluation"
+  },
+  "timing": {
+    "dev_processes": 2,
+    "dev_blocks": 5,
+    "fresh_processes": 5,
+    "fresh_blocks": 20,
+    "warmup": 20,
+    "calls_per_block": 10,
+    "primary": "Complete BF16 GPU-input to BF16 output, synchronized wall block mean including wrapper/preprocessing/allocation",
+    "secondary": "Separate CUDA event block; not host overhead",
+    "order_seed": "505100+round*10000+length+document_index*37; balanced rotations",
+    "cost_outside": [
+      "capture",
+      "CPU-GPU copies",
+      "reference",
+      "profiler",
+      "I/O",
+      "first-call/compile"
+    ],
+    "eager": true,
+    "cache": "Warm repeated inputs; no quantized memoization",
+    "kernel_only": false
+  },
+  "statistics": {
+    "bootstrap": 5000,
+    "timing_seed": 505901,
+    "numerical_seed": 505902,
+    "timing": "Crossed document and GLOBAL process resampling; cell paired-block resampling; same random indices across configs",
+    "numerical": "Document clusters, all16 heads",
+    "interval": "percentile 95%, linear; pointwise, not population guarantee",
+    "speedup": "median of paired BF16/candidate block ratios; ratio of medians separate"
+  },
+  "resources": {
+    "peak_allocated_max_bytes": 13958643712,
+    "minimum_free_bytes": 4294967296,
+    "build_attempts_max": 2,
+    "builds_used": 0,
+    "gpu_serial": true,
+    "weights_download": false
+  },
+  "failure_policy": "Stop invalid config at smoke; no source patch. Stop whole run on input/capture/fingerprint/environment failure; preserve raw failure. Missing/undefined prevents GO; no confirmation candidate swap.",
+  "prefix_stress": "Same Case004 D128 seed400135 fixture; futureV x1000 and range-preserving permutation; B and anchor tested, finalist only if selected; separate from ordinary error screen",
+  "pareto": "DEV observed point-estimate dominance in complete wall latency, median error and p95 error; no weighted score",
+  "capture_gate": "Same-fingerprint native BF16 replay must be bitwise equal",
+  "frozen_files": {
+    "inputs/c004-dev-00.txt": "242e41bb9eab56f8d9e7616ff44ea1b4e5db2d57f837bafb2ee367cfa280053a",
+    "inputs/c004-dev-01.txt": "43abfb386997e8a4d30e04411361e4e117680473818e18d31a5a8cd1fd1de675",
+    "inputs/c004-dev-02.txt": "e00dc8edf7e049a8c2a69eb89df2f5f780e1ab45c33d004c49ddbb20039f81e3",
+    "inputs/c004-dev-03.txt": "79ac0f03cbffa206e5505db8cdd697279b2e857ef396649fa9678de7f371c66d",
+    "inputs/c004-dev-04.txt": "0fde31ee2da4ca5465260a04288498133f6742214ccb454339bac4111d8350d6",
+    "inputs/c004-dev-05.txt": "befc545bdbfce2363331875f5e35e363f7d883875f5b69b1034c25dc373a5b91",
+    "inputs/c004-dev-06.txt": "e332a43d9bc2e62a6e5c40abf5be2f08360c17ab5345bc83e89319e37882c944",
+    "inputs/c004-dev-07.txt": "53904887ffd2147c711b9aa51ee1ba8ef7809dc8083d02af694a45304a9e03d1",
+    "inputs/dev_manifest.json": "29c599617204af9f4a995ee62423c19fdf0698442d46d52405200a05711d1622",
+    "inputs/historical_index.json": "bdc05938f7466fe4961b3155f0246d4f7328318f79643749401e7c807b52b35a",
+    "provenance/case004_instruction_evidence.json": "cee0f798ebffe9c473ddf5f27a955561af59b7f57f2809f777d3b51bce379e7d",
+    "provenance/case004_model.json": "20f20d4e7fd6d62e3e441a126ce914f9912c24a492a6ac70a116bd66ea4cf0b1",
+    "provenance/dev_capture.json": "4610e5c14df389063733ba41f0293e2ee5ee14e1d04cf282058a81dc76f8032b",
+    "provenance/probe-A_PUBLIC.json": "0e36aeeb410c3624c9f9914fe878345057ac38aa09da87029c7af93fe188703d",
+    "provenance/probe-B.json": "06cae4dc20dc6867d44184a6226a12a44987a3a5a6b4b23f829c663c1b352d5c",
+    "provenance/probe-V1.json": "dcb85ba8fe774a3cc1ae87015ecd96d84dce323c36253c02de9c76c48e83866a",
+    "provenance/probe-V2.json": "efc7a6ebc24a8cc8d318e013a51ba3b7a9aa82ec5b2fc63e4266af68a1fa2700",
+    "provenance/probe-V3.json": "eb1122246053d0448c1b7d2ff0c4fc3e6deaa93d4e5a7473c84a14bf3a383681",
+    "provenance/probe-V4.json": "186fc86a65a9ade174042d06d7c77c8fccd894609299b176e2c0c98266af6232",
+    "provenance/reuse.json": "f6d6ab439970210a573295e910c0dbe3a5005c63796eaf144166636a70e4729c",
+    "provenance/source_audit.json": "3759494ee02392a22409044cc5a2385826bd6d2f1e9a46eb696912fd6696700c",
+    "provenance/support_table.json": "5ae42e509e5f301a9970a06508394f4a17b472be4dd679de456a8ff4114200c4",
+    "provenance/v3_diagnostic.json": "4fb48d93e7369871725a34c6c7185069336a0a09eb19bc15ddd02ce7af5599c4",
+    "scripts/analyze.py": "c5e90b674c3855b974a022d1573dc33b10ecd1b262c8d5926c72dd4bdce20589",
+    "scripts/audit_source.py": "a25dc2333742b144e11e6efeb7e6ca2a3ddd9722237b4fa6debd42b5fa60eef5",
+    "scripts/benchmark.py": "3dfd45d407972482ee1b84d5106211676199becd0fd78f5b29cd2586bba6367d",
+    "scripts/capture_qwen.py": "7998136571c6084efe0b0e7530ebfc3a774f8abf5ad94ac9a0da6f978cb9bce6",
+    "scripts/diagnose_v3.py": "9191999cc641963091afec20d68723042560edc078c5f43b56d9b50616ddbf88",
+    "scripts/freeze.py": "26fd690305afafe8054462ca93394c58913f8eec9978842db983c209caff20d0",
+    "scripts/fresh_inputs.py": "10a00c6378395a688d4a9c1e096a23eddfc52c562cc168117be64cbc0c8227f0",
+    "scripts/probe_backend.py": "0759cfab66f2a3879714c05c215a0f981034c5536597a172f608485b6a7245d2",
+    "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/anchor.py": "803d2970599e31d0618cb0c35afcd7397f6db3cb8bee3cd5de4cddb2c9c673a3",
+    "src/backends.py": "f37aef2b67c669e36992da0ed3d81fa626de924611f312c8383ac6f5bae04eaa",
+    "src/base_metrics.py": "843149723db44492e65fbb6c9692c600fd8173113f5ea4c93e35fc55b1ab3695",
+    "src/common.py": "7832b0981c88c095e298f5998a16ef5bee021f2af52510f6d9d3867771bbf8a9",
+    "src/decision.py": "6281411e8e19a0b606837d9bbe348cf46ca3c139f65dc888a9fe7072cb12cf55",
+    "src/protocol.py": "085a19ee2964afa5f79d055856b63d4f79b52a84bf146e3dfc01d8cf38ef18ae",
+    "src/reference.py": "cb6f6f0fb5dc42f0119ae24c4595e75bfb6226730c2e13e6ee4fa53b4a4d1448",
+    "src/runtime.py": "803965ffd2d5cc28f83e1329cf89c307820158cf1e4c02adc3660de238cc82c8",
+    "src/statistics.py": "5d9aea1987cee215c36cf61de94d9f25b64a6c802c753b238f5e5a98a49c19d1",
+    "src/timing.py": "17afd9012fa4f4346897df4d270bd27a053eabe75cad659d4751c018d097a9df",
+    "tests/test_cpu.py": "bd9ea411796cc7c3213be505f30276c0e2a390d06c1bda9ef2d4a5602bc931fd"
+  }
+}

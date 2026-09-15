@@ -1,0 +1,15 @@
+{
+  "status": "V3_EXCLUDED_BEFORE_DEV",
+  "classification": "IMPLEMENTATION_ERROR in tested upstream smoothing path; no local patch",
+  "initial_error_message": "GQA mismatch was a coarse assertion; diagnostic identified nonfinite values rather than proving a head-index mapping error",
+  "source": "csrc/fused/fused.cu:385-418, MeanScaleKernel",
+  "source_sha256": "71edcb594551dfba46f4c07b7ff6e04ac5779917040b1ddb76a155582aa09d99",
+  "mechanism": "Constant centered channel has amax=0, scale=0; reciprocal scale=448/0, centered zero multiplied by infinity. Measured quantized nonfinite and attention nonfinite values agree with this source mechanism.",
+  "evidence": [
+    "provenance/probe-V3.json",
+    "provenance/v3_diagnostic.json"
+  ],
+  "scope": "Observed on fixed small development fixtures; no claim about frequency in Qwen or all Sage settings",
+  "new_builds": 0,
+  "source_modified": false
+}

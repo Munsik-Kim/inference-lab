@@ -1,0 +1,151 @@
+{
+  "scope": "Two predetermined semantic fixtures after constant-V failure; no quality/timing selection",
+  "records": [
+    {
+      "fixture": "constant",
+      "v_scale_min": 0.0,
+      "v_scale_max": 0.0,
+      "v_quantized_nonfinite": 8192,
+      "v_mean_per_head": [
+        [
+          2.0,
+          7.0
+        ]
+      ],
+      "outputs": {
+        "B": {
+          "nonfinite": 0,
+          "first_query_channel0": [
+            [
+              2.0,
+              2.0,
+              7.0,
+              7.0
+            ]
+          ],
+          "finite_mean_by_head": [
+            2.0,
+            2.0,
+            7.0,
+            7.0
+          ]
+        },
+        "V1": {
+          "nonfinite": 0,
+          "first_query_channel0": [
+            [
+              2.0,
+              2.0,
+              7.0,
+              7.0
+            ]
+          ],
+          "finite_mean_by_head": [
+            1.99658203125,
+            1.9970703125,
+            7.0,
+            7.005859375
+          ]
+        },
+        "V3": {
+          "nonfinite": 16384,
+          "first_query_channel0": [
+            [
+              null,
+              null,
+              null,
+              null
+            ]
+          ],
+          "finite_mean_by_head": [
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "fixture": "constant_plus_small_variation",
+      "v_scale_min": 0.0,
+      "v_scale_max": 8.719308243598789e-05,
+      "v_quantized_nonfinite": 64,
+      "v_mean_per_head": [
+        [
+          1.9996795654296875,
+          6.9998779296875
+        ]
+      ],
+      "outputs": {
+        "B": {
+          "nonfinite": 0,
+          "first_query_channel0": [
+            [
+              2.015625,
+              2.015625,
+              6.96875,
+              6.96875
+            ]
+          ],
+          "finite_mean_by_head": [
+            1.9993572235107422,
+            1.9993000030517578,
+            7.000144958496094,
+            7.000068664550781
+          ]
+        },
+        "V1": {
+          "nonfinite": 0,
+          "first_query_channel0": [
+            [
+              2.015625,
+              2.015625,
+              7.03125,
+              7.03125
+            ]
+          ],
+          "finite_mean_by_head": [
+            2.0175514221191406,
+            2.017993927001953,
+            7.027099609375,
+            7.032958984375
+          ]
+        },
+        "V3": {
+          "nonfinite": 128,
+          "first_query_channel0": [
+            [
+              2.015625,
+              2.015625,
+              6.96875,
+              6.96875
+            ]
+          ],
+          "finite_mean_by_head": [
+            1.999551773071289,
+            1.9993667602539062,
+            null,
+            null
+          ]
+        }
+      }
+    }
+  ],
+  "profile": {
+    "ops": [
+      "sageattention_sm89::qk_int8_sv_f8_accum_f32_fuse_v_scale_fuse_v_mean_attn"
+    ],
+    "cuda_kernels": [
+      "void MeanScaleKernel<64u, true, __nv_bfloat16>(__nv_bfloat16*, signed char*, float*, float*, float, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int)",
+      "void QuantInt8Kernel<128u, 32u, 1u, false, false, __nv_bfloat16>(__nv_bfloat16*, __nv_bfloat16*, signed char*, float*, float, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int)",
+      "void QuantInt8Kernel<128u, 64u, 1u, false, true, __nv_bfloat16>(__nv_bfloat16*, __nv_bfloat16*, signed char*, float*, float, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int)",
+      "void TransposePadPermuteKernel<128u, 64u, true, __nv_bfloat16>(__nv_bfloat16*, __nv_bfloat16*, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int)",
+      "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1} const&)::{lambda(int)#1})",
+      "void at::native::reduce_kernel<128, 4, at::native::ReduceOp<c10::BFloat16, at::native::MeanOps<c10::BFloat16, float, float, c10::BFloat16>, unsigned int, c10::BFloat16, 4, 8> >(at::native::ReduceOp<c10::BFloat16, at::native::MeanOps<c10::BFloat16, float, float, c10::BFloat16>, unsigned int, c10::BFloat16, 4, 8>)",
+      "void qk_int_sv_f8_attn_kernel<128u, 64u, 32u, 64u, 128u, (DataType)1, (QuantGranularity)2, (QuantGranularity)2, float, false, __nv_bfloat16, (ComputeUnit)1, (MaskMode)1, false, true, true, false>(signed char*, signed char*, signed char*, __nv_bfloat16*, float*, float*, float*, float*, float*, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float)"
+    ],
+    "fused_bf16": false,
+    "low_precision": true
+  }
+}

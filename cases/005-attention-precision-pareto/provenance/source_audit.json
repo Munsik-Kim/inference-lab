@@ -1,0 +1,67 @@
+{
+  "checked_at_utc": "2026-09-15T05:20:03.401518+00:00",
+  "environment": {
+    "gpu": "NVIDIA GeForce RTX 5080",
+    "sm": [
+      12,
+      0
+    ],
+    "vram_bytes": 17094475776,
+    "driver": "610.47",
+    "os": "Linux",
+    "kernel": "5.15.167.4-microsoft-standard-WSL2",
+    "wsl": true,
+    "python": "3.12.14",
+    "versions": {
+      "torch": "2.13.0",
+      "triton": "3.7.1",
+      "transformers": "5.17.0",
+      "numpy": "2.3.5",
+      "sageattention": "2.2.0"
+    },
+    "torch_runtime": "2.13.0+cu130",
+    "cuda_build": "13.0",
+    "sage_binary_sha256": {
+      "_qattn_sm89.cpython-312-x86_64-linux-gnu.so": "99606dd4a325b30cbe4b01239ce83832e0294cd2517b35c0d05a85baffbad5c7",
+      "_fused.cpython-312-x86_64-linux-gnu.so": "976681eb2500673219bdb1d584d3f726c7358b7244c68c07a7cd31f929d7c2d7",
+      "_qattn_sm80.cpython-312-x86_64-linux-gnu.so": "9f4121d57d1bd362d39c4947e318568f12271ece013b960bf9a14bb8db2b648c"
+    },
+    "sage_core_sha256": "e475182fc55d6a683499e1eb4d8886fc06e050ed938d8563b090773eede2a99e",
+    "qwen_modeling_sha256": "cbb7f2dc274c2f5592746c0dc6985ca50353efa07376f92cc922b77680a74f69",
+    "tf32": false,
+    "compile": false,
+    "cuda_graph": false,
+    "reference_settings": {
+      "allow_tf32": false,
+      "allow_fp16_reduced_precision_reduction": false,
+      "allow_bf16_reduced_precision_reduction": false
+    },
+    "float32_matmul_precision": "highest"
+  },
+  "environment_fingerprint": "c683296ce8cc108b248491f346cb5cd09df49544afd3642110eaad02e91b62ff",
+  "sage_commit": "d1a57a546c3d395b1ffcbeecc66d81db76f3b4b5",
+  "source_files": {
+    "sageattention/core.py": "e475182fc55d6a683499e1eb4d8886fc06e050ed938d8563b090773eede2a99e",
+    "sageattention/quant.py": "86bf415d4d24793a591c2a056e60f41b4bc579519ac7a875e484a65816940bf7",
+    "sageattention/sm80_compile.py": "b307d836a8580f3731cfd8a7774f70faec984c869e5cac1af9086d43fcdff29b",
+    "sageattention/sm89_compile.py": "dd5e0ebf92f2662a85d24cee5c984fe6ba114e610253b4bd339af5e3d5da97c9",
+    "csrc/mma.cuh": "841a0b028e25b48fd83ad042d7bf817f84bfd5e5630d19d08510b0b797914231",
+    "setup.py": "db9b707a3b6cda661534ab25ffc24ffdc3d17137fb44117b99569fb00ea3fd96"
+  },
+  "source_clean": true,
+  "installed_core_matches_pinned_source": true,
+  "case004_binary_and_capture_source_match": true,
+  "verified_dev_full_traces": 8,
+  "layer_indexing": "zero-based module.layer_idx=13",
+  "source_checks": {
+    "dispatch": "core.py 152-153: SM120 hardcodes per_warp, fp32+fp16; **kwargs not forwarded",
+    "fp8_bundle": "805-809: 2.25 for fp32+fp16; 448.0 otherwise",
+    "ignored_smooth_v": "797-803 FP8 fp32+fp32/fp32+fp16; 608-610 FP16 fp32/fp16+fp32",
+    "v4": "612-614: V to FP16 inside public call; sm80_compile qk_int8_sv_f16_accum_f32_attn",
+    "qk": "per_warp; query warp32, query tile128, key block64; K centering unchanged",
+    "accumulation_limit": "Option and source path names are not proof of effective accumulator bits on SM120"
+  },
+  "source_url": "https://github.com/thu-ml/SageAttention/blob/d1a57a546c3d395b1ffcbeecc66d81db76f3b4b5/sageattention/core.py",
+  "new_installations": 0,
+  "new_builds": 0
+}

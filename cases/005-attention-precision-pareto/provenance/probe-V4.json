@@ -1,0 +1,195 @@
+{
+  "config_id": "V4",
+  "started_at_utc": "2026-09-15T05:23:17.378072+00:00",
+  "settings": {
+    "function": "sageattn_qk_int8_pv_fp16_cuda",
+    "requested_kwargs": {
+      "tensor_layout": "HND",
+      "qk_quant_gran": "per_warp",
+      "smooth_k": true,
+      "return_lse": false,
+      "pv_accum_dtype": "fp32",
+      "smooth_v": false
+    },
+    "effective_kwargs": {
+      "tensor_layout": "HND",
+      "qk_quant_gran": "per_warp",
+      "smooth_k": true,
+      "return_lse": false,
+      "pv_accum_dtype": "fp32",
+      "smooth_v": false
+    },
+    "qk_dtype": "INT8",
+    "p_dtype": "FP16",
+    "v_dtype": "FP16",
+    "v_scale_max": null,
+    "output_dtype": "BF16",
+    "bundle": "Accumulation option also changes V quantization scale from anchor; V3 adds V centering; V4 changes PV format and casts V inside call",
+    "gqa": "Native H16/H8; no full KV expansion; upstream may repeat the sequence-mean vector"
+  },
+  "checks": [
+    {
+      "causal": true,
+      "oracle": {
+        "relative_output_error": 0.00794552302752494,
+        "absolute_rms_error": 0.003822772718843222,
+        "cosine": 0.9999684746922494,
+        "invalid_rows": 0,
+        "near_zero": false,
+        "status": "OK",
+        "error_squared_sum": 0.23942907920272588,
+        "reference_squared_sum": 3792.5552298868242,
+        "actual_squared_sum": 3794.4846131707927,
+        "dot_sum": 3793.400206989207
+      },
+      "output_dtype": "torch.bfloat16",
+      "layout": "contiguous BHND"
+    },
+    {
+      "causal": false,
+      "oracle": {
+        "relative_output_error": 0.010875385038549682,
+        "absolute_rms_error": 0.003008064021312467,
+        "cosine": 0.9999410261219251,
+        "invalid_rows": 0,
+        "near_zero": false,
+        "status": "OK",
+        "error_squared_sum": 0.14824979097705726,
+        "reference_squared_sum": 1253.4436250323495,
+        "actual_squared_sum": 1254.7356062149686,
+        "dot_sum": 1254.0154907281703
+      },
+      "output_dtype": "torch.bfloat16",
+      "layout": "contiguous BHND"
+    }
+  ],
+  "warnings": [],
+  "status": "EXECUTABLE_VERIFIED",
+  "gqa_distinct_head_error": 0.0,
+  "causal_flip": true,
+  "explicit_scale": true,
+  "profile": {
+    "ops": [
+      "sageattention::qk_int8_sv_f16_accum_f32_attn"
+    ],
+    "cuda_kernels": [
+      "void QuantInt8Kernel<128u, 32u, 1u, false, false, __nv_bfloat16>(__nv_bfloat16*, __nv_bfloat16*, signed char*, float*, float, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int)",
+      "void QuantInt8Kernel<128u, 64u, 1u, false, true, __nv_bfloat16>(__nv_bfloat16*, __nv_bfloat16*, signed char*, float*, float, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int)",
+      "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1} const&)::{lambda(int)#1})",
+      "void at::native::reduce_kernel<128, 4, at::native::ReduceOp<c10::BFloat16, at::native::MeanOps<c10::BFloat16, float, float, c10::BFloat16>, unsigned int, c10::BFloat16, 4, 8> >(at::native::ReduceOp<c10::BFloat16, at::native::MeanOps<c10::BFloat16, float, float, c10::BFloat16>, unsigned int, c10::BFloat16, 4, 8>)",
+      "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#10}::operator()() const::{lambda(c10::Half)#1}, std::array<char*, 2ul>, 4, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >(int, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#10}::operator()() const::{lambda(c10::Half)#1}, std::array<char*, 2ul>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1>)",
+      "void qk_int_sv_f16_attn_kernel<128u, 64u, 32u, 64u, 128u, (DataType)1, (QuantGranularity)2, (QuantGranularity)2, float, false, __nv_bfloat16, (ComputeUnit)0, (MaskMode)1, false, false>(signed char*, signed char*, __half*, __nv_bfloat16*, float*, float*, float*, __nv_bfloat16*, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float)"
+    ],
+    "fused_bf16": false,
+    "low_precision": true
+  },
+  "observed_calls": [
+    {
+      "function": "per_warp_int8_cuda",
+      "kwargs": {
+        "tensor_layout": "HND",
+        "BLKQ": 128,
+        "WARPQ": 32,
+        "BLKK": 64
+      },
+      "tensor_operands": [
+        {
+          "index": 0,
+          "dtype": "torch.bfloat16",
+          "shape": [
+            1,
+            4,
+            32,
+            128
+          ]
+        },
+        {
+          "index": 1,
+          "dtype": "torch.bfloat16",
+          "shape": [
+            1,
+            2,
+            32,
+            128
+          ]
+        },
+        {
+          "index": 2,
+          "dtype": "torch.bfloat16",
+          "shape": [
+            1,
+            2,
+            1,
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "function": "qk_int8_sv_f16_accum_f32_attn",
+      "kwargs": {},
+      "tensor_operands": [
+        {
+          "index": 0,
+          "dtype": "torch.int8",
+          "shape": [
+            1,
+            4,
+            32,
+            128
+          ]
+        },
+        {
+          "index": 1,
+          "dtype": "torch.int8",
+          "shape": [
+            1,
+            2,
+            32,
+            128
+          ]
+        },
+        {
+          "index": 2,
+          "dtype": "torch.float16",
+          "shape": [
+            1,
+            2,
+            32,
+            128
+          ]
+        },
+        {
+          "index": 3,
+          "dtype": "torch.bfloat16",
+          "shape": [
+            1,
+            4,
+            32,
+            128
+          ]
+        },
+        {
+          "index": 4,
+          "dtype": "torch.float32",
+          "shape": [
+            1,
+            4,
+            4
+          ]
+        },
+        {
+          "index": 5,
+          "dtype": "torch.float32",
+          "shape": [
+            1,
+            2,
+            1
+          ]
+        }
+      ]
+    }
+  ],
+  "inputs_unchanged": true,
+  "completed_at_utc": "2026-09-15T05:23:18.532915+00:00"
+}
