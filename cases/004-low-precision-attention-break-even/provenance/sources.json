@@ -1,0 +1,73 @@
+{
+  "accessed_sources": [
+    {
+      "role": "idea_v1",
+      "url": "https://arxiv.org/html/2609.13031v1",
+      "resolved_url": "https://arxiv.org/html/2609.13031v1",
+      "http_status": 200,
+      "sha256": "041863c8aa3748929b89fd1c557c2aae845a48160279bca744aa73f590741481",
+      "accessed_at_utc": "2026-09-15T01:34:13.364918+00:00"
+    },
+    {
+      "role": "sage_paper",
+      "url": "https://arxiv.org/abs/2505.21136",
+      "resolved_url": "https://arxiv.org/abs/2505.21136",
+      "http_status": 200,
+      "sha256": "10ea44e2f1ccaff669a294935fa51c68007557b52a7c04363a2d8cd81e9e41c7",
+      "accessed_at_utc": "2026-09-15T01:34:13.529807+00:00"
+    },
+    {
+      "role": "sdpa",
+      "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html",
+      "resolved_url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html",
+      "http_status": 200,
+      "sha256": "ee506ef331bdaaae84765bd2bb724ade9eca34ef5583ffa306994914f5e4d8e8",
+      "accessed_at_utc": "2026-09-15T01:34:13.900779+00:00"
+    },
+    {
+      "role": "sdpa_kernel",
+      "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.attention.sdpa_kernel.html",
+      "resolved_url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.attention.sdpa_kernel.html",
+      "http_status": 200,
+      "sha256": "4f9250c89d0e417e5dcf62843fe547c56dea009ee4e480ec8da2966c633d230d",
+      "accessed_at_utc": "2026-09-15T01:34:13.902214+00:00"
+    },
+    {
+      "role": "cuda_event",
+      "url": "https://docs.pytorch.org/docs/stable/generated/torch.cuda.Event.html",
+      "resolved_url": "https://docs.pytorch.org/docs/stable/generated/torch.cuda.Event.html",
+      "http_status": 200,
+      "sha256": "ade2e904f05d6973f085b95a56d61e5a62b9404cd564bab0e8bf03834b1578cc",
+      "accessed_at_utc": "2026-09-15T01:34:13.900652+00:00"
+    }
+  ],
+  "sage_repository": "https://github.com/thu-ml/SageAttention",
+  "sage_commit": "d1a57a546c3d395b1ffcbeecc66d81db76f3b4b5",
+  "sage_version": "2.2.0",
+  "source_files": {
+    "setup.py": "db9b707a3b6cda661534ab25ffc24ffdc3d17137fb44117b99569fb00ea3fd96",
+    "sageattention/core.py": "e475182fc55d6a683499e1eb4d8886fc06e050ed938d8563b090773eede2a99e",
+    "sageattention/quant.py": "86bf415d4d24793a591c2a056e60f41b4bc579519ac7a875e484a65816940bf7",
+    "sageattention/sm89_compile.py": "dd5e0ebf92f2662a85d24cee5c984fe6ba114e610253b4bd339af5e3d5da97c9",
+    "csrc/mma.cuh": "841a0b028e25b48fd83ad042d7bf817f84bfd5e5630d19d08510b0b797914231",
+    "csrc/qattn/sm89_qk_int8_sv_f8_accum_f16_fuse_v_scale_attn_inst_buf.cu": "2d9651036aa0ce2769985055024ba944f197186ebf1db9b102af2f3560027260",
+    "csrc/numeric_conversion.cuh": "bb7edb348764a13827bb025c326784a609a416ba7758a5f69d9ac2460a26aa3d",
+    "LICENSE": "178f46f58127373d449565589a32c2b5b60c082934618c17b7ce6890c61ef394",
+    "csrc/qattn/qk_int_sv_f8_cuda_sm89.cuh": "9dfe17b60fb02047ed6ac03ca9af24565d7b6e773fd62526c6a89bf539e180f0"
+  },
+  "candidate": {
+    "api": "sageattn_qk_int8_pv_fp8_cuda",
+    "qk_quant_gran": "per_warp",
+    "pv_accum_dtype_option": "fp32+fp16",
+    "smooth_k": true,
+    "smooth_v": false,
+    "layout": "HND",
+    "output_dtype": "BF16",
+    "query_granularity": "32-token warp within 128-token query block",
+    "key_granularity": "64-token block",
+    "value_granularity": "per channel across sequence, e4m3, scale_max=2.25",
+    "accumulator_evidence": "Profiled exact inst_buf FP16 specialization; static matching binary symbols contain IMMA.16832.S8.S8 and QMMA.16832.F16.E4M3.E4M3. Source uses FP16 PV instruction buffer and FP32 outer output accumulator. No dynamic instruction counts."
+  },
+  "idea_scope": "Inspired by full-cost amortization in Attention Quantization for Tabular Foundation Models v1. This INT8-QK/FP8-PV Sage path is not that paper's pure FP8 Q/K/V kernel. No TabPFN experiment or borrowed 8192 threshold.",
+  "author_claim_scope": "Sage paper speed and model-quality claims are upstream results, not this experiment."
+}

@@ -2,13 +2,14 @@
 
 Reproducible case studies of local LLM execution on an **RTX 5080 16GB**. The project investigates execution compatibility, memory use, latency, and task quality through recorded experiments and inspectable evidence.
 
-**Three completed cases are documented here.** They cover execution compatibility, an official BF16/FP8 comparison on synthetic Korean document extraction, and an independent EFQ-Softmax numerical audit on Qwen attention traces.
+**Four completed cases are documented here.** They cover execution compatibility, an official BF16/FP8 comparison on synthetic Korean document extraction, an independent EFQ-Softmax numerical audit, and a full-operator low-precision attention comparison on Qwen traces.
 
 | Case | Question | Recorded result | Materials |
 |---|---|---|---|
 | 001 — Validating vLLM W8A8 INT8 fallback on RTX 5080 | Can an existing kernel-selection guard unblock a real W8A8 model on SM120? | Before: initialization error, exit 1. After: text generation, exit 0; 96 INT8 modules selected the Triton kernel class. | [Case and reproduction instructions](cases/001-sm120-int8-fallback/README.md) · [Download ZIP](downloads/step04_sm120_int8_repro.zip) |
 | 002 — Official BF16 vs FP8 Qwen3-4B document extraction | How do memory, latency, and extraction accuracy compare between the official BF16 and FP8 releases? | BF16 31/100 vs FP8 32/100 correct; difference +1 pp, 95% paired interval −2 to +5 pp. FP8 used less memory and had lower median latency; both accuracies were too low for unattended extraction. | [Case, results and reproduction](cases/002-bf16-fp8-document-extraction/README.md) · [Download ZIP](downloads/case002_bf16_fp8_document_extraction.zip) |
 | 003 — Independent EFQ-Softmax numerical audit | How robust are the published EFQ settings on real Qwen attention inputs? | EFQ-Mean median output error was 11.49–14.49%. Calibrated EFQ was near same-scale nearest in aggregate, but its median error was 1.13–1.18× headroom nearest. No packed-FP4 speed or task-quality claim. | [Case, methods and evidence](cases/003-efq-softmax-numerical-audit/README.md) |
+| 004 — Low-precision attention break-even | Does official SageAttention beat fused BF16 after preprocessing while meeting a fixed local Qwen-output error screen? | Real-Qwen complete speedup was 0.373×/1.465×/2.100× at lengths 512/2048/4096. All three failed the local error screen; no real-model candidate selected. | [Case, methods and evidence](cases/004-low-precision-attention-break-even/README.md) · [Download ZIP](downloads/case004_low_precision_attention_break_even.zip) |
 
 The unmodified vLLM 0.29.0 wheel selected a CUTLASS implementation that does not support INT8 on SM120. Applying the Python runtime guard from [hclsys's PR #54316](https://github.com/vllm-project/vllm/pull/54316) let the selector use the existing Triton implementation. The pinned `RedHatAI/Qwen2.5-0.5B-Instruct-quantized.w8a8` model then generated “The capital of France is Paris.” and exited normally, with 8 generated tokens including EOS.
 
@@ -22,7 +23,9 @@ Case 002 used 100 fixed evaluation documents and three paired timing rounds on t
 
 Case 003 used post-QK-normalization/post-RoPE traces from Qwen3-0.6B on 8 development and 16 held-out synthetic documents. It isolates probability approximation with fixed Q/K/V and FP32 arithmetic; it does not measure model quality or packed-FP4 acceleration. The [case](cases/003-efq-softmax-numerical-audit/README.md) and [analysis](cases/003-efq-softmax-numerical-audit/ANALYSIS.md) separate code mapping from scale choice and report calibration within the same prompt family, dependent measurements and error tails.
 
-Future work may address extraction reliability or a limited kernel-feasibility experiment under a separately fixed protocol; those follow-ups have not been run. The [case template](cases/TEMPLATE.md) provides a starting point.
+Case 004 measured official SageAttention's INT8-QK/FP8-PV path against development-selected fused BF16 SDPA, including quantization, smoothing, layout changes and wrapper cost. It covered 24 synthetic conditions and three real-Qwen geometries in five process rounds. At Qwen length 512, a faster prequantized internal kernel became a slower complete call. At lengths 2048 and 4096, complete speedup reached 1.465× and 2.100×, but all three lengths exceeded the fixed local output-error limits. The [detailed explanation](cases/004-low-precision-attention-break-even/README.md#experimental-design) covers design, verification and implications; the [analysis](cases/004-low-precision-attention-break-even/ANALYSIS.md) keeps timing gains separate from numerical rejection. This is a local attention-output comparison, not a downstream task-quality verdict.
+
+Future work may address extraction reliability or an EFQ microkernel-feasibility experiment under a separately fixed protocol; those follow-ups have not been run. The [case template](cases/TEMPLATE.md) provides a starting point.
 
 The original guard and its branch tests are hclsys's work. This project's contribution is RTX 5080 execution validation and reproducible evidence. OpenAI Codex assisted with the reproducer and documentation. See the case [NOTICE](cases/001-sm120-int8-fallback/NOTICE.md) for attribution and the [Apache-2.0 license](LICENSE).
 

@@ -1,0 +1,39 @@
+{
+  "isolated_prefix": "CASE004_WORK/env",
+  "base_python": "Existing CASE002 Python, read-only; venv --system-site-packages",
+  "python": "3.12.14",
+  "torch_runtime": "2.13.0+cu130",
+  "torch_import_origin": "Inherited base site-packages/torch/__init__.py",
+  "sage_import_origin": "CASE004_WORK/env site-packages/sageattention/__init__.py",
+  "nvcc": "13.0.88 from existing NVIDIA CUDA 13.0 toolkit wheel",
+  "system_nvcc_unused": "12.8.93",
+  "compiler": "g++ 13.3.0",
+  "flags": {
+    "TORCH_CUDA_ARCH_LIST": "12.0",
+    "MAX_JOBS": "4",
+    "EXT_PARALLEL": "1",
+    "NVCC_APPEND_FLAGS": "--threads=1"
+  },
+  "attempts": [
+    {
+      "id": 1,
+      "exit_code": 1,
+      "elapsed_seconds": 514.29,
+      "failure": "Final linker: cannot find -lcudart. Existing NVIDIA wheel has libcudart.so.13, without unversioned linker symlink."
+    },
+    {
+      "id": 2,
+      "exit_code": 0,
+      "elapsed_seconds": 466.44,
+      "change": "Private cuda-link/libcudart.so symlink to existing versioned runtime; LIBRARY_PATH points to private directory. No upstream source or existing environment changes."
+    }
+  ],
+  "wheel": {
+    "name": "sageattention-2.2.0-cp312-cp312-linux_x86_64.whl",
+    "bytes": 15217452,
+    "sha256": "0415539b210df9b07414a249e8853aa3b0fbba163af0c5c5a91896c880a576b3"
+  },
+  "install": "python -m pip install --no-deps --no-index WHEEL",
+  "build": "python -m pip wheel --no-build-isolation --no-deps SAGE_SOURCE --wheel-dir WHEELS",
+  "note": "Source build limited to two attempts. Wheel and full build output are private, not distributed."
+}

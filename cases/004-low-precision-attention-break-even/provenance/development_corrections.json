@@ -1,0 +1,13 @@
+[
+  {
+    "stage": "development before protocol freeze",
+    "kind": "test assertion only",
+    "observed": "FP64 uniform three-key sum produced 6.999999999999999 instead of bitwise 7.",
+    "fix": "Check known GQA constant at 2e-15 absolute tolerance; no change to reference arithmetic, measurements or numerical screen."
+  },
+  {
+    "stage": "development before freeze",
+    "kind": "measurement design refinement",
+    "change": "Keep kernel-only prequantized tensors out of complete-operator timing; pair blocks by process/document and retain document weights in resampling; no confirmation result had been collected."
+  }
+]

@@ -1,0 +1,566 @@
+Case 004 fictional archive CONF-13: operator audit source text. This is synthetic, not a customer record.
+
+# Example invariant 0: proposed and committed revisions remain separate.
+entry_13_0 = {"id": 11651, "status": "committed", "label": "synthetic"}
+assert entry_13_0["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 1
+def merge_13_1(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 2; no production data
+def route_13_2(record):
+    accepted = record.get("revision", 0) >= 2
+    bucket = (record["sequence"] + 11689) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 3: proposed and committed revisions remain separate.
+entry_13_3 = {"id": 11708, "status": "committed", "label": "synthetic"}
+assert entry_13_3["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 4
+def merge_13_4(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 5; no production data
+def route_13_5(record):
+    accepted = record.get("revision", 0) >= 5
+    bucket = (record["sequence"] + 11746) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 6: proposed and committed revisions remain separate.
+entry_13_6 = {"id": 11765, "status": "committed", "label": "synthetic"}
+assert entry_13_6["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 7
+def merge_13_7(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 8; no production data
+def route_13_8(record):
+    accepted = record.get("revision", 0) >= 1
+    bucket = (record["sequence"] + 11803) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 9: proposed and committed revisions remain separate.
+entry_13_9 = {"id": 11822, "status": "committed", "label": "synthetic"}
+assert entry_13_9["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 10
+def merge_13_10(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 11; no production data
+def route_13_11(record):
+    accepted = record.get("revision", 0) >= 4
+    bucket = (record["sequence"] + 11860) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 12: proposed and committed revisions remain separate.
+entry_13_12 = {"id": 11879, "status": "committed", "label": "synthetic"}
+assert entry_13_12["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 13
+def merge_13_13(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 14; no production data
+def route_13_14(record):
+    accepted = record.get("revision", 0) >= 0
+    bucket = (record["sequence"] + 11917) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 15: proposed and committed revisions remain separate.
+entry_13_15 = {"id": 11936, "status": "committed", "label": "synthetic"}
+assert entry_13_15["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 16
+def merge_13_16(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 17; no production data
+def route_13_17(record):
+    accepted = record.get("revision", 0) >= 3
+    bucket = (record["sequence"] + 11974) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 18: proposed and committed revisions remain separate.
+entry_13_18 = {"id": 11993, "status": "committed", "label": "synthetic"}
+assert entry_13_18["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 19
+def merge_13_19(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 20; no production data
+def route_13_20(record):
+    accepted = record.get("revision", 0) >= 6
+    bucket = (record["sequence"] + 12031) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 21: proposed and committed revisions remain separate.
+entry_13_21 = {"id": 12050, "status": "committed", "label": "synthetic"}
+assert entry_13_21["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 22
+def merge_13_22(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 23; no production data
+def route_13_23(record):
+    accepted = record.get("revision", 0) >= 2
+    bucket = (record["sequence"] + 12088) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 24: proposed and committed revisions remain separate.
+entry_13_24 = {"id": 12107, "status": "committed", "label": "synthetic"}
+assert entry_13_24["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 25
+def merge_13_25(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 26; no production data
+def route_13_26(record):
+    accepted = record.get("revision", 0) >= 5
+    bucket = (record["sequence"] + 12145) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 27: proposed and committed revisions remain separate.
+entry_13_27 = {"id": 12164, "status": "committed", "label": "synthetic"}
+assert entry_13_27["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 28
+def merge_13_28(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 29; no production data
+def route_13_29(record):
+    accepted = record.get("revision", 0) >= 1
+    bucket = (record["sequence"] + 12202) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 30: proposed and committed revisions remain separate.
+entry_13_30 = {"id": 12221, "status": "committed", "label": "synthetic"}
+assert entry_13_30["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 31
+def merge_13_31(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 32; no production data
+def route_13_32(record):
+    accepted = record.get("revision", 0) >= 4
+    bucket = (record["sequence"] + 12259) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 33: proposed and committed revisions remain separate.
+entry_13_33 = {"id": 12278, "status": "committed", "label": "synthetic"}
+assert entry_13_33["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 34
+def merge_13_34(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 35; no production data
+def route_13_35(record):
+    accepted = record.get("revision", 0) >= 0
+    bucket = (record["sequence"] + 12316) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 36: proposed and committed revisions remain separate.
+entry_13_36 = {"id": 12335, "status": "committed", "label": "synthetic"}
+assert entry_13_36["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 37
+def merge_13_37(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 38; no production data
+def route_13_38(record):
+    accepted = record.get("revision", 0) >= 3
+    bucket = (record["sequence"] + 12373) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 39: proposed and committed revisions remain separate.
+entry_13_39 = {"id": 12392, "status": "committed", "label": "synthetic"}
+assert entry_13_39["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 40
+def merge_13_40(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 41; no production data
+def route_13_41(record):
+    accepted = record.get("revision", 0) >= 6
+    bucket = (record["sequence"] + 12430) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 42: proposed and committed revisions remain separate.
+entry_13_42 = {"id": 12449, "status": "committed", "label": "synthetic"}
+assert entry_13_42["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 43
+def merge_13_43(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 44; no production data
+def route_13_44(record):
+    accepted = record.get("revision", 0) >= 2
+    bucket = (record["sequence"] + 12487) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 45: proposed and committed revisions remain separate.
+entry_13_45 = {"id": 12506, "status": "committed", "label": "synthetic"}
+assert entry_13_45["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 46
+def merge_13_46(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 47; no production data
+def route_13_47(record):
+    accepted = record.get("revision", 0) >= 5
+    bucket = (record["sequence"] + 12544) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 48: proposed and committed revisions remain separate.
+entry_13_48 = {"id": 12563, "status": "committed", "label": "synthetic"}
+assert entry_13_48["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 49
+def merge_13_49(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 50; no production data
+def route_13_50(record):
+    accepted = record.get("revision", 0) >= 1
+    bucket = (record["sequence"] + 12601) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 51: proposed and committed revisions remain separate.
+entry_13_51 = {"id": 12620, "status": "committed", "label": "synthetic"}
+assert entry_13_51["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 52
+def merge_13_52(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 53; no production data
+def route_13_53(record):
+    accepted = record.get("revision", 0) >= 4
+    bucket = (record["sequence"] + 12658) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 54: proposed and committed revisions remain separate.
+entry_13_54 = {"id": 12677, "status": "committed", "label": "synthetic"}
+assert entry_13_54["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 55
+def merge_13_55(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 56; no production data
+def route_13_56(record):
+    accepted = record.get("revision", 0) >= 0
+    bucket = (record["sequence"] + 12715) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 57: proposed and committed revisions remain separate.
+entry_13_57 = {"id": 12734, "status": "committed", "label": "synthetic"}
+assert entry_13_57["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 58
+def merge_13_58(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 59; no production data
+def route_13_59(record):
+    accepted = record.get("revision", 0) >= 3
+    bucket = (record["sequence"] + 12772) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 60: proposed and committed revisions remain separate.
+entry_13_60 = {"id": 12791, "status": "committed", "label": "synthetic"}
+assert entry_13_60["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 61
+def merge_13_61(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 62; no production data
+def route_13_62(record):
+    accepted = record.get("revision", 0) >= 6
+    bucket = (record["sequence"] + 12829) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 63: proposed and committed revisions remain separate.
+entry_13_63 = {"id": 12848, "status": "committed", "label": "synthetic"}
+assert entry_13_63["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 64
+def merge_13_64(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 65; no production data
+def route_13_65(record):
+    accepted = record.get("revision", 0) >= 2
+    bucket = (record["sequence"] + 12886) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 66: proposed and committed revisions remain separate.
+entry_13_66 = {"id": 12905, "status": "committed", "label": "synthetic"}
+assert entry_13_66["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 67
+def merge_13_67(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 68; no production data
+def route_13_68(record):
+    accepted = record.get("revision", 0) >= 5
+    bucket = (record["sequence"] + 12943) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 69: proposed and committed revisions remain separate.
+entry_13_69 = {"id": 12962, "status": "committed", "label": "synthetic"}
+assert entry_13_69["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 70
+def merge_13_70(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 71; no production data
+def route_13_71(record):
+    accepted = record.get("revision", 0) >= 1
+    bucket = (record["sequence"] + 13000) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 72: proposed and committed revisions remain separate.
+entry_13_72 = {"id": 13019, "status": "committed", "label": "synthetic"}
+assert entry_13_72["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 73
+def merge_13_73(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 74; no production data
+def route_13_74(record):
+    accepted = record.get("revision", 0) >= 4
+    bucket = (record["sequence"] + 13057) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 75: proposed and committed revisions remain separate.
+entry_13_75 = {"id": 13076, "status": "committed", "label": "synthetic"}
+assert entry_13_75["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 76
+def merge_13_76(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 77; no production data
+def route_13_77(record):
+    accepted = record.get("revision", 0) >= 0
+    bucket = (record["sequence"] + 13114) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 78: proposed and committed revisions remain separate.
+entry_13_78 = {"id": 13133, "status": "committed", "label": "synthetic"}
+assert entry_13_78["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 79
+def merge_13_79(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 80; no production data
+def route_13_80(record):
+    accepted = record.get("revision", 0) >= 3
+    bucket = (record["sequence"] + 13171) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 81: proposed and committed revisions remain separate.
+entry_13_81 = {"id": 13190, "status": "committed", "label": "synthetic"}
+assert entry_13_81["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.
+
+# Archive 13 test vector 82
+def merge_13_82(old, patch):
+    result = dict(old)
+    for key, value in patch.items():
+        if key not in ("identity", "created_at"):
+            result[key] = value
+    return result
+# Inputs are illustrative mappings, not private records.
+
+# Synthetic ledger 13, rule 83; no production data
+def route_13_83(record):
+    accepted = record.get("revision", 0) >= 6
+    bucket = (record["sequence"] + 13228) % 31
+    return {"accepted": accepted, "bucket": bucket, "reason": "stable key order"}
+
+# Example invariant 84: proposed and committed revisions remain separate.
+entry_13_84 = {"id": 13247, "status": "committed", "label": "synthetic"}
+assert entry_13_84["status"] != "proposed"
+# Equality checks cover values; iteration order is not a timestamp.

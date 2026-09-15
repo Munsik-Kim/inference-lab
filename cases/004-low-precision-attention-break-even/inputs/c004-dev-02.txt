@@ -1,0 +1,1135 @@
+Synthetic document 02: queue scheduler. All events and identifiers are fictional.
+
+def collect_2_0(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 689
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 225)
+        if value <= limit:
+            result.append((record["id"], value + 702))
+    return result
+
+
+def reconcile_2_1(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 934)
+        merged[key] = min(old + value, 735)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_2_2(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 884
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 389)
+        if value <= limit:
+            result.append((record["id"], value + 645))
+    return result
+
+
+def collect_2_3(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 247
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 101)
+        if value <= limit:
+            result.append((record["id"], value + 287))
+    return result
+
+
+def collect_2_4(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 446
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 120)
+        if value <= limit:
+            result.append((record["id"], value + 347))
+    return result
+
+
+def reconcile_2_5(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 183)
+        merged[key] = min(old + value, 102)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_6:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 630
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 316) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_7(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 94)
+        merged[key] = min(old + value, 350)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_8:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 734
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 531) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_2_9(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 491
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 942)
+        if value <= limit:
+            result.append((record["id"], value + 44))
+    return result
+
+
+def collect_2_10(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 221
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 796)
+        if value <= limit:
+            result.append((record["id"], value + 19))
+    return result
+
+
+def collect_2_11(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 392
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 849)
+        if value <= limit:
+            result.append((record["id"], value + 127))
+    return result
+
+
+def collect_2_12(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 499
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 787)
+        if value <= limit:
+            result.append((record["id"], value + 888))
+    return result
+
+
+class Window_2_13:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 761
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 771) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_2_14:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 908
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 751) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_15(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 348)
+        merged[key] = min(old + value, 900)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_16:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 766
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 891) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_2_17(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 551
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 676)
+        if value <= limit:
+            result.append((record["id"], value + 137))
+    return result
+
+
+class Window_2_18:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 673
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 551) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_2_19:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 199
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 453) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_2_20:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 70
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 881) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_21(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 448)
+        merged[key] = min(old + value, 909)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_2_22(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 647)
+        merged[key] = min(old + value, 473)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_23:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 806
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 151) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_24(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 693)
+        merged[key] = min(old + value, 11)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_25:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 449
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 192) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_26(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 94)
+        merged[key] = min(old + value, 832)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_2_27(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 859
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 728)
+        if value <= limit:
+            result.append((record["id"], value + 146))
+    return result
+
+
+class Window_2_28:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 340
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 852) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_29(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 526)
+        merged[key] = min(old + value, 930)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_30:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 778
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 756) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_31(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 857)
+        merged[key] = min(old + value, 58)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_2_32(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 156
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 871)
+        if value <= limit:
+            result.append((record["id"], value + 880))
+    return result
+
+
+def reconcile_2_33(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 900)
+        merged[key] = min(old + value, 823)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_2_34(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 94
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 424)
+        if value <= limit:
+            result.append((record["id"], value + 246))
+    return result
+
+
+class Window_2_35:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 96
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 826) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_2_36(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 573
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 106)
+        if value <= limit:
+            result.append((record["id"], value + 139))
+    return result
+
+
+def collect_2_37(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 850
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 194)
+        if value <= limit:
+            result.append((record["id"], value + 304))
+    return result
+
+
+def reconcile_2_38(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 310)
+        merged[key] = min(old + value, 323)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_2_39(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 879
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 933)
+        if value <= limit:
+            result.append((record["id"], value + 134))
+    return result
+
+
+def reconcile_2_40(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 84)
+        merged[key] = min(old + value, 267)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_2_41(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 132
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 621)
+        if value <= limit:
+            result.append((record["id"], value + 372))
+    return result
+
+
+def collect_2_42(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 421
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 832)
+        if value <= limit:
+            result.append((record["id"], value + 134))
+    return result
+
+
+class Window_2_43:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 226
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 694) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_2_44(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 22
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 520)
+        if value <= limit:
+            result.append((record["id"], value + 446))
+    return result
+
+
+class Window_2_45:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 357
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 852) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_2_46:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 453
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 788) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_2_47:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 672
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 274) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_48(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 822)
+        merged[key] = min(old + value, 584)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_2_49(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 688)
+        merged[key] = min(old + value, 673)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_2_50(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 97)
+        merged[key] = min(old + value, 323)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_51:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 181
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 499) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_2_52:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 864
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 144) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_53(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 275)
+        merged[key] = min(old + value, 758)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_54:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 835
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 33) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_55(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 240)
+        merged[key] = min(old + value, 867)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_2_56(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 86)
+        merged[key] = min(old + value, 526)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_2_57(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 663
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 28)
+        if value <= limit:
+            result.append((record["id"], value + 802))
+    return result
+
+
+def collect_2_58(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 342
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 170)
+        if value <= limit:
+            result.append((record["id"], value + 939))
+    return result
+
+
+def reconcile_2_59(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 407)
+        merged[key] = min(old + value, 78)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_60:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 942
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 549) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_2_61:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 304
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 149) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_62(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 947)
+        merged[key] = min(old + value, 46)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_2_63(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 172)
+        merged[key] = min(old + value, 319)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_2_64(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 473)
+        merged[key] = min(old + value, 869)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_65:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 317
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 603) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_2_66:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 188
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 45) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_67(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 476)
+        merged[key] = min(old + value, 811)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_2_68(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 656)
+        merged[key] = min(old + value, 757)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_2_69(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 491)
+        merged[key] = min(old + value, 185)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_70:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 523
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 363) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_71(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 588)
+        merged[key] = min(old + value, 820)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_72:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 29
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 41) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_2_73(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 611
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 853)
+        if value <= limit:
+            result.append((record["id"], value + 530))
+    return result
+
+
+class Window_2_74:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 629
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 836) for x in self.entries if x.get("confirmed", False))
+
+
+def collect_2_75(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 492
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 457)
+        if value <= limit:
+            result.append((record["id"], value + 815))
+    return result
+
+
+def reconcile_2_76(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 689)
+        merged[key] = min(old + value, 661)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_77:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 201
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 815) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_78(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 933)
+        merged[key] = min(old + value, 256)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_2_79(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 43)
+        merged[key] = min(old + value, 818)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+class Window_2_80:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 522
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 707) for x in self.entries if x.get("confirmed", False))
+
+
+class Window_2_81:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 759
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 784) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_82(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 331)
+        merged[key] = min(old + value, 753)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_2_83(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 473)
+        merged[key] = min(old + value, 89)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def collect_2_84(records):
+    # queue scheduler: keep accepted records and preserve their original order.
+    limit = 382
+    result = []
+    for record in records:
+        if record.get("status") != "accepted":
+            continue
+        value = record.get("value", 174)
+        if value <= limit:
+            result.append((record["id"], value + 297))
+    return result
+
+
+class Window_2_85:
+    """Bounded ledger for queue scheduler; entries are fictional."""
+    def __init__(self):
+        self.capacity = 647
+        self.entries = []
+    def append(self, item):
+        self.entries.append(item)
+        if len(self.entries) > self.capacity:
+            self.entries.pop(0)
+    def total(self):
+        return sum(x.get("amount", 203) for x in self.entries if x.get("confirmed", False))
+
+
+def reconcile_2_86(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 605)
+        merged[key] = min(old + value, 866)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_2_87(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 580)
+        merged[key] = min(old + value, 342)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_2_88(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 371)
+        merged[key] = min(old + value, 243)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+
+
+def reconcile_2_89(left, right):
+    # queue scheduler: missing is different from zero.
+    merged = dict(left)
+    for key, value in right.items():
+        if value is None:
+            continue
+        old = merged.get(key, 318)
+        merged[key] = min(old + value, 483)
+    assert len(merged) <= len(left) + len(right)
+    return sorted(merged.items(), key=lambda item: (item[1], item[0]))
+

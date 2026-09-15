@@ -1,0 +1,319 @@
+{
+  "path_labels": "CASE004_WORK, CASE_DIRECTORY, CASE003_DIRECTORY, BASE_PREFIX, QWEN_SNAPSHOT and ANALYSIS_PYTHON are portable path labels. Commands record installation, experiment and validation stages; exploratory fetch and intermediate document-generation commands are omitted. See INSTALL.md for environment preparation.",
+  "executions": [
+    {
+      "id": "prepare_inputs",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "CASE_DIRECTORY/scripts/prepare_inputs.py",
+        "--case003",
+        "CASE003_DIRECTORY",
+        "--snapshot",
+        "QWEN_SNAPSHOT"
+      ],
+      "started_at_utc": "2026-09-15T01:22:03.675130+00:00",
+      "elapsed_seconds": 6.742497761999402,
+      "exit_code": 0
+    },
+    {
+      "id": "capture_dev",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "CASE_DIRECTORY/scripts/capture_qwen.py",
+        "--split",
+        "dev",
+        "--snapshot",
+        "QWEN_SNAPSHOT",
+        "--work-dir",
+        "CASE004_WORK"
+      ],
+      "started_at_utc": "2026-09-15T01:24:14.157811+00:00",
+      "elapsed_seconds": 8.687908743000662,
+      "exit_code": 0
+    },
+    {
+      "id": "install_sage_attempt1",
+      "argv": [
+        "env",
+        "CUDA_HOME=BASE_PREFIX/lib/python3.12/site-packages/nvidia/cu13",
+        "TORCH_CUDA_ARCH_LIST=12.0",
+        "MAX_JOBS=4",
+        "EXT_PARALLEL=1",
+        "NVCC_APPEND_FLAGS=--threads=1",
+        "PIP_CACHE_DIR=CASE004_WORK/pip-cache",
+        "CASE004_WORK/env/bin/python",
+        "-m",
+        "pip",
+        "wheel",
+        "--no-build-isolation",
+        "--no-deps",
+        "CASE004_WORK/sources/SageAttention",
+        "--wheel-dir",
+        "CASE004_WORK/wheels"
+      ],
+      "started_at_utc": "2026-09-15T01:16:32.256902+00:00",
+      "elapsed_seconds": 514.289721657,
+      "exit_code": 1
+    },
+    {
+      "id": "cpu_tests_development",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "CASE_DIRECTORY/tests/test_cpu.py"
+      ],
+      "started_at_utc": "2026-09-15T01:30:53.337543+00:00",
+      "elapsed_seconds": 0.21567541299918958,
+      "exit_code": 1
+    },
+    {
+      "id": "cpu_tests_development_fixed",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "CASE_DIRECTORY/tests/test_cpu.py"
+      ],
+      "started_at_utc": "2026-09-15T01:31:29.957164+00:00",
+      "elapsed_seconds": 0.16434401600054116,
+      "exit_code": 0
+    },
+    {
+      "id": "install_sage_attempt2",
+      "argv": [
+        "env",
+        "CUDA_HOME=BASE_PREFIX/lib/python3.12/site-packages/nvidia/cu13",
+        "TORCH_CUDA_ARCH_LIST=12.0",
+        "MAX_JOBS=4",
+        "EXT_PARALLEL=1",
+        "NVCC_APPEND_FLAGS=--threads=1",
+        "LIBRARY_PATH=CASE004_WORK/cuda-link",
+        "PIP_CACHE_DIR=CASE004_WORK/pip-cache",
+        "CASE004_WORK/env/bin/python",
+        "-m",
+        "pip",
+        "wheel",
+        "--no-build-isolation",
+        "--no-deps",
+        "CASE004_WORK/sources/SageAttention",
+        "--wheel-dir",
+        "CASE004_WORK/wheels"
+      ],
+      "started_at_utc": "2026-09-15T01:28:29.153973+00:00",
+      "elapsed_seconds": 466.44251837900083,
+      "exit_code": 0
+    },
+    {
+      "id": "install_sage_wheel",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--no-deps",
+        "--no-index",
+        "CASE004_WORK/wheels/sageattention-2.2.0-cp312-cp312-linux_x86_64.whl"
+      ],
+      "started_at_utc": "2026-09-15T01:43:09.588019+00:00",
+      "elapsed_seconds": 0.47586884900010773,
+      "exit_code": 0
+    },
+    {
+      "id": "cpu_tests_prefreeze",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "started_at_utc": "2026-09-15T01:43:29.064966+00:00",
+      "elapsed_seconds": 0.21399069299877738,
+      "exit_code": 0
+    },
+    {
+      "id": "sage_gpu_gate0",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "scripts/probe_backend.py"
+      ],
+      "started_at_utc": "2026-09-15T01:43:27.661323+00:00",
+      "elapsed_seconds": 12.635522421000132,
+      "exit_code": 0
+    },
+    {
+      "id": "benchmark_dev",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "scripts/benchmark.py",
+        "--stage",
+        "dev",
+        "--round",
+        "0",
+        "--work-dir",
+        "CASE004_WORK"
+      ],
+      "started_at_utc": "2026-09-15T01:43:59.978373+00:00",
+      "elapsed_seconds": 64.10937567200017,
+      "exit_code": 0
+    },
+    {
+      "id": "freeze_protocol",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "scripts/freeze_protocol.py"
+      ],
+      "started_at_utc": "2026-09-15T01:48:35.271610+00:00",
+      "elapsed_seconds": 0.1644179559989425,
+      "exit_code": 0
+    },
+    {
+      "id": "capture_confirmation",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "scripts/capture_qwen.py",
+        "--split",
+        "confirmation",
+        "--snapshot",
+        "QWEN_SNAPSHOT",
+        "--work-dir",
+        "CASE004_WORK"
+      ],
+      "started_at_utc": "2026-09-15T01:49:01.265477+00:00",
+      "elapsed_seconds": 12.730791964999298,
+      "exit_code": 0
+    },
+    {
+      "id": "benchmark_confirmation_0",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "scripts/benchmark.py",
+        "--stage",
+        "confirmation",
+        "--round",
+        "0",
+        "--work-dir",
+        "CASE004_WORK"
+      ],
+      "started_at_utc": "2026-09-15T01:49:43.991584+00:00",
+      "elapsed_seconds": 109.07639683399975,
+      "exit_code": 0
+    },
+    {
+      "id": "benchmark_confirmation_1",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "scripts/benchmark.py",
+        "--stage",
+        "confirmation",
+        "--round",
+        "1",
+        "--work-dir",
+        "CASE004_WORK"
+      ],
+      "started_at_utc": "2026-09-15T01:51:33.086475+00:00",
+      "elapsed_seconds": 98.14339963800012,
+      "exit_code": 0
+    },
+    {
+      "id": "benchmark_confirmation_2",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "scripts/benchmark.py",
+        "--stage",
+        "confirmation",
+        "--round",
+        "2",
+        "--work-dir",
+        "CASE004_WORK"
+      ],
+      "started_at_utc": "2026-09-15T01:53:11.247699+00:00",
+      "elapsed_seconds": 96.6684274979998,
+      "exit_code": 0
+    },
+    {
+      "id": "benchmark_confirmation_3",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "scripts/benchmark.py",
+        "--stage",
+        "confirmation",
+        "--round",
+        "3",
+        "--work-dir",
+        "CASE004_WORK"
+      ],
+      "started_at_utc": "2026-09-15T01:54:47.933638+00:00",
+      "elapsed_seconds": 96.55809174000024,
+      "exit_code": 0
+    },
+    {
+      "id": "benchmark_confirmation_4",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "scripts/benchmark.py",
+        "--stage",
+        "confirmation",
+        "--round",
+        "4",
+        "--work-dir",
+        "CASE004_WORK"
+      ],
+      "started_at_utc": "2026-09-15T01:56:24.509641+00:00",
+      "elapsed_seconds": 97.8338812359998,
+      "exit_code": 0
+    },
+    {
+      "id": "analyze_confirmation",
+      "argv": [
+        "ANALYSIS_PYTHON",
+        "scripts/analyze.py",
+        "--output-dir",
+        "CASE004_WORK/analysis-a"
+      ],
+      "started_at_utc": "2026-09-15T01:59:31.169449+00:00",
+      "elapsed_seconds": 6.580276918999516,
+      "exit_code": 0
+    },
+    {
+      "id": "analyze_determinism",
+      "argv": [
+        "ANALYSIS_PYTHON",
+        "scripts/analyze.py",
+        "--output-dir",
+        "CASE004_WORK/analysis-b"
+      ],
+      "started_at_utc": "2026-09-15T02:00:16.263559+00:00",
+      "elapsed_seconds": 6.739700510999683,
+      "exit_code": 0
+    },
+    {
+      "id": "independent_artifact_audit",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "scripts/verify_artifacts.py",
+        "--snapshot",
+        "QWEN_SNAPSHOT",
+        "--output",
+        "provenance/artifact_audit.json"
+      ],
+      "started_at_utc": "2026-09-15T02:02:15.000124+00:00",
+      "elapsed_seconds": 1.2656330800000433,
+      "exit_code": 0
+    },
+    {
+      "id": "cpu_tests_final",
+      "argv": [
+        "CASE004_WORK/env/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "started_at_utc": "2026-09-15T02:02:42.738969+00:00",
+      "elapsed_seconds": 0.16429967399926682,
+      "exit_code": 0
+    }
+  ]
+}

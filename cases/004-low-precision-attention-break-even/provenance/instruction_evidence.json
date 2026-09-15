@@ -1,0 +1,55 @@
+{
+  "tool": "CUDA 12.8 cuobjdump --dump-sass",
+  "exit_code": 0,
+  "scope": "Static instructions in the installed SM120 binary for source-template symbols matching profiled kernel specializations; not dynamic instruction counters",
+  "records": [
+    {
+      "symbol": "_Z24qk_int_sv_f8_attn_kernelILj128ELj64ELj32ELj64ELj128EL8DataType1EL16QuantGranularity2ELS1_2EfLb1E13__nv_bfloat16L11ComputeUnit1EL8MaskMode0ELb0ELb1ELb0ELb1EEvPaS5_S5_PT9_PfS8_S8_S8_S8_jjjjjjjjjjjjjjjf",
+      "demangled": "void qk_int_sv_f8_attn_kernel<128u, 64u, 32u, 64u, 128u, (DataType)1, (QuantGranularity)2, (QuantGranularity)2, float, true, __nv_bfloat16, (ComputeUnit)1, (MaskMode)0, false, true, false, true>(signed char*, signed char*, signed char*, __nv_bfloat16*, float*, float*, float*, float*, float*, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float)",
+      "instruction_counts": {
+        "IMMA.16832.S8.S8": 192,
+        "QMMA.16832.F16.E4M3.E4M3": 192
+      },
+      "instruction_examples": [
+        "IMMA.16832.S8.S8 R92, R112.ROW, R44.COL, RZ                              &req={1}         ?WAIT15_END_GROUP;",
+        "QMMA.16832.F16.E4M3.E4M3 R110, R72, R46, RZ                              &req={1}         ?trans1;"
+      ]
+    },
+    {
+      "symbol": "_Z24qk_int_sv_f8_attn_kernelILj128ELj64ELj32ELj64ELj128EL8DataType1EL16QuantGranularity2ELS1_2EfLb1E13__nv_bfloat16L11ComputeUnit1EL8MaskMode1ELb0ELb1ELb0ELb1EEvPaS5_S5_PT9_PfS8_S8_S8_S8_jjjjjjjjjjjjjjjf",
+      "demangled": "void qk_int_sv_f8_attn_kernel<128u, 64u, 32u, 64u, 128u, (DataType)1, (QuantGranularity)2, (QuantGranularity)2, float, true, __nv_bfloat16, (ComputeUnit)1, (MaskMode)1, false, true, false, true>(signed char*, signed char*, signed char*, __nv_bfloat16*, float*, float*, float*, float*, float*, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float)",
+      "instruction_counts": {
+        "IMMA.16832.S8.S8": 192,
+        "QMMA.16832.F16.E4M3.E4M3": 192
+      },
+      "instruction_examples": [
+        "IMMA.16832.S8.S8 R76, R120.ROW, R80.COL, RZ                              &req={1}         ?WAIT15_END_GROUP;",
+        "QMMA.16832.F16.E4M3.E4M3 R100, R48, R84, RZ                              &req={1}         ?trans1;"
+      ]
+    },
+    {
+      "symbol": "_Z24qk_int_sv_f8_attn_kernelILj128ELj64ELj32ELj64ELj64EL8DataType1EL16QuantGranularity2ELS1_2EfLb1E13__nv_bfloat16L11ComputeUnit1EL8MaskMode0ELb0ELb1ELb0ELb1EEvPaS5_S5_PT9_PfS8_S8_S8_S8_jjjjjjjjjjjjjjjf",
+      "demangled": "void qk_int_sv_f8_attn_kernel<128u, 64u, 32u, 64u, 64u, (DataType)1, (QuantGranularity)2, (QuantGranularity)2, float, true, __nv_bfloat16, (ComputeUnit)1, (MaskMode)0, false, true, false, true>(signed char*, signed char*, signed char*, __nv_bfloat16*, float*, float*, float*, float*, float*, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float)",
+      "instruction_counts": {
+        "IMMA.16832.S8.S8": 96,
+        "QMMA.16832.F16.E4M3.E4M3": 96
+      },
+      "instruction_examples": [
+        "IMMA.16832.S8.S8 R116, R56.ROW, R64.COL, RZ                              &req={1}         ?WAIT15_END_GROUP;",
+        "QMMA.16832.F16.E4M3.E4M3 R90, R56, R40, RZ                               &req={3}         ?trans1;"
+      ]
+    },
+    {
+      "symbol": "_Z24qk_int_sv_f8_attn_kernelILj128ELj64ELj32ELj64ELj64EL8DataType1EL16QuantGranularity2ELS1_2EfLb1E13__nv_bfloat16L11ComputeUnit1EL8MaskMode1ELb0ELb1ELb0ELb1EEvPaS5_S5_PT9_PfS8_S8_S8_S8_jjjjjjjjjjjjjjjf",
+      "demangled": "void qk_int_sv_f8_attn_kernel<128u, 64u, 32u, 64u, 64u, (DataType)1, (QuantGranularity)2, (QuantGranularity)2, float, true, __nv_bfloat16, (ComputeUnit)1, (MaskMode)1, false, true, false, true>(signed char*, signed char*, signed char*, __nv_bfloat16*, float*, float*, float*, float*, float*, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float)",
+      "instruction_counts": {
+        "IMMA.16832.S8.S8": 96,
+        "QMMA.16832.F16.E4M3.E4M3": 96
+      },
+      "instruction_examples": [
+        "IMMA.16832.S8.S8 R116, R56.ROW, R64.COL, RZ                              &req={1}         ?WAIT15_END_GROUP;",
+        "QMMA.16832.F16.E4M3.E4M3 R74, R56, R40, RZ                                                ?trans1;"
+      ]
+    }
+  ]
+}

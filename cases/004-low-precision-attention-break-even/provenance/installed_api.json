@@ -1,0 +1,14 @@
+{
+  "sdpa_kernel_signature": "(backends: list[torch.nn.attention._SDPBackend] | torch.nn.attention._SDPBackend, set_priority: bool = False)",
+  "sdpa_kernel_source_sha256": "8b7a477f978a8532852fd81e241c78182516bc4975d672d580a5848a76e11eb6",
+  "sdpa_doc_sha256": "6bc2ebda2ba8dc4e7201fd0a746528380deba12976828d7a721708e6de10e0d8",
+  "sdpa_signature_doc": [
+    "scaled_dot_product_attention(query, key, value, attn_mask=None, dropout_p=0.0,",
+    "        is_causal=False, scale=None, enable_gqa=False) -> Tensor:",
+    "",
+    "    Computes scaled dot product attention on query, key and value tensors, using an optional attention mask if passed,"
+  ],
+  "event_signature": "(enable_timing=False, blocking=False, interprocess=False, external=False)",
+  "event_elapsed_time_doc": "Return the time elapsed.\n\n        Time reported in milliseconds after the event was recorded and\n        before the end_event was recorded.\n\n        Args:\n            end_event (Event): the end event.\n        ",
+  "scale_and_gqa_local_support": "Verified in installed API and actual Gate 0; enable_gqa Hq/Hkv=2; scale explicit; dropout=0; square causal/noncausal; no arbitrary mask adapter."
+}
