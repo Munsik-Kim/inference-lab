@@ -16,4 +16,4 @@ RTX 5080에서 같은 Qwen3-0.6B 모델의 13번 층 prefill attention만 바꾸
 
 [별도 보충 자료](supplemental/readout-ties-v1/README.ko.md)는 같은 표준 192개와 기존 선정 스트레스 46개를 재사용한다. 원래 표준 집합의 선택 변화 5건/8건은 모두 기준 또는 후보의 최고점 동률을 포함했다. 동일 hidden state의 FP32 head 진단에서는 각각 3건이었으며 새로운 변화도 생겼다. 이를 더 좋은 모델이나 품질 보존의 근거로 삼지 않는다. 원래 native 결과·생성 0/24·모델 시간 측정은 그대로다.
 
-[통합 ZIP](../../downloads/case006_decision_stability_with_readout_20260917.zip)을 내려받고 압축을 풀어 각 HTML을 브라우저에서 연다. GitHub의 HTML 코드 화면은 실행 중인 탐색기가 아니다. 보충 HTML은 Windows Edge의 file://와 태블릿 화면 에뮬레이션에서 검사했으며 실제 iPad는 미검증이다.
+[통합 ZIP](../../downloads/case006_decision_stability_with_readout_20260917_docfix1.zip)을 내려받고 압축을 풀어 각 HTML을 브라우저에서 연다. GitHub의 HTML 코드 화면은 실행 중인 탐색기가 아니다. 보충 HTML은 Windows Edge의 file://와 태블릿 화면 에뮬레이션에서 검사했으며 실제 iPad는 미검증이다.

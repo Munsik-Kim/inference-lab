@@ -74,7 +74,7 @@ The supplement reuses the same 192 standard and 46 selected stress scenarios, no
 
 ## Download and publication snapshot
 
-[Download the combined original + supplement ZIP](../../downloads/case006_decision_stability_with_readout_20260917.zip) · [archive size and SHA256](../../downloads/case006_decision_stability_with_readout_20260917.json).
+[Download the combined original + supplement ZIP](../../downloads/case006_decision_stability_with_readout_20260917_docfix1.zip) · [archive size and SHA256](../../downloads/case006_decision_stability_with_readout_20260917_docfix1.json).
 
 Unzip and open `demo/index.html` for the original native explorer or `supplemental/readout-ties-v1/demo/index.html` for the separately labelled readout diagnostic. Both are offline HTML files; GitHub's HTML source preview is not a running demo. The supplemental file was tested through `file://` in Windows Edge 153 at desktop and emulated tablet sizes. Real iPad operation remains untested; GitHub Pages is not enabled by this publication.
 

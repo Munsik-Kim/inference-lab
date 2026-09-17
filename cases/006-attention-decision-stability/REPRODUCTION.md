@@ -32,8 +32,8 @@ Set `GPU_PY` to that environment's Python, `SNAPSHOT` to the verified local Qwen
 "$GPU_PY" -B scripts/run_case006.py --stage smoke --snapshot "$SNAPSHOT" --output "$CASE006_RUN/smoke.json"
 "$GPU_PY" -B scripts/validate_integration.py --snapshot "$SNAPSHOT" --output "$CASE006_RUN/integration.json"
 "$GPU_PY" -B scripts/verify_inputs.py --evaluation-inputs inputs/evaluation --snapshot "$SNAPSHOT" --output "$CASE006_RUN/input-audit.json"
-"$GPU_PY" -B scripts/measure_scores.py --stage eval --snapshot "$SNAPSHOT" --inputs inputs/evaluation/standard-*.json --gold inputs/evaluation/gold.json --semantic "$CASE006_RUN/integration.json" --freeze configs/eval_manifest_freeze_v1.json --work-dir "$CASE006_RUN/standard"
-"$GPU_PY" -B scripts/measure_scores.py --stage eval --snapshot "$SNAPSHOT" --inputs inputs/evaluation/boundary_pool-*.json --gold inputs/evaluation/gold.json --semantic "$CASE006_RUN/integration.json" --freeze configs/eval_manifest_freeze_v1.json --selection configs/boundary_selection_v1.json --work-dir "$CASE006_RUN/stress"
+"$GPU_PY" -B scripts/measure_scores.py --stage eval --snapshot "$SNAPSHOT" --inputs inputs/evaluation/standard-*.json --gold inputs/evaluation/gold.json --semantic "$CASE006_RUN/integration.json" --freeze configs/eval_manifest_freeze_v1.json --work-dir "$CASE006_RUN/standard-eval"
+"$GPU_PY" -B scripts/measure_scores.py --stage eval --snapshot "$SNAPSHOT" --inputs inputs/evaluation/boundary_pool-*.json --gold inputs/evaluation/gold.json --semantic "$CASE006_RUN/integration.json" --freeze configs/eval_manifest_freeze_v1.json --selection configs/boundary_selection_v1.json --work-dir "$CASE006_RUN/boundary-eval"
 "$GPU_PY" -B scripts/measure_scores.py --stage length --snapshot "$SNAPSHOT" --inputs inputs/evaluation/length-*.json --gold inputs/evaluation/gold.json --semantic "$CASE006_RUN/integration.json" --freeze configs/eval_manifest_freeze_v1.json --work-dir "$CASE006_RUN/length"
 "$GPU_PY" -B scripts/run_secondary.py --snapshot "$SNAPSHOT" --inputs inputs/evaluation/secondary-*.json --gold inputs/evaluation/gold.json --freeze configs/eval_manifest_freeze_v1.json --work-dir "$CASE006_RUN/secondary"
 for round in 0 1 2; do
@@ -48,6 +48,39 @@ These commands replay already published inputs. They are not fresh held-out conf
 
 Model captures, reference calculations and full-vocabulary vectors stay in private work directories. Only scalar payloads should be exported using `collect_public.py`. Public scalars support arithmetic auditing; full GPU replay is required to independently reproduce kernel outputs.
 
+
+## Connecting original replay to the readout supplement
+
+`CASE006_DIR` is the absolute path to this published case directory. `CASE006_RUN`
+is the private root holding the original measurement outputs; `CASE006_READOUT_RUN`
+is a separate, new private directory for readout outputs. The commands above create:
+
+```text
+$CASE006_RUN/
+  standard-eval/private_vectors/
+  boundary-eval/private_vectors/
+  length/
+  secondary/
+  timing/
+```
+
+Pass the root `CASE006_RUN` to `--original-run`, not either dataset subdirectory.
+Run the following example from the supplement directory:
+
+```bash
+cd "$CASE006_DIR/supplemental/readout-ties-v1"
+"$GPU_PY" -B scripts/run_readout.py \
+  --original-case "$CASE006_DIR" \
+  --original-run "$CASE006_RUN" \
+  --snapshot "$SNAPSHOT" \
+  --work-dir "$CASE006_READOUT_RUN"
+```
+
+This is a command for a future pinned-local GPU reproduction, not a command run
+for the documentation fix. It requires the complete private vectors and the same
+pinned model/environment. Public scalar records cannot reconstruct hidden states.
+The CPU documentation path-contract check verifies directory agreement only; it
+does not establish fresh-install GPU reproduction or numerical identity.
 
 ## Publication package verification
 
