@@ -1,0 +1,27 @@
+{
+  "execution_status": "COMPLETED_CONTROLLED_STUDY",
+  "semantic_validity_status": "PASS",
+  "evidence_completeness": "ALL_FIXED_STAGES_COMPLETE",
+  "deployment_verdict": "NOT_ASSESSED",
+  "problems": [],
+  "publication_readiness": "READY_FOR_REVIEW",
+  "observable_effect_summary": "Standard choice changes and gains; stress regressions; mean gold-NLL intervals include zero; strict secondary schema fails in all arms; sub-percent model-prefill differences.",
+  "completed_stages": [
+    "semantic diagnostics",
+    "DEV",
+    "DESIGN_FREEZE",
+    "B-only boundary pool",
+    "EVAL_MANIFEST_FREEZE",
+    "standard and stress evaluation",
+    "length support",
+    "own-cache secondary generation",
+    "three model timing processes",
+    "independent scalar and timing audits"
+  ],
+  "remaining": "User review; no further authorized research or external publication",
+  "next_command": "python -B scripts/analyze_study.py --records results/raw/paired/*.json --timing results/raw/timing/*.json --secondary results/raw/secondary/*.json --output <NEW_EXTERNAL_DIR>",
+  "measurement_resume_required": false,
+  "publish_ready": true,
+  "committed": false,
+  "pushed": false
+}

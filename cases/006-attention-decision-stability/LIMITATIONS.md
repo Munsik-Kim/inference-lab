@@ -1,0 +1,16 @@
+# Limits and unmeasured questions
+
+- One pinned Qwen3-0.6B checkpoint, one RTX 5080, one zero-based layer and square prompt prefill. No weight/KV quantization, all-layer replacement, alternative models or precision search.
+- Self-written English task templates and bounded Python arithmetic with deterministic repeated filler. Distinct latent scenarios are the analysis clusters; heads, query rows, lengths and process rounds are not extra documents. This is not a representative natural-language or bilingual benchmark.
+- BF16 retrieval/comparison/code accuracy was 59/64, 30/64 and 15/64. Weak baseline utility, balanced but limited label conventions and template sharing constrain the interpretation of small changes.
+- The 46-item stress set is selected on BF16 winner gaps from a separate fixed pool. Its rates do not estimate ordinary-workload rates. Empty bins and exact ties were not refilled.
+- Forced-choice probabilities condition on four labels. Full-label mass and full-vocabulary NLL/argmax are reported separately. Native logits were already BF16-rounded before FP64 analysis.
+- Primary scores observe only the prompt. No unseen answer continuation enters whole-sequence quantization statistics. This design does not prove arbitrary prefix invariance or streaming/decode equivalence of the low-precision kernel.
+- Local attention error uses 32 query positions per head and all causal-valid keys, not every query. Hidden-boundary normalized differences have different denominators. R and final KL require both outputs and are retrospective diagnostics, not predictors.
+- All three arms had 0/24 strict schema-valid outputs on the separate structured-generation diagnostic. Formatting failure is not automatically a wrong underlying fact; no response repair or post-hoc re-prompting was applied. The bounded token comparisons cannot establish a successful structured task. A same-index match does not restore a cache/state.
+- Timed model prefill excludes tokenizer, CPU/GPU input transfer and diagnostic instrumentation. Five-call block averages are not single-request service latencies. Separate single-request generation times can reflect different lengths/EOS. No isolated decode-time estimate, server TTFT, model-weight memory saving or end-to-end deployment benchmark was measured.
+- Bootstrap intervals are pointwise, same-family estimates. Zero observed regressions or a confidence interval including zero proves neither zero risk nor equivalence. No deployment utility tolerance or non-inferiority margin was specified.
+- Public option logits and scalar norms support CPU arithmetic auditing. Full vectors and activations are intentionally omitted, so some full-vocabulary/hidden/kernel claims require the retained private evidence or a new pinned GPU reproduction. Codex's separate checker is not an independent human or third-party experiment.
+- The offline explorer is a recorded-evidence viewer, not a GPU service. No cloud hosting or publication was performed. Direct tablet file-preview execution has not been verified.
+
+Future model/task/layer or integration studies require a separate protocol. This case does not authorize another sweep or turn Case005's development stop into a deployment approval.

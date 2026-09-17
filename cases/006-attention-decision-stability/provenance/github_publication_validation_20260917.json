@@ -1,0 +1,105 @@
+{
+  "scope": "CPU publication verification; no additional GPU/model calls",
+  "original_tests": {
+    "passed": 59,
+    "failed": 0,
+    "tree": "Hash-verified original-only scratch"
+  },
+  "supplement_tests": {
+    "passed": 23,
+    "failed": 0
+  },
+  "publication_integrity_tests": {
+    "passed": 6,
+    "failed": 0,
+    "initial_invocation": "Wrong working directory caused discovery failure before any tests; corrected to case directory. Original failed command log retained privately."
+  },
+  "original_scalar_audit": {
+    "status": "PASS_CPU_MEASUREMENT_CONSISTENCY",
+    "records_checked": 1290,
+    "norm_units_checked": 41280,
+    "paired_comparisons": 860,
+    "bootstrap_intervals_checked": 40,
+    "primary_192_scenarios_complete": true,
+    "independence_scope": "Distinct scalar/norm/paired/bootstrap calculation path. Not third-party GPU replication. Full-vocabulary KL and hidden differences cannot be fully reconstructed from public four-logit/norm evidence alone.",
+    "derived_execution_status": "COMPLETED_CONTROLLED_STUDY",
+    "deployment_verdict": "NOT_ASSESSED"
+  },
+  "original_timing_audit": {
+    "status": "PASS",
+    "raw_timing_rows": 540,
+    "documents": 12,
+    "shared_local_processes": 3,
+    "recomputed": {
+      "A_PUBLIC": {
+        "median": 1.0040888999751811,
+        "ci95": [
+          1.00325344954255,
+          1.0052304694675998
+        ]
+      },
+      "V4": {
+        "median": 1.001392123166501,
+        "ci95": [
+          1.0007302114164227,
+          1.0022650483895947
+        ]
+      }
+    },
+    "scope": "Independent scalar aggregation and resampling; not new GPU replication"
+  },
+  "supplement_scalar_audit": {
+    "status": "PASS",
+    "scalar_cells": 1428,
+    "distinct_existing_scenarios": 238,
+    "groups_checked": 32,
+    "bootstrap_intervals_checked": 48,
+    "norm_summaries_checked": 6188,
+    "max_scalar_difference": 7.105427357601002e-15,
+    "original_totals_reconstructed": true,
+    "scope": "Independent scalar and bootstrap calculations; no independent kernel/full-vocabulary replication"
+  },
+  "inputs_audit": {
+    "status": "PASS",
+    "independent_base_scenarios": 486,
+    "exact_prompts_including_dependent_subsets": 606,
+    "independent_fact_oracles": "PASS",
+    "split_overlap": "NONE",
+    "required_fact_and_option_retention": "PASS",
+    "frozen_code_files": 19,
+    "tokenizer_replay": "NOT_RUN",
+    "scope": "CPU facts/tokenization/hash audit; no model inference"
+  },
+  "byte_identical_regeneration": [
+    "original-analysis/summary.json",
+    "original-analysis/pairs.json",
+    "supplement-analysis/summary.json",
+    "supplement-analysis/pairs.json",
+    "supplement-materials/figures/01_readout_flips.png",
+    "supplement-materials/figures/02_score_readout.png",
+    "supplement-materials/figures/03_local_margin.png",
+    "supplement-materials/demo/index.html"
+  ],
+  "privacy": {
+    "status": "PASS",
+    "text_files_scanned": 193,
+    "findings": [],
+    "scope": "Explicit personal-path and credential patterns plus payload inventory review; synthetic path-rejection test labels are not personal paths"
+  },
+  "earlier_tracked_files_unchanged": 381,
+  "browser": {
+    "evidence": "Byte-identical reviewed supplemental HTML and recorded Edge153 file:// checks reused; not a new browser or real-iPad run",
+    "reviewed_validation_sha256": "3ceb6aa8c49c848dbe259b732439ecf2508bfcc2de7e278a4a526222a344c41c",
+    "real_ipad": "NOT_TESTED"
+  },
+  "source_review_archives_preserved": true,
+  "no_third_party_gpu_replication_claim": true,
+  "whitespace": {
+    "default_git_diff_check": "109 CR-at-EOL warnings in the unchanged reviewed CSV; no trailing spaces or tabs",
+    "verified_csv_lines": 109,
+    "byte_policy": "Retained approved CSV bytes and original hashes; no line-ending conversion",
+    "CRLF_aware_git_check": "PASS",
+    "command": "git -c core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol diff --cached --check",
+    "config_scope": "Command only; no repository/global config change"
+  }
+}

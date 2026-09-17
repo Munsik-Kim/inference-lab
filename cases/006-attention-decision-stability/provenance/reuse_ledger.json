@@ -1,0 +1,28 @@
+{
+  "base_commit": "b4d42f8dc6e3cea81e5daf7d5379f57c7b3976a5",
+  "consulted": [
+    {
+      "path": "cases/005-attention-precision-pareto/src/backends.py",
+      "sha256": "f37aef2b67c669e36992da0ed3d81fa626de924611f312c8383ac6f5bae04eaa"
+    },
+    {
+      "path": "cases/005-attention-precision-pareto/src/reference.py",
+      "sha256": "cb6f6f0fb5dc42f0119ae24c4595e75bfb6226730c2e13e6ee4fa53b4a4d1448"
+    },
+    {
+      "path": "cases/005-attention-precision-pareto/src/timing.py",
+      "sha256": "17afd9012fa4f4346897df4d270bd27a053eabe75cad659d4751c018d097a9df"
+    },
+    {
+      "path": "cases/005-attention-precision-pareto/scripts/analyze.py",
+      "sha256": "c5e90b674c3855b974a022d1573dc33b10ecd1b262c8d5926c72dd4bdce20589"
+    },
+    {
+      "path": "cases/004-low-precision-attention-break-even/scripts/capture_qwen.py",
+      "sha256": "e1e682fbb6921d4f28942560b00f768e087b013d78f976b66f45d3241bbf3b7d"
+    }
+  ],
+  "reuse": "Explicit Sage options, GQA head mapping, 32 query positions, synchronized wall boundary; independently written Case006 modules, no runtime imports from previous cases",
+  "correction": "Case005 scripts/analyze.py line 42 in its unexecuted fresh path passed True,True to final_decision. Case006 requires explicit full-output validity evidence; missing or nonfinite evidence blocks completion. Case005 frozen code and STOP_DEV_SCREEN unchanged.",
+  "capture_change": "AutoModelForCausalLM and native logits_to_keep=1 replace backbone-only capture. Scoped registry restoration includes exceptions. Integration correspondence passed; see integration_pass.json and the retained head-shape diagnostic."
+}

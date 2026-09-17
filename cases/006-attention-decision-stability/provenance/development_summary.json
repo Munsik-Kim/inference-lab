@@ -1,0 +1,1745 @@
+{
+  "scope": "One layer (13) prompt prefill, fixed BF16 Qwen3-0.6B weights; no downstream deployment verdict",
+  "deployment_verdict": "NOT_ASSESSED",
+  "groups": {
+    "dev/L4096": {
+      "independent_scenarios": 96,
+      "arms": {
+        "A_PUBLIC": {
+          "outcomes": {
+            "n": 96,
+            "both_correct": 52,
+            "regression": 1,
+            "gain": 0,
+            "both_wrong": 43,
+            "flips": {
+              "numerator": 2,
+              "denominator": 96,
+              "rate": 0.020833333333333332
+            },
+            "wrong_to_wrong_flips": 1,
+            "regression_given_B_correct": {
+              "numerator": 1,
+              "denominator": 53,
+              "rate": 0.018867924528301886
+            },
+            "gain_given_B_wrong": {
+              "numerator": 0,
+              "denominator": 43,
+              "rate": 0.0
+            },
+            "regression_unconditional": {
+              "numerator": 1,
+              "denominator": 96,
+              "rate": 0.010416666666666666
+            },
+            "gain_unconditional": {
+              "numerator": 0,
+              "denominator": 96,
+              "rate": 0.0
+            },
+            "accuracy_delta": -0.010416666666666666,
+            "zero_event_note": "Zero observed events is not zero population risk"
+          },
+          "B_accuracy": 0.5520833333333334,
+          "candidate_accuracy": 0.5416666666666666,
+          "task_balanced": {
+            "delta_choice_nll": {
+              "mean": 0.0011021331936714358,
+              "per_task": {
+                "RETRIEVAL": 0.016627882094037316,
+                "COMPARISON": -0.0016355755895398616,
+                "CODE": -0.011685906923483147
+              },
+              "ci95": [
+                -0.021915159568828002,
+                0.02442531001245049
+              ],
+              "independent_scenarios": 96,
+              "scope": "Pointwise paired task-stratified scenario-cluster percentile interval"
+            },
+            "delta_brier": {
+              "mean": 0.0021494532361714283,
+              "per_task": {
+                "RETRIEVAL": 0.004069836210471363,
+                "COMPARISON": 0.0011134441088946146,
+                "CODE": 0.0012650793891483079
+              },
+              "ci95": [
+                -0.009899399074970014,
+                0.013755471196910628
+              ],
+              "independent_scenarios": 96,
+              "scope": "Pointwise paired task-stratified scenario-cluster percentile interval"
+            },
+            "delta_gold_margin": {
+              "mean": 0.018229166666666668,
+              "per_task": {
+                "RETRIEVAL": 0.04296875,
+                "COMPARISON": 0.015625,
+                "CODE": -0.00390625
+              },
+              "ci95": [
+                -0.02734375,
+                0.06640625
+              ],
+              "independent_scenarios": 96,
+              "scope": "Pointwise paired task-stratified scenario-cluster percentile interval"
+            },
+            "delta_accuracy": {
+              "mean": -0.010416666666666666,
+              "per_task": {
+                "RETRIEVAL": 0.0,
+                "COMPARISON": 0.0,
+                "CODE": -0.03125
+              },
+              "ci95": [
+                -0.03125,
+                0.0
+              ],
+              "independent_scenarios": 96,
+              "scope": "Pointwise paired task-stratified scenario-cluster percentile interval"
+            }
+          },
+          "B_choice_nll": {
+            "n": 96,
+            "mean": 1.372647539534924,
+            "median": 0.6253120426009282,
+            "p95": 4.683574134391263,
+            "min": 7.77370801898769e-05,
+            "max": 6.071422206595265
+          },
+          "candidate_choice_nll": {
+            "n": 96,
+            "mean": 1.3737496727285956,
+            "median": 0.6272538196231636,
+            "p95": 4.747454452181184,
+            "min": 8.977087851747001e-05,
+            "max": 6.246444314020437
+          },
+          "B_label_mass": {
+            "n": 96,
+            "mean": 0.9998677700540984,
+            "median": 0.999898431758449,
+            "p95": 0.9999947562412212,
+            "min": 0.9995615099012619,
+            "max": 0.9999984646276082
+          },
+          "candidate_label_mass": {
+            "n": 96,
+            "mean": 0.9998604278686125,
+            "median": 0.9999056327664958,
+            "p95": 0.9999945696102008,
+            "min": 0.9994862389073487,
+            "max": 0.9999978004927601
+          },
+          "B_full_gold_nll": {
+            "n": 96,
+            "mean": 1.3727797852686372,
+            "median": 0.6254854956915743,
+            "p95": 4.683889627829572,
+            "min": 7.981421309466441e-05,
+            "max": 6.071791870632467
+          },
+          "candidate_full_gold_nll": {
+            "n": 96,
+            "mean": 1.3738892637401336,
+            "median": 0.627532000061283,
+            "p95": 4.747818800556434,
+            "min": 9.19703881763212e-05,
+            "max": 6.246852714201395
+          },
+          "B_full_argmax_allowed": 96,
+          "candidate_full_argmax_allowed": 96,
+          "B_gap": {
+            "n": 96,
+            "mean": 2.2578125,
+            "median": 1.25,
+            "p95": 8.375,
+            "min": 0.0,
+            "max": 9.625
+          },
+          "full_vocab_kl": {
+            "n": 96,
+            "mean": 0.0029596322211455847,
+            "median": 0.0010620770162467763,
+            "p95": 0.01048465075817085,
+            "min": 2.197417930487831e-07,
+            "max": 0.029375280091097924
+          },
+          "local_reference_error": {
+            "n": 96,
+            "mean": 0.021752312207136845,
+            "median": 0.021665435271678947,
+            "p95": 0.024404617165822116,
+            "min": 0.019118853690279505,
+            "max": 0.025614194392793235
+          },
+          "near_zero_local_count": 0,
+          "R_undefined_count": 6,
+          "per_task": {
+            "RETRIEVAL": {
+              "n": 32,
+              "outcomes": {
+                "n": 32,
+                "both_correct": 30,
+                "regression": 0,
+                "gain": 0,
+                "both_wrong": 2,
+                "flips": {
+                  "numerator": 0,
+                  "denominator": 32,
+                  "rate": 0.0
+                },
+                "wrong_to_wrong_flips": 0,
+                "regression_given_B_correct": {
+                  "numerator": 0,
+                  "denominator": 30,
+                  "rate": 0.0
+                },
+                "gain_given_B_wrong": {
+                  "numerator": 0,
+                  "denominator": 2,
+                  "rate": 0.0
+                },
+                "regression_unconditional": {
+                  "numerator": 0,
+                  "denominator": 32,
+                  "rate": 0.0
+                },
+                "gain_unconditional": {
+                  "numerator": 0,
+                  "denominator": 32,
+                  "rate": 0.0
+                },
+                "accuracy_delta": 0.0,
+                "zero_event_note": "Zero observed events is not zero population risk"
+              },
+              "B_correct": 30,
+              "candidate_correct": 30,
+              "mean_delta_nll": 0.016627882094037316
+            },
+            "COMPARISON": {
+              "n": 32,
+              "outcomes": {
+                "n": 32,
+                "both_correct": 13,
+                "regression": 0,
+                "gain": 0,
+                "both_wrong": 19,
+                "flips": {
+                  "numerator": 0,
+                  "denominator": 32,
+                  "rate": 0.0
+                },
+                "wrong_to_wrong_flips": 0,
+                "regression_given_B_correct": {
+                  "numerator": 0,
+                  "denominator": 13,
+                  "rate": 0.0
+                },
+                "gain_given_B_wrong": {
+                  "numerator": 0,
+                  "denominator": 19,
+                  "rate": 0.0
+                },
+                "regression_unconditional": {
+                  "numerator": 0,
+                  "denominator": 32,
+                  "rate": 0.0
+                },
+                "gain_unconditional": {
+                  "numerator": 0,
+                  "denominator": 32,
+                  "rate": 0.0
+                },
+                "accuracy_delta": 0.0,
+                "zero_event_note": "Zero observed events is not zero population risk"
+              },
+              "B_correct": 13,
+              "candidate_correct": 13,
+              "mean_delta_nll": -0.0016355755895398616
+            },
+            "CODE": {
+              "n": 32,
+              "outcomes": {
+                "n": 32,
+                "both_correct": 9,
+                "regression": 1,
+                "gain": 0,
+                "both_wrong": 22,
+                "flips": {
+                  "numerator": 2,
+                  "denominator": 32,
+                  "rate": 0.0625
+                },
+                "wrong_to_wrong_flips": 1,
+                "regression_given_B_correct": {
+                  "numerator": 1,
+                  "denominator": 10,
+                  "rate": 0.1
+                },
+                "gain_given_B_wrong": {
+                  "numerator": 0,
+                  "denominator": 22,
+                  "rate": 0.0
+                },
+                "regression_unconditional": {
+                  "numerator": 1,
+                  "denominator": 32,
+                  "rate": 0.03125
+                },
+                "gain_unconditional": {
+                  "numerator": 0,
+                  "denominator": 32,
+                  "rate": 0.0
+                },
+                "accuracy_delta": -0.03125,
+                "zero_event_note": "Zero observed events is not zero population risk"
+              },
+              "B_correct": 10,
+              "candidate_correct": 9,
+              "mean_delta_nll": -0.011685906923483147
+            }
+          },
+          "bins": [
+            {
+              "task": "RETRIEVAL",
+              "gap_bin": "EXACT_TIE",
+              "n": 2,
+              "both_correct": 0,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 2,
+              "flips": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "RETRIEVAL",
+              "gap_bin": "[0.0,0.1)",
+              "n": 0,
+              "both_correct": 0,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "accuracy_delta": null,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "RETRIEVAL",
+              "gap_bin": "[0.1,0.5)",
+              "n": 1,
+              "both_correct": 1,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "RETRIEVAL",
+              "gap_bin": "[0.5,1.0)",
+              "n": 1,
+              "both_correct": 1,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "RETRIEVAL",
+              "gap_bin": "[1.0,inf)",
+              "n": 28,
+              "both_correct": 28,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 0,
+                "denominator": 28,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 28,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 28,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 28,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "COMPARISON",
+              "gap_bin": "EXACT_TIE",
+              "n": 2,
+              "both_correct": 2,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "COMPARISON",
+              "gap_bin": "[0.0,0.1)",
+              "n": 0,
+              "both_correct": 0,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "accuracy_delta": null,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "COMPARISON",
+              "gap_bin": "[0.1,0.5)",
+              "n": 2,
+              "both_correct": 0,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 2,
+              "flips": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "COMPARISON",
+              "gap_bin": "[0.5,1.0)",
+              "n": 5,
+              "both_correct": 2,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 3,
+              "flips": {
+                "numerator": 0,
+                "denominator": 5,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 3,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 5,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 5,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "COMPARISON",
+              "gap_bin": "[1.0,inf)",
+              "n": 23,
+              "both_correct": 9,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 14,
+              "flips": {
+                "numerator": 0,
+                "denominator": 23,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 9,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 14,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 23,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 23,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "CODE",
+              "gap_bin": "EXACT_TIE",
+              "n": 2,
+              "both_correct": 0,
+              "regression": 1,
+              "gain": 0,
+              "both_wrong": 1,
+              "flips": {
+                "numerator": 1,
+                "denominator": 2,
+                "rate": 0.5
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 1,
+                "denominator": 1,
+                "rate": 1.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 1,
+                "denominator": 2,
+                "rate": 0.5
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "accuracy_delta": -0.5,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "CODE",
+              "gap_bin": "[0.0,0.1)",
+              "n": 0,
+              "both_correct": 0,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "accuracy_delta": null,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "CODE",
+              "gap_bin": "[0.1,0.5)",
+              "n": 11,
+              "both_correct": 3,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 8,
+              "flips": {
+                "numerator": 1,
+                "denominator": 11,
+                "rate": 0.09090909090909091
+              },
+              "wrong_to_wrong_flips": 1,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 3,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 8,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 11,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 11,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "CODE",
+              "gap_bin": "[0.5,1.0)",
+              "n": 13,
+              "both_correct": 3,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 10,
+              "flips": {
+                "numerator": 0,
+                "denominator": 13,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 3,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 10,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 13,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 13,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "CODE",
+              "gap_bin": "[1.0,inf)",
+              "n": 6,
+              "both_correct": 3,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 3,
+              "flips": {
+                "numerator": 0,
+                "denominator": 6,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 3,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 3,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 6,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 6,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            }
+          ],
+          "predictive_AUC": "NOT_ESTIMABLE_NO_PREDICTIVE_PROTOCOL",
+          "zero_flip_sensitivity_limit": null
+        },
+        "V4": {
+          "outcomes": {
+            "n": 96,
+            "both_correct": 51,
+            "regression": 2,
+            "gain": 0,
+            "both_wrong": 43,
+            "flips": {
+              "numerator": 4,
+              "denominator": 96,
+              "rate": 0.041666666666666664
+            },
+            "wrong_to_wrong_flips": 2,
+            "regression_given_B_correct": {
+              "numerator": 2,
+              "denominator": 53,
+              "rate": 0.03773584905660377
+            },
+            "gain_given_B_wrong": {
+              "numerator": 0,
+              "denominator": 43,
+              "rate": 0.0
+            },
+            "regression_unconditional": {
+              "numerator": 2,
+              "denominator": 96,
+              "rate": 0.020833333333333332
+            },
+            "gain_unconditional": {
+              "numerator": 0,
+              "denominator": 96,
+              "rate": 0.0
+            },
+            "accuracy_delta": -0.020833333333333332,
+            "zero_event_note": "Zero observed events is not zero population risk"
+          },
+          "B_accuracy": 0.5520833333333334,
+          "candidate_accuracy": 0.53125,
+          "task_balanced": {
+            "delta_choice_nll": {
+              "mean": -0.006916137437158539,
+              "per_task": {
+                "RETRIEVAL": 0.009755187862934722,
+                "COMPARISON": -0.02567091816221323,
+                "CODE": -0.004832682012197109
+              },
+              "ci95": [
+                -0.0285024151840885,
+                0.01487125319314132
+              ],
+              "independent_scenarios": 96,
+              "scope": "Pointwise paired task-stratified scenario-cluster percentile interval"
+            },
+            "delta_brier": {
+              "mean": -0.0002706726938872771,
+              "per_task": {
+                "RETRIEVAL": 0.004462912320016634,
+                "COMPARISON": -0.011636976456851324,
+                "CODE": 0.006362046055172859
+              },
+              "ci95": [
+                -0.012575291157077057,
+                0.011685963788648173
+              ],
+              "independent_scenarios": 96,
+              "scope": "Pointwise paired task-stratified scenario-cluster percentile interval"
+            },
+            "delta_gold_margin": {
+              "mean": 0.046875,
+              "per_task": {
+                "RETRIEVAL": 0.09765625,
+                "COMPARISON": 0.05859375,
+                "CODE": -0.015625
+              },
+              "ci95": [
+                0.00390625,
+                0.08984375
+              ],
+              "independent_scenarios": 96,
+              "scope": "Pointwise paired task-stratified scenario-cluster percentile interval"
+            },
+            "delta_accuracy": {
+              "mean": -0.020833333333333332,
+              "per_task": {
+                "RETRIEVAL": -0.03125,
+                "COMPARISON": 0.0,
+                "CODE": -0.03125
+              },
+              "ci95": [
+                -0.052083333333333336,
+                0.0
+              ],
+              "independent_scenarios": 96,
+              "scope": "Pointwise paired task-stratified scenario-cluster percentile interval"
+            }
+          },
+          "B_choice_nll": {
+            "n": 96,
+            "mean": 1.372647539534924,
+            "median": 0.6253120426009282,
+            "p95": 4.683574134391263,
+            "min": 7.77370801898769e-05,
+            "max": 6.071422206595265
+          },
+          "candidate_choice_nll": {
+            "n": 96,
+            "mean": 1.3657314020977658,
+            "median": 0.6618806444831975,
+            "p95": 4.7700615122610515,
+            "min": 7.908578072601813e-05,
+            "max": 6.189130574077822
+          },
+          "B_label_mass": {
+            "n": 96,
+            "mean": 0.9998677700540984,
+            "median": 0.999898431758449,
+            "p95": 0.9999947562412212,
+            "min": 0.9995615099012619,
+            "max": 0.9999984646276082
+          },
+          "candidate_label_mass": {
+            "n": 96,
+            "mean": 0.9998610712888313,
+            "median": 0.9999137026575298,
+            "p95": 0.9999945058774629,
+            "min": 0.9994390832517906,
+            "max": 0.9999986231964072
+          },
+          "B_full_gold_nll": {
+            "n": 96,
+            "mean": 1.3727797852686372,
+            "median": 0.6254854956915743,
+            "p95": 4.683889627829572,
+            "min": 7.981421309466441e-05,
+            "max": 6.071791870632467
+          },
+          "candidate_full_gold_nll": {
+            "n": 96,
+            "mean": 1.3658703492918771,
+            "median": 0.6620720769665169,
+            "p95": 4.770210372963739,
+            "min": 8.16677529513754e-05,
+            "max": 6.18954203719008
+          },
+          "B_full_argmax_allowed": 96,
+          "candidate_full_argmax_allowed": 96,
+          "B_gap": {
+            "n": 96,
+            "mean": 2.2578125,
+            "median": 1.25,
+            "p95": 8.375,
+            "min": 0.0,
+            "max": 9.625
+          },
+          "full_vocab_kl": {
+            "n": 96,
+            "mean": 0.003671203054893383,
+            "median": 0.0019518893196010362,
+            "p95": 0.010318747372998647,
+            "min": 4.3611929704595014e-08,
+            "max": 0.027854936281691438
+          },
+          "local_reference_error": {
+            "n": 96,
+            "mean": 0.018779703646663735,
+            "median": 0.018676115954304247,
+            "p95": 0.02188441144891462,
+            "min": 0.016001611496081154,
+            "max": 0.023315877683840497
+          },
+          "near_zero_local_count": 0,
+          "R_undefined_count": 6,
+          "per_task": {
+            "RETRIEVAL": {
+              "n": 32,
+              "outcomes": {
+                "n": 32,
+                "both_correct": 29,
+                "regression": 1,
+                "gain": 0,
+                "both_wrong": 2,
+                "flips": {
+                  "numerator": 2,
+                  "denominator": 32,
+                  "rate": 0.0625
+                },
+                "wrong_to_wrong_flips": 1,
+                "regression_given_B_correct": {
+                  "numerator": 1,
+                  "denominator": 30,
+                  "rate": 0.03333333333333333
+                },
+                "gain_given_B_wrong": {
+                  "numerator": 0,
+                  "denominator": 2,
+                  "rate": 0.0
+                },
+                "regression_unconditional": {
+                  "numerator": 1,
+                  "denominator": 32,
+                  "rate": 0.03125
+                },
+                "gain_unconditional": {
+                  "numerator": 0,
+                  "denominator": 32,
+                  "rate": 0.0
+                },
+                "accuracy_delta": -0.03125,
+                "zero_event_note": "Zero observed events is not zero population risk"
+              },
+              "B_correct": 30,
+              "candidate_correct": 29,
+              "mean_delta_nll": 0.009755187862934722
+            },
+            "COMPARISON": {
+              "n": 32,
+              "outcomes": {
+                "n": 32,
+                "both_correct": 13,
+                "regression": 0,
+                "gain": 0,
+                "both_wrong": 19,
+                "flips": {
+                  "numerator": 1,
+                  "denominator": 32,
+                  "rate": 0.03125
+                },
+                "wrong_to_wrong_flips": 1,
+                "regression_given_B_correct": {
+                  "numerator": 0,
+                  "denominator": 13,
+                  "rate": 0.0
+                },
+                "gain_given_B_wrong": {
+                  "numerator": 0,
+                  "denominator": 19,
+                  "rate": 0.0
+                },
+                "regression_unconditional": {
+                  "numerator": 0,
+                  "denominator": 32,
+                  "rate": 0.0
+                },
+                "gain_unconditional": {
+                  "numerator": 0,
+                  "denominator": 32,
+                  "rate": 0.0
+                },
+                "accuracy_delta": 0.0,
+                "zero_event_note": "Zero observed events is not zero population risk"
+              },
+              "B_correct": 13,
+              "candidate_correct": 13,
+              "mean_delta_nll": -0.02567091816221323
+            },
+            "CODE": {
+              "n": 32,
+              "outcomes": {
+                "n": 32,
+                "both_correct": 9,
+                "regression": 1,
+                "gain": 0,
+                "both_wrong": 22,
+                "flips": {
+                  "numerator": 1,
+                  "denominator": 32,
+                  "rate": 0.03125
+                },
+                "wrong_to_wrong_flips": 0,
+                "regression_given_B_correct": {
+                  "numerator": 1,
+                  "denominator": 10,
+                  "rate": 0.1
+                },
+                "gain_given_B_wrong": {
+                  "numerator": 0,
+                  "denominator": 22,
+                  "rate": 0.0
+                },
+                "regression_unconditional": {
+                  "numerator": 1,
+                  "denominator": 32,
+                  "rate": 0.03125
+                },
+                "gain_unconditional": {
+                  "numerator": 0,
+                  "denominator": 32,
+                  "rate": 0.0
+                },
+                "accuracy_delta": -0.03125,
+                "zero_event_note": "Zero observed events is not zero population risk"
+              },
+              "B_correct": 10,
+              "candidate_correct": 9,
+              "mean_delta_nll": -0.004832682012197109
+            }
+          },
+          "bins": [
+            {
+              "task": "RETRIEVAL",
+              "gap_bin": "EXACT_TIE",
+              "n": 2,
+              "both_correct": 0,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 2,
+              "flips": {
+                "numerator": 1,
+                "denominator": 2,
+                "rate": 0.5
+              },
+              "wrong_to_wrong_flips": 1,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "RETRIEVAL",
+              "gap_bin": "[0.0,0.1)",
+              "n": 0,
+              "both_correct": 0,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "accuracy_delta": null,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "RETRIEVAL",
+              "gap_bin": "[0.1,0.5)",
+              "n": 1,
+              "both_correct": 0,
+              "regression": 1,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 1,
+                "denominator": 1,
+                "rate": 1.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 1,
+                "denominator": 1,
+                "rate": 1.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 1,
+                "denominator": 1,
+                "rate": 1.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "accuracy_delta": -1.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "RETRIEVAL",
+              "gap_bin": "[0.5,1.0)",
+              "n": 1,
+              "both_correct": 1,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "RETRIEVAL",
+              "gap_bin": "[1.0,inf)",
+              "n": 28,
+              "both_correct": 28,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 0,
+                "denominator": 28,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 28,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 28,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 28,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "COMPARISON",
+              "gap_bin": "EXACT_TIE",
+              "n": 2,
+              "both_correct": 2,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "COMPARISON",
+              "gap_bin": "[0.0,0.1)",
+              "n": 0,
+              "both_correct": 0,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "accuracy_delta": null,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "COMPARISON",
+              "gap_bin": "[0.1,0.5)",
+              "n": 2,
+              "both_correct": 0,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 2,
+              "flips": {
+                "numerator": 1,
+                "denominator": 2,
+                "rate": 0.5
+              },
+              "wrong_to_wrong_flips": 1,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "COMPARISON",
+              "gap_bin": "[0.5,1.0)",
+              "n": 5,
+              "both_correct": 2,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 3,
+              "flips": {
+                "numerator": 0,
+                "denominator": 5,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 3,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 5,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 5,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "COMPARISON",
+              "gap_bin": "[1.0,inf)",
+              "n": 23,
+              "both_correct": 9,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 14,
+              "flips": {
+                "numerator": 0,
+                "denominator": 23,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 9,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 14,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 23,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 23,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "CODE",
+              "gap_bin": "EXACT_TIE",
+              "n": 2,
+              "both_correct": 0,
+              "regression": 1,
+              "gain": 0,
+              "both_wrong": 1,
+              "flips": {
+                "numerator": 1,
+                "denominator": 2,
+                "rate": 0.5
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 1,
+                "denominator": 1,
+                "rate": 1.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 1,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 1,
+                "denominator": 2,
+                "rate": 0.5
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 2,
+                "rate": 0.0
+              },
+              "accuracy_delta": -0.5,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "CODE",
+              "gap_bin": "[0.0,0.1)",
+              "n": 0,
+              "both_correct": 0,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 0,
+              "flips": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 0,
+                "rate": null
+              },
+              "accuracy_delta": null,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "CODE",
+              "gap_bin": "[0.1,0.5)",
+              "n": 11,
+              "both_correct": 3,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 8,
+              "flips": {
+                "numerator": 0,
+                "denominator": 11,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 3,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 8,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 11,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 11,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "CODE",
+              "gap_bin": "[0.5,1.0)",
+              "n": 13,
+              "both_correct": 3,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 10,
+              "flips": {
+                "numerator": 0,
+                "denominator": 13,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 3,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 10,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 13,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 13,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            },
+            {
+              "task": "CODE",
+              "gap_bin": "[1.0,inf)",
+              "n": 6,
+              "both_correct": 3,
+              "regression": 0,
+              "gain": 0,
+              "both_wrong": 3,
+              "flips": {
+                "numerator": 0,
+                "denominator": 6,
+                "rate": 0.0
+              },
+              "wrong_to_wrong_flips": 0,
+              "regression_given_B_correct": {
+                "numerator": 0,
+                "denominator": 3,
+                "rate": 0.0
+              },
+              "gain_given_B_wrong": {
+                "numerator": 0,
+                "denominator": 3,
+                "rate": 0.0
+              },
+              "regression_unconditional": {
+                "numerator": 0,
+                "denominator": 6,
+                "rate": 0.0
+              },
+              "gain_unconditional": {
+                "numerator": 0,
+                "denominator": 6,
+                "rate": 0.0
+              },
+              "accuracy_delta": 0.0,
+              "zero_event_note": "Zero observed events is not zero population risk"
+            }
+          ],
+          "predictive_AUC": "NOT_ESTIMABLE_NO_PREDICTIVE_PROTOCOL",
+          "zero_flip_sensitivity_limit": null
+        }
+      },
+      "evidence_kind": "DEVELOPMENT",
+      "bootstrap_indices_sha256": "9583d42ccc146e3b1e7e650c34e540427e2ef3758bf6e2909b21450f05ef7dd1"
+    }
+  },
+  "paired_items": 192,
+  "measured_arm_records": 288,
+  "example_selection": {
+    "A_PUBLIC": {
+      "rule": "Post-hoc descriptive examples; no representative rate claim",
+      "median_absolute_nll_change": null,
+      "largest_absolute_nll_change": null,
+      "first_regression_id": null,
+      "first_gain_id": null
+    },
+    "V4": {
+      "rule": "Post-hoc descriptive examples; no representative rate claim",
+      "median_absolute_nll_change": null,
+      "largest_absolute_nll_change": null,
+      "first_regression_id": null,
+      "first_gain_id": null
+    }
+  }
+}

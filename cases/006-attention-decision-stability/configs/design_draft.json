@@ -1,0 +1,155 @@
+{
+  "version": "0.2-pre-GPU-draft",
+  "status": "DRAFT_NOT_DESIGN_FREEZE",
+  "design_freeze": false,
+  "evaluation_manifest_freeze": false,
+  "model": {
+    "id": "Qwen/Qwen3-0.6B",
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "weights_dtype": "BF16",
+    "layer": 13,
+    "layer_indexing": "zero-based",
+    "geometry": {
+      "B": 1,
+      "Hq": 16,
+      "Hkv": 8,
+      "D": 128
+    },
+    "scope": "Square causal prompt prefill only; all decode native BF16"
+  },
+  "arms": {
+    "B": "Native installed Qwen SDPA; fused runtime verification pending",
+    "A_PUBLIC": {
+      "function": "sageattn_qk_int8_pv_fp8_cuda",
+      "pv_accum_dtype": "fp32+fp16",
+      "v_scale_max": 2.25
+    },
+    "V4": {
+      "function": "sageattn_qk_int8_pv_fp16_cuda",
+      "pv_accum_dtype": "fp32",
+      "v_scale_max": null
+    }
+  },
+  "common_candidate_kwargs": {
+    "tensor_layout": "HND",
+    "qk_quant_gran": "per_warp",
+    "smooth_k": true,
+    "smooth_v": false,
+    "return_lse": false
+  },
+  "data": {
+    "seed": 606160,
+    "language": "English instructions and restricted Python; no bilingual claim",
+    "prepared_per_family": {
+      "smoke": 2,
+      "dev": 32
+    },
+    "planned_per_family": {
+      "standard": 64,
+      "boundary_pool": 64,
+      "boundary_selected_max": 24,
+      "length_support_base_ids": 16,
+      "trajectory_base_ids": 8,
+      "timing_base_ids": 4
+    },
+    "main_length": 4096,
+    "smoke_length": 512,
+    "secondary_lengths": [
+      512,
+      2048
+    ],
+    "label_ids": [
+      32,
+      33,
+      34,
+      35
+    ],
+    "template": "Pinned Qwen non-thinking; generation prompt; no answer continuation",
+    "filler": "Repeated deterministic irrelevant archive notes, plus punctuation for exact length; never truncate core",
+    "generator_revision": "CODE initial = 11 + 64 * split_index + index to prevent cross-split program duplicates",
+    "future_manifest_selection": "Stable SHA256(base_id) ordering within task, not outcomes; not yet executed"
+  },
+  "boundary_selection": {
+    "baseline_only": true,
+    "candidate_access_allowed_before_freeze": false,
+    "winner_gap_bins": [
+      "(0,0.1)",
+      "[0.1,0.5)",
+      "[0.5,1.0)",
+      "[1.0,infinity)"
+    ],
+    "ties": "Separate; do not select or refill",
+    "per_task_bin_max": 6,
+    "order": "lexical base_id"
+  },
+  "metrics": {
+    "primary": "Task-balanced mean paired change of gold choice NLL at standard L4096",
+    "brier": "Sum over four labels without division by four",
+    "relative_norm": "sqrt(sum squared difference / sum squared reference), null when reference RMS <= 1e-6",
+    "local_queries": "floor(i*(N-1)/31), i=0..31, all valid causal keys, all heads",
+    "native_logits": "BF16 model logits before CPU FP64 analysis; logits_to_keep=1",
+    "full_KL": "Only if actually computed from full final-token vectors; otherwise NOT_COMPUTED",
+    "R": "osc(candidate-B option logits) / B winner gap, undefined at ties, post-hoc only",
+    "deployment_verdict": "NOT_ASSESSED",
+    "task_quality_acceptance_gate": null
+  },
+  "planned_boundaries": [
+    "layer13 attention output before o_proj",
+    "layer13 post-attention residual, pre post_attention_layernorm",
+    "decoder block outputs 13/14/18/22/27",
+    "final norm",
+    "final logits"
+  ],
+  "statistics": {
+    "bootstrap": 5000,
+    "seed": 606901,
+    "unit": "Task-stratified paired base-scenario cluster; all lengths/arms preserved",
+    "quantile": "linear percentile",
+    "zero_events": "Not zero population risk; exact bound requires explicit independent Bernoulli assumption"
+  },
+  "planned_timing": {
+    "scenario_count": 12,
+    "process_rounds": 3,
+    "warmup": 5,
+    "blocks": 5,
+    "calls_per_block": 5,
+    "seed": 606902,
+    "primary": "Synchronized wall-clock model prompt forward with native one-position LM head",
+    "secondary": "Separate CUDA event blocks",
+    "excluded": [
+      "tokenizer",
+      "diagnostic hooks",
+      "reference",
+      "file IO",
+      "profiler"
+    ],
+    "cache": "Reset each request; no quantized-input memoization"
+  },
+  "planned_generation": {
+    "scenario_count": 24,
+    "max_new_tokens": 64,
+    "policy": "Greedy control; own cache after each arm prefill; decode BF16",
+    "comparisons": [
+      "Incremental common B prefix, score before next reference token",
+      "Free running own history"
+    ],
+    "implemented": "CPU parser/alignment and prefix iterator only; GPU generation runner pending"
+  },
+  "resource_policy": {
+    "target_max_allocated_GiB": 13,
+    "min_free_MiB": 13312,
+    "existing_compute_process": "GPU_BUSY without model import/forward",
+    "no_downloads": true,
+    "no_builds": true
+  },
+  "stage_readiness": {
+    "CPU_primitives": "TESTED",
+    "GPU_smoke": "BLOCKED_GPU_BUSY",
+    "DEV_model_scoring": "NOT_RUN",
+    "design_freeze": "NOT_DONE",
+    "eval_manifest_freeze": "NOT_DONE",
+    "evaluation_runner": "NOT_IMPLEMENTED",
+    "secondary_model_runner": "NOT_IMPLEMENTED",
+    "timing_model_runner": "NOT_IMPLEMENTED"
+  }
+}
