@@ -1,0 +1,6477 @@
+{
+  "stage": "smoke",
+  "resource_gate": {
+    "gpu": "NVIDIA GeForce RTX 5080",
+    "driver": "610.47",
+    "total_mib": 16303,
+    "free_mib": 14921,
+    "utilization_percent": 5,
+    "active_compute_process_count": 0,
+    "status": "RESOURCE_GATE_PASSED",
+    "samples": [
+      {
+        "gpu": "NVIDIA GeForce RTX 5080",
+        "driver": "610.47",
+        "total_mib": 16303,
+        "free_mib": 14922,
+        "utilization_percent": 3,
+        "active_compute_process_count": 0
+      },
+      {
+        "gpu": "NVIDIA GeForce RTX 5080",
+        "driver": "610.47",
+        "total_mib": 16303,
+        "free_mib": 14921,
+        "utilization_percent": 4,
+        "active_compute_process_count": 0
+      },
+      {
+        "gpu": "NVIDIA GeForce RTX 5080",
+        "driver": "610.47",
+        "total_mib": 16303,
+        "free_mib": 14921,
+        "utilization_percent": 4,
+        "active_compute_process_count": 0
+      },
+      {
+        "gpu": "NVIDIA GeForce RTX 5080",
+        "driver": "610.47",
+        "total_mib": 16303,
+        "free_mib": 14921,
+        "utilization_percent": 4,
+        "active_compute_process_count": 0
+      },
+      {
+        "gpu": "NVIDIA GeForce RTX 5080",
+        "driver": "610.47",
+        "total_mib": 16303,
+        "free_mib": 14921,
+        "utilization_percent": 5,
+        "active_compute_process_count": 0
+      }
+    ],
+    "policy": "Five pre-model samples; >=3 with GPU utilization >10% blocks. Registration alone is not proof of activity. Minimum free memory remains 13312 MiB."
+  },
+  "model_forward_started": true,
+  "gpu_measurements": 0,
+  "semantic_smoke": {
+    "rows": [
+      {
+        "item_id": "c006-smoke-retrieval-000-L512",
+        "arm": "B",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": true,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-retrieval-000-L512",
+        "arm": "A_PUBLIC",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": null,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "sageattn_qk_int8_pv_fp8_cuda"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-retrieval-000-L512",
+        "arm": "V4",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": null,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "sageattn_qk_int8_pv_fp16_cuda"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-retrieval-001-L512",
+        "arm": "B",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": true,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-retrieval-001-L512",
+        "arm": "A_PUBLIC",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": null,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "sageattn_qk_int8_pv_fp8_cuda"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-retrieval-001-L512",
+        "arm": "V4",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": null,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "sageattn_qk_int8_pv_fp16_cuda"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-comparison-000-L512",
+        "arm": "B",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": true,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-comparison-000-L512",
+        "arm": "A_PUBLIC",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": null,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "sageattn_qk_int8_pv_fp8_cuda"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-comparison-000-L512",
+        "arm": "V4",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": null,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "sageattn_qk_int8_pv_fp16_cuda"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-comparison-001-L512",
+        "arm": "B",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": true,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-comparison-001-L512",
+        "arm": "A_PUBLIC",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": null,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "sageattn_qk_int8_pv_fp8_cuda"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-comparison-001-L512",
+        "arm": "V4",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": null,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "sageattn_qk_int8_pv_fp16_cuda"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-code-000-L512",
+        "arm": "B",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": true,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-code-000-L512",
+        "arm": "A_PUBLIC",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": null,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "sageattn_qk_int8_pv_fp8_cuda"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-code-000-L512",
+        "arm": "V4",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": null,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "sageattn_qk_int8_pv_fp16_cuda"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-code-001-L512",
+        "arm": "B",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": true,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-code-001-L512",
+        "arm": "A_PUBLIC",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": null,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "sageattn_qk_int8_pv_fp8_cuda"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      },
+      {
+        "item_id": "c006-smoke-code-001-L512",
+        "arm": "V4",
+        "evidence_kind": "gpu_semantic_smoke",
+        "native_B_bitwise": null,
+        "same_layer13_qkv": true,
+        "inputs_unchanged": true,
+        "all_attention_outputs_finite": true,
+        "all_blocks_finite": true,
+        "full_logits_finite": true,
+        "routing_valid": true,
+        "prefill_calls": [
+          {
+            "layer": 0,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "sageattn_qk_int8_pv_fp16_cuda"
+          },
+          {
+            "layer": 14,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 512,
+            "kv_len": 512,
+            "route": "native_BF16"
+          }
+        ],
+        "decode_calls": [
+          {
+            "layer": 0,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 1,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 2,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 3,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 4,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 5,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 6,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 7,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 8,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 9,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 10,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 11,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 12,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 13,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 14,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 15,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 16,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 17,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 18,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 19,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 20,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 21,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 22,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 23,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 24,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 25,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 26,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          },
+          {
+            "layer": 27,
+            "q_len": 1,
+            "kv_len": 513,
+            "route": "native_BF16"
+          }
+        ],
+        "target_output_dtype": "torch.bfloat16",
+        "final_logits_dtype": "torch.bfloat16",
+        "profiler_kernel_verification": "NOT_RUN",
+        "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY"
+      }
+    ],
+    "status": "PARTIAL_SEMANTIC_CHECK_NOT_EVALUATION_READY",
+    "remaining": [
+      "Full final-norm and boundary capture checks",
+      "Standalone/integrated operator correspondence",
+      "Profiler fused/native and low-precision kernel verification",
+      "B repeat floor and full/no-last logits check",
+      "DEV scoring and two real freezes before any evaluation"
+    ]
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "original_study": "COMPLETED_CONTROLLED_STUDY",
+  "supplemental_cpu": "PASS",
+  "supplemental_readout": "COMPLETED",
+  "evidence_review": "READY_FOR_USER_REVIEW",
+  "deployment": "NOT_ASSESSED",
+  "publication": "NOT_PUBLISHED_BY_THIS_TASK",
+  "original_tests": {
+    "passed": 59,
+    "failed": 0,
+    "location": "Hash-verified original-only scratch copy; historical ResourceWarnings retained privately"
+  },
+  "supplemental_tests": {
+    "passed": 23,
+    "failed": 0
+  },
+  "scalar_checker": {
+    "status": "PASS",
+    "scalar_cells": 1428,
+    "distinct_existing_scenarios": 238,
+    "groups_checked": 32,
+    "bootstrap_intervals_checked": 48,
+    "norm_summaries_checked": 6188,
+    "max_scalar_difference": 7.105427357601002e-15,
+    "original_totals_reconstructed": true,
+    "scope": "Independent scalar and bootstrap calculations; no independent kernel/full-vocabulary replication"
+  },
+  "original_hashes_preserved": 543,
+  "original_case_files_preserved": 161,
+  "original_private_vector_files_verified_unchanged": 714,
+  "original_private_ledger_files_verified_unchanged": 714,
+  "original_archive_sha256": "79a215e73cf6ab30931392d67bb658cc18deee1034fe3b488ba6a78d7d12220d",
+  "original_archive_bytes": 11645471,
+  "original_and_supplement_reanalysis_byte_identity": [
+    "original-reanalysis/summary.json",
+    "original-reanalysis/pairs.json",
+    "supplement-analysis/summary.json",
+    "supplement-analysis/pairs.json",
+    "materials/material_manifest.json",
+    "materials/hidden_boundary_summary.csv",
+    "materials/TABLES.md",
+    "materials/demo/index.html",
+    "materials/figures/01_readout_flips.png",
+    "materials/figures/02_score_readout.png",
+    "materials/figures/03_local_margin.png"
+  ],
+  "relative_links_verified": 23,
+  "privacy_scan": "PASS; no private paths or credential patterns in supplement",
+  "original_privacy_false_positive": "Original tests/test_core.py has a synthetic Windows-drive path rejection fixture, not a personal path; preserved",
+  "prohibited_payloads": "No weights, full activations/logits, cache, environments, large profiles or symlinks",
+  "browser": {
+    "status": "PASS",
+    "browser": "Edg/153.0.4234.32",
+    "os": "win32",
+    "node": "v24.12.0",
+    "automation": "Chrome DevTools Protocol through installed headless Microsoft Edge; no browser package installed",
+    "protocol": "file:// via WSL UNC",
+    "views": [
+      {
+        "width": 1280,
+        "height": 900
+      },
+      {
+        "width": 768,
+        "height": 1024,
+        "tablet_emulation": true
+      }
+    ],
+    "checks": [
+      {
+        "name": "file_protocol",
+        "pass": true
+      },
+      {
+        "name": "native_default_192",
+        "pass": true
+      },
+      {
+        "name": "persistent_posthoc_label",
+        "pass": true
+      },
+      {
+        "name": "native_A_5_flips",
+        "pass": true
+      },
+      {
+        "name": "FP32_A_3_flips",
+        "pass": true
+      },
+      {
+        "name": "empty_native_regression_group",
+        "pass": true
+      },
+      {
+        "name": "task_filter_64",
+        "pass": true
+      },
+      {
+        "name": "exact_item_search",
+        "pass": true
+      },
+      {
+        "name": "download_exists",
+        "pass": true
+      },
+      {
+        "name": "download_real_item_six_views",
+        "pass": true
+      },
+      {
+        "name": "original_stress_46",
+        "pass": true
+      },
+      {
+        "name": "desktop_no_horizontal_page_overflow",
+        "pass": true
+      },
+      {
+        "name": "tablet_emulation_no_horizontal_page_overflow",
+        "pass": true
+      },
+      {
+        "name": "no_console_errors",
+        "pass": true
+      },
+      {
+        "name": "no_remote_page_requests",
+        "pass": true
+      }
+    ],
+    "console_errors": [],
+    "request_schemes": [
+      "file",
+      "data"
+    ],
+    "remote_page_requests": 0,
+    "network_scope": "Page target; HTTP(S) blocked; not OS-wide traffic inspection",
+    "real_ipad": "NOT_TESTED",
+    "download_verified": true
+  },
+  "git_index_unchanged": true,
+  "no_new_gpu_timing_or_generation": true,
+  "missing_core_cells": 0,
+  "failed_core_cells": 0,
+  "original_protocol_modified": false,
+  "publication_authorization": "Not requested or exercised in this task",
+  "remote_freshness": "UNVERIFIED: automatic approval review rejected external git ls-remote; local origin/main equals base, may be stale",
+  "supplement_privacy_false_positive": "A naive drive-letter regex matched the final letter of Options followed by JSON escaped newline. Word-boundary inspection rejected that false match; source numeric/input content was unchanged.",
+  "independent_control_recalculation": "Separate scalar checker also reconstructs C1, BF16 option rounding through IEEE float32 bit arithmetic, FP64 option differences/gaps/winners from retained values."
+}

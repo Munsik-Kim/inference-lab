@@ -1,0 +1,161 @@
+{
+  "kind": "MAIN_PUBLICATION_DOCUMENTATION_FIX",
+  "timestamp_utc": "2026-09-17T04:32:34.519555+00:00",
+  "repository": "Munsik-Kim/inference-lab",
+  "pull_request": 1,
+  "starting_pr_head": "16e51b2edb42b0e00792806b233bdea7f3e6496b",
+  "starting_base": "b4d42f8dc6e3cea81e5daf7d5379f57c7b3976a5",
+  "authorization_scope": "Follow-up user request authorizes this bounded documentation/package fix, feature-branch commit/push, PR body update and merge-commit publication after verification. Earlier branch-only publication scope remains historical.",
+  "problem": "Measurement examples wrote standard/private_vectors and stress/private_vectors; the readout runner resolves standard-eval/private_vectors and boundary-eval/private_vectors under original-run.",
+  "correction": {
+    "standard": "standard -> standard-eval",
+    "boundary_pool": "stress -> boundary-eval",
+    "original_run": "Pass the shared private measurement root, not a dataset subdirectory.",
+    "runner_changes": false
+  },
+  "document_changes": {
+    "README.md": {
+      "before_sha256": "038c1cf8fd4cbe4d5c9d04cea340b6bcc0dbe88aa134c621c2fb4c77b22281ca",
+      "after_sha256": "b6a742641a34f6e13f76937620074c66d7024c42c01a5bfad28747e4eed20c9a"
+    },
+    "cases/006-attention-decision-stability/README.ko.md": {
+      "before_sha256": "9331469547086adcbb26345c300e23af1c11f9755a374e19579a63360c4b55ae",
+      "after_sha256": "7219e5e50265d983b5017af80a1d20a5ed26a5e9e1042405c8e82d1bd4855f60"
+    },
+    "cases/006-attention-decision-stability/README.md": {
+      "before_sha256": "fe25e79fd25679c14a0211984a164240693295b41ce15a24ca83982978131ecf",
+      "after_sha256": "1f4462a709861673536c8aa733ffad3716c697edb02b99769bf07db2a164f5f6"
+    },
+    "cases/006-attention-decision-stability/REPRODUCTION.md": {
+      "before_sha256": "ef8388e4c15eb96e7952d75f9a29740cc775b829773d9df84f92d514a77bd7df",
+      "after_sha256": "a3c50def6d431d4493a603b5bd6852da84debc831033539545c7f2da66a91b87"
+    }
+  },
+  "previous_publication_snapshot_sha256": "9d90a204d862e07c4dd577b1fc8fbdf2dfe2204b96d5a7976285394cba9a2a53",
+  "previous_editorial_entries": {
+    "REPRODUCTION.md": {
+      "reviewed_sha256": "b582dfc0bece9a8610a23b5c75650647db06fb9f22a25533494c7bf5d16d8301",
+      "published_sha256": "ef8388e4c15eb96e7952d75f9a29740cc775b829773d9df84f92d514a77bd7df"
+    },
+    "README.md": {
+      "reviewed_sha256": "07dc4690145ae30065c990c4935858b7cda0b5d5842b631a3a6464a2cc38bfcd",
+      "published_sha256": "fe25e79fd25679c14a0211984a164240693295b41ce15a24ca83982978131ecf"
+    },
+    "README.ko.md": {
+      "reviewed_sha256": "e973863884c0020a723615283350c97daa49773a18a67a330b251c2b38dde39b",
+      "published_sha256": "9331469547086adcbb26345c300e23af1c11f9755a374e19579a63360c4b55ae"
+    }
+  },
+  "previous_publication_archive": {
+    "filename": "case006_decision_stability_with_readout_20260917.zip",
+    "files": 209,
+    "bytes": 14311510,
+    "sha256": "06e74af49faf42f9d0ec40f4a43c63174ff3987b6210596be10eb1ac2f7a13e0"
+  },
+  "historical_archives_preserved": [
+    {
+      "filename": "case006_decision_stability_20260917_review.zip",
+      "sha256": "79a215e73cf6ab30931392d67bb658cc18deee1034fe3b488ba6a78d7d12220d",
+      "bytes": 11645471
+    },
+    {
+      "filename": "case006_supplement_review_20260917.zip",
+      "sha256": "5844b9fa87203ea11eaec3fb22abf8f705d90420cf0670ac5cecd3555db54eef",
+      "bytes": 2556677
+    }
+  ],
+  "new_gpu_runs": 0,
+  "scope": "Documentation path contract and distribution packaging only; no new model/tokenizer/readout/profiler execution or environment changes.",
+  "completed_cpu_validation": {
+    "historical_original_tests": {
+      "passed": 59,
+      "failed": 0,
+      "scope": "Hash-verified original-only archive extraction"
+    },
+    "supplement_tests": {
+      "passed": 23,
+      "failed": 0
+    },
+    "publication_tests": {
+      "passed": 9,
+      "failed": 0,
+      "new_documentation_path_contract_tests": 3
+    },
+    "original_scalar_audit": {
+      "status": "PASS_CPU_MEASUREMENT_CONSISTENCY",
+      "records_checked": 1290,
+      "norm_units_checked": 41280,
+      "paired_comparisons": 860,
+      "bootstrap_intervals_checked": 40,
+      "primary_192_scenarios_complete": true,
+      "independence_scope": "Distinct scalar/norm/paired/bootstrap calculation path. Not third-party GPU replication. Full-vocabulary KL and hidden differences cannot be fully reconstructed from public four-logit/norm evidence alone.",
+      "derived_execution_status": "COMPLETED_CONTROLLED_STUDY",
+      "deployment_verdict": "NOT_ASSESSED"
+    },
+    "timing_audit": {
+      "status": "PASS",
+      "raw_timing_rows": 540,
+      "documents": 12,
+      "shared_local_processes": 3,
+      "recomputed": {
+        "A_PUBLIC": {
+          "median": 1.0040888999751811,
+          "ci95": [
+            1.00325344954255,
+            1.0052304694675998
+          ]
+        },
+        "V4": {
+          "median": 1.001392123166501,
+          "ci95": [
+            1.0007302114164227,
+            1.0022650483895947
+          ]
+        }
+      },
+      "scope": "Independent scalar aggregation and resampling; not new GPU replication"
+    },
+    "input_audit": {
+      "status": "PASS",
+      "independent_base_scenarios": 486,
+      "exact_prompts_including_dependent_subsets": 606,
+      "independent_fact_oracles": "PASS",
+      "split_overlap": "NONE",
+      "required_fact_and_option_retention": "PASS",
+      "frozen_code_files": 19,
+      "tokenizer_replay": "NOT_RUN",
+      "scope": "CPU facts/tokenization/hash audit; no model inference"
+    },
+    "supplement_scalar_audit": {
+      "status": "PASS",
+      "scalar_cells": 1428,
+      "distinct_existing_scenarios": 238,
+      "groups_checked": 32,
+      "bootstrap_intervals_checked": 48,
+      "norm_summaries_checked": 6188,
+      "max_scalar_difference": 7.105427357601002e-15,
+      "original_totals_reconstructed": true,
+      "scope": "Independent scalar and bootstrap calculations; no independent kernel/full-vocabulary replication"
+    },
+    "derived_files": {
+      "status": "PASS",
+      "byte_identical": [
+        "original summary",
+        "original pairs",
+        "supplement summary",
+        "supplement pairs"
+      ]
+    }
+  },
+  "not_rerun": [
+    "GPU inference/readout",
+    "tokenizer replay",
+    "figure/HTML generation",
+    "browser checks",
+    "real iPad checks"
+  ],
+  "deployment": "NOT_ASSESSED",
+  "real_ipad": "NOT_TESTED",
+  "original_results_policy": "Original protocols, raw measurements, summaries, figures, HTML, RUN_STATE, SHA256SUMS and the entire reviewed supplement are unchanged. Historical validation records are not rewritten.",
+  "verification_scope": "CPU scalar consistency and documented path agreement, not independent GPU reproduction. Final current-package checks are recorded outside the case to avoid recursive package identities."
+}

@@ -1,0 +1,46 @@
+{
+  "cpu_tests": {
+    "command": "python -B -m unittest discover -s tests -v",
+    "exit_code": 0,
+    "passed": 44,
+    "failed": 0
+  },
+  "independent_input_check": {
+    "command": "python -B scripts/verify_results.py --case . --output <NEW_EXTERNAL_JSON>",
+    "exit_code": 0,
+    "gold_records": 102,
+    "token_records": 102,
+    "measured_scores": 0,
+    "measured_intervals": 0
+  },
+  "deterministic_rebuild": {
+    "commands": [
+      "python -B scripts/reproduce_analysis.py --case . --output <NEW_EXTERNAL_DIR>",
+      "python -B scripts/build_demo.py --case . --output <NEW_EXTERNAL_DIR>"
+    ],
+    "exit_codes": [
+      0,
+      0
+    ],
+    "byte_identical": [
+      "summary.json",
+      "pairs.json",
+      "index.html"
+    ]
+  },
+  "javascript": {
+    "syntax_exit_code": 0,
+    "DOM_fixture_exit_code": 0,
+    "DOM_assertions": 10,
+    "browser_render": "NOT_RUN",
+    "tablet_interaction": "NOT_RUN"
+  },
+  "gpu_gate": {
+    "command": "python -B scripts/run_case006.py --stage smoke --snapshot <EXISTING_PINNED_SNAPSHOT> --output <NEW_PRIVATE_JSON>",
+    "exit_code": 20,
+    "status": "GPU_BUSY",
+    "model_forward_started": false
+  },
+  "measurement_publication_ready": false,
+  "scope": "CPU preparation candidate only; no GPU or full-study completion claim"
+}

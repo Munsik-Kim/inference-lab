@@ -1,0 +1,29 @@
+{
+  "corrections": [
+    {
+      "phase": "CPU development before any model output or freeze",
+      "issue": "One identical CODE latent program in DEV code-023 and prospective STANDARD code-005",
+      "old_input_digest": "7cf5066fed865e825da37b8a31f1087e040ff67f749810276f1e03c64c7a728e",
+      "new_input_digest": "79178d10d3d9553488957220d2fdfd02f5c1b758229ce2255c31061a885b1d4f",
+      "old_gold_digest": "e082fa4ba46fae299c8b5f06c259112384c3769c4da04ad3396b678ea59af4d5",
+      "new_gold_digest": "6ff7efb52a0a33ffda3f277ad021474b82fc66d4cf698cbdb799489598a13b59",
+      "change": "Use disjoint deterministic initial-value ranges for CODE by split/index. Old draft inputs retained privately. Regenerate prepared smoke/DEV only.",
+      "affected_measurements": 0,
+      "evaluation_inputs_previously_scored": false
+    },
+    {
+      "phase": "Before DESIGN_FREEZE and evaluation",
+      "issue": "A registered GPU process at 1% utilization was initially treated as busy",
+      "change": "Use five utilization/free-memory samples; mere registered PID is not activity. No process was stopped.",
+      "affected_measurements": 0
+    },
+    {
+      "phase": "GPU semantic DEV before DESIGN_FREEZE",
+      "issue": "Full-position versus last-position native BF16 LM-head GEMMs were incorrectly required to be bitwise equal",
+      "observation": "Identical hidden states; max logit difference 0.03125 across GEMM shapes. Native final-position output matches the same-shape head exactly. B passthrough and repeats match bitwise.",
+      "change": "Every arm uses the identical native logits_to_keep=1 path. Retain both integration reports.",
+      "affected_evaluation_measurements": 0
+    }
+  ],
+  "test_development": "Initial 40-test run exposed the duplicate plus two fixture assertions using incorrect return-key names; assertions corrected. Final verification is recorded separately."
+}

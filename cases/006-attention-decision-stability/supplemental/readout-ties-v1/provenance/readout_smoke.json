@@ -1,0 +1,848 @@
+[
+  {
+    "cell": "c006-smoke-code-000-L512--A_PUBLIC",
+    "validity": {
+      "full_attention_outputs_finite": true,
+      "full_block_outputs_finite": true,
+      "full_final_hidden_finite": true,
+      "full_logits_finite": true,
+      "inputs_unchanged": true,
+      "same_layer13_qkv": true,
+      "routing_valid": true,
+      "dtype_layout_valid": true,
+      "answer_interface_valid": true,
+      "native_B_validated": true,
+      "effective_backend_verified": true
+    },
+    "readout": {
+      "score": {
+        "option_logits": [
+          31.02070426940918,
+          28.21027946472168,
+          28.25206756591797,
+          32.750789642333984
+        ],
+        "gold_index": 0,
+        "label_ids": [
+          32,
+          33,
+          34,
+          35
+        ],
+        "log_q": [
+          -1.9116236563722282,
+          -4.722048461059728,
+          -4.680260359863439,
+          -0.1815382834474235
+        ],
+        "q": [
+          0.1478401500157686,
+          0.008896934844480628,
+          0.009276598318748419,
+          0.8339863168210053
+        ],
+        "prediction": 3,
+        "correct": false,
+        "choice_nll": 1.9116236563722282,
+        "choice_brier": 1.4218747972958083,
+        "gold_margin": -1.7300853729248047,
+        "winner_gap": 1.7300853729248047,
+        "winner_tied": false,
+        "full_lse": 32.93262398322184,
+        "full_gold_nll": 1.911919713812658,
+        "log_label_mass": -0.00029605744042981996,
+        "label_mass": 0.9997039863802496,
+        "full_argmax": 35,
+        "full_argmax_allowed": true
+      },
+      "native_score": {
+        "option_logits": [
+          31.0,
+          28.25,
+          28.25,
+          32.75
+        ],
+        "gold_index": 0,
+        "label_ids": [
+          32,
+          33,
+          34,
+          35
+        ],
+        "log_q": [
+          -1.9289759134713762,
+          -4.678975913471376,
+          -4.678975913471376,
+          -0.1789759134713762
+        ],
+        "q": [
+          0.14529691893665347,
+          0.009288521267544625,
+          0.009288521267544625,
+          0.8361260385282537
+        ],
+        "prediction": 3,
+        "correct": false,
+        "choice_nll": 1.9289759134713762,
+        "choice_brier": 1.4297966623388034,
+        "gold_margin": -1.75,
+        "winner_gap": 1.75,
+        "winner_tied": false,
+        "full_lse": 32.92926406985447,
+        "full_gold_nll": 1.9292640698544687,
+        "log_label_mass": -0.00028815638309254155,
+        "label_mass": 0.9997118851299706,
+        "full_argmax": 35,
+        "full_argmax_allowed": true
+      },
+      "controls": {
+        "C1_cast_only_exact": true,
+        "native_projection_full_exact": true,
+        "hidden_bf16_roundtrip_exact": true,
+        "C2_full_equal": false,
+        "C2_full_mismatch_count": 50,
+        "C2_full_max_abs": 0.015625,
+        "C2_option_logits": [
+          31.0,
+          28.25,
+          28.25,
+          32.75
+        ],
+        "C2_option_equal": true,
+        "C3_fp64_options": [
+          31.020701980334707,
+          28.210283842869103,
+          28.25206750864163,
+          32.750789816025645
+        ],
+        "C3_fp32_minus_fp64": [
+          2.2890744730830193e-06,
+          -4.3781474232673645e-06,
+          5.727633833885193e-08,
+          -1.7369166016578674e-07
+        ],
+        "C3_max_abs": 4.3781474232673645e-06,
+        "C3_gap_difference": -2.462766133248806e-06,
+        "C3_winner_disagreement": false,
+        "C3_tolerance_pass": true,
+        "full_native_finite": true,
+        "full_shadow_finite": true,
+        "full_hidden_finite": true,
+        "flags_restored": true,
+        "C3_compensated_options": [
+          31.020701980334707,
+          28.210283842869103,
+          28.25206750864163,
+          32.750789816025645
+        ],
+        "C3_compensated_max_abs": 0.0
+      },
+      "native_to_shadow_full_kl": 3.3454694150001234e-05
+    }
+  },
+  {
+    "cell": "c006-smoke-code-000-L512--B",
+    "validity": {
+      "full_attention_outputs_finite": true,
+      "full_block_outputs_finite": true,
+      "full_final_hidden_finite": true,
+      "full_logits_finite": true,
+      "inputs_unchanged": true,
+      "same_layer13_qkv": true,
+      "routing_valid": true,
+      "dtype_layout_valid": true,
+      "answer_interface_valid": true,
+      "native_B_validated": true,
+      "effective_backend_verified": true
+    },
+    "readout": {
+      "score": {
+        "option_logits": [
+          30.940753936767578,
+          28.28342056274414,
+          28.16716766357422,
+          32.81062316894531
+        ],
+        "gold_index": 0,
+        "label_ids": [
+          32,
+          33,
+          34,
+          35
+        ],
+        "log_q": [
+          -2.0307790829402776,
+          -4.688112456963715,
+          -4.804365356133637,
+          -0.16090985076254327
+        ],
+        "q": [
+          0.13123323973254042,
+          0.009204042797275665,
+          0.00819389957268842,
+          0.8513688178974947
+        ],
+        "prediction": 3,
+        "correct": false,
+        "choice_nll": 2.0307790829402776,
+        "choice_brier": 1.4797364022278168,
+        "gold_margin": -1.8698692321777344,
+        "winner_gap": 1.8698692321777344,
+        "winner_tied": false,
+        "full_lse": 32.97190791500464,
+        "full_gold_nll": 2.0311539782370645,
+        "log_label_mass": -0.00037489529678680356,
+        "label_mass": 0.9996251749676741,
+        "full_argmax": 35,
+        "full_argmax_allowed": true
+      },
+      "native_score": {
+        "option_logits": [
+          31.0,
+          28.25,
+          28.125,
+          32.75
+        ],
+        "gold_index": 0,
+        "label_ids": [
+          32,
+          33,
+          34,
+          35
+        ],
+        "log_q": [
+          -1.927883887408548,
+          -4.677883887408548,
+          -4.802883887408548,
+          -0.177883887408548
+        ],
+        "q": [
+          0.14545567362533324,
+          0.009298670115248459,
+          0.008206047574862707,
+          0.8370396086845587
+        ],
+        "prediction": 3,
+        "correct": false,
+        "choice_nll": 1.927883887408548,
+        "choice_brier": 1.4310351167286455,
+        "gold_margin": -1.75,
+        "winner_gap": 1.75,
+        "winner_tied": false,
+        "full_lse": 32.92828905109576,
+        "full_gold_nll": 1.92828905109576,
+        "log_label_mass": -0.0004051636872119957,
+        "label_mass": 0.9995949183805107,
+        "full_argmax": 35,
+        "full_argmax_allowed": true
+      },
+      "controls": {
+        "C1_cast_only_exact": true,
+        "native_projection_full_exact": true,
+        "hidden_bf16_roundtrip_exact": true,
+        "C2_full_equal": false,
+        "C2_full_mismatch_count": 53,
+        "C2_full_max_abs": 0.03125,
+        "C2_option_logits": [
+          31.0,
+          28.25,
+          28.125,
+          32.75
+        ],
+        "C2_option_equal": true,
+        "C3_fp64_options": [
+          30.940751849499065,
+          28.28342337347567,
+          28.167167257983238,
+          32.81062060967088
+        ],
+        "C3_fp32_minus_fp64": [
+          2.0872685126960278e-06,
+          -2.810731530189514e-06,
+          4.055909812450409e-07,
+          2.559274435043335e-06
+        ],
+        "C3_max_abs": 2.810731530189514e-06,
+        "C3_gap_difference": 4.720059223473072e-07,
+        "C3_winner_disagreement": false,
+        "C3_tolerance_pass": true,
+        "full_native_finite": true,
+        "full_shadow_finite": true,
+        "full_hidden_finite": true,
+        "flags_restored": true,
+        "C3_compensated_options": [
+          30.940751849499065,
+          28.28342337347567,
+          28.167167257983238,
+          32.81062060967088
+        ],
+        "C3_compensated_max_abs": 0.0
+      },
+      "native_to_shadow_full_kl": 0.0008668915349763245
+    }
+  },
+  {
+    "cell": "c006-smoke-code-000-L512--V4",
+    "validity": {
+      "full_attention_outputs_finite": true,
+      "full_block_outputs_finite": true,
+      "full_final_hidden_finite": true,
+      "full_logits_finite": true,
+      "inputs_unchanged": true,
+      "same_layer13_qkv": true,
+      "routing_valid": true,
+      "dtype_layout_valid": true,
+      "answer_interface_valid": true,
+      "native_B_validated": true,
+      "effective_backend_verified": true
+    },
+    "readout": {
+      "score": {
+        "option_logits": [
+          30.808128356933594,
+          28.170852661132812,
+          28.14983558654785,
+          32.70034408569336
+        ],
+        "gold_index": 0,
+        "label_ids": [
+          32,
+          33,
+          34,
+          35
+        ],
+        "log_q": [
+          -2.0510003164390653,
+          -4.688276012239847,
+          -4.7092930868248075,
+          -0.1587845876792997
+        ],
+        "q": [
+          0.12860619233418802,
+          0.009202537550613302,
+          0.009011145428841339,
+          0.8531801246863552
+        ],
+        "prediction": 3,
+        "correct": false,
+        "choice_nll": 2.0510003164390653,
+        "choice_brier": 1.4874093806374569,
+        "gold_margin": -1.8922157287597656,
+        "winner_gap": 1.8922157287597656,
+        "winner_tied": false,
+        "full_lse": 32.85943236787199,
+        "full_gold_nll": 2.051304010938395,
+        "log_label_mass": -0.0003036944993297652,
+        "label_mass": 0.9996963516111768,
+        "full_argmax": 35,
+        "full_argmax_allowed": true
+      },
+      "native_score": {
+        "option_logits": [
+          30.75,
+          28.125,
+          28.125,
+          32.75
+        ],
+        "gold_index": 0,
+        "label_ids": [
+          32,
+          33,
+          34,
+          35
+        ],
+        "log_q": [
+          -2.14405063997512,
+          -4.76905063997512,
+          -4.76905063997512,
+          -0.14405063997512002
+        ],
+        "q": [
+          0.11717922953118703,
+          0.008488434916699972,
+          0.008488434916699972,
+          0.8658439006354122
+        ],
+        "prediction": 3,
+        "correct": false,
+        "choice_nll": 2.14405063997512,
+        "choice_brier": 1.5292022800933642,
+        "gold_margin": -2.0,
+        "winner_gap": 2.0,
+        "winner_tied": false,
+        "full_lse": 32.89434424850179,
+        "full_gold_nll": 2.1443442485017883,
+        "log_label_mass": -0.0002936085266682653,
+        "label_mass": 0.9997064345720971,
+        "full_argmax": 35,
+        "full_argmax_allowed": true
+      },
+      "controls": {
+        "C1_cast_only_exact": true,
+        "native_projection_full_exact": true,
+        "hidden_bf16_roundtrip_exact": true,
+        "C2_full_equal": false,
+        "C2_full_mismatch_count": 42,
+        "C2_full_max_abs": 0.03125,
+        "C2_option_logits": [
+          30.75,
+          28.125,
+          28.125,
+          32.75
+        ],
+        "C2_option_equal": true,
+        "C3_fp64_options": [
+          30.808125911280513,
+          28.170853074640036,
+          28.14983581053093,
+          32.700344840064645
+        ],
+        "C3_fp32_minus_fp64": [
+          2.4456530809402466e-06,
+          -4.1350722312927246e-07,
+          -2.2398307919502258e-07,
+          -7.543712854385376e-07
+        ],
+        "C3_max_abs": 2.4456530809402466e-06,
+        "C3_gap_difference": -3.200024366378784e-06,
+        "C3_winner_disagreement": false,
+        "C3_tolerance_pass": true,
+        "full_native_finite": true,
+        "full_shadow_finite": true,
+        "full_hidden_finite": true,
+        "flags_restored": true,
+        "C3_compensated_options": [
+          30.808125911280513,
+          28.170853074640036,
+          28.14983581053093,
+          32.700344840064645
+        ],
+        "C3_compensated_max_abs": 0.0
+      },
+      "native_to_shadow_full_kl": 0.0006608267905459406
+    }
+  },
+  {
+    "cell": "c006-smoke-code-001-L512--A_PUBLIC",
+    "validity": {
+      "full_attention_outputs_finite": true,
+      "full_block_outputs_finite": true,
+      "full_final_hidden_finite": true,
+      "full_logits_finite": true,
+      "inputs_unchanged": true,
+      "same_layer13_qkv": true,
+      "routing_valid": true,
+      "dtype_layout_valid": true,
+      "answer_interface_valid": true,
+      "native_B_validated": true,
+      "effective_backend_verified": true
+    },
+    "readout": {
+      "score": {
+        "option_logits": [
+          32.83869171142578,
+          29.837448120117188,
+          28.54220199584961,
+          31.18287467956543
+        ],
+        "gold_index": 1,
+        "label_ids": [
+          32,
+          33,
+          34,
+          35
+        ],
+        "log_q": [
+          -0.22655967408800137,
+          -3.227803265396595,
+          -4.523049389664173,
+          -1.882376705948353
+        ],
+        "q": [
+          0.7972717644279863,
+          0.039644491629920925,
+          0.010855869368208218,
+          0.15222787457388753
+        ],
+        "prediction": 0,
+        "correct": false,
+        "choice_nll": 3.227803265396595,
+        "choice_brier": 1.5812161445078903,
+        "gold_margin": -3.0012435913085938,
+        "winner_gap": 1.6558170318603516,
+        "winner_tied": false,
+        "full_lse": 33.065853795039615,
+        "full_gold_nll": 3.2284056749224277,
+        "log_label_mass": -0.0006024095258325701,
+        "label_mass": 0.9993977718863558,
+        "full_argmax": 32,
+        "full_argmax_allowed": true
+      },
+      "native_score": {
+        "option_logits": [
+          32.75,
+          29.875,
+          28.5,
+          31.125
+        ],
+        "gold_index": 1,
+        "label_ids": [
+          32,
+          33,
+          34,
+          35
+        ],
+        "log_q": [
+          -0.23711907602935156,
+          -3.1121190760293516,
+          -4.487119076029352,
+          -1.8621190760293516
+        ],
+        "q": [
+          0.7888973436612111,
+          0.04450654259415027,
+          0.011253016240171686,
+          0.15534309750446784
+        ],
+        "prediction": 0,
+        "correct": false,
+        "choice_nll": 3.1121190760293516,
+        "choice_brier": 1.5595848742978835,
+        "gold_margin": -2.875,
+        "winner_gap": 1.625,
+        "winner_tied": false,
+        "full_lse": 32.98774574025445,
+        "full_gold_nll": 3.1127457402544465,
+        "log_label_mass": -0.0006266642250949417,
+        "label_mass": 0.999373532087921,
+        "full_argmax": 32,
+        "full_argmax_allowed": true
+      },
+      "controls": {
+        "C1_cast_only_exact": true,
+        "native_projection_full_exact": true,
+        "hidden_bf16_roundtrip_exact": true,
+        "C2_full_equal": false,
+        "C2_full_mismatch_count": 48,
+        "C2_full_max_abs": 0.015625,
+        "C2_option_logits": [
+          32.75,
+          29.875,
+          28.5,
+          31.125
+        ],
+        "C2_option_equal": true,
+        "C3_fp64_options": [
+          32.83868868276477,
+          29.837444696575403,
+          28.54220364242792,
+          31.18287672661245
+        ],
+        "C3_fp32_minus_fp64": [
+          3.028661012649536e-06,
+          3.423541784286499e-06,
+          -1.646578311920166e-06,
+          -2.0470470190048218e-06
+        ],
+        "C3_max_abs": 3.423541784286499e-06,
+        "C3_gap_difference": 5.075708031654358e-06,
+        "C3_winner_disagreement": false,
+        "C3_tolerance_pass": true,
+        "full_native_finite": true,
+        "full_shadow_finite": true,
+        "full_hidden_finite": true,
+        "flags_restored": true,
+        "C3_compensated_options": [
+          32.83868868276477,
+          29.837444696575403,
+          28.54220364242792,
+          31.18287672661245
+        ],
+        "C3_compensated_max_abs": 0.0
+      },
+      "native_to_shadow_full_kl": 0.0003700587306205031
+    }
+  },
+  {
+    "cell": "c006-smoke-code-001-L512--B",
+    "validity": {
+      "full_attention_outputs_finite": true,
+      "full_block_outputs_finite": true,
+      "full_final_hidden_finite": true,
+      "full_logits_finite": true,
+      "inputs_unchanged": true,
+      "same_layer13_qkv": true,
+      "routing_valid": true,
+      "dtype_layout_valid": true,
+      "answer_interface_valid": true,
+      "native_B_validated": true,
+      "effective_backend_verified": true
+    },
+    "readout": {
+      "score": {
+        "option_logits": [
+          32.94359588623047,
+          29.872282028198242,
+          28.718076705932617,
+          31.29458999633789
+        ],
+        "gold_index": 1,
+        "label_ids": [
+          32,
+          33,
+          34,
+          35
+        ],
+        "log_q": [
+          -0.2257153373546359,
+          -3.2970291953868625,
+          -4.4512345176524875,
+          -1.874721227247214
+        ],
+        "q": [
+          0.7979452145344906,
+          0.03699290300591543,
+          0.011664158468919364,
+          0.15339772399067594
+        ],
+        "prediction": 0,
+        "correct": false,
+        "choice_nll": 3.2970291953868625,
+        "choice_brier": 1.5877661485777763,
+        "gold_margin": -3.0713138580322266,
+        "winner_gap": 1.6490058898925781,
+        "winner_tied": false,
+        "full_lse": 33.16997032525125,
+        "full_gold_nll": 3.297688297053007,
+        "log_label_mass": -0.0006591016661445792,
+        "label_mass": 0.9993411154936458,
+        "full_argmax": 32,
+        "full_argmax_allowed": true
+      },
+      "native_score": {
+        "option_logits": [
+          33.0,
+          29.875,
+          28.75,
+          31.25
+        ],
+        "gold_index": 1,
+        "label_ids": [
+          32,
+          33,
+          34,
+          35
+        ],
+        "log_q": [
+          -0.20861866278295338,
+          -3.3336186627829534,
+          -4.458618662782953,
+          -1.9586186627829534
+        ],
+        "q": [
+          0.8117047098477622,
+          0.03566381595838831,
+          0.011578345846304851,
+          0.141053128347545
+        ],
+        "prediction": 0,
+        "correct": false,
+        "choice_nll": 3.3336186627829534,
+        "choice_brier": 1.6088388549501424,
+        "gold_margin": -3.125,
+        "winner_gap": 1.75,
+        "winner_tied": false,
+        "full_lse": 33.20924675806828,
+        "full_gold_nll": 3.334246758068282,
+        "log_label_mass": -0.0006280952853288113,
+        "label_mass": 0.9993721019252237,
+        "full_argmax": 32,
+        "full_argmax_allowed": true
+      },
+      "controls": {
+        "C1_cast_only_exact": true,
+        "native_projection_full_exact": true,
+        "hidden_bf16_roundtrip_exact": true,
+        "C2_full_equal": false,
+        "C2_full_mismatch_count": 51,
+        "C2_full_max_abs": 0.015625,
+        "C2_option_logits": [
+          33.0,
+          29.875,
+          28.75,
+          31.25
+        ],
+        "C2_option_equal": true,
+        "C3_fp64_options": [
+          32.94359740335494,
+          29.872279902920127,
+          28.718077330151573,
+          31.294592293910682
+        ],
+        "C3_fp32_minus_fp64": [
+          -1.5171244740486145e-06,
+          2.125278115272522e-06,
+          -6.242189556360245e-07,
+          -2.2975727915763855e-06
+        ],
+        "C3_max_abs": 2.2975727915763855e-06,
+        "C3_gap_difference": 7.80448317527771e-07,
+        "C3_winner_disagreement": false,
+        "C3_tolerance_pass": true,
+        "full_native_finite": true,
+        "full_shadow_finite": true,
+        "full_hidden_finite": true,
+        "flags_restored": true,
+        "C3_compensated_options": [
+          32.94359740335494,
+          29.872279902920127,
+          28.718077330151573,
+          31.294592293910682
+        ],
+        "C3_compensated_max_abs": 0.0
+      },
+      "native_to_shadow_full_kl": 0.0006533812425799703
+    }
+  },
+  {
+    "cell": "c006-smoke-code-001-L512--V4",
+    "validity": {
+      "full_attention_outputs_finite": true,
+      "full_block_outputs_finite": true,
+      "full_final_hidden_finite": true,
+      "full_logits_finite": true,
+      "inputs_unchanged": true,
+      "same_layer13_qkv": true,
+      "routing_valid": true,
+      "dtype_layout_valid": true,
+      "answer_interface_valid": true,
+      "native_B_validated": true,
+      "effective_backend_verified": true
+    },
+    "readout": {
+      "score": {
+        "option_logits": [
+          32.73707962036133,
+          29.611047744750977,
+          28.35472297668457,
+          31.04587745666504
+        ],
+        "gold_index": 1,
+        "label_ids": [
+          32,
+          33,
+          34,
+          35
+        ],
+        "log_q": [
+          -0.2156639122045334,
+          -3.341695787814885,
+          -4.598020555881291,
+          -1.9068660759008225
+        ],
+        "q": [
+          0.8060061451858324,
+          0.035376915084672486,
+          0.010071752497326865,
+          0.14854518723216872
+        ],
+        "prediction": 0,
+        "correct": false,
+        "choice_nll": 3.341695787814885,
+        "choice_brier": 1.6023107148770959,
+        "gold_margin": -3.1260318756103516,
+        "winner_gap": 1.691202163696289,
+        "winner_tied": false,
+        "full_lse": 32.953489181661624,
+        "full_gold_nll": 3.342441436910647,
+        "log_label_mass": -0.0007456490957622464,
+        "label_mass": 0.9992546288314418,
+        "full_argmax": 32,
+        "full_argmax_allowed": true
+      },
+      "native_score": {
+        "option_logits": [
+          32.75,
+          29.625,
+          28.375,
+          31.0
+        ],
+        "gold_index": 1,
+        "label_ids": [
+          32,
+          33,
+          34,
+          35
+        ],
+        "log_q": [
+          -0.2072572449742509,
+          -3.332257244974251,
+          -4.582257244974251,
+          -1.957257244974251
+        ],
+        "q": [
+          0.8128105316671161,
+          0.03571240237826458,
+          0.010231774588774062,
+          0.14124529136584768
+        ],
+        "prediction": 0,
+        "correct": false,
+        "choice_nll": 3.332257244974251,
+        "choice_brier": 1.6105664528603367,
+        "gold_margin": -3.125,
+        "winner_gap": 1.75,
+        "winner_tied": false,
+        "full_lse": 32.95797246640434,
+        "full_gold_nll": 3.3329724664043425,
+        "log_label_mass": -0.0007152214300916171,
+        "label_mass": 0.9992850342797888,
+        "full_argmax": 32,
+        "full_argmax_allowed": true
+      },
+      "controls": {
+        "C1_cast_only_exact": true,
+        "native_projection_full_exact": true,
+        "hidden_bf16_roundtrip_exact": true,
+        "C2_full_equal": false,
+        "C2_full_mismatch_count": 52,
+        "C2_full_max_abs": 0.03125,
+        "C2_option_logits": [
+          32.75,
+          29.625,
+          28.375,
+          31.0
+        ],
+        "C2_option_equal": true,
+        "C3_fp64_options": [
+          32.73707845620811,
+          29.61104857735336,
+          28.354722613003105,
+          31.045877646654844
+        ],
+        "C3_fp32_minus_fp64": [
+          1.1641532182693481e-06,
+          -8.326023817062378e-07,
+          3.6368146538734436e-07,
+          -1.8998980522155762e-07
+        ],
+        "C3_max_abs": 1.1641532182693481e-06,
+        "C3_gap_difference": 1.3541430234909058e-06,
+        "C3_winner_disagreement": false,
+        "C3_tolerance_pass": true,
+        "full_native_finite": true,
+        "full_shadow_finite": true,
+        "full_hidden_finite": true,
+        "flags_restored": true,
+        "C3_compensated_options": [
+          32.73707845620811,
+          29.61104857735336,
+          28.354722613003105,
+          31.045877646654844
+        ],
+        "C3_compensated_max_abs": 0.0
+      },
+      "native_to_shadow_full_kl": 0.00021452970720000735
+    }
+  }
+]

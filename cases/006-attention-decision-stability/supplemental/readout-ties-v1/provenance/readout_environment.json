@@ -1,0 +1,46 @@
+{
+  "torch": "2.13.0+cu130",
+  "cuda_build": "13.0",
+  "gpu": "NVIDIA GeForce RTX 5080",
+  "device_capability": [
+    12,
+    0
+  ],
+  "head_shape": [
+    151936,
+    1024
+  ],
+  "head_dtype": "torch.bfloat16",
+  "weight_sha256": "8f29acf519434862d95613b2b4f6b9d14933a5e4d16baebf8ac0b33b410acfb6",
+  "bias": null,
+  "same_weight_embedding_storage": true,
+  "tf32_before": false,
+  "fp32_precision_getter": "ieee",
+  "source_files": [
+    {
+      "file": "transformers.models.qwen3.modeling_qwen3",
+      "sha256": "cbb7f2dc274c2f5592746c0dc6985ca50353efa07376f92cc922b77680a74f69"
+    },
+    {
+      "file": "transformers.integrations.sdpa_attention",
+      "sha256": "53c7229daca9ade4c5df874194448938c1edc925abbc71809f9750dd66381e6f"
+    },
+    {
+      "file": "sageattention.core",
+      "sha256": "e475182fc55d6a683499e1eb4d8886fc06e050ed938d8563b090773eede2a99e"
+    },
+    {
+      "file": "sageattention/_fused.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "976681eb2500673219bdb1d584d3f726c7358b7244c68c07a7cd31f929d7c2d7"
+    },
+    {
+      "file": "sageattention/_qattn_sm80.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "9f4121d57d1bd362d39c4947e318568f12271ece013b960bf9a14bb8db2b648c"
+    },
+    {
+      "file": "sageattention/_qattn_sm89.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "99606dd4a325b30cbe4b01239ce83832e0294cd2517b35c0d05a85baffbad5c7"
+    }
+  ],
+  "runtime_seconds_to_load": 0.6954293480002889
+}

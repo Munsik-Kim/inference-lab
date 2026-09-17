@@ -1,0 +1,15 @@
+# Retained evidence schema
+
+Keys are `(split, base_id, length, arm, readout)`; item_id and token_hash link exact inputs. Splits are `standard` and the **original selected** `boundary_pool`. The latter name does not mean all 192 pool items are evaluated here. Native and FP32 views are repeated observations of each existing scenario.
+
+`raw/native.json` has 714 records copied from verified original payloads: four `option_logits`, gold index, full vocabulary log normalizer/argmax, native dtype, all original validity fields and lightweight local/hidden norm summaries. `source_payload_sha256` identifies the complete original payload. `local_pooled`/`local_last_query` compare against the common FP32 reference; `native_pair_local` compares candidates against native B across 32 queries. `hidden_differences.layer13_attention_before_o_proj_last` supplies the separate last-query candidate-versus-B comparison. B's pair-difference fields are empty by definition, not a failed recording.
+
+`raw/shadow.json` has 714 readout records with the same keys and `H_FP32`. It includes four actual GPU FP32 logits, full vocabulary log normalizer/argmax, CPU-computed scores, original or replay validity, state origin, C1/C2/C3 controls and a hash of the excluded private vector file. `C3_fp64_options` retain the separate CPU dot products, not a second forward. `C3_gap_difference` is the signed FP32-minus-FP64 winner-gap difference. `C2_option_logits` are full-shadow values rounded through BF16 and widened. `full_vocab_kl_B_to_candidate` is computed from full shadow vectors; `native_to_shadow_full_kl` compares readouts within an arm. Both require excluded full vectors for independent reconstruction.
+
+`derived/pairs.json` contains 952 candidate-versus-B pairs (238 scenarios × two candidates × two views), not 952 independent samples. It retains exact top sets, deterministic predictions, gold correctness, margin/gap, choice KL, NLL/Brier differences, original native B tie membership and retrospective R. R at a B tie is null.
+
+`derived/summary.json` gives 32 set/view/candidate/task groups. `tie_strata` partitions every group; original native B-conditioned groups and current-view tie strata remain distinct. Conditional rates retain numerator/denominator and null empty groups. Group-level `delta_nll` is a scenario mean; STANDARD's equally sized tasks make this equal to the task-balanced mean. Post-hoc bootstrap results explicitly contain task-balanced means. The optional interaction is task-balanced even in the unequal selected stress set.
+
+`derived/hidden_boundary_summary.csv` retains named boundary, scenario count and separate median absolute RMS, B reference RMS and relative error. Each normalized difference uses its own boundary reference. `figures/03_local_margin.png` shows candidate-versus-B pooled local error, not candidate-versus-FP32 error.
+
+Public option logits allow independent choice scoring. They do not reconstruct a full-vocabulary KL or hidden state. The public log normalizer is sufficient for label mass/full gold-token NLL calculation but does not independently prove that the original whole-vocabulary reduction was correct.

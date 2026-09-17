@@ -1,0 +1,94 @@
+{
+  "status": "PASS_PUBLIC_CANDIDATE_CHECKS",
+  "cpu_tests": {
+    "command": "python -B -m unittest discover -s tests -v",
+    "exit_code": 0,
+    "passed": 59,
+    "failed": 0,
+    "log": "cpu_publication_tests.log",
+    "warning_note": "Historical frozen verify_results.py emits ResourceWarning for temporary hash-reader handles. Warnings are retained; local case-directory prefixes in the public log are redacted. Test failures: zero."
+  },
+  "scalar_audit": {
+    "status": "PASS_CPU_MEASUREMENT_CONSISTENCY",
+    "records_checked": 1290,
+    "norm_units_checked": 41280,
+    "paired_comparisons": 860,
+    "bootstrap_intervals_checked": 40,
+    "primary_192_scenarios_complete": true,
+    "independence_scope": "Distinct scalar/norm/paired/bootstrap calculation path. Not third-party GPU replication. Full-vocabulary KL and hidden differences cannot be fully reconstructed from public four-logit/norm evidence alone.",
+    "derived_execution_status": "COMPLETED_CONTROLLED_STUDY",
+    "deployment_verdict": "NOT_ASSESSED"
+  },
+  "timing_audit": {
+    "status": "PASS",
+    "raw_timing_rows": 540,
+    "documents": 12,
+    "shared_local_processes": 3,
+    "recomputed": {
+      "A_PUBLIC": {
+        "median": 1.0040888999751811,
+        "ci95": [
+          1.00325344954255,
+          1.0052304694675998
+        ]
+      },
+      "V4": {
+        "median": 1.001392123166501,
+        "ci95": [
+          1.0007302114164227,
+          1.0022650483895947
+        ]
+      }
+    },
+    "scope": "Independent scalar aggregation and resampling; not new GPU replication"
+  },
+  "input_audit": {
+    "status": "PASS",
+    "independent_base_scenarios": 486,
+    "exact_prompts_including_dependent_subsets": 606,
+    "independent_fact_oracles": "PASS",
+    "split_overlap": "NONE",
+    "required_fact_and_option_retention": "PASS",
+    "frozen_code_files": 19,
+    "tokenizer_replay": "PASS",
+    "scope": "CPU facts/tokenization/hash audit; no model inference"
+  },
+  "full_vector_audit": {
+    "status": "PASS",
+    "full_vocabulary_KL_pairs_checked": 860,
+    "max_absolute_KL_recalculation_difference": 3.1710745140856034e-15,
+    "repeated_B_full_vectors_checked": 142,
+    "repeated_B_full_vectors_differed": 0,
+    "scope": "Local complete-vector arithmetic audit; vectors remain excluded from public package. Not new GPU replication."
+  },
+  "deterministic_rebuild": {
+    "summary_json_byte_identical": true,
+    "pairs_json_byte_identical": true,
+    "PNG_files_byte_identical": 11,
+    "HTML_byte_identical": true
+  },
+  "javascript": {
+    "syntax_exit_code": 0,
+    "DOM_fixture_exit_code": 0,
+    "assertions": 19,
+    "browser_render": "NOT_RUN",
+    "tablet_interaction": "NOT_RUN"
+  },
+  "preservation": {
+    "earlier_cases_template_download_files": 381,
+    "changed": 0,
+    "user_changes_preserved": true
+  },
+  "hygiene": {
+    "private_path_secret_or_excluded_artifact_findings": 0,
+    "scope": "Pattern/static checks, not security certification",
+    "command": "python -B scripts/verify_public.py --output <NEW_EXTERNAL_JSON>",
+    "log_path_redactions": 316
+  },
+  "protocol_hashes": {
+    "design_freeze_v1.json": "2b333643fb1c0c6742bf38b3d94d14c841ff513da111ca15cde9af9badc415cf",
+    "eval_manifest_freeze_v1.json": "67ec9e7db933b708fad65d9612383b74de1ce52de65bec13f472f3a194f005f3"
+  },
+  "package": "CRC, safe paths, symlink exclusion and byte correspondence are checked by package.py; ZIP identity is kept in an external record to avoid self-reference",
+  "publication": "Local candidate only; no commit, push, PR, cloud upload or public hosting"
+}
