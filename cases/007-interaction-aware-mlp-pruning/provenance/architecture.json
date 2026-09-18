@@ -1,0 +1,24 @@
+{
+  "layers": 28,
+  "hidden_size": 1024,
+  "intermediate_size": 3072,
+  "layer": 13,
+  "gate_proj": [
+    3072,
+    1024
+  ],
+  "up_proj": [
+    3072,
+    1024
+  ],
+  "down_proj": [
+    1024,
+    3072
+  ],
+  "bias": false,
+  "activation": "silu",
+  "expression": "down_proj(silu(gate_proj(x)) * up_proj(x))",
+  "input_boundary": "actual input to zero-based decoder layer 13 MLP, after post_attention_layernorm",
+  "source_sha256": "cbb7f2dc274c2f5592746c0dc6985ca50353efa07376f92cc922b77680a74f69",
+  "mlp_class_source_sha256": "cbe8e45014af4b3ecf023eb5ab032abfa90fb311c9ea50af70e96d73431d7fe6"
+}

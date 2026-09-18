@@ -1,0 +1,1247 @@
+{
+  "schema_version": 1,
+  "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+  "role": "Editorial aid only; frozen case evidence remains authoritative. Text and numeric checks do not establish translation equivalence.",
+  "claims": [
+    {
+      "claim_id": "c001-runtime",
+      "case_id": "001",
+      "claim_en": "The original run failed at initialization; the guarded wheel generated text. Inspection identified 96 INT8 modules, not dynamic kernel calls.",
+      "claim_ko": "원실행은 초기화에 실패했고 guard를 적용한 wheel은 텍스트를 생성했다. 96개는 INT8 모듈 관찰 수이며 동적 커널 호출 수가 아니다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/001-sm120-int8-fallback/README.md",
+      "source_sha256": "60a8a655be88cffa7f84b8b5cde37acddfe6228af31f870bf5df8f61f99b6d75",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "exit 1",
+          "exit 0",
+          "96 `CompressedTensorsW8A8Int8` modules",
+          "not GPU kernel profiling"
+        ]
+      },
+      "metric": "execution compatibility and module inspection",
+      "value": {
+        "before_exit": 1,
+        "after_exit": 0,
+        "modules": 96
+      },
+      "unit": "exit status / modules",
+      "denominator": "one short request per phase",
+      "scope": "RTX 5080, official vLLM 0.29.0 wheel, Python runtime hunk only",
+      "evidence_kind": "original",
+      "limits": "Guard authored by hclsys; no performance/quality or fresh-host replay claim.",
+      "docs_locations": [
+        "docs/en/CASEBOOK.md",
+        "docs/ko/CASEBOOK.md"
+      ],
+      "display_checks": [
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "96",
+            "code 1",
+            "code 0"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "96",
+            "exit 1",
+            "exit 0"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c002-quality",
+      "case_id": "002",
+      "claim_en": "BF16 and FP8 scored 31/100 and 32/100, with paired difference +1 percentage point and interval [-2,5].",
+      "claim_ko": "BF16과 FP8은 31/100·32/100이며 쌍별 차이 +1 퍼센트포인트(%p)의 구간은 [-2,5]다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/002-bf16-fp8-document-extraction/results/aggregate.json",
+      "source_sha256": "c827afc60160c5eaa572882b45eeaf8787619635abefb7b410113727c452e7c2",
+      "source_locator": {
+        "kind": "json",
+        "checks": [
+          {
+            "pointer": "/quality/bf16/all/document_correct",
+            "equals": 31
+          },
+          {
+            "pointer": "/quality/fp8/all/document_correct",
+            "equals": 32
+          },
+          {
+            "pointer": "/unique_eval_documents",
+            "equals": 100
+          },
+          {
+            "pointer": "/paired_quality/fp8_minus_bf16_percentage_points",
+            "equals": 1.0
+          },
+          {
+            "pointer": "/paired_quality/paired_stratified_bootstrap_95pct_interval_pp",
+            "equals": [
+              -2.0,
+              5.0
+            ]
+          }
+        ]
+      },
+      "metric": "all-four-field document correctness, first round",
+      "value": [
+        31,
+        32
+      ],
+      "unit": "documents; percentage-point difference",
+      "denominator": 100,
+      "scope": "official Qwen3-4B releases, synthetic Korean extraction",
+      "evidence_kind": "original",
+      "limits": "Three rounds are repeated documents; does not establish quality improvement/equivalence.",
+      "docs_locations": [
+        "docs/en/CASEBOOK.md",
+        "docs/ko/CASEBOOK.md"
+      ],
+      "display_checks": [
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "31/100",
+            "32/100",
+            "−2 to +5"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "31/100",
+            "32/100",
+            "−2~+5"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c002-cost",
+      "case_id": "002",
+      "claim_en": "FP8 used lower whole-device sampled peak memory and shorter request times; output lengths differed.",
+      "claim_ko": "FP8의 장치 전체 관측 최대 메모리와 요청 시간은 낮았지만 출력 길이는 달랐다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/002-bf16-fp8-document-extraction/README.md",
+      "source_sha256": "1e7dfe0fce6ecb3f121ba68d1352dfbe3d4cd15b4eabc042199ade08abc35f7e",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "11.623–11.624",
+          "8.211–8.211",
+          "Explicit BF16 KV cache budget",
+          "Output lengths were equal in only"
+        ]
+      },
+      "metric": "whole-device sampled peak and warmed request latency",
+      "value": {
+        "peak_gib_approx": [
+          11.62,
+          8.21
+        ],
+        "kv_budget_gib": 1
+      },
+      "unit": "GiB; request elapsed time",
+      "denominator": null,
+      "scope": "same explicit BF16 KV budget, background GPU allocations included",
+      "evidence_kind": "original",
+      "limits": "Sampled whole-device memory is not weight memory or process allocator usage; not isolated decode speed.",
+      "docs_locations": [
+        "docs/en/CASEBOOK.md",
+        "docs/ko/CASEBOOK.md"
+      ],
+      "display_checks": [
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "11.62 GiB",
+            "8.21 GiB"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "11.62 GiB",
+            "8.21 GiB"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c003-reference",
+      "case_id": "003",
+      "claim_en": "Calibrated EFQ stayed near nearest under the same scale; a nearest baseline using the different headroom scale rule had lower median/p95 at every length. Code mapping and comparison scale are separate effects.",
+      "claim_ko": "보정 EFQ는 같은 scale의 nearest와 비슷했지만 다른 headroom scale 규칙의 nearest 기준 구현이 모든 길이에서 더 낮은 중앙값과 p95를 보였다. 코드 매핑과 비교 기준의 scale 선택은 구분한다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/003-efq-softmax-numerical-audit/README.md",
+      "source_sha256": "e9e02c0524cdf2f6def0859834ce439799cb1fa2d425e9f162bf857388832193",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "11.49–14.49%",
+          "1.133×, 1.179× and 1.148×",
+          "16 documents × 3 layers × 4 heads",
+          "FP32 numerical simulation"
+        ]
+      },
+      "metric": "median/p95 relative output Frobenius error",
+      "value": {
+        "mean_median_percent_range": [
+          11.49,
+          14.49
+        ],
+        "calibrated_headroom_median_ratios": [
+          1.133,
+          1.179,
+          1.148
+        ]
+      },
+      "unit": "relative output error %, error ratios",
+      "denominator": "16 independent documents; 192 repeated head units per length",
+      "scope": "Qwen3-0.6B traces, 512/2048/4096; same QKV; reference scale distinguished",
+      "evidence_kind": "original",
+      "limits": "Han et al. method; FP32 simulation, no packed-FP4 speed/task-quality measurement.",
+      "docs_locations": [
+        "docs/en/CASEBOOK.md",
+        "docs/ko/CASEBOOK.md"
+      ],
+      "display_checks": [
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "11.49%",
+            "14.49%",
+            "1.133×",
+            "1.179×",
+            "1.148×"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "11.49~14.49%",
+            "1.133×",
+            "1.179×",
+            "1.148×"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c004-cost",
+      "case_id": "004",
+      "claim_en": "Complete-operator ratios were 0.373/1.465/2.100 at 512/2048/4096; all three Qwen conditions failed the local screen.",
+      "claim_ko": "길이 512/2048/4096의 전체 연산 속도비는 0.373/1.465/2.100이며 세 Qwen 조건 모두 국소 기준에서 탈락했다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/004-low-precision-attention-break-even/README.md",
+      "source_sha256": "366f3228b97c09bb6979ac9b12079d02d09b6bf14ddf9022a536fd6698e09777",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "0.373×",
+          "1.465×",
+          "2.100×",
+          "none of the three real-Qwen conditions passed",
+          "32 sampled queries per head"
+        ]
+      },
+      "metric": "median paired complete-operator BF16/candidate wall-time ratio",
+      "value": [
+        0.373,
+        1.465,
+        2.1
+      ],
+      "unit": "speedup ratio",
+      "denominator": "16 documents, dependent head/query/length measurements; five processes",
+      "scope": "Qwen H16/H8, layer13, full-query call; sampled-query error",
+      "evidence_kind": "original",
+      "limits": "Not whole-model latency; synthetic H8/H8 separate; 1%/3% engineering screen not task tolerance.",
+      "docs_locations": [
+        "docs/en/CASEBOOK.md",
+        "docs/en/PORTFOLIO.md",
+        "docs/ko/CASEBOOK.md",
+        "docs/ko/PORTFOLIO.md"
+      ],
+      "display_checks": [
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "0.373×",
+            "1.465×",
+            "2.100×"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "0.373×",
+            "1.465×",
+            "2.100×"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c005-stop",
+      "case_id": "005",
+      "claim_en": "No changed setting qualified; STOP_DEV_SCREEN, no finalist or fresh confirmation.",
+      "claim_ko": "통과한 변경 설정이 없어 STOP_DEV_SCREEN이며 최종 후보와 새로운 확인 실험은 없다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/005-attention-precision-pareto/results/dev_summary.json",
+      "source_sha256": "4a603fe90c9fc7bd378c75055bebc729040c0b0e568923e99af92be12dc2db9d",
+      "source_locator": {
+        "kind": "json",
+        "checks": [
+          {
+            "pointer": "/final_decision",
+            "equals": "STOP_DEV_SCREEN"
+          },
+          {
+            "pointer": "/finalist_id",
+            "equals": null
+          },
+          {
+            "pointer": "/documents",
+            "equals": 8
+          }
+        ]
+      },
+      "metric": "development decision",
+      "value": "STOP_DEV_SCREEN",
+      "unit": "status",
+      "denominator": "8 documents",
+      "scope": "Qwen3-0.6B layer13, causal L4096",
+      "evidence_kind": "original",
+      "limits": "Original 1%/3%/1.50x gate unchanged; bounded candidate set only.",
+      "docs_locations": [
+        "docs/en/CASEBOOK.md",
+        "docs/en/PORTFOLIO.md",
+        "docs/ko/CASEBOOK.md",
+        "docs/ko/PORTFOLIO.md"
+      ],
+      "display_checks": [
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "STOP_DEV_SCREEN",
+            "1.50×"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "STOP_DEV_SCREEN",
+            "1.50×"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c005-tradeoff",
+      "case_id": "005",
+      "claim_en": "V4 lowered median error versus A_PUBLIC but also reduced complete speedup; V1/V2 are bundled settings.",
+      "claim_ko": "V4는 A_PUBLIC보다 중앙값 오차를 줄였지만 전체 속도비도 낮췄다. V1/V2는 묶음 설정 비교다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/005-attention-precision-pareto/results/dev_summary.json",
+      "source_sha256": "4a603fe90c9fc7bd378c75055bebc729040c0b0e568923e99af92be12dc2db9d",
+      "source_locator": {
+        "kind": "json",
+        "checks": [
+          {
+            "pointer": "/rows/1/config_id",
+            "equals": "A_PUBLIC"
+          },
+          {
+            "pointer": "/rows/1/speedup",
+            "equals": 2.1097035362369847
+          },
+          {
+            "pointer": "/rows/5/config_id",
+            "equals": "V4"
+          },
+          {
+            "pointer": "/rows/5/speedup",
+            "equals": 1.3376093933570266
+          },
+          {
+            "pointer": "/rows/1/numerical/median",
+            "equals": 0.022941462010887384
+          },
+          {
+            "pointer": "/rows/5/numerical/median",
+            "equals": 0.019578113763810356
+          }
+        ]
+      },
+      "metric": "DEV local output error and paired complete-call speedup",
+      "value": {
+        "median_percent": [
+          2.294,
+          1.958
+        ],
+        "speedup": [
+          2.11,
+          1.338
+        ]
+      },
+      "unit": "% relative error; speedup ratio",
+      "denominator": "128 dependent document/head units from 8 documents",
+      "scope": "32 fixed queries per head, L4096, first numerical round",
+      "evidence_kind": "original",
+      "limits": "No isolated accumulator attribution; not finalist or fresh confirmation.",
+      "docs_locations": [
+        "docs/en/CASEBOOK.md",
+        "docs/ko/CASEBOOK.md"
+      ],
+      "display_checks": [
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "2.294%",
+            "1.958%",
+            "2.110×",
+            "1.338×"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "2.294%",
+            "1.958%",
+            "2.110×",
+            "1.338×"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c005-validity",
+      "case_id": "005",
+      "claim_en": "V3 was excluded on a small zero-centered-range/nonfinite-output fixture before real-input DEV.",
+      "claim_ko": "V3는 작은 zero-centered-range/NaN/Inf가 포함된 유효하지 않은 출력 검사에서 실제 입력 개발 비교 전에 제외됐다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/005-attention-precision-pareto/ANALYSIS.md",
+      "source_sha256": "5f65eb75e0639ca946c1ef7028025a99bc84e34a890484f672b707c0943a35af",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "zero after BF16 rounding",
+          "without a zero guard",
+          "V3 was excluded before the real-trace comparison."
+        ]
+      },
+      "metric": null,
+      "value": null,
+      "unit": null,
+      "denominator": null,
+      "scope": "pinned SageAttention revision; specific smoothing path",
+      "evidence_kind": "documented-implementation",
+      "limits": "Not a general failure on Qwen, threshold failure or security claim.",
+      "docs_locations": [
+        "docs/en/CASEBOOK.md",
+        "docs/ko/CASEBOOK.md"
+      ],
+      "display_checks": []
+    },
+    {
+      "claim_id": "c006-native",
+      "case_id": "006",
+      "claim_en": "Native standard choices changed for A_PUBLIC 5/192 and V4 8/192, with gains and wrong-to-wrong changes; separate stress included regressions. For both settings, the 95% interval for the task-balanced mean paired change in gold-choice negative log-likelihood (NLL; candidate minus BF16) included zero. A positive change means a worse probability score for the correct choice; this does not establish equivalence.",
+      "claim_ko": "원래 출력 계산(native)의 표준 선택은 A_PUBLIC 5/192·V4 8/192가 바뀌었고 정답 획득과 다른 오답 변경이 있었다. 별도 스트레스에는 회귀가 있었다. 두 설정 모두 과제별 가중치를 같게 둔 정답 선택지의 음의 로그우도(NLL) 쌍별 변화 평균에 대해 95% 구간을 구했으며, 그 구간은 0을 포함했습니다. 변화는 후보−BF16이며, 양수는 정답에 부여한 확률이 낮아지는 방향입니다. 이 결과만으로 품질의 동등성을 입증하지는 않습니다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/006-attention-decision-stability/results/study/summary.json",
+      "source_sha256": "338b4194ce883fb5a0e69e03f43987ac86bf143ce1df2317a3e322099f838f8d",
+      "source_locator": {
+        "kind": "json",
+        "checks": [
+          {
+            "pointer": "/groups/standard~1L4096/independent_scenarios",
+            "equals": 192
+          },
+          {
+            "pointer": "/groups/standard~1L4096/arms/A_PUBLIC/outcomes/regression",
+            "equals": 0
+          },
+          {
+            "pointer": "/groups/standard~1L4096/arms/A_PUBLIC/outcomes/gain",
+            "equals": 2
+          },
+          {
+            "pointer": "/groups/standard~1L4096/arms/A_PUBLIC/outcomes/wrong_to_wrong_flips",
+            "equals": 3
+          },
+          {
+            "pointer": "/groups/standard~1L4096/arms/A_PUBLIC/outcomes/flips/numerator",
+            "equals": 5
+          },
+          {
+            "pointer": "/groups/standard~1L4096/arms/V4/outcomes/regression",
+            "equals": 0
+          },
+          {
+            "pointer": "/groups/standard~1L4096/arms/V4/outcomes/gain",
+            "equals": 4
+          },
+          {
+            "pointer": "/groups/standard~1L4096/arms/V4/outcomes/wrong_to_wrong_flips",
+            "equals": 4
+          },
+          {
+            "pointer": "/groups/standard~1L4096/arms/V4/outcomes/flips/numerator",
+            "equals": 8
+          },
+          {
+            "pointer": "/groups/boundary_pool~1L4096/independent_scenarios",
+            "equals": 46
+          },
+          {
+            "pointer": "/groups/boundary_pool~1L4096/arms/A_PUBLIC/outcomes/regression",
+            "equals": 2
+          },
+          {
+            "pointer": "/groups/boundary_pool~1L4096/arms/A_PUBLIC/outcomes/gain",
+            "equals": 1
+          },
+          {
+            "pointer": "/groups/boundary_pool~1L4096/arms/A_PUBLIC/outcomes/wrong_to_wrong_flips",
+            "equals": 0
+          },
+          {
+            "pointer": "/groups/boundary_pool~1L4096/arms/A_PUBLIC/outcomes/flips/numerator",
+            "equals": 3
+          },
+          {
+            "pointer": "/groups/boundary_pool~1L4096/arms/V4/outcomes/regression",
+            "equals": 1
+          },
+          {
+            "pointer": "/groups/boundary_pool~1L4096/arms/V4/outcomes/gain",
+            "equals": 2
+          },
+          {
+            "pointer": "/groups/boundary_pool~1L4096/arms/V4/outcomes/wrong_to_wrong_flips",
+            "equals": 0
+          },
+          {
+            "pointer": "/groups/boundary_pool~1L4096/arms/V4/outcomes/flips/numerator",
+            "equals": 3
+          },
+          {
+            "pointer": "/groups/standard~1L4096/arms/A_PUBLIC/task_balanced/delta_choice_nll/mean",
+            "equals": 0.001093702654786921
+          },
+          {
+            "pointer": "/groups/standard~1L4096/arms/A_PUBLIC/task_balanced/delta_choice_nll/ci95",
+            "equals": [
+              -0.01197994361078134,
+              0.014042046561404224
+            ]
+          },
+          {
+            "pointer": "/groups/standard~1L4096/arms/V4/task_balanced/delta_choice_nll/mean",
+            "equals": -0.00718217651699804
+          },
+          {
+            "pointer": "/groups/standard~1L4096/arms/V4/task_balanced/delta_choice_nll/ci95",
+            "equals": [
+              -0.01919758157224358,
+              0.004463581937220162
+            ]
+          }
+        ]
+      },
+      "metric": "paired choice flips, gold regression/gain; task-balanced mean paired change in gold-choice NLL (candidate minus BF16)",
+      "value": {
+        "standard_flips": [
+          5,
+          8
+        ],
+        "standard_regressions": [
+          0,
+          0
+        ],
+        "standard_gains": [
+          2,
+          4
+        ],
+        "stress_regressions": [
+          2,
+          1
+        ],
+        "mean_delta_choice_nll": {
+          "A_PUBLIC": 0.001093702654786921,
+          "V4": -0.00718217651699804
+        },
+        "ci95_delta_choice_nll": {
+          "A_PUBLIC": [
+            -0.01197994361078134,
+            0.014042046561404224
+          ],
+          "V4": [
+            -0.01919758157224358,
+            0.004463581937220162
+          ]
+        }
+      },
+      "unit": "scenarios; NLL change in nats",
+      "denominator": {
+        "standard": 192,
+        "selected_stress": 46
+      },
+      "scope": "same task/input, Qwen3-0.6B layer13 prefill only; native output",
+      "evidence_kind": "original",
+      "limits": "Zero observed regression is not zero risk/equivalence. Stress is baseline-conditioned, not workload frequency.",
+      "docs_locations": [
+        "README.md",
+        "README.ko.md",
+        "docs/en/CASEBOOK.md",
+        "docs/en/PORTFOLIO.md",
+        "docs/ko/CASEBOOK.md",
+        "docs/ko/PORTFOLIO.md"
+      ],
+      "display_checks": [
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "5 of 192",
+            "8 of 192",
+            "104/106/108"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "192개 중 5개",
+            "192개 중 8개",
+            "104/106/108"
+          ]
+        },
+        {
+          "path": "README.md",
+          "contains": [
+            "95%",
+            "NLL",
+            "candidate minus BF16"
+          ]
+        },
+        {
+          "path": "README.ko.md",
+          "contains": [
+            "95%",
+            "NLL",
+            "후보−BF16"
+          ]
+        },
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "95%",
+            "NLL",
+            "candidate minus BF16"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "95%",
+            "NLL",
+            "후보−BF16"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c006-readout",
+      "case_id": "006",
+      "claim_en": "Native standard flips involved top ties; shadow FP32 produced three flips per candidate including new flips, on reused inputs. Readout maps final hidden state to vocabulary scores; native and shadow denote original and separate diagnostic computations.",
+      "claim_ko": "Native 표준 변경에는 최고점 동률이 있었고 같은 입력의 shadow FP32에서는 후보마다 새 변경을 포함한 3건이 관측됐다. Readout은 모델 내부 상태를 어휘 점수로 바꾸는 마지막 출력 계산이며 native와 shadow는 원래 계산과 별도 진단용 계산을 구분한다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/006-attention-decision-stability/supplemental/readout-ties-v1/README.md",
+      "source_sha256": "2e57c22dd42d5141df43955bca59254655c031817dc497a483fd6a518a1dad31",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "All 5 A_PUBLIC and 8 V4",
+          "3 changes for each candidate",
+          "2 new flips appeared",
+          "238 existing L4096 scenarios"
+        ]
+      },
+      "metric": "same-readout candidate/B flips",
+      "value": {
+        "shadow_standard_flips": [
+          3,
+          3
+        ]
+      },
+      "unit": "scenarios",
+      "denominator": "same 192 standard + same 46 selected stress; repeated readout views",
+      "scope": "same final hidden states and represented BF16 weights; FP32 output projection",
+      "evidence_kind": "posthoc",
+      "limits": "Not fresh confirmation, better model, or pure final-rounding causal attribution.",
+      "docs_locations": [
+        "README.md",
+        "README.ko.md",
+        "docs/en/CASEBOOK.md",
+        "docs/en/PORTFOLIO.md",
+        "docs/ko/CASEBOOK.md",
+        "docs/ko/PORTFOLIO.md"
+      ],
+      "display_checks": [
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "3 of 192",
+            "192 + 46"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "192개 중 3개",
+            "192 + 46"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c006-limits",
+      "case_id": "006",
+      "claim_en": "BF16 code accuracy was 15/64; strict structured output was 0/24 for every arm; deployment NOT_ASSESSED.",
+      "claim_ko": "BF16 코드 정답은 15/64, 엄격한 구조화 출력은 모든 설정에서 0/24, 배포는 NOT_ASSESSED다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/006-attention-decision-stability/README.md",
+      "source_sha256": "1f4462a709861673536c8aa733ffad3716c697edb02b99769bf07db2a164f5f6",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "code 15/64",
+          "0/24",
+          "NOT_ASSESSED",
+          "COMPLETED_CONTROLLED_STUDY"
+        ]
+      },
+      "metric": "code choice correctness and strict generation schema",
+      "value": [
+        15,
+        0
+      ],
+      "unit": "scenarios",
+      "denominator": [
+        64,
+        24
+      ],
+      "scope": "primary code stratum and separate bounded generation subset",
+      "evidence_kind": "original",
+      "limits": "Native counts remain primary; completed study does not imply deployment approval.",
+      "docs_locations": [
+        "README.md",
+        "README.ko.md",
+        "docs/en/CASEBOOK.md",
+        "docs/ko/CASEBOOK.md"
+      ],
+      "display_checks": [
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "15/64",
+            "0/24",
+            "NOT_ASSESSED"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "15/64",
+            "0/24",
+            "NOT_ASSESSED"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c006-timing",
+      "case_id": "006",
+      "claim_en": "Model-prefill speedups were 1.0041x and 1.0014x, not operator-only ratios.",
+      "claim_ko": "모델 prefill 속도비는 1.0041x·1.0014x이며 연산 단독 속도비가 아니다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/006-attention-decision-stability/results/study/summary.json",
+      "source_sha256": "338b4194ce883fb5a0e69e03f43987ac86bf143ce1df2317a3e322099f838f8d",
+      "source_locator": {
+        "kind": "json",
+        "checks": [
+          {
+            "pointer": "/model_timing/A_PUBLIC/paired_ratio_median",
+            "equals": 1.0040888999751811
+          },
+          {
+            "pointer": "/model_timing/V4/paired_ratio_median",
+            "equals": 1.001392123166501
+          }
+        ]
+      },
+      "metric": "paired complete prompt-forward wall-time ratio",
+      "value": [
+        1.0041,
+        1.0014
+      ],
+      "unit": "speedup ratio",
+      "denominator": "12 fixed scenarios, 3 shared process rounds",
+      "scope": "same final-position LM head, block-mean per-call timing",
+      "evidence_kind": "original",
+      "limits": "Not service latency, Case004 operator speed, or general acceleration.",
+      "docs_locations": [
+        "docs/en/CASEBOOK.md",
+        "docs/ko/CASEBOOK.md"
+      ],
+      "display_checks": [
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "1.0041×",
+            "1.0014×"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "1.0041×",
+            "1.0014×"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c006-implementation",
+      "case_id": "006",
+      "claim_en": "A scoped adapter changes only layer13 square prefill and restores the original path; other layers and decode stay BF16. B names the BF16 control; A_PUBLIC and V4 name low-precision attention settings with BF16 model weights.",
+      "claim_ko": "범위를 제한한 어댑터가 layer13 정사각 prefill만 바꾸고 원래 경로를 복구한다. 다른 층과 decode는 BF16이다. B는 BF16 기준선이며 A_PUBLIC과 V4는 모델 가중치를 BF16으로 유지하는 저정밀 attention 설정이다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/006-attention-decision-stability/METHODS.md",
+      "source_sha256": "e808959953ccc811036d3fee436442d365ecbbfad6ac11708b4a9d1219db643f",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "Only zero-based layer 13",
+          "every single-token decode step use native BF16 SDPA",
+          "restores the original registry entry even on exceptions"
+        ]
+      },
+      "metric": null,
+      "value": null,
+      "unit": null,
+      "denominator": null,
+      "scope": "one-layer intervention, fixed BF16 model weights",
+      "evidence_kind": "documented-implementation",
+      "limits": "Not all-layer or weight/KV quantization; scope established by recorded checks and source.",
+      "docs_locations": [
+        "docs/en/CASEBOOK.md",
+        "docs/en/PORTFOLIO.md",
+        "docs/ko/CASEBOOK.md",
+        "docs/ko/PORTFOLIO.md"
+      ],
+      "display_checks": []
+    },
+    {
+      "claim_id": "c006-package",
+      "case_id": "project",
+      "claim_en": "The current combined ZIP is the docfix1 package identified by its existing metadata.",
+      "claim_ko": "현재 통합 ZIP은 기존 metadata가 식별하는 docfix1 패키지다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "downloads/case006_decision_stability_with_readout_20260917_docfix1.json",
+      "source_sha256": "b2d31635882f92cd46001b0ce196e7181ae8a1b41528f5c50069b2b8ae70c01f",
+      "source_locator": {
+        "kind": "json",
+        "checks": [
+          {
+            "pointer": "/filename",
+            "equals": "case006_decision_stability_with_readout_20260917_docfix1.zip"
+          },
+          {
+            "pointer": "/files",
+            "equals": 211
+          },
+          {
+            "pointer": "/bytes",
+            "equals": 14317197
+          },
+          {
+            "pointer": "/sha256",
+            "equals": "3bf9887be344b234322088282772821178eb59a4f9bfb2e705b89b20d0f80b96"
+          }
+        ]
+      },
+      "metric": null,
+      "value": null,
+      "unit": null,
+      "denominator": null,
+      "scope": "current publication package; prior ZIP remains historical",
+      "evidence_kind": "proposed-guide",
+      "limits": "These guides do not rewrite case packages.",
+      "docs_locations": [
+        "docs/en/GETTING_STARTED.md",
+        "docs/ko/GETTING_STARTED.md"
+      ],
+      "display_checks": []
+    },
+    {
+      "claim_id": "c006-browser",
+      "case_id": "006",
+      "claim_en": "Supplemental Edge file viewing was checked at desktop and emulated tablet sizes; actual iPad not tested.",
+      "claim_ko": "보충 탐색기는 Edge의 로컬 파일에서 데스크톱·태블릿 크기 에뮬레이션 검사를 했으며 실제 iPad는 미검증이다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/006-attention-decision-stability/supplemental/readout-ties-v1/README.md",
+      "source_sha256": "2e57c22dd42d5141df43955bca59254655c031817dc497a483fd6a518a1dad31",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "headless Edge on Windows",
+          "emulated tablet sizes",
+          "Real iPad: NOT_TESTED"
+        ]
+      },
+      "metric": null,
+      "value": null,
+      "unit": null,
+      "denominator": null,
+      "scope": "historical browser check; offline embedded recorded evidence",
+      "evidence_kind": "documented-implementation",
+      "limits": "Not a new browser run or actual iPad validation. GitHub HTML source view is not a hosted demo.",
+      "docs_locations": [
+        "docs/en/GETTING_STARTED.md",
+        "docs/ko/GETTING_STARTED.md"
+      ],
+      "display_checks": []
+    },
+    {
+      "claim_id": "c006-verification",
+      "case_id": "006",
+      "claim_en": "Current and historical manifests have distinct scopes; CPU scalar auditing cannot reconstruct excluded full tensors.",
+      "claim_ko": "현재·역사적 manifest는 범위가 다르며 CPU 스칼라 감사로 제외된 전체 tensor를 복원할 수 없다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/006-attention-decision-stability/REPRODUCTION.md",
+      "source_sha256": "a3c50def6d431d4493a603b5bd6852da84debc831033539545c7f2da66a91b87",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "original 59-test suite",
+          "PUBLICATION_SHA256SUMS",
+          "CPU reanalysis checks saved scalar arithmetic"
+        ]
+      },
+      "metric": null,
+      "value": null,
+      "unit": null,
+      "denominator": null,
+      "scope": "existing publication verifier and separately documented CPU/GPU commands",
+      "evidence_kind": "proposed-guide",
+      "limits": "No new install, GPU execution or full reanalysis in this docs task.",
+      "docs_locations": [
+        "docs/en/GETTING_STARTED.md",
+        "docs/ko/GETTING_STARTED.md"
+      ],
+      "display_checks": []
+    },
+    {
+      "claim_id": "attribution",
+      "case_id": "006",
+      "claim_en": "Upstream supplies models/kernels; this project supplies controlled evaluation and evidence with Codex assistance.",
+      "claim_ko": "모델·커널은 upstream의 작업이고 프로젝트는 Codex 지원을 받아 통제 평가와 근거를 구현했다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/006-attention-decision-stability/NOTICE.md",
+      "source_sha256": "59c71d8d76511b5d38d612b2b4cdca43e6af6c0617e0f3c2c5dec73d283aca9a",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "OpenAI Codex assisted",
+          "not a new quantizer or attention kernel",
+          "No human or third-party review is claimed."
+        ]
+      },
+      "metric": null,
+      "value": null,
+      "unit": null,
+      "denominator": null,
+      "scope": "case notices retain individual upstream credits; root Apache-2.0",
+      "evidence_kind": "documented-implementation",
+      "limits": "No invented commercial history, solo unaided kernel authorship or external replication.",
+      "docs_locations": [
+        "docs/en/PORTFOLIO.md",
+        "docs/ko/PORTFOLIO.md"
+      ],
+      "display_checks": []
+    },
+    {
+      "claim_id": "c007-transfer",
+      "case_id": "007",
+      "claim_en": "Small 25% local transfer; identical 50% structures; the frozen two-budget result remains COMPLETED_NO_CLEAR_TRANSFER.",
+      "claim_ko": "25%에서 작은 국소 개선, 50%에서는 동일 구조이며 고정된 두 예산 종합 판정은 COMPLETED_NO_CLEAR_TRANSFER다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/007-interaction-aware-mlp-pruning/results/derived/summary.json",
+      "source_sha256": "c7f05c383b68f029c9d477e6d0d416a1382fda663335709acb6b19f77ed623be",
+      "source_locator": {
+        "kind": "json",
+        "checks": [
+          {
+            "pointer": "/status",
+            "equals": "COMPLETED_NO_CLEAR_TRANSFER"
+          },
+          {
+            "pointer": "/deployment",
+            "equals": "NOT_ASSESSED"
+          },
+          {
+            "pointer": "/transfer/4/mean_paired_relative_error_delta",
+            "equals": -0.0020027712195072552
+          },
+          {
+            "pointer": "/transfer/4/ci95",
+            "equals": [
+              -0.0028477932400117305,
+              -0.001144724275854774
+            ]
+          },
+          {
+            "pointer": "/transfer/4/pairwise_better_prompts",
+            "equals": 141
+          },
+          {
+            "pointer": "/transfer/4/n",
+            "equals": 192
+          },
+          {
+            "pointer": "/transfer/8/ci95",
+            "equals": [
+              0.0,
+              0.0
+            ]
+          }
+        ]
+      },
+      "metric": "Mean paired local relative-error change",
+      "value": null,
+      "unit": "fraction; display multiplied by 100 for percentage points",
+      "denominator": 192,
+      "scope": "One BF16 Qwen3-0.6B layer13 dense MLP; 512 tokens; 32 local positions; 192 held-out prompts.",
+      "evidence_kind": "original",
+      "limits": "Not all-model compression, equivalence or deployment approval. Same 50% structure is not an independent non-inferiority test.",
+      "docs_locations": [
+        "README.md",
+        "README.ko.md",
+        "docs/en/CASEBOOK.md",
+        "docs/en/PORTFOLIO.md",
+        "docs/ko/CASEBOOK.md",
+        "docs/ko/PORTFOLIO.md"
+      ],
+      "display_checks": [
+        {
+          "path": "README.md",
+          "contains": [
+            "COMPLETED_NO_CLEAR_TRANSFER"
+          ]
+        },
+        {
+          "path": "README.ko.md",
+          "contains": [
+            "COMPLETED_NO_CLEAR_TRANSFER"
+          ]
+        },
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "COMPLETED_NO_CLEAR_TRANSFER"
+          ]
+        },
+        {
+          "path": "docs/en/PORTFOLIO.md",
+          "contains": [
+            "COMPLETED_NO_CLEAR_TRANSFER"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "COMPLETED_NO_CLEAR_TRANSFER"
+          ]
+        },
+        {
+          "path": "docs/ko/PORTFOLIO.md",
+          "contains": [
+            "COMPLETED_NO_CLEAR_TRANSFER"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c007-quality",
+      "case_id": "007",
+      "claim_en": "Closer baseline fidelity at 25% did not give the best gold NLL; whole-model prefill acceleration was not established.",
+      "claim_ko": "25%의 기준선 충실도가 더 높아도 정답 NLL까지 가장 좋지는 않았으며 모델 전체 prefill 가속은 입증되지 않았다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/007-interaction-aware-mlp-pruning/README.md",
+      "source_sha256": "248eb68e0ac0879ba362ed7d8edda547dd96b6750e0db224b0247cd61734aa9c",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "48/192",
+          "12/192",
+          "+0.069860 nats [0.025925, 0.111997]",
+          "All model-prefill speedup intervals include 1.",
+          "1.176–1.412×"
+        ]
+      },
+      "metric": "Choice flips and post-hoc PAIRWISE minus INDEPENDENT gold-choice NLL",
+      "value": null,
+      "unit": "scenarios; nats",
+      "denominator": 192,
+      "scope": "Original measured model comparisons with separately labelled post-hoc direct NLL contrast.",
+      "evidence_kind": "posthoc",
+      "limits": "Gold contrast did not change selector or frozen decision. Full KL is a retained full-vector scalar, not reconstructable from four option logits.",
+      "docs_locations": [
+        "README.md",
+        "README.ko.md",
+        "docs/en/CASEBOOK.md",
+        "docs/en/PORTFOLIO.md",
+        "docs/ko/CASEBOOK.md",
+        "docs/ko/PORTFOLIO.md"
+      ],
+      "display_checks": [
+        {
+          "path": "README.md",
+          "contains": [
+            "NLL"
+          ]
+        },
+        {
+          "path": "README.ko.md",
+          "contains": [
+            "NLL"
+          ]
+        },
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "NLL"
+          ]
+        },
+        {
+          "path": "docs/en/PORTFOLIO.md",
+          "contains": [
+            "NLL"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "NLL"
+          ]
+        },
+        {
+          "path": "docs/ko/PORTFOLIO.md",
+          "contains": [
+            "NLL"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c007-random",
+      "case_id": "007",
+      "claim_en": "Both selected sets had lower held-out mean local error than each of 20 frozen random sets at each budget.",
+      "claim_ko": "두 선택은 각 예산의 고정 무작위 집합 20개 각각보다 held-out 평균 국소 오차가 낮았다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/007-interaction-aware-mlp-pruning/README.md",
+      "source_sha256": "248eb68e0ac0879ba362ed7d8edda547dd96b6750e0db224b0247cd61734aa9c",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "Random sets beating either selection | 0/20 | 0/20",
+          "not the optimum over all removal sets",
+          "not as complete models for quality or speed"
+        ]
+      },
+      "metric": "Frozen random sets with lower mean local error",
+      "value": null,
+      "unit": "sets",
+      "denominator": "20 per budget; 192 shared prompts",
+      "scope": "Set mean over 192 prompts, then summarize 20 fixed set means per budget.",
+      "evidence_kind": "original",
+      "limits": "Descriptive local reference only; repetitions are not 3840 independent prompts; no random model quality or timing.",
+      "docs_locations": [
+        "docs/en/CASEBOOK.md",
+        "docs/ko/CASEBOOK.md"
+      ],
+      "display_checks": [
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "20"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "20"
+          ]
+        }
+      ]
+    },
+    {
+      "claim_id": "c007-package",
+      "case_id": "007",
+      "claim_en": "The reviewed Case007 publication ZIP and offline explorer use the preserved measurements.",
+      "claim_ko": "Case007 검토 공개 ZIP과 오프라인 탐색기는 보존된 측정을 사용한다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "downloads/case007_mlp_pruning_reviewed_publication_v1.json",
+      "source_sha256": "1b482b345c45dd6c7bbc44791e07e744398b4386289311dc28d47a721008686c",
+      "source_locator": {
+        "kind": "json",
+        "checks": [
+          {
+            "pointer": "/filename",
+            "equals": "case007_mlp_pruning_reviewed_publication_v1.zip"
+          },
+          {
+            "pointer": "/files",
+            "equals": 1287
+          },
+          {
+            "pointer": "/bytes",
+            "equals": 5249926
+          },
+          {
+            "pointer": "/sha256",
+            "equals": "6b55d7891147e09170b25095dc7583bca6ec12c429496330f4178a69dcb6b9b0"
+          },
+          {
+            "pointer": "/publication_manifest_sha256",
+            "equals": "14b7c0514064c668c7b3c7086c3ca9d65116e9e51a5c512e3e2248d2bb1f5346"
+          },
+          {
+            "pointer": "/scientific_status",
+            "equals": "COMPLETED_NO_CLEAR_TRANSFER"
+          }
+        ]
+      },
+      "metric": null,
+      "value": null,
+      "unit": null,
+      "denominator": null,
+      "scope": "Case-only publication package; local embedded English HTML; current and original manifest scopes differ.",
+      "evidence_kind": "proposed-guide",
+      "limits": "Not hosted inference, fresh measurements, private-vector verification, or real iPad validation.",
+      "docs_locations": [
+        "docs/en/GETTING_STARTED.md",
+        "docs/ko/GETTING_STARTED.md"
+      ],
+      "display_checks": []
+    }
+  ]
+}

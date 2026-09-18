@@ -1,0 +1,67 @@
+{
+  "status": "PASS",
+  "scope": "Frozen-stage completion and local review preparation; no publication",
+  "cpu_tests": {
+    "executed": 29,
+    "pass": 29,
+    "fail": 0,
+    "skip": 0,
+    "frozen_core_tests": 20
+  },
+  "independent_public_norm_records": 29568,
+  "independent_private_norm_records": 487872,
+  "heldout_model_cells": 960,
+  "timing_processes": 3,
+  "timing_records": 900,
+  "public_private_summary_and_pairs": "BYTE_IDENTICAL",
+  "report_regeneration": {
+    "byte_identical": [
+      "ANALYSIS.md",
+      "posthoc_Q.json",
+      "README.md",
+      "demo/index.html",
+      "figures/01_transfer.png",
+      "figures/03_random.png",
+      "figures/02_interactions.png"
+    ],
+    "public_editorial_text": "README/ANALYSIS contain additional explanatory text; tables/figures/demo retain generated values"
+  },
+  "frozen_protocol_and_code": "PASS_UNCHANGED",
+  "source_inputs_and_previous_measurements": "PASS_UNCHANGED",
+  "missing_cells": 0,
+  "failed_new_gpu_stages": 0,
+  "full_output_validity": "PASS_OBSERVED_960_CELLS",
+  "commands_with_private_paths_redacted": [
+    "python -B -m unittest discover -s tests -v",
+    "python -B scripts/analyze.py --raw results/raw --output NEW_EXTERNAL_DIR",
+    "python -B scripts/analyze.py --raw PRIVATE_COMPLETED_RUN --output NEW_EXTERNAL_DIR",
+    "python -B scripts/verify.py --raw results/raw --summary SUMMARY_JSON --output NEW_EXTERNAL_JSON",
+    "python -B scripts/verify.py --raw PRIVATE_COMPLETED_RUN --summary SUMMARY_JSON --output NEW_EXTERNAL_JSON",
+    "python -B scripts/verify_completion.py --case . --summary results/derived/summary.json --output NEW_EXTERNAL_JSON",
+    "python -B scripts/report.py --case . --summary SUMMARY_JSON --output NEW_EXTERNAL_DIR",
+    "python -B scripts/completion_notes.py --case . --output NEW_EXTERNAL_JSON"
+  ],
+  "listed_command_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "browser": "provenance/browser_completion.json",
+  "privacy": "provenance/completion_hygiene.json",
+  "real_ipad": "NOT_TESTED",
+  "independent_gpu_replication": "NOT_RUN",
+  "new_layers_models_training_or_search": "NOT_RUN",
+  "external_publication": "NOT_PERFORMED",
+  "whitespace": {
+    "default_no_index_exit": 3,
+    "warning": "Pre-existing frozen src/oracle.py:82 blank line at EOF; unchanged from partial package",
+    "command_local_blank_at_eof_exemption_exit": 1,
+    "global_or_repository_git_config_changed": false,
+    "interpretation": "git diff --no-index returned 1 for differing trees with empty whitespace diagnostic output after only blank-at-EOF was exempted; default exit 3 included the preserved EOF warning."
+  }
+}

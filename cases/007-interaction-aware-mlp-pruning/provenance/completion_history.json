@@ -1,0 +1,66 @@
+{
+  "kind": "AUTHORIZED_FROZEN_STAGE_RESUME",
+  "completed_utc": "2026-09-18T06:41:47.576560+00:00",
+  "historical_state": {
+    "status": "BLOCKED_RESOURCE",
+    "deployment": "NOT_ASSESSED",
+    "publication_readiness": "PARTIAL_REVIEW_CANDIDATE; held-out transfer and cost unmeasured",
+    "stages": {
+      "CPU_tests": "PASS",
+      "smoke": "PASS",
+      "CALIBRATION": "PASS",
+      "DEVELOPMENT": "PASS",
+      "HELD_OUT": "NOT_RUN_RESOURCE_GATE",
+      "timing": "NOT_RUN",
+      "independent_partial_reanalysis": "PASS"
+    },
+    "native_model_forwards": 156,
+    "pruned_model_forwards": 0,
+    "inputs": {
+      "SMOKE": 6,
+      "CALIBRATION": 96,
+      "DEVELOPMENT": 48,
+      "HELD_OUT_frozen_not_run": 192
+    },
+    "source_revision": "24ba3310dfd9fc14ed7f88d5ce91d31f0c176ab1",
+    "protocol_sha256": "6d3120b98f3e6f35a712024f15563f5a0414d437eea00c6b097c8cd23f86be54",
+    "selection_sha256": "7675d4dd1a907591922a26a5d63d742f10f073a2c68021c907343612180e6f37",
+    "next_command": "\"$GPU_PY\" -B scripts/run.py --stage heldout --snapshot \"$SNAPSHOT\" --work \"$RESUME_NEW\"",
+    "resume_preparation": "scripts/prepare_resume.py copies verified completed private stages to a new root; resource gate must pass; no retries on viewed held-out results",
+    "current_task_gpu_execution_stopped": true,
+    "stage_failure": "An external compute process was detected before heldout model load. No external process was terminated."
+  },
+  "historical_package": {
+    "filename": "case007_partial_review_20260918.zip",
+    "bytes": 2732254,
+    "files": 299,
+    "sha256": "2cdb4d929a9503aa7ce2a3bedde62b9055cb93aaf1b4dcb9587b63efdb4ea5d6"
+  },
+  "new_heldout_model_forwards": 960,
+  "new_timing_processes": 3,
+  "new_timing_model_forwards": 4968,
+  "timing_forward_accounting": "Per process: six diagnostic B forwards; six prompts x five arms x (five warmups + five blocks x five calls x wall/event) = 1650 timed/warmup forwards, plus six diagnostics. Total 1656 per process.",
+  "new_calibration_forwards": 0,
+  "new_development_forwards": 0,
+  "heldout_cells_missing": 0,
+  "new_stage_failures": 0,
+  "frozen_scientific_code_changed": false,
+  "partial_artifact_test_update": "The unfrozen test_artifacts.py now checks complete coverage and preserved historical partial status; frozen test_core.py unchanged.",
+  "packaging_change": "Package status now reads actual RUN_STATE instead of a hardcoded historical block.",
+  "historical_before_hashes": {
+    "README.md": "cafb4629f8edf7464e31c0896b01fbe204348db7d0185cc40990d8816454676b",
+    "README.ko.md": "4a7dc9871f3b88e3855c9bc44b8e6aea6a1861e24416cfa34dc22423068645b4",
+    "ANALYSIS.md": "cc2a9a2e1877fcf969dd3e04b36e23ccf092cea1330d2f4ab440afadd116f6e2",
+    "METHODS.md": "5306cb385a31f8584f5b9ed512b4d4b66573e80da6678407a00520de9a1f8024",
+    "LIMITATIONS.md": "ec450bfd205d57a5856c8e6e6bcab2ddc7ff7e716c52849cfff2c61a198f3a03",
+    "PORTFOLIO.md": "60bff4bd83d0fa8d58f8d9b1d0700e3fa2e4d0a05cecca2e58357cb536b3bca7",
+    "REPRODUCTION.md": "92c62df92ac1329910da2cc749119ff67f07ac9755846594ad15a73824427713",
+    "RUN_STATE.json": "4267d2d5b9e652acacc424a5ba89a5610fa9b8e02457c00371fd02a5a89c6377",
+    "SHA256SUMS": "6865f51ba73bc884946599e0e761f334c2da45f2e35faad0233d8fd6f7118f2e",
+    "tests/test_artifacts.py": "f7c61625920c6f59e26ee335eafec129de71f61843ef4109d299649390f0dfc9",
+    "scripts/package.py": "abb27084010a12a74391e2498cc38dfbaafcb725b77a720dc54875bdeddcd860",
+    "demo/index.html": "07e49cd6b6b079ab8824e85fdfc99e59ea953363c0d68341a43af19d7f05be70",
+    "figures/02_interactions.png": "be38a2832b86e538e0c1711bb99b9b9cb3c558d72d7bddabebd9c2db8d898e47",
+    "figures/03_random.png": "0cc2dad99e3f6b3ff9d46cbe7e539f82a602cc9c945f2b197167b53dae4b22c4"
+  }
+}

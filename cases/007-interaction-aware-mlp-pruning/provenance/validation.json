@@ -1,0 +1,39 @@
+{
+  "CPU_tests": {
+    "initial": 20,
+    "final": 26,
+    "failures": 0,
+    "Torch_CPU_surgery_test": "PASS"
+  },
+  "GPU_semantics": {
+    "smoke_prompts": 6,
+    "native_repeat": "bitwise PASS",
+    "sliced_masked_smoke_max_relative": 0.0,
+    "FP32_identity_max_relative": 3.78851164405523e-07,
+    "development_sliced_masked_max_relative": 0.0005094685412227474
+  },
+  "independent_partial_audit": "independent_partial_audit.json",
+  "regeneration": {
+    "partial_summary_byte_identity": true,
+    "README_EN_KO_ANALYSIS_byte_identity": true,
+    "three_figures_byte_identity": true,
+    "offline_HTML_byte_identity": true
+  },
+  "preservation": {
+    "existing_repository_files": 600,
+    "byte_identical": true,
+    "bilingual_docs_candidate_files": 12,
+    "bilingual_docs_unchanged": true
+  },
+  "browser": "browser_check.json",
+  "browser_first_attempt": "Failed because preview URL used wrong WSL share name; corrected to actual wslpath result; no public file changed",
+  "not_run": [
+    "held-out local error",
+    "pruned-model quality",
+    "MLP and model-prefill timing",
+    "full-study analyze/verify/report on measured held-out data",
+    "real iPad",
+    "third-party GPU replication"
+  ],
+  "package_readiness": "Reviewable resource-blocked partial evidence, not a completed compression-transfer study"
+}
