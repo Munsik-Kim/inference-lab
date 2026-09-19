@@ -1,4 +1,4 @@
-# Inference Lab 용어집
+# DIOVA 용어집
 
 [English](../en/GLOSSARY.md) | 한국어 · [홈](../../README.ko.md)
 

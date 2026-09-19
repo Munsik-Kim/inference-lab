@@ -1,10 +1,10 @@
-# Start here: Inference Lab
+# Start here: DIOVA
 
 English | [한국어](../ko/START_HERE.md) · [Home](../../README.md)
 
 ## 1. What is this project?
 
-Inference Lab studies how calculations and answers change when we try to make an AI model lighter or faster. It combines comparison runners, code that cuts model matrices, and viewers for individual recorded results, measured locally on an RTX 5080. Reading and viewing the results needs neither an AI degree nor a GPU.
+DIOVA studies how calculations and answers change when we try to make an AI model lighter or faster. It combines comparison runners, code that cuts model matrices, and viewers for individual recorded results, measured locally on an RTX 5080. Reading and viewing the results needs neither an AI degree nor a GPU.
 
 ## 2. Why is making a model faster difficult?
 

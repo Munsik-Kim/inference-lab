@@ -6,6 +6,14 @@ def anchor(url: str, label: str, cls: str = '') -> str:
     return f'<a class="{cls}" href="{escape(url, quote=True)}">{escape(label)}</a>'
 
 
+def acronym_line(line: str) -> str:
+    return ' '.join(
+        '<strong>'+escape(word[0])+'</strong>'+escape(word[1:])
+        if word[0].isalpha() else escape(word)
+        for word in line.split()
+    )
+
+
 def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
          revision: str) -> str:
     docs = f'https://github.com/Munsik-Kim/inference-lab/blob/main/docs/{lang}/'
@@ -26,7 +34,7 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
         diagram += ''.join(f'<span class="group-cell {"removed" if i in removed else "retained"}" aria-hidden="true"></span>' for i in range(16))+'</div></div>'
     diagram += '<div class="diagram-key"><span><i class="key-retained"></i>'+text('retained')+'</span><span><i class="key-removed"></i>'+text('removedGroups')+'</span></div>'
     out = '<section class="cap-hero"><p class="eyebrow">'+text('homeKicker')+'</p>'
-    out += '<h1>'+text('heroLine1')+'<span>'+text('heroLine2')+'</span></h1><p class="lede">'+text('homeIntro')+'</p>'
+    out += '<h1 lang="en">'+acronym_line(t['heroLine1'])+' <span>'+acronym_line(t['heroLine2'])+'</span></h1><p class="lede">'+text('homeIntro')+'</p>'
     out += '<p class="core-tech">Python · PyTorch · Transformers · vLLM · NumPy</p><div class="actions home-jumps">'
     for target, key in [('capabilities','navCapabilities'),('tech-stack','navStack'),('projects','navProjects')]:
         out += anchor('#'+target,t[key],'text-link')
@@ -82,4 +90,4 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
 
 
 def language_index() -> str:
-    return '''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; style-src 'self' file:; object-src 'none'; base-uri 'none'"><link rel="icon" href="assets/icon.svg"><title>Inference Lab</title><link rel="stylesheet" href="assets/style.css"></head><body class="language-page"><main class="language-card"><span class="brand-mark" aria-hidden="true">i</span><p class="eyebrow">LLM INFERENCE ENGINEERING</p><h1>Inference Lab</h1><p>Model modification. GPU comparisons. Result explorers.</p><p lang="ko">모델 구조 변경 · GPU 비교 · 결과 탐색 도구</p><div class="language-options"><a href="ko/index.html" lang="ko"><span>한국어</span><span aria-hidden="true">→</span></a><a href="en/index.html"><span>English</span><span aria-hidden="true">→</span></a></div><p class="small">Recorded experiments · 저장된 실험 결과</p></main></body></html>'''
+    return '''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; style-src 'self' file:; object-src 'none'; base-uri 'none'"><link rel="icon" href="assets/icon.svg"><title>DIOVA</title><link rel="stylesheet" href="assets/style.css"></head><body class="language-page"><main class="language-card"><span class="brand-mark" aria-hidden="true">D</span><p class="eyebrow">DEEP LEARNING · INFERENCE · OPTIMIZATION</p><h1>DIOVA</h1><p>Deep-learning Inference Optimization, Validation &amp; Analysis</p><p lang="ko">딥러닝 추론 최적화 · 검증 · 분석</p><div class="language-options"><a href="ko/index.html" lang="ko"><span>한국어</span><span aria-hidden="true">→</span></a><a href="en/index.html"><span>English</span><span aria-hidden="true">→</span></a></div><p class="small">Recorded experiments · 저장된 실험 결과</p></main></body></html>'''

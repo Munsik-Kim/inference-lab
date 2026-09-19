@@ -1,4 +1,4 @@
-# Inference Lab 처음 보기
+# DIOVA 처음 보기
 
 [English](../en/START_HERE.md) | 한국어 · [홈](../../README.ko.md)
 

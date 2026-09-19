@@ -1,4 +1,8 @@
-# Recorded-result showcase
+# DIOVA result showcase
+
+DIOVA stands for Deep-learning Inference Optimization, Validation & Analysis.
+The display name is DIOVA; the repository and existing URLs remain `inference-lab`.
+Historical case documents and packages retain their original names.
 
 This presentation layer reads pinned public Case006/007 evidence without editing it.
 It provides English and Korean static pages, item filters, same-readout comparisons,

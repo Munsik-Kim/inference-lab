@@ -1,4 +1,4 @@
-# Terms for reading Inference Lab
+# Terms for reading DIOVA
 
 English | [한국어](../ko/GLOSSARY.md) · [Home](../../README.md)
 
