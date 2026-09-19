@@ -1,53 +1,62 @@
-# 구현 역량과 근거
+# 도구, 구현, 기술 협업
 
 [English](../en/PORTFOLIO.md) | 한국어 · [홈](../../README.ko.md)
 
+[처음 보는 분](START_HERE.md) · [쉬운 용어집](GLOSSARY.md)
+
 ## 30초 소개
 
-<!-- claims: c006-native c006-readout -->
-Inference Lab은 실행 성공, 빠른 연산, 안정적인 모델 답변에 왜 서로 다른 검사가 필요한지 조사합니다. 기존 추론 구성요소 위에 비교 조건의 통제, 별도로 계산한 정답(gold)을 갖춘 과제, 실행 경로·유효성 검사, CPU에서 확인하는 보고 체계를 구현했습니다. B는 원래 BF16 실행인 비교 기준선입니다. A_PUBLIC과 V4는 같은 모델의 attention 연산 한 곳에 적용한 두 저정밀 설정의 이름이며, 모델 가중치는 BF16으로 유지합니다. 대표 Qwen 실험의 표준셋에서는 A_PUBLIC이 192개 중 5개, V4가 192개 중 8개의 선택을 바꾸었고 정답 획득과 다른 오답으로의 변경이 포함됐습니다. Readout은 모델 내부 상태를 어휘 점수로 바꾸는 마지막 출력 계산입니다. 동일 입력 후속 진단은 원래 출력 계산(native)과 별도 진단용 출력 계산(shadow)을 구분합니다. 원래 동률이 해석에 중요함을 보여주지만 본래 결과를 대체하지 않습니다. [사례 안내](CASEBOOK.md#case-006)와 [오프라인 근거 안내](GETTING_STARTED.md#offline-explorers)에서 정확한 항목까지 확인할 수 있습니다. 제한된 합성 입력의 조사이며 모델 품질을 보증하지 않습니다.
+<!-- claims: c007-transfer c007-quality c006-native c006-readout -->
+Inference Lab은 모델 변경을 직접 확인할 수 있는 측정 결과와 연결합니다. 압축 도구는 채널 그룹을 고르고 Qwen의 MLP 행렬을 줄인 뒤, 선택에 쓰지 않은 입력에서 재구성 오차·답변·실행 시간을 비교합니다. Attention 연구는 한 층만 바꾸는 개입으로 답변 점수와 선택을 추적합니다. 한·영 결과 화면에서 개별 질문과 비교값을 함께 보고, CPU 예제로 공개 보정 통계에서 원래 선택기를 다시 실행할 수 있습니다.
 
-## 실제 자료로 확인하는 역량
+MLP 25% 삭제에서 PAIRWISE의 국소 오차는 소폭 낮았고 기준선 선택을 더 많이 보존했지만, 정답 NLL은 INDEPENDENT가 더 좋았습니다. 50%의 선택 모듈은 같았으며 고정 판정은 **COMPLETED_NO_CLEAR_TRANSFER**입니다. Case006에서는 표준 192개 중 A_PUBLIC은 5개, V4는 8개의 선택이 달라졌습니다. 같은 입력의 사후 출력 계산 진단은 동률과 마지막 어휘 점수 계산을 살펴봅니다. 구현상 선택과 서로 다른 평가 목표를 이 예제들에서 확인할 수 있습니다. [사례 안내](CASEBOOK.md) · [로컬 화면 열기](GETTING_STARTED.md#local-showcase).
 
-- **실행 경로 진단:** Case001은 지원하지 않는 CUTLASS를 허용한 선택 조건과 기존 Triton 대체 경로를 구분합니다. [수정 전후 runner — Python 소스](../../cases/001-sm120-int8-fallback/run.py)와 [검증 기록 — 기술 원문(영어)](../../cases/001-sm120-int8-fallback/README.md)에서 재현 도구와 upstream 수정을 나누어 확인합니다.
-- **공정한 비용 경계:** Case004는 필요한 전처리와 출력 변환을 전체 연산 호출 안에 포함하고 kernel-only 시간을 별도로 표시합니다. [방법 — 영어](../../cases/004-low-precision-attention-break-even/METHODS.md)와 [backend 어댑터 — Python 소스](../../cases/004-low-precision-attention-break-even/src/backends.py)가 그 계약을 보여줍니다.
-- **기준을 바꾸지 않는 수치 비교:** Case003은 매핑과 scale 효과를 분리하고, Case005는 개발 탈락을 유지하면서 실제 절충을 보여줍니다. [수치 감사 — 영어](../../cases/003-efq-softmax-numerical-audit/ANALYSIS.md), [개발 분석 — 영어](../../cases/005-attention-precision-pareto/ANALYSIS.md), [별도 사후 검토 — 영어](../../cases/005-attention-precision-pareto/POSTHOC_THRESHOLD_REVIEW.md)는 서로 다른 근거 범위를 유지합니다.
-- **모델 내부 개입 통제:** Case006은 prefill 한 층만 가로채고 원래 경로를 복구하며 일부 logits만이 아닌 전체 출력 유효성을 검사합니다. [개입 코드 — Python](../../cases/006-attention-decision-stability/src/intervention.py)와 [유효성 검사 — Python](../../cases/006-attention-decision-stability/src/validity.py)에서 경계를 확인합니다.
-- **점수 해석의 수치 진단:** 보충 자료는 정확한 동률, 정답 전환, 각 readout 안의 후보 대 B 비교를 구분하며 native와 FP32는 별도 보기로 유지합니다. [방법 — 영어](../../cases/006-attention-decision-stability/supplemental/readout-ties-v1/METHODS.md)과 [스칼라 검사기 — Python](../../cases/006-attention-decision-stability/supplemental/readout-ties-v1/scripts/verify_scalar.py)는 사후 진단을 새 평가와 분리합니다.
-- **검사할 수 있는 근거 전달:** 정확한 입력, 소스 식별자, 쌍별 기록과 로컬 HTML이 집계표를 개별 관측과 연결합니다. [입력 manifest JSON](../../cases/006-attention-decision-stability/configs/eval_manifest_freeze_v1.json), [독립 스칼라 계산 — Python](../../cases/006-attention-decision-stability/scripts/audit_study.py), [탐색기 이용 안내](GETTING_STARTED.md#offline-explorers)가 경로를 보여줍니다.
+![고정 코드 입력 하나를 비교하는 실제 Case007 로컬 화면](../../presentation/screenshots/case007-comparison.png)
 
-## 구조화 압축: 또 하나의 구현 사례
+*로컬 Edge 화면: 첫 고정 CODE 입력의 25% 삭제 비교입니다. [Case006 출력 계산 화면](../../presentation/screenshots/case006-readout.png)은 별도로 표시한 같은 입력 진단을 보여줍니다. 탐색을 안내하는 선택 화면이며 전체 성능 집계가 아닙니다.*
 
-<!-- claims: c007-transfer c007-quality -->
-Case007은 선택한 채널 그룹을 실제로 더 작은 dense MLP로 바꾸고, 범위를 제한한 교체와 마스킹·행렬 축소의 대응을 검사합니다. 25%에서 PAIRWISE의 미관측 입력 평균 국소 오차는 29.6288%로 INDEPENDENT의 29.8291%보다 낮았습니다. 삭제하지 않은 BF16 기준선에는 더 가까웠지만 정답 선택지 NLL까지 가장 좋지는 않았습니다. 50%에서는 같은 모듈을 만들었으므로 고정 종합 판정은 **COMPLETED_NO_CLEAR_TRANSFER**이며 모델 전체 prefill 가속은 입증하지 못했습니다. 기준선 보존을 과제 품질과 혼동하지 않고 선택·실제 모델 구조 변경·미관측 입력 평가를 연결한 구현입니다. [사례 안내](CASEBOOK.md#case-007) · [구조 변경 Python 소스](../../cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [저장된 탐색기](GETTING_STARTED.md#case007-explorer).
+## 구현 역량과 실제 근거
 
-Qwen/Transformers는 모델을 제공하며, HOPE는 별도 MoE expert pruning 맥락에서 개념적 동기를 줍니다. 그룹의 부호 있는 기여 항등식은 기본적인 계산 관계이며 새 pruning 알고리즘이나 HOPE 재현이 아닙니다. [Case007 출처와 재사용 — 영어](../../cases/007-interaction-aware-mlp-pruning/NOTICE.md). 아래의 Codex 지원 및 스칼라 검산·GPU 재현 구분도 동일하게 적용됩니다.
+- **실행 경로 진단:** SM120에서 upstream의 커널 선택 guard를 수정 전후 실행기로 확인했습니다. [Case001 실행기](../../cases/001-sm120-int8-fallback/run.py).
+- **비용 측정:** smoothing, 양자화, 변환을 포함한 호출 시간을 attention 어댑터에서 측정했습니다. [Case004 어댑터](../../cases/004-low-precision-attention-break-even/src/backends.py).
+- **수치 분석:** EFQ 매핑과 scale 선택을 나눠 비교하고, 고정된 정밀도 screen의 중단 판정을 기록했습니다. [Case003 분석·영어](../../cases/003-efq-softmax-numerical-audit/ANALYSIS.md) · [Case005 분석·영어](../../cases/005-attention-precision-pareto/ANALYSIS.md).
+- **모델 구조 변경:** 대응하는 행·열을 선택해 작은 dense MLP를 만들고, 마스킹한 계산과 비교했습니다. [Case007 구조 변경 코드](../../cases/007-interaction-aware-mlp-pruning/src/surgery.py).
+- **입력별 평가:** 별도로 계산한 정답(gold)을 기준으로 전환 유형, 점수 변화, 정확한 동률을 볼 수 있습니다. [Case006 분석·영어](../../cases/006-attention-decision-stability/ANALYSIS.md) · [출력 계산 스칼라 검사기](../../cases/006-attention-decision-stability/supplemental/readout-ties-v1/scripts/verify_scalar.py).
+- **분석 도구 전달:** source hash로 화면의 기록을 원자료와 연결하고, 작은 선택기 예제로 보정 목적함수를 실행합니다. [화면 빌더](../../tools/showcase/build.py) · [CPU 예제](../../tools/showcase/replay_selection.py).
+
+<a id="code-tour"></a>
+## 세 군데 코드 읽기
+
+<!-- claims: c006-implementation -->
+1. **모델의 attention 호출을 제한합니다.** [`ScopedAttention`](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/src/intervention.py#L30)부터 읽습니다. `route`는 13번 층의 정사각형 prefill 개입을 허용하고 `__exit__`는 이전 등록 함수를 복구합니다. [예외 복구 테스트](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/tests/test_core.py#L193)에서 이 동작을 확인할 수 있습니다.
+2. **행렬 크기를 줄입니다.** [`sliced`](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/007-interaction-aware-mlp-pruning/src/surgery.py#L6)는 남긴 그룹을 gate/up 행과 down 열에 대응시킵니다. `masked`가 비교 기준을 만들고 `replace_mlp`는 `finally`에서 원래 모듈을 복구합니다. [형상·bias·계산 대응 테스트](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/007-interaction-aware-mlp-pruning/tests/test_core.py#L62)가 이 연결을 검사합니다.
+3. **불완전한 근거를 거절합니다.** [`assess`](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/src/validity.py#L10)는 전체 출력과 실행 경로 검사 결과를 요구합니다. [원래 pairing 테스트](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/tests/test_core.py#L249)는 누락·중복·서로 다른 입력의 결합을 거절합니다. 새 [화면 검사기](../../tools/showcase/check.py)는 표시용 데이터를 보존된 원자료와 대조합니다.
+
+## 60–90초 시연 대본
+
+*실제 화면을 열어 설명하기 위한 대본입니다. 녹화 영상은 포함하지 않습니다.*
+
+“Case007 로컬 화면을 엽니다. B는 삭제 전 기준선이고 옆의 두 열은 같은 수의 그룹을 제거한 결과입니다. 25% 예산에서 고정 CODE 안내 사례를 고릅니다. 이 입력에서 국소 재구성, 기준선 선택 보존, 정답에 부여한 확률을 따로 볼 수 있습니다. 50%로 바꾸면 선택 그룹과 모듈 출력이 같습니다. 시간은 이 입력의 값으로 붙이지 않고, 별도 고정 입력 6개의 측정으로 보여줍니다.
+
+“이제 Case006에서 표준 입력 하나를 고릅니다. 정답과 최고점 집합, 네 선택지 확률을 비교합니다. 회귀는 기준선이 맞힌 답의 손실이며, 선택 변경에는 새 정답이나 다른 오답도 있습니다. FP32 진단으로 전환하면 같은 시나리오를 그 출력 계산의 기준선과 비교합니다. 마지막으로 원자료 링크를 열고 CPU 선택기 명령을 실행합니다. 모델을 실행하지 않고 보정 행렬 Q에서 그룹 조합을 열거해 저장된 선택과 대조합니다.”
+
+## 근거로 연결되는 소개 문장 세 개
+
+<!-- claims: c004-cost c005-stop -->
+- 그룹 선택과 행렬 축소 도구를 만들고, 마스킹 계산 및 미관측 입력과 비교했습니다. [Case007 방법·영어](../../cases/007-interaction-aware-mlp-pruning/METHODS.md).
+- Qwen 한 층 개입과 답변 확률·정답 손실·정답 획득·동률의 쌍별 분석을 구현했습니다. [Case006 방법·영어](../../cases/006-attention-decision-stability/METHODS.md).
+- Attention 전체 호출 비용을 측정하고, 관측된 정밀도·비용 절충과 **STOP_DEV_SCREEN** 판정을 함께 기록했습니다. [Case004 비용·영어](../../cases/004-low-precision-attention-break-even/README.md) · [Case005 판정·영어](../../cases/005-attention-precision-pareto/README.md).
 
 <a id="contribution-and-reuse"></a>
 ## 프로젝트 기여와 재사용
 
 <!-- claims: attribution -->
-프로젝트의 작업은 실행 도구, 실험 통제, 근거 수집, 수치·행동 분석과 전달입니다. Qwen과 Red Hat AI는 체크포인트를 제공합니다. vLLM은 서빙 엔진, PyTorch와 Transformers는 수치 연산과 모델 통합, SageAttention은 저정밀 커널을 제공합니다. Case001 guard의 작성자는 hclsys이고 EFQ-Softmax의 저자는 Han과 공동저자입니다. 이 저장소가 새로 발명한 커널이나 quantizer가 아닙니다.
+프로젝트의 작업은 비교 실행, 범위를 제한한 어댑터, 행렬 축소, 유효성 검사, 수치·답변 분석과 결과 탐색기입니다. Qwen과 Red Hat AI가 체크포인트를, Transformers·PyTorch·vLLM이 모델과 실행 구성요소를, SageAttention이 저정밀 커널을 제공합니다. Case001 guard의 저자는 hclsys이며 EFQ-Softmax는 Han과 공동저자의 작업입니다. HOPE는 별도 MoE expert-pruning 맥락에서 상호작용을 고려한 삭제의 동기를 제공합니다. 여기의 dense 그룹 목적함수는 선택한 MLP 분해에서 직접 구했습니다.
 
-[Case001 출처 — 영어](../../cases/001-sm120-int8-fallback/NOTICE.md), [Case003 출처 — 영어](../../cases/003-efq-softmax-numerical-audit/NOTICE.md), [Case006 출처 — 영어](../../cases/006-attention-decision-stability/NOTICE.md)에 원래 기여와 해당 라이선스가 있습니다. 저장소의 [Apache-2.0](../../LICENSE)이 upstream 모델 조건을 대신하지 않습니다. OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지원했습니다. 별도 CPU 계산 경로는 보존된 기록의 일관성을 확인하며 외부 제3자 GPU 재현이나 독립적인 사람의 검토가 아닙니다.
+OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지원했습니다. [Case001](../../cases/001-sm120-int8-fallback/NOTICE.md), [Case003](../../cases/003-efq-softmax-numerical-audit/NOTICE.md), [Case006](../../cases/006-attention-decision-stability/NOTICE.md), [Case007 출처·영어](../../cases/007-interaction-aware-mlp-pruning/NOTICE.md)에 재사용한 작업을 기록했습니다. 프로젝트 코드는 [Apache-2.0](../../LICENSE)이며 모델·upstream 이용 조건은 별도입니다.
 
-## 이 프로젝트로 이야기할 수 있는 범위
+## 기술 협업 범위
 
-**연구·평가 엔지니어링:** 비교 조건 설정, 독립 정답 유지, 실패 기록, 불확실성 검사, 결과가 측정한 대상의 구분입니다.
+**모델 변경 전후 평가**, **로컬 추론 문제 진단**, **재현 가능한 분석 도구와 결과 화면**을 주제로 코드를 검토할 수 있습니다. 비교할 모델 경계, 공개 입력 ID, 평가 지표에서 논의를 시작할 수 있습니다. [저장소 이슈](https://github.com/Munsik-Kim/inference-lab/issues)는 공개 기술 질문 경로이며, 인증값이나 비공개 고객 자료는 공개 보고에 넣지 않습니다.
 
-**추론 진단·분석 도구 협업:** 기존 runtime 주위의 어댑터, 출처를 추적할 수 있는 비교 보고, CPU 재분석, 오프라인 근거 탐색기입니다. 기록된 구현을 근거로 협업할 수 있는 주제입니다. 결과는 조사한 모델·장치·과제 범위에 한정되며 배포 적합성은 평가하지 않았습니다.
-
-## 근거에 연결되는 소개 문장 세 개
-
-<!-- claims: c006-implementation c004-cost c005-stop -->
-- Qwen3-0.6B layer 13의 prefill만 바꾸는 통제 비교를 구현하고, 기준선과의 불일치를 정답 획득·손실과 구분했습니다. [범위와 구현 — 기술 원문(영어)](../../cases/006-attention-decision-stability/METHODS.md).
-- 저정밀 attention의 전체 호출 비용을 fused BF16과 비교하고, 빨랐던 길이에서도 국소 오차 기준 탈락을 그대로 기록했습니다. [연산 결과 — 영어](../../cases/004-low-precision-attention-break-even/README.md).
-- Case005의 **STOP_DEV_SCREEN**을 보존하면서 측정된 정밀도·비용 절충과 별도 사후 해석을 공개했습니다. [개발 판정 — 영어](../../cases/005-attention-precision-pareto/README.md).
-
-## 세 단계로 설명하기
-
-1. 표준 결과표와 독립 시나리오 분모를 먼저 읽습니다. 속도 수치보다 먼저 어느 연산을 바꾸었는지 설명합니다.
-2. 원래 탐색기에서 ID 하나를 골라 gold·기준/후보 점수·결과 유형을 확인합니다. 별도 스트레스셋으로 옮겨 선정 규칙을 설명합니다.
-3. 보충 탐색기에서 같은 ID의 native 동률과 shadow readout을 비교합니다. [한계 — 기술 원문(영어)](../../cases/006-attention-decision-stability/LIMITATIONS.md)로 돌아가 낮은 코드 성능, 실패한 구조화 생성, 작은 모델 prefill 효과, 미평가 배포 상태를 함께 설명합니다.
-
-[이용 안내](GETTING_STARTED.md)에 로컬 열기와 CPU 검증 방법이 있습니다. 이 시연에는 호스팅된 추론 서비스가 포함되지 않습니다.
+근거는 특정 모델·장치 하나·합성 과제의 결과입니다. 배포 판단은 **NOT_ASSESSED**입니다. CPU 감사는 남긴 스칼라를 검산하며, 제외된 전체 벡터와 별도 GPU 재현의 확인 범위는 [재현 안내](GETTING_STARTED.md)에서 설명합니다.

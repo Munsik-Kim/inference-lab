@@ -1,0 +1,57 @@
+name: Portfolio Pages (manual)
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish the reviewed showcase after separate user approval and Pages setup'
+        type: boolean
+        required: true
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: portfolio-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main' && inputs.publish == true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6; verified 2026-09-18
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6; verified 2026-09-18
+        with:
+          python-version: '3.12.14'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6; verified 2026-09-18
+        with:
+          node-version: '24.12.0'
+      - name: Filter and deep-link unit tests (no npm dependencies)
+        run: node tests/showcase/test_state.cjs
+      - run: python -m pip install -r tools/showcase/requirements-cpu.txt
+      - name: Build and verify the same artifact that will be uploaded
+        run: python -B tools/showcase/run_checks.py --output "$RUNNER_TEMP/portfolio-pages"
+      - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4; verified 2026-09-18
+        with:
+          path: ${{ runner.temp }}/portfolio-pages/site
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && inputs.publish == true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5; verified 2026-09-18
+        with:
+          enablement: false # This workflow does not enable Pages in repository settings.
+      - name: Deploy previously checked site artifact
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4; verified 2026-09-18

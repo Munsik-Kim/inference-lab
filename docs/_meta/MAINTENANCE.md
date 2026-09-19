@@ -17,3 +17,43 @@ When markdown-it-py is present, its extracted link destinations are cross-checke
 Follow [GitHub's README guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes) for repository-relative paths. Keep the root README as the entry point; do not add a `.github/README.md` that takes display precedence. The paired guides are [English](../en/CASEBOOK.md) and [Korean](../ko/CASEBOOK.md).
 
 Changing these introductions does **not** authorize changing `cases/`, `notes/`, `downloads/`, licenses, frozen protocols or historical packages. Do not regenerate experiment ZIPs/checksums as a side effect. A new scientific result or publication revision needs its own review. Refresh both language download links only after checking actual current metadata, while preserving historical archives.
+
+## Presentation tools
+
+The editable bilingual guides and `presentation/` sit outside frozen case inventories.
+`claims.json` keeps its original evidence revision; `protection_revision` separately
+identifies the starting repository whose non-guide files must stay unchanged.
+The source manifest in `presentation/` pins the exact public files read by the builder.
+A new build records both that evidence revision and hashes of the presentation code.
+Run the builder into a new external directory, then run `tools/showcase/check.py`.
+The deployment artifact is an explicit allowlist, not a repository copy.
+
+The CPU workflow and manual Pages workflow are prepared source files. Local results
+are not remote CI or Pages publication. Update live URLs and badges only after an
+approved remote run and readback. Preserve the case ZIPs and historical checksums
+when editing these guides. Translation meaning and prose still require editorial review.
+
+## Beginner explanation layer
+
+The two READMEs lead to paired START_HERE and GLOSSARY pages, then to CASEBOOK,
+the preserved case documents, source and evidence. Keep the plain explanation,
+technical term and evidence link in that order. Do not convert a limited result
+into a general speed or quality claim when shortening a sentence.
+
+The conceptual SVG is authored documentation, not an experimental result figure.
+The checker covers 12 language pages, beginner case routes, paired glossary IDs
+and the restricted static SVG. Source hashes and scientific result locators remain
+fixed in claims.json; display checks follow the actual page where a metric appears.
+Detailed NLL intervals and study decisions remain in CASEBOOK and the original
+cases when the introductory README links to them instead of repeating them.
+
+`protection_revision` records the current main used to start this documentation
+work; `source_revision` still identifies the existing claim evidence. Only the
+checker’s explicit PUBLIC_FILES may change; other existing files and additions
+under cases/downloads/notes are checked. Re-run with a private starting inventory
+when available. No case result is recalculated by these documentation checks.
+
+Translation equivalence and reading difficulty need an editorial review. Browser
+previews use installed Markdown rendering and local CSS, not a pixel-exact copy
+of GitHub. Never call an emulated viewport a real iPad test. Before publishing,
+compare against other open documentation PRs; this local layer does not merge them.
