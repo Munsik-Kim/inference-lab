@@ -8,14 +8,36 @@
   if(!D||!T||!Array.isArray(D.records)||!D.records.length||!D.prompts){$('count').textContent=T?.noData||'Missing display data';return;}
   const is7=D.case==='007';
   const S=window.ShowcaseState, defaults=S.defaults(is7), choices=S.choices(is7);
-  const labels={ALL:T.all,HELD_OUT:is7?(document.documentElement.lang==='ko'?'미관측 입력 192개':'Held-out · 192'):'HELD_OUT',standard:document.documentElement.lang==='ko'?'표준 192개':'Standard · 192',boundary_pool:document.documentElement.lang==='ko'?'선정 스트레스 46개':'Selected stress · 46',H_NATIVE:document.documentElement.lang==='ko'?'원래 계산 · native':'Original · native',H_FP32:document.documentElement.lang==='ko'?'사후 진단 · FP32':'Post-hoc diagnostic · FP32','4':'4/16 · 25%','8':'8/16 · 50%'};
+  const methodName=key=>T.methodLabels?.[key]||key;
+  const labels={...(T.methodLabels||{}),ALL:T.all,HELD_OUT:is7?(document.documentElement.lang==='ko'?'미관측 입력 192개':'Held-out · 192'):'HELD_OUT',standard:document.documentElement.lang==='ko'?'표준 192개':'Standard · 192',boundary_pool:document.documentElement.lang==='ko'?'선정 스트레스 46개':'Selected stress · 46',H_NATIVE:document.documentElement.lang==='ko'?'원래 계산 · native':'Original · native',H_FP32:document.documentElement.lang==='ko'?'사후 진단 · FP32':'Post-hoc diagnostic · FP32','4':'4/16 · 25%','8':'8/16 · 50%'};
   let state={...defaults},visible=[],current=null;
   for(const key of Object.keys(choices)){if(!$(key))continue;for(const value of choices[key]){const o=node('option',labels[value]||T[value]||value);o.value=value;$(key).append(o);}$(key).addEventListener('change',()=>{state[key]=$(key).value;state.id='';save();render();});}
   $('query').addEventListener('input',()=>{state.query=$('query').value;state.id='';save();render();});
   $('items').addEventListener('change',()=>{state.id=$('items').value;save();detail();});
   $('reset').addEventListener('click',()=>{state={...defaults,set:choices.set.includes(state.set)?state.set:defaults.set};save();render();});
-  function save(){history.replaceState(null,'',S.encode(state));$('language').hash=location.hash;}
-  function restore(){state=S.decode(location.hash,is7);render();}
+  function save(){history.replaceState(null,'',location.pathname+S.encode(state));syncLanguage();}
+  function restore(){
+    const anchor=location.hash.slice(1);
+    if(S.isStudyAnchor(anchor)){
+      // A contents link scrolls the explanation; it must not reset item filters.
+      const saved=new URLSearchParams(location.search).get('view');
+      if(saved)state=S.decode(saved,is7);
+      render();syncLanguage();return;
+    }
+    state=S.decode(location.hash,is7);render();syncLanguage();
+  }
+  function syncLanguage(){
+    const url=new URL($('language').href);
+    url.hash=location.hash;
+    url.search=S.isStudyAnchor(location.hash.slice(1))?'?'+new URLSearchParams({view:S.encode(state)}).toString():'';
+    $('language').href=url.href;
+  }
+  for(const a of document.querySelectorAll('a[href^="#"]')){
+    if(S.isStudyAnchor(a.hash.slice(1)))a.addEventListener('click',()=>{
+      const url=new URL(location.href);url.search=new URLSearchParams({view:S.encode(state)}).toString();
+      history.replaceState(null,'',url);syncLanguage();
+    });
+  }
   function selected(){return S.select(D.records,state,is7);}
   function render(){
     let invalid=!S.valid(state,is7);
@@ -48,7 +70,7 @@
     if(!current)return;
     const siblings=D.records.filter(r=>r.id===current.id&&r.readout===current.readout&&r.set===current.set&&(!is7||r.budget===current.budget));
     siblings.sort((a,b)=>a.arm.localeCompare(b.arm));
-    const scores=[current.B,...siblings.map(r=>r.candidate)],cols=[T.setting,'B',...siblings.map(r=>r.arm)];
+    const scores=[current.B,...siblings.map(r=>r.candidate)],cols=[T.setting,methodName('B'),...siblings.map(r=>methodName(r.arm))];
     $('item-title').textContent=current.id+(is7?' · '+labels[current.budget]:' · '+labels[current.readout])+' · '+T.gold+': '+letter(current.B.gold)+' · '+current.evidence_kind;
     const rows=[[T.outcome,'—',...siblings.map(r=>(T[r.cell]||r.cell)+(r.wrong_to_wrong?' · '+T.wrong_to_wrong:''))],['ΔNLL (candidate − B)','0',...siblings.map(r=>fmt(r.delta_nll))],[T.prediction,...scores.map(s=>letter(s.prediction))],[T.top,...scores.map(s=>s.top.map(letter).join(', '))],[T.nll,...scores.map(s=>fmt(s.nll))],[T.mass,...scores.map(s=>fmt(s.label_mass))],[T.margin,...scores.map(s=>fmt(s.margin))],[T.local,'—',...siblings.map(r=>fmt(r.local_error*100))],[T.kl,'0',...siblings.map(r=>fmt(r.full_kl))]];
     if(is7)rows.push([T.groups,'—',...siblings.map(r=>r.selected_groups.join(', '))]);

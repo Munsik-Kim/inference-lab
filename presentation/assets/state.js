@@ -7,6 +7,7 @@
   function encode(s){return '#'+new URLSearchParams(Object.entries(s).filter(([,v])=>v)).toString();}
   function valid(s,is7){return Object.entries(choices(is7)).every(([k,values])=>values.includes(s[k]));}
   function select(rows,s,is7){if(!valid(s,is7))return [];return rows.filter(r=>r.set===s.set&&r.arm===s.arm&&r.readout===s.readout&&(!is7||r.budget===s.budget)&&(s.task==='ALL'||r.task===s.task)&&(!s.query||r.id.toLowerCase().includes(s.query.toLowerCase()))&&(s.outcome==='ALL'||(s.outcome==='flip'?r.flip:s.outcome==='wrong_to_wrong'?r.wrong_to_wrong:r.cell===s.outcome)));}
-  const api={defaults,choices,decode,encode,valid,select};
+  const isStudyAnchor=value=>['main','objective','data','theory','design','validation','results','interpretation','conclusion','explorer'].includes(value);
+  const api={defaults,choices,decode,encode,valid,select,isStudyAnchor};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ShowcaseState=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

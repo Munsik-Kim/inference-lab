@@ -65,7 +65,14 @@ MLP는 모델 안에서 정보를 변환하는 계산 블록입니다. 채널 �
 
 [결과 탐색](https://munsik-kim.github.io/inference-lab/ko/case006.html) · [Attention 교체 코드](cases/006-attention-decision-stability/src/intervention.py) · [상세 연구·추가 진단](docs/ko/CASEBOOK.md#case-006)
 
-## 일곱 질문과 구현물
+### Case 008 — 바꾼 모델을 저장하고 다시 실행하기
+
+<!-- claims: c008-tracks -->
+GPTQ 변환부터 새 vLLM 실행까지, 고정된 작은 MLP의 보정부터 층별 구조 로딩까지 두 경로를 연결했습니다. Q 가중치 파일은 약 67.0% 작아졌고 R의 국소 제곱오차는 짧은 합성 입력에서 94.1–95.4% 감소했습니다. 요청 가속은 확정하지 못했고 정답 점수 변화는 혼재했습니다.
+
+[구조화 보고서](cases/008-build-reconstruct-reload/REPORT.ko.md) · [코드·재현(영어)](cases/008-build-reconstruct-reload/REPRODUCTION.md) · [측정 자료 ZIP](downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)
+
+## 여덟 질문과 구현물
 
 | 쉬운 질문 | 이 사례에서 볼 수 있는 것 |
 |---|---|
@@ -76,6 +83,7 @@ MLP는 모델 안에서 정보를 변환하는 계산 블록입니다. 채널 �
 | [005 — 속도와 오차를 함께 만족하는 설정이 있을까?](docs/ko/CASEBOOK.md#case-005) | 측정한 절충 관계. 바꿔 본 설정 중 두 조건을 만족한 것이 없어 새 확인 단계로 넘어가지 않았습니다. 기술명: 정밀도, 국소 오차. |
 | [006 — 어느 질문의 답이 바뀌는가?](docs/ko/CASEBOOK.md#case-006) | 입력별 답변 점수·선택·최고점 동률 진단. 기술명: NLL, top-score tie. |
 | [007 — 작은 계산 블록에 어느 그룹을 남길까?](docs/ko/CASEBOOK.md#case-007) | 그룹 선택, 실제 행렬 축소, 선택에 쓰지 않은 입력의 평가. 기술명: MLP, pruning. |
+| [008 — 바꾼 모델을 저장하고 다시 실행할 수 있을까?](docs/ko/CASEBOOK.md#case-008) | GPTQ 저장·실행 통합과 고정 MLP ridge 복구. Q 파일과 R 국소 오차가 감소했고 정답 점수 변화는 혼재. |
 
 ## 더 깊게 보기
 

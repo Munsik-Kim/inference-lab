@@ -1,6 +1,6 @@
 # Maintaining the bilingual guides
 
-The existing [case template](../../cases/TEMPLATE.md) remains the starting point for a separately authorized new case. The source revision now includes Cases001–007. These pages interpret existing evidence; they are not an alternative result database.
+The existing [case template](../../cases/TEMPLATE.md) remains the starting point for a separately authorized new case. The source revision now includes Cases001–007; Case008 additionally identifies its reviewed archive snapshot. These pages interpret existing evidence; they are not an alternative result database.
 
 1. Read the relevant frozen case, its current publication record and underlying result. Record conflicts before changing a claim. Historical “not published” text in an original run record describes that snapshot, not today's repository state.
 2. Update [claims.json](claims.json) with the source revision, hash, exact text/JSON locator, units, independent denominator and limits. Keep original and post-hoc evidence separate. Do not copy raw datasets into this map.
@@ -57,3 +57,5 @@ Translation equivalence and reading difficulty need an editorial review. Browser
 previews use installed Markdown rendering and local CSS, not a pixel-exact copy
 of GitHub. Never call an emulated viewport a real iPad test. Before publishing,
 compare against other open documentation PRs; this local layer does not merge them.
+
+Case008 claims use their explicit reviewed archive identity; the additional-publication checker runs its anchored verifier and checks its download metadata. Earlier protected files remain checked against the existing Git revision. A new package must be explicitly declared, never accepted as an entire editable case directory.

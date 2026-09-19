@@ -1,0 +1,64 @@
+{
+  "code": {
+    "tools/modelpack/__init__.py": "4f64a35b7c58b49b9313060a686f647f4d94d85347011732c4fccc3989cedd15",
+    "tools/modelpack/__main__.py": "1447619d164a7c5f3467fb189409317ce2480c2baf7f8a160f7a0f04f1bb1313",
+    "tools/modelpack/analysis.py": "4325041555b3583a587286332568b976dbcd8ba57d3bf508a3d8196b91a64eef",
+    "tools/modelpack/artifact.py": "fe40d41fcef07ab13f5dd24015c262584e521f54dae92d120fe479ad7614ce70",
+    "tools/modelpack/audit.py": "536bac305164405e6f849ec4cf3addc6f10c6ae350a3936125d0b61cb63b0111",
+    "tools/modelpack/collect.py": "1b3d8e978a1ce4ddb314c5d1a35241275e4599f55ecc30a1520372cdd7800d30",
+    "tools/modelpack/common.py": "1cb5897555cb6dc14e74cf90ac58086cf0a89c4a1b47330235d63eebd78ab787",
+    "tools/modelpack/data.py": "42daf17905c1028fd34fd3a477ec1049788d645067ff59496c5b23ffd890bd4e",
+    "tools/modelpack/freeze.py": "7df2c6abdb23a2e283e58a4675fc7949187487fd1f139b70f8a3d2d8c5884ca6",
+    "tools/modelpack/numerics.py": "c565ad7b0a34c0e3440989f8856ac0b810459b7097e19f20200d45428309263e",
+    "tools/modelpack/package.py": "5e7960fd38e71e32dea2d0acead60506a01a9e9b7faab33d4fb981440cf02b04",
+    "tools/modelpack/r_study.py": "9054a1ac56b7eee6ba626551ce8aa4fbbb8624e8e11394457f53d54adaabaedd",
+    "tools/modelpack/reload.py": "33e060116bf93110ff299cc4c4023c1f32a364f50e1b123c81af77a09b99c3a4",
+    "tools/modelpack/report.py": "283591a5a1ef8fd8fc211a2e6797e7bc2ce836d387d4837fd9c0d1e7948f2e4b",
+    "tools/modelpack/runtime.py": "601964c3b4956dc189d7dd7659a57e465dca9be5a5bf6eb1d35035e24f6edcfc",
+    "tools/modelpack/timing.py": "7832e6eda137d18e38ef1c04a647103400ac5dc2e68ab017a0baa91e7c24fc0c"
+  },
+  "dependencies": {
+    "artifacts": {
+      "I25": "cdab50076959d23ee9eb8871a52e463ee2188b5e78d20ff9e742203c09b7c426",
+      "I25-R": "6aad69209257847aef33247fbdb938afa9bd5c16e17b57604a701302a00a13dc",
+      "P25": "34be88577250bfb0b1f7bfc0059d0046a176d0decf54c3c5f535261e5300e827",
+      "P25-R": "54309c12f123e88d3e2c41006a8b9667b955d6145708c39af1ac53073e54731b",
+      "R-B": "b47de499349d2f93458146bbbbf9530ecebd58d3c3aaeff3408a10988846b2b1",
+      "S50": "f6bb68379c6d37599c656fbef247b0c1315568991a75a6cd07cc676c4dd1bb81",
+      "S50-R": "c5374d5c3755d60fb3f6a8c5812a5ca09bf75e1f4afaf0e3198badb3c700cf89"
+    },
+    "fit_sha256": "d707b1f1ebd2d928c51badaed6c7d530153379e3f53ad9be250edf9d6e79517a",
+    "heldout_selection": "all 192 fixed scenarios",
+    "selection": {
+      "eta": 0.01,
+      "heldout_accessed": false,
+      "input_hash": "1bf027778a0b4294d6d5a8e916d8cab3cba7a2765e55dab3bf687e01aa70ff16",
+      "mean_relative_squared_error": {
+        "0.0001": 0.01726794037666159,
+        "0.001": 0.012200158557466168,
+        "0.01": 0.010291973100983252,
+        "0.1": 0.012049518987059383,
+        "1.0": 0.020392384236601672
+      },
+      "rule": "one common eta minimizes task/prompt-balanced mean relative squared native output error averaged equally over three structures on DEV; exact ties choose larger eta"
+    },
+    "selection_sha256": "c58f8236b3ff799fef3ef2caff3769e500c4364fe675dd8d878dac4afdb1bb86"
+  },
+  "design_sha256": "b5aa84270984a0b908e089754a8bd4b61c9495c24dfb25902cad6eeaddfc7a2e",
+  "frozen_at": "2026-09-19T14:29:17.416131+00:00",
+  "heldout_candidate_outputs_observed": false,
+  "input_files": {
+    "inputs/Q/calibration.json": "f153af34e183ef7bfab2b3f85eaa6ae2be9a4bf809b4b289d3a52d5d66cd9fce",
+    "inputs/Q/development.json": "288e8fbbbe6ecbb8e54f263c0c11bb156cf0ba8529b798b7d55339f39d2821bf",
+    "inputs/Q/heldout.json": "b0b654971276c3401411822668e2e1ed3d52a5997a229e9e5ad171ebcc6950a0",
+    "inputs/Q/manifest.json": "af36960460522cfd72daba9b4b11a569e4bccba21657522ce8343726e82d6237",
+    "inputs/Q/smoke.json": "cad4844bf731756d803f2de6919999b10d2590189da4c03d87200c12808dd560",
+    "inputs/R/calibration.json": "3e72f2d1593236ad223ff90d219e7e8d6b859da3e155b62ee0008fded65f948b",
+    "inputs/R/development.json": "340e735363ee57c6d39648e95f9e53cb72a3fe069615bc8672fc02dc736d3962",
+    "inputs/R/heldout.json": "f828402f8c71605346fbedae578fed21e07fb519ca7e05417c180caec4f4ac9a",
+    "inputs/R/manifest.json": "a0b3b1a48af9c4783494165161abe0d410eeafe48be6991b36db9e18934d63b3",
+    "inputs/R/smoke.json": "afcd73923786e2748b17b3d978a488b1ecf209be9b25b307d4f01261d7b3bad4"
+  },
+  "scope": "local freeze after DEV; original test inputs not used for fitting",
+  "track": "R"
+}

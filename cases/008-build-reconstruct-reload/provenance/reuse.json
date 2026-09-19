@@ -1,0 +1,35 @@
+{
+  "source_revision": "2d817c215f9effc1c02868733a52b3ebc4060082",
+  "sources": {
+    "cases/007-interaction-aware-mlp-pruning/src/surgery.py": "a07636819c1c07803578aca903bb09514b3e90c01db64ef939f43e3b840a8926",
+    "cases/007-interaction-aware-mlp-pruning/results/raw/selection.json": "7675d4dd1a907591922a26a5d63d742f10f073a2c68021c907343612180e6f37",
+    "cases/006-attention-decision-stability/src/intervention.py": "73a67f1b505a9c4204cd9d0158cb42ba54a9d1161ad8f42cf075464dd85b9f60",
+    "cases/002-bf16-fp8-document-extraction/README.md": "1e7dfe0fce6ecb3f121ba68d1352dfbe3d4cd15b4eabc042199ade08abc35f7e"
+  },
+  "reuse_changes": [
+    {
+      "source": "Case007 surgery and frozen selections",
+      "use": "aligned gate/up rows and down columns; fixed three removed sets",
+      "change": "standalone per-layer loader and native BF16 ridge teacher; no new selector"
+    },
+    {
+      "source": "Case006 scoring/validity conventions",
+      "use": "paired gold versus baseline, final-token boundary, full-output finite checks",
+      "change": "fresh synthetic data; validity derived from complete observed boundaries, never a hardcoded fresh/valid flag"
+    },
+    {
+      "source": "Case002 vLLM WSL runtime",
+      "use": "V1 runner and non-FlashInfer sampler flags",
+      "change": "actual locally built GPTQ W4 checkpoint; standard packed Marlin path"
+    }
+  ],
+  "upstream": [
+    "Qwen",
+    "Transformers",
+    "PyTorch",
+    "LLM Compressor GPTQ",
+    "compressed-tensors",
+    "vLLM / Marlin"
+  ],
+  "assistance": "Codex assisted implementation, execution, debugging, analysis and documentation"
+}

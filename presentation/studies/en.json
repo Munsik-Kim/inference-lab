@@ -1,0 +1,368 @@
+{
+  "case007": {
+    "title": "Case 007 · Which channels should a smaller MLP remove?",
+    "intro": "An MLP transforms the numbers representing each token. This study divided its 3,072 intermediate channels into 16 groups of 192 channels. It compared ways to select which groups to remove while keeping the removal count fixed.",
+    "see": "Follow the selection rule, the physically smaller matrices, held-out reconstruction and answer changes, and measured call times. Then inspect individual inputs.",
+    "sections": [
+      {
+        "id": "objective",
+        "title": "Objective",
+        "paragraphs": [
+          "The aim was to remove part of an MLP while keeping its output close to the original. The comparison evaluates removal groups separately or accounts for their joint effect.",
+          "A channel is one coordinate of the intermediate vector computed for a token. This MLP computes 3,072 intermediate values from 1,024 input values, then combines them into 1,024 output values. A channel is not an input document or a word.",
+          "A group is a fixed deletion unit: 192 channels in index order. Group 0 contains channels 0–191; group 1 contains 192–383, continuing through group 15. These are not learned clusters of semantically similar channels. An “individual group” means one of these 16 blocks.",
+          "B is the unpruned BF16 model. Deleting a group removes its gate/up rows and down columns together. Four groups remove 768 channels and leave 2,304. That does not remove 25% of the whole model."
+        ],
+        "table": {
+          "key": "method-definitions",
+          "title": "What do the two methods select?",
+          "headers": [
+            "Method",
+            "What it computes",
+            "How it selects"
+          ],
+          "rows": [
+            [
+              "Individual-score selection · INDEPENDENT",
+              "For each group, average the squared output change from removing that group alone over calibration inputs.",
+              "Choose the four or eight lowest-scoring groups. The selection score omits cancellation or reinforcement between groups."
+            ],
+            [
+              "Interaction-aware selection · PAIRWISE",
+              "Include individual scores and pairwise terms measuring how group output changes cancel or reinforce one another.",
+              "Evaluate complete four- or eight-group removal combinations and choose the minimum predicted joint squared error."
+            ]
+          ],
+          "note": "INDEPENDENT does not establish statistical independence. “Pair” refers to terms in the error calculation, not a rule to remove only two groups. Both methods used the same 96 calibration inputs.",
+          "source": "cases/007-interaction-aware-mlp-pruning/src/core.py"
+        }
+      },
+      {
+        "id": "data",
+        "title": "Dataset",
+        "paragraphs": [
+          "Three synthetic English task families provide exact answers: RETRIEVAL looks up a fact by key; COMPARISON compares or calculates values; CODE predicts a restricted short program’s result. Generator rules and exact computation establish gold before model scoring.",
+          "Every prompt contains 512 tokens with its question and required facts preserved. Local error uses 32 fixed positions per prompt. Positions and repeated configurations do not add independent inputs."
+        ],
+        "table": {
+          "headers": [
+            "Data",
+            "Prompts",
+            "Purpose"
+          ],
+          "rows": [
+            [
+              "CALIBRATION",
+              "96 (32 per task)",
+              "Select removal sets"
+            ],
+            [
+              "DEVELOPMENT",
+              "48 (16 per task)",
+              "Check implementation and numerical agreement"
+            ],
+            [
+              "HELD_OUT",
+              "192 (64 per task)",
+              "Compare after selection is frozen"
+            ],
+            [
+              "Separate smoke",
+              "6",
+              "Basic execution checks"
+            ]
+          ]
+        }
+      },
+      {
+        "id": "theory",
+        "title": "Assumptions and theory",
+        "paragraphs": [
+          "Why can cancellation matter? Suppose one group adds +3 and another adds −3 along an output direction. Their sum is zero: removing both leaves that direction unchanged. If each instead adds +3, removing both changes it by a magnitude of six.",
+          "The values below are an invented one-dimensional teaching example, not experiment measurements. The actual study computed each group’s 1,024-dimensional output contribution at fixed token positions on calibration inputs. Group contributions were computed in FP32 from the represented BF16 inputs and weights. The physically smaller models were evaluated in BF16 after selection.",
+          "Writing each contribution as a vector cᵢ, the deletion change is their sum. Its squared size equals the individual squared sizes plus twice all signed pairwise inner products. INDEPENDENT uses the first part; PAIRWISE includes both.",
+          "Q is the 16×16 matrix of individual sizes and inner products. For a vector z marking removed groups with ones, PAIRWISE uses zᵀQz. This describes output change at the same MLP input; it does not directly optimize gold probabilities or whole-model quality."
+        ],
+        "table": {
+          "key": "teaching-example",
+          "title": "Teaching example · not measured evidence",
+          "headers": [
+            "Assumed contributions",
+            "Sum of individual scores",
+            "Squared joint change"
+          ],
+          "rows": [
+            [
+              "+3, −3",
+              "3² + (−3)² = 18",
+              "(3 − 3)² = 0"
+            ],
+            [
+              "+3, +3",
+              "3² + 3² = 18",
+              "(3 + 3)² = 36"
+            ]
+          ],
+          "note": "Equal individual-score sums can hide different joint changes. This example is not evidence that PAIRWISE always wins on real inputs."
+        }
+      },
+      {
+        "id": "design",
+        "title": "Experiment design",
+        "paragraphs": [
+          "Only zero-based layer 13 of Qwen3-0.6B changes. Its original intermediate width of 3,072 is partitioned into 16 contiguous groups of 192 channels. Remove four groups (25%) or eight (50%). Other layers and attention keep their native BF16 path; there is no retraining.",
+          "The runner enumerated all 1,820 / 12,870 combinations at the two budgets using calibration statistics, then froze selection. It sliced gate/up rows and down columns into actual widths of 2,304 / 1,536. A full-size masked computation served only as an equivalence reference.",
+          "Twenty frozen random removal sets per budget provide a local-error reference on the same inputs. Their model-level answer quality and request times were not measured."
+        ]
+      },
+      {
+        "id": "validation",
+        "title": "Validation",
+        "paragraphs": [
+          "Development checks cover the contribution-sum identity, row/column mapping, sliced-versus-masked numerical agreement, and module restoration after exceptions. Evaluation checks full model outputs for NaN/Inf and verifies input and selection identities.",
+          "The 95% intervals use 5,000 paired, within-task prompt resamples. Local error, gold-choice probabilities, full-vocabulary distribution differences and time are separate measurements. Public scalar checks recalculate retained values; they cannot reconstruct excluded hidden/logit vectors or GPU execution."
+        ]
+      },
+      {
+        "id": "results",
+        "title": "Results",
+        "paragraphs": [
+          "This summary covers all 192 held-out prompts and is separate from the item filters below. Local relative error divides the difference between original and smaller MLP outputs by the original output size, at identical MLP inputs. Values are means of prompt-level relative Frobenius errors pooled over 32 positions."
+        ],
+        "tables": "results7"
+      },
+      {
+        "id": "interpretation",
+        "title": "Interpretation",
+        "paragraphs": [
+          "At 25%, PAIRWISE slightly reduced local error and stayed closer to B’s vocabulary distribution and decisions. INDEPENDENT nevertheless had better gold-choice NLL, the probability loss for the independently computed answer. Preserving B and improving gold-based scores are different objectives.",
+          "At 50%, both methods produced the same groups, weights and outputs. The [0, 0] difference interval is not independent evidence of quality equivalence. The random reference describes the 20 frozen sets; it does not establish optimality over all removal sets.",
+          "B scored 63/64 on retrieval, 15/64 on comparison and 16/64 on code. Read the answer changes within these weak-baseline strata and synthetic forced-choice tasks."
+        ]
+      },
+      {
+        "id": "conclusion",
+        "title": "Conclusion",
+        "paragraphs": [
+          "The completed comparison connects group selection, physical matrix slicing, held-out inputs, answer scores and cost. A small local improvement was observed at 25%; the two selectors produced the same structure at 50%.",
+          "The frozen rule requires the 95% upper bound of PAIRWISE−INDEPENDENT local-error change to be below zero at both budgets for positive transfer. The result remains COMPLETED_NO_CLEAR_TRANSFER; deployment is NOT_ASSESSED. The scope is one model, one layer and no retraining."
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "path": "cases/007-interaction-aware-mlp-pruning/METHODS.md",
+        "ko": "방법·조건 — 영어",
+        "en": "Methods and conditions"
+      },
+      {
+        "path": "cases/007-interaction-aware-mlp-pruning/configs/protocol.json",
+        "ko": "동결한 실험 규칙",
+        "en": "Frozen protocol"
+      },
+      {
+        "path": "cases/007-interaction-aware-mlp-pruning/README.ko.md",
+        "ko": "원래 결과 보고 — 한국어",
+        "en": "Original result report (Korean)"
+      },
+      {
+        "path": "cases/007-interaction-aware-mlp-pruning/README.md",
+        "ko": "원래 결과 보고 — 영어",
+        "en": "Original result report"
+      },
+      {
+        "path": "cases/007-interaction-aware-mlp-pruning/results/derived/summary.json",
+        "ko": "집계 수치 JSON",
+        "en": "Summary values (JSON)"
+      },
+      {
+        "path": "cases/007-interaction-aware-mlp-pruning/REPRODUCTION.md",
+        "ko": "재현·검산 명령 — 영어",
+        "en": "Reproduction and scalar checks"
+      },
+      {
+        "path": "cases/007-interaction-aware-mlp-pruning/src/core.py",
+        "ko": "그룹·선택기 구현 — 영어",
+        "en": "Grouping and selector source"
+      },
+      {
+        "path": "cases/007-interaction-aware-mlp-pruning/src/surgery.py",
+        "ko": "행렬 축소 구현 — 영어",
+        "en": "Matrix slicing source"
+      }
+    ]
+  },
+  "case006": {
+    "title": "Case 006 · Where do answers change when attention arithmetic changes?",
+    "intro": "The same questions ran with native BF16 arithmetic and two low-precision attention settings. Attention determines which information to combine from preceding tokens. This study changed number formats at one attention operation and compared answer probabilities and choices.",
+    "see": "Inspect answer transitions on the standard and separately selected stress sets. A post-hoc diagnostic then examines ties and decisions when the same internal states pass through a different final vocabulary projection, or readout.",
+    "sections": [
+      {
+        "id": "objective",
+        "title": "Objective",
+        "paragraphs": [
+          "The question was whether similar accuracy totals hide different correct items or different probabilities for gold answers. The same model and questions were compared while changing one attention path.",
+          "B is the model’s original BF16 path. A_PUBLIC and V4 are attention settings, not different models. A_PUBLIC carries forward the public reference setting used in Case 005; V4 retains that case’s fourth variant name. V4 does not mean FP4 or four-bit precision.",
+          "BF16 and FP16 are different 16-bit floating-point formats; FP8 is an eight-bit floating-point format and INT8 is an eight-bit integer format. Their representable values and spacing differ, affecting arithmetic and conversion cost. Model weights stayed BF16; the attention multiplication paths below changed."
+        ],
+        "table": {
+          "key": "method-definitions",
+          "title": "What changes in each setting?",
+          "headers": [
+            "Setting",
+            "Attention scores · QK product",
+            "Value combination · PV product"
+          ],
+          "rows": [
+            [
+              "Original arithmetic · B",
+              "Native BF16 SDPA",
+              "Native BF16 SDPA"
+            ],
+            [
+              "FP8 value-combination path · A_PUBLIC",
+              "INT8 Q/K path",
+              "FP8 PV; recorded accumulation option fp32+fp16"
+            ],
+            [
+              "FP16 value-combination path · V4",
+              "INT8 Q/K path",
+              "FP16 PV; recorded accumulation option fp32"
+            ]
+          ],
+          "note": "Accumulation adds the multiplication results. Formats describe path operands, not a claim that every intermediate uses that bit width. Both low-precision paths return BF16 attention outputs.",
+          "source": "cases/006-attention-decision-stability/METHODS.md"
+        }
+      },
+      {
+        "id": "data",
+        "title": "Dataset",
+        "paragraphs": [
+          "These are synthetic English four-option tasks: RETRIEVAL looks up facts, COMPARISON compares facts or relations, and CODE predicts restricted short-program outputs. Gold is computed before inference without a model judge.",
+          "Primary prompts contain 4,096 tokens; only irrelevant filler adjusts length. Standard inputs are not filtered by B’s correctness or scores. Stress inputs are selected from a separate pool by B’s winner gap, so their rates must remain separate."
+        ],
+        "table": {
+          "headers": [
+            "Data",
+            "Prompts",
+            "Purpose"
+          ],
+          "rows": [
+            [
+              "Development / separate smoke",
+              "96 / 6",
+              "Check presentation, intervention and one-token labels"
+            ],
+            [
+              "Standard evaluation",
+              "192 (64 per task)",
+              "Unfiltered primary comparison"
+            ],
+            [
+              "Selected stress · boundary_pool",
+              "46 selected from a separate pool of 192",
+              "B-score-conditioned comparison"
+            ],
+            [
+              "Length / generation / timing support",
+              "Same 48 / 24 / 12 IDs",
+              "Separate measurements, not extra independent samples"
+            ]
+          ]
+        }
+      },
+      {
+        "id": "theory",
+        "title": "Assumptions and theory",
+        "paragraphs": [
+          "Attention has two stages. Q (query) is the learned vector used to look for relevant information at the current position; K (key) is compared with it at each position; V (value) contains the information to combine. These are numerical model representations.",
+          "① QK product: dot products between the current Q and permitted K vectors produce attention scores. A causal mask excludes future positions. Scaling and softmax convert the scores to weights P that sum to one.",
+          "② PV product: multiply and sum V vectors according to weights P to produce the attention output. A_PUBLIC and V4 both use an INT8 QK path; their value-combination paths use FP8 and FP16 respectively.",
+          "The adapter called SageAttention’s explicit FP8-PV / FP16-PV functions. Both use K centering (smooth_k=True), no V centering (smooth_v=False), and per_warp Q/K quantization. A_PUBLIC has a recorded V scale maximum of 2.25; V4’s required BF16-to-FP16 V conversion stays inside the call. A scale maps values into the lower-precision representable range.",
+          "Operand format, accumulation, scaling and conversion change as a bundle. Differences cannot be attributed solely to FP8 versus FP16. How local perturbations affect final answers also depends on the remaining model computation.",
+          "NLL is the negative log probability of the gold choice; lower is better. ΔNLL=candidate−B, so positive is worse. A flip changes B’s choice; a regression loses a correct B answer. Gains correct a wrong B answer, and wrong-to-wrong changes are counted separately.",
+          "Top ties use exact stored equality at the maximum option score, not display rounding or a small tolerance. The original deterministic tie-breaking rule is retained."
+        ]
+      },
+      {
+        "id": "design",
+        "title": "Experiment design",
+        "paragraphs": [
+          "Only zero-based layer 13’s prompt-prefill attention in Qwen3-0.6B was replaced. Other layers and subsequent decode used BF16. All arms received the same tokens, weights and masks; no future answer tokens entered primary inputs.",
+          "The post-hoc readout diagnostic reuses the same 192 standard and 46 selected stress scenarios. Each arm’s final hidden state and represented BF16 weights are evaluated through a separate FP32 head. Candidate and B are compared within the same readout. This is neither a new independent evaluation nor a model-improvement setting."
+        ]
+      },
+      {
+        "id": "validation",
+        "title": "Validation",
+        "paragraphs": [
+          "Checks establish native-versus-B agreement, layer-13-only routing, identical Q/K/V, input immutability and restoration on exception. Validity scans cover attention, all decoder blocks, final norm and full-vocabulary output, not only four option scores.",
+          "Every answer label is verified as one token in its actual continuation context. The task-balanced mean paired NLL change uses 5,000 prompt resamples for pointwise 95% intervals.",
+          "Readout controls include widening native outputs without recomputation, rounding FP32 outputs back through the original dtype, and a separate CPU FP64 calculation of four option dot products. Public option-record reanalysis and excluded full-vector checks have different audit scopes."
+        ]
+      },
+      {
+        "id": "results",
+        "title": "Results",
+        "paragraphs": [
+          "These tables summarize the complete study. Standard versus stress and native versus post-hoc FP32 readouts are shown separately. Item filters below do not change this summary."
+        ],
+        "tables": "results6"
+      },
+      {
+        "id": "interpretation",
+        "title": "Interpretation",
+        "paragraphs": [
+          "Every original standard-set flip involved an exact top tie in B or the candidate. Tie-breaking is part of native behavior. Some flips vanished and new ones appeared under FP32 readout, so the diagnostic cannot be described simply as removing errors.",
+          "Zero observed standard-set regressions does not establish general quality preservation. The separate stress set had regressions, and the standard NLL intervals are not an equivalence test. B scored 15/64 on code; strict structured generation was 0/24 for every arm.",
+          "The shadow projection reads the same states through a different arithmetic path. It does not isolate final rounding as the sole cause of every difference."
+        ]
+      },
+      {
+        "id": "conclusion",
+        "title": "Conclusion",
+        "paragraphs": [
+          "The completed comparison traces a one-layer numerical intervention through gold probabilities, individual choices, ties and cost. It distinguishes disagreement from losing or gaining correct answers and records sensitivity to output-head arithmetic.",
+          "The original study is COMPLETED_CONTROLLED_STUDY; the supplement is POST_HOC_SAME_INPUT_READOUT_DIAGNOSTIC; deployment is NOT_ASSESSED. These synthetic one-layer prefill results do not constitute a full-model low-precision or service-quality verdict."
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "path": "cases/006-attention-decision-stability/METHODS.md",
+        "ko": "방법·조건 — 영어",
+        "en": "Methods and conditions"
+      },
+      {
+        "path": "cases/006-attention-decision-stability/README.md",
+        "ko": "원래 결과 보고 — 영어",
+        "en": "Original result report"
+      },
+      {
+        "path": "cases/006-attention-decision-stability/results/study/summary.json",
+        "ko": "본실험 집계 JSON",
+        "en": "Original study summary (JSON)"
+      },
+      {
+        "path": "cases/006-attention-decision-stability/supplemental/readout-ties-v1/README.ko.md",
+        "ko": "사후 진단 보고 — 한국어",
+        "en": "Readout diagnostic (Korean)"
+      },
+      {
+        "path": "cases/006-attention-decision-stability/supplemental/readout-ties-v1/README.md",
+        "ko": "사후 진단 보고 — 영어",
+        "en": "Readout diagnostic"
+      },
+      {
+        "path": "cases/006-attention-decision-stability/REPRODUCTION.md",
+        "ko": "재현·검산 명령 — 영어",
+        "en": "Reproduction and scalar checks"
+      },
+      {
+        "path": "cases/006-attention-decision-stability/src/intervention.py",
+        "ko": "attention 교체 구현 — 영어",
+        "en": "Attention intervention source"
+      }
+    ]
+  }
+}

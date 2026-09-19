@@ -24,7 +24,9 @@ python3 -B tools/showcase/check.py --site "$OUT/site" --output "$OUT/site-check.
 
 브라우저에서 `$OUT/site/index.html`을 열어 한국어 또는 English를 고릅니다. 빌드는 Python 표준 라이브러리를 사용합니다. 스크립트와 표시 데이터가 로컬에 있어 서버 없이 `file://`로 열 수 있습니다. 같은 상대 리소스 경로는 `/inference-lab/` 하위 경로에서도 동작합니다. 공개된 Pages 화면과 로컬 빌드는 같은 정적 화면 코드를 사용합니다.
 
-Case007에서 25% 또는 50% 삭제를 고른 뒤 과제나 입력 ID를 선택합니다. 표는 같은 예산에서 B와 두 선택법을 비교합니다. Case006에서는 표준 또는 선정 스트레스, 원래 계산 또는 표시된 FP32 진단을 선택합니다. 후보는 항상 같은 출력 계산의 B와 대응합니다. 필터와 입력 ID는 URL fragment에 남아 새로고침·언어 전환 후에도 유지됩니다. JSON 다운로드에는 원래 수치 정밀도의 비교값을 넣습니다. 안내 사례는 과제별 첫 고정 ID이며 성공 사례만 고른 것이 아닙니다.
+상세 화면은 **목표 → 데이터셋 → 가정과 이론 → 실험 설계 → 검증 내용 → 결과 → 결과 해석 → 결론** 순서로 읽습니다. 목차에서 필요한 항목으로 이동하거나 **입력별 결과 바로 보기**를 선택할 수 있습니다. 위의 전체 실험 요약과 아래 필터의 현재 부분집합 통계는 별도입니다. [GitHub 사례 안내](CASEBOOK.md)도 일곱 사례를 같은 순서로 설명합니다.
+
+Case007에서 25% 또는 50% 삭제를 고른 뒤 과제나 입력 ID를 선택합니다. 표는 같은 예산에서 B와 두 선택법을 비교합니다. Case006에서는 표준 또는 선정 스트레스, 원래 계산 또는 표시된 FP32 진단을 선택합니다. 후보는 항상 같은 출력 계산의 B와 대응합니다. 필터와 입력 ID는 URL에 남아 새로고침·언어 전환 후에도 유지됩니다. JSON 다운로드에는 원래 수치 정밀도의 비교값을 넣습니다. 안내 사례는 과제별 첫 고정 ID이며 성공 사례만 고른 것이 아닙니다.
 
 화면에서는 결정론적인 무관한 채움 문장과 토큰 배열을 생략하고 정확한 공개 입력·점수 기록으로 연결합니다. Case007 시간은 별도 입력 6개의 집계이며 화면의 각 입력별 측정값이 아닙니다. 네 선택지 점수로 선택지 지표를 재계산할 수 있습니다. 저장된 전체 어휘 KL과 전체 출력 유효성은 원래 측정에서 더 넓은 자료를 확인한 기록입니다.
 
@@ -114,3 +116,7 @@ ZIP만 풀었다면 먼저 그 안의 `006-attention-decision-stability` 디렉�
 커널 출력을 다시 얻으려면 고정 모델·소스·binary와 호환 하드웨어 환경이 필요합니다. 공개 스칼라 기록으로 제외된 hidden vector나 전체 Q/K/V를 복원할 수는 없습니다. [고정 로컬 GPU 안내 — 기술 원문(영어)](../../cases/006-attention-decision-stability/REPRODUCTION.md#pinned-local-gpu-replay)와 [원실험·readout 경로 연결 — 영어](../../cases/006-attention-decision-stability/REPRODUCTION.md#connecting-original-replay-to-the-readout-supplement)가 조건을 설명합니다. 이 안내 작성 중 실행한 절차가 아닌 향후 재현 지침입니다. CPU 재계산은 저장된 근거의 계산 일관성을 확인하며, 외부 GPU 재현이나 배포 적합성을 입증하지 않습니다.
 
 이번 입문 안내 편집에서는 문서·링크·파일 보존만 검사했습니다. 위의 실험 재계산 명령과 GPU 명령은 실행하지 않았으며, 기존 검사 기록은 해당 시점의 근거입니다.
+
+## Case 008: 보고서와 독립 검산 묶음
+
+[구조화 보고서](../../cases/008-build-reconstruct-reload/REPORT.ko.md)를 읽고 [코드·recipe·측정 자료 ZIP](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)과 [메타데이터](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.json)를 내려받으세요. 압축 해제 루트에는 tools/modelpack과 사례 폴더가 함께 있습니다. `cases/008-build-reconstruct-reload/demo/index.html`을 열면 원래 영어 탐색기를 볼 수 있습니다. 현재 배포 사이트에 별도 Case 008 화면이 있는 것은 아닙니다. [CPU 검사·원본 복원 명령(영어)](../../cases/008-build-reconstruct-reload/REPRODUCTION.md)은 향후 GPU 명령과 분리되어 있으며 모델 가중치는 포함하지 않습니다.

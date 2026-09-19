@@ -1,0 +1,169 @@
+{
+  "schema": 1,
+  "study": "CASE008_TWO_TRACK",
+  "status": "BUILD_DESIGN_FREEZE",
+  "source_base": "2d817c215f9effc1c02868733a52b3ebc4060082",
+  "source_design_sha256": "c89db9d38fa82bdb277a285bbb0833179d5cdf0311ae859da0704a70789c8005",
+  "seed": 808190,
+  "analysis_seed": 808191,
+  "bootstrap_replicates": 5000,
+  "unit": "base scenario; task-stratified paired resampling",
+  "tasks": [
+    "retrieval",
+    "comparison",
+    "code"
+  ],
+  "Q": {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "counts": {
+      "smoke": 6,
+      "calibration": 256,
+      "development": 64,
+      "heldout": 192
+    },
+    "max_length": 1024,
+    "recipe": {
+      "method": "GPTQ",
+      "num_bits": 4,
+      "group_size": 128,
+      "symmetric": true,
+      "targets": "Linear excluding lm_head",
+      "activations": "BF16",
+      "actorder": null,
+      "dampening": 0.01,
+      "block_size": 128,
+      "offload_hessians": true,
+      "pipeline": "sequential"
+    },
+    "runtime": "existing vLLM 0.29.0",
+    "fixed_kv_bytes": 1073741824
+  },
+  "R": {
+    "model": "Qwen/Qwen3-0.6B",
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "counts": {
+      "smoke": 6,
+      "calibration": 128,
+      "development": 48,
+      "heldout": 192
+    },
+    "max_length": 512,
+    "positions": 32,
+    "layer": 13,
+    "groups": 16,
+    "removed": {
+      "I25": [
+        8,
+        12,
+        13,
+        14
+      ],
+      "P25": [
+        8,
+        13,
+        14,
+        15
+      ],
+      "S50": [
+        7,
+        8,
+        9,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "eta_grid": [
+      0.0001,
+      0.001,
+      0.01,
+      0.1,
+      1.0
+    ],
+    "eta_rule": "one common eta minimizes task/prompt-balanced mean relative squared native output error averaged equally over three structures on DEV; exact ties choose larger eta",
+    "fit_dtype": "CPU float64",
+    "inference_dtype": "BF16",
+    "teacher": "native BF16 MLP output at same post_attention_layernorm input",
+    "activation": "actual smaller gate/up path; not sliced full activation"
+  },
+  "data": {
+    "source": "new deterministic synthetic English scenarios and bounded integer programs",
+    "split_rule": "different scenario ID and disjoint factual/program seeds; no shared base scenario",
+    "families": "retrieval facts, comparison of two values, bounded arithmetic program",
+    "length_policy": "Variable length; whole essential prompt, no filler or truncation; caps Q1024/R512. Actual tokenizer lengths are recorded.",
+    "labels": "A B C D; verify one-token continuation and stable prefix",
+    "primary_model_metric": "task-balanced mean paired full-vocabulary gold next-token NLL change (candidate minus baseline)",
+    "secondary": [
+      "conditional choice NLL",
+      "choice Brier",
+      "gold margin",
+      "accuracy",
+      "regression/gain/wrong-to-wrong",
+      "KL baseline || candidate",
+      "allowed label mass",
+      "exact top ties"
+    ],
+    "baseline_floor": "report every family; flag weak baseline, no heldout filtering"
+  },
+  "timing": {
+    "ids": "first 4 hash-ordered heldout IDs per task",
+    "independent_processes": 3,
+    "warmups": 5,
+    "paired_blocks": 5,
+    "calls_per_block": 3,
+    "boundaries": {
+      "R": [
+        "prefill_and_argmax",
+        "fixed_8_token_request"
+      ],
+      "Q": [
+        "one_token_request",
+        "fixed_8_token_request"
+      ]
+    },
+    "allocation": "one model at a time; allocated/reserved and sampled whole device separately",
+    "maximum_process_gib": 13,
+    "Q_boundary_limit": "vLLM blocking generate includes scheduling/sampling/readback; pure prefill not isolated"
+  },
+  "reload": {
+    "processes": 2,
+    "different_absolute_directory": true,
+    "offline": true,
+    "prompt_and_decode": true,
+    "repeats": "fixed smoke IDs only"
+  },
+  "deployment": "NOT_ASSESSED",
+  "publication": "LOCAL_REVIEW_ONLY",
+  "no_new_selector": true,
+  "Q_R_effects_not_pooled": true,
+  "frozen_at": "2026-09-19T13:37:02.941884+00:00",
+  "source_hashes": {
+    "tools/modelpack/__init__.py": "4f64a35b7c58b49b9313060a686f647f4d94d85347011732c4fccc3989cedd15",
+    "tools/modelpack/__main__.py": "01aa418af2ed02e535eb84745e5dfddd37c70745e7024579f2d0993469b9a697",
+    "tools/modelpack/artifact.py": "fe40d41fcef07ab13f5dd24015c262584e521f54dae92d120fe479ad7614ce70",
+    "tools/modelpack/common.py": "1cb5897555cb6dc14e74cf90ac58086cf0a89c4a1b47330235d63eebd78ab787",
+    "tools/modelpack/data.py": "42daf17905c1028fd34fd3a477ec1049788d645067ff59496c5b23ffd890bd4e",
+    "tools/modelpack/numerics.py": "c565ad7b0a34c0e3440989f8856ac0b810459b7097e19f20200d45428309263e",
+    "tools/modelpack/q_runtime.py": "cdd2cce22ccf3413a2c71af1383b9315d3b928337b4f2d898f2b5a4244dc8c01",
+    "tools/modelpack/quantized.py": "3b7ef4f4b5536d1c43e2ad1dff0237df4c62aa834e8352a168a71c7ef38b61d6",
+    "tools/modelpack/r_study.py": "ecbd8822abfb514beeb39f8806f42243f6ee0bc25e5e645611a44757fdc53753",
+    "tools/modelpack/reload.py": "6ad13007ba0da516739cee6d8275222cf6a253c1494f924449a6de5a2e5ae7ec",
+    "tools/modelpack/runtime.py": "601964c3b4956dc189d7dd7659a57e465dca9be5a5bf6eb1d35035e24f6edcfc",
+    "tools/modelpack/timing.py": "7832e6eda137d18e38ef1c04a647103400ac5dc2e68ab017a0baa91e7c24fc0c"
+  },
+  "input_files": {
+    "inputs/Q/calibration.json": "f153af34e183ef7bfab2b3f85eaa6ae2be9a4bf809b4b289d3a52d5d66cd9fce",
+    "inputs/Q/development.json": "288e8fbbbe6ecbb8e54f263c0c11bb156cf0ba8529b798b7d55339f39d2821bf",
+    "inputs/Q/heldout.json": "b0b654971276c3401411822668e2e1ed3d52a5997a229e9e5ad171ebcc6950a0",
+    "inputs/Q/manifest.json": "af36960460522cfd72daba9b4b11a569e4bccba21657522ce8343726e82d6237",
+    "inputs/Q/smoke.json": "cad4844bf731756d803f2de6919999b10d2590189da4c03d87200c12808dd560",
+    "inputs/R/calibration.json": "3e72f2d1593236ad223ff90d219e7e8d6b859da3e155b62ee0008fded65f948b",
+    "inputs/R/development.json": "340e735363ee57c6d39648e95f9e53cb72a3fe069615bc8672fc02dc736d3962",
+    "inputs/R/heldout.json": "f828402f8c71605346fbedae578fed21e07fb519ca7e05417c180caec4f4ac9a",
+    "inputs/R/manifest.json": "a0b3b1a48af9c4783494165161abe0d410eeafe48be6991b36db9e18934d63b3",
+    "inputs/R/smoke.json": "afcd73923786e2748b17b3d978a488b1ecf209be9b25b307d4f01261d7b3bad4"
+  }
+}

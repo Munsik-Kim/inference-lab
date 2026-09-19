@@ -1,0 +1,17 @@
+{
+  "stage": "4B smoke, before DEV/heldout",
+  "attempt": "q-reload-1",
+  "failed_verdict": "Absent/invalid full-output evidence",
+  "observed": {
+    "layer_boundaries": 36,
+    "checks_per_layer": 22,
+    "invalid": 0,
+    "final_model_wrapper_hook": 0
+  },
+  "cause": "Qwen3Model support_torch_compile wrapper does not trigger the ordinary model-level forward hook in this runtime",
+  "correction": "hook actual final RMSNorm module; retain all per-layer and full-vocabulary checks",
+  "changed_recipe": false,
+  "before_source_sha256": "1157d5077139ac256bfa528a314e16e7ce547792a1dc909a6bf565aa1f792cbd",
+  "after_source_sha256": "406207c851ec0692d2a72eb44809d21feaba9002d2e74d5f58db20913fb7c96b",
+  "time": "2026-09-19T14:08:05.008481+00:00"
+}

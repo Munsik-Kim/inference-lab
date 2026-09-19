@@ -1,0 +1,11 @@
+# Attribution
+
+Qwen authors provide the pretrained Qwen3 models, tokenizer and model design. Hugging Face Transformers provides the native implementation and safetensors integration. vLLM provides the serving runtime and Marlin W4A16 execution; LLM Compressor and compressed-tensors provide GPTQ conversion and serialization. These upstream implementations retain their own licenses.
+
+This case implements local artifact validation, a per-layer structure loader, fixed-set down-projection ridge reconstruction, paired evaluation and CPU evidence checks. The aligned MLP slicing and experimental boundary follow [Case 007](../007-interaction-aware-mlp-pruning/README.md); answer-score and full-output-validation conventions follow [Case 006](../006-attention-decision-stability/README.md). Existing WSL-compatible vLLM settings follow [Case 002](../002-bf16-fp8-document-extraction/README.md). Their original files remain unchanged.
+
+Related work: [SparseGPT, Frantar and Alistarh (2023)](https://proceedings.mlr.press/v202/frantar23a.html) studies sparse reconstruction. Fixed grouped deletion followed by ridge fitting of one dense down projection here is not a reproduction of SparseGPT. [GPTQ, Frantar et al.](https://arxiv.org/abs/2210.17323) is the upstream quantization method used by the conversion library, not an algorithm invented in this project.
+
+Implementation references: [vLLM W4A16](https://docs.vllm.ai/en/stable/features/quantization/llm_compressor/int4/), [LLM Compressor W4A16 example](https://docs.vllm.ai/projects/llm-compressor/en/latest/examples/quantization_w4a16/), [Qwen3-0.6B pinned model](https://huggingface.co/Qwen/Qwen3-0.6B/tree/c1899de289a04d12100db370d81485cdf75e47ca), [Qwen3-4B-Instruct-2507 pinned model](https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/tree/cdbee75f17c01a7cc42f958dc650907174af0554). Installed source and file hashes, rather than current examples, control the actual execution.
+
+Codex assisted implementation, debugging, execution, analysis and documentation. No third-party GPU replication or human review of these new results is implied. New repository code follows the [repository license](../../LICENSE); model weights are excluded from the public candidate.

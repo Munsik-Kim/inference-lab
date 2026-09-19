@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT/'tools/showcase'))
 from build import build
 from common import read, source_manifest
 from data import load
+from layout import home, report8_url, C8_REVISION, C8_PATH
 
 
 class Page(HTMLParser):
@@ -104,6 +105,24 @@ class Homepages(unittest.TestCase):
         self.assertEqual(manifest['evidence_revision'],source_manifest(ROOT)['evidence_revision'])
         for case,data in load(ROOT).items():self.assertEqual(read(self.site/f'data/{case}.json'),data)
         self.assertEqual(manifest['independent_scenarios'],{'case007':192,'case006_standard':192,'case006_selected_stress':46})
+
+    def test_case008_is_reachable_in_each_language_without_new_explorer_data(self):
+        for lang in ('en','ko'):
+            for page in ('index','guide'):
+                html=(self.site/lang/(page+'.html')).read_text()
+                self.assertIn('href="'+report8_url(lang)+'"',html)
+                self.assertNotIn('data/case008',html)
+            html=(self.site/lang/'index.html').read_text()
+            self.assertIn('id="case008-report"',html)
+            for i in range(1,9):self.assertIn(f'#case-{i:03}',html)
+        reports=read(self.site/'build_manifest.json')['linked_reports']['case008']
+        self.assertEqual(reports['revision'],C8_REVISION)
+        self.assertEqual(set(reports['files']),{C8_PATH+'/REPORT.md',C8_PATH+'/REPORT.ko.md'})
+        with self.assertRaises(ValueError):report8_url('unknown')
+
+    def test_archive_cannot_silently_drop_an_untranslated_case(self):
+        with self.assertRaisesRegex(ValueError,'Every case needs'):
+            home({},'ko',{},['case001','case002'],['Only one title'],'fixture')
 
 
 if __name__=='__main__':unittest.main()

@@ -60,3 +60,8 @@ OpenAI Codex assisted implementation, local execution, tests, analysis and writi
 The code supports discussions about **model-change evaluation**, **local inference diagnosis** and **reproducible analysis tools and result screens**. A useful starting point is a model boundary, a public input ID and a metric to compare. [Repository issues](https://github.com/Munsik-Kim/inference-lab/issues) provide a public technical-question channel; keep credentials and private customer data out of public reports.
 
 The evidence covers specific models, one device and synthetic tasks. Deployment is **NOT_ASSESSED**. CPU audits check retained scalars; excluded full vectors and independent GPU replication have a separate verification scope in the [reproduction guide](GETTING_STARTED.md).
+
+## Checkpoint build and reconstruction: Case 008
+
+<!-- claims: c008-tracks -->
+Connected GPTQ conversion, packed checkpoint checks and fresh vLLM execution; separately implemented fixed-small-MLP ridge fitting and a per-layer loader. File/resident-weight reductions in Q and squared local error recovery in R are distinct from mixed gold scores and unresolved request speedups. [Structured report](../../cases/008-build-reconstruct-reload/REPORT.md) · [Loader and fitting tour](../../cases/008-build-reconstruct-reload/PORTFOLIO.md).

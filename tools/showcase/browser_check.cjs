@@ -25,10 +25,14 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
     for(const lang of ['ko','en'])for(const c of ['case007','case006']){
       await navigate(new URL(lang+'/'+c+'.html',base).href);
       expect(await ev('document.getElementById("items").options.length')===192,lang+c+' initial 192');
+      expect(await ev('document.querySelectorAll(".study-section").length')===8,'Static study loaded '+lang+c);
+      expect(await ev('[...document.querySelectorAll("#arm option")].every(o=>o.textContent.includes(" · "))'),'Descriptive method names '+lang+c);
       for(const width of [390,768,1280]){
         await send('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:false});await wait(70);
         const dimensions=await ev('({width:innerWidth,scroll:document.documentElement.scrollWidth,labels:[...document.querySelectorAll("input,select")].every(e=>e.labels.length>0)})');
         expect(dimensions.scroll<=dimensions.width+2&&dimensions.labels,lang+c+' '+width+' layout and labels');
+        if(lang==='ko'){await ev('scrollTo(0,0)');const shot=await send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.join(out,c+'-intro-'+width+'.png'),Buffer.from(shot.data,'base64'));}
+        if(lang==='ko'){await ev('document.querySelector(".study-table").scrollIntoView()');const shot=await send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.join(out,c+'-methods-'+width+'.png'),Buffer.from(shot.data,'base64'));await ev('scrollTo(0,0)');}
       }
       await ev('document.getElementById("query").value="not-an-input";document.getElementById("query").dispatchEvent(new Event("input"))');
       expect(await ev('document.getElementById("items").options.length')===0,'Empty filter '+lang+c);
@@ -38,6 +42,16 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
       const id=await ev('document.getElementById("items").value'),hash=await ev('location.hash');
       await send('Page.reload');await wait(350);expect(await ev('document.getElementById("items").value')===id,'Reload ID '+lang+c);
       await navigate(await ev('document.getElementById("language").href'));expect(await ev('document.getElementById("items").value')===id,'Language retains ID '+lang+c);
+      await navigate(new URL(lang+'/'+c+'.html'+hash,base).href);
+      const order=await ev('[...document.querySelectorAll(".study-section")].map(e=>e.id)');
+      expect(JSON.stringify(order)===JSON.stringify(['objective','data','theory','design','validation','results','interpretation','conclusion']),'Eight study sections '+lang+c);
+      await ev('document.querySelector(".study-toc").querySelectorAll("a")[5].click()');await wait(100);
+      expect(await ev('document.getElementById("items").value')===id,'Contents link preserves item '+lang+c);
+      expect(await ev('location.hash')==='#results','Results anchor '+lang+c);
+      await send('Page.reload');await wait(350);
+      expect(await ev('document.getElementById("items").value')===id,'Section reload preserves item '+lang+c);
+      await navigate(await ev('document.getElementById("language").href'));
+      expect(await ev('location.hash')==='#results'&&await ev('document.getElementById("items").value')===id,'Language retains section and item '+lang+c);
       await navigate(new URL(lang+'/'+c+'.html'+hash,base).href);
       // Synthetic XSS probe in page memory only; never written to source or measurements.
       await ev('window.__probe=undefined;window.EVIDENCE.prompts[document.getElementById("items").value].text="<script>window.__probe=1</script>";document.getElementById("items").dispatchEvent(new Event("change"))');
@@ -61,6 +75,7 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
       if(lang==='ko'){
         if(c==='case006')await ev('document.getElementById("readout").value="H_FP32";document.getElementById("readout").dispatchEvent(new Event("change"))');
         // First fixed comparison item; screenshots are not chosen for a dramatic result.
+        await ev('document.getElementById("results").scrollIntoView()');await wait(80);const resultShot=await send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.join(out,c+'-results.png'),Buffer.from(resultShot.data,'base64'));
         await ev('document.getElementById("detail").scrollIntoView()');
         const screenshot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});fs.writeFileSync(path.join(out,c+'.png'),Buffer.from(screenshot.data,'base64'));
       }
@@ -80,7 +95,7 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
     }
     const forbidden=requests.filter(x=>/^https?:/.test(x)&&(u.protocol==='file:'||new URL(x).origin!==u.origin));
     expect(errors.length===0,'No console exceptions/errors');expect(responseErrors.length===0,'No HTTP resource failures');expect(forbidden.length===0,'No external runtime requests');
-    fs.writeFileSync(path.join(out,'browser.json'),JSON.stringify({status:'PASS',browser:version.Browser,node:process.version,os:process.platform,protocol:u.protocol,method:'existing Edge, CDP, fresh temporary profile',viewports:[390,768,1280],checks,console_errors:errors,external_requests:forbidden,http_resource_failures:responseErrors,screenshots:['case007.png','case006.png'],real_ipad:'NOT_TESTED'},null,2));
+    fs.writeFileSync(path.join(out,'browser.json'),JSON.stringify({status:'PASS',browser:version.Browser,node:process.version,os:process.platform,protocol:u.protocol,method:'existing Edge, CDP, fresh temporary profile',viewports:[390,768,1280],checks,console_errors:errors,external_requests:forbidden,http_resource_failures:responseErrors,screenshots:fs.readdirSync(out).filter(name=>name.endsWith('.png')).sort(),real_ipad:'NOT_TESTED'},null,2));
     console.log('PASS '+checks.length+' browser assertions');
   }catch(e){fs.writeFileSync(path.join(out,'failure.json'),JSON.stringify({status:'FAIL',error:e.message,checks,console_errors:errors,http_resource_failures:responseErrors},null,2));throw e;}
   finally{if(send)try{await send('Browser.close');}catch{}if(ws)ws.close();}

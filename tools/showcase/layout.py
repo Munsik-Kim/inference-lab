@@ -1,6 +1,16 @@
 """Presentation-only layouts. Selection diagrams use retained group IDs."""
 from html import escape
 
+C8_PATH = 'cases/008-build-reconstruct-reload'
+C8_REVISION = '9bc8b8fced8dfd5147f9bfdc67564eda04670810'
+
+
+def report8_url(lang: str) -> str:
+    if lang not in ('en', 'ko'):
+        raise ValueError('Unsupported report language')
+    name = 'REPORT.ko.md' if lang == 'ko' else 'REPORT.md'
+    return f'https://github.com/Munsik-Kim/inference-lab/blob/{C8_REVISION}/{C8_PATH}/{name}'
+
 
 def anchor(url: str, label: str, cls: str = '') -> str:
     return f'<a class="{cls}" href="{escape(url, quote=True)}">{escape(label)}</a>'
@@ -16,6 +26,8 @@ def acronym_line(line: str) -> str:
 
 def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
          revision: str) -> str:
+    if len(case_paths) != len(names):
+        raise ValueError('Every case needs a translated archive title')
     docs = f'https://github.com/Munsik-Kim/inference-lab/blob/main/docs/{lang}/'
     source = f'https://github.com/Munsik-Kim/inference-lab/blob/{revision}/'
     text = lambda key: escape(t[key])
@@ -77,6 +89,10 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
             out += '<p class="scope">'+text('homeLimit6')+'</p>'
         implementation = 'cases/007-interaction-aware-mlp-pruning/src/surgery.py' if is7 else 'cases/006-attention-decision-stability/src/intervention.py'
         out += '<div class="card-bottom">'+anchor(case+'.html',t['open']+' →','text-link')+anchor(source+implementation,t['projectSource'],'quiet-link')+anchor(docs+'CASEBOOK.md#case-00'+n,t['fullStudy'],'quiet-link')+'</div></article>'
+    out += '<article id="case008-report" class="card study-card"><div class="card-heading"><span class="case-number">008</span><span class="category">'+text('category8')+'</span></div>'
+    out += '<h3>'+anchor(report8_url(lang),t['homeTitle8'])+'</h3><p class="card-intro">'+text('homeIntro8')+'</p><p class="project-tech">'+text('projectTech8')+'</p>'
+    out += '<div class="result-box"><p class="result-label">'+text('trackQ8')+'</p><p>'+text('trackR8')+'</p></div><p class="card-limit">'+text('projectResult8')+'</p>'
+    out += '<div class="card-bottom">'+anchor(report8_url(lang),t['report8']+' →','text-link')+anchor(f'https://github.com/Munsik-Kim/inference-lab/blob/{C8_REVISION}/tools/modelpack/__main__.py',t['projectSource'],'quiet-link')+'</div></article>'
     out += '</div><aside class="diagram project-diagram"><div class="diagram-description"><p class="eyebrow">CASE 007 · 4 / 16 · 25%</p><h3>'+text('diagramSection')+'</h3><p>'+text('diagramCaption')+'</p>'+anchor(source+'cases/007-interaction-aware-mlp-pruning/results/raw/selection.json',t['recordedSelection'],'text-link')+'</div><div class="diagram-data">'+diagram+'</div></aside></section>'
     reading = '<section class="reading-strip"><div><p class="eyebrow">START HERE</p><h2>'+text('readingTitle')+'</h2><p>'+text('readingIntro')+'</p></div><div class="reading-links">'
     for url, key in [(docs+'START_HERE.md','beginner'),(docs+'GLOSSARY.md','glossary'),('guide.html','guide')]:

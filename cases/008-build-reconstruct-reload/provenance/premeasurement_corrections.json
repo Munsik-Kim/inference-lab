@@ -1,0 +1,45 @@
+{
+  "new_model_evaluation_runs": 0,
+  "phase": "premeasurement instrumentation",
+  "Q_build": {
+    "environment": "isolated venv",
+    "llmcompressor": "0.13.0",
+    "torch": "2.13.0",
+    "transformers": "5.14.1",
+    "compressed-tensors": "0.18.0",
+    "inherited_vllm": "not used in build environment; dependency mismatch explicitly isolated"
+  },
+  "Q_serve": {
+    "vllm": "0.29.0",
+    "transformers": "5.17.0",
+    "compressed-tensors": "0.17.0",
+    "changed": false
+  },
+  "attempts": [
+    {
+      "name": "q-smoke-runtime",
+      "outcome": "BLOCKED_INITIALIZATION",
+      "cause": "default V2 runner requires unavailable UVA on this WSL setup",
+      "correction": "reuse Case002 VLLM_USE_V2_MODEL_RUNNER=0"
+    },
+    {
+      "name": "q-smoke-runtime-v1runner",
+      "outcome": "BLOCKED_INITIALIZATION",
+      "cause": "default FlashInfer sampler reports unsupported GPU during initialization",
+      "correction": "reuse Case002 VLLM_USE_FLASHINFER_SAMPLER=0 and explicit fixed runtime flags"
+    },
+    {
+      "name": "q-smoke-runtime-case002flags",
+      "outcome": "BLOCKED_INSTRUMENTATION",
+      "cause": "vLLM rejected callable RPC serialization",
+      "correction": "named worker extension RPC; no insecure pickle fallback"
+    },
+    {
+      "name": "q-smoke-runtime-namedrpc",
+      "outcome": "BLOCKED_INSTRUMENTATION",
+      "cause": "shell edit used unavailable python command; old code ran and repeated serialization failure",
+      "correction": "python3 edit verified before launching new attempt"
+    }
+  ],
+  "scope": "Only fixture support checks; no Q 4B calibration or heldout results observed."
+}
