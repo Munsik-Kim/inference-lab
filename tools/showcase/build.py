@@ -7,7 +7,7 @@ from string import Template
 import hashlib
 from common import ROOT, C6, C7, SUP, json_text, read, new_output, require, sha, script_json, source_manifest
 from data import load, source_url
-from layout import home, language_index
+from layout import home, language_index, report8_url, C8_PATH, C8_REVISION
 from study import render as study_render, method_labels
 
 def link(url, text, cls=''):
@@ -46,8 +46,8 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         files['data/'+case+'.json'] = (json_text(data)+'\n').encode()
     files['index.html'] = language_index().encode()
     case_paths = sorted(p.parent.relative_to(root).as_posix() for p in (root/'cases').glob('*/README.md'))
-    names = {'en':['Execution compatibility','BF16 / FP8 extraction','Softmax approximation','Complete attention cost','Precision–cost settings','Answer decisions and ties','Structured MLP pruning'],
-             'ko':['실행 호환성','BF16 / FP8 문서 추출','Softmax 수치 근사','Attention 전체 호출 비용','정밀도와 비용의 절충','답변 선택과 동률','구조화 MLP 압축']}
+    names = {'en':['Execution compatibility','BF16 / FP8 extraction','Softmax approximation','Complete attention cost','Precision–cost settings','Answer decisions and ties','Structured MLP pruning','Model build, reload and MLP reconstruction'],
+             'ko':['실행 호환성','BF16 / FP8 문서 추출','Softmax 수치 근사','Attention 전체 호출 비용','정밀도와 비용의 절충','답변 선택과 동률','구조화 MLP 압축','모델 제작·재실행과 MLP 출력 복구']}
     for lang,t in languages.items():
         t['methodLabels']=method_labels(lang)
         files[f'assets/{lang}.js'] = ('window.TEXT = '+script_json(t)+';\n').encode()
@@ -62,6 +62,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 body+=link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/GETTING_STARTED.md',t['guide'])
                 body+='<div class="actions">'+link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/START_HERE.md',t['beginner'])+' · '+link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/GLOSSARY.md',t['glossary'])+'</div>'
                 body+='<div class="actions">'+link(source_url(rev,C7+'/src/surgery.py'),t['code'])+' · '+link(source_url(rev,C6+'/src/intervention.py'),t['code'])+'</div>'
+                body+='<h2>Case 008</h2><p>'+escape(t['homeIntro8'])+'</p>'+link(report8_url(lang),t['report8'])
             else:
                 body=explorer_body(t,page,study_render(root,payloads[page],lang))
                 path=C7 if page=='case007' else C6
@@ -81,6 +82,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     identity=hashlib.sha256(json_text(presentation_hashes).encode()).hexdigest()
     report={'schema':1,'build_base_path':base_path,'url_policy':'relative resources; file:// and hosted subpath use the same bytes',
             'evidence_revision':rev,'source_manifest_sha256':sha(root/'presentation/source_manifest.json'),
+            'linked_reports':{'case008':{'revision':C8_REVISION,'files':{C8_PATH+'/'+name:sha(root/C8_PATH/name) for name in ('REPORT.md','REPORT.ko.md')}}},
             'presentation_identity':identity,'presentation_files':presentation_hashes,
             'record_counts':{k:len(v['records']) for k,v in payloads.items()},
             'independent_scenarios':{'case007':192,'case006_standard':192,'case006_selected_stress':46},

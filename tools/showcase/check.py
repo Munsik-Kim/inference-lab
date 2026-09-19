@@ -9,6 +9,7 @@ from urllib.parse import unquote, urlsplit
 from common import ROOT, read, require, sha, json_text, new_output
 from data import load
 from study import SECTION_IDS, result_html
+from layout import report8_url, C8_PATH, C8_REVISION
 
 EXPECTED = {'index.html','en/index.html','ko/index.html','en/guide.html','ko/guide.html','en/case006.html','ko/case006.html',
             'en/case007.html','ko/case007.html','assets/icon.svg','assets/app.js','assets/state.js','assets/style.css','assets/study.css',
@@ -55,6 +56,14 @@ def check(root: Path, site: Path) -> dict:
             positions=[html.find('id="'+section+'"') for section in (*SECTION_IDS,'explorer')]
             require(min(positions)>=0 and positions==sorted(positions), 'Study reading order/coverage')
             require(result_html(data,lang) in html, 'Study table values/scope differ from retained evidence')
+    linked=m['linked_reports']['case008']
+    require(linked['revision']==C8_REVISION,'Wrong Case008 report revision')
+    require(linked['files']=={C8_PATH+'/'+name:sha(root/C8_PATH/name) for name in ('REPORT.md','REPORT.ko.md')},'Changed linked report')
+    for lang in ('en','ko'):
+        home=(site/lang/'index.html').read_text()
+        require('id="case008-report"' in home and '#case-008' in home,'Missing Case008 home/archive entry')
+        for page in ('index','guide'):
+            require('href="'+report8_url(lang)+'"' in (site/lang/(page+'.html')).read_text(),'Missing same-language Case008 report link')
     n=0
     for name,path in paths.items():
         if path.suffix!='.html':continue
