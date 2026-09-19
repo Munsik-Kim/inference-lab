@@ -2,47 +2,68 @@
 
 [English](README.md) | 한국어
 
-Inference Lab은 AI 모델을 더 가볍고 빠르게 바꾸려 할 때 실행 방식, 계산 시간, 답변이 어떻게 달라지는지 실험하는 프로젝트입니다. RTX 5080에서 모델을 바꾸고 비교하는 도구를 만들고, 입력별 결과를 살펴볼 수 있도록 기록했습니다. 요약에서 개별 예시, 코드, 재현 안내로 이어지는 경로를 제공합니다.
+**모델 압축 · GPU 성능 측정 · 답변 비교**
 
-[처음 보는 분](docs/ko/START_HERE.md) · [저장된 결과 보기](https://munsik-kim.github.io/inference-lab/ko/index.html) · [구현 살펴보기](docs/ko/PORTFOLIO.md)
+PyTorch 모델의 계산과 구조를 바꾸고, GPU에서 실행 시간·메모리·답변 변화를 비교하는 도구를 구현했습니다. RTX 5080 실험의 재현 코드와 입력별 결과 화면을 함께 제공합니다.
 
-## 세 가지 질문
+**Python · PyTorch · Transformers · vLLM · NumPy**
 
-1. **실제로 실행되는가?** 측정한 GPU와 소프트웨어에서 모델이 작동하는 실행 경로를 확인합니다.
-2. **정말 빨라지는가?** 핵심 연산, 데이터 준비까지 포함한 호출, 모델 전체의 시간을 따로 측정합니다.
-3. **답변은 어떻게 달라지는가?** 전체 정답률과 함께, 같은 질문에서 정답에 주는 확률과 실제 선택을 비교합니다.
+[구현 기능](#capabilities) · [기술스택](#tech-stack) · [프로젝트 보기](#projects)
 
-## 질문이 발전해 온 과정
+<a id="capabilities"></a>
+## 구현 기능
 
-실행(001) → 숫자를 가볍게 표현하기(002–003) → 연산 비용(004–005) → 모델 답변(006) → 실제 구조 압축(007).
+### 모델 연산 교체와 구조 압축
 
-![실행, 변경, 측정, 비교, 검증으로 이어지는 읽기 순서](docs/assets/inference-reading-path.svg)
+모델의 특정 연산을 교체하고, 채널을 선택해 실제 행렬 크기를 줄입니다. 변경한 계산의 대응과 원래 모듈로의 복원을 테스트합니다.
 
-*프로젝트를 읽는 개념적 순서입니다. 각 사례의 모델·입력·조건은 다르며, 화살표는 하나의 연속 실험에서 얻은 결과를 뜻하지 않습니다.*
+Python · PyTorch · Transformers. [Attention 교체 코드](cases/006-attention-decision-stability/src/intervention.py) · [행렬 축소와 테스트](cases/007-interaction-aware-mlp-pruning/tests/test_core.py)
 
-## 직접 볼 수 있는 대표 사례
+### GPU 추론 성능과 답변 비교
 
-### Case 007 — AI 내부 계산의 어느 부분을 제거할 수 있을까?
+같은 입력에서 지연시간·GPU 메모리·정답 점수를 비교합니다. 부분 연산과 모델 전체의 실행 비용을 나누어 측정합니다.
+
+vLLM · CUDA 실행 환경 · NVML · NumPy. [요청·메모리 측정 코드](cases/002-bf16-fp8-document-extraction/scripts/run.py) · [시간 측정 경계](cases/004-low-precision-attention-break-even/src/timing.py)
+
+### 재계산 도구와 결과 탐색기
+
+공개 기록을 재계산하는 Python 도구와 입력별 결과를 보는 웹 화면을 만듭니다. 자동 검사로 표시 데이터와 원자료의 연결을 확인합니다.
+
+Python · JavaScript · GitHub Actions · GitHub Pages. [CPU 선택기 재계산](tools/showcase/replay_selection.py) · [표시 계층 검사와 테스트](tests/showcase/test_showcase.py)
+
+<a id="tech-stack"></a>
+## 기술스택별 작업
+
+| 작업 | 기술과 구현 |
+|---|---|
+| 모델 구현·수정 | **Python / PyTorch / Transformers** — 모델 객체 검사, 연산 교체, 행렬 축소, shape·dtype 검사를 구현했습니다. |
+| GPU 추론 통합 | **vLLM / PyTorch SDPA / SageAttention / CUDA 실행 환경 / NVML** — 공개 backend 연결, 로컬 서버 실행, 실행 경로·자원 사용 기록을 구현했습니다. |
+| 수치 분석·그룹 선택 | **NumPy / Matplotlib / 조합 탐색 / 쌍별 통계** — 기여 행렬과 제거 그룹을 구하고, 오차·점수·불확실성을 분석했습니다. |
+| 재현·자동 검사 | **Git / unittest / SHA256 / GitHub Actions** — 파일 보존과 입력 짝짓기 검사, 스칼라 재계산, 문서·표시 계층 CI를 구현했습니다. |
+| 결과 화면 | **HTML / CSS / JavaScript / GitHub Pages** — 필터·입력별 직접 링크·소스 탐색을 갖춘 한·영 정적 화면을 만들었습니다. |
+
+[구현 코드·관련 테스트 읽기](docs/ko/PORTFOLIO.md#code-tour). CUDA는 GPU 실행·측정에, 공개 커널은 연산 교체에 사용했습니다.
+
+<a id="projects"></a>
+## 대표 프로젝트
+
+### Case 007 — 채널 선택부터 실제 모델 구조 축소까지
 
 <!-- claims: c007-transfer c007-quality -->
-MLP는 모델 안에서 정보를 변환하는 큰 계산 블록입니다. 압축 도구는 한 블록의 채널을 16그룹으로 나눠, 각 그룹을 따로 평가하는 선택법과 그룹 사이의 상호작용도 보는 선택법을 비교합니다. 선택한 뒤에는 `gate_proj`, `up_proj`, `down_proj` 행렬을 잘라 실제로 작은 블록을 만듭니다.
+MLP는 모델 안에서 정보를 변환하는 계산 블록입니다. 채널 그룹을 선택하고 gate/up/down 행렬을 잘라 작은 모듈을 만드는 도구를 구현했습니다. 사용 기술은 **PyTorch · NumPy · 구조화 가지치기(pruning)**입니다.
 
-그룹의 25%를 제거할 때 상호작용을 고려한 선택은 선택에 쓰지 않은 입력 192개에서 원래 블록 출력에 조금 더 가까웠습니다. 50%에서는 두 방법이 같은 구조를 골랐습니다. 축소한 **한 층 MLP**는 1.176–1.412배 빨랐지만, 전체 모델 측정에서는 가속이 뚜렷하지 않았습니다. 원래 모델을 가깝게 보존하는 것과 정답에 더 좋은 확률 점수를 주는 것도 다른 결과였습니다.
+한 층 MLP 그룹의 25% 삭제에서는 상호작용 선택의 국소 오차가 미관측 입력 192개에서 소폭 낮았고, 50%에서는 두 방법이 같은 구조를 골랐습니다. 축소한 **한 층 MLP**는 1.176–1.412배 빨랐으며, 질문을 처음 처리하는 prefill의 전체 모델 가속은 확인되지 않았습니다. 기준 모델을 가깝게 보존하는 것과 정답에 더 좋은 확률을 주는 것은 다른 결과였습니다.
 
-기술명: Qwen3-0.6B · SwiGLU · INDEPENDENT / PAIRWISE · 구조화 가지치기(pruning).
+[결과 탐색](https://munsik-kim.github.io/inference-lab/ko/case007.html) · [행렬 축소 코드](cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [상세 연구](docs/ko/CASEBOOK.md#case-007)
 
-[결과와 정확한 지표](docs/ko/CASEBOOK.md#case-007) · [행렬 축소 코드](cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [탐색기 열기](https://munsik-kim.github.io/inference-lab/ko/case007.html)
-
-### Case 006 — 전체 정답률이 비슷해도 개별 답은 달라질까?
+### Case 006 — 모델의 계산을 바꾸고 답변 변화를 추적하는 도구
 
 <!-- claims: c006-native c006-readout c006-limits -->
-입력의 정보를 조합하는 attention 연산 한 곳의 숫자 정밀도를 줄이고, 같은 질문에서 네 가지 보기 중 고른 답을 변경 전후로 추적하는 도구를 만들었습니다. 새로 맞힌 답, 기준선이 맞혔지만 후보가 틀린 답, 다른 오답으로 바뀐 경우를 볼 수 있습니다.
+한 층 attention을 교체하고 같은 질문의 정답 확률·선택·최고점 동률을 비교하는 도구를 구현했습니다. 사용 기술은 **PyTorch · Transformers · SageAttention**입니다.
 
-두 저정밀 설정은 표준 입력 **192개 중 5개**, **192개 중 8개**의 선택을 바꿨습니다. 이 집합에서는 이전에 맞힌 답을 잃지 않았지만, 별도로 선정한 스트레스 입력에서는 그런 경우가 있었습니다. 같은 입력을 다시 살핀 후속 진단에서는 최고점 동률과 내부 상태를 마지막 단어 점수로 바꾸는 출력 계산을 조사했습니다. 한 모델의 한 층을 합성 질문으로 비교한 기록입니다.
+두 설정은 표준 192개 중 5개, 192개 중 8개의 선택을 바꿨습니다. 이 집합에서는 기준선의 정답을 잃지 않았지만 별도로 선정한 스트레스 집합에서는 정답 손실이 있었습니다. 같은 입력의 사후 진단은 마지막 어휘 점수 계산의 정밀도를 살폈습니다. 한 모델의 한 층을 합성 질문으로 비교한 기록입니다.
 
-기술명: BF16 기준선 · A_PUBLIC / V4 · 선택 변경(decision flip) · 출력 계산 민감성(readout sensitivity).
-
-[결과·한계·출력 계산 진단](docs/ko/CASEBOOK.md#case-006) · [한정된 연산을 바꾸는 코드](cases/006-attention-decision-stability/src/intervention.py) · [탐색기 열기](https://munsik-kim.github.io/inference-lab/ko/case006.html)
+[결과 탐색](https://munsik-kim.github.io/inference-lab/ko/case006.html) · [Attention 교체 코드](cases/006-attention-decision-stability/src/intervention.py) · [상세 연구·추가 진단](docs/ko/CASEBOOK.md#case-006)
 
 ## 일곱 질문과 구현물
 

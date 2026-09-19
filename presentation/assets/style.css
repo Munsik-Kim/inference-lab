@@ -283,3 +283,56 @@ body[data-case="guide"] main>h1 { max-width: 650px; }
 @media(prefers-reduced-motion:reduce) {
   *, *::before, *::after { transition: none!important; scroll-behavior: auto!important; }
 }
+/* Capabilities-first home only; explorer and guide sizing remains unchanged. */
+body[data-case="index"] .cap-hero { max-width: 850px; padding: 10px 0 22px; }
+body[data-case="index"] .cap-hero .eyebrow { margin-bottom: 12px; }
+body[data-case="index"] .cap-hero h1 { font-size: clamp(2rem,3.4vw,2.65rem); margin: 0 0 15px; }
+body[data-case="index"] .cap-hero h1 span { display: block; }
+body[data-case="index"] .cap-hero .lede { max-width: 800px; font-size: 1rem; line-height: 1.8; margin-bottom: 13px; }
+body[data-case="index"] .core-tech { color: var(--ink); font-size: .87rem; font-weight: 600; margin: 10px 0; }
+body[data-case="index"] .home-jumps { margin: 14px 0 0; gap: 26px; }
+body[data-case="index"] :is(#capabilities,#tech-stack,#projects,#studies) { scroll-margin-top: 120px; }
+body[data-case="index"] .cap-section { padding: 12px 0 42px; }
+body[data-case="index"] .cap-section h2 { font-size: 1.3rem; margin-bottom: 18px; }
+body[data-case="index"] .cap-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; }
+body[data-case="index"] .cap-card { display: flex; flex-direction: column; background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 23px; min-width: 0; }
+body[data-case="index"] .cap-card .case-number { align-self: start; }
+body[data-case="index"] .cap-card h3 { font-size: 1.09rem; margin: 13px 0 9px; line-height: 1.45; text-wrap: initial; }
+body[data-case="index"] .cap-card>p { font-size: 1rem; color: var(--muted); line-height: 1.7; margin: 0 0 14px; }
+body[data-case="index"] .cap-card .cap-tech { font-size: .77rem; color: var(--ink); margin-top: auto; }
+body[data-case="index"] .cap-links { display: flex; flex-wrap: wrap; gap: 2px 13px; border-top: 1px solid var(--border); padding-top: 8px; }
+body[data-case="index"] .cap-links a { font-size: .8rem; padding: 6px 0; }
+body[data-case="index"] .stack-section { padding: 35px 0 42px; border-top: 1px solid var(--border); }
+body[data-case="index"] .stack-section h2 { font-size: 1.5rem; }
+body[data-case="index"] .stack-list { margin: 0 0 18px; }
+body[data-case="index"] .stack-list>div { display: grid; grid-template-columns: 220px 1fr; gap: 30px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+body[data-case="index"] .stack-list dt { font-weight: 650; font-size: .96rem; }
+body[data-case="index"] .stack-list dd { margin: 0; font-size: 1rem; color: var(--muted); }
+body[data-case="index"] .stack-list strong { font-size: .85rem; font-weight: 600; color: var(--ink); }
+body[data-case="index"] .stack-list p { margin: 3px 0 0; }
+body[data-case="index"] .home-anchor { display: block; }
+body[data-case="index"] .project-tech { color: var(--ink); font-size: .78rem; margin-top: -10px; margin-bottom: 18px; }
+body[data-case="index"] .card-limit { font-size: .9rem; }
+body[data-case="index"] .project-diagram { display: grid; grid-template-columns: 1fr 1.35fr; gap: 40px; margin-top: 24px; box-shadow: none; }
+body[data-case="index"] .diagram-description { padding: 6px 0; }
+body[data-case="index"] .diagram-description h3 { margin: 0 0 12px; font-size: 1.2rem; }
+body[data-case="index"] .diagram-description>p:not(.eyebrow) { font-size: .92rem; color: var(--muted); }
+body[data-case="index"] .diagram-data { min-width: 0; }
+body[data-case="index"] .diagram-data .group-axis { margin-top: 0; }
+@media(max-width:1000px) {
+  body[data-case="index"] .cap-grid { grid-template-columns: 1fr; }
+  body[data-case="index"] .cap-card { padding: 24px; }
+  body[data-case="index"] .cap-links a { min-height: 44px; display: inline-flex; align-items: center; }
+  body[data-case="index"] .project-diagram { max-width: none; grid-template-columns: 1fr; gap: 20px; }
+}
+@media(max-width:540px) {
+  body[data-case="index"] .cap-hero { padding-top: 0; }
+  body[data-case="index"] .cap-hero h1 { font-size: 2rem; }
+  body[data-case="index"] .cap-hero .lede { font-size: 1rem; }
+  body[data-case="index"] .home-jumps { gap: 22px; }
+  body[data-case="index"] .home-jumps a { min-height: 44px; display: inline-flex; align-items: center; }
+  body[data-case="index"] .cap-grid { gap: 16px; }
+  body[data-case="index"] .cap-card { padding: 22px 20px; }
+  body[data-case="index"] .stack-list>div { grid-template-columns: 1fr; gap: 7px; }
+  body[data-case="index"] .stack-section { padding-top: 28px; }
+}

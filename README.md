@@ -2,47 +2,68 @@
 
 English | [한국어](README.ko.md)
 
-Inference Lab tests what changes when we try to make AI models lighter or faster: how they run, how long their calculations take, and which answers they choose. Local experiments on an RTX 5080 pair tools for changing and comparing models with recorded results you can inspect. Each case connects a summary to individual examples, code and reproduction instructions.
+**Model compression · GPU measurement · Answer comparison**
 
-[New here?](docs/en/START_HERE.md) · [Explore recorded results](https://munsik-kim.github.io/inference-lab/en/index.html) · [See what was built](docs/en/PORTFOLIO.md)
+Inference Lab implements tools to change PyTorch model operations and structure, then compare GPU runtime, memory use and answer changes. Reproducible code and item-level result explorers connect the implementation to recorded RTX 5080 experiments.
 
-## Three questions
+**Python · PyTorch · Transformers · vLLM · NumPy**
 
-1. **Does it run?** Check whether the model follows a working execution path on the tested GPU and software.
-2. **Is it actually faster?** Measure the core operation, the call including data preparation, and the whole model separately.
-3. **What happens to the answers?** Compare the probability assigned to the correct answer and the choice made for each question, alongside overall accuracy.
+[Capabilities](#capabilities) · [Tech stack](#tech-stack) · [Projects](#projects)
 
-## How the questions developed
+<a id="capabilities"></a>
+## Capabilities
 
-Execution (001) → smaller number formats (002–003) → operation costs (004–005) → model answers (006) → smaller model structure (007).
+### Model modification and structural compression
 
-![Reading route: run, change, measure, compare, verify](docs/assets/inference-reading-path.svg)
+Replace selected model operations and build smaller MLP modules by slicing aligned weight matrices. Check the computation and restore the original module.
 
-*This is a conceptual reading route. The cases have different models, inputs and protocols; the arrows are not measured results from one continuous experiment.*
+Python · PyTorch · Transformers. [Attention adapter](cases/006-attention-decision-stability/src/intervention.py) · [Matrix slicing and tests](cases/007-interaction-aware-mlp-pruning/tests/test_core.py)
 
-## Two examples to explore
+### GPU inference measurement and output evaluation
 
-### Case 007 — Which parts of a calculation can we remove?
+Compare latency, GPU memory and answer scores on matched inputs. Measure individual operations and complete model calls at separate boundaries.
+
+vLLM · CUDA runtime · NVML · NumPy. [Request and memory runner](cases/002-bf16-fp8-document-extraction/scripts/run.py) · [Timing boundaries](cases/004-low-precision-attention-break-even/src/timing.py)
+
+### Reproducible analysis and result explorers
+
+Build Python tools for replaying recorded calculations and web interfaces for inspecting individual results. Automated checks link the displays to their sources.
+
+Python · JavaScript · GitHub Actions · GitHub Pages. [CPU selector replay](tools/showcase/replay_selection.py) · [Display checks and tests](tests/showcase/test_showcase.py)
+
+<a id="tech-stack"></a>
+## Tech stack in use
+
+| Work | Technologies and implementation |
+|---|---|
+| Model implementation | **Python / PyTorch / Transformers** — Inspect model objects; replace operations; slice matrices; check shapes and dtypes. |
+| GPU inference integration | **vLLM / PyTorch SDPA / SageAttention / CUDA runtime / NVML** — Connect public backends, run a local server and record execution routes and resource use. |
+| Numerical analysis and selection | **NumPy / Matplotlib / combinatorial search / paired statistics** — Build contribution matrices, select groups and analyze errors, scores and uncertainty. |
+| Reproduction and checks | **Git / unittest / SHA256 / GitHub Actions** — Check preserved files and input pairing; recalculate scalars; run documentation and display CI. |
+| Result interfaces | **HTML / CSS / JavaScript / GitHub Pages** — Build bilingual static explorers with filters, item links and source navigation. |
+
+[Read the implementation and related tests](docs/en/PORTFOLIO.md#code-tour). CUDA supports execution and measurement; public kernels supply the replaced operations.
+
+<a id="projects"></a>
+## Selected projects
+
+### Case 007 — From channel selection to a smaller model block
 
 <!-- claims: c007-transfer c007-quality -->
-An MLP is a large block that transforms information inside the model. The compression tool divides one block into 16 channel groups and compares selecting groups individually with selecting them using their interactions. It then cuts the `gate_proj`, `up_proj` and `down_proj` matrices to build a smaller block.
+An MLP is a block that transforms information inside the model. The selector and weight-slicing adapter turn chosen channel groups into a physically smaller module. Built with **PyTorch · NumPy · structured pruning**.
 
-With 25% of groups removed, interaction-aware selection kept the block slightly closer to its original output on 192 inputs unused for selection. At 50%, both methods chose the same structure. The smaller **one-layer MLP** ran 1.176–1.412× faster; whole-model timings did not establish a speedup. Staying closer to the original model also differed from giving the correct answer the best probability score.
+At 25% removal of one MLP's groups, interaction-aware selection slightly reduced local error on 192 held-out inputs; both methods chose the same structure at 50%. The smaller **one-layer MLP** ran 1.176–1.412× faster, while whole-model prefill—the initial processing of a prompt—did not establish a speedup. Closer preservation of the original model differed from assigning the best probability to the correct answer.
 
-Technical terms: Qwen3-0.6B · SwiGLU · INDEPENDENT / PAIRWISE · structured pruning.
+[Explore results](https://munsik-kim.github.io/inference-lab/en/case007.html) · [Matrix-slicing code](cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [Detailed study](docs/en/CASEBOOK.md#case-007)
 
-[Results and exact metrics](docs/en/CASEBOOK.md#case-007) · [Matrix-slicing code](cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [Open the explorer](https://munsik-kim.github.io/inference-lab/en/case007.html)
-
-### Case 006 — Can similar accuracy hide different answers?
+### Case 006 — Model interventions and answer-by-answer comparisons
 
 <!-- claims: c006-native c006-readout c006-limits -->
-A comparison tool replaces one attention operation—the calculation that combines information from the input—with lower-precision arithmetic. It tracks the choice among four answers to the same question before and after the change. It shows newly correct answers, lost correct answers and changes between wrong answers.
+A one-layer attention adapter and paired evaluation tools compare answer probabilities, choice transitions and exact top-score ties on the same question. Built with **PyTorch · Transformers · SageAttention**.
 
-Two low-precision settings changed **5 of 192** and **8 of 192** standard-set choices. Neither lost a previously correct answer in that set; a separate selected stress set did. A follow-up on the same inputs examined equal top scores and the final calculation that turns internal states into word scores. These records describe one layer of one model on synthetic questions.
+The two settings changed 5 of 192 and 8 of 192 standard-set choices. Neither lost a previously correct answer in that set; a separate selected stress set did. A post-hoc diagnostic on the same inputs examined the precision of the final vocabulary-score calculation. These records cover one layer of one model on synthetic questions.
 
-Technical terms: BF16 baseline · A_PUBLIC / V4 · decision flip · readout sensitivity.
-
-[Results, limitations and readout diagnostic](docs/en/CASEBOOK.md#case-006) · [Scoped intervention code](cases/006-attention-decision-stability/src/intervention.py) · [Open the explorers](https://munsik-kim.github.io/inference-lab/en/case006.html)
+[Explore results](https://munsik-kim.github.io/inference-lab/en/case006.html) · [Attention adapter](cases/006-attention-decision-stability/src/intervention.py) · [Detailed study and diagnostic](docs/en/CASEBOOK.md#case-006)
 
 ## Seven questions, with working tools and recorded outcomes
 

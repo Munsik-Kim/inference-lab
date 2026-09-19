@@ -68,6 +68,8 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 scripts=f'<script defer src="../assets/{lang}.js"></script><script defer src="../data/{page}.js"></script><script defer src="../assets/state.js"></script><script defer src="../assets/app.js"></script>'
             body+=f'<details class="provenance"><summary>{t["evidence"]}</summary><p class="small">{t["evidence"]}: <code>{rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p></details>'
             navigation = ''.join('<a'+(' aria-current="page"' if page==target else '')+' href="'+target+'.html">'+escape(label)+'</a>' for target,label in [('case007','Case 007'),('case006','Case 006'),('guide',t['navGuide'])])
+            if page == 'index':
+                navigation = ''.join(link('#'+target,t[key]) for target,key in [('capabilities','navCapabilities'),('tech-stack','navStack'),('projects','navProjects')])
             html=template.substitute(lang=lang,title=t['brand'] if page=='index' else t['guide'] if page=='guide' else t['case007' if page=='case007' else 'case006'],navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=t['language'],body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=source_url(rev,C7+'/NOTICE.md'),scripts=scripts)
             files[f'{lang}/{page}.html']=html.encode()
     # Explicit file set: no recursive copy of repository data, caches or archives.
