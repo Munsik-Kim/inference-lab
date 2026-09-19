@@ -4,7 +4,7 @@ English | [한국어](README.ko.md)
 
 Inference Lab tests what changes when we try to make AI models lighter or faster: how they run, how long their calculations take, and which answers they choose. Local experiments on an RTX 5080 pair tools for changing and comparing models with recorded results you can inspect. Each case connects a summary to individual examples, code and reproduction instructions.
 
-[New here?](docs/en/START_HERE.md) · [Explore recorded results](docs/en/GETTING_STARTED.md#offline-explorers) · [See what was built](docs/en/PORTFOLIO.md)
+[New here?](docs/en/START_HERE.md) · [Explore recorded results](https://munsik-kim.github.io/inference-lab/en/index.html) · [See what was built](docs/en/PORTFOLIO.md)
 
 ## Three questions
 
@@ -31,7 +31,7 @@ With 25% of groups removed, interaction-aware selection kept the block slightly 
 
 Technical terms: Qwen3-0.6B · SwiGLU · INDEPENDENT / PAIRWISE · structured pruning.
 
-[Results and exact metrics](docs/en/CASEBOOK.md#case-007) · [Matrix-slicing code](cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [Open the explorer](docs/en/GETTING_STARTED.md#case007-explorer)
+[Results and exact metrics](docs/en/CASEBOOK.md#case-007) · [Matrix-slicing code](cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [Open the explorer](https://munsik-kim.github.io/inference-lab/en/case007.html)
 
 ### Case 006 — Can similar accuracy hide different answers?
 
@@ -42,7 +42,7 @@ Two low-precision settings changed **5 of 192** and **8 of 192** standard-set ch
 
 Technical terms: BF16 baseline · A_PUBLIC / V4 · decision flip · readout sensitivity.
 
-[Results, limitations and readout diagnostic](docs/en/CASEBOOK.md#case-006) · [Scoped intervention code](cases/006-attention-decision-stability/src/intervention.py) · [Open the explorers](docs/en/GETTING_STARTED.md#offline-explorers)
+[Results, limitations and readout diagnostic](docs/en/CASEBOOK.md#case-006) · [Scoped intervention code](cases/006-attention-decision-stability/src/intervention.py) · [Open the explorers](https://munsik-kim.github.io/inference-lab/en/case006.html)
 
 ## Seven questions, with working tools and recorded outcomes
 

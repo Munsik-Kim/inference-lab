@@ -4,6 +4,8 @@ This presentation layer reads pinned public Case006/007 evidence without editing
 It provides English and Korean static pages, item filters, same-readout comparisons,
 source links and JSON downloads. The home page does not load either case's dataset.
 
+Published viewer: [한국어](https://munsik-kim.github.io/inference-lab/ko/index.html) · [English](https://munsik-kim.github.io/inference-lab/en/index.html). The same code supports the offline build below.
+
 From the repository root, with Python 3.12:
 
 ```bash
@@ -20,14 +22,14 @@ Marked irrelevant filler and token arrays are omitted. Exact input files remain 
 
 `source_manifest.json` records the fixed experiment commit and hashes of read files.
 `build_manifest.json` separately records presentation-source hashes, display counts and
-artifact hashes. The scientific source commit does not claim to contain these new,
-uncommitted presentation files. Repeated arms/readouts are not independent scenarios.
+artifact hashes. The scientific source commit does not claim to contain the separately versioned
+presentation files. Repeated arms/readouts are not independent scenarios.
 A current source change makes the original build stale; generate a new external build.
 
 The CPU selector uses Python 3.12.14 and NumPy 2.3.5. It imports the original selector
 by a unique module name, validates calibration Q/grouping/hashes and reruns both
 frozen budgets. The filter tests use Node 24.12.0 with `node:test` and no npm packages.
-The prepared workflows install only these CPU tools on GitHub-hosted runners.
+The workflows install only these CPU tools on GitHub-hosted runners.
 
 Browser checks used an already installed Windows Edge through CDP, with a temporary
 profile, at 390/768/1280 pixels. `browser_check.cjs` is optional and accepts a local
@@ -35,7 +37,8 @@ site base URL plus a new external report directory. It exercises native/shadow/s
 separation, task/ID/empty filters, language/deep-link restoration, keyboard focus,
 text-only script-string rendering, downloads and runtime requests. Screenshots here
 show fixed first CODE IDs from actual local execution. Real iPad: NOT_TESTED.
-No public site or remote CI run is implied by these local files.
+The browser record above covers the original local checks. The published site and
+remote CPU runs have separate GitHub deployment and Actions records.
 
 The three `linguist-generated` paths in `.gitattributes` are produced by the preserved
 `build_study_demo.py`, supplement `build_materials.py` and Case007 `report.py` scripts.
