@@ -65,7 +65,14 @@ The two settings changed 5 of 192 and 8 of 192 standard-set choices. Neither los
 
 [Explore results](https://munsik-kim.github.io/inference-lab/en/case006.html) · [Attention adapter](cases/006-attention-decision-stability/src/intervention.py) · [Detailed study and diagnostic](docs/en/CASEBOOK.md#case-006)
 
-## Seven questions, with working tools and recorded outcomes
+### Case 008 — Save and reload changed models
+
+<!-- claims: c008-tracks -->
+Two separate tracks connect GPTQ conversion to fresh vLLM execution, and fixed smaller-MLP repair to a per-layer loader. Q weight files decreased about 67.0%; R recovered 94.1–95.4% of squared local error on short synthetic inputs. Request speedup was not established and gold-score changes were mixed.
+
+[Structured report](cases/008-build-reconstruct-reload/REPORT.md) · [Code](cases/008-build-reconstruct-reload/REPRODUCTION.md) · [Evidence ZIP](downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)
+
+## Eight questions, with working tools and recorded outcomes
 
 | Question | What the case provides |
 |---|---|
@@ -76,6 +83,7 @@ The two settings changed 5 of 192 and 8 of 192 standard-set choices. Neither los
 | [005 — Can a setting balance speed and error?](docs/en/CASEBOOK.md#case-005) | Measured trade-offs; no tested changed setting met both requirements, so fresh confirmation stopped. Terms: precision, local error. |
 | [006 — Which individual answers change?](docs/en/CASEBOOK.md#case-006) | Paired answer scores, choices and equal-top-score diagnostics. Terms: NLL, top-score tie. |
 | [007 — Which groups should a smaller block keep?](docs/en/CASEBOOK.md#case-007) | Group selection, actual matrix slicing and evaluation on unused inputs. Terms: MLP, pruning. |
+| [008 — Can a changed model be saved and reloaded?](docs/en/CASEBOOK.md#case-008) | GPTQ checkpoint integration and fixed-MLP ridge reconstruction; smaller Q files and lower R local error, with mixed gold scores. |
 
 ## Go deeper
 

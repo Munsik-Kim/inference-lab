@@ -1,0 +1,61 @@
+/* Study pages only; home typography, palette and layout are unchanged. */
+.study-intro { max-width: 920px; padding-bottom: 32px; }
+.study-intro h1 { max-width: 900px; font-size: clamp(1.9rem, 3.4vw, 2.9rem); line-height: 1.36; }
+.study-intro .lede { max-width: 800px; }
+.study-see { max-width: 800px; color: var(--muted); }
+.study-layout { display: grid; grid-template-columns: 205px minmax(0,1fr); gap: 52px; align-items: start; border-top: 1px solid var(--border); padding-top: 36px; }
+.study-toc { position: sticky; top: 108px; }
+.study-toc>p { margin: 0 0 16px; color: var(--muted); font-size: .8rem; font-weight: 650; }
+.study-toc nav { display: block; }
+.study-toc ol { padding: 0; margin: 0; list-style: none; }
+.study-toc a { display: flex; gap: 12px; white-space: normal; padding: 8px 0; font-size: .9rem; }
+.study-toc a span { font-size: .7rem; color: var(--accent); font-variant-numeric: tabular-nums; padding-top: 3px; }
+.study-article { min-width: 0; max-width: 845px; }
+.study-section { scroll-margin-top: 110px; padding-bottom: 32px; margin-bottom: 34px; border-bottom: 1px solid var(--border); }
+.study-section h2 { font-size: 1.55rem; margin-bottom: 20px; }
+.study-section h2>span { font-size: .75rem; color: var(--accent); margin-right: 12px; vertical-align: middle; font-variant-numeric: tabular-nums; }
+.study-section p { max-width: 74ch; }
+.study-table { margin: 26px 0 32px; }
+.study-table h3 { line-height: 1.5; margin-bottom: 10px; }
+.study-table .scroll { border: 1px solid var(--border); border-radius: 8px; background: var(--white); }
+.study-table table { min-width: 0; width: 100%; margin: 0; font-size: .85rem; font-variant-numeric: tabular-nums; }
+.study-table th, .study-table td { white-space: normal; overflow-wrap: anywhere; padding: 12px 14px; vertical-align: top; }
+.study-table thead th { background: var(--tint); color: var(--ink); }
+.study-table tbody th { font-weight: 550; }
+.study-table .table-note { font-size: .8rem; color: var(--muted); line-height: 1.8; margin: 12px 0 2px; }
+.study-source { font-size: .75rem; }
+.study-sources { margin: 0 0 40px; font-size: .88rem; }
+.study-sources li { margin: 6px 0; }
+.explorer-intro { border-top: 2px solid var(--accent); margin: 20px 0 32px; padding-top: 32px; scroll-margin-top: 110px; }
+.explorer-intro h2 { font-size: 1.65rem; }
+.explorer-intro ol { max-width: 820px; padding-left: 24px; }
+.explorer-intro li { padding-left: 8px; margin: 12px 0; }
+@media (max-width: 860px) {
+ .study-layout { grid-template-columns: 1fr; gap: 30px; }
+ .study-toc { position: static; background: var(--white); padding: 20px 24px; border: 1px solid var(--border); border-radius: 10px; }
+ .study-toc ol { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 20px; }
+ .study-toc a { font-size: .85rem; }
+}
+@media (max-width: 480px) {
+ .study-table th, .study-table td { padding: 10px 8px; font-size: .75rem; }
+ .study-toc { padding: 18px; }
+ .study-toc ol { gap: 0 12px; }
+ .study-toc a { gap: 6px; }
+ .study-intro h1 { font-size: 1.85rem; }
+}
+
+.method-key { border-left: 3px solid var(--accent); padding: 10px 16px; background: var(--tint); font-size: .88rem; line-height: 1.9; }
+.study-table[data-table="teaching-example"] { border: 1px dashed var(--border); border-radius: 8px; padding: 16px; }
+
+.study-table { scroll-margin-top: 115px; }
+.method-cards { display: grid; gap: 14px; }
+.method-card { border: 1px solid var(--border); background: var(--white); border-radius: 8px; padding: 20px; }
+.method-card h4 { margin: 0 0 14px; font-size: 1rem; color: var(--accent-dark); line-height: 1.6; overflow-wrap: break-word; }
+.method-card dl { margin: 0; }
+.method-card dl>div { display: grid; grid-template-columns: 145px minmax(0,1fr); gap: 18px; margin-top: 10px; }
+.method-card dt { color: var(--muted); font-size: .85rem; font-weight: 600; }
+.method-card dd { margin: 0; font-size: .92rem; }
+@media (max-width: 580px) {
+ .method-card dl>div { display: block; margin-top: 16px; }
+ .method-card dt { margin-bottom: 4px; }
+}

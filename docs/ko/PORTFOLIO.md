@@ -60,3 +60,8 @@ OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지�
 **모델 변경 전후 평가**, **로컬 추론 문제 진단**, **재현 가능한 분석 도구와 결과 화면**을 주제로 코드를 검토할 수 있습니다. 비교할 모델 경계, 공개 입력 ID, 평가 지표에서 논의를 시작할 수 있습니다. [저장소 이슈](https://github.com/Munsik-Kim/inference-lab/issues)는 공개 기술 질문 경로이며, 인증값이나 비공개 고객 자료는 공개 보고에 넣지 않습니다.
 
 근거는 특정 모델·장치 하나·합성 과제의 결과입니다. 배포 판단은 **NOT_ASSESSED**입니다. CPU 감사는 남긴 스칼라를 검산하며, 제외된 전체 벡터와 별도 GPU 재현의 확인 범위는 [재현 안내](GETTING_STARTED.md)에서 설명합니다.
+
+## 저장본 제작과 출력 복구: Case 008
+
+<!-- claims: c008-tracks -->
+GPTQ 변환·packed 저장본 검사·새 vLLM 실행을 연결하고, 별도 트랙에서 고정된 작은 MLP의 ridge 적합과 층별 구조 로더를 구현했습니다. Q의 파일·상주 가중치 감소, R의 국소 제곱오차 복구와 혼재한 정답 점수·확정되지 않은 요청 가속을 따로 보고합니다. [구조화 보고서](../../cases/008-build-reconstruct-reload/REPORT.ko.md) · [로더·보정 코드 투어](../../cases/008-build-reconstruct-reload/PORTFOLIO.md).

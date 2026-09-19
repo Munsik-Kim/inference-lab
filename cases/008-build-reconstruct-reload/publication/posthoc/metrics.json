@@ -1,0 +1,794 @@
+{
+  "code_structure": {
+    "Q": {
+      "calibration": {
+        "code_prompts": 85,
+        "count_to_gold_label": {
+          "2->A": 22,
+          "3->B": 21,
+          "4->C": 21,
+          "5->D": 21
+        },
+        "gold_is_smallest_option": 85
+      },
+      "development": {
+        "code_prompts": 21,
+        "count_to_gold_label": {
+          "2->A": 6,
+          "3->B": 5,
+          "4->C": 5,
+          "5->D": 5
+        },
+        "gold_is_smallest_option": 21
+      },
+      "heldout": {
+        "code_prompts": 64,
+        "count_to_gold_label": {
+          "2->A": 16,
+          "3->B": 16,
+          "4->C": 16,
+          "5->D": 16
+        },
+        "gold_is_smallest_option": 64
+      },
+      "smoke": {
+        "code_prompts": 2,
+        "count_to_gold_label": {
+          "2->A": 1,
+          "3->B": 1
+        },
+        "gold_is_smallest_option": 2
+      }
+    },
+    "R": {
+      "calibration": {
+        "code_prompts": 42,
+        "count_to_gold_label": {
+          "2->A": 11,
+          "3->B": 11,
+          "4->C": 10,
+          "5->D": 10
+        },
+        "gold_is_smallest_option": 42
+      },
+      "development": {
+        "code_prompts": 16,
+        "count_to_gold_label": {
+          "2->A": 4,
+          "3->B": 4,
+          "4->C": 4,
+          "5->D": 4
+        },
+        "gold_is_smallest_option": 16
+      },
+      "heldout": {
+        "code_prompts": 64,
+        "count_to_gold_label": {
+          "2->A": 16,
+          "3->B": 16,
+          "4->C": 16,
+          "5->D": 16
+        },
+        "gold_is_smallest_option": 64
+      },
+      "smoke": {
+        "code_prompts": 2,
+        "count_to_gold_label": {
+          "2->A": 1,
+          "3->B": 1
+        },
+        "gold_is_smallest_option": 2
+      }
+    }
+  },
+  "evidence_kind": "POST_HOC_SAME_RECORD_DIAGNOSTIC",
+  "limits": "Full argmax membership and full KL are retained scalars, not reconstructed full vectors. No new uncertainty intervals. Shared synthetic templates; repeated arms are not independent samples.",
+  "new_gpu_runs": 0,
+  "sources": {
+    "../../tools/modelpack/data.py": "42daf17905c1028fd34fd3a477ec1049788d645067ff59496c5b23ffd890bd4e",
+    "inputs/Q/calibration.json": "f153af34e183ef7bfab2b3f85eaa6ae2be9a4bf809b4b289d3a52d5d66cd9fce",
+    "inputs/Q/development.json": "288e8fbbbe6ecbb8e54f263c0c11bb156cf0ba8529b798b7d55339f39d2821bf",
+    "inputs/Q/heldout.json": "b0b654971276c3401411822668e2e1ed3d52a5997a229e9e5ad171ebcc6950a0",
+    "inputs/Q/smoke.json": "cad4844bf731756d803f2de6919999b10d2590189da4c03d87200c12808dd560",
+    "inputs/R/calibration.json": "3e72f2d1593236ad223ff90d219e7e8d6b859da3e155b62ee0008fded65f948b",
+    "inputs/R/development.json": "340e735363ee57c6d39648e95f9e53cb72a3fe069615bc8672fc02dc736d3962",
+    "inputs/R/heldout.json": "f828402f8c71605346fbedae578fed21e07fb519ca7e05417c180caec4f4ac9a",
+    "inputs/R/smoke.json": "afcd73923786e2748b17b3d978a488b1ecf209be9b25b307d4f01261d7b3bad4",
+    "results/raw/Q/model_records.json": "878e8f84bc7c1ffcfc844bcb02b01c8acc5c1e34d7be8a18340d898e5aaf0f89",
+    "results/raw/R/model_records.json": "413defaa858fe47dc46825d326cb187967a19d9784a1807afab4c66afa7b0479"
+  },
+  "tracks": {
+    "Q": {
+      "all": {
+        "arms": {
+          "Q-BF16": {
+            "correct": 137,
+            "delta_choice": 0.0,
+            "delta_full": 0.0,
+            "delta_mass_nll": 0.0,
+            "full_argmax_allowed_recorded": 128,
+            "gain": 0,
+            "mean_label_mass": 0.6669627299359345,
+            "mean_negative_log_mass": 2.3929117349580618,
+            "negative_log_mean_mass": 0.4050211117852193,
+            "prediction_histogram": {
+              "A": 33,
+              "B": 30,
+              "C": 33,
+              "D": 96
+            },
+            "regression": 0
+          },
+          "Q-W4": {
+            "correct": 137,
+            "delta_choice": 0.3794648033654073,
+            "delta_full": -0.5912952117183258,
+            "delta_mass_nll": -0.9707600150837331,
+            "full_argmax_allowed_recorded": 128,
+            "gain": 1,
+            "mean_label_mass": 0.6733684929731812,
+            "mean_negative_log_mass": 1.4221517198743288,
+            "negative_log_mean_mass": 0.39546256133136853,
+            "prediction_histogram": {
+              "A": 33,
+              "B": 32,
+              "C": 31,
+              "D": 96
+            },
+            "regression": 1
+          }
+        },
+        "n": 192
+      },
+      "code": {
+        "arms": {
+          "Q-BF16": {
+            "correct": 16,
+            "delta_choice": 0.0,
+            "delta_full": 0.0,
+            "delta_mass_nll": 0.0,
+            "full_argmax_allowed_recorded": 0,
+            "gain": 0,
+            "mean_label_mass": 0.0011716764048317304,
+            "mean_negative_log_mass": 7.178449390834419,
+            "negative_log_mean_mass": 6.749319731043725,
+            "prediction_histogram": {
+              "A": 0,
+              "B": 0,
+              "C": 0,
+              "D": 64
+            },
+            "regression": 0
+          },
+          "Q-W4": {
+            "correct": 16,
+            "delta_choice": 1.3223606409884194,
+            "delta_full": -1.5898976393911286,
+            "delta_mass_nll": -2.912258280379548,
+            "full_argmax_allowed_recorded": 0,
+            "gain": 0,
+            "mean_label_mass": 0.02036786548010707,
+            "mean_negative_log_mass": 4.26619111045487,
+            "negative_log_mean_mass": 3.893796841661251,
+            "prediction_histogram": {
+              "A": 0,
+              "B": 0,
+              "C": 0,
+              "D": 64
+            },
+            "regression": 0
+          }
+        },
+        "n": 64
+      },
+      "comparison": {
+        "arms": {
+          "Q-BF16": {
+            "correct": 58,
+            "delta_choice": 0.0,
+            "delta_full": 0.0,
+            "delta_mass_nll": 0.0,
+            "full_argmax_allowed_recorded": 64,
+            "gain": 0,
+            "mean_label_mass": 0.9997165206496536,
+            "mean_negative_log_mass": 0.000285806793084209,
+            "negative_log_mean_mass": 0.00028351953821261877,
+            "prediction_histogram": {
+              "A": 17,
+              "B": 15,
+              "C": 16,
+              "D": 16
+            },
+            "regression": 0
+          },
+          "Q-W4": {
+            "correct": 57,
+            "delta_choice": -0.05896099015078271,
+            "delta_full": -0.05898274810085136,
+            "delta_mass_nll": -2.1757950068646004e-05,
+            "full_argmax_allowed_recorded": 64,
+            "gain": 0,
+            "mean_label_mass": 0.999737613764537,
+            "mean_negative_log_mass": 0.00026404884301556297,
+            "negative_log_mean_mass": 0.00026242066475396793,
+            "prediction_histogram": {
+              "A": 17,
+              "B": 16,
+              "C": 15,
+              "D": 16
+            },
+            "regression": 1
+          }
+        },
+        "n": 64
+      },
+      "retrieval": {
+        "arms": {
+          "Q-BF16": {
+            "correct": 63,
+            "delta_choice": 0.0,
+            "delta_full": 0.0,
+            "delta_mass_nll": 0.0,
+            "full_argmax_allowed_recorded": 64,
+            "gain": 0,
+            "mean_label_mass": 0.9999999927533183,
+            "mean_negative_log_mass": 7.2466828093809e-09,
+            "negative_log_mean_mass": 7.246681725415074e-09,
+            "prediction_histogram": {
+              "A": 16,
+              "B": 15,
+              "C": 17,
+              "D": 16
+            },
+            "regression": 0
+          },
+          "Q-W4": {
+            "correct": 64,
+            "delta_choice": -0.12500524074141495,
+            "delta_full": -0.12500524766299737,
+            "delta_mass_nll": -6.921582418328853e-09,
+            "full_argmax_allowed_recorded": 64,
+            "gain": 1,
+            "mean_label_mass": 0.9999999996748996,
+            "mean_negative_log_mass": 3.251003910520467e-10,
+            "negative_log_mean_mass": 3.2510039110489185e-10,
+            "prediction_histogram": {
+              "A": 16,
+              "B": 16,
+              "C": 16,
+              "D": 16
+            },
+            "regression": 0
+          }
+        },
+        "n": 64
+      }
+    },
+    "R": {
+      "all": {
+        "arms": {
+          "I25": {
+            "correct": 128,
+            "delta_choice": -0.3366047089434198,
+            "delta_full": -0.5838230152124175,
+            "delta_mass_nll": -0.24721830626899774,
+            "full_argmax_allowed_recorded": 112,
+            "gain": 6,
+            "mean_label_mass": 0.4791669872138951,
+            "mean_negative_log_mass": 1.064966364471985,
+            "negative_log_mean_mass": 0.7357061260108361,
+            "prediction_histogram": {
+              "A": 97,
+              "B": 33,
+              "C": 25,
+              "D": 37
+            },
+            "regression": 2
+          },
+          "I25-R": {
+            "correct": 124,
+            "delta_choice": -0.06295104356849873,
+            "delta_full": -0.058966368586544284,
+            "delta_mass_nll": 0.003984674981954446,
+            "full_argmax_allowed_recorded": 91,
+            "gain": 2,
+            "mean_label_mass": 0.4411397327459528,
+            "mean_negative_log_mass": 1.3161693457229369,
+            "negative_log_mean_mass": 0.8183935994238006,
+            "prediction_histogram": {
+              "A": 101,
+              "B": 33,
+              "C": 20,
+              "D": 38
+            },
+            "regression": 2
+          },
+          "P25": {
+            "correct": 130,
+            "delta_choice": -0.08730784562422565,
+            "delta_full": 0.7742886106988877,
+            "delta_mass_nll": 0.8615964563231132,
+            "full_argmax_allowed_recorded": 64,
+            "gain": 8,
+            "mean_label_mass": 0.3164459370629738,
+            "mean_negative_log_mass": 2.1737811270640957,
+            "negative_log_mean_mass": 1.1506028669553516,
+            "prediction_histogram": {
+              "A": 96,
+              "B": 34,
+              "C": 26,
+              "D": 36
+            },
+            "regression": 2
+          },
+          "P25-R": {
+            "correct": 123,
+            "delta_choice": -0.02604708191618497,
+            "delta_full": -0.13470777483325863,
+            "delta_mass_nll": -0.10866069291707366,
+            "full_argmax_allowed_recorded": 97,
+            "gain": 2,
+            "mean_label_mass": 0.464507261673021,
+            "mean_negative_log_mass": 1.2035239778239089,
+            "negative_log_mean_mass": 0.7667780875393104,
+            "prediction_histogram": {
+              "A": 103,
+              "B": 33,
+              "C": 19,
+              "D": 37
+            },
+            "regression": 3
+          },
+          "R-B": {
+            "correct": 124,
+            "delta_choice": 0.0,
+            "delta_full": 0.0,
+            "delta_mass_nll": 0.0,
+            "full_argmax_allowed_recorded": 93,
+            "gain": 0,
+            "mean_label_mass": 0.4432302127916699,
+            "mean_negative_log_mass": 1.3121846707409823,
+            "negative_log_mean_mass": 0.8136659762162135,
+            "prediction_histogram": {
+              "A": 105,
+              "B": 33,
+              "C": 19,
+              "D": 35
+            },
+            "regression": 0
+          },
+          "S50": {
+            "correct": 107,
+            "delta_choice": 0.17837201006424874,
+            "delta_full": 2.2674792861747686,
+            "delta_mass_nll": 2.08910727611052,
+            "full_argmax_allowed_recorded": 10,
+            "gain": 3,
+            "mean_label_mass": 0.08045700339781611,
+            "mean_negative_log_mass": 3.4012919468515026,
+            "negative_log_mean_mass": 2.5200323565319227,
+            "prediction_histogram": {
+              "A": 122,
+              "B": 35,
+              "C": 14,
+              "D": 21
+            },
+            "regression": 20
+          },
+          "S50-R": {
+            "correct": 122,
+            "delta_choice": -0.08156996207508793,
+            "delta_full": -0.13995613295181836,
+            "delta_mass_nll": -0.058386170876730425,
+            "full_argmax_allowed_recorded": 92,
+            "gain": 1,
+            "mean_label_mass": 0.4529814279122984,
+            "mean_negative_log_mass": 1.2537984998642522,
+            "negative_log_mean_mass": 0.7919041523256397,
+            "prediction_histogram": {
+              "A": 102,
+              "B": 34,
+              "C": 18,
+              "D": 38
+            },
+            "regression": 3
+          }
+        },
+        "n": 192
+      },
+      "code": {
+        "arms": {
+          "I25": {
+            "correct": 16,
+            "delta_choice": -0.9382292755098541,
+            "delta_full": -1.3408829011129157,
+            "delta_mass_nll": -0.4026536256030616,
+            "full_argmax_allowed_recorded": 0,
+            "gain": 0,
+            "mean_label_mass": 0.10702703571630641,
+            "mean_negative_log_mass": 2.249845394743349,
+            "negative_log_mean_mass": 2.234673806190127,
+            "prediction_histogram": {
+              "A": 64,
+              "B": 0,
+              "C": 0,
+              "D": 0
+            },
+            "regression": 0
+          },
+          "I25-R": {
+            "correct": 16,
+            "delta_choice": -0.19748618497499,
+            "delta_full": -0.1540202497220709,
+            "delta_mass_nll": 0.043465935252919086,
+            "full_argmax_allowed_recorded": 0,
+            "gain": 0,
+            "mean_label_mass": 0.07011532657444806,
+            "mean_negative_log_mass": 2.69596495559933,
+            "negative_log_mean_mass": 2.6576138701170433,
+            "prediction_histogram": {
+              "A": 64,
+              "B": 0,
+              "C": 0,
+              "D": 0
+            },
+            "regression": 0
+          },
+          "P25": {
+            "correct": 16,
+            "delta_choice": -0.14468468837779058,
+            "delta_full": 1.4013705132412393,
+            "delta_mass_nll": 1.5460552016190299,
+            "full_argmax_allowed_recorded": 0,
+            "gain": 0,
+            "mean_label_mass": 0.015904036496355734,
+            "mean_negative_log_mass": 4.19855422196544,
+            "negative_log_mean_mass": 4.141182334279573,
+            "prediction_histogram": {
+              "A": 64,
+              "B": 0,
+              "C": 0,
+              "D": 0
+            },
+            "regression": 0
+          },
+          "P25-R": {
+            "correct": 16,
+            "delta_choice": -0.04736912187466208,
+            "delta_full": -0.22475618287823435,
+            "delta_mass_nll": -0.17738706100357227,
+            "full_argmax_allowed_recorded": 0,
+            "gain": 0,
+            "mean_label_mass": 0.08754053143619023,
+            "mean_negative_log_mass": 2.4751119593428386,
+            "negative_log_mean_mass": 2.4356533764565693,
+            "prediction_histogram": {
+              "A": 64,
+              "B": 0,
+              "C": 0,
+              "D": 0
+            },
+            "regression": 0
+          },
+          "R-B": {
+            "correct": 16,
+            "delta_choice": 0.0,
+            "delta_full": 0.0,
+            "delta_mass_nll": 0.0,
+            "full_argmax_allowed_recorded": 0,
+            "gain": 0,
+            "mean_label_mass": 0.07380843311759736,
+            "mean_negative_log_mass": 2.652499020346411,
+            "negative_log_mean_mass": 2.6062822840178734,
+            "prediction_histogram": {
+              "A": 64,
+              "B": 0,
+              "C": 0,
+              "D": 0
+            },
+            "regression": 0
+          },
+          "S50": {
+            "correct": 16,
+            "delta_choice": -0.009832534099869783,
+            "delta_full": 1.91135361641389,
+            "delta_mass_nll": 1.9211861505137597,
+            "full_argmax_allowed_recorded": 0,
+            "gain": 0,
+            "mean_label_mass": 0.010796964379602644,
+            "mean_negative_log_mass": 4.573685170860171,
+            "negative_log_mean_mass": 4.528490260323934,
+            "prediction_histogram": {
+              "A": 64,
+              "B": 0,
+              "C": 0,
+              "D": 0
+            },
+            "regression": 0
+          },
+          "S50-R": {
+            "correct": 16,
+            "delta_choice": -0.2503660932734386,
+            "delta_full": -0.3366278443108728,
+            "delta_mass_nll": -0.08626175103743416,
+            "full_argmax_allowed_recorded": 0,
+            "gain": 0,
+            "mean_label_mass": 0.07907667176593129,
+            "mean_negative_log_mass": 2.5662372693089766,
+            "negative_log_mean_mass": 2.5373373684909026,
+            "prediction_histogram": {
+              "A": 64,
+              "B": 0,
+              "C": 0,
+              "D": 0
+            },
+            "regression": 0
+          }
+        },
+        "n": 64
+      },
+      "comparison": {
+        "arms": {
+          "I25": {
+            "correct": 50,
+            "delta_choice": -0.055070078632736164,
+            "delta_full": -0.5094910228177074,
+            "delta_mass_nll": -0.4544209441849713,
+            "full_argmax_allowed_recorded": 51,
+            "gain": 3,
+            "mean_label_mass": 0.4877825077533656,
+            "mean_negative_log_mass": 0.7573769455751242,
+            "negative_log_mean_mass": 0.7178856533074782,
+            "prediction_histogram": {
+              "A": 16,
+              "B": 17,
+              "C": 11,
+              "D": 20
+            },
+            "regression": 2
+          },
+          "I25-R": {
+            "correct": 48,
+            "delta_choice": -0.0038989925503667977,
+            "delta_full": -0.05429303447703676,
+            "delta_mass_nll": -0.050394041926669964,
+            "full_argmax_allowed_recorded": 27,
+            "gain": 1,
+            "mean_label_mass": 0.33544258612772465,
+            "mean_negative_log_mass": 1.1614038478334257,
+            "negative_log_mean_mass": 1.0923044664912145,
+            "prediction_histogram": {
+              "A": 19,
+              "B": 17,
+              "C": 8,
+              "D": 20
+            },
+            "regression": 2
+          },
+          "P25": {
+            "correct": 51,
+            "delta_choice": -0.030876686074751136,
+            "delta_full": 0.8170610967956733,
+            "delta_mass_nll": 0.8479377828704244,
+            "full_argmax_allowed_recorded": 3,
+            "gain": 4,
+            "mean_label_mass": 0.14480505200887844,
+            "mean_negative_log_mass": 2.05973567263052,
+            "negative_log_mean_mass": 1.93236691007507,
+            "prediction_histogram": {
+              "A": 16,
+              "B": 18,
+              "C": 11,
+              "D": 19
+            },
+            "regression": 2
+          },
+          "P25-R": {
+            "correct": 47,
+            "delta_choice": -0.024084658251343316,
+            "delta_full": -0.16651868871007386,
+            "delta_mass_nll": -0.14243403045873054,
+            "full_argmax_allowed_recorded": 33,
+            "gain": 1,
+            "mean_label_mass": 0.3673354293754715,
+            "mean_negative_log_mass": 1.069363859301365,
+            "negative_log_mean_mass": 1.0014798718498423,
+            "prediction_histogram": {
+              "A": 20,
+              "B": 17,
+              "C": 7,
+              "D": 20
+            },
+            "regression": 3
+          },
+          "R-B": {
+            "correct": 49,
+            "delta_choice": 0.0,
+            "delta_full": 0.0,
+            "delta_mass_nll": 0.0,
+            "full_argmax_allowed_recorded": 29,
+            "gain": 0,
+            "mean_label_mass": 0.32250958013332587,
+            "mean_negative_log_mass": 1.2117978897600956,
+            "negative_log_mean_mass": 1.1316224373477495,
+            "prediction_histogram": {
+              "A": 21,
+              "B": 17,
+              "C": 8,
+              "D": 18
+            },
+            "regression": 0
+          },
+          "S50": {
+            "correct": 35,
+            "delta_choice": 0.4049164108620901,
+            "delta_full": 2.9883130864516163,
+            "delta_mass_nll": 2.5833966755895266,
+            "full_argmax_allowed_recorded": 0,
+            "gain": 2,
+            "mean_label_mass": 0.02500096120729526,
+            "mean_negative_log_mass": 3.795194565349622,
+            "negative_log_mean_mass": 3.6888410065612427,
+            "prediction_histogram": {
+              "A": 36,
+              "B": 21,
+              "C": 2,
+              "D": 5
+            },
+            "regression": 16
+          },
+          "S50-R": {
+            "correct": 47,
+            "delta_choice": -0.02367807328271182,
+            "delta_full": -0.11467785567709932,
+            "delta_mass_nll": -0.0909997823943875,
+            "full_argmax_allowed_recorded": 28,
+            "gain": 1,
+            "mean_label_mass": 0.3482813843525188,
+            "mean_negative_log_mass": 1.120798107365708,
+            "negative_log_mean_mass": 1.0547445502032786,
+            "prediction_histogram": {
+              "A": 19,
+              "B": 18,
+              "C": 7,
+              "D": 20
+            },
+            "regression": 3
+          }
+        },
+        "n": 64
+      },
+      "retrieval": {
+        "arms": {
+          "I25": {
+            "correct": 62,
+            "delta_choice": -0.0165147726876691,
+            "delta_full": 0.09890487829337069,
+            "delta_mass_nll": 0.11541965098103979,
+            "full_argmax_allowed_recorded": 61,
+            "gain": 3,
+            "mean_label_mass": 0.8426914181720133,
+            "mean_negative_log_mass": 0.18767675309748078,
+            "negative_log_mean_mass": 0.17115443998415983,
+            "prediction_histogram": {
+              "A": 17,
+              "B": 16,
+              "C": 14,
+              "D": 17
+            },
+            "regression": 0
+          },
+          "I25-R": {
+            "correct": 60,
+            "delta_choice": 0.012532046819860587,
+            "delta_full": 0.031414178439474805,
+            "delta_mass_nll": 0.018882131619614217,
+            "full_argmax_allowed_recorded": 64,
+            "gain": 1,
+            "mean_label_mass": 0.9178612855356857,
+            "mean_negative_log_mass": 0.0911392337360552,
+            "negative_log_mean_mass": 0.08570900486012192,
+            "prediction_histogram": {
+              "A": 18,
+              "B": 16,
+              "C": 12,
+              "D": 18
+            },
+            "regression": 0
+          },
+          "P25": {
+            "correct": 63,
+            "delta_choice": -0.08636216242013522,
+            "delta_full": 0.10443422205975017,
+            "delta_mass_nll": 0.1907963844798854,
+            "full_argmax_allowed_recorded": 61,
+            "gain": 4,
+            "mean_label_mass": 0.7886287226836872,
+            "mean_negative_log_mass": 0.2630534865963264,
+            "negative_log_mean_mass": 0.2374596358284584,
+            "prediction_histogram": {
+              "A": 16,
+              "B": 16,
+              "C": 15,
+              "D": 17
+            },
+            "regression": 0
+          },
+          "P25-R": {
+            "correct": 60,
+            "delta_choice": -0.0066874656225495155,
+            "delta_full": -0.01284845291146769,
+            "delta_mass_nll": -0.006160987288918174,
+            "full_argmax_allowed_recorded": 64,
+            "gain": 1,
+            "mean_label_mass": 0.9386458242074012,
+            "mean_negative_log_mass": 0.06609611482752281,
+            "negative_log_mean_mass": 0.06331705494333498,
+            "prediction_histogram": {
+              "A": 19,
+              "B": 16,
+              "C": 12,
+              "D": 17
+            },
+            "regression": 0
+          },
+          "R-B": {
+            "correct": 59,
+            "delta_choice": 0.0,
+            "delta_full": 0.0,
+            "delta_mass_nll": 0.0,
+            "full_argmax_allowed_recorded": 64,
+            "gain": 0,
+            "mean_label_mass": 0.9333726251240866,
+            "mean_negative_log_mass": 0.07225710211644099,
+            "negative_log_mean_mass": 0.06895077402582638,
+            "prediction_histogram": {
+              "A": 20,
+              "B": 16,
+              "C": 11,
+              "D": 17
+            },
+            "regression": 0
+          },
+          "S50": {
+            "correct": 56,
+            "delta_choice": 0.14003215343052583,
+            "delta_full": 1.9027711556588,
+            "delta_mass_nll": 1.762739002228274,
+            "full_argmax_allowed_recorded": 10,
+            "gain": 1,
+            "mean_label_mass": 0.20557308460655044,
+            "mean_negative_log_mass": 1.8349961043447152,
+            "negative_log_mean_mass": 1.5819536654175175,
+            "prediction_histogram": {
+              "A": 22,
+              "B": 14,
+              "C": 12,
+              "D": 16
+            },
+            "regression": 4
+          },
+          "S50-R": {
+            "correct": 59,
+            "delta_choice": 0.029334280330886642,
+            "delta_full": 0.031437301132517026,
+            "delta_mass_nll": 0.002103020801630384,
+            "full_argmax_allowed_recorded": 64,
+            "gain": 0,
+            "mean_label_mass": 0.9315862276184451,
+            "mean_negative_log_mass": 0.07436012291807137,
+            "negative_log_mean_mass": 0.07086652465954067,
+            "prediction_histogram": {
+              "A": 19,
+              "B": 16,
+              "C": 11,
+              "D": 18
+            },
+            "regression": 0
+          }
+        },
+        "n": 64
+      }
+    }
+  }
+}

@@ -1,0 +1,206 @@
+{
+  "archive_validation": "Performed after immutable package creation; see the external ZIP metadata and final local handoff report. No archive self-hash is embedded.",
+  "artifact_integrity": {
+    "Q_full_vocab_reload_vectors_byte_identical": 6,
+    "R_original_noop_exact": true,
+    "R_reload_reports_exact": 7,
+    "artifacts": {
+      "I25": {
+        "artifact_sha256": "cdab50076959d23ee9eb8871a52e463ee2188b5e78d20ff9e742203c09b7c426",
+        "byte_identical_copy": true,
+        "files": 11
+      },
+      "I25-R": {
+        "artifact_sha256": "6aad69209257847aef33247fbdb938afa9bd5c16e17b57604a701302a00a13dc",
+        "byte_identical_copy": true,
+        "files": 11
+      },
+      "P25": {
+        "artifact_sha256": "34be88577250bfb0b1f7bfc0059d0046a176d0decf54c3c5f535261e5300e827",
+        "byte_identical_copy": true,
+        "files": 11
+      },
+      "P25-R": {
+        "artifact_sha256": "54309c12f123e88d3e2c41006a8b9667b955d6145708c39af1ac53073e54731b",
+        "byte_identical_copy": true,
+        "files": 11
+      },
+      "Q": {
+        "artifact_sha256": "16c5d08d1e6f4160dfeff07fde3c67dc3a2e795c0f8da23020d89b8b64bcc827",
+        "byte_identical_copy": true,
+        "files": 11
+      },
+      "R-B": {
+        "artifact_sha256": "b47de499349d2f93458146bbbbf9530ecebd58d3c3aaeff3408a10988846b2b1",
+        "byte_identical_copy": true,
+        "files": 11
+      },
+      "S50": {
+        "artifact_sha256": "f6bb68379c6d37599c656fbef247b0c1315568991a75a6cd07cc676c4dd1bb81",
+        "byte_identical_copy": true,
+        "files": 11
+      },
+      "S50-R": {
+        "artifact_sha256": "c5374d5c3755d60fb3f6a8c5812a5ca09bf75e1f4afaf0e3198badb3c700cf89",
+        "byte_identical_copy": true,
+        "files": 11
+      }
+    },
+    "scope": "same backend, two fresh-process records per artifact and verified separate-directory copies; full vectors excluded from public Git",
+    "status": "PASS"
+  },
+  "as_of_utc": "2026-09-19T14:57:33.399270+00:00",
+  "browser": {
+    "browser": "Edg/153.0.4234.32",
+    "checks": [
+      "Q full cohort",
+      "Q width 390",
+      "Q width 768",
+      "Q width 1280",
+      "Q task count",
+      "Q reload retains ID",
+      "Q empty result",
+      "Q candidate data",
+      "R full cohort",
+      "R width 390",
+      "R width 768",
+      "R width 1280",
+      "R task count",
+      "R reload retains ID",
+      "R empty result",
+      "R candidate data",
+      "script string stays text",
+      "Keyboard navigation",
+      "Measured JSON download",
+      "No browser exceptions",
+      "No external resource requests"
+    ],
+    "errors": [],
+    "external_requests": [],
+    "method": "existing Edge/Node CDP; new temporary browser profile; no GPU rendering",
+    "node": "v24.12.0",
+    "os": "win32",
+    "protocol": "file:",
+    "real_iPad": "NOT_TESTED",
+    "status": "PASS",
+    "viewports": [
+      390,
+      768,
+      1280
+    ]
+  },
+  "calibration_readout_same_shape_exact_cells": 384,
+  "deployment": "NOT_ASSESSED",
+  "environment_preservation": {
+    "added": [],
+    "changed": {},
+    "effective_versions": {
+      "compressed-tensors": "0.17.0",
+      "numpy": "2.3.5",
+      "safetensors": "0.8.0",
+      "torch": "2.13.0",
+      "transformers": "5.17.0",
+      "triton": "3.7.1",
+      "vllm": "0.29.0"
+    },
+    "status": "PASS",
+    "unchanged_distributions": 199
+  },
+  "full_validity": {
+    "Q": {
+      "arm_cells": 384,
+      "full_validity": "PASS",
+      "independent_heldout_scenarios": 192
+    },
+    "R": {
+      "arm_cells": 1344,
+      "full_validity": "PASS",
+      "independent_heldout_scenarios": 192
+    }
+  },
+  "limits": [
+    "Full-vocabulary KL is a retained GPU-output-derived scalar, not independently reconstructible from four option logits.",
+    "Private H/Y solution checking and same-backend reload comparison are not third-party GPU replication.",
+    "Offline environment variables/local snapshots were used; no OS network namespace was asserted.",
+    "No sampled whole-device memory peak, new iPad run, or deployment-quality acceptance test."
+  ],
+  "preservation": {
+    "baseline_revision": "2d817c215f9effc1c02868733a52b3ebc4060082",
+    "differences": [],
+    "source_binary_files": 16,
+    "source_model_files": 21,
+    "status": "PASS",
+    "unchanged_tracked_files": 1931
+  },
+  "private_fit_audit": {
+    "requires_excluded_H_Y": true,
+    "source": "provenance/private_fit_audit.json",
+    "status": "PASS"
+  },
+  "public_scalar_audit": {
+    "scope": "independent option/norm/paired calculations and same frozen bootstrap indices; full-vocabulary normalizers retained, full KL/vector/kernel checks excluded",
+    "status": "PASS",
+    "tracks": {
+      "Q": {
+        "records": 384,
+        "scenarios": 192,
+        "status": "PASS"
+      },
+      "R": {
+        "records": 1344,
+        "scenarios": 192,
+        "status": "PASS"
+      }
+    }
+  },
+  "publication": "LOCAL_REVIEW_ONLY_NOT_PUBLISHED",
+  "regeneration": {
+    "files": {
+      "demo/index.html": true,
+      "figures/q_scores.png": true,
+      "figures/r_recovery.png": true,
+      "generation.json": true,
+      "q_score_boundaries.png": true
+    },
+    "status": "PASS",
+    "summary_byte_identical": true
+  },
+  "smoke_corrections": {
+    "full_model_smoke_missing_hook_failure": 1,
+    "numerical_nonfinite_failures": 0,
+    "records": [
+      "provenance/premeasurement_corrections.json",
+      "provenance/Q_full_smoke_hook_correction.json",
+      "provenance/R_config_boundary.json"
+    ],
+    "scope": "pre-evaluation corrections; failed attempts retained, not pooled",
+    "tiny_fixture_failures": 4
+  },
+  "status": "CPU_AND_BROWSER_VERIFIED",
+  "timing_audit": {
+    "scope": "paired raw wall-clock block means and same frozen hierarchical resampling; no new timing",
+    "status": "PASS",
+    "tracks": {
+      "Q": {
+        "records": 720,
+        "rounds": 3,
+        "scenarios": 12,
+        "status": "PASS"
+      },
+      "R": {
+        "records": 2520,
+        "rounds": 3,
+        "scenarios": 12,
+        "status": "PASS"
+      }
+    }
+  },
+  "unit_tests": {
+    "failed": 0,
+    "log_sha256": "e6c3c38ae9bd56134d6f0b0b0868ffc9ed1f86bf72f5fc15147fa006c7fdbc10",
+    "passed": 19,
+    "run": 19,
+    "scope": "CPU tests, including tiny labelled model fixtures and new-process reload; not 19 GPU experiments",
+    "skipped": 0
+  }
+}

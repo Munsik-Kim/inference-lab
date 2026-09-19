@@ -8,9 +8,10 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 from common import ROOT, read, require, sha, json_text, new_output
 from data import load
+from study import SECTION_IDS, result_html
 
 EXPECTED = {'index.html','en/index.html','ko/index.html','en/guide.html','ko/guide.html','en/case006.html','ko/case006.html',
-            'en/case007.html','ko/case007.html','assets/icon.svg','assets/app.js','assets/state.js','assets/style.css',
+            'en/case007.html','ko/case007.html','assets/icon.svg','assets/app.js','assets/state.js','assets/style.css','assets/study.css',
             'assets/en.js','assets/ko.js','data/case006.js','data/case007.js',
             'data/case006.json','data/case007.json','build_manifest.json'}
 class Links(HTMLParser):
@@ -48,6 +49,12 @@ def check(root: Path, site: Path) -> dict:
         import json
         require(json.loads(text[len('window.EVIDENCE = '):-2])==expected, 'JS/JSON mismatch')
         require('<' not in text and '\u2028' not in text and '\u2029' not in text, 'Unsafe embedded JSON')
+    for case, data in payloads.items():
+        for lang in ('en','ko'):
+            html=(site/f'{lang}/{case}.html').read_text()
+            positions=[html.find('id="'+section+'"') for section in (*SECTION_IDS,'explorer')]
+            require(min(positions)>=0 and positions==sorted(positions), 'Study reading order/coverage')
+            require(result_html(data,lang) in html, 'Study table values/scope differ from retained evidence')
     n=0
     for name,path in paths.items():
         if path.suffix!='.html':continue

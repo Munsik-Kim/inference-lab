@@ -1,0 +1,104 @@
+{
+  "runtime_versions": {
+    "torch": "2.13.0",
+    "triton": "3.7.1",
+    "transformers": "5.17.0",
+    "compressed-tensors": "0.17.0",
+    "vllm": "0.29.0",
+    "safetensors": "0.8.0",
+    "numpy": "2.3.5",
+    "tokenizers": "0.23.2",
+    "fsspec": "2026.7.0"
+  },
+  "build": {
+    "effective_versions": {
+      "torch": "2.13.0",
+      "triton": "3.7.1",
+      "transformers": "5.14.1",
+      "compressed-tensors": "0.18.0",
+      "llmcompressor": "0.13.0",
+      "tokenizers": "0.22.2",
+      "fsspec": "2026.6.0",
+      "numpy": "2.3.5",
+      "safetensors": "0.8.0"
+    },
+    "imported": {
+      "transformers": "5.14.1",
+      "torch": "2.13.0+cu130"
+    },
+    "note": "metadata.version resolves active distribution; earlier distributions enumeration had duplicate inherited names"
+  },
+  "source_binary_hashes": {
+    "runtime/transformers/models/qwen3/modeling_qwen3.py": {
+      "sha256": "cbb7f2dc274c2f5592746c0dc6985ca50353efa07376f92cc922b77680a74f69",
+      "bytes": 23039
+    },
+    "runtime/vllm/v1/worker/gpu_model_runner.py": {
+      "sha256": "3970d7b764f80847842e10fc20f0e3f4f3da84cd97d042bb92db6e99147337e2",
+      "bytes": 343117
+    },
+    "runtime/vllm/model_executor/models/qwen3.py": {
+      "sha256": "6ade9b12f4c7a4d670fe2e4dd778049bbe0a94fe2ba61a149d9706587a280e28",
+      "bytes": 12609
+    },
+    "build/llmcompressor/modifiers/gptq/base.py": {
+      "sha256": "00bf3cfb4b6879bbc74f0e4e36c62b1caf7cbf94c624029f9b7e6c2af25aa38b",
+      "bytes": 16013
+    },
+    "build/llmcompressor/entrypoints/oneshot.py": {
+      "sha256": "8eaba80bfd066c0ebc5d0148bda6baaea5dfc9cd2ea15c03e8f187405101896b",
+      "bytes": 19982
+    },
+    "build/transformers/models/qwen3/modeling_qwen3.py": {
+      "sha256": "fbdcfeeb1b54135ca67ba7df924da92f4b264e1252b517eea2de989289ebaeab",
+      "bytes": 23353
+    },
+    "runtime/vllm/cumem_allocator.abi3.so": {
+      "sha256": "6e74676bc7f1cc264cefd097992cfe39d8d5b859e6ee10bef20f6920463460d9",
+      "bytes": 27264
+    },
+    "runtime/vllm/_qutlass_C.abi3.so": {
+      "sha256": "8c491acd0ee844ec79346e153f61f876c475e1f62f0a177535148e0c0611d852",
+      "bytes": 1414584
+    },
+    "runtime/vllm/spinloop.abi3.so": {
+      "sha256": "d9611e3b08ab8ed4ec80c28d483371aad10b212ab597603e60452ab0e8549b7f",
+      "bytes": 16872
+    },
+    "runtime/vllm/fs_io_C.abi3.so": {
+      "sha256": "33a2230eee458b5585a1da6a02fa3a2927891e7c29608e2cab1490bec1e9a3f5",
+      "bytes": 27592
+    },
+    "runtime/vllm/_flashkda_C.abi3.so": {
+      "sha256": "c03adf54b109aaed7d15c565d65c7d9ece1c5e165e95bc50e5608e2fdc5ccef3",
+      "bytes": 4844976
+    },
+    "runtime/vllm/_rust_tool_parser.abi3.so": {
+      "sha256": "c5f089d1755688f6d4a2b78c37a711e74f0ed171b9605cc9952d835bf847e921",
+      "bytes": 1017264
+    },
+    "runtime/vllm/_flashmla_C.abi3.so": {
+      "sha256": "83f1dd7ac31d734ec19da78b417d85b91de79b40c645660ee48e51621d6aa048",
+      "bytes": 1784000
+    },
+    "runtime/vllm/_C_stable_libtorch.abi3.so": {
+      "sha256": "0375f3ec05f823961476dfe3450cb67df385eb9541eeed29e5daccc28a142ecb",
+      "bytes": 81090008
+    },
+    "runtime/vllm/_flashmla_extension_C.abi3.so": {
+      "sha256": "c9b6fd42b4fa294846a6bd4661be33eb954342014fc716ae07f827da5019a0e8",
+      "bytes": 214040
+    },
+    "runtime/vllm/_moe_C_stable_libtorch.abi3.so": {
+      "sha256": "b08ed3949171409258e259ff58b3d8f85765bae9ffb79445481a6cf93293e6e4",
+      "bytes": 49596688
+    }
+  },
+  "cpu_analysis": {
+    "python": "3.12",
+    "numpy": "2.3.5",
+    "matplotlib": "3.10.8"
+  },
+  "isolation": "new build venv; existing runtime versions unchanged; inherited vLLM not used by build",
+  "initial_metadata_correction": "distributions enumeration included shadowed system packages; effective versions verified via metadata.version and imported version"
+}

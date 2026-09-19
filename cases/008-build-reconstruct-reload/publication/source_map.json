@@ -1,0 +1,248 @@
+{
+  "claims": [
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "design",
+      "locator": "/R/eta_rule",
+      "scope": "Original DEV-only common eta and fixed groups",
+      "source_path": "cases/008-build-reconstruct-reload/configs/build_freeze.json",
+      "source_sha256": "b5aa84270984a0b908e089754a8bd4b61c9495c24dfb25902cad6eeaddfc7a2e"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "q-scores",
+      "locator": "/tracks/Q/arms/Q-W4",
+      "scope": "192 heldout prompts, task-balanced paired candidate minus BF16",
+      "source_path": "cases/008-build-reconstruct-reload/results/derived/summary.json",
+      "source_sha256": "f690d1d4dc44d87eb5003518d9f7e60eb9cf2b2305eb978a6385e23a885c5ece"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "r-recovery",
+      "locator": "/tracks/R/repair",
+      "scope": "Ratio of summed squared error; 32 positions; 192 independent prompts",
+      "source_path": "cases/008-build-reconstruct-reload/results/derived/summary.json",
+      "source_sha256": "f690d1d4dc44d87eb5003518d9f7e60eb9cf2b2305eb978a6385e23a885c5ece"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "r-scores",
+      "locator": "/tracks/R/arms",
+      "scope": "Gold scores and retained full KL are distinct",
+      "source_path": "cases/008-build-reconstruct-reload/results/derived/summary.json",
+      "source_sha256": "f690d1d4dc44d87eb5003518d9f7e60eb9cf2b2305eb978a6385e23a885c5ece"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "timing",
+      "locator": "/timing",
+      "scope": "Q blocking requests; R prefill and fixed-eight; 12 prompts and 3 rounds",
+      "source_path": "cases/008-build-reconstruct-reload/results/derived/summary.json",
+      "source_sha256": "f690d1d4dc44d87eb5003518d9f7e60eb9cf2b2305eb978a6385e23a885c5ece"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "same-size",
+      "locator": "/same_size_cost",
+      "scope": "Uncorrected/repaired time ratios, same shapes",
+      "source_path": "cases/008-build-reconstruct-reload/results/derived/additional_tables.json",
+      "source_sha256": "7466b3290ad605f8e4eb9db58555d7382b75025367889bc77e202b5a44e9c702"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "split-recovery",
+      "locator": "/recovery_by_split",
+      "scope": "Shared templates, calibration/DEV/heldout separate",
+      "source_path": "cases/008-build-reconstruct-reload/results/derived/additional_tables.json",
+      "source_sha256": "7466b3290ad605f8e4eb9db58555d7382b75025367889bc77e202b5a44e9c702"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "local-norm",
+      "locator": "/splits/heldout",
+      "scope": "Mean relative error is not recovery percent",
+      "source_path": "cases/008-build-reconstruct-reload/results/derived/local_tables.json",
+      "source_sha256": "9164f4295d847165bb59dbac60afec036a6cb08a4d44141f5b4aad30ec3d127e"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "storage",
+      "locator": "/Q/files",
+      "scope": "Original safetensors bytes",
+      "source_path": "cases/008-build-reconstruct-reload/provenance/models.json",
+      "source_sha256": "0b22a1eb72a502b110e737211037fbef0500a400347046bc0eb9f676cec23e09"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "packed-storage",
+      "locator": "/safetensors_bytes",
+      "scope": "GPTQ output file size, not whole-device memory",
+      "source_path": "cases/008-build-reconstruct-reload/results/raw/Q/build.json",
+      "source_sha256": "bbb33d2e0715b0ce547513633043261d6603b65e5a127e6006db85fef87860fe"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "native-runtime",
+      "locator": "/after/0",
+      "scope": "Resident named parameter and allocator scopes",
+      "source_path": "cases/008-build-reconstruct-reload/results/raw/Q/Q-BF16-runtime.json",
+      "source_sha256": "c930f068c67af00e834005eeb57c9d43ed030ff397d8a4cf3dadf051c699f5f1"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "w4-runtime",
+      "locator": "/after/0",
+      "scope": "144 fused Marlin routes; different count from 252 targets",
+      "source_path": "cases/008-build-reconstruct-reload/results/raw/Q/Q-W4-runtime.json",
+      "source_sha256": "33e9906dae225bc8c262a67f6ed8c54172ab8fdc3ea66bcab135465f5cf498fd"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "r-artifacts",
+      "locator": "/arms",
+      "scope": "Same shapes before/after; only one layer shrunk",
+      "source_path": "cases/008-build-reconstruct-reload/results/raw/R/export.json",
+      "source_sha256": "6e1fc7ce0648e1935a788b05854fc84d2b7d6cbefa55bfe19d57bc749c9e669a"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "q-lengths",
+      "locator": "/length_min",
+      "scope": "Actual lengths versus cap",
+      "source_path": "cases/008-build-reconstruct-reload/inputs/Q/manifest.json",
+      "source_sha256": "af36960460522cfd72daba9b4b11a569e4bccba21657522ce8343726e82d6237"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "r-lengths",
+      "locator": "/length_min",
+      "scope": "Actual lengths versus cap",
+      "source_path": "cases/008-build-reconstruct-reload/inputs/R/manifest.json",
+      "source_sha256": "a0b3b1a48af9c4783494165161abe0d410eeafe48be6991b36db9e18934d63b3"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "status",
+      "locator": "/deployment",
+      "scope": "Historical completed study; no deployment verdict",
+      "source_path": "cases/008-build-reconstruct-reload/RUN_STATE.json",
+      "source_sha256": "3a5552e0dbd656a4a7e655b393e44d54e9b824bd21f482ec25b40878764a3a81"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "environment",
+      "locator": "/runtime_versions",
+      "scope": "Frozen installed versions",
+      "source_path": "cases/008-build-reconstruct-reload/provenance/environment.json",
+      "source_sha256": "f8df256ca3185130e9e46b415076c299c109b0e703cdeddee026b2cb4448a625"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "posthoc",
+      "id": "posthoc",
+      "locator": "/tracks/Q/code",
+      "scope": "Post-hoc same records; full normalizer retained",
+      "source_path": "cases/008-build-reconstruct-reload/publication/posthoc/metrics.json",
+      "source_sha256": "f7833a2c95a2d36a74d61a8cbac846f40b261ae2652feaece9c27d58c94c2048"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "posthoc",
+      "id": "code-cues",
+      "locator": "count=2+index%4",
+      "scope": "Code template cues; no identified causal use",
+      "source_path": "tools/modelpack/data.py",
+      "source_sha256": "42daf17905c1028fd34fd3a477ec1049788d645067ff59496c5b23ffd890bd4e"
+    },
+    {
+      "documents": [
+        "REPORT.md",
+        "REPORT.ko.md"
+      ],
+      "evidence_kind": "original",
+      "id": "ridge",
+      "locator": "def fit_ridge",
+      "scope": "Row-sample normal equations; CPU FP64; no explicit inverse",
+      "source_path": "tools/modelpack/numerics.py",
+      "source_sha256": "c565ad7b0a34c0e3440989f8856ac0b810459b7097e19f20200d45428309263e"
+    }
+  ],
+  "schema": 1,
+  "semantic_parity": "Manual editorial comparison required; hashes are not proof of translation meaning",
+  "source_revision": "archive:49cc2640b63d7662cf3d40c168eaf036505bbf5f7f5f73de8de48099d452daca",
+  "table_check": "tables.py regenerates every marked table from original summaries and separately checked raw diagnostics"
+}

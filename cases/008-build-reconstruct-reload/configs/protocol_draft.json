@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "study": "CASE008_TWO_TRACK",
+  "status": "PRE_SMOKE_DESIGN",
+  "source_base": "2d817c215f9effc1c02868733a52b3ebc4060082",
+  "source_design_sha256": "c89db9d38fa82bdb277a285bbb0833179d5cdf0311ae859da0704a70789c8005",
+  "seed": 808190,
+  "analysis_seed": 808191,
+  "bootstrap_replicates": 5000,
+  "unit": "base scenario; task-stratified paired resampling",
+  "tasks": [
+    "retrieval",
+    "comparison",
+    "code"
+  ],
+  "Q": {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "counts": {
+      "smoke": 6,
+      "calibration": 256,
+      "development": 64,
+      "heldout": 192
+    },
+    "max_length": 1024,
+    "recipe": {
+      "method": "GPTQ",
+      "num_bits": 4,
+      "group_size": 128,
+      "symmetric": true,
+      "targets": "Linear excluding lm_head",
+      "activations": "BF16",
+      "actorder": null,
+      "dampening": 0.01,
+      "block_size": 128,
+      "offload_hessians": true,
+      "pipeline": "sequential"
+    },
+    "runtime": "existing vLLM 0.29.0",
+    "fixed_kv_bytes": 1073741824
+  },
+  "R": {
+    "model": "Qwen/Qwen3-0.6B",
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "counts": {
+      "smoke": 6,
+      "calibration": 128,
+      "development": 48,
+      "heldout": 192
+    },
+    "max_length": 512,
+    "positions": 32,
+    "layer": 13,
+    "groups": 16,
+    "removed": {
+      "I25": [
+        8,
+        12,
+        13,
+        14
+      ],
+      "P25": [
+        8,
+        13,
+        14,
+        15
+      ],
+      "S50": [
+        7,
+        8,
+        9,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "eta_grid": [
+      0.0001,
+      0.001,
+      0.01,
+      0.1,
+      1.0
+    ],
+    "eta_rule": "one common eta minimizes task/prompt-balanced mean relative squared native output error averaged equally over three structures on DEV; exact ties choose larger eta",
+    "fit_dtype": "CPU float64",
+    "inference_dtype": "BF16",
+    "teacher": "native BF16 MLP output at same post_attention_layernorm input",
+    "activation": "actual smaller gate/up path; not sliced full activation"
+  },
+  "data": {
+    "source": "new deterministic synthetic English scenarios and bounded integer programs",
+    "split_rule": "different scenario ID and disjoint factual/program seeds; no shared base scenario",
+    "families": "retrieval facts, comparison of two values, bounded arithmetic program",
+    "length_policy": "Variable length; whole essential prompt, no filler or truncation; caps Q1024/R512. Actual tokenizer lengths are recorded.",
+    "labels": "A B C D; verify one-token continuation and stable prefix",
+    "primary_model_metric": "task-balanced mean paired full-vocabulary gold next-token NLL change (candidate minus baseline)",
+    "secondary": [
+      "conditional choice NLL",
+      "choice Brier",
+      "gold margin",
+      "accuracy",
+      "regression/gain/wrong-to-wrong",
+      "KL baseline || candidate",
+      "allowed label mass",
+      "exact top ties"
+    ],
+    "baseline_floor": "report every family; flag weak baseline, no heldout filtering"
+  },
+  "timing": {
+    "ids": "first 4 hash-ordered heldout IDs per task",
+    "independent_processes": 3,
+    "warmups": 5,
+    "paired_blocks": 5,
+    "calls_per_block": 3,
+    "boundaries": [
+      "prefill last-position LM head",
+      "fixed 8-token greedy request"
+    ],
+    "allocation": "one model at a time; allocated/reserved and sampled whole device separately",
+    "maximum_process_gib": 13
+  },
+  "reload": {
+    "processes": 2,
+    "different_absolute_directory": true,
+    "offline": true,
+    "prompt_and_decode": true,
+    "repeats": "fixed smoke IDs only"
+  },
+  "deployment": "NOT_ASSESSED",
+  "publication": "LOCAL_REVIEW_ONLY",
+  "no_new_selector": true,
+  "Q_R_effects_not_pooled": true
+}

@@ -1,0 +1,8 @@
+{
+  "status": "PROPOSED_ONLY_NOT_INTEGRATED_OR_PUBLISHED",
+  "title": "Case 008 — Build, Reconstruct, Reload",
+  "en": "Built a GPTQ W4A16 checkpoint for Qwen3-4B-Instruct-2507 and standalone layer-13 pruned/reconstructed checkpoints for Qwen3-0.6B. Both tracks reload in fresh processes from a different directory. The W4 safetensors occupy 2,651,839,568 bytes versus 8,044,982,000 bytes for BF16. R evaluates whether fitting only the smaller down projection recovers native BF16 output error on 192 held-out scenarios. The tracks use different models and runtimes; their quality and cost are reported separately.",
+  "ko": "Qwen3-4B-Instruct-2507의 GPTQ W4A16 저장본과 Qwen3-0.6B의 13번 층 MLP를 축소·보정한 독립 저장본을 만들었습니다. 두 트랙 모두 다른 디렉터리에서 새 프로세스로 다시 불러왔습니다. W4 safetensors 크기는 2,651,839,568바이트로, BF16 원본의 8,044,982,000바이트와 비교했습니다. R은 작은 down projection만 적합했을 때 미관측 입력 192개의 원래 BF16 출력 오차가 얼마나 회복되는지 평가합니다. 모델과 실행기가 다르므로 두 트랙의 품질·비용을 따로 보고합니다.",
+  "source": "results/derived/summary.json",
+  "link": "cases/008-build-reconstruct-reload/README.md"
+}

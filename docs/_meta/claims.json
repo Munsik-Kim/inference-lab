@@ -1274,7 +1274,53 @@
         "docs/ko/GETTING_STARTED.md"
       ],
       "display_checks": []
+    },
+    {
+      "claim_id": "c008-tracks",
+      "case_id": "008",
+      "claim_en": "Q checkpoint conversion/reload and R fixed-MLP reconstruction are separate completed tracks; no request-speed or deployment approval.",
+      "claim_ko": "Q 저장본 변환·재실행과 R 고정 MLP 복구는 별도 완료 트랙이며 요청 가속이나 배포 승인이 아니다.",
+      "source_revision": "archive:49cc2640b63d7662cf3d40c168eaf036505bbf5f7f5f73de8de48099d452daca",
+      "source_path": "cases/008-build-reconstruct-reload/results/derived/summary.json",
+      "source_sha256": "f690d1d4dc44d87eb5003518d9f7e60eb9cf2b2305eb978a6385e23a885c5ece",
+      "source_locator": {
+        "kind": "json",
+        "checks": [
+          {
+            "pointer": "/tracks/Q/arms/Q-W4/correct",
+            "equals": 137
+          },
+          {
+            "pointer": "/tracks/R/repair/I25/n",
+            "equals": 192
+          },
+          {
+            "pointer": "/deployment",
+            "equals": "NOT_ASSESSED"
+          }
+        ]
+      },
+      "scope": "Two models/runtimes; 192 heldout prompts per track; short synthetic inputs; R 32 positions.",
+      "limits": "Local squared-error recovery is not accuracy. Gold-score changes mixed; code constant choices; no request speedup established.",
+      "evidence_kind": "original",
+      "docs_locations": [
+        "README.md",
+        "README.ko.md",
+        "docs/en/CASEBOOK.md",
+        "docs/ko/CASEBOOK.md",
+        "docs/en/PORTFOLIO.md",
+        "docs/ko/PORTFOLIO.md"
+      ],
+      "display_checks": []
     }
   ],
-  "protection_revision": "bc1da81a82bff2e2827c5b4cabc9082cb6db5484"
+  "protection_revision": "bc1da81a82bff2e2827c5b4cabc9082cb6db5484",
+  "additional_publications": [
+    {
+      "case_path": "cases/008-build-reconstruct-reload",
+      "archive_sha256": "49cc2640b63d7662cf3d40c168eaf036505bbf5f7f5f73de8de48099d452daca",
+      "manifest": "cases/008-build-reconstruct-reload/PUBLICATION_SHA256SUMS",
+      "download_metadata": "downloads/case008_build_reconstruct_reload_reviewed_publication_v2.json"
+    }
+  ]
 }

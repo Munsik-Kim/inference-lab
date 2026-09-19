@@ -8,14 +8,14 @@ import hashlib
 from common import ROOT, C6, C7, SUP, json_text, read, new_output, require, sha, script_json, source_manifest
 from data import load, source_url
 from layout import home, language_index
+from study import render as study_render, method_labels
 
 def link(url, text, cls=''):
     return f'<a class="{cls}" href="{escape(url, quote=True)}">{escape(text)}</a>'
 
-def explorer_body(t: dict, case: str) -> str:
+def explorer_body(t: dict, case: str, introduction: str) -> str:
     c7 = case == 'case007'
-    h = f'<p class="eyebrow">CASE {case[-3:]} · QWEN3-0.6B · RTX 5080</p><h1>{escape(t["c7title" if c7 else "c6title"])}</h1><p class="lede">{escape(t["c7intro" if c7 else "c6intro"])}</p>'
-    h = '<div class="page-intro">'+h+'</div>'
+    h = introduction
     h += '<p id="view-note" class="note"></p>'
     h += f'<section class="panel filter-panel"><h2>{t["filters"]}</h2><div class="filters">'
     for key in ('set','task','arm','budget' if c7 else 'readout','outcome'):
@@ -39,7 +39,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     require(set(languages['en']) == set(languages['ko']), 'Missing language counterpart key')
     template = Template((root/'presentation/templates/page.html').read_text())
     files = {}
-    for name in ('style.css','app.js','state.js','icon.svg'):
+    for name in ('style.css','study.css','app.js','state.js','icon.svg'):
         files['assets/'+name] = (root/'presentation/assets'/name).read_bytes()
     for case, data in payloads.items():
         files['data/'+case+'.js'] = ('window.EVIDENCE = '+script_json(data)+';\n').encode()
@@ -49,6 +49,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     names = {'en':['Execution compatibility','BF16 / FP8 extraction','Softmax approximation','Complete attention cost','Precision–cost settings','Answer decisions and ties','Structured MLP pruning'],
              'ko':['실행 호환성','BF16 / FP8 문서 추출','Softmax 수치 근사','Attention 전체 호출 비용','정밀도와 비용의 절충','답변 선택과 동률','구조화 MLP 압축']}
     for lang,t in languages.items():
+        t['methodLabels']=method_labels(lang)
         files[f'assets/{lang}.js'] = ('window.TEXT = '+script_json(t)+';\n').encode()
         other = 'ko' if lang == 'en' else 'en'
         for page in ('index','case007','case006','guide'):
@@ -62,7 +63,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 body+='<div class="actions">'+link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/START_HERE.md',t['beginner'])+' · '+link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/GLOSSARY.md',t['glossary'])+'</div>'
                 body+='<div class="actions">'+link(source_url(rev,C7+'/src/surgery.py'),t['code'])+' · '+link(source_url(rev,C6+'/src/intervention.py'),t['code'])+'</div>'
             else:
-                body=explorer_body(t,page)
+                body=explorer_body(t,page,study_render(root,payloads[page],lang))
                 path=C7 if page=='case007' else C6
                 body += '<div class="actions">'+link(source_url(rev,path+'/REPRODUCTION.md'),t['original'])+'</div>'
                 scripts=f'<script defer src="../assets/{lang}.js"></script><script defer src="../data/{page}.js"></script><script defer src="../assets/state.js"></script><script defer src="../assets/app.js"></script>'
@@ -71,6 +72,8 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
             if page == 'index':
                 navigation = ''.join(link('#'+target,t[key]) for target,key in [('capabilities','navCapabilities'),('tech-stack','navStack'),('projects','navProjects')])
             html=template.substitute(lang=lang,title=escape(t['siteTitle'] if page=='index' else t['guide'] if page=='guide' else t['case007' if page=='case007' else 'case006']),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=t['language'],body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=source_url(rev,C7+'/NOTICE.md'),scripts=scripts)
+            if page in ('case006','case007'):
+                html=html.replace('</head>', '<link rel="stylesheet" href="../assets/study.css"></head>')
             files[f'{lang}/{page}.html']=html.encode()
     # Explicit file set: no recursive copy of repository data, caches or archives.
     source_files = [p for folder in ('presentation','tools/showcase') for p in (root/folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts]

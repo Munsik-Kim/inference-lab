@@ -12,6 +12,8 @@ import hashlib
 import json
 import re
 import subprocess
+import sys
+import tempfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -207,7 +209,11 @@ def check_claims(root: Path, mapping: dict, pages: list[str], errors: list[str])
             continue
         if sha(source) != c['source_sha256']:
             errors.append('Changed source hash: ' + cid)
-        if c['source_revision'] != mapping['source_revision'] or not re.fullmatch('[0-9a-f]{40}', c['source_revision']):
+        archive_source = any(
+            c['source_revision'] == 'archive:'+entry['archive_sha256']
+            and c['source_path'].startswith(entry['case_path']+'/')
+            for entry in mapping.get('additional_publications', []))
+        if not archive_source and (c['source_revision'] != mapping['source_revision'] or not re.fullmatch('[0-9a-f]{40}', c['source_revision'])):
             errors.append('Invalid source revision: ' + cid)
         for key in ('claim_en', 'claim_ko', 'scope', 'limits'):
             if not c.get(key):
@@ -238,7 +244,7 @@ def check_claims(root: Path, mapping: dict, pages: list[str], errors: list[str])
     return len(claims)
 
 
-def check_protection(root: Path, base: str, errors: list[str], inventory: Path | None) -> int:
+def check_protection(root: Path, base: str, errors: list[str], inventory: Path | None, additional: set[str] | None = None) -> int:
     if inventory:
         data = json.loads(inventory.read_text())
         if data['base_revision'] != base:
@@ -247,7 +253,7 @@ def check_protection(root: Path, base: str, errors: list[str], inventory: Path |
             f = root/name
             if not f.is_file() or sha(f) != expected:
                 errors.append('Protected file changed: ' + name)
-        check_protected_additions(root, set(data['files']), errors)
+        check_protected_additions(root, set(data['files']) | (additional or set()), errors)
         return len(data['files'])
     result = subprocess.run(['git', 'ls-tree', '-r', '-z', base], cwd=root, capture_output=True, check=True)
     count = 0
@@ -270,7 +276,7 @@ def check_protection(root: Path, base: str, errors: list[str], inventory: Path |
         actual = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
         if actual != expected:
             errors.append('Protected Git blob changed: ' + name)
-    check_protected_additions(root, known, errors)
+    check_protected_additions(root, known | (additional or set()), errors)
     return count
 
 
@@ -311,6 +317,45 @@ def check_packages(root: Path, mapping: dict, errors: list[str]) -> list[str]:
     return downloads
 
 
+def check_additional_publications(root: Path, mapping: dict, errors: list[str]) -> set[str]:
+    """Authorize only exact files from an independently verified new publication."""
+    known = set()
+    for entry in mapping.get('additional_publications', []):
+        case = entry.get('case_path')
+        # This extension is specifically the reviewed Case008, not a directory wildcard.
+        if case != 'cases/008-build-reconstruct-reload' or entry.get('archive_sha256') != '49cc2640b63d7662cf3d40c168eaf036505bbf5f7f5f73de8de48099d452daca':
+            errors.append('Unknown additional publication'); continue
+        try:
+            with tempfile.TemporaryDirectory() as temp:
+                proc = subprocess.run([sys.executable, '-B', str(root/case/'publication/verify_publication.py'),
+                    '--root', str(root), '--output', str(Path(temp)/'check.json')], capture_output=True, text=True)
+                if proc.returncode:
+                    errors.append('Additional publication verification failed'); continue
+            if entry['manifest'] != case+'/PUBLICATION_SHA256SUMS':
+                raise ValueError('Unexpected manifest')
+            for line in (root/entry['manifest']).read_text().splitlines():
+                digest, name = line.split('  ', 1)
+                if name in known or sha(root/name) != digest:
+                    raise ValueError('Duplicate/hash mismatch')
+                known.add(name)
+            known.add(entry['manifest'])
+            expected = 'downloads/case008_build_reconstruct_reload_reviewed_publication_v2.json'
+            if entry['download_metadata'] != expected:
+                raise ValueError('Unexpected download metadata')
+            meta=json.loads((root/expected).read_text());name=meta['filename']
+            if name!='case008_build_reconstruct_reload_reviewed_publication_v2.zip':
+                raise ValueError('Unexpected download filename')
+            zip_path=root/'downloads'/name
+            if zip_path.is_symlink() or sha(zip_path)!=meta['sha256'] or zip_path.stat().st_size!=meta['bytes']:
+                raise ValueError('Download hash/size mismatch')
+            if sha(root/entry['manifest'])!=meta['publication_manifest_sha256']:
+                raise ValueError('Download manifest mismatch')
+            known.update([expected,'downloads/'+name])
+        except (OSError, KeyError, ValueError) as exc:
+            errors.append('Invalid additional publication: '+str(exc))
+    return known
+
+
 def audit(root: Path, inventory: Path | None = None) -> dict:
     root = root.resolve()
     errors: list[str] = []
@@ -320,7 +365,8 @@ def audit(root: Path, inventory: Path | None = None) -> dict:
     check_beginner_routes(root, errors)
     check_concept_figure(root, errors)
     count = check_claims(root, mapping, list(PAGES), errors)
-    protected = check_protection(root, mapping.get('protection_revision', mapping['source_revision']), errors, inventory)
+    additional = check_additional_publications(root, mapping, errors)
+    protected = check_protection(root, mapping.get('protection_revision', mapping['source_revision']), errors, inventory, additional)
     check_copy_hygiene(root, (*PAGES, CONCEPT_FIGURE, 'docs/_meta/claims.json', 'docs/_meta/MAINTENANCE.md'), errors)
     downloads = check_packages(root, mapping, errors)
     return {'status': 'PASS' if not errors else 'FAIL', 'errors': errors,
