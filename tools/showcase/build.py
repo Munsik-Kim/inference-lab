@@ -7,6 +7,7 @@ from string import Template
 import hashlib
 from common import ROOT, C6, C7, SUP, json_text, read, new_output, require, sha, script_json, source_manifest
 from data import load, source_url
+from layout import home, language_index
 
 def link(url, text, cls=''):
     return f'<a class="{cls}" href="{escape(url, quote=True)}">{escape(text)}</a>'
@@ -14,8 +15,9 @@ def link(url, text, cls=''):
 def explorer_body(t: dict, case: str) -> str:
     c7 = case == 'case007'
     h = f'<p class="eyebrow">CASE {case[-3:]} · QWEN3-0.6B · RTX 5080</p><h1>{escape(t["c7title" if c7 else "c6title"])}</h1><p class="lede">{escape(t["c7intro" if c7 else "c6intro"])}</p>'
+    h = '<div class="page-intro">'+h+'</div>'
     h += '<p id="view-note" class="note"></p>'
-    h += f'<section class="panel"><h2>{t["filters"]}</h2><div class="filters">'
+    h += f'<section class="panel filter-panel"><h2>{t["filters"]}</h2><div class="filters">'
     for key in ('set','task','arm','budget' if c7 else 'readout','outcome'):
         h += f'<label>{t[key]}<select id="{key}"></select></label>'
     h += f'<label>{t["query"]}<input id="query" type="search" autocomplete="off"></label></div>'
@@ -42,35 +44,17 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     for case, data in payloads.items():
         files['data/'+case+'.js'] = ('window.EVIDENCE = '+script_json(data)+';\n').encode()
         files['data/'+case+'.json'] = (json_text(data)+'\n').encode()
-    files['index.html'] = ('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="assets/icon.svg"><title>Inference Lab</title><link rel="stylesheet" href="assets/style.css"><main><h1>Inference Lab</h1><p>Recorded results · 저장된 실험 결과</p><div class="actions"><a class="button" href="ko/index.html">한국어</a><a class="button" href="en/index.html">English</a></div></main></html>').encode()
+    files['index.html'] = language_index().encode()
     case_paths = sorted(p.parent.relative_to(root).as_posix() for p in (root/'cases').glob('*/README.md'))
     names = {'en':['Execution compatibility','BF16 / FP8 extraction','Softmax approximation','Complete attention cost','Precision–cost settings','Answer decisions and ties','Structured MLP pruning'],
              'ko':['실행 호환성','BF16 / FP8 문서 추출','Softmax 수치 근사','Attention 전체 호출 비용','정밀도와 비용의 절충','답변 선택과 동률','구조화 MLP 압축']}
-    summary7 = payloads['case007']['summary']
-    mean = summary7['transfer']['4']['mean_paired_relative_error_delta']*100
     for lang,t in languages.items():
         files[f'assets/{lang}.js'] = ('window.TEXT = '+script_json(t)+';\n').encode()
         other = 'ko' if lang == 'en' else 'en'
         for page in ('index','case007','case006','guide'):
             scripts = ''
             if page == 'index':
-                body = f'<p class="eyebrow">LLM INFERENCE ENGINEERING</p><h1>{escape(t["tagline"])}</h1><p class="lede">{escape(t["intro"])}</p>'
-                body += '<div class="actions">'+link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/START_HERE.md',t['beginner'])+' · '+link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/GLOSSARY.md',t['glossary'])+'</div><div class="cards">'
-                for case in ('case007','case006'):
-                    c7=case=='case007'
-                    body += f'<article class="card"><p class="eyebrow">CASE {case[-3:]}</p><h2>{t["c7title" if c7 else "c6title"]}</h2><p>{t["c7intro" if c7 else "c6intro"]}</p>'
-                    if c7:
-                        body += f'<p class="number">{mean:+.4f} '+('percentage points' if lang=='en' else '퍼센트포인트')+'</p><p>'+('Mean paired local-error change, 25% deletion, 192 held-out prompts.' if lang=='en' else '25% 삭제, 미관측 입력 192개의 평균 국소 오차 차이.')+'</p>'
-                    else:
-                        a=payloads['case006']['summary']['groups']['standard/L4096']['arms']
-                        body += f'<p class="number">A_PUBLIC {a["A_PUBLIC"]["outcomes"]["flips"]["numerator"]}/192 · V4 {a["V4"]["outcomes"]["flips"]["numerator"]}/192</p><p>'+('Native choice changes; standard set.' if lang=='en' else '원래 출력 계산에서 표준셋의 선택 변경.')+'</p>'
-                    if c7:
-                        ci=summary7['transfer']['4']['ci95']
-                        body += f'<p class="scope">95% CI [{ci[0]*100:+.4f}, {ci[1]*100:+.4f}] '+('percentage points' if lang=='en' else '퍼센트포인트')+'</p>'
-                    body += f'<p class="scope">{t["c7note" if c7 else "c6limits"]}</p>'+link(case+'.html',t['open'],'button')+'</article>'
-                body += '</div><div class="actions">'+link('guide.html',t['guide'])+' · '+link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/PORTFOLIO.md',t['code'])+'</div>'
-                body += f'<h2>{t["cases"]}</h2><ol class="case-list">'+''.join('<li>'+link(source_url(rev,path+'/README.md'),name+(' (English source)' if lang=='en' else ' (기술 원문·영어)'))+'</li>' for path,name in zip(case_paths,names[lang]))+'</ol>'
-                body += '<p>'+link('https://github.com/Munsik-Kim/inference-lab/issues',t['contact'])+'</p>'
+                body = home(t, lang, payloads, case_paths, names[lang], rev)
             elif page == 'guide':
                 command='OUT=$(mktemp -d)\npython3 -B tools/showcase/build.py --output "$OUT/site"\npython3 -B tools/showcase/check.py --site "$OUT/site" --output "$OUT/site-check.json"\npython3 -B tools/showcase/replay_selection.py --output "$OUT/selection.json"'
                 body=f'<h1>{t["guide"]}</h1><p>{t["guide_intro"]}</p><pre>{escape(command)}</pre><p>{t["guide_result"]}</p><p>{t["guide_browser"]}</p>'
@@ -82,8 +66,9 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 path=C7 if page=='case007' else C6
                 body += '<div class="actions">'+link(source_url(rev,path+'/REPRODUCTION.md'),t['original'])+'</div>'
                 scripts=f'<script defer src="../assets/{lang}.js"></script><script defer src="../data/{page}.js"></script><script defer src="../assets/state.js"></script><script defer src="../assets/app.js"></script>'
-            body+=f'<p class="small">{t["evidence"]}: <code>{rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p>'
-            html=template.substitute(lang=lang,title=t['brand'] if page=='index' else page,asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=t['language'],body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=source_url(rev,C7+'/NOTICE.md'),scripts=scripts)
+            body+=f'<details class="provenance"><summary>{t["evidence"]}</summary><p class="small">{t["evidence"]}: <code>{rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p></details>'
+            navigation = ''.join('<a'+(' aria-current="page"' if page==target else '')+' href="'+target+'.html">'+escape(label)+'</a>' for target,label in [('case007','Case 007'),('case006','Case 006'),('guide',t['navGuide'])])
+            html=template.substitute(lang=lang,title=t['brand'] if page=='index' else t['guide'] if page=='guide' else t['case007' if page=='case007' else 'case006'],navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=t['language'],body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=source_url(rev,C7+'/NOTICE.md'),scripts=scripts)
             files[f'{lang}/{page}.html']=html.encode()
     # Explicit file set: no recursive copy of repository data, caches or archives.
     source_files = [p for folder in ('presentation','tools/showcase') for p in (root/folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts]
