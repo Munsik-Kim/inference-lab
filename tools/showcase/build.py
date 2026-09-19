@@ -54,7 +54,8 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         for page in ('index','case007','case006','guide'):
             scripts = ''
             if page == 'index':
-                body = f'<p class="eyebrow">LLM INFERENCE ENGINEERING</p><h1>{escape(t["tagline"])}</h1><p class="lede">{escape(t["intro"])}</p><div class="cards">'
+                body = f'<p class="eyebrow">LLM INFERENCE ENGINEERING</p><h1>{escape(t["tagline"])}</h1><p class="lede">{escape(t["intro"])}</p>'
+                body += '<div class="actions">'+link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/START_HERE.md',t['beginner'])+' · '+link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/GLOSSARY.md',t['glossary'])+'</div><div class="cards">'
                 for case in ('case007','case006'):
                     c7=case=='case007'
                     body += f'<article class="card"><p class="eyebrow">CASE {case[-3:]}</p><h2>{t["c7title" if c7 else "c6title"]}</h2><p>{t["c7intro" if c7 else "c6intro"]}</p>'
@@ -74,6 +75,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 command='OUT=$(mktemp -d)\npython3 -B tools/showcase/build.py --output "$OUT/site"\npython3 -B tools/showcase/check.py --site "$OUT/site" --output "$OUT/site-check.json"\npython3 -B tools/showcase/replay_selection.py --output "$OUT/selection.json"'
                 body=f'<h1>{t["guide"]}</h1><p>{t["guide_intro"]}</p><pre>{escape(command)}</pre><p>{t["guide_result"]}</p><p>{t["guide_browser"]}</p>'
                 body+=link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/GETTING_STARTED.md',t['guide'])
+                body+='<div class="actions">'+link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/START_HERE.md',t['beginner'])+' · '+link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/GLOSSARY.md',t['glossary'])+'</div>'
                 body+='<div class="actions">'+link(source_url(rev,C7+'/src/surgery.py'),t['code'])+' · '+link(source_url(rev,C6+'/src/intervention.py'),t['code'])+'</div>'
             else:
                 body=explorer_body(t,page)

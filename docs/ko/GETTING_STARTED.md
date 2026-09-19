@@ -7,8 +7,12 @@
 사례를 읽고, 기록된 입력을 탐색하거나, 작은 CPU 검사를 실행할 수 있습니다. GPU 재현에는 별도 환경과 명령이 있습니다.
 
 
+## 설치 없이 공개 결과 화면 열기
+
+[한국어 홈](https://munsik-kim.github.io/inference-lab/ko/index.html) · [Case007: 구조화 압축](https://munsik-kim.github.io/inference-lab/ko/case007.html) · [Case006: 답변 선택과 동률](https://munsik-kim.github.io/inference-lab/ko/case006.html). Pages 화면은 저장된 측정값을 보여주며 설치나 GPU가 필요 없습니다. 오프라인에서 보려면 아래처럼 로컬 빌드를 사용합니다.
+
 <a id="local-showcase"></a>
-## 한·영 로컬 결과 화면 열기
+## 한·영 결과 화면을 로컬에서도 열기
 
 새 화면에서 Case007의 그룹 선택과 Case006의 답변 점수를 볼 수 있습니다. 저장된 측정값을 읽으며, 원래 출력과 사후 출력 진단을 따로 보여줍니다. 이 저장소의 루트에서 Python 3.12로 실행하고 새 외부 출력 디렉터리를 사용합니다.
 
@@ -18,7 +22,7 @@ python3 -B tools/showcase/build.py --output "$OUT/site" --base-path /inference-l
 python3 -B tools/showcase/check.py --site "$OUT/site" --output "$OUT/site-check.json"
 ```
 
-브라우저에서 `$OUT/site/index.html`을 열어 한국어 또는 English를 고릅니다. 빌드는 Python 표준 라이브러리를 사용합니다. 스크립트와 표시 데이터가 로컬에 있어 서버 없이 `file://`로 열 수 있습니다. 같은 상대 리소스 경로는 `/inference-lab/` 하위 경로에서도 동작합니다. 현재는 로컬 미리보기이며 이 화면의 Pages를 활성화하지 않았습니다.
+브라우저에서 `$OUT/site/index.html`을 열어 한국어 또는 English를 고릅니다. 빌드는 Python 표준 라이브러리를 사용합니다. 스크립트와 표시 데이터가 로컬에 있어 서버 없이 `file://`로 열 수 있습니다. 같은 상대 리소스 경로는 `/inference-lab/` 하위 경로에서도 동작합니다. 공개된 Pages 화면과 로컬 빌드는 같은 정적 화면 코드를 사용합니다.
 
 Case007에서 25% 또는 50% 삭제를 고른 뒤 과제나 입력 ID를 선택합니다. 표는 같은 예산에서 B와 두 선택법을 비교합니다. Case006에서는 표준 또는 선정 스트레스, 원래 계산 또는 표시된 FP32 진단을 선택합니다. 후보는 항상 같은 출력 계산의 B와 대응합니다. 필터와 입력 ID는 URL fragment에 남아 새로고침·언어 전환 후에도 유지됩니다. JSON 다운로드에는 원래 수치 정밀도의 비교값을 넣습니다. 안내 사례는 과제별 첫 고정 ID이며 성공 사례만 고른 것이 아닙니다.
 

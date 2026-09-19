@@ -7,8 +7,12 @@ English | [한국어](../ko/GETTING_STARTED.md) · [Home](../../README.md)
 Read the studies, explore recorded inputs, or run a small CPU check. GPU reproduction has its own environment and commands.
 
 
+## Open the published result viewer
+
+[English home](https://munsik-kim.github.io/inference-lab/en/index.html) · [Case007: structured pruning](https://munsik-kim.github.io/inference-lab/en/case007.html) · [Case006: decisions and ties](https://munsik-kim.github.io/inference-lab/en/case006.html). These Pages screens use saved measurements and require no installation or GPU. Use the local build below for offline viewing.
+
 <a id="local-showcase"></a>
-## Open the bilingual local showcase
+## Open the bilingual showcase
 
 The new screen shows Case007 group selection and Case006 answer scores. It reads retained measurements, with separate native and post-hoc readout views. From this repository's root, use Python 3.12 and choose a new external output directory:
 
@@ -18,7 +22,7 @@ python3 -B tools/showcase/build.py --output "$OUT/site" --base-path /inference-l
 python3 -B tools/showcase/check.py --site "$OUT/site" --output "$OUT/site-check.json"
 ```
 
-Open `$OUT/site/index.html` in a browser, then choose English or 한국어. The build uses the Python standard library. All scripts and display data are local; `file://` works without a server. The same relative resource paths also support a site mounted at `/inference-lab/`. This is a local preview; Pages has not been activated for this presentation.
+Open `$OUT/site/index.html` in a browser, then choose English or 한국어. The build uses the Python standard library. All scripts and display data are local; `file://` works without a server. The same relative resource paths also support a site mounted at `/inference-lab/`. The published Pages viewer and a local build use the same static presentation code.
 
 In Case007, choose 25% or 50% deletion, then a task or input ID. The table compares B with both selectors at the same budget. In Case006, choose standard or selected stress, then native or the labelled FP32 diagnostic; each candidate stays paired with B under that readout. Filters and the chosen ID persist in the URL fragment and across language changes. JSON download includes the displayed comparison at its original numeric precision. Guided examples use the first fixed ID per task, not selected success stories.
 

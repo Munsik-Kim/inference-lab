@@ -4,7 +4,7 @@
 
 Inference Lab은 AI 모델을 더 가볍고 빠르게 바꾸려 할 때 실행 방식, 계산 시간, 답변이 어떻게 달라지는지 실험하는 프로젝트입니다. RTX 5080에서 모델을 바꾸고 비교하는 도구를 만들고, 입력별 결과를 살펴볼 수 있도록 기록했습니다. 요약에서 개별 예시, 코드, 재현 안내로 이어지는 경로를 제공합니다.
 
-[처음 보는 분](docs/ko/START_HERE.md) · [저장된 결과 보기](docs/ko/GETTING_STARTED.md#offline-explorers) · [구현 살펴보기](docs/ko/PORTFOLIO.md)
+[처음 보는 분](docs/ko/START_HERE.md) · [저장된 결과 보기](https://munsik-kim.github.io/inference-lab/ko/index.html) · [구현 살펴보기](docs/ko/PORTFOLIO.md)
 
 ## 세 가지 질문
 
@@ -31,7 +31,7 @@ MLP는 모델 안에서 정보를 변환하는 큰 계산 블록입니다. 압�
 
 기술명: Qwen3-0.6B · SwiGLU · INDEPENDENT / PAIRWISE · 구조화 가지치기(pruning).
 
-[결과와 정확한 지표](docs/ko/CASEBOOK.md#case-007) · [행렬 축소 코드](cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [탐색기 열기](docs/ko/GETTING_STARTED.md#case007-explorer)
+[결과와 정확한 지표](docs/ko/CASEBOOK.md#case-007) · [행렬 축소 코드](cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [탐색기 열기](https://munsik-kim.github.io/inference-lab/ko/case007.html)
 
 ### Case 006 — 전체 정답률이 비슷해도 개별 답은 달라질까?
 
@@ -42,7 +42,7 @@ MLP는 모델 안에서 정보를 변환하는 큰 계산 블록입니다. 압�
 
 기술명: BF16 기준선 · A_PUBLIC / V4 · 선택 변경(decision flip) · 출력 계산 민감성(readout sensitivity).
 
-[결과·한계·출력 계산 진단](docs/ko/CASEBOOK.md#case-006) · [한정된 연산을 바꾸는 코드](cases/006-attention-decision-stability/src/intervention.py) · [탐색기 열기](docs/ko/GETTING_STARTED.md#offline-explorers)
+[결과·한계·출력 계산 진단](docs/ko/CASEBOOK.md#case-006) · [한정된 연산을 바꾸는 코드](cases/006-attention-decision-stability/src/intervention.py) · [탐색기 열기](https://munsik-kim.github.io/inference-lab/ko/case006.html)
 
 ## 일곱 질문과 구현물
 
