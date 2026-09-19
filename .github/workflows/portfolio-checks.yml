@@ -1,0 +1,32 @@
+name: Portfolio CPU checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: portfolio-checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6; verified 2026-09-18
+        with:
+          persist-credentials: false
+          fetch-depth: 0 # Historical evidence/protection Git blobs are checked.
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6; verified 2026-09-18
+        with:
+          python-version: '3.12.14'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6; verified 2026-09-18
+        with:
+          node-version: '24.12.0'
+      - name: Filter and deep-link unit tests (no npm dependencies)
+        run: node tests/showcase/test_state.cjs
+      - name: Install CPU-only requirements in the hosted runner
+        run: python -m pip install -r tools/showcase/requirements-cpu.txt
+      - name: Docs, source preservation, scalar audits, selector and site
+        run: python -B tools/showcase/run_checks.py --output "$RUNNER_TEMP/portfolio-checks"

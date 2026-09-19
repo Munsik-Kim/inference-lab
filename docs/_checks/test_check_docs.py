@@ -156,5 +156,21 @@ class DocumentChecks(unittest.TestCase):
         self.assertTrue(any('Unsupported reference' in e for e in errors))
 
 
-if __name__ == '__main__':
+class ProtectionScope(unittest.TestCase):
+    def test_guides_are_editable_but_science_is_protected(self):
+        from check_docs import PUBLIC_FILES
+        self.assertIn('README.ko.md', PUBLIC_FILES)
+        self.assertIn('docs/en/PORTFOLIO.md', PUBLIC_FILES)
+        self.assertNotIn('cases/006-attention-decision-stability/README.md', PUBLIC_FILES)
+        self.assertNotIn('LICENSE', PUBLIC_FILES)
+
+    def test_changed_protected_bytes_are_detected(self):
+        from check_docs import check_protection
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);(root/'cases').mkdir();path=root/'cases/frozen.json';path.write_text('old')
+            inventory=root/'inventory.json';inventory.write_text(json.dumps({'base_revision':'a'*40,'files':{'cases/frozen.json':hashlib.sha256(b'old').hexdigest()}}))
+            path.write_text('changed');errors=[];check_protection(root,'a'*40,errors,inventory)
+            self.assertIn('Protected file changed: cases/frozen.json',errors)
+
+if __name__ == "__main__":
     unittest.main()

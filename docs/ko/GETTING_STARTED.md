@@ -2,7 +2,49 @@
 
 [English](../en/GETTING_STARTED.md) | 한국어 · [홈](../../README.ko.md)
 
-개별 실험을 모은 저장소이며 하나의 설치형 서비스나 공통 모델 서버 CLI는 아닙니다. 필요한 확인 수준을 선택하면 됩니다. 읽기와 저장된 결과 탐색에는 GPU가 필요하지 않습니다.
+사례를 읽고, 기록된 입력을 탐색하거나, 작은 CPU 검사를 실행할 수 있습니다. GPU 재현에는 별도 환경과 명령이 있습니다.
+
+
+<a id="local-showcase"></a>
+## 한·영 로컬 결과 화면 열기
+
+새 화면에서 Case007의 그룹 선택과 Case006의 답변 점수를 볼 수 있습니다. 저장된 측정값을 읽으며, 원래 출력과 사후 출력 진단을 따로 보여줍니다. 이 저장소의 루트에서 Python 3.12로 실행하고 새 외부 출력 디렉터리를 사용합니다.
+
+```bash
+OUT=$(mktemp -d)
+python3 -B tools/showcase/build.py --output "$OUT/site" --base-path /inference-lab/
+python3 -B tools/showcase/check.py --site "$OUT/site" --output "$OUT/site-check.json"
+```
+
+브라우저에서 `$OUT/site/index.html`을 열어 한국어 또는 English를 고릅니다. 빌드는 Python 표준 라이브러리를 사용합니다. 스크립트와 표시 데이터가 로컬에 있어 서버 없이 `file://`로 열 수 있습니다. 같은 상대 리소스 경로는 `/inference-lab/` 하위 경로에서도 동작합니다. 현재는 로컬 미리보기이며 이 화면의 Pages를 활성화하지 않았습니다.
+
+Case007에서 25% 또는 50% 삭제를 고른 뒤 과제나 입력 ID를 선택합니다. 표는 같은 예산에서 B와 두 선택법을 비교합니다. Case006에서는 표준 또는 선정 스트레스, 원래 계산 또는 표시된 FP32 진단을 선택합니다. 후보는 항상 같은 출력 계산의 B와 대응합니다. 필터와 입력 ID는 URL fragment에 남아 새로고침·언어 전환 후에도 유지됩니다. JSON 다운로드에는 원래 수치 정밀도의 비교값을 넣습니다. 안내 사례는 과제별 첫 고정 ID이며 성공 사례만 고른 것이 아닙니다.
+
+화면에서는 결정론적인 무관한 채움 문장과 토큰 배열을 생략하고 정확한 공개 입력·점수 기록으로 연결합니다. Case007 시간은 별도 입력 6개의 집계이며 화면의 각 입력별 측정값이 아닙니다. 네 선택지 점수로 선택지 지표를 재계산할 수 있습니다. 저장된 전체 어휘 KL과 전체 출력 유효성은 원래 측정에서 더 넓은 자료를 확인한 기록입니다.
+
+기존 Windows Edge를 CDP로 제어해 390·768·1280픽셀 화면에서 `file://`, 필터, 빈 결과, URL 복원, 언어 전환, JSON 다운로드를 실행했습니다. 화면 크기 에뮬레이션이며 **실제 iPad NOT_TESTED**입니다. 아래 기존 탐색기의 브라우저 기록은 과거 검사로 유지합니다. [선택적 브라우저 검사 코드](../../tools/showcase/browser_check.cjs) · [빌드·표시 데이터 검사](../../tools/showcase/check.py).
+
+<a id="cpu-selector"></a>
+## GPU 없이 Case007 선택기 다시 실행하기
+
+Python 3.12.14·NumPy 2.3.5가 있는 기존 CPU 환경을 사용합니다. Torch, Transformers, 모델 파일은 필요 없습니다. 아래 예제를 해당 환경에서 실행해 확인했습니다. 저장소 루트에서 `CPU_PY`를 그 인터프리터로 지정하고 새 출력 파일을 사용합니다.
+
+```bash
+CPU_PY=python3
+OUT=$(mktemp -d)
+"$CPU_PY" -B tools/showcase/replay_selection.py --output "$OUT/selection.json"
+"$CPU_PY" -B -m unittest discover -s tests/showcase -v
+```
+
+Wrapper는 원래 선택기를 고유한 모듈 이름으로 불러와 보정 행렬 Q에서 실행합니다. Source hash, 유한하고 대칭인 16×16 Q, 연속 그룹 대응, 고정 예산, 원래 사전식 동점 규칙을 검사합니다. 선택에 미관측 입력의 통계를 사용하지 않습니다.
+
+| 삭제 예산 | 다시 계산한 그룹과 저장 결과 일치 여부 |
+|---|---|
+| 4/16 | INDEPENDENT `[8,12,13,14]`, PAIRWISE `[8,13,14,15]` — 모두 일치 |
+| 8/16 | 두 방법 모두 `[7,8,9,11,12,13,14,15]` — 모두 일치 |
+
+방법별로 1,820개 또는 12,870개의 작은 CPU 목적값을 계산합니다. **모델 forward는 0회**입니다. JSON에는 목적값과 정의를 담습니다. 독립 선택은 선택된 대각 원소 합, 상호작용 선택은 선택된 부분행렬 전체 합을 사용하므로 목적함수가 다릅니다. 이 예제는 저장된 선택 로직을 확인하며 GPU 품질·시간은 원실험의 결과입니다.
+
 
 ## 1. 근거 읽기
 
@@ -56,7 +98,7 @@ python -B scripts/verify_publication.py --output /tmp/inference-lab-case006-docs
 
 ZIP만 풀었다면 먼저 그 안의 `006-attention-decision-stability` 디렉터리로 들어간 뒤 같은 verifier 명령을 실행합니다. 이 검사는 파일 식별과 목록을 확인하며 과학적 수치 계산 자체를 검사하는 것은 아닙니다.
 
-점수와 구간을 다시 계산하려면 [CPU 재분석 명령 — 기술 원문(영어)](../../cases/006-attention-decision-stability/REPRODUCTION.md#cpu-analysis-of-retained-measurements)을 따릅니다. 기록된 분석 환경은 Python 3.12.14와 NumPy 2.3.5이며, 그림 생성에는 Matplotlib 3.10.8과 Pillow 12.3.0도 사용했습니다. 이 안내는 설치 명령이나 의존성 변경을 추가하지 않습니다. 이번 문서 개편에서는 대형 재계산과 GPU 예시를 실행하지 않았고 기존 CPU 환경으로 최소 패키지 verifier만 실행했습니다.
+점수와 구간을 다시 계산하려면 [CPU 재분석 명령 — 기술 원문(영어)](../../cases/006-attention-decision-stability/REPRODUCTION.md#cpu-analysis-of-retained-measurements)을 따릅니다. 기록된 분석 환경은 Python 3.12.14와 NumPy 2.3.5이며, 그림 생성에는 Matplotlib 3.10.8과 Pillow 12.3.0도 사용했습니다. 이 안내는 설치 명령이나 의존성 변경을 추가하지 않습니다. 화면 검사는 선택기 재실행, 패키지 검증과 일부 스칼라 감사를 포함합니다. 전체 bootstrap·그림 재생성과 GPU 예시는 별도 절차입니다.
 
 `SHA256SUMS`는 원래 검토 snapshot을, `PUBLICATION_SHA256SUMS`는 자기 자신을 제외한 현재 통합 공개 파일을 설명합니다. 보충 자료의 고정 manifest도 별도로 유지합니다. 역사적 59개 exact-inventory 테스트는 원실험 전용 archive의 목록을 전제로 하므로 통합 트리에 그대로 적용하거나 새 파일에 맞추어 완화하지 않습니다. [검증 범위 — 기술 원문(영어)](../../cases/006-attention-decision-stability/REPRODUCTION.md#publication-package-verification).
 

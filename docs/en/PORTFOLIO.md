@@ -1,53 +1,60 @@
-# Engineering contribution and evidence
+# Tools, implementation and technical collaboration
 
 English | [한국어](../ko/PORTFOLIO.md) · [Home](../../README.md)
 
 ## A 30-second introduction
 
-<!-- claims: c006-native c006-readout -->
-Inference Lab investigates why successful execution, faster operators and stable model answers need different tests. It implements controlled comparisons, tasks with independently computed correct answers (gold), runtime and validity checks, and CPU-auditable reporting around existing inference components. B is the original BF16 baseline. A_PUBLIC and V4 name two low-precision settings applied to one attention operation in the same model; model weights remain BF16. In its representative Qwen study, A_PUBLIC changed 5 of 192 standard choices and V4 changed 8 of 192, including gains and different wrong answers. Readout maps the final hidden state to vocabulary scores. A same-input follow-up separates the original (native) output computation from a diagnostic (shadow) computation. It showed that native ties matter to that description without replacing the native result. The [casebook](CASEBOOK.md#case-006) and [offline evidence guide](GETTING_STARTED.md#offline-explorers) connect the observations to exact items. These are narrow synthetic studies, not a model-quality guarantee.
+<!-- claims: c007-transfer c007-quality c006-native c006-readout -->
+Inference Lab connects model changes to measurements you can inspect. Its compression pipeline chooses channel groups, slices a smaller Qwen MLP and compares reconstruction, answers and runtime on held-out inputs. Its attention study follows answer scores and choices through a scoped model intervention. The bilingual result screen puts those comparisons next to individual questions, while a CPU example reruns the original group selector from public calibration statistics.
 
-## Capabilities tied to working artifacts
+At 25% MLP deletion, PAIRWISE slightly lowered local error and preserved more baseline choices, but INDEPENDENT had better gold NLL. At 50%, the selected modules were identical; the frozen status is **COMPLETED_NO_CLEAR_TRANSFER**. In Case006, A_PUBLIC changed 5 of 192 standard choices and V4 changed 8 of 192. A same-input readout follow-up examines ties and the final vocabulary projection. These examples make both implementation choices and competing evaluation objectives visible. [Casebook](CASEBOOK.md) · [Open the local screen](GETTING_STARTED.md#local-showcase).
 
-- **Diagnose an execution path.** Case001 separates a selector accepting an unsupported CUTLASS implementation from the existing Triton fallback. [Before/after runner](../../cases/001-sm120-int8-fallback/run.py) and [recorded validation](../../cases/001-sm120-int8-fallback/README.md) distinguish the project's reproducer from the upstream fix.
-- **Define a fair cost boundary.** Case004 measures required preprocessing and output conversion inside a complete operator call, with kernel-only timing labelled separately. [Methods](../../cases/004-low-precision-attention-break-even/METHODS.md) and [backend adapters](../../cases/004-low-precision-attention-break-even/src/backends.py) expose that contract.
-- **Compare numerical approximations without moving the gate.** Case003 separates mapping and scale effects; Case005 preserves a failed development gate while showing a real trade-off. [Numerical audit](../../cases/003-efq-softmax-numerical-audit/ANALYSIS.md), [development analysis](../../cases/005-attention-precision-pareto/ANALYSIS.md) and [separate post-hoc review](../../cases/005-attention-precision-pareto/POSTHOC_THRESHOLD_REVIEW.md) retain their different evidence scopes.
-- **Control intervention inside a native model.** Case006 intercepts a single prefill layer, restores the original path and validates full outputs rather than sampled logits alone. [Scoped intervention](../../cases/006-attention-decision-stability/src/intervention.py) and [validity checks](../../cases/006-attention-decision-stability/src/validity.py) make the boundary inspectable.
-- **Investigate score interpretation.** The readout supplement separates exact ties, gold transitions and candidate-versus-B comparisons within each readout condition; native and FP32 remain separate views. [Methods](../../cases/006-attention-decision-stability/supplemental/readout-ties-v1/METHODS.md) and [scalar checker](../../cases/006-attention-decision-stability/supplemental/readout-ties-v1/scripts/verify_scalar.py) keep this post-hoc diagnosis distinct from fresh evaluation.
-- **Deliver inspectable evidence.** Exact inputs, source identities, paired records and local HTML connect aggregate tables to individual observations. [Input manifest](../../cases/006-attention-decision-stability/configs/eval_manifest_freeze_v1.json), [independent scalar calculation](../../cases/006-attention-decision-stability/scripts/audit_study.py) and [explorer instructions](GETTING_STARTED.md#offline-explorers) show the route.
+![Actual local Case007 comparison screen, showing one fixed code input](../../presentation/screenshots/case007-comparison.png)
 
-## Structural compression: a second implementation example
+*Local Edge screenshot: the first fixed CODE input, 25% deletion. [Case006 readout screen](../../presentation/screenshots/case006-readout.png) shows the separately labelled same-input diagnostic. These are selected views for navigation, not aggregate performance summaries.*
 
-<!-- claims: c007-transfer c007-quality -->
-Case007 converts selected channel groups into a genuinely smaller dense MLP, using scoped replacement and masked-versus-sliced checks. At 25%, PAIRWISE's held-out mean local error was 29.6288%, versus 29.8291% for INDEPENDENT. It stayed closer to the unpruned BF16 baseline but did not give the best gold-choice NLL. At 50% the selectors produced identical modules, so the frozen overall result remains **COMPLETED_NO_CLEAR_TRANSFER**; whole-model prefill acceleration was not established. This demonstrates selection, structural model changes and transfer evaluation without equating baseline preservation with task quality. [Casebook](CASEBOOK.md#case-007) · [Model surgery source](../../cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [Recorded explorer](GETTING_STARTED.md#case007-explorer).
+## Working capabilities and their evidence
 
-Qwen/Transformers supply the model; HOPE provides conceptual motivation in a separate MoE expert-pruning setting. The group's signed contribution identity is elementary, not a new pruning algorithm or a HOPE reproduction. [Case007 attribution and reused work](../../cases/007-interaction-aware-mlp-pruning/NOTICE.md). The same Codex-assistance and scalar-versus-GPU verification distinctions below apply.
+- **Runtime diagnosis:** a before/after runner isolates an upstream kernel-selection guard on SM120. [Case001 runner](../../cases/001-sm120-int8-fallback/run.py).
+- **Cost measurement:** attention adapters include smoothing, quantization and conversion in complete-call time. [Case004 adapters](../../cases/004-low-precision-attention-break-even/src/backends.py).
+- **Numerical analysis:** reference comparisons separate EFQ mapping and scale choice, while a fixed precision screen records its stopping decision. [Case003 analysis](../../cases/003-efq-softmax-numerical-audit/ANALYSIS.md) · [Case005 analysis](../../cases/005-attention-precision-pareto/ANALYSIS.md).
+- **Structural model changes:** matched row/column selection produces a smaller dense MLP, checked against a masked computation. [Case007 surgery](../../cases/007-interaction-aware-mlp-pruning/src/surgery.py).
+- **Input-level evaluation:** gold-grounded transitions, score shifts and exact ties are inspectable for each scenario. [Case006 analysis](../../cases/006-attention-decision-stability/ANALYSIS.md) · [readout scalar checker](../../cases/006-attention-decision-stability/supplemental/readout-ties-v1/scripts/verify_scalar.py).
+- **Analysis delivery:** source hashes connect display records to preserved evidence, and a small selector replay exposes the actual calibration objective. [Showcase builder](../../tools/showcase/build.py) · [CPU replay](../../tools/showcase/replay_selection.py).
+
+<a id="code-tour"></a>
+## A three-stop code tour
+
+<!-- claims: c006-implementation -->
+1. **Control a native attention call.** Start at [`ScopedAttention`](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/src/intervention.py#L30). `route` permits the layer-13 square prefill intervention; `__exit__` restores the prior registry entry. Read the [restoration-on-exception test](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/tests/test_core.py#L193).
+2. **Make the matrix smaller.** [`sliced`](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/007-interaction-aware-mlp-pruning/src/surgery.py#L6) maps retained groups to gate/up rows and down columns. `masked` supplies the reference; `replace_mlp` restores the original module in `finally`. The [shape/bias/equivalence test](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/007-interaction-aware-mlp-pruning/tests/test_core.py#L62) covers that contract.
+3. **Reject incomplete evidence.** [`assess`](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/src/validity.py#L10) requires full-output and routing checks. Pair joins reject missing, duplicate or mismatched inputs in the [original tests](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/tests/test_core.py#L249). The new [display checker](../../tools/showcase/check.py) compares the extracted display data with these preserved sources.
+
+## A 60–90 second demonstration script
+
+*Script for a live walkthrough; no recorded video is supplied.*
+
+“Open the local Case007 screen. B is the unpruned baseline, and the two columns beside it remove the same number of groups. Keep the 25% budget and choose the fixed CODE guide. This item shows why local reconstruction, baseline agreement and probability on the correct answer are different measurements. Change to 50%: the selected groups and module outputs match. Timing is shown separately for six fixed inputs, rather than attributed to this item.
+
+“Now open Case006. Select a standard input and compare the gold answer, top-score set and four probabilities. A regression loses a baseline-correct answer; a flip can also gain a correct answer or change between wrong answers. Switch to the labelled FP32 diagnostic: it uses the same scenarios and its own baseline readout. Finally, open the source link and run the CPU selector command. It enumerates group combinations from calibration Q and checks the recorded selection without a model forward.”
+
+## Three introduction lines with source links
+
+<!-- claims: c004-cost c005-stop -->
+- Built a group-selection and matrix-slicing pipeline with masked-versus-sliced and held-out comparisons. [Case007 methods](../../cases/007-interaction-aware-mlp-pruning/METHODS.md).
+- Implemented a single-layer Qwen intervention and paired analysis of answer probabilities, regressions, gains and ties. [Case006 methods](../../cases/006-attention-decision-stability/METHODS.md).
+- Measured complete attention cost and retained **STOP_DEV_SCREEN** alongside the observed precision–cost trade-off. [Case004 cost](../../cases/004-low-precision-attention-break-even/README.md) · [Case005 decision](../../cases/005-attention-precision-pareto/README.md).
 
 <a id="contribution-and-reuse"></a>
 ## Contribution and reuse
 
 <!-- claims: attribution -->
-The project's contribution is the harness, experiment controls, evidence collection, numerical/behavioral analysis and presentation. Qwen and Red Hat AI supply checkpoints. vLLM supplies the serving engine; PyTorch and Transformers supply numerical operators and model integration; SageAttention supplies the low-precision kernels. hclsys authored the Case001 guard. Han and coauthors developed EFQ-Softmax. These are not newly invented kernels or quantizers in this repository.
+The project's work is comparison execution, scoped adapters, matrix surgery, validity checks, numerical/behavioral analysis and evidence viewers. Qwen and Red Hat AI provide checkpoints; Transformers, PyTorch and vLLM provide model/runtime components; SageAttention provides low-precision kernels. hclsys authored the Case001 guard. Han and coauthors developed EFQ-Softmax. HOPE motivates interaction-aware deletion in a separate MoE expert-pruning setting; the dense-group objective follows directly from the chosen MLP decomposition.
 
-[Case001 attribution](../../cases/001-sm120-int8-fallback/NOTICE.md), [Case003 attribution](../../cases/003-efq-softmax-numerical-audit/NOTICE.md) and [Case006 attribution](../../cases/006-attention-decision-stability/NOTICE.md) identify original work and applicable licenses. The repository [Apache-2.0 license](../../LICENSE) does not replace upstream model terms. OpenAI Codex assisted implementation, local execution, tests, analysis and documentation. Separate CPU calculation paths establish consistency of retained records, not third-party GPU replication or an independent human review.
+OpenAI Codex assisted implementation, local execution, tests, analysis and writing. [Case001](../../cases/001-sm120-int8-fallback/NOTICE.md), [Case003](../../cases/003-efq-softmax-numerical-audit/NOTICE.md), [Case006](../../cases/006-attention-decision-stability/NOTICE.md) and [Case007 notices](../../cases/007-interaction-aware-mlp-pruning/NOTICE.md) credit reused work. Project code uses [Apache-2.0](../../LICENSE); model/upstream terms remain applicable.
 
-## Where this work is relevant
+## Technical collaboration
 
-**Research and evaluation engineering:** specifying comparable conditions, maintaining independent gold, recording failures, checking uncertainty and distinguishing what a result measures.
+The code supports discussions about **model-change evaluation**, **local inference diagnosis** and **reproducible analysis tools and result screens**. A useful starting point is a model boundary, a public input ID and a metric to compare. [Repository issues](https://github.com/Munsik-Kim/inference-lab/issues) provide a public technical-question channel; keep credentials and private customer data out of public reports.
 
-**Inference diagnostics and analysis-tool collaboration:** adapters around existing runtimes, provenance-aware comparison reports, CPU reanalysis and an offline evidence viewer. These are collaboration topics supported by the recorded implementations. Findings remain scoped to the tested models, device and tasks; deployment is not assessed.
-
-## Three evidence-backed introduction lines
-
-<!-- claims: c006-implementation c004-cost c005-stop -->
-- Built a controlled Qwen3-0.6B layer-13 prefill comparison that distinguishes baseline disagreement from gold-grounded gains and regressions. [Scope and implementation](../../cases/006-attention-decision-stability/METHODS.md).
-- Compared complete low-precision attention cost with fused BF16 and kept local-error rejection visible even at faster measured lengths. [Operator results](../../cases/004-low-precision-attention-break-even/README.md).
-- Preserved Case005's **STOP_DEV_SCREEN** while exposing the measured precision–cost trade-off and separate post-hoc interpretation. [Development decision](../../cases/005-attention-precision-pareto/README.md).
-
-## Demonstrate the work in three steps
-
-1. Read the standard result table and its independent scenario denominator. Name the intervention before showing any speed number.
-2. In the original explorer, inspect one item by ID: gold, baseline/candidate scores and outcome type. Then switch to selected stress and explain the selection rule.
-3. In the separate supplement, compare native ties and shadow readout for the same ID. Return to [limitations](../../cases/006-attention-decision-stability/LIMITATIONS.md): weak code utility, failed structured generation, small model-prefill effect and no deployment assessment remain part of the result.
-
-The [getting-started guide](GETTING_STARTED.md) explains local viewing and CPU verification. No hosted inference service is part of this demonstration.
+The evidence covers specific models, one device and synthetic tasks. Deployment is **NOT_ASSESSED**. CPU audits check retained scalars; excluded full vectors and independent GPU replication have a separate verification scope in the [reproduction guide](GETTING_STARTED.md).

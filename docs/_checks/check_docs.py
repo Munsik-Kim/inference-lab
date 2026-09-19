@@ -198,7 +198,7 @@ def check_protection(root: Path, base: str, errors: list[str], inventory: Path |
         mode, kind, expected = info.decode().split()
         name = rawname.decode()
         known.add(name)
-        if name == 'README.md':
+        if name in PUBLIC_FILES:
             continue
         count += 1
         f = root/name
@@ -257,7 +257,7 @@ def audit(root: Path, inventory: Path | None = None) -> dict:
     links = check_links(root, [*PAGES, 'docs/_meta/MAINTENANCE.md'], errors)
     check_pairs(root, errors)
     count = check_claims(root, mapping, list(PAGES), errors)
-    protected = check_protection(root, mapping['source_revision'], errors, inventory)
+    protected = check_protection(root, mapping.get('protection_revision', mapping['source_revision']), errors, inventory)
     blocked = re.compile(r'\bTODO\b|\bTBD\b|\bPLACEHOLDER\b|example\.(?:com|org)|turn\d+(?:search|view|fetch)\d+|filecite|/home/[^/\s]+/|/mnt/|C:\\\\Users|hf_[A-Za-z0-9]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}')
     for name in (*PAGES, 'docs/_meta/claims.json', 'docs/_meta/MAINTENANCE.md'):
         if (root/name).is_file() and blocked.search((root/name).read_text()):
@@ -276,7 +276,7 @@ def audit(root: Path, inventory: Path | None = None) -> dict:
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--repo', type=Path, default=Path(__file__).resolve().parents[2])
-    parser.add_argument('--inventory', type=Path, help='Optional private starting SHA256 inventory; otherwise compare protected Git blobs at source revision')
+    parser.add_argument('--inventory', type=Path, help='Optional private starting SHA256 inventory; otherwise compare protected Git blobs at protection_revision; authored guides are editable')
     parser.add_argument('--output', type=Path, required=True, help='New report outside the repository')
     args = parser.parse_args()
     if args.output.exists() or args.output.resolve().is_relative_to(args.repo.resolve()):

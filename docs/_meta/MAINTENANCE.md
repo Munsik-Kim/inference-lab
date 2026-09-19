@@ -17,3 +17,18 @@ When markdown-it-py is present, its extracted link destinations are cross-checke
 Follow [GitHub's README guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes) for repository-relative paths. Keep the root README as the entry point; do not add a `.github/README.md` that takes display precedence. The paired guides are [English](../en/CASEBOOK.md) and [Korean](../ko/CASEBOOK.md).
 
 Changing these introductions does **not** authorize changing `cases/`, `notes/`, `downloads/`, licenses, frozen protocols or historical packages. Do not regenerate experiment ZIPs/checksums as a side effect. A new scientific result or publication revision needs its own review. Refresh both language download links only after checking actual current metadata, while preserving historical archives.
+
+## Presentation tools
+
+The editable bilingual guides and `presentation/` sit outside frozen case inventories.
+`claims.json` keeps its original evidence revision; `protection_revision` separately
+identifies the starting repository whose non-guide files must stay unchanged.
+The source manifest in `presentation/` pins the exact public files read by the builder.
+A new build records both that evidence revision and hashes of the presentation code.
+Run the builder into a new external directory, then run `tools/showcase/check.py`.
+The deployment artifact is an explicit allowlist, not a repository copy.
+
+The CPU workflow and manual Pages workflow are prepared source files. Local results
+are not remote CI or Pages publication. Update live URLs and badges only after an
+approved remote run and readback. Preserve the case ZIPs and historical checksums
+when editing these guides. Translation meaning and prose still require editorial review.

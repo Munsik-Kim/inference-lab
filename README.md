@@ -2,52 +2,46 @@
 
 English | [한국어](README.ko.md)
 
-Inference Lab compares local LLM execution, the full cost of low-precision operations, and changes in model answers on an RTX 5080 16GB. It combines reproducible case studies with tools for recalculating results and inspecting individual evidence. The contribution is an evaluation system around existing models and kernels: controlled comparisons, retained failures, and explanations tied to measurements. Reading the reports and exploring the recorded results requires no GPU.
+Inference Lab connects model compression, numerical diagnostics and answer comparisons to recorded measurements on an RTX 5080. It includes tools that slice a smaller Qwen MLP, compare model outputs input by input, recalculate selection decisions on CPU, and explore results in a browser.
 
-[Casebook](docs/en/CASEBOOK.md) · [Explore the results](docs/en/GETTING_STARTED.md) · [Implementation and contribution](docs/en/PORTFOLIO.md)
+[Explore results](docs/en/GETTING_STARTED.md#local-showcase) · [Inspect the implementation](docs/en/PORTFOLIO.md#code-tour) · [Replay a selection](docs/en/GETTING_STARTED.md#cpu-selector)
 
-## Why these comparisons matter
-
-A faster kernel, a faster call including data conversion, a faster model, and a correct answer are different outcomes. A useful comparison must identify which one it measures. These seven cases move from execution compatibility to operator costs and model behavior, using different models, inputs and protocols. They form a reading path, not one continuous performance curve. Each case keeps its own settings, evidence and limits.
-
-## Start with Case006: when similar scores hide different answers
-
-<!-- claims: c006-native c006-readout c006-limits -->
-Case006 asks whether changing one attention operation can alter individual decisions even when aggregate accuracy looks similar. A scoped adapter replaced only zero-based layer 13's prompt-prefill attention in Qwen3-0.6B. All other layers and subsequent token decoding stayed BF16. B is the original BF16 baseline. A_PUBLIC and V4 name two low-precision settings applied to one attention operation in the same model; model weights remain BF16. Synthetic retrieval, comparison and code questions had independently computed correct answers (gold); the BF16 model was a comparator, not the answer key.
-
-On 192 standard scenarios, A_PUBLIC changed **5 of 192** choices relative to BF16, and V4 changed **8 of 192**. The changes included gains and different wrong answers, with no standard-set regressions (BF16 correct, candidate wrong). A separately selected 46-scenario stress set did contain regressions. For both settings, the 95% interval for the task-balanced mean paired change in gold-choice negative log-likelihood (NLL; candidate minus BF16) included zero. A positive change means a worse probability score for the correct choice; this does not establish equivalence. [Original results and scope](cases/006-attention-decision-stability/README.md).
-
-![Paired changes in gold-answer scores on the standard set](cases/006-attention-decision-stability/figures/01_score_changes.png)
-
-*Gold-choice NLL changes are candidate minus BF16; positive values mean less probability on the correct choice. Each dot is a scenario–candidate pair; the intervals reported above describe the task-balanced mean paired change. Score changes and answer correctness are distinct.*
-
-Readout is the final computation mapping a model hidden state to vocabulary scores. The post-hoc supplement distinguishes the original (native) output computation from a separate diagnostic (shadow) output computation. It found that every native standard-set choice change involved a top-score tie in the baseline or candidate. Evaluating the same final hidden states and represented BF16 weights through a separate FP32 output head produced **3 of 192** changes for each candidate, including new changes. Each candidate was compared with B under the same readout. It reused the same 192 standard and 46 stress scenarios; it is not fresh confirmation or an improved-model claim. [Separate readout diagnostic](cases/006-attention-decision-stability/supplemental/readout-ties-v1/README.md).
-
-The evidence viewer connects exact questions, gold labels, option scores and outcomes. The limits remain visible: BF16 answered only **15/64** code questions correctly, and all arms had **0/24** strictly valid structured outputs in the separate generation diagnostic. This is a completed controlled study, with deployment **NOT_ASSESSED**.
-
-## Choose a reading path
-
-1. **Understand the whole project:** [Casebook](docs/en/CASEBOOK.md), seven questions and what each comparison established.
-2. **Inspect the engineering contribution:** [Portfolio guide](docs/en/PORTFOLIO.md), linked to implementation, analysis and attribution.
-3. **Check results yourself:** [Getting started](docs/en/GETTING_STARTED.md), from the current ZIP and offline explorers to CPU reanalysis and separate GPU reproduction.
-
-## Seven questions, seven bounded results
-
-| Case and question | What was observed |
-|---|---|
-| [001 — Can the model start?](docs/en/CASEBOOK.md#case-001) | An upstream selection guard enabled generation where the original W8A8 path failed on SM120. |
-| [002 — What changes with an official FP8 model?](docs/en/CASEBOOK.md#case-002) | Memory and request time decreased, but document extraction accuracy was low for both releases. |
-| [003 — How faithful is a softmax approximation?](docs/en/CASEBOOK.md#case-003) | The interpretation changed with the scale-matched versus headroom-scale reference. |
-| [004 — Does the whole operator save time?](docs/en/CASEBOOK.md#case-004) | Some longer Qwen calls were faster; none of the three lengths passed the fixed local error screen. |
-| [005 — Can settings improve the trade-off?](docs/en/CASEBOOK.md#case-005) | Lower-error FP16 PV cost more time; no changed setting qualified, so fresh confirmation did not run. |
-| [006 — Do individual answers change?](docs/en/CASEBOOK.md#case-006) | Paired decisions exposed changes that aggregate accuracy alone did not describe. |
-| [007 — Which MLP groups should be removed?](docs/en/CASEBOOK.md#case-007) | Pairwise selection slightly reduced local error at 25%; 50% selections were identical, and closer baseline fidelity did not give the best gold NLL. |
+## Case 007: select channels, build a smaller MLP
 
 <!-- claims: c007-transfer c007-quality -->
-Case007 adds actual structural compression: it slices one MLP, the model's feed-forward block, at fixed deletion budgets. Its result remains **COMPLETED_NO_CLEAR_TRANSFER** under the frozen two-budget rule; whole-model prefill acceleration was not established. [English study](cases/007-interaction-aware-mlp-pruning/README.md) · [Download and inspect](docs/en/GETTING_STARTED.md#case007-explorer).
+The compression pipeline measures 16 channel groups in one Qwen3-0.6B MLP, chooses groups to delete, then slices the gate/up rows and down columns. INDEPENDENT scores groups separately; PAIRWISE includes their signed interactions. Both use the same deletion budget and calibration inputs, followed by 192 held-out prompts.
 
-## Contribution, reuse and scope
+At 25% deletion, PAIRWISE lowered mean local reconstruction error from 29.8291% to 29.6288%. At 50%, both selectors produced the same smaller module. The frozen two-budget result is **COMPLETED_NO_CLEAR_TRANSFER**. PAIRWISE stayed closer to baseline choices at 25%, while INDEPENDENT gave better gold-choice negative log-likelihood (NLL), a probability loss for the independently calculated correct answer. Lower NLL is better.
 
-The project implements comparison harnesses, input/gold construction, runtime checks, scalar audits and recorded-evidence viewers. Qwen and Red Hat AI supply checkpoints; vLLM, PyTorch, Transformers and SageAttention supply execution components. The Case001 guard is hclsys's work, and EFQ-Softmax is Han and coauthors' method. The [portfolio attribution](docs/en/PORTFOLIO.md#contribution-and-reuse) links the original notices and separates those contributions.
+The smaller **one-layer MLP** ran 1.176–1.412× faster locally; every whole-model prefill speedup interval included 1. The [comparison screen](docs/en/GETTING_STARTED.md#local-showcase) connects each input to removed groups, local error and answer transitions. [Study and measurements](cases/007-interaction-aware-mlp-pruning/README.md) · [Matrix surgery](cases/007-interaction-aware-mlp-pruning/src/surgery.py).
 
-OpenAI Codex assisted code, local checks, analysis and writing. Separate calculation paths check consistency; they do not constitute third-party GPU replication. These are device- and task-scoped investigations, including negative results, not a new quantizer, general SDK or deployed product. Project materials use [Apache-2.0](LICENSE); case notices retain upstream attribution and applicable licenses.
+## Case 006: follow scores and choices through an intervention
+
+<!-- claims: c006-native c006-readout c006-limits -->
+A scoped adapter changes only layer 13's prompt-prefill attention. B is the original BF16 baseline; A_PUBLIC and V4 are two low-precision attention settings in the same BF16-weight model. The viewer compares correct-answer probabilities, choices and regressions—answers B got right that a candidate lost.
+
+On 192 standard scenarios, A_PUBLIC changed **5 of 192** choices and V4 changed **8 of 192**. There were no regressions in that set; the separate 46-item selected stress set recorded two and one, respectively. Both task-balanced mean paired NLL-change 95% intervals included zero (candidate minus B; positive is worse). This does not establish equivalence.
+
+A post-hoc readout diagnostic recomputed the final vocabulary scores from the same hidden states and represented BF16 weights. Every native standard flip involved an exact top-score tie in B or its candidate. The separate FP32 head produced **3 of 192** flips per candidate, including new flips. The screen keeps these reused-input views separate. B's code score was **15/64**; strict structured generation was **0/24** for each arm. [Native study](cases/006-attention-decision-stability/README.md) · [Readout diagnostic](cases/006-attention-decision-stability/supplemental/readout-ties-v1/README.md).
+
+## Seven connected questions
+
+| Case | Tool and observation |
+|---|---|
+| [001 — Can the model execute?](docs/en/CASEBOOK.md#case-001) | A before/after runner verified an upstream SM120 selection guard. |
+| [002 — What changes with FP8?](docs/en/CASEBOOK.md#case-002) | Paired extraction tests measured resource savings and low task accuracy. |
+| [003 — Which numerical reference?](docs/en/CASEBOOK.md#case-003) | An equation audit separated code mapping from scale choice. |
+| [004 — What does the full call cost?](docs/en/CASEBOOK.md#case-004) | Complete attention timing included operand preparation and conversion. |
+| [005 — Which precision–cost trade-off?](docs/en/CASEBOOK.md#case-005) | A bounded screen retained measured trade-offs and STOP_DEV_SCREEN. |
+| [006 — Which individual answers change?](docs/en/CASEBOOK.md#case-006) | Paired scores and ties expose changes behind aggregate accuracy. |
+| [007 — Which MLP groups to remove?](docs/en/CASEBOOK.md#case-007) | Selection, physical slicing and held-out checks form one compression study. |
+
+These are related engineering questions with different protocols, not a single performance curve.
+
+## Use the tools and inspect the contribution
+
+The [getting-started guide](docs/en/GETTING_STARTED.md) covers the bilingual local showcase, preserved English explorers, a small CPU selection replay and full scalar audits. Viewing results needs no GPU. The [portfolio guide](docs/en/PORTFOLIO.md) offers a code tour and a 60–90 second demonstration script.
+
+The project implements comparison harnesses, model surgery, validity checks, analysis and evidence viewers around Qwen, Transformers, PyTorch, vLLM and SageAttention. [Attribution](docs/en/PORTFOLIO.md#contribution-and-reuse) credits the upstream methods and kernels. OpenAI Codex assisted implementation, execution, analysis and documentation. Project code uses [Apache-2.0](LICENSE); upstream terms remain applicable.
+
+This work supports technical discussions about model-change evaluation, local inference diagnosis and reproducible analysis tools. [Public technical questions](https://github.com/Munsik-Kim/inference-lab/issues) can refer to a case and public input ID. Results are scoped to the tested device and synthetic tasks; deployment remains **NOT_ASSESSED**.
