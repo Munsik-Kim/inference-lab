@@ -101,6 +101,30 @@ class Artifact(unittest.TestCase):
             self.assertTrue(all('token_ids' not in p for p in d['prompts'].values()))
     def test_language_keys_equal(self):
         self.assertEqual(set(read(ROOT/'presentation/content/en.json')),set(read(ROOT/'presentation/content/ko.json')))
+    def test_home_diagram_matches_recorded_groups(self):
+        from html.parser import HTMLParser
+        class Diagram(HTMLParser):
+            def __init__(self):
+                super().__init__();self.rows=[];self.current=None
+            def handle_starttag(self,tag,attrs):
+                a=dict(attrs)
+                if a.get('class')=='group-strip':
+                    self.current=[];self.rows.append(self.current)
+                if tag=='span' and 'group-cell' in a.get('class','').split():
+                    self.current.append('removed' in a['class'].split())
+        selection=read(ROOT/C7/'results/raw/selection.json')['selections']
+        expected=[[],selection['INDEPENDENT_4']['removed'],selection['PAIRWISE_4']['removed']]
+        for lang in ('en','ko'):
+            d=Diagram();d.feed((self.site/lang/'index.html').read_text())
+            self.assertEqual([len(row) for row in d.rows],[16,16,16])
+            self.assertEqual([[i for i,v in enumerate(row) if v] for row in d.rows],expected)
+    def test_home_rejects_inconsistent_selections(self):
+        from layout import home
+        d=read(self.site/'data/case007.json')
+        row=next(r for r in d['records'] if r['arm']=='PAIRWISE' and r['budget']=='4')
+        row['selected_groups']=[0,1,2,3]
+        with self.assertRaisesRegex(ValueError,'Inconsistent recorded selection'):
+            home({},'en',{'case007':d},[],[],'fixture')
     def test_reused_views_are_not_more_scenarios(self):
         d=read(self.site/'data/case006.json')
         self.assertEqual(len({r['id'] for r in d['records']}),238)
