@@ -2,6 +2,8 @@
 
 [English](../en/GETTING_STARTED.md) | 한국어 · [홈](../../README.ko.md)
 
+[처음 보는 분](START_HERE.md) · [쉬운 용어집](GLOSSARY.md)
+
 사례를 읽고, 기록된 입력을 탐색하거나, 작은 CPU 검사를 실행할 수 있습니다. GPU 재현에는 별도 환경과 명령이 있습니다.
 
 
@@ -86,6 +88,7 @@ python -B scripts/verify_publication.py --case . --output /tmp/inference-lab-cas
 
 이는 원본 보존과 공개 스칼라·표의 일관성 검사이며 비공개 벡터나 GPU 실행 검사가 아닙니다. 전체 CPU 재분석과 별도 GPU 절차는 [Case007 재현 안내 — 기술 원문(영어)](../../cases/007-interaction-aware-mlp-pruning/REPRODUCTION.md)를 따릅니다. case 전용 ZIP은 저장소 전체 백업이 아니므로 이전 사례 링크에는 저장소가 필요합니다. 이 안내에서 과거 브라우저 검사를 재실행하지 않았고 실제 iPad는 **NOT_TESTED**입니다.
 
+<a id="cpu-checks"></a>
 ## 3. CPU로 Case006 패키지를 확인한 뒤 수치를 재계산하기
 
 <!-- claims: c006-verification -->
@@ -105,3 +108,5 @@ ZIP만 풀었다면 먼저 그 안의 `006-attention-decision-stability` 디렉�
 ## 4. GPU 재현은 별도 실험으로 다루기
 
 커널 출력을 다시 얻으려면 고정 모델·소스·binary와 호환 하드웨어 환경이 필요합니다. 공개 스칼라 기록으로 제외된 hidden vector나 전체 Q/K/V를 복원할 수는 없습니다. [고정 로컬 GPU 안내 — 기술 원문(영어)](../../cases/006-attention-decision-stability/REPRODUCTION.md#pinned-local-gpu-replay)와 [원실험·readout 경로 연결 — 영어](../../cases/006-attention-decision-stability/REPRODUCTION.md#connecting-original-replay-to-the-readout-supplement)가 조건을 설명합니다. 이 안내 작성 중 실행한 절차가 아닌 향후 재현 지침입니다. CPU 재계산은 저장된 근거의 계산 일관성을 확인하며, 외부 GPU 재현이나 배포 적합성을 입증하지 않습니다.
+
+이번 입문 안내 편집에서는 문서·링크·파일 보존만 검사했습니다. 위의 실험 재계산 명령과 GPU 명령은 실행하지 않았으며, 기존 검사 기록은 해당 시점의 근거입니다.

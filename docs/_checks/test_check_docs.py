@@ -6,7 +6,9 @@ import tempfile
 import unittest
 from unittest.mock import patch
 from pathlib import Path
-from check_docs import anchors, check_claims, check_links, check_pairs, check_packages, check_protected_additions, PAGES
+from check_docs import (anchors, check_claims, check_links, check_pairs, check_packages,
+                        check_protected_additions, check_protection,
+                        check_beginner_routes, check_concept_figure, check_copy_hygiene, CONCEPT_FIGURE, PAGES)
 
 
 class DocumentChecks(unittest.TestCase):
@@ -155,6 +157,88 @@ class DocumentChecks(unittest.TestCase):
         errors=[];check_links(self.root,list(PAGES),errors)
         self.assertTrue(any('Unsupported reference' in e for e in errors))
 
+    def beginner_fixture(self):
+        for lang, home in (('en', 'README.md'), ('ko', 'README.ko.md')):
+            for name, prefix in ((home, f'docs/{lang}/'), (f'docs/{lang}/START_HERE.md', '')):
+                with (self.root/name).open('a') as stream:
+                    stream.write('\n'.join(f'[Case {n}]({prefix}CASEBOOK.md#case-{n:03d})' for n in range(1, 8)))
+                    stream.write(f'\n[Terms]({prefix}GLOSSARY.md) [Start]({prefix}START_HERE.md)\n')
+            with (self.root/f'docs/{lang}/GLOSSARY.md').open('a') as stream:
+                stream.write('\n'.join(f'<a id="term-{n}"></a>' for n in range(20)))
+
+    def test_beginner_routes_and_glossary_pairs(self):
+        self.beginner_fixture()
+        errors=[];check_beginner_routes(self.root, errors)
+        self.assertEqual(errors, [])
+
+    def test_missing_beginner_case_route(self):
+        self.beginner_fixture()
+        p=self.root/'docs/en/START_HERE.md'
+        p.write_text(p.read_text().replace('CASEBOOK.md#case-007', 'CASEBOOK.md'))
+        errors=[];check_beginner_routes(self.root, errors)
+        self.assertIn('Missing beginner case route: docs/en/START_HERE.md/7', errors)
+
+    def test_missing_new_language_pages(self):
+        for name in ('START_HERE.md', 'GLOSSARY.md'):
+            with self.subTest(name=name):
+                p=self.root/f'docs/ko/{name}';old=p.read_text();p.unlink()
+                errors=[];check_pairs(self.root, errors)
+                self.assertTrue(any('Missing language counterpart' in e for e in errors))
+                p.write_text(old)
+
+    def test_glossary_concept_mismatch(self):
+        self.beginner_fixture()
+        p=self.root/'docs/ko/GLOSSARY.md';p.write_text(p.read_text().replace('term-19', 'different'))
+        errors=[];check_beginner_routes(self.root, errors)
+        self.assertIn('Unequal glossary concept anchors', errors)
+
+    def test_broken_image_link(self):
+        with (self.root/'README.md').open('a') as stream:stream.write('\n![Concept](absent.svg)\n')
+        errors=[];check_links(self.root,['README.md'],errors)
+        self.assertTrue(any('Broken local link' in e for e in errors))
+
+    def svg_fixture(self, content=''):
+        p=self.root/CONCEPT_FIGURE;p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text('<svg xmlns="http://www.w3.org/2000/svg"><title>Route</title><desc>Concept only</desc>'+content+'</svg>')
+        return p
+
+    def test_declarative_svg(self):
+        self.svg_fixture('<text x="5" y="10">RUN</text>')
+        errors=[];check_concept_figure(self.root,errors)
+        self.assertEqual(errors, [])
+
+    def test_active_svg_is_rejected(self):
+        for content in ('<script>ignored()</script>', '<text onclick="ignored()">X</text>', '<image href="https://invalid.invalid/a"/>'):
+            with self.subTest(content=content):
+                self.svg_fixture(content)
+                errors=[];check_concept_figure(self.root, errors)
+                self.assertTrue(any('Invalid concept figure' in e for e in errors))
+
+    def test_svg_needs_accessible_description(self):
+        p=self.svg_fixture();p.write_text(p.read_text().replace('<desc>Concept only</desc>', ''))
+        errors=[];check_concept_figure(self.root,errors)
+        self.assertTrue(any('Invalid concept figure' in e for e in errors))
+
+    def test_scientific_change_not_hidden_by_editable_guides(self):
+        p=self.root/'cases/frozen/result.json';p.parent.mkdir(parents=True);p.write_text('original')
+        inv=self.root/'inventory.json'
+        inv.write_text(json.dumps({'base_revision':'a'*40,'files':{'cases/frozen/result.json':hashlib.sha256(p.read_bytes()).hexdigest()}}))
+        errors=[];self.assertEqual(check_protection(self.root,'a'*40,errors,inv),1);self.assertEqual(errors,[])
+        p.write_text('changed');errors=[];check_protection(self.root,'a'*40,errors,inv)
+        self.assertIn('Protected file changed: cases/frozen/result.json',errors)
+
+    def test_copy_hygiene_rejects_private_path_and_unfinished_copy(self):
+        for value in ('/home/fixture/private.json', 'ghp_'+'x'*25, 'turn42search8', 'TODO'):
+            with self.subTest(value=value):
+                (self.root/'README.md').write_text(value)
+                errors=[];check_copy_hygiene(self.root,('README.md',),errors)
+                self.assertTrue(any('Private identifier/credential/unfinished citation' in e for e in errors))
+
+    def test_copy_hygiene_accepts_normal_introduction(self):
+        (self.root/'README.md').write_text('Compare recorded answers. 결과를 비교합니다.')
+        errors=[];check_copy_hygiene(self.root,('README.md',),errors)
+        self.assertEqual(errors, [])
+
 
 class ProtectionScope(unittest.TestCase):
     def test_guides_are_editable_but_science_is_protected(self):
@@ -172,5 +256,6 @@ class ProtectionScope(unittest.TestCase):
             path.write_text('changed');errors=[];check_protection(root,'a'*40,errors,inventory)
             self.assertIn('Protected file changed: cases/frozen.json',errors)
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     unittest.main()

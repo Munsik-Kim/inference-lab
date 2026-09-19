@@ -2,6 +2,8 @@
 
 English | [한국어](../ko/PORTFOLIO.md) · [Home](../../README.md)
 
+[New here?](START_HERE.md) · [Plain-language glossary](GLOSSARY.md)
+
 ## A 30-second introduction
 
 <!-- claims: c007-transfer c007-quality c006-native c006-readout -->

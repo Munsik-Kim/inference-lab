@@ -32,3 +32,28 @@ The CPU workflow and manual Pages workflow are prepared source files. Local resu
 are not remote CI or Pages publication. Update live URLs and badges only after an
 approved remote run and readback. Preserve the case ZIPs and historical checksums
 when editing these guides. Translation meaning and prose still require editorial review.
+
+## Beginner explanation layer
+
+The two READMEs lead to paired START_HERE and GLOSSARY pages, then to CASEBOOK,
+the preserved case documents, source and evidence. Keep the plain explanation,
+technical term and evidence link in that order. Do not convert a limited result
+into a general speed or quality claim when shortening a sentence.
+
+The conceptual SVG is authored documentation, not an experimental result figure.
+The checker covers 12 language pages, beginner case routes, paired glossary IDs
+and the restricted static SVG. Source hashes and scientific result locators remain
+fixed in claims.json; display checks follow the actual page where a metric appears.
+Detailed NLL intervals and study decisions remain in CASEBOOK and the original
+cases when the introductory README links to them instead of repeating them.
+
+`protection_revision` records the current main used to start this documentation
+work; `source_revision` still identifies the existing claim evidence. Only the
+checker’s explicit PUBLIC_FILES may change; other existing files and additions
+under cases/downloads/notes are checked. Re-run with a private starting inventory
+when available. No case result is recalculated by these documentation checks.
+
+Translation equivalence and reading difficulty need an editorial review. Browser
+previews use installed Markdown rendering and local CSS, not a pixel-exact copy
+of GitHub. Never call an emulated viewport a real iPad test. Before publishing,
+compare against other open documentation PRs; this local layer does not merge them.

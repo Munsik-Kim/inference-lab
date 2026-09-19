@@ -2,6 +2,8 @@
 
 English | [한국어](../ko/CASEBOOK.md) · [Home](../../README.md)
 
+[New here?](START_HERE.md) · [Plain-language glossary](GLOSSARY.md)
+
 The cases build tools for execution diagnosis, cost measurement, numerical checks and model-change evaluation. Start with [Case007](#case-007) for matrix slicing or [Case006](#case-006) for answer comparisons, then follow the earlier investigations. Each uses its own model, inputs and protocol.
 
 <a id="case-001"></a>

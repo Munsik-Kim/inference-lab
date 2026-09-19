@@ -2,6 +2,8 @@
 
 English | [한국어](../ko/GETTING_STARTED.md) · [Home](../../README.md)
 
+[New here?](START_HERE.md) · [Plain-language glossary](GLOSSARY.md)
+
 Read the studies, explore recorded inputs, or run a small CPU check. GPU reproduction has its own environment and commands.
 
 
@@ -86,6 +88,7 @@ python -B scripts/verify_publication.py --case . --output /tmp/inference-lab-cas
 
 This checks preservation and retained scalar/table consistency, not private vectors or GPU execution. For full CPU reanalysis and the distinct GPU procedure, use [Case007 reproduction instructions](../../cases/007-interaction-aware-mlp-pruning/REPRODUCTION.md). The case-only ZIP is not a repository backup; links to earlier cases need the repository. Its historical browser checks are not rerun by this guide, and real iPad remains **NOT_TESTED**.
 
+<a id="cpu-checks"></a>
 ## 3. Check Case006, then reanalyze on CPU
 
 <!-- claims: c006-verification -->
@@ -105,3 +108,5 @@ To recalculate scores and intervals, follow [CPU reanalysis commands](../../case
 ## 4. Treat GPU reproduction as a separate experiment
 
 Recreating kernel outputs requires the pinned model, sources, binaries and compatible hardware environment. Public scalar records cannot reconstruct excluded hidden vectors or full Q/K/V. The [pinned-local GPU instructions](../../cases/006-attention-decision-stability/REPRODUCTION.md#pinned-local-gpu-replay) and [original-to-readout directory contract](../../cases/006-attention-decision-stability/REPRODUCTION.md#connecting-original-replay-to-the-readout-supplement) describe those requirements. They are future reproduction instructions, not steps executed for this guide. CPU recalculation establishes consistency of saved evidence, not independent GPU replication or deployment readiness.
+
+This beginner-layer edit checks documentation, links and file preservation only. The experiment reanalysis and GPU commands above were not run; earlier validation records describe their own execution dates.

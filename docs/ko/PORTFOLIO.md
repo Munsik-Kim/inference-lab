@@ -2,6 +2,8 @@
 
 [English](../en/PORTFOLIO.md) | 한국어 · [홈](../../README.ko.md)
 
+[처음 보는 분](START_HERE.md) · [쉬운 용어집](GLOSSARY.md)
+
 ## 30초 소개
 
 <!-- claims: c007-transfer c007-quality c006-native c006-readout -->

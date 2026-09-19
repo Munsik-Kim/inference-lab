@@ -2,46 +2,64 @@
 
 [English](README.md) | 한국어
 
-Inference Lab은 모델 압축, 수치 진단, 답변 비교 도구를 RTX 5080의 측정 결과와 연결한 추론 엔지니어링 프로젝트입니다. Qwen의 MLP를 실제로 줄이는 코드, 입력별 모델 출력을 비교하는 분석, CPU 선택기 재계산, 브라우저 결과 탐색기를 제공합니다.
+Inference Lab은 AI 모델을 더 가볍고 빠르게 바꾸려 할 때 실행 방식, 계산 시간, 답변이 어떻게 달라지는지 실험하는 프로젝트입니다. RTX 5080에서 모델을 바꾸고 비교하는 도구를 만들고, 입력별 결과를 살펴볼 수 있도록 기록했습니다. 요약에서 개별 예시, 코드, 재현 안내로 이어지는 경로를 제공합니다.
 
-[결과 보기](docs/ko/GETTING_STARTED.md#local-showcase) · [구현 살펴보기](docs/ko/PORTFOLIO.md#code-tour) · [선택기 재계산](docs/ko/GETTING_STARTED.md#cpu-selector)
+[처음 보는 분](docs/ko/START_HERE.md) · [저장된 결과 보기](docs/ko/GETTING_STARTED.md#offline-explorers) · [구현 살펴보기](docs/ko/PORTFOLIO.md)
 
-## Case 007: 채널을 선택하고 작은 MLP를 만듭니다
+## 세 가지 질문
+
+1. **실제로 실행되는가?** 측정한 GPU와 소프트웨어에서 모델이 작동하는 실행 경로를 확인합니다.
+2. **정말 빨라지는가?** 핵심 연산, 데이터 준비까지 포함한 호출, 모델 전체의 시간을 따로 측정합니다.
+3. **답변은 어떻게 달라지는가?** 전체 정답률과 함께, 같은 질문에서 정답에 주는 확률과 실제 선택을 비교합니다.
+
+## 질문이 발전해 온 과정
+
+실행(001) → 숫자를 가볍게 표현하기(002–003) → 연산 비용(004–005) → 모델 답변(006) → 실제 구조 압축(007).
+
+![실행, 변경, 측정, 비교, 검증으로 이어지는 읽기 순서](docs/assets/inference-reading-path.svg)
+
+*프로젝트를 읽는 개념적 순서입니다. 각 사례의 모델·입력·조건은 다르며, 화살표는 하나의 연속 실험에서 얻은 결과를 뜻하지 않습니다.*
+
+## 직접 볼 수 있는 대표 사례
+
+### Case 007 — AI 내부 계산의 어느 부분을 제거할 수 있을까?
 
 <!-- claims: c007-transfer c007-quality -->
-압축 도구는 Qwen3-0.6B 한 층 MLP의 채널을 16그룹으로 나눠 측정하고, 삭제할 그룹을 고른 뒤 gate/up 행과 down 열을 잘라냅니다. INDEPENDENT는 그룹을 개별 평가하고 PAIRWISE는 그룹 사이의 부호 있는 상호작용도 반영합니다. 같은 삭제 예산과 보정 입력을 사용하고, 선택에 쓰지 않은 입력 192개로 결과를 확인했습니다.
+MLP는 모델 안에서 정보를 변환하는 큰 계산 블록입니다. 압축 도구는 한 블록의 채널을 16그룹으로 나눠, 각 그룹을 따로 평가하는 선택법과 그룹 사이의 상호작용도 보는 선택법을 비교합니다. 선택한 뒤에는 `gate_proj`, `up_proj`, `down_proj` 행렬을 잘라 실제로 작은 블록을 만듭니다.
 
-25% 삭제에서 PAIRWISE의 평균 국소 재구성 오차는 29.8291%에서 29.6288%로 소폭 낮아졌습니다. 50%에서는 두 방법이 같은 축소 모듈을 만들었습니다. 고정된 두 예산 판정은 **COMPLETED_NO_CLEAR_TRANSFER**입니다. 25%의 PAIRWISE가 기준선 선택을 더 많이 보존했지만, 별도로 계산한 정답(gold) 확률의 음의 로그(NLL)는 INDEPENDENT가 더 좋았습니다. NLL은 낮을수록 좋습니다.
+그룹의 25%를 제거할 때 상호작용을 고려한 선택은 선택에 쓰지 않은 입력 192개에서 원래 블록 출력에 조금 더 가까웠습니다. 50%에서는 두 방법이 같은 구조를 골랐습니다. 축소한 **한 층 MLP**는 1.176–1.412배 빨랐지만, 전체 모델 측정에서는 가속이 뚜렷하지 않았습니다. 원래 모델을 가깝게 보존하는 것과 정답에 더 좋은 확률 점수를 주는 것도 다른 결과였습니다.
 
-축소한 **한 층 MLP**는 국소 호출에서 1.176–1.412배 빨랐고, 모델 전체 prefill 속도비 구간은 모두 1을 포함했습니다. [비교 화면](docs/ko/GETTING_STARTED.md#local-showcase)에서 입력별 삭제 그룹, 국소 오차, 정답 전환을 볼 수 있습니다. [실험과 측정값·영어](cases/007-interaction-aware-mlp-pruning/README.md) · [행렬 축소 코드](cases/007-interaction-aware-mlp-pruning/src/surgery.py).
+기술명: Qwen3-0.6B · SwiGLU · INDEPENDENT / PAIRWISE · 구조화 가지치기(pruning).
 
-## Case 006: 한 층을 바꾼 뒤 점수와 선택을 따라갑니다
+[결과와 정확한 지표](docs/ko/CASEBOOK.md#case-007) · [행렬 축소 코드](cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [탐색기 열기](docs/ko/GETTING_STARTED.md#case007-explorer)
+
+### Case 006 — 전체 정답률이 비슷해도 개별 답은 달라질까?
 
 <!-- claims: c006-native c006-readout c006-limits -->
-범위를 제한한 어댑터가 13번 층의 프롬프트 prefill attention만 바꿉니다. B는 원래 BF16 기준선이며, A_PUBLIC과 V4는 같은 BF16 가중치 모델에 적용한 두 저정밀 attention 설정입니다. 탐색기에서 정답 확률, 선택 변경, 기준선이 맞힌 답을 후보가 잃은 경우인 회귀를 비교합니다.
+입력의 정보를 조합하는 attention 연산 한 곳의 숫자 정밀도를 줄이고, 같은 질문에서 네 가지 보기 중 고른 답을 변경 전후로 추적하는 도구를 만들었습니다. 새로 맞힌 답, 기준선이 맞혔지만 후보가 틀린 답, 다른 오답으로 바뀐 경우를 볼 수 있습니다.
 
-표준 입력 192개 중 A_PUBLIC은 **192개 중 5개**, V4는 **192개 중 8개**의 선택이 바뀌었습니다. 이 집합의 회귀는 0회였고, 별도로 선정한 스트레스 입력 46개에서는 각각 2회·1회였습니다. 과제를 같은 비중으로 둔 평균 쌍별 NLL 변화의 95% 구간은 두 설정 모두 0을 포함했습니다. 변화는 후보−B이며 양수가 나빠지는 방향입니다. 이 결과로 동등성을 입증한 것은 아닙니다.
+두 저정밀 설정은 표준 입력 **192개 중 5개**, **192개 중 8개**의 선택을 바꿨습니다. 이 집합에서는 이전에 맞힌 답을 잃지 않았지만, 별도로 선정한 스트레스 입력에서는 그런 경우가 있었습니다. 같은 입력을 다시 살핀 후속 진단에서는 최고점 동률과 내부 상태를 마지막 단어 점수로 바꾸는 출력 계산을 조사했습니다. 한 모델의 한 층을 합성 질문으로 비교한 기록입니다.
 
-사후 출력 계산(readout) 진단은 같은 내부 상태와 BF16 가중치의 표현값에서 마지막 어휘 점수를 다시 계산했습니다. 원래 표준셋의 모든 선택 변경에는 B 또는 후보의 최고점 동률이 끼어 있었습니다. 별도 FP32 출력 계산에서는 각 후보 **192개 중 3개**가 바뀌었으며 새 변경도 생겼습니다. 화면은 같은 입력을 재사용한 두 계산을 따로 보여줍니다. B의 코드 정답은 **15/64개**, 엄격한 구조화 생성 성공은 각 설정 **0/24개**였습니다. [원실험·영어](cases/006-attention-decision-stability/README.md) · [출력 계산 진단·영어](cases/006-attention-decision-stability/supplemental/readout-ties-v1/README.md).
+기술명: BF16 기준선 · A_PUBLIC / V4 · 선택 변경(decision flip) · 출력 계산 민감성(readout sensitivity).
 
-## 일곱 가지 연결된 질문
+[결과·한계·출력 계산 진단](docs/ko/CASEBOOK.md#case-006) · [한정된 연산을 바꾸는 코드](cases/006-attention-decision-stability/src/intervention.py) · [탐색기 열기](docs/ko/GETTING_STARTED.md#offline-explorers)
 
-| 사례 | 도구와 관측 |
+## 일곱 질문과 구현물
+
+| 쉬운 질문 | 이 사례에서 볼 수 있는 것 |
 |---|---|
-| [001 — 모델을 실행할 수 있는가?](docs/ko/CASEBOOK.md#case-001) | 전후 비교 실행기로 upstream의 SM120 선택 guard를 확인했습니다. |
-| [002 — FP8에서 무엇이 달라지는가?](docs/ko/CASEBOOK.md#case-002) | 문서 추출을 쌍으로 비교해 자원 감소와 낮은 정답률을 측정했습니다. |
-| [003 — 어떤 수치 기준과 비교하는가?](docs/ko/CASEBOOK.md#case-003) | 방정식 검산으로 코드 매핑과 scale 선택을 나눠 봤습니다. |
-| [004 — 호출 전체 비용은 얼마인가?](docs/ko/CASEBOOK.md#case-004) | 입력 준비와 변환을 포함한 attention 시간을 측정했습니다. |
-| [005 — 정밀도와 비용은 어떻게 맞바뀌는가?](docs/ko/CASEBOOK.md#case-005) | 제한된 후보 비교에서 절충점과 STOP_DEV_SCREEN을 기록했습니다. |
-| [006 — 개별 답변은 어떻게 바뀌는가?](docs/ko/CASEBOOK.md#case-006) | 점수와 동률을 함께 보며 정답률 뒤의 선택 변경을 조사했습니다. |
-| [007 — 어느 MLP 그룹을 제거할 것인가?](docs/ko/CASEBOOK.md#case-007) | 선택, 실제 행렬 축소, 미관측 입력 검증을 연결했습니다. |
+| [001 — GPU에서 모델이 실행되지 않는다면?](docs/ko/CASEBOOK.md#case-001) | 기존 실행 경로 수정의 전후 비교 도구. 기술명: SM120, vLLM, W8A8. |
+| [002 — 적은 비트로 저장하면 메모리와 시간이 줄까?](docs/ko/CASEBOOK.md#case-002) | 공식 모델의 문서 추출 비교. 자원 사용은 줄었지만 과제 정답률은 낮았습니다. 기술명: BF16, FP8. |
+| [003 — 간단해진 계산은 원래 값과 얼마나 비슷할까?](docs/ko/CASEBOOK.md#case-003) | 비교 기준의 scale을 나누어 검사한 수치 오차. 기술명: EFQ-Softmax, FP32 모의 계산. |
+| [004 — 핵심 연산이 빠르면 호출 전체도 빨라질까?](docs/ko/CASEBOOK.md#case-004) | 준비 비용을 포함한 attention 시간. 긴 입력 일부는 빨랐지만 출력 오차는 고정 기준을 넘었습니다. 기술명: kernel, 전체 호출 비용. |
+| [005 — 속도와 오차를 함께 만족하는 설정이 있을까?](docs/ko/CASEBOOK.md#case-005) | 측정한 절충 관계. 바꿔 본 설정 중 두 조건을 만족한 것이 없어 새 확인 단계로 넘어가지 않았습니다. 기술명: 정밀도, 국소 오차. |
+| [006 — 어느 질문의 답이 바뀌는가?](docs/ko/CASEBOOK.md#case-006) | 입력별 답변 점수·선택·최고점 동률 진단. 기술명: NLL, top-score tie. |
+| [007 — 작은 계산 블록에 어느 그룹을 남길까?](docs/ko/CASEBOOK.md#case-007) | 그룹 선택, 실제 행렬 축소, 선택에 쓰지 않은 입력의 평가. 기술명: MLP, pruning. |
 
-사례들은 관련된 엔지니어링 질문을 서로 다른 조건에서 조사했으며, 하나의 연속 성능 곡선은 아닙니다.
+## 더 깊게 보기
 
-## 도구 사용과 구현 기여
+5분 [처음 보기](docs/ko/START_HERE.md)에서 시작하거나 [용어집](docs/ko/GLOSSARY.md)에서 궁금한 말을 찾아보세요. [사례 안내](docs/ko/CASEBOOK.md)는 방법·소스·정확한 결과로, [이용 안내](docs/ko/GETTING_STARTED.md)는 ZIP 다운로드·로컬 HTML·CPU 검사로 이어집니다. 탐색기는 저장된 측정값을 보여주므로 GPU가 필요 없습니다. GitHub의 HTML 미리보기는 작동 화면이 아닌 소스 코드입니다. 기존 탐색기 UI와 상세 기술 원문은 영어입니다.
 
-[시작 안내](docs/ko/GETTING_STARTED.md)는 한·영 로컬 화면, 보존된 영어 탐색기, 작은 CPU 선택기 예제와 스칼라 검산을 연결합니다. 결과를 보는 데 GPU는 필요 없습니다. [포트폴리오](docs/ko/PORTFOLIO.md)에는 코드 읽기 순서와 60–90초 시연 대본이 있습니다.
+## 기여와 출처
 
-Qwen, Transformers, PyTorch, vLLM, SageAttention 위에 비교 실행기, 모델 구조 변경, 유효성 검사, 분석과 결과 탐색기를 구현했습니다. [기여·출처](docs/ko/PORTFOLIO.md#contribution-and-reuse)에서 기존 방법과 커널의 저자를 확인할 수 있습니다. OpenAI Codex가 구현·실행·분석·문서 작성을 지원했습니다. 프로젝트 코드는 [Apache-2.0](LICENSE)이며 upstream 이용 조건은 별도입니다.
-
-모델 변경 전후 평가, 로컬 추론 문제 진단, 재현 가능한 분석 도구를 주제로 기술 협업을 논의할 수 있습니다. [공개 기술 질문](https://github.com/Munsik-Kim/inference-lab/issues)에는 사례와 공개 입력 ID를 연결할 수 있습니다. 결과는 측정한 장치와 합성 과제의 범위이며 배포 판단은 **NOT_ASSESSED**입니다.
+공개 모델과 실행 라이브러리에 비교 실행기, 행렬 축소 도구, 수치 검사와 근거 탐색기를 연결했습니다. [포트폴리오의 기여·출처](docs/ko/PORTFOLIO.md#contribution-and-reuse)에서 Qwen, Transformers, PyTorch, vLLM, SageAttention 및 기존 방법·수정의 저자를 확인할 수 있습니다. OpenAI Codex가 구현·실행·분석·작성을 지원했습니다. 프로젝트 자료는 [Apache-2.0](LICENSE)을 따르며 사례별 고지에 upstream 조건을 남겼습니다. 이 작업은 모델 변경 평가와 추론 문제 진단에 연결되며, 배포 적합성은 평가하지 않았습니다.
