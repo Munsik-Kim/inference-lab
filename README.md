@@ -1,10 +1,10 @@
-# Inference Lab
+# DIOVA
 
 English | [한국어](README.ko.md)
 
-**Model compression · GPU measurement · Answer comparison**
+**D**eep-learning **I**nference **O**ptimization, **V**alidation & **A**nalysis
 
-Inference Lab implements tools to change PyTorch model operations and structure, then compare GPU runtime, memory use and answer changes. Reproducible code and item-level result explorers connect the implementation to recorded RTX 5080 experiments.
+DIOVA connects model compression with inference measurement and output analysis. The project includes PyTorch model adapters, RTX 5080 measurements, and tools for exploring individual results.
 
 **Python · PyTorch · Transformers · vLLM · NumPy**
 
@@ -82,5 +82,7 @@ The two settings changed 5 of 192 and 8 of 192 standard-set choices. Neither los
 Read the five-minute [introduction](docs/en/START_HERE.md) or look up a term in the [glossary](docs/en/GLOSSARY.md). The [Casebook](docs/en/CASEBOOK.md) leads to methods, source and exact results. [Getting started](docs/en/GETTING_STARTED.md) explains ZIP downloads, local HTML and CPU checks. The explorers show saved measurements and need no GPU; GitHub's HTML source view displays code, not the running screen.
 
 ## Contribution and sources
+
+DIOVA stands for **Deep-learning Inference Optimization, Validation & Analysis**.
 
 The project builds comparison runners, model-slicing adapters, numerical checks and evidence viewers around public models and execution libraries. The [portfolio](docs/en/PORTFOLIO.md#contribution-and-reuse) credits Qwen, Transformers, PyTorch, vLLM, SageAttention and the upstream methods and fixes. OpenAI Codex assisted implementation, execution, analysis and writing. [Apache-2.0](LICENSE) applies to project materials; case notices retain upstream terms. These studies support work on model-change evaluation and inference diagnostics; deployment suitability remains unevaluated.

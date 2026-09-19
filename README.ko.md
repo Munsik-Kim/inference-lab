@@ -1,10 +1,10 @@
-# Inference Lab
+# DIOVA
 
 [English](README.md) | 한국어
 
-**모델 압축 · GPU 성능 측정 · 답변 비교**
+**D**eep-learning **I**nference **O**ptimization, **V**alidation & **A**nalysis
 
-PyTorch 모델의 계산과 구조를 바꾸고, GPU에서 실행 시간·메모리·답변 변화를 비교하는 도구를 구현했습니다. RTX 5080 실험의 재현 코드와 입력별 결과 화면을 함께 제공합니다.
+DIOVA는 딥러닝 모델을 압축하고 실행 성능과 답변 변화를 비교하는 프로젝트입니다. PyTorch로 구현한 모델 수정 도구, RTX 5080 측정, 입력별 결과 탐색기를 함께 제공합니다.
 
 **Python · PyTorch · Transformers · vLLM · NumPy**
 
@@ -82,5 +82,7 @@ MLP는 모델 안에서 정보를 변환하는 계산 블록입니다. 채널 �
 5분 [처음 보기](docs/ko/START_HERE.md)에서 시작하거나 [용어집](docs/ko/GLOSSARY.md)에서 궁금한 말을 찾아보세요. [사례 안내](docs/ko/CASEBOOK.md)는 방법·소스·정확한 결과로, [이용 안내](docs/ko/GETTING_STARTED.md)는 ZIP 다운로드·로컬 HTML·CPU 검사로 이어집니다. 탐색기는 저장된 측정값을 보여주므로 GPU가 필요 없습니다. GitHub의 HTML 미리보기는 작동 화면이 아닌 소스 코드입니다. 기존 탐색기 UI와 상세 기술 원문은 영어입니다.
 
 ## 기여와 출처
+
+DIOVA는 **Deep-learning Inference Optimization, Validation & Analysis**의 약자입니다.
 
 공개 모델과 실행 라이브러리에 비교 실행기, 행렬 축소 도구, 수치 검사와 근거 탐색기를 연결했습니다. [포트폴리오의 기여·출처](docs/ko/PORTFOLIO.md#contribution-and-reuse)에서 Qwen, Transformers, PyTorch, vLLM, SageAttention 및 기존 방법·수정의 저자를 확인할 수 있습니다. OpenAI Codex가 구현·실행·분석·작성을 지원했습니다. 프로젝트 자료는 [Apache-2.0](LICENSE)을 따르며 사례별 고지에 upstream 조건을 남겼습니다. 이 작업은 모델 변경 평가와 추론 문제 진단에 연결되며, 배포 적합성은 평가하지 않았습니다.

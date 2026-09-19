@@ -7,7 +7,7 @@ English | [한국어](../ko/PORTFOLIO.md) · [Home](../../README.md)
 ## A 30-second introduction
 
 <!-- claims: c007-transfer c007-quality c006-native c006-readout -->
-Inference Lab implements tools to change PyTorch model operations and structure, then compare GPU runtime, memory use and answer changes. Reproducible code and item-level result explorers connect the implementation to recorded RTX 5080 experiments. The implementation covers model adapters and matrix slicing, GPU cost and answer comparisons, and CPU replay with result interfaces. See [technologies by task](../../README.md#tech-stack), then follow the code tour below to functions and tests.
+DIOVA connects model compression with inference measurement and output analysis. The project includes PyTorch model adapters, RTX 5080 measurements, and tools for exploring individual results. The implementation covers model adapters and matrix slicing, GPU cost and answer comparisons, and CPU replay with result interfaces. See [technologies by task](../../README.md#tech-stack), then follow the code tour below to functions and tests.
 
 At 25% MLP deletion, PAIRWISE slightly lowered local error and preserved more baseline choices, but INDEPENDENT had better gold NLL. At 50%, the selected modules were identical; the frozen status is **COMPLETED_NO_CLEAR_TRANSFER**. In Case006, A_PUBLIC changed 5 of 192 standard choices and V4 changed 8 of 192. A same-input readout follow-up examines ties and the final vocabulary projection. These examples make both implementation choices and competing evaluation objectives visible. [Casebook](CASEBOOK.md) · [Open the local screen](GETTING_STARTED.md#local-showcase).
 
