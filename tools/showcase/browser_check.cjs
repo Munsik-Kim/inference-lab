@@ -93,6 +93,32 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
         expect(await e('document.documentElement.scrollWidth<=innerWidth+2'),'Home/guide layout '+lang+page+width);
       }
     }
+    for(const lang of ['en','ko']) {
+      await send('Page.navigate',{url:new URL(lang+'/index.html',base).href});await wait(250);
+      expect(await e('[...document.querySelectorAll(".study-card .case-number")].map(e=>e.textContent).join(",")')==='008,007,006','Case008 featured first '+lang);
+      await send('Page.navigate',{url:new URL(lang+'/case008.html',base).href});await wait(250);
+      expect(await e('document.querySelectorAll(".track-panel").length')===2,'Two separate Case008 tracks '+lang);
+      expect(await e('document.getElementById("q-file-reduction").textContent')==='67.04%','Recorded Q file reduction '+lang);
+      expect(await e('document.querySelectorAll(".repair-card").length')===3,'Three fixed repaired structures '+lang);
+      for(const width of [390,768,1280]) {
+        await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});await wait(50);
+        expect(await e('document.documentElement.scrollWidth<=innerWidth+2'),'Case008 layout '+lang+width);
+        if(lang==='ko')for(const track of ['q','r']) {
+          await e('document.getElementById("track-'+track+'").scrollIntoView()');await wait(40);
+          const shot=await send('Page.captureScreenshot',{format:'png'});
+          fs.writeFileSync(path.join(out,'case008-'+track+'-'+width+'.png'),Buffer.from(shot.data,'base64'));
+        }
+      }
+      await e('[...document.querySelectorAll("a")].find(a=>a.getAttribute("href")==="#track-r").click()');await wait(80);
+      expect(await e('location.hash')==='#track-r','R section link '+lang);
+      await send('Page.reload');await wait(250);
+      expect(await e('location.hash')==='#track-r','Case008 reload section '+lang);
+      const target=await e('document.getElementById("language").href');
+      await send('Page.navigate',{url:target});await wait(250);
+      expect(await e('location.hash')==='#track-r','Case008 language retains section '+lang);
+      await e('document.getElementById("language").focus()');
+      expect(await e('getComputedStyle(document.activeElement).outlineStyle')!=='none','Case008 keyboard focus '+lang);
+    }
     const forbidden=requests.filter(x=>/^https?:/.test(x)&&(u.protocol==='file:'||new URL(x).origin!==u.origin));
     expect(errors.length===0,'No console exceptions/errors');expect(responseErrors.length===0,'No HTTP resource failures');expect(forbidden.length===0,'No external runtime requests');
     fs.writeFileSync(path.join(out,'browser.json'),JSON.stringify({status:'PASS',browser:version.Browser,node:process.version,os:process.platform,protocol:u.protocol,method:'existing Edge, CDP, fresh temporary profile',viewports:[390,768,1280],checks,console_errors:errors,external_requests:forbidden,http_resource_failures:responseErrors,screenshots:fs.readdirSync(out).filter(name=>name.endsWith('.png')).sort(),real_ipad:'NOT_TESTED'},null,2));

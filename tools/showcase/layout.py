@@ -25,7 +25,7 @@ def acronym_line(line: str) -> str:
 
 
 def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
-         revision: str) -> str:
+         revision: str, data8: dict | None = None) -> str:
     if len(case_paths) != len(names):
         raise ValueError('Every case needs a translated archive title')
     docs = f'https://github.com/Munsik-Kim/inference-lab/blob/main/docs/{lang}/'
@@ -52,14 +52,14 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
         out += anchor('#'+target,t[key],'text-link')
     out += '</div></section><section id="capabilities" class="cap-section"><h2>'+text('capHeading')+'</h2><div class="cap-grid">'
     evidence = [
-        ('model-structure', 'cases/006-attention-decision-stability/src/intervention.py', 'cases/007-interaction-aware-mlp-pruning/tests/test_core.py'),
+        ('model-structure', 'tools/modelpack/artifact.py', 'cases/008-build-reconstruct-reload/tests/test_core.py'),
         ('gpu-comparison', 'cases/002-bf16-fp8-document-extraction/scripts/run.py', 'cases/004-low-precision-attention-break-even/src/timing.py'),
         ('result-delivery', 'tools/showcase/replay_selection.py', 'tests/showcase/test_showcase.py'),
     ]
     # Case code is pinned to the unchanged evidence revision. Display code links to
     # the repository implementation; the build manifest identifies this local edit.
     for i,(cid,impl,test) in enumerate(evidence,1):
-        prefix = source if i < 3 else 'https://github.com/Munsik-Kim/inference-lab/blob/main/'
+        prefix = (f'https://github.com/Munsik-Kim/inference-lab/blob/{C8_REVISION}/' if i == 1 else source) if i < 3 else 'https://github.com/Munsik-Kim/inference-lab/blob/main/'
         out += '<article class="cap-card" id="'+cid+'"><span class="case-number" aria-hidden="true">0'+str(i)+'</span><h3>'+text(f'cap{i}Title')+'</h3>'
         out += '<p>'+text(f'cap{i}Body')+'</p><p class="cap-tech">'+text(f'cap{i}Tech')+'</p><div class="cap-links">'
         out += anchor(prefix+impl,t[f'cap{i}Link1'])+anchor(prefix+test,t[f'cap{i}Link2'])+'</div></article>'
@@ -68,6 +68,14 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
         out += '<div><dt>'+text(f'stack{i}Title')+'</dt><dd><strong>'+text(f'stack{i}Tech')+'</strong><p>'+text(f'stack{i}Body')+'</p></dd></div>'
     out += '</dl>'+anchor(docs+'PORTFOLIO.md#code-tour',t['stackEvidence'],'text-link')+'</section>'
     out += '<span id="studies" class="home-anchor" aria-hidden="true"></span><section id="projects" class="studies"><div class="section-heading"><div><p class="eyebrow">SELECTED PROJECTS</p><h2>'+text('navProjects')+'</h2></div><p>'+text('studiesIntro')+'</p></div><div class="cards">'
+    out += '<article id="case008-report" class="card study-card"><div class="card-heading"><span class="case-number">008</span><span class="category">'+text('category8')+'</span></div>'
+    out += '<h3>'+anchor('case008.html',t['homeTitle8'])+'</h3><p class="card-intro">'+text('homeIntro8')+'</p><p class="project-tech">'+text('projectTech8')+'</p>'
+    if data8 is None:
+        raise ValueError('Missing Case008 display data')
+    reduction = 100*data8['tracks']['Q']['file_reduction_fraction']
+    recovery = [100*v['recovery']['pooled_recovery'] for v in data8['tracks']['R']['structures'].values()]
+    out += '<div class="result-box"><p class="result-label">'+text('trackQ8')+'</p><p class="result-number">'+f'{reduction:.1f}%'+'</p><p>'+text('trackR8')+' '+f'{min(recovery):.1f}–{max(recovery):.1f}%'+'</p></div><p class="card-limit">'+text('projectResult8')+'</p>'
+    out += '<div class="card-bottom">'+anchor('case008.html',t['open']+' →','text-link')+anchor(report8_url(lang),t['report8'],'quiet-link')+anchor(f'https://github.com/Munsik-Kim/inference-lab/blob/{C8_REVISION}/tools/modelpack/__main__.py',t['projectSource'],'quiet-link')+'</div></article>'
     s7 = payloads['case007']['summary']['transfer']['4']
     s6 = payloads['case006']['summary']['groups']['standard/L4096']['arms']
     for case in ('case007', 'case006'):
@@ -89,10 +97,6 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
             out += '<p class="scope">'+text('homeLimit6')+'</p>'
         implementation = 'cases/007-interaction-aware-mlp-pruning/src/surgery.py' if is7 else 'cases/006-attention-decision-stability/src/intervention.py'
         out += '<div class="card-bottom">'+anchor(case+'.html',t['open']+' →','text-link')+anchor(source+implementation,t['projectSource'],'quiet-link')+anchor(docs+'CASEBOOK.md#case-00'+n,t['fullStudy'],'quiet-link')+'</div></article>'
-    out += '<article id="case008-report" class="card study-card"><div class="card-heading"><span class="case-number">008</span><span class="category">'+text('category8')+'</span></div>'
-    out += '<h3>'+anchor(report8_url(lang),t['homeTitle8'])+'</h3><p class="card-intro">'+text('homeIntro8')+'</p><p class="project-tech">'+text('projectTech8')+'</p>'
-    out += '<div class="result-box"><p class="result-label">'+text('trackQ8')+'</p><p>'+text('trackR8')+'</p></div><p class="card-limit">'+text('projectResult8')+'</p>'
-    out += '<div class="card-bottom">'+anchor(report8_url(lang),t['report8']+' →','text-link')+anchor(f'https://github.com/Munsik-Kim/inference-lab/blob/{C8_REVISION}/tools/modelpack/__main__.py',t['projectSource'],'quiet-link')+'</div></article>'
     out += '</div><aside class="diagram project-diagram"><div class="diagram-description"><p class="eyebrow">CASE 007 · 4 / 16 · 25%</p><h3>'+text('diagramSection')+'</h3><p>'+text('diagramCaption')+'</p>'+anchor(source+'cases/007-interaction-aware-mlp-pruning/results/raw/selection.json',t['recordedSelection'],'text-link')+'</div><div class="diagram-data">'+diagram+'</div></aside></section>'
     reading = '<section class="reading-strip"><div><p class="eyebrow">START HERE</p><h2>'+text('readingTitle')+'</h2><p>'+text('readingIntro')+'</p></div><div class="reading-links">'
     for url, key in [(docs+'START_HERE.md','beginner'),(docs+'GLOSSARY.md','glossary'),('guide.html','guide')]:

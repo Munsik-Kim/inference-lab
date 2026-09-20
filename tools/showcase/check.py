@@ -8,10 +8,11 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 from common import ROOT, read, require, sha, json_text, new_output
 from data import load
+from case008 import load_case008, render_case008
 from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
 
-EXPECTED = {'index.html','en/index.html','ko/index.html','en/guide.html','ko/guide.html','en/case006.html','ko/case006.html',
+EXPECTED = {'en/case008.html','ko/case008.html','data/case008.json','assets/case008.css','assets/case008.js','index.html','en/index.html','ko/index.html','en/guide.html','ko/guide.html','en/case006.html','ko/case006.html',
             'en/case007.html','ko/case007.html','assets/icon.svg','assets/app.js','assets/state.js','assets/style.css','assets/study.css',
             'assets/en.js','assets/ko.js','data/case006.js','data/case007.js',
             'data/case006.json','data/case007.json','build_manifest.json'}
@@ -42,6 +43,11 @@ def check(root: Path, site: Path) -> dict:
     for name,digest in m['presentation_files'].items():
         path=(root/name).resolve()
         require(path.is_relative_to(root.resolve()) and path.is_file() and sha(path)==digest, 'Stale presentation build')
+    data8=load_case008(root)
+    require(read(site/'data/case008.json') == data8, 'Case008 display mismatch')
+    require(m['case008_source_manifest_sha256']==sha(root/'presentation/case008_sources.json'), 'Wrong Case008 source manifest')
+    for lang in ('en','ko'):
+        require(render_case008(root,data8,lang) in (site/lang/'case008.html').read_text(), 'Case008 rendered values/scope mismatch')
     payloads=load(root)
     for case,expected in payloads.items():
         require(read(site/f'data/{case}.json')==expected, 'Display numeric/source mismatch')

@@ -4,7 +4,7 @@
 
 **D**eep-learning **I**nference **O**ptimization, **V**alidation & **A**nalysis
 
-DIOVA는 딥러닝 모델을 압축하고 실행 성능과 답변 변화를 비교하는 프로젝트입니다. PyTorch로 구현한 모델 수정 도구, RTX 5080 측정, 입력별 결과 탐색기를 함께 제공합니다.
+DIOVA는 모델을 압축·저장·재실행하고, 출력과 실행 비용을 비교하는 도구를 만듭니다. PyTorch 구현, RTX 5080 측정 기록, 브라우저 결과 화면을 함께 살펴볼 수 있습니다.
 
 **Python · PyTorch · Transformers · vLLM · NumPy**
 
@@ -13,11 +13,11 @@ DIOVA는 딥러닝 모델을 압축하고 실행 성능과 답변 변화를 비�
 <a id="capabilities"></a>
 ## 구현 기능
 
-### 모델 연산 교체와 구조 압축
+### 모델을 압축하고, 저장하고, 다시 실행합니다
 
-모델의 특정 연산을 교체하고, 채널을 선택해 실제 행렬 크기를 줄입니다. 변경한 계산의 대응과 원래 모듈로의 복원을 테스트합니다.
+GPTQ 저장본 제작과 추론 엔진 연결, 층별 MLP 크기가 달라진 모델의 저장·로딩, 작은 모듈의 출력 가중치 보정을 구현했습니다.
 
-Python · PyTorch · Transformers. [Attention 교체 코드](cases/006-attention-decision-stability/src/intervention.py) · [행렬 축소와 테스트](cases/007-interaction-aware-mlp-pruning/tests/test_core.py)
+LLM Compressor · PyTorch · Transformers · safetensors. [저장본 로더](tools/modelpack/artifact.py) · [저장·재로딩 테스트](cases/008-build-reconstruct-reload/tests/test_core.py)
 
 ### GPU 추론 성능과 답변 비교
 
@@ -36,16 +36,25 @@ Python · JavaScript · GitHub Actions · GitHub Pages. [CPU 선택기 재계산
 
 | 작업 | 기술과 구현 |
 |---|---|
-| 모델 구현·수정 | **Python / PyTorch / Transformers** — 모델 객체 검사, 연산 교체, 행렬 축소, shape·dtype 검사를 구현했습니다. |
-| GPU 추론 통합 | **vLLM / PyTorch SDPA / SageAttention / CUDA 실행 환경 / NVML** — 공개 backend 연결, 로컬 서버 실행, 실행 경로·자원 사용 기록을 구현했습니다. |
-| 수치 분석·그룹 선택 | **NumPy / Matplotlib / 조합 탐색 / 쌍별 통계** — 기여 행렬과 제거 그룹을 구하고, 오차·점수·불확실성을 분석했습니다. |
-| 재현·자동 검사 | **Git / unittest / SHA256 / GitHub Actions** — 파일 보존과 입력 짝짓기 검사, 스칼라 재계산, 문서·표시 계층 CI를 구현했습니다. |
-| 결과 화면 | **HTML / CSS / JavaScript / GitHub Pages** — 필터·입력별 직접 링크·소스 탐색을 갖춘 한·영 정적 화면을 만들었습니다. |
+| 양자화·압축 저장 | **LLM Compressor / GPTQ / compressed-tensors** — Linear 가중치를 변환하고 packed tensor와 변환 recipe를 검사합니다. |
+| 모델 구조·저장·로딩 | **PyTorch / Transformers / safetensors** — 행렬을 자르고 층별 폭을 저장한 뒤 tensor shape와 공유 가중치를 복원합니다. |
+| 수치 보정·그룹 선택 | **NumPy / CPU FP64 / ridge regression / Cholesky** — 작은 MLP의 출력 가중치를 보정하고 그룹 선택과 쌍별 점수를 비교합니다. |
+| GPU 실행·검사 | **vLLM / Marlin / PyTorch SDPA / SageAttention / CUDA runtime / NVML** — 실제 실행 경로를 확인하고 같은 입력의 메모리·전체 호출 비용을 측정합니다. |
+| 재계산·결과 화면 | **Python / unittest / GitHub Actions / HTML / CSS / JavaScript** — 스칼라·저장본 검사, 작은 CPU 예제, 한·영 결과 화면을 제공합니다. |
 
 [구현 코드·관련 테스트 읽기](docs/ko/PORTFOLIO.md#code-tour). CUDA는 GPU 실행·측정에, 공개 커널은 연산 교체에 사용했습니다.
 
 <a id="projects"></a>
 ## 대표 프로젝트
+
+### Case 008 — 모델 변환·복구·재실행 파이프라인
+
+<!-- claims: c008-tracks c008-artifact-implementation -->
+GPTQ 변환, 압축 파일 검사, 새 vLLM 프로세스 실행을 연결했습니다. 별도 경로에서는 고정된 작은 MLP의 출력 가중치를 보정하고 독립 저장본에서 층별 구조를 복원합니다. 사용 기술은 **LLM Compressor · compressed-tensors · safetensors · PyTorch · NumPy**입니다.
+
+Q 가중치 파일은 약 67.0% 작아졌고, R의 국소 제곱 출력 오차는 짧은 합성 평가 입력에서 94.1–95.4% 줄었습니다. 서로 다른 모델과 지표의 결과입니다. 정답 점수 변화는 혼재했으며 요청 가속은 확정하지 못했습니다.
+
+[Q/R 결과 화면](https://munsik-kim.github.io/inference-lab/ko/case008.html) · [정식 보고서](cases/008-build-reconstruct-reload/REPORT.ko.md) · [작은 CPU 저장·재로딩 예제](docs/ko/GETTING_STARTED.md#tiny-model-demo) · [측정 자료 ZIP](downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)
 
 ### Case 007 — 채널 선택부터 실제 모델 구조 축소까지
 
@@ -65,12 +74,6 @@ MLP는 모델 안에서 정보를 변환하는 계산 블록입니다. 채널 �
 
 [결과 탐색](https://munsik-kim.github.io/inference-lab/ko/case006.html) · [Attention 교체 코드](cases/006-attention-decision-stability/src/intervention.py) · [상세 연구·추가 진단](docs/ko/CASEBOOK.md#case-006)
 
-### Case 008 — 바꾼 모델을 저장하고 다시 실행하기
-
-<!-- claims: c008-tracks -->
-GPTQ 변환부터 새 vLLM 실행까지, 고정된 작은 MLP의 보정부터 층별 구조 로딩까지 두 경로를 연결했습니다. Q 가중치 파일은 약 67.0% 작아졌고 R의 국소 제곱오차는 짧은 합성 입력에서 94.1–95.4% 감소했습니다. 요청 가속은 확정하지 못했고 정답 점수 변화는 혼재했습니다.
-
-[구조화 보고서](cases/008-build-reconstruct-reload/REPORT.ko.md) · [코드·재현(영어)](cases/008-build-reconstruct-reload/REPRODUCTION.md) · [측정 자료 ZIP](downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)
 
 ## 여덟 질문과 구현물
 

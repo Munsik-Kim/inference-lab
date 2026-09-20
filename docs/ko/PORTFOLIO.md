@@ -6,8 +6,10 @@
 
 ## 30초 소개
 
-<!-- claims: c007-transfer c007-quality c006-native c006-readout -->
-DIOVA는 딥러닝 모델을 압축하고 실행 성능과 답변 변화를 비교하는 프로젝트입니다. PyTorch로 구현한 모델 수정 도구, RTX 5080 측정, 입력별 결과 탐색기를 함께 제공합니다. 모델 연산 교체·행렬 축소, GPU 비용·답변 비교, 재계산 도구·결과 화면이 세 가지 구현 축입니다. [기술스택별 작업](../../README.ko.md#tech-stack)에서 사용 기술을, 아래 코드 읽기에서 함수와 테스트를 확인할 수 있습니다.
+<!-- claims: c007-transfer c007-quality c006-native c006-readout c008-tracks c008-artifact-implementation -->
+DIOVA는 모델을 압축·저장·재실행하고, 출력과 실행 비용을 비교하는 도구를 만듭니다. PyTorch 구현, RTX 5080 측정 기록, 브라우저 결과 화면을 함께 살펴볼 수 있습니다.
+
+Case008은 저장본 변환, 엄격한 구조 로딩, 고정 구조의 ridge 보정을 연결합니다. Q 가중치 파일은 약 67.0% 작아졌고 R의 국소 제곱오차는 짧은 합성 입력에서 94.1–95.4% 줄었습니다. 서로 다른 모델·지표이며 정답 점수 변화는 혼재했습니다. [Q/R 화면](https://munsik-kim.github.io/inference-lab/ko/case008.html) · [작은 CPU 예제](GETTING_STARTED.md#tiny-model-demo).
 
 MLP 25% 삭제에서 PAIRWISE의 국소 오차는 소폭 낮았고 기준선 선택을 더 많이 보존했지만, 정답 NLL은 INDEPENDENT가 더 좋았습니다. 50%의 선택 모듈은 같았으며 고정 판정은 **COMPLETED_NO_CLEAR_TRANSFER**입니다. Case006에서는 표준 192개 중 A_PUBLIC은 5개, V4는 8개의 선택이 달라졌습니다. 같은 입력의 사후 출력 계산 진단은 동률과 마지막 어휘 점수 계산을 살펴봅니다. 구현상 선택과 서로 다른 평가 목표를 이 예제들에서 확인할 수 있습니다. [사례 안내](CASEBOOK.md) · [로컬 화면 열기](GETTING_STARTED.md#local-showcase).
 
@@ -25,7 +27,9 @@ MLP 25% 삭제에서 PAIRWISE의 국소 오차는 소폭 낮았고 기준선 선
 - **분석 도구 전달:** source hash로 화면의 기록을 원자료와 연결하고, 작은 선택기 예제로 보정 목적함수를 실행합니다. [화면 빌더](../../tools/showcase/build.py) · [CPU 예제](../../tools/showcase/replay_selection.py).
 
 <a id="code-tour"></a>
-## 세 군데 코드 읽기
+## 구현 코드 읽기
+
+**저장본 제작과 재로딩부터 읽습니다.** [`save_dense()`](https://github.com/Munsik-Kim/inference-lab/blob/9bc8b8fced8dfd5147f9bfdc67564eda04670810/tools/modelpack/artifact.py#L32)는 tensor·구조 목록을 저장합니다. [`load_dense()`](https://github.com/Munsik-Kim/inference-lab/blob/9bc8b8fced8dfd5147f9bfdc67564eda04670810/tools/modelpack/artifact.py#L109)는 meta에서 층별 폭을 바꾸고 가중치를 엄격하게 할당한 뒤 공유 가중치와 rotary buffer를 복원합니다. [`fit_ridge()`](https://github.com/Munsik-Kim/inference-lab/blob/9bc8b8fced8dfd5147f9bfdc67564eda04670810/tools/modelpack/numerics.py#L13)는 CPU FP64 보정 문제를 풉니다. [원래 저장 테스트](../../cases/008-build-reconstruct-reload/tests/test_core.py)는 누락 tensor와 잘못된 구조를 거절합니다. [독립 CPU 예제](../../tools/modelpack_demo/roundtrip.py)는 이 로더를 다른 프로세스에서 실행합니다.
 
 <!-- claims: c006-implementation -->
 1. **모델의 attention 호출을 제한합니다.** [`ScopedAttention`](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/src/intervention.py#L30)부터 읽습니다. `route`는 13번 층의 정사각형 prefill 개입을 허용하고 `__exit__`는 이전 등록 함수를 복구합니다. [예외 복구 테스트](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/tests/test_core.py#L193)에서 이 동작을 확인할 수 있습니다.
@@ -36,9 +40,9 @@ MLP 25% 삭제에서 PAIRWISE의 국소 오차는 소폭 낮았고 기준선 선
 
 *실제 화면을 열어 설명하기 위한 대본입니다. 녹화 영상은 포함하지 않습니다.*
 
-“Case007 로컬 화면을 엽니다. B는 삭제 전 기준선이고 옆의 두 열은 같은 수의 그룹을 제거한 결과입니다. 25% 예산에서 고정 CODE 안내 사례를 고릅니다. 이 입력에서 국소 재구성, 기준선 선택 보존, 정답에 부여한 확률을 따로 볼 수 있습니다. 50%로 바꾸면 선택 그룹과 모듈 출력이 같습니다. 시간은 이 입력의 값으로 붙이지 않고, 별도 고정 입력 6개의 측정으로 보여줍니다.
+“Case008에서 Q를 엽니다. BF16 원본을 GPTQ로 변환하고 새 vLLM 프로세스에서 실행한 순서를 봅니다. 파일 바이트와 allocator 메모리는 서로 다른 자원입니다. 정답 수는 같아도 확률 점수의 방향은 달랐습니다.
 
-“이제 Case006에서 표준 입력 하나를 고릅니다. 정답과 최고점 집합, 네 선택지 확률을 비교합니다. 회귀는 기준선이 맞힌 답의 손실이며, 선택 변경에는 새 정답이나 다른 오답도 있습니다. FP32 진단으로 전환하면 같은 시나리오를 그 출력 계산의 기준선과 비교합니다. 마지막으로 원자료 링크를 열고 CPU 선택기 명령을 실행합니다. 모델을 실행하지 않고 보정 행렬 Q에서 그룹 조합을 열거해 저장된 선택과 대조합니다.”
+“R로 이동해 I25의 보정 전후를 비교합니다. 채널 수는 고정된 채 국소 오차가 줄었습니다. 정답 수는 별도 결과로 확인합니다. CPU 예제 링크에서 작은 무작위 모델 명령을 실행하고 summary.json을 엽니다. 저장 프로세스가 종료된 뒤 다른 프로세스가 복사본을 읽었습니다. 구조, 전체 출력, 공유 가중치가 모두 같아야 합니다. 이어서 로더 소스와 실패 테스트를 봅니다. Case007과 Case006에서는 앞선 그룹 선택과 입력별 답변 비교를 볼 수 있습니다.”
 
 ## 근거로 연결되는 소개 문장 세 개
 
@@ -53,6 +57,8 @@ MLP 25% 삭제에서 PAIRWISE의 국소 오차는 소폭 낮았고 기준선 선
 <!-- claims: attribution -->
 프로젝트의 작업은 비교 실행, 범위를 제한한 어댑터, 행렬 축소, 유효성 검사, 수치·답변 분석과 결과 탐색기입니다. Qwen과 Red Hat AI가 체크포인트를, Transformers·PyTorch·vLLM이 모델과 실행 구성요소를, SageAttention이 저정밀 커널을 제공합니다. Case001 guard의 저자는 hclsys이며 EFQ-Softmax는 Han과 공동저자의 작업입니다. HOPE는 별도 MoE expert-pruning 맥락에서 상호작용을 고려한 삭제의 동기를 제공합니다. 여기의 dense 그룹 목적함수는 선택한 MLP 분해에서 직접 구했습니다.
 
+GPTQ는 기존 양자화 방법이며 LLM Compressor·compressed-tensors는 변환·압축 저장을, safetensors는 가중치 형식을 제공합니다. Case008에서는 저장본 검사, 층별 구조 로더, 고정 구조 ridge 적합을 연결했습니다. [Case008 출처·영어](../../cases/008-build-reconstruct-reload/NOTICE.md).
+
 OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지원했습니다. [Case001](../../cases/001-sm120-int8-fallback/NOTICE.md), [Case003](../../cases/003-efq-softmax-numerical-audit/NOTICE.md), [Case006](../../cases/006-attention-decision-stability/NOTICE.md), [Case007 출처·영어](../../cases/007-interaction-aware-mlp-pruning/NOTICE.md)에 재사용한 작업을 기록했습니다. 프로젝트 코드는 [Apache-2.0](../../LICENSE)이며 모델·upstream 이용 조건은 별도입니다.
 
 ## 기술 협업 범위
@@ -60,8 +66,3 @@ OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지�
 **모델 변경 전후 평가**, **로컬 추론 문제 진단**, **재현 가능한 분석 도구와 결과 화면**을 주제로 코드를 검토할 수 있습니다. 비교할 모델 경계, 공개 입력 ID, 평가 지표에서 논의를 시작할 수 있습니다. [저장소 이슈](https://github.com/Munsik-Kim/inference-lab/issues)는 공개 기술 질문 경로이며, 인증값이나 비공개 고객 자료는 공개 보고에 넣지 않습니다.
 
 근거는 특정 모델·장치 하나·합성 과제의 결과입니다. 배포 판단은 **NOT_ASSESSED**입니다. CPU 감사는 남긴 스칼라를 검산하며, 제외된 전체 벡터와 별도 GPU 재현의 확인 범위는 [재현 안내](GETTING_STARTED.md)에서 설명합니다.
-
-## 저장본 제작과 출력 복구: Case 008
-
-<!-- claims: c008-tracks -->
-GPTQ 변환·packed 저장본 검사·새 vLLM 실행을 연결하고, 별도 트랙에서 고정된 작은 MLP의 ridge 적합과 층별 구조 로더를 구현했습니다. Q의 파일·상주 가중치 감소, R의 국소 제곱오차 복구와 혼재한 정답 점수·확정되지 않은 요청 가속을 따로 보고합니다. [구조화 보고서](../../cases/008-build-reconstruct-reload/REPORT.ko.md) · [로더·보정 코드 투어](../../cases/008-build-reconstruct-reload/PORTFOLIO.md).

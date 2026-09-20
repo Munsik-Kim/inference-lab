@@ -7,6 +7,48 @@ English | [한국어](../ko/GETTING_STARTED.md) · [Home](../../README.md)
 Read the studies, explore recorded inputs, or run a small CPU check. GPU reproduction has its own environment and commands.
 
 
+<a id="case008-paths"></a>
+## Case008: choose what to run
+
+| Your purpose | Entry point |
+|---|---|
+| Inspect results and recalculate recorded scores | [Q/R result screen](https://munsik-kim.github.io/inference-lab/en/case008.html), then the CPU evidence command below. |
+| Try the implementation without a pretrained model | [Tiny CPU save–reload example](#tiny-model-demo). |
+| Build a full Q or R model artifact | [Pinned environments and complete build procedures](../../cases/008-build-reconstruct-reload/REPRODUCTION.md). Model weights are separate local prerequisites. |
+| Reproduce the frozen study | [Protocol](../../cases/008-build-reconstruct-reload/configs/protocol_draft.json), fixed inputs and [historical snapshot restoration](../../cases/008-build-reconstruct-reload/publication/README.md). |
+
+From the repository root, use Python 3.12.14 with NumPy 2.3.5 and a **new external output directory**:
+
+```bash
+OUT=$(mktemp -d)
+python3 -B tools/case008_checks/run.py --mode evidence --output "$OUT/evidence"
+```
+
+This runs the publication tests, original analysis, scalar and timing audits, and the same-record NLL/recovery diagnostic. Regenerated summary, additional/local tables and post-hoc JSON are compared byte-for-byte with preserved files. It does not rerun model inference or reconstruct excluded full vectors. The `Case 008 CPU contracts` workflow separates this job from modelpack tests; Portfolio CPU checks remains the documentation/site suite.
+
+<a id="tiny-model-demo"></a>
+## Run a tiny model's save–reload contract
+
+Use a separate CPU environment with the [fixture dependency versions](../../tools/modelpack_demo/requirements-cpu.txt): Python 3.12.14, PyTorch 2.13.0, Transformers 5.17.0, safetensors 0.8.0 and NumPy 2.3.5. The CI job installs the CPU-only PyTorch wheel; an existing compatible environment also works. No pretrained weights, tokenizer or GPU is required. Environment setup details are in the [demo README](../../tools/modelpack_demo/README.md).
+
+```bash
+OUT=$(mktemp -d)
+python3 -B tools/modelpack_demo/roundtrip.py --output "$OUT/tiny-roundtrip"
+python3 -B -m unittest discover -s tests/modelpack_demo -v
+```
+
+The command creates a random two-layer Qwen fixture on CPU, reduces layer 1's intermediate width from 64 to 48, saves it and lets the builder process exit. A second process loads a copied artifact from another directory, with access to the original builder directory blocked. It compares complete finite outputs, tensor shapes and tied embedding/head identity. It reuses the frozen Case008 loader; the wrapper does not alter research code.
+
+The checked summary includes `TINY_RANDOM_CPU_FIXTURE`, widths `[64,48]`, gate/up `[48,32]`, down `[32,48]`, matching logits and shared weights. Generated tiny weights and process logs stay in the external output directory. This is a serialization test, with no trained-model quality or speed claim. To run the historical modelpack tests and this demo together:
+
+```bash
+OUT=$(mktemp -d)
+python3 -B tools/case008_checks/run.py --mode modelpack --output "$OUT/modelpack"
+```
+
+The wrapper restores the hash-checked historical tree before its exact-inventory tests. It also checks missing/invalid artifact behavior; it never weakens a frozen inventory test for the current publication tree.
+
+
 ## Open the published result viewer
 
 [English home](https://munsik-kim.github.io/inference-lab/en/index.html) · [Case007: structured pruning](https://munsik-kim.github.io/inference-lab/en/case007.html) · [Case006: decisions and ties](https://munsik-kim.github.io/inference-lab/en/case006.html). These Pages screens use saved measurements and require no installation or GPU. Use the local build below for offline viewing.
@@ -24,7 +66,7 @@ python3 -B tools/showcase/check.py --site "$OUT/site" --output "$OUT/site-check.
 
 Open `$OUT/site/index.html` in a browser, then choose English or 한국어. The build uses the Python standard library. All scripts and display data are local; `file://` works without a server. The same relative resource paths also support a site mounted at `/inference-lab/`. The published Pages viewer and a local build use the same static presentation code.
 
-Read each detail page in order: **objective → dataset → assumptions and theory → experiment design → validation → results → interpretation → conclusion**. Use the contents links or **Jump to individual results**. The complete-study tables above are separate from the filtered subset statistics below. The [GitHub casebook](CASEBOOK.md) uses the same structure for all seven cases.
+Read each detail page in order: **objective → dataset → assumptions and theory → experiment design → validation → results → interpretation → conclusion**. Use the contents links or **Jump to individual results**. The complete-study tables above are separate from the filtered subset statistics below. The [GitHub casebook](CASEBOOK.md) uses the same structure for all eight cases.
 
 In Case007, choose 25% or 50% deletion, then a task or input ID. The table compares B with both selectors at the same budget. In Case006, choose standard or selected stress, then native or the labelled FP32 diagnostic; each candidate stays paired with B under that readout. Filters and the chosen ID persist in the URL and across language changes. JSON download includes the displayed comparison at its original numeric precision. Guided examples use the first fixed ID per task, not selected success stories.
 
@@ -115,8 +157,8 @@ To recalculate scores and intervals, follow [CPU reanalysis commands](../../case
 
 Recreating kernel outputs requires the pinned model, sources, binaries and compatible hardware environment. Public scalar records cannot reconstruct excluded hidden vectors or full Q/K/V. The [pinned-local GPU instructions](../../cases/006-attention-decision-stability/REPRODUCTION.md#pinned-local-gpu-replay) and [original-to-readout directory contract](../../cases/006-attention-decision-stability/REPRODUCTION.md#connecting-original-replay-to-the-readout-supplement) describe those requirements. They are future reproduction instructions, not steps executed for this guide. CPU recalculation establishes consistency of saved evidence, not independent GPU replication or deployment readiness.
 
-This beginner-layer edit checks documentation, links and file preservation only. The experiment reanalysis and GPU commands above were not run; earlier validation records describe their own execution dates.
+The earlier beginner-layer edit checked documentation, links and preservation only. The current Case008 CPU commands were separately executed and checked; GPU reproduction and full-model builds were not rerun.
 
 ## Case 008: report and standalone evidence bundle
 
-Read the [structured report](../../cases/008-build-reconstruct-reload/REPORT.md), then download the [code/recipe/evidence ZIP](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip) and [metadata](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.json). The extracted root includes tools/modelpack and the case. Open `cases/008-build-reconstruct-reload/demo/index.html` locally for its original English viewer. The current hosted showcase has no separate Case 008 page. [CPU and historical-restore commands](../../cases/008-build-reconstruct-reload/REPRODUCTION.md) are distinct from future GPU commands and do not include model weights.
+Read the [structured report](../../cases/008-build-reconstruct-reload/REPORT.md), then download the [code/recipe/evidence ZIP](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip) and [metadata](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.json). The extracted root includes tools/modelpack and the case. Open `cases/008-build-reconstruct-reload/demo/index.html` locally for its original English viewer. The bilingual site summary shows Q storage/memory and R before/after repair; the original viewer retains detailed records. [CPU and historical-restore commands](../../cases/008-build-reconstruct-reload/REPRODUCTION.md) are distinct from future GPU commands and do not include model weights.

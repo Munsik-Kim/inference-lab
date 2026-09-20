@@ -9,6 +9,7 @@ from common import ROOT, C6, C7, SUP, json_text, read, new_output, require, sha,
 from data import load, source_url
 from layout import home, language_index, report8_url, C8_PATH, C8_REVISION
 from study import render as study_render, method_labels
+from case008 import load_case008, render_case008
 
 def link(url, text, cls=''):
     return f'<a class="{cls}" href="{escape(url, quote=True)}">{escape(text)}</a>'
@@ -33,17 +34,19 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     require(base_path in ('/', '/inference-lab/'), 'Supported base paths: / or /inference-lab/')
     output = new_output(root, output)
     payloads = load(root)
+    data8 = load_case008(root)
     manifest = source_manifest(root)
     rev = manifest['evidence_revision']
     languages = {lang:read(root/f'presentation/content/{lang}.json') for lang in ('en','ko')}
     require(set(languages['en']) == set(languages['ko']), 'Missing language counterpart key')
     template = Template((root/'presentation/templates/page.html').read_text())
     files = {}
-    for name in ('style.css','study.css','app.js','state.js','icon.svg'):
+    for name in ('style.css','study.css','case008.css','case008.js','app.js','state.js','icon.svg'):
         files['assets/'+name] = (root/'presentation/assets'/name).read_bytes()
     for case, data in payloads.items():
         files['data/'+case+'.js'] = ('window.EVIDENCE = '+script_json(data)+';\n').encode()
         files['data/'+case+'.json'] = (json_text(data)+'\n').encode()
+    files['data/case008.json'] = (json_text(data8)+'\n').encode()
     files['index.html'] = language_index().encode()
     case_paths = sorted(p.parent.relative_to(root).as_posix() for p in (root/'cases').glob('*/README.md'))
     names = {'en':['Execution compatibility','BF16 / FP8 extraction','Softmax approximation','Complete attention cost','Precision–cost settings','Answer decisions and ties','Structured MLP pruning','Model build, reload and MLP reconstruction'],
@@ -52,10 +55,13 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         t['methodLabels']=method_labels(lang)
         files[f'assets/{lang}.js'] = ('window.TEXT = '+script_json(t)+';\n').encode()
         other = 'ko' if lang == 'en' else 'en'
-        for page in ('index','case007','case006','guide'):
+        for page in ('index','case008','case007','case006','guide'):
             scripts = ''
             if page == 'index':
-                body = home(t, lang, payloads, case_paths, names[lang], rev)
+                body = home(t, lang, payloads, case_paths, names[lang], rev, data8)
+            elif page == 'case008':
+                body = render_case008(root, data8, lang)
+                scripts = '<script defer src="../assets/case008.js"></script>'
             elif page == 'guide':
                 command='OUT=$(mktemp -d)\npython3 -B tools/showcase/build.py --output "$OUT/site"\npython3 -B tools/showcase/check.py --site "$OUT/site" --output "$OUT/site-check.json"\npython3 -B tools/showcase/replay_selection.py --output "$OUT/selection.json"'
                 body=f'<h1>{t["guide"]}</h1><p>{t["guide_intro"]}</p><pre>{escape(command)}</pre><p>{t["guide_result"]}</p><p>{t["guide_browser"]}</p>'
@@ -68,13 +74,16 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 path=C7 if page=='case007' else C6
                 body += '<div class="actions">'+link(source_url(rev,path+'/REPRODUCTION.md'),t['original'])+'</div>'
                 scripts=f'<script defer src="../assets/{lang}.js"></script><script defer src="../data/{page}.js"></script><script defer src="../assets/state.js"></script><script defer src="../assets/app.js"></script>'
-            body+=f'<details class="provenance"><summary>{t["evidence"]}</summary><p class="small">{t["evidence"]}: <code>{rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p></details>'
-            navigation = ''.join('<a'+(' aria-current="page"' if page==target else '')+' href="'+target+'.html">'+escape(label)+'</a>' for target,label in [('case007','Case 007'),('case006','Case 006'),('guide',t['navGuide'])])
+            page_rev = C8_REVISION if page == 'case008' else rev
+            body+=f'<details class="provenance"><summary>{t["evidence"]}</summary><p class="small">{t["evidence"]}: <code>{page_rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p></details>'
+            navigation = ''.join('<a'+(' aria-current="page"' if page==target else '')+' href="'+target+'.html">'+escape(label)+'</a>' for target,label in [('case008','Case 008'),('case007','Case 007'),('case006','Case 006'),('guide',t['navGuide'])])
             if page == 'index':
                 navigation = ''.join(link('#'+target,t[key]) for target,key in [('capabilities','navCapabilities'),('tech-stack','navStack'),('projects','navProjects')])
-            html=template.substitute(lang=lang,title=escape(t['siteTitle'] if page=='index' else t['guide'] if page=='guide' else t['case007' if page=='case007' else 'case006']),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=t['language'],body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=source_url(rev,C7+'/NOTICE.md'),scripts=scripts)
+            html=template.substitute(lang=lang,title=escape(t['siteTitle'] if page=='index' else t['guide'] if page=='guide' else t['homeTitle8'] if page=='case008' else t['case007' if page=='case007' else 'case006']),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=t['language'],body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=source_url(C8_REVISION,C8_PATH+'/NOTICE.md') if page=='case008' else source_url(rev,C7+'/NOTICE.md'),scripts=scripts)
             if page in ('case006','case007'):
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/study.css"></head>')
+            if page == 'case008':
+                html=html.replace('</head>', '<link rel="stylesheet" href="../assets/case008.css"></head>')
             files[f'{lang}/{page}.html']=html.encode()
     # Explicit file set: no recursive copy of repository data, caches or archives.
     source_files = [p for folder in ('presentation','tools/showcase') for p in (root/folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts]
@@ -82,10 +91,11 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     identity=hashlib.sha256(json_text(presentation_hashes).encode()).hexdigest()
     report={'schema':1,'build_base_path':base_path,'url_policy':'relative resources; file:// and hosted subpath use the same bytes',
             'evidence_revision':rev,'source_manifest_sha256':sha(root/'presentation/source_manifest.json'),
+            'case008_source_manifest_sha256':sha(root/'presentation/case008_sources.json'),
             'linked_reports':{'case008':{'revision':C8_REVISION,'files':{C8_PATH+'/'+name:sha(root/C8_PATH/name) for name in ('REPORT.md','REPORT.ko.md')}}},
             'presentation_identity':identity,'presentation_files':presentation_hashes,
             'record_counts':{k:len(v['records']) for k,v in payloads.items()},
-            'independent_scenarios':{'case007':192,'case006_standard':192,'case006_selected_stress':46},
+            'independent_scenarios':{'case007':192,'case006_standard':192,'case006_selected_stress':46,'case008_Q':192,'case008_R':192},
             'files':{name:hashlib.sha256(blob).hexdigest() for name,blob in sorted(files.items())}}
     files['build_manifest.json']=(json_text(report)+'\n').encode()
     output.mkdir(parents=True)
