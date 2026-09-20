@@ -1,0 +1,47 @@
+name: Case 008 CPU contracts
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: case008-cpu-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+env:
+  CUDA_VISIBLE_DEVICES: ''
+  PYTHONDONTWRITEBYTECODE: '1'
+  HF_HUB_OFFLINE: '1'
+  TRANSFORMERS_OFFLINE: '1'
+  HF_HUB_DISABLE_TELEMETRY: '1'
+jobs:
+  evidence:
+    name: Case 008 evidence checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6, existing repository pin
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6, existing repository pin
+        with:
+          python-version: '3.12.14'
+      - run: python -m pip install numpy==2.3.5
+      - run: python -B tools/case008_checks/run.py --mode evidence --output "$RUNNER_TEMP/case008-evidence"
+  modelpack:
+    name: Modelpack CPU tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6, existing repository pin
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6, existing repository pin
+        with:
+          python-version: '3.12.14'
+      - name: Install CPU-only fixture dependencies (no model download)
+        run: |
+          python -m pip install torch==2.13.0+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r tools/modelpack_demo/requirements-cpu.txt
+      - run: python -B tools/case008_checks/run.py --mode modelpack --output "$RUNNER_TEMP/case008-modelpack"

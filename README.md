@@ -4,7 +4,7 @@ English | [한국어](README.ko.md)
 
 **D**eep-learning **I**nference **O**ptimization, **V**alidation & **A**nalysis
 
-DIOVA connects model compression with inference measurement and output analysis. The project includes PyTorch model adapters, RTX 5080 measurements, and tools for exploring individual results.
+DIOVA builds tools to compress, save and reload models, then compare their outputs and execution costs. Explore the PyTorch implementations, RTX 5080 measurements and browser-based results.
 
 **Python · PyTorch · Transformers · vLLM · NumPy**
 
@@ -13,11 +13,11 @@ DIOVA connects model compression with inference measurement and output analysis.
 <a id="capabilities"></a>
 ## Capabilities
 
-### Model modification and structural compression
+### Compress, save and reload models
 
-Replace selected model operations and build smaller MLP modules by slicing aligned weight matrices. Check the computation and restore the original module.
+Build GPTQ checkpoints and connect them to the inference engine. Save and restore models with layer-specific MLP widths, and fit the output weights of a smaller module.
 
-Python · PyTorch · Transformers. [Attention adapter](cases/006-attention-decision-stability/src/intervention.py) · [Matrix slicing and tests](cases/007-interaction-aware-mlp-pruning/tests/test_core.py)
+LLM Compressor · PyTorch · Transformers · safetensors. [Checkpoint loader](tools/modelpack/artifact.py) · [Save–reload tests](cases/008-build-reconstruct-reload/tests/test_core.py)
 
 ### GPU inference measurement and output evaluation
 
@@ -36,16 +36,25 @@ Python · JavaScript · GitHub Actions · GitHub Pages. [CPU selector replay](to
 
 | Work | Technologies and implementation |
 |---|---|
-| Model implementation | **Python / PyTorch / Transformers** — Inspect model objects; replace operations; slice matrices; check shapes and dtypes. |
-| GPU inference integration | **vLLM / PyTorch SDPA / SageAttention / CUDA runtime / NVML** — Connect public backends, run a local server and record execution routes and resource use. |
-| Numerical analysis and selection | **NumPy / Matplotlib / combinatorial search / paired statistics** — Build contribution matrices, select groups and analyze errors, scores and uncertainty. |
-| Reproduction and checks | **Git / unittest / SHA256 / GitHub Actions** — Check preserved files and input pairing; recalculate scalars; run documentation and display CI. |
-| Result interfaces | **HTML / CSS / JavaScript / GitHub Pages** — Build bilingual static explorers with filters, item links and source navigation. |
+| Quantization and compressed storage | **LLM Compressor / GPTQ / compressed-tensors** — Convert Linear weights, inspect packed tensors and record the conversion recipe. |
+| Model structure and serialization | **PyTorch / Transformers / safetensors** — Slice matrices, save layer widths and reload strict tensor shapes and tied weights. |
+| Numerical reconstruction and selection | **NumPy / CPU FP64 / ridge regression / Cholesky** — Fit a fixed smaller MLP’s output weights; compare group selections and paired scores. |
+| GPU execution and checks | **vLLM / Marlin / PyTorch SDPA / SageAttention / CUDA runtime / NVML** — Verify actual runtime routes; measure memory and complete-call costs on matching inputs. |
+| Reanalysis and result interfaces | **Python / unittest / GitHub Actions / HTML / CSS / JavaScript** — Check scalars and artifacts, run tiny CPU fixtures and build bilingual result screens. |
 
 [Read the implementation and related tests](docs/en/PORTFOLIO.md#code-tour). CUDA supports execution and measurement; public kernels supply the replaced operations.
 
 <a id="projects"></a>
 ## Selected projects
+
+### Case 008 — Convert, reconstruct and reload a model
+
+<!-- claims: c008-tracks c008-artifact-implementation -->
+GPTQ conversion, packed-file validation and a fresh vLLM process form one path. A separate path repairs a fixed smaller MLP and restores its layer-specific structure from a standalone artifact. Built with **LLM Compressor · compressed-tensors · safetensors · PyTorch · NumPy**.
+
+Q weight files decreased about 67.0%; R reduced squared local output error by 94.1–95.4% on short synthetic held-out inputs. These are separate models and metrics. Gold-score changes were mixed, and request speedup was not established.
+
+[Q/R result screens](https://munsik-kim.github.io/inference-lab/en/case008.html) · [Structured report](cases/008-build-reconstruct-reload/REPORT.md) · [Tiny CPU save–reload example](docs/en/GETTING_STARTED.md#tiny-model-demo) · [Evidence ZIP](downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)
 
 ### Case 007 — From channel selection to a smaller model block
 
@@ -65,12 +74,6 @@ The two settings changed 5 of 192 and 8 of 192 standard-set choices. Neither los
 
 [Explore results](https://munsik-kim.github.io/inference-lab/en/case006.html) · [Attention adapter](cases/006-attention-decision-stability/src/intervention.py) · [Detailed study and diagnostic](docs/en/CASEBOOK.md#case-006)
 
-### Case 008 — Save and reload changed models
-
-<!-- claims: c008-tracks -->
-Two separate tracks connect GPTQ conversion to fresh vLLM execution, and fixed smaller-MLP repair to a per-layer loader. Q weight files decreased about 67.0%; R recovered 94.1–95.4% of squared local error on short synthetic inputs. Request speedup was not established and gold-score changes were mixed.
-
-[Structured report](cases/008-build-reconstruct-reload/REPORT.md) · [Code](cases/008-build-reconstruct-reload/REPRODUCTION.md) · [Evidence ZIP](downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)
 
 ## Eight questions, with working tools and recorded outcomes
 

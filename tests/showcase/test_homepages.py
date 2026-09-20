@@ -86,7 +86,7 @@ class Homepages(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'Missing capability'):
             check_capabilities(html.replace('id="model-structure"','id="missing"'),ROOT)
         with self.assertRaisesRegex(ValueError,'Missing implementation source'):
-            check_capabilities(html.replace('/src/intervention.py','/src/absent.py'),ROOT)
+            check_capabilities(html.replace('/tools/modelpack/artifact.py','/tools/modelpack/absent.py'),ROOT)
 
     def test_essential_content_is_static_and_anchors_survive(self):
         for lang in ('en','ko'):
@@ -104,9 +104,9 @@ class Homepages(unittest.TestCase):
         manifest=read(self.site/'build_manifest.json')
         self.assertEqual(manifest['evidence_revision'],source_manifest(ROOT)['evidence_revision'])
         for case,data in load(ROOT).items():self.assertEqual(read(self.site/f'data/{case}.json'),data)
-        self.assertEqual(manifest['independent_scenarios'],{'case007':192,'case006_standard':192,'case006_selected_stress':46})
+        self.assertEqual(manifest['independent_scenarios'],{'case007':192,'case006_standard':192,'case006_selected_stress':46,'case008_Q':192,'case008_R':192})
 
-    def test_case008_is_reachable_in_each_language_without_new_explorer_data(self):
+    def test_case008_report_is_linked_without_loading_data_on_home(self):
         for lang in ('en','ko'):
             for page in ('index','guide'):
                 html=(self.site/lang/(page+'.html')).read_text()

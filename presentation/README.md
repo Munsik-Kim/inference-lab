@@ -4,9 +4,9 @@ DIOVA stands for Deep-learning Inference Optimization, Validation & Analysis.
 The display name is DIOVA; the repository and existing URLs remain `inference-lab`.
 Historical case documents and packages retain their original names.
 
-This presentation layer reads pinned public Case006/007 evidence without editing it.
+This presentation layer reads pinned public Case006/007/008 evidence without editing it.
 It provides English and Korean static pages, item filters, same-readout comparisons,
-source links and JSON downloads. The home page does not load either case's dataset.
+source links and JSON downloads. Case008 has separate Q storage/runtime and R fixed-structure reconstruction summaries. The home page does not load item datasets.
 
 Published viewer: [한국어](https://munsik-kim.github.io/inference-lab/ko/index.html) · [English](https://munsik-kim.github.io/inference-lab/en/index.html). The same code supports the offline build below.
 
@@ -24,6 +24,7 @@ or a destination inside the repository. The builder copies only its explicit ass
 list; it extracts score/prompt projections rather than copying experiment trees.
 Marked irrelevant filler and token arrays are omitted. Exact input files remain linked.
 
+`case008_sources.json` pins the additional summary sources; it publishes no full vectors or token arrays.
 `source_manifest.json` records the fixed experiment commit and hashes of read files.
 `build_manifest.json` separately records presentation-source hashes, display counts and
 artifact hashes. The scientific source commit does not claim to contain the separately versioned
@@ -33,7 +34,7 @@ A current source change makes the original build stale; generate a new external 
 The CPU selector uses Python 3.12.14 and NumPy 2.3.5. It imports the original selector
 by a unique module name, validates calibration Q/grouping/hashes and reruns both
 frozen budgets. The filter tests use Node 24.12.0 with `node:test` and no npm packages.
-The workflows install only these CPU tools on GitHub-hosted runners.
+Portfolio checks use these tools. The separate `case008-checks.yml` runs retained-evidence checks and modelpack CPU tests, including a random tiny model using CPU PyTorch/Transformers/safetensors. No checkpoint downloads or GPU research runs are in CI. [Tiny example](../tools/modelpack_demo/README.md).
 
 Browser checks used an already installed Windows Edge through CDP, with a temporary
 profile, at 390/768/1280 pixels. `browser_check.cjs` is optional and accepts a local

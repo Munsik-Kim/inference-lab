@@ -6,8 +6,10 @@ English | [한국어](../ko/PORTFOLIO.md) · [Home](../../README.md)
 
 ## A 30-second introduction
 
-<!-- claims: c007-transfer c007-quality c006-native c006-readout -->
-DIOVA connects model compression with inference measurement and output analysis. The project includes PyTorch model adapters, RTX 5080 measurements, and tools for exploring individual results. The implementation covers model adapters and matrix slicing, GPU cost and answer comparisons, and CPU replay with result interfaces. See [technologies by task](../../README.md#tech-stack), then follow the code tour below to functions and tests.
+<!-- claims: c007-transfer c007-quality c006-native c006-readout c008-tracks c008-artifact-implementation -->
+DIOVA builds tools to compress, save and reload models, then compare their outputs and execution costs. Explore the PyTorch implementations, RTX 5080 measurements and browser-based results.
+
+Case008 connects checkpoint conversion, strict loading and fixed-structure ridge repair. Q weight files decreased about 67.0%; R reduced local squared error by 94.1–95.4% on short synthetic inputs. The models and metrics are separate, and gold scores were mixed. [Q/R screen](https://munsik-kim.github.io/inference-lab/en/case008.html) · [Tiny CPU example](GETTING_STARTED.md#tiny-model-demo).
 
 At 25% MLP deletion, PAIRWISE slightly lowered local error and preserved more baseline choices, but INDEPENDENT had better gold NLL. At 50%, the selected modules were identical; the frozen status is **COMPLETED_NO_CLEAR_TRANSFER**. In Case006, A_PUBLIC changed 5 of 192 standard choices and V4 changed 8 of 192. A same-input readout follow-up examines ties and the final vocabulary projection. These examples make both implementation choices and competing evaluation objectives visible. [Casebook](CASEBOOK.md) · [Open the local screen](GETTING_STARTED.md#local-showcase).
 
@@ -25,7 +27,9 @@ At 25% MLP deletion, PAIRWISE slightly lowered local error and preserved more ba
 - **Analysis delivery:** source hashes connect display records to preserved evidence, and a small selector replay exposes the actual calibration objective. [Showcase builder](../../tools/showcase/build.py) · [CPU replay](../../tools/showcase/replay_selection.py).
 
 <a id="code-tour"></a>
-## A three-stop code tour
+## Code tour
+
+**Start with artifact creation and reload.** [`save_dense()`](https://github.com/Munsik-Kim/inference-lab/blob/9bc8b8fced8dfd5147f9bfdc67564eda04670810/tools/modelpack/artifact.py#L32) saves tensor and structure manifests; [`load_dense()`](https://github.com/Munsik-Kim/inference-lab/blob/9bc8b8fced8dfd5147f9bfdc67564eda04670810/tools/modelpack/artifact.py#L109) builds on meta, adjusts per-layer widths, assigns weights strictly and restores tied weights and rotary buffers. [`fit_ridge()`](https://github.com/Munsik-Kim/inference-lab/blob/9bc8b8fced8dfd5147f9bfdc67564eda04670810/tools/modelpack/numerics.py#L13) solves the CPU FP64 reconstruction problem. [Original storage tests](../../cases/008-build-reconstruct-reload/tests/test_core.py) reject missing tensors and incompatible structures. [The standalone CPU demo](../../tools/modelpack_demo/roundtrip.py) runs this loader in another process.
 
 <!-- claims: c006-implementation -->
 1. **Control a native attention call.** Start at [`ScopedAttention`](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/src/intervention.py#L30). `route` permits the layer-13 square prefill intervention; `__exit__` restores the prior registry entry. Read the [restoration-on-exception test](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/tests/test_core.py#L193).
@@ -36,9 +40,9 @@ At 25% MLP deletion, PAIRWISE slightly lowered local error and preserved more ba
 
 *Script for a live walkthrough; no recorded video is supplied.*
 
-“Open the local Case007 screen. B is the unpruned baseline, and the two columns beside it remove the same number of groups. Keep the 25% budget and choose the fixed CODE guide. This item shows why local reconstruction, baseline agreement and probability on the correct answer are different measurements. Change to 50%: the selected groups and module outputs match. Timing is shown separately for six fixed inputs, rather than attributed to this item.
+“Open Case008 and select Q. The flow follows a BF16 source through GPTQ conversion and a new vLLM process. Compare file bytes and allocator memory: they describe different resources. The correct counts match, but the probability-score directions differ.
 
-“Now open Case006. Select a standard input and compare the gold answer, top-score set and four probabilities. A regression loses a baseline-correct answer; a flip can also gain a correct answer or change between wrong answers. Switch to the labelled FP32 diagnostic: it uses the same scenarios and its own baseline readout. Finally, open the source link and run the CPU selector command. It enumerates group combinations from calibration Q and checks the recorded selection without a model forward.”
+“Move to R. Compare I25 before and after output-weight repair: the channel count stays fixed while local error falls. Correct counts remain a separate result. Follow the CPU example link, run the tiny random-model command, and inspect summary.json. The builder exited before another process loaded a copied artifact. Shapes, complete outputs and shared weights must match. Then open the loader source and its failure tests. Case007 and Case006 provide the earlier group-selection and answer-level comparisons.”
 
 ## Three introduction lines with source links
 
@@ -53,6 +57,8 @@ At 25% MLP deletion, PAIRWISE slightly lowered local error and preserved more ba
 <!-- claims: attribution -->
 The project's work is comparison execution, scoped adapters, matrix surgery, validity checks, numerical/behavioral analysis and evidence viewers. Qwen and Red Hat AI provide checkpoints; Transformers, PyTorch and vLLM provide model/runtime components; SageAttention provides low-precision kernels. hclsys authored the Case001 guard. Han and coauthors developed EFQ-Softmax. HOPE motivates interaction-aware deletion in a separate MoE expert-pruning setting; the dense-group objective follows directly from the chosen MLP decomposition.
 
+GPTQ is the upstream quantization method; LLM Compressor and compressed-tensors implement conversion/storage, and safetensors provides the weight format. Case008 adds artifact validation, a layer-aware loader and fixed-structure ridge fitting. [Case008 attribution](../../cases/008-build-reconstruct-reload/NOTICE.md).
+
 OpenAI Codex assisted implementation, local execution, tests, analysis and writing. [Case001](../../cases/001-sm120-int8-fallback/NOTICE.md), [Case003](../../cases/003-efq-softmax-numerical-audit/NOTICE.md), [Case006](../../cases/006-attention-decision-stability/NOTICE.md) and [Case007 notices](../../cases/007-interaction-aware-mlp-pruning/NOTICE.md) credit reused work. Project code uses [Apache-2.0](../../LICENSE); model/upstream terms remain applicable.
 
 ## Technical collaboration
@@ -60,8 +66,3 @@ OpenAI Codex assisted implementation, local execution, tests, analysis and writi
 The code supports discussions about **model-change evaluation**, **local inference diagnosis** and **reproducible analysis tools and result screens**. A useful starting point is a model boundary, a public input ID and a metric to compare. [Repository issues](https://github.com/Munsik-Kim/inference-lab/issues) provide a public technical-question channel; keep credentials and private customer data out of public reports.
 
 The evidence covers specific models, one device and synthetic tasks. Deployment is **NOT_ASSESSED**. CPU audits check retained scalars; excluded full vectors and independent GPU replication have a separate verification scope in the [reproduction guide](GETTING_STARTED.md).
-
-## Checkpoint build and reconstruction: Case 008
-
-<!-- claims: c008-tracks -->
-Connected GPTQ conversion, packed checkpoint checks and fresh vLLM execution; separately implemented fixed-small-MLP ridge fitting and a per-layer loader. File/resident-weight reductions in Q and squared local error recovery in R are distinct from mixed gold scores and unresolved request speedups. [Structured report](../../cases/008-build-reconstruct-reload/REPORT.md) · [Loader and fitting tour](../../cases/008-build-reconstruct-reload/PORTFOLIO.md).
