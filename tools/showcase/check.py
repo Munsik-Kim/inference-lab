@@ -26,6 +26,51 @@ class Links(HTMLParser):
         for key in ('src','href'):
             if a.get(key):self.links.append((tag,a[key]))
 
+class Regions(HTMLParser):
+    """Collect visible text and links in named generated HTML regions."""
+    VOID = {'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}
+    def __init__(self):
+        super().__init__(); self.stack=[]; self.blocks={}
+    def handle_starttag(self, tag, attrs):
+        a=dict(attrs)
+        if 'id' in a:
+            self.blocks[a['id']]={'text':[], 'links':[]}
+        active=[key for _,key in self.stack if key is not None]
+        if a.get('id'): active.append(a['id'])
+        if tag=='a':
+            for key in active:self.blocks[key]['links'].append(a.get('href',''))
+        if tag not in self.VOID:self.stack.append((tag,a.get('id')))
+    def handle_endtag(self, tag):
+        if self.stack and self.stack[-1][0]==tag:self.stack.pop()
+    def handle_data(self, data):
+        for _,key in self.stack:
+            if key is not None:self.blocks[key]['text'].append(data)
+
+
+def check_home_outputs(html: str, data8: dict, lang: str) -> None:
+    """Check outcome units/scopes next to home metrics, not a scientific verdict."""
+    p=Regions();p.feed(html)
+    require(all(key in p.blocks for key in ('output-q','output-r','project-007','project-006')), 'Missing outcome region')
+    q=data8['tracks']['Q'];r=data8['tracks']['R']
+    qb,rb=p.blocks['output-q'],p.blocks['output-r']
+    qt=' '.join(qb['text']);rt=' '.join(rb['text'])
+    for value in q['weight_bytes'].values():
+        require(f'{value/10**9:.3f} GB' in qt, 'Home weight-file decimal GB mismatch')
+    require(f"{100*q['file_reduction_fraction']:.1f}%" in qt, 'Home file reduction mismatch')
+    require(q['model'].split('/')[-1] in qt and 'GPTQ W4A16' in qt, 'Home Q model/precision scope missing')
+    require(('Weight files' if lang=='en' else '가중치 파일') in qt, 'Home Q file scope missing')
+    values=[100*v['recovery']['pooled_recovery'] for v in r['structures'].values()]
+    require(f'{min(values):.1f}–{max(values):.1f}%' in rt, 'Home R error reduction mismatch')
+    scope=('local squared output error','One MLP layer','192 short synthetic held-out prompts') if lang=='en' else ('국소 제곱 출력 오차','한 층 MLP','짧은 합성 평가 입력 192개')
+    require(r['model'].split('/')[-1] in rt and all(term in rt for term in scope), 'Home R error/model/input scope missing')
+    for key in ('q','r'):
+        require('case008.html#'+key+'-evaluation' in p.blocks['output-'+key]['links'], 'Missing direct quality/runtime link')
+    for case,scope in [('007',('One MLP layer','16 channel groups') if lang=='en' else ('한 층 MLP','16개 채널 그룹')),('006',('One attention layer','Fixed synthetic questions') if lang=='en' else ('한 층 attention','고정 합성 질문'))]:
+        block=p.blocks['project-'+case]
+        require(all(term in ' '.join(block['text']) for term in scope), 'Missing tool scope')
+        require('case'+case+'.html#design' in block['links'], 'Missing detailed study link')
+
+
 def check(root: Path, site: Path) -> dict:
     require(site.is_dir(), 'Missing built site')
     paths={}
@@ -67,6 +112,7 @@ def check(root: Path, site: Path) -> dict:
     require(linked['files']=={C8_PATH+'/'+name:sha(root/C8_PATH/name) for name in ('REPORT.md','REPORT.ko.md')},'Changed linked report')
     for lang in ('en','ko'):
         home=(site/lang/'index.html').read_text()
+        check_home_outputs(home,data8,lang)
         require('id="case008-report"' in home and '#case-008' in home,'Missing Case008 home/archive entry')
         for page in ('index','guide'):
             require('href="'+report8_url(lang)+'"' in (site/lang/(page+'.html')).read_text(),'Missing same-language Case008 report link')

@@ -6,12 +6,12 @@ English | [한국어](../ko/PORTFOLIO.md) · [Home](../../README.md)
 
 ## A 30-second introduction
 
-<!-- claims: c007-transfer c007-quality c006-native c006-readout c008-tracks c008-artifact-implementation -->
-DIOVA builds tools to compress, save and reload models, then compare their outputs and execution costs. Explore the PyTorch implementations, RTX 5080 measurements and browser-based results.
+<!-- claims: c008-tracks c008-artifact-implementation c007-implementation -->
+DIOVA develops tools to modify pretrained models, save and reload the results, and measure their behavior on real hardware. Explore the implementation and recorded results in each project.
 
-Case008 connects checkpoint conversion, strict loading and fixed-structure ridge repair. Q weight files decreased about 67.0%; R reduced local squared error by 94.1–95.4% on short synthetic inputs. The models and metrics are separate, and gold scores were mixed. [Q/R screen](https://munsik-kim.github.io/inference-lab/en/case008.html) · [Tiny CPU example](GETTING_STARTED.md#tiny-model-demo).
+Case008 connects a GPTQ checkpoint builder, packed-weight validation, a structure-aware loader and fixed-MLP output reconstruction. The two paths reduce Qwen 4B weight files to **2.652 GB from 8.045 GB**, and reduce deletion-induced local squared output error by **94.1–95.4%** in one Qwen 0.6B MLP on 192 short synthetic held-out prompts. These are separate models and metrics. [Inspect the toolchains](https://munsik-kim.github.io/inference-lab/en/case008.html) · [Run the tiny CPU save–reload example](GETTING_STARTED.md#tiny-model-demo).
 
-At 25% MLP deletion, PAIRWISE slightly lowered local error and preserved more baseline choices, but INDEPENDENT had better gold NLL. At 50%, the selected modules were identical; the frozen status is **COMPLETED_NO_CLEAR_TRANSFER**. In Case006, A_PUBLIC changed 5 of 192 standard choices and V4 changed 8 of 192. A same-input readout follow-up examines ties and the final vocabulary projection. These examples make both implementation choices and competing evaluation objectives visible. [Casebook](CASEBOOK.md) · [Open the local screen](GETTING_STARTED.md#local-showcase).
+Case007 turns channel-group selections into smaller gate/up/down matrices. Case006 lets you inspect answer probabilities, lost correct answers, gains and ties for each question. Start with a result screen, open its implementation, then replay the public selection calculation. [Code tour](#code-tour) · [CPU selector](GETTING_STARTED.md#cpu-selector).
 
 ![Actual local Case007 comparison screen, showing one fixed code input](../../presentation/screenshots/case007-comparison.png)
 
@@ -50,6 +50,13 @@ At 25% MLP deletion, PAIRWISE slightly lowered local error and preserved more ba
 - Built a group-selection and matrix-slicing pipeline with masked-versus-sliced and held-out comparisons. [Case007 methods](../../cases/007-interaction-aware-mlp-pruning/METHODS.md).
 - Implemented a single-layer Qwen intervention and paired analysis of answer probabilities, regressions, gains and ties. [Case006 methods](../../cases/006-attention-decision-stability/METHODS.md).
 - Measured complete attention cost and retained **STOP_DEV_SCREEN** alongside the observed precision–cost trade-off. [Case004 cost](../../cases/004-low-precision-attention-break-even/README.md) · [Case005 decision](../../cases/005-attention-precision-pareto/README.md).
+
+## Evaluating the tools
+
+<!-- claims: c007-transfer c007-quality c006-native c006-readout -->
+Case008 gold-score changes differed by probability metric and repaired structure. Its measured request-time intervals included 1. Inspect the [Q quality and runtime comparison](https://munsik-kim.github.io/inference-lab/en/case008.html#q-evaluation) and the [R comparison](https://munsik-kim.github.io/inference-lab/en/case008.html#r-evaluation).
+
+At 25% MLP deletion, PAIRWISE slightly lowered local error and preserved more baseline choices, but INDEPENDENT had better gold NLL. At 50%, the selected modules were identical; the frozen status is **COMPLETED_NO_CLEAR_TRANSFER**. In Case006, A_PUBLIC changed 5 of 192 standard choices and V4 changed 8 of 192. A same-input readout follow-up examines ties and the final vocabulary projection. These examples make both implementation choices and competing evaluation objectives visible. [Casebook](CASEBOOK.md) · [Open the local screen](GETTING_STARTED.md#local-showcase).
 
 <a id="contribution-and-reuse"></a>
 ## Contribution and reuse

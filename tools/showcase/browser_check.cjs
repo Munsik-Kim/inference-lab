@@ -89,13 +89,32 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
       await send('Page.navigate',{url:new URL(lang+'/'+page+'.html',base).href});await wait(200);
       expect(await e('document.readyState==="complete" && document.querySelector("h1").textContent.length>0'),'Home/guide loaded '+lang+page);
       for(const width of [390,768,1280]){
-        await send('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:false});await wait(30);
+        await e('document.activeElement.blur()');
+        await send('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:false});await wait(80);
         expect(await e('document.documentElement.scrollWidth<=innerWidth+2'),'Home/guide layout '+lang+page+width);
+        if(page==='index') {
+          expect(await e('[...document.querySelectorAll(".project-scope")].every(x=>parseFloat(getComputedStyle(x).fontSize)>=15 && getComputedStyle(x).color===getComputedStyle(document.documentElement).color)'), 'Readable home scopes '+lang+width);
+          for(const [label,target] of [['home',null],['projects','projects'],['output-q','output-q'],['output-r','output-r'],['project007','project-007'],['project006','project-006']]) {
+            await e(target?'document.getElementById('+JSON.stringify(target)+').scrollIntoView()':'scrollTo({top:0,left:0,behavior:"instant"})');await wait(100);
+            if(!target)expect(await e('scrollY')===0,'Home screenshot starts at top '+lang+width);
+            const shot=await send('Page.captureScreenshot',{format:'png'});
+            fs.writeFileSync(path.join(out,label+'-'+lang+'-'+width+'.png'),Buffer.from(shot.data,'base64'));
+          }
+          await e('document.querySelector(".home-jumps a").focus()');
+          expect(await e('document.activeElement.href.includes("PORTFOLIO.md#code-tour") && getComputedStyle(document.activeElement).outlineStyle!=="none"'), 'Home first CTA keyboard focus '+lang+width);
+          await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Tab',code:'Tab',windowsVirtualKeyCode:9});await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Tab',code:'Tab',windowsVirtualKeyCode:9});
+          expect(await e('document.activeElement.href.includes("#tiny-model-demo")'), 'Home CPU CTA keyboard order '+lang+width);
+        }
       }
     }
     for(const lang of ['en','ko']) {
       await send('Page.navigate',{url:new URL(lang+'/index.html',base).href});await wait(250);
       expect(await e('[...document.querySelectorAll(".study-card .case-number")].map(e=>e.textContent).join(",")')==='008,007,006','Case008 featured first '+lang);
+      expect(await e('document.querySelectorAll(".project-output").length===2 && document.querySelectorAll(".study-card .card-limit").length===0'),'Separate deliverables without repeated verdict '+lang);
+      await e('[...document.querySelectorAll(".home-jumps a")].find(a=>a.getAttribute("href")==="#projects").click()');await wait(80);
+      expect(await e('location.hash')==='#projects','Project CTA '+lang);
+      await e('[...document.querySelectorAll("#output-q a")].find(a=>a.getAttribute("href")==="case008.html#q-evaluation").click()');await wait(250);
+      expect(await e('location.hash==="#q-evaluation" && !!document.getElementById("q-evaluation")'),'Q evaluation reached from home '+lang);
       await send('Page.navigate',{url:new URL(lang+'/case008.html',base).href});await wait(250);
       expect(await e('document.querySelectorAll(".track-panel").length')===2,'Two separate Case008 tracks '+lang);
       expect(await e('document.getElementById("q-file-reduction").textContent')==='67.04%','Recorded Q file reduction '+lang);
@@ -118,6 +137,13 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
       expect(await e('location.hash')==='#track-r','Case008 language retains section '+lang);
       await e('document.getElementById("language").focus()');
       expect(await e('getComputedStyle(document.activeElement).outlineStyle')!=='none','Case008 keyboard focus '+lang);
+      for(const section of ['q-evaluation','r-evaluation']) {
+        await e('location.hash='+JSON.stringify(section));await wait(80);
+        await send('Page.reload');await wait(250);
+        const next=await e('document.getElementById("language").href');
+        await send('Page.navigate',{url:next});await wait(250);
+        expect(await e('location.hash')==='#'+section,'Evaluation reload/language anchor '+lang+section);
+      }
     }
     const forbidden=requests.filter(x=>/^https?:/.test(x)&&(u.protocol==='file:'||new URL(x).origin!==u.origin));
     expect(errors.length===0,'No console exceptions/errors');expect(responseErrors.length===0,'No HTTP resource failures');expect(forbidden.length===0,'No external runtime requests');

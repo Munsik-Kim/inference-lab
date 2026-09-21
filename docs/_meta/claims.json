@@ -599,8 +599,6 @@
       "evidence_kind": "original",
       "limits": "Zero observed regression is not zero risk/equivalence. Stress is baseline-conditioned, not workload frequency.",
       "docs_locations": [
-        "README.md",
-        "README.ko.md",
         "docs/en/CASEBOOK.md",
         "docs/en/PORTFOLIO.md",
         "docs/en/START_HERE.md",
@@ -639,22 +637,6 @@
             "95%",
             "NLL",
             "후보−BF16"
-          ]
-        },
-        {
-          "path": "README.md",
-          "contains": [
-            "5 of 192",
-            "8 of 192",
-            "stress"
-          ]
-        },
-        {
-          "path": "README.ko.md",
-          "contains": [
-            "192개 중 5개",
-            "192개 중 8개",
-            "스트레스"
           ]
         }
       ]
@@ -746,8 +728,6 @@
       "evidence_kind": "original",
       "limits": "Native counts remain primary; completed study does not imply deployment approval.",
       "docs_locations": [
-        "README.md",
-        "README.ko.md",
         "docs/en/CASEBOOK.md",
         "docs/ko/CASEBOOK.md"
       ],
@@ -846,6 +826,8 @@
       "evidence_kind": "documented-implementation",
       "limits": "Not all-layer or weight/KV quantization; scope established by recorded checks and source.",
       "docs_locations": [
+        "README.ko.md",
+        "README.md",
         "docs/en/CASEBOOK.md",
         "docs/en/PORTFOLIO.md",
         "docs/ko/CASEBOOK.md",
@@ -1037,8 +1019,6 @@
       "evidence_kind": "original",
       "limits": "Not all-model compression, equivalence or deployment approval. Same 50% structure is not an independent non-inferiority test.",
       "docs_locations": [
-        "README.md",
-        "README.ko.md",
         "docs/en/CASEBOOK.md",
         "docs/en/PORTFOLIO.md",
         "docs/en/START_HERE.md",
@@ -1069,22 +1049,6 @@
           "path": "docs/ko/PORTFOLIO.md",
           "contains": [
             "COMPLETED_NO_CLEAR_TRANSFER"
-          ]
-        },
-        {
-          "path": "README.md",
-          "contains": [
-            "25%",
-            "50%",
-            "192"
-          ]
-        },
-        {
-          "path": "README.ko.md",
-          "contains": [
-            "25%",
-            "50%",
-            "192"
           ]
         },
         {
@@ -1131,8 +1095,6 @@
       "evidence_kind": "posthoc",
       "limits": "Gold contrast did not change selector or frozen decision. Full KL is a retained full-vector scalar, not reconstructable from four option logits.",
       "docs_locations": [
-        "README.md",
-        "README.ko.md",
         "docs/en/CASEBOOK.md",
         "docs/en/PORTFOLIO.md",
         "docs/en/START_HERE.md",
@@ -1163,22 +1125,6 @@
           "path": "docs/ko/PORTFOLIO.md",
           "contains": [
             "NLL"
-          ]
-        },
-        {
-          "path": "README.md",
-          "contains": [
-            "one-layer MLP",
-            "1.176–1.412×",
-            "whole-model"
-          ]
-        },
-        {
-          "path": "README.ko.md",
-          "contains": [
-            "한 층 MLP",
-            "1.176–1.412배",
-            "전체 모델"
           ]
         }
       ]
@@ -1331,6 +1277,39 @@
       "scope": "Existing Case008 modelpack implementation, with upstream algorithm/runtime reuse.",
       "limits": "Tiny random CPU wrapper checks serialization only; no trained-model quality or speed claim.",
       "evidence_kind": "documented-implementation",
+      "docs_locations": [
+        "README.md",
+        "README.ko.md",
+        "docs/en/PORTFOLIO.md",
+        "docs/ko/PORTFOLIO.md"
+      ],
+      "display_checks": []
+    },
+    {
+      "claim_id": "c007-implementation",
+      "case_id": "007",
+      "claim_en": "Selected channel indices slice gate/up rows and down columns into a physically smaller MLP, with a masked reference and scoped restoration.",
+      "claim_ko": "선택한 채널 인덱스로 gate/up 행과 down 열을 잘라 실제 작은 MLP를 만들며 마스킹 비교와 범위 내 교체·복구를 제공한다.",
+      "source_revision": "a9435322b08871d120a4544e7b15ea9da85016c2",
+      "source_path": "cases/007-interaction-aware-mlp-pruning/src/surgery.py",
+      "source_sha256": "a07636819c1c07803578aca903bb09514b3e90c01db64ef939f43e3b840a8926",
+      "source_locator": {
+        "kind": "text",
+        "contains": [
+          "def sliced(original,mapping,removed):",
+          "result.gate_proj=linear(original.gate_proj,rows=ids)",
+          "result.down_proj=linear(original.down_proj,cols=ids)",
+          "def masked(original,x,mapping,removed):",
+          "finally:layer.mlp=old"
+        ]
+      },
+      "metric": null,
+      "value": null,
+      "unit": null,
+      "denominator": null,
+      "scope": "Case007: one Qwen3-0.6B MLP, 16 contiguous channel groups; deletion budgets 4 and 8.",
+      "evidence_kind": "documented-implementation",
+      "limits": "Implementation scope; comparative quality and timing remain in linked results, not a whole-model speed claim.",
       "docs_locations": [
         "README.md",
         "README.ko.md",
