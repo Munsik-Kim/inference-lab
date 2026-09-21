@@ -3,6 +3,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 import sys
+import copy
 import tempfile
 import unittest
 
@@ -11,7 +12,9 @@ sys.path.insert(0, str(ROOT/'tools/showcase'))
 from build import build
 from common import read, source_manifest
 from data import load
-from layout import home, report8_url, C8_REVISION, C8_PATH
+from layout import home, report8_url, C8_REVISION, C8_PATH, output_metrics
+from case008 import load_case008
+from check import check_home_outputs
 
 
 class Page(HTMLParser):
@@ -123,6 +126,55 @@ class Homepages(unittest.TestCase):
     def test_archive_cannot_silently_drop_an_untranslated_case(self):
         with self.assertRaisesRegex(ValueError,'Every case needs'):
             home({},'ko',{},['case001','case002'],['Only one title'],'fixture')
+
+    def test_outcomes_are_separate_scoped_and_linked(self):
+        data=load_case008(ROOT)
+        for lang in ('en','ko'):
+            html=(self.site/lang/'index.html').read_text()
+            check_home_outputs(html,data,lang)
+            locale=read(ROOT/f'presentation/content/{lang}.json')
+            self.assertIn('<h1>'+locale['homeHeroTitle']+'</h1>',html)
+            self.assertIn('Deep-learning Inference Optimization, Validation &amp; Analysis',html)
+            self.assertNotIn('class="card-limit"',html)
+            self.assertNotIn(locale['projectResult8'],html)
+            self.assertNotIn(locale['homeLimit6'],html)
+            self.assertNotIn('-0.2003',html)
+            self.assertIn('#tiny-model-demo',html)
+            self.assertIn('#cpu-selector',html)
+
+    def test_wrong_home_units_scope_and_missing_evaluation_rejected(self):
+        data=load_case008(ROOT);html=(self.site/'en/index.html').read_text()
+        mutations=[('8.045 GB','8.045 GiB','decimal GB'),
+                   ('local squared output error','accuracy','error/model/input scope'),
+                   ('192 short synthetic held-out prompts','384 prompts','error/model/input scope'),
+                   ('case008.html#q-evaluation','case008.html','quality/runtime'),
+                   ('16 channel groups','all layers','tool scope')]
+        for old,new,error in mutations:
+            with self.subTest(old=old),self.assertRaisesRegex(ValueError,error):
+                check_home_outputs(html.replace(old,new),data,'en')
+
+    def test_rounding_uses_retained_values_instead_of_fixed_headlines(self):
+        d=load_case008(ROOT);m=output_metrics(d)
+        self.assertEqual(m['weight_files'],'8.045 GB → 2.652 GB')
+        changed=copy.deepcopy(d);changed['tracks']['Q']['weight_bytes']['Q-W4']=3_000_000_000
+        changed['tracks']['Q']['file_reduction_fraction']=1-3_000_000_000/d['tracks']['Q']['weight_bytes']['Q-BF16']
+        self.assertIn('3.000 GB',output_metrics(changed)['weight_files'])
+        self.assertNotEqual(m['reduction'],output_metrics(changed)['reduction'])
+        for lang in ('en','ko'):
+            doc=(ROOT/('README.md' if lang=='en' else 'README.ko.md')).read_text()
+            for value in (m['reduction']+'%',m['weight_files'],m['recovery']):self.assertIn(value,doc)
+
+    def test_evaluation_links_reach_preserved_detail(self):
+        for lang in ('en','ko'):
+            detail=(self.site/lang/'case008.html').read_text()
+            locale=read(ROOT/f'presentation/case008/{lang}.json')
+            for key in ('qscore','nllScope','timeScope','rConclusion'):
+                from html import escape
+                self.assertIn(escape(locale[key]),detail)
+            for name in ('q-evaluation','q-timing','r-evaluation'):self.assertIn('id="'+name+'"',detail)
+            self.assertIn('NOT_ASSESSED',detail)
+            self.assertIn('COMPLETED_NO_CLEAR_TRANSFER',(self.site/lang/'case007.html').read_text())
+            self.assertIn('0/24',(self.site/lang/'case006.html').read_text())
 
 
 if __name__=='__main__':unittest.main()

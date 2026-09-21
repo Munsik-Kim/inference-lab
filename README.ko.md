@@ -1,14 +1,18 @@
-# DIOVA
+**DIOVA**
 
 [English](README.md) | 한국어
 
 **D**eep-learning **I**nference **O**ptimization, **V**alidation & **A**nalysis
 
-DIOVA는 모델을 압축·저장·재실행하고, 출력과 실행 비용을 비교하는 도구를 만듭니다. PyTorch 구현, RTX 5080 측정 기록, 브라우저 결과 화면을 함께 살펴볼 수 있습니다.
+# 모델 압축부터 저장·실행까지 구현합니다.
 
-**Python · PyTorch · Transformers · vLLM · NumPy**
+양자화 모델 제작, 모델 구조 변경, 압축 후 계산 복구와 GPU 성능 평가.
 
-[구현 기능](#capabilities) · [기술스택](#tech-stack) · [프로젝트 보기](#projects)
+DIOVA는 학습된 모델을 더 가볍게 만드는 코드와, 변경한 모델을 다시 실행하고 비교하는 도구를 개발합니다. 실제 구현과 측정 결과를 프로젝트별로 확인할 수 있습니다.
+
+**PyTorch · Transformers · LLM Compressor · safetensors · vLLM · NumPy**
+
+[모델 제작 도구](docs/ko/PORTFOLIO.md#code-tour) · [CPU 데모 실행](docs/ko/GETTING_STARTED.md#tiny-model-demo) · [프로젝트 보기](#projects)
 
 <a id="capabilities"></a>
 ## 구현 기능
@@ -47,32 +51,54 @@ Python · JavaScript · GitHub Actions · GitHub Pages. [CPU 선택기 재계산
 <a id="projects"></a>
 ## 대표 프로젝트
 
-### Case 008 — 모델 변환·복구·재실행 파이프라인
+### Case 008 — 모델을 변환하고, 복구하고, 다시 실행하기
 
 <!-- claims: c008-tracks c008-artifact-implementation -->
-GPTQ 변환, 압축 파일 검사, 새 vLLM 프로세스 실행을 연결했습니다. 별도 경로에서는 고정된 작은 MLP의 출력 가중치를 보정하고 독립 저장본에서 층별 구조를 복원합니다. 사용 기술은 **LLM Compressor · compressed-tensors · safetensors · PyTorch · NumPy**입니다.
+Qwen 4B의 양자화 저장본 제작과 Qwen 0.6B의 작은 MLP 출력 복구를 구현했습니다. 모델과 측정 대상이 다른 두 결과물을 각각 살펴볼 수 있습니다.
 
-Q 가중치 파일은 약 67.0% 작아졌고, R의 국소 제곱 출력 오차는 짧은 합성 평가 입력에서 94.1–95.4% 줄었습니다. 서로 다른 모델과 지표의 결과입니다. 정답 점수 변화는 혼재했으며 요청 가속은 확정하지 못했습니다.
+#### Q · Qwen 4B 가중치 파일 67.0% 절감
 
-[Q/R 결과 화면](https://munsik-kim.github.io/inference-lab/ko/case008.html) · [정식 보고서](cases/008-build-reconstruct-reload/REPORT.ko.md) · [작은 CPU 저장·재로딩 예제](docs/ko/GETTING_STARTED.md#tiny-model-demo) · [측정 자료 ZIP](downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)
+원본 모델을 GPTQ W4A16으로 변환하고, 압축된 가중치와 설정을 검사한 뒤 새 vLLM 프로세스에서 실행하는 파이프라인을 구현했습니다.
 
-### Case 007 — 채널 선택부터 실제 모델 구조 축소까지
+**8.045 GB → 2.652 GB** — 가중치 파일 · 원본 BF16 → GPTQ W4A16 · 십진 GB.
 
-<!-- claims: c007-transfer c007-quality -->
-MLP는 모델 안에서 정보를 변환하는 계산 블록입니다. 채널 그룹을 선택하고 gate/up/down 행렬을 잘라 작은 모듈을 만드는 도구를 구현했습니다. 사용 기술은 **PyTorch · NumPy · 구조화 가지치기(pruning)**입니다.
+Qwen3-4B-Instruct-2507 · GPTQ W4A16. **LLM Compressor · compressed-tensors · vLLM**.
 
-한 층 MLP 그룹의 25% 삭제에서는 상호작용 선택의 국소 오차가 미관측 입력 192개에서 소폭 낮았고, 50%에서는 두 방법이 같은 구조를 골랐습니다. 축소한 **한 층 MLP**는 1.176–1.412배 빨랐으며, 질문을 처음 처리하는 prefill의 전체 모델 가속은 확인되지 않았습니다. 기준 모델을 가깝게 보존하는 것과 정답에 더 좋은 확률을 주는 것은 다른 결과였습니다.
+[변환 코드](tools/modelpack/quantized.py) · [저장·재실행 과정](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) · [품질·속도 평가](https://munsik-kim.github.io/inference-lab/ko/case008.html#q-evaluation)
 
-[결과 탐색](https://munsik-kim.github.io/inference-lab/ko/case007.html) · [행렬 축소 코드](cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [상세 연구](docs/ko/CASEBOOK.md#case-007)
+#### R · 같은 작은 MLP에서 계산 오차 복구
 
-### Case 006 — 모델의 계산을 바꾸고 답변 변화를 추적하는 도구
+출력 가중치를 다시 맞춰 삭제로 생긴 국소 제곱 출력 오차를 평가 입력에서 줄였습니다. 보정값은 기존 작은 행렬에 저장해 추가 추론 행렬 없이 실행합니다.
 
-<!-- claims: c006-native c006-readout c006-limits -->
-한 층 attention을 교체하고 같은 질문의 정답 확률·선택·최고점 동률을 비교하는 도구를 구현했습니다. 사용 기술은 **PyTorch · Transformers · SageAttention**입니다.
+**94.1–95.4%** — 삭제로 생긴 국소 제곱 출력 오차 감소.
 
-두 설정은 표준 192개 중 5개, 192개 중 8개의 선택을 바꿨습니다. 이 집합에서는 기준선의 정답을 잃지 않았지만 별도로 선정한 스트레스 집합에서는 정답 손실이 있었습니다. 같은 입력의 사후 진단은 마지막 어휘 점수 계산의 정밀도를 살폈습니다. 한 모델의 한 층을 합성 질문으로 비교한 기록입니다.
+Qwen3-0.6B · 한 층 MLP · 짧은 합성 평가 입력 192개. **PyTorch · NumPy · safetensors**.
 
-[결과 탐색](https://munsik-kim.github.io/inference-lab/ko/case006.html) · [Attention 교체 코드](cases/006-attention-decision-stability/src/intervention.py) · [상세 연구·추가 진단](docs/ko/CASEBOOK.md#case-006)
+[구조 복원 코드](tools/modelpack/artifact.py) · [보정 방법](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-r) · [품질·속도 평가](https://munsik-kim.github.io/inference-lab/ko/case008.html#r-evaluation)
+
+[설계와 실험 결과](cases/008-build-reconstruct-reload/REPORT.ko.md) · [CPU 데모 실행](docs/ko/GETTING_STARTED.md#tiny-model-demo) · [코드·recipe·측정 자료 ZIP](downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)
+
+### Case 007 — 채널 선택부터 실제 행렬 축소까지
+
+<!-- claims: c007-implementation -->
+각 채널 그룹의 기여와 그룹 간 상호작용을 계산해 제거 대상을 고르고, gate/up/down 행렬을 함께 줄이는 도구를 구현했습니다. 선택 결과를 실제 작은 PyTorch 모듈로 만들고, 원래 모듈에 같은 삭제를 적용한 계산과 비교합니다.
+
+**그룹 선택 → 행렬 축소 → 계산 검증**
+
+Qwen3-0.6B · 한 층 MLP · 16개 채널 그룹. **PyTorch · NumPy · 구조화 pruning**.
+
+[선택기 실행](docs/ko/GETTING_STARTED.md#cpu-selector) · [구조 변경 코드](cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [설계와 실험 결과](https://munsik-kim.github.io/inference-lab/ko/case007.html#design)
+
+### Case 006 — 모델 변경을 질문별로 추적하는 평가 도구
+
+<!-- claims: c006-implementation c006-readout -->
+모델의 특정 attention 연산을 교체하고, 같은 질문의 답변 확률·선택·동률을 비교하는 도구를 구현했습니다. 평균 점수에서 가려진 변화를 입력별로 확인하고, 마지막 출력 계산의 정밀도까지 별도로 조사할 수 있습니다.
+
+**정답 손실 · 새 정답 · 다른 오답으로의 변경**
+
+Qwen3-0.6B · 한 층 attention · 고정 합성 질문. **PyTorch · Transformers · SageAttention**.
+
+[비교 화면](https://munsik-kim.github.io/inference-lab/ko/case006.html#results) · [연산 개입 코드](cases/006-attention-decision-stability/src/intervention.py) · [설계와 실험 결과](https://munsik-kim.github.io/inference-lab/ko/case006.html#design)
 
 
 ## 여덟 질문과 구현물

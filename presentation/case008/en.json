@@ -1,6 +1,6 @@
 {
-  "title": "Compress, save and reload a changed model",
-  "intro": "Track Q builds an INT4-weight checkpoint and runs it in a fresh inference process. Track R fits the output weights of a smaller MLP and restores its layer-specific structure on reload. These are two separate Qwen models and experiments.",
+  "title": "Build, reconstruct, reload",
+  "intro": "Built a quantized checkpoint pipeline and a structure-aware MLP reconstruction tool. Q converts and reloads a Qwen 4B model; R fits the output weights of a smaller Qwen 0.6B MLP and restores its saved structure. Inspect each toolchain, then its quality and runtime measurements.",
   "tracks": "Two separate tracks", "qtitle": "Q · A smaller checkpoint that runs", "rtitle": "R · Recovering output in a fixed smaller MLP", "try": "Try the save–reload contract on a CPU",
   "scenarios": "held-out scenarios", "tokens": "prompt tokens",
   "qmethod": "GPTQ converts Linear weights to packed INT4 using LLM Compressor and compressed-tensors. Activations remain BF16 (W4A16); the output head is excluded. The recorded run checks the packed artifact and the actual vLLM / Marlin execution route.",
@@ -21,5 +21,7 @@
   "rScope": "Relative error uses the native MLP output norm at 32 fixed positions per prompt. Energy recovery pools squared errors and is a different metric. Repair changed only down_proj.weight; tensor shapes, parameter counts and the number of inference matrices stayed fixed.",
   "rConclusion": "Local reconstruction improved in every held-out prompt, but correct counts moved in different directions. The same-size before/after request-time intervals all include 1. Inputs are short synthetic questions from shared template families; this is not a measure of recovered general model ability.",
   "report": "Read the structured report and exact definitions", "fixture": "A separate random tiny model demonstrates slicing, saving, process exit, directory copy and fresh CPU reload. Shape, complete outputs and tied weights are checked. It downloads no pretrained model and produces no task-quality or speed result.",
-  "routes": "Choose a route: inspect recorded results, run the tiny CPU example, build a full model artifact, or reproduce the frozen study.", "fourRoutes": "Four ways to use the project", "download": "Read / save the displayed source JSON", "sources": "Frozen sources and study status"
+  "routes": "Choose a route: inspect recorded results, run the tiny CPU example, build a full model artifact, or reproduce the frozen study.", "fourRoutes": "Four ways to use the project", "download": "Read / save the displayed source JSON", "sources": "Frozen sources and study status",
+  "qEvaluation": "Q quality and runtime",
+  "rEvaluation": "R quality and runtime"
 }

@@ -6,12 +6,12 @@
 
 ## 30초 소개
 
-<!-- claims: c007-transfer c007-quality c006-native c006-readout c008-tracks c008-artifact-implementation -->
-DIOVA는 모델을 압축·저장·재실행하고, 출력과 실행 비용을 비교하는 도구를 만듭니다. PyTorch 구현, RTX 5080 측정 기록, 브라우저 결과 화면을 함께 살펴볼 수 있습니다.
+<!-- claims: c008-tracks c008-artifact-implementation c007-implementation -->
+DIOVA는 학습된 모델을 더 가볍게 만드는 코드와, 변경한 모델을 다시 실행하고 비교하는 도구를 개발합니다. 실제 구현과 측정 결과를 프로젝트별로 확인할 수 있습니다.
 
-Case008은 저장본 변환, 엄격한 구조 로딩, 고정 구조의 ridge 보정을 연결합니다. Q 가중치 파일은 약 67.0% 작아졌고 R의 국소 제곱오차는 짧은 합성 입력에서 94.1–95.4% 줄었습니다. 서로 다른 모델·지표이며 정답 점수 변화는 혼재했습니다. [Q/R 화면](https://munsik-kim.github.io/inference-lab/ko/case008.html) · [작은 CPU 예제](GETTING_STARTED.md#tiny-model-demo).
+Case008은 GPTQ 저장본 제작, 압축 가중치 검사, 층별 구조 로더와 고정 MLP의 출력 복구를 연결합니다. Qwen 4B 가중치 파일은 **8.045 GB에서 2.652 GB로**, Qwen 0.6B의 한 층 MLP에서는 짧은 합성 평가 입력 192개의 삭제로 생긴 국소 제곱 출력 오차를 **94.1–95.4%** 줄였습니다. 서로 다른 모델과 지표입니다. [두 구현 과정 보기](https://munsik-kim.github.io/inference-lab/ko/case008.html) · [작은 CPU 저장·재로딩 예제 실행](GETTING_STARTED.md#tiny-model-demo).
 
-MLP 25% 삭제에서 PAIRWISE의 국소 오차는 소폭 낮았고 기준선 선택을 더 많이 보존했지만, 정답 NLL은 INDEPENDENT가 더 좋았습니다. 50%의 선택 모듈은 같았으며 고정 판정은 **COMPLETED_NO_CLEAR_TRANSFER**입니다. Case006에서는 표준 192개 중 A_PUBLIC은 5개, V4는 8개의 선택이 달라졌습니다. 같은 입력의 사후 출력 계산 진단은 동률과 마지막 어휘 점수 계산을 살펴봅니다. 구현상 선택과 서로 다른 평가 목표를 이 예제들에서 확인할 수 있습니다. [사례 안내](CASEBOOK.md) · [로컬 화면 열기](GETTING_STARTED.md#local-showcase).
+Case007은 채널 그룹 선택을 실제 gate/up/down 행렬 축소로 연결합니다. Case006에서는 질문별 정답 확률, 정답 손실·개선과 동률을 살펴볼 수 있습니다. 결과 화면에서 실제 입력 하나를 고르고, 연결된 구현 코드를 읽은 뒤 공개 선택 계산을 재실행할 수 있습니다. [코드 투어](#code-tour) · [CPU 선택기](GETTING_STARTED.md#cpu-selector).
 
 ![고정 코드 입력 하나를 비교하는 실제 Case007 로컬 화면](../../presentation/screenshots/case007-comparison.png)
 
@@ -50,6 +50,13 @@ MLP 25% 삭제에서 PAIRWISE의 국소 오차는 소폭 낮았고 기준선 선
 - 그룹 선택과 행렬 축소 도구를 만들고, 마스킹 계산 및 미관측 입력과 비교했습니다. [Case007 방법·영어](../../cases/007-interaction-aware-mlp-pruning/METHODS.md).
 - Qwen 한 층 개입과 답변 확률·정답 손실·정답 획득·동률의 쌍별 분석을 구현했습니다. [Case006 방법·영어](../../cases/006-attention-decision-stability/METHODS.md).
 - Attention 전체 호출 비용을 측정하고, 관측된 정밀도·비용 절충과 **STOP_DEV_SCREEN** 판정을 함께 기록했습니다. [Case004 비용·영어](../../cases/004-low-precision-attention-break-even/README.md) · [Case005 판정·영어](../../cases/005-attention-precision-pareto/README.md).
+
+## 도구의 성능 평가
+
+<!-- claims: c007-transfer c007-quality c006-native c006-readout -->
+Case008의 정답 점수 변화는 확률 지표와 보정 구조에 따라 달랐고, 측정한 요청 시간비 구간은 1을 포함했습니다. [Q 품질·속도 평가](https://munsik-kim.github.io/inference-lab/ko/case008.html#q-evaluation)와 [R 평가](https://munsik-kim.github.io/inference-lab/ko/case008.html#r-evaluation)에서 비교할 수 있습니다.
+
+MLP 25% 삭제에서 PAIRWISE의 국소 오차는 소폭 낮았고 기준선 선택을 더 많이 보존했지만, 정답 NLL은 INDEPENDENT가 더 좋았습니다. 50%의 선택 모듈은 같았으며 고정 판정은 **COMPLETED_NO_CLEAR_TRANSFER**입니다. Case006에서는 표준 192개 중 A_PUBLIC은 5개, V4는 8개의 선택이 달라졌습니다. 같은 입력의 사후 출력 계산 진단은 동률과 마지막 어휘 점수 계산을 살펴봅니다. 구현상 선택과 서로 다른 평가 목표를 이 예제들에서 확인할 수 있습니다. [사례 안내](CASEBOOK.md) · [로컬 화면 열기](GETTING_STARTED.md#local-showcase).
 
 <a id="contribution-and-reuse"></a>
 ## 프로젝트 기여와 재사용

@@ -1,14 +1,18 @@
-# DIOVA
+**DIOVA**
 
 English | [한국어](README.ko.md)
 
 **D**eep-learning **I**nference **O**ptimization, **V**alidation & **A**nalysis
 
-DIOVA builds tools to compress, save and reload models, then compare their outputs and execution costs. Explore the PyTorch implementations, RTX 5080 measurements and browser-based results.
+# From model compression to working checkpoints.
 
-**Python · PyTorch · Transformers · vLLM · NumPy**
+Quantized model builds, structural pruning, weight reconstruction, and GPU evaluation.
 
-[Capabilities](#capabilities) · [Tech stack](#tech-stack) · [Projects](#projects)
+DIOVA develops tools to modify pretrained models, save and reload the results, and measure their behavior on real hardware. Explore the implementation and recorded results in each project.
+
+**PyTorch · Transformers · LLM Compressor · safetensors · vLLM · NumPy**
+
+[Model build tools](docs/en/PORTFOLIO.md#code-tour) · [Run the CPU demo](docs/en/GETTING_STARTED.md#tiny-model-demo) · [Explore projects](#projects)
 
 <a id="capabilities"></a>
 ## Capabilities
@@ -47,32 +51,54 @@ Python · JavaScript · GitHub Actions · GitHub Pages. [CPU selector replay](to
 <a id="projects"></a>
 ## Selected projects
 
-### Case 008 — Convert, reconstruct and reload a model
+### Case 008 — Build, reconstruct, reload
 
 <!-- claims: c008-tracks c008-artifact-implementation -->
-GPTQ conversion, packed-file validation and a fresh vLLM process form one path. A separate path repairs a fixed smaller MLP and restores its layer-specific structure from a standalone artifact. Built with **LLM Compressor · compressed-tensors · safetensors · PyTorch · NumPy**.
+Two toolchains: build a quantized Qwen 4B checkpoint, or reconstruct the outputs of a smaller Qwen 0.6B MLP. Each has its own model, measurements and result screen.
 
-Q weight files decreased about 67.0%; R reduced squared local output error by 94.1–95.4% on short synthetic held-out inputs. These are separate models and metrics. Gold-score changes were mixed, and request speedup was not established.
+#### Q · 67.0% smaller Qwen 4B weight files
 
-[Q/R result screens](https://munsik-kim.github.io/inference-lab/en/case008.html) · [Structured report](cases/008-build-reconstruct-reload/REPORT.md) · [Tiny CPU save–reload example](docs/en/GETTING_STARTED.md#tiny-model-demo) · [Evidence ZIP](downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)
+Built a pipeline that converts Qwen weights to GPTQ W4A16, validates the packed checkpoint, and runs it in fresh vLLM processes.
 
-### Case 007 — From channel selection to a smaller model block
+**8.045 GB → 2.652 GB** — Weight files · Original BF16 → GPTQ W4A16 · Decimal GB.
 
-<!-- claims: c007-transfer c007-quality -->
-An MLP is a block that transforms information inside the model. The selector and weight-slicing adapter turn chosen channel groups into a physically smaller module. Built with **PyTorch · NumPy · structured pruning**.
+Qwen3-4B-Instruct-2507 · GPTQ W4A16. **LLM Compressor · compressed-tensors · vLLM**.
 
-At 25% removal of one MLP's groups, interaction-aware selection slightly reduced local error on 192 held-out inputs; both methods chose the same structure at 50%. The smaller **one-layer MLP** ran 1.176–1.412× faster, while whole-model prefill—the initial processing of a prompt—did not establish a speedup. Closer preservation of the original model differed from assigning the best probability to the correct answer.
+[Conversion code](tools/modelpack/quantized.py) · [Build and reload](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) · [Quality and runtime evaluation](https://munsik-kim.github.io/inference-lab/en/case008.html#q-evaluation)
 
-[Explore results](https://munsik-kim.github.io/inference-lab/en/case007.html) · [Matrix-slicing code](cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [Detailed study](docs/en/CASEBOOK.md#case-007)
+#### R · Reconstructing a smaller MLP’s outputs
 
-### Case 006 — Model interventions and answer-by-answer comparisons
+Fitted the smaller output projection to reduce deletion-induced local squared output error on held-out inputs. The correction is stored in the existing smaller weight matrix, with no additional inference matrix.
 
-<!-- claims: c006-native c006-readout c006-limits -->
-A one-layer attention adapter and paired evaluation tools compare answer probabilities, choice transitions and exact top-score ties on the same question. Built with **PyTorch · Transformers · SageAttention**.
+**94.1–95.4%** — Reduction in deletion-induced local squared output error.
 
-The two settings changed 5 of 192 and 8 of 192 standard-set choices. Neither lost a previously correct answer in that set; a separate selected stress set did. A post-hoc diagnostic on the same inputs examined the precision of the final vocabulary-score calculation. These records cover one layer of one model on synthetic questions.
+Qwen3-0.6B · One MLP layer · 192 short synthetic held-out prompts. **PyTorch · NumPy · safetensors**.
 
-[Explore results](https://munsik-kim.github.io/inference-lab/en/case006.html) · [Attention adapter](cases/006-attention-decision-stability/src/intervention.py) · [Detailed study and diagnostic](docs/en/CASEBOOK.md#case-006)
+[Structure-aware loader](tools/modelpack/artifact.py) · [Reconstruction method](https://munsik-kim.github.io/inference-lab/en/case008.html#track-r) · [Quality and runtime evaluation](https://munsik-kim.github.io/inference-lab/en/case008.html#r-evaluation)
+
+[Methods and results](cases/008-build-reconstruct-reload/REPORT.md) · [Run the CPU demo](docs/en/GETTING_STARTED.md#tiny-model-demo) · [Code, recipes and measurements ZIP](downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)
+
+### Case 007 — From channel selection to smaller weight matrices
+
+<!-- claims: c007-implementation -->
+Built selectors for individual and pairwise channel-group contributions, then turned their selections into physically smaller PyTorch MLPs by slicing the aligned gate, up and down projections. The smaller module is checked against the masked original computation.
+
+**Select groups → Slice matrices → Verify computation**
+
+Qwen3-0.6B · One MLP layer · 16 channel groups. **PyTorch · NumPy · structured pruning**.
+
+[Run the selector](docs/en/GETTING_STARTED.md#cpu-selector) · [Model-slicing code](cases/007-interaction-aware-mlp-pruning/src/surgery.py) · [Methods and results](https://munsik-kim.github.io/inference-lab/en/case007.html#design)
+
+### Case 006 — Trace model changes question by question
+
+<!-- claims: c006-implementation c006-readout -->
+Built a scoped attention adapter and paired evaluation tools to compare answer probabilities, choices and exact ties on the same questions. The tools expose item-level changes and support a separate diagnostic of the final output projection’s numerical precision.
+
+**Lost correct answers · New correct answers · Wrong-to-wrong changes**
+
+Qwen3-0.6B · One attention layer · Fixed synthetic questions. **PyTorch · Transformers · SageAttention**.
+
+[Explore comparisons](https://munsik-kim.github.io/inference-lab/en/case006.html#results) · [Attention adapter](cases/006-attention-decision-stability/src/intervention.py) · [Methods and results](https://munsik-kim.github.io/inference-lab/en/case006.html#design)
 
 
 ## Eight questions, with working tools and recorded outcomes
