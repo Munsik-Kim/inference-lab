@@ -41,6 +41,9 @@ class NewStudyDisplay(unittest.TestCase):
             for key in ['serving','quality','scope']:self.assertIn('id="'+key+'"',s)
             self.assertIn('../data/case009.json',s);self.assertIn('NOT_ASSESSED',s)
             self.assertIn('serving-L128.svg',s);self.assertIn('serving-L1024.svg',s)
+            self.assertIn('diova_compare-0.1.1-py3-none-any.whl',s)
+            self.assertIn('case009_serving_quality_reviewed_publication_v2.zip',s)
+            self.assertIn('README'+('.ko' if lang=='ko' else '')+'.md',s)
     def test_retained_calculation_keeps_failed_process_visible(self):
         d=self.fixture();d['quality']['tasks']=[{'task':'wikitext','status':'COMPUTED_WITH_PROCESS_FAILURE',
             'process_status':{'BF16':'COMPLETE','W4':'FAILED'},'groups':{'wikitext/none':{'arms':{

@@ -53,8 +53,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         files['data/case009.json'] = (json_text(data9)+'\n').encode()
         files['data/case009.js'] = ('window.CASE009_EVIDENCE = '+script_json(data9)+';\n').encode()
         files['assets/case009.js'] = (root/'presentation/assets/case009.js').read_bytes()
-        # New code has no public commit yet. Ship small read-only source copies
-        # instead of linking to nonexistent blob/main paths during local review.
+        # Ship read-only source copies matching this build for offline inspection.
         for name,path in SOURCE_COPIES.items():files['sources/'+name]=(root/path).read_bytes()
         for length in (128,1024):
             files[f'assets/serving-L{length}.svg']=(root/C9/f'figures/serving-L{length}.svg').read_bytes()
@@ -92,7 +91,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 path=C7 if page=='case007' else C6
                 body += '<div class="actions">'+link(source_url(rev,path+'/REPRODUCTION.md'),t['original'])+'</div>'
                 scripts=f'<script defer src="../assets/{lang}.js"></script><script defer src="../data/{page}.js"></script><script defer src="../assets/state.js"></script><script defer src="../assets/app.js"></script>'
-            page_rev = 'Case009 local snapshot (file hashes in JSON)' if page=='case009' else C8_REVISION if page == 'case008' else rev
+            page_rev = 'Case009 reviewed snapshot (file hashes in JSON)' if page=='case009' else C8_REVISION if page == 'case008' else rev
             body+=f'<details class="provenance"><summary>{t["evidence"]}</summary><p class="small">{t["evidence"]}: <code>{page_rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p></details>'
             navigation = ''.join('<a'+(' aria-current="page"' if page==target else '')+' href="'+target+'.html">'+escape(label)+'</a>' for target,label in [('case008','Case 008'),('case007','Case 007'),('case006','Case 006'),('guide',t['navGuide'])])
             if page == 'index':
