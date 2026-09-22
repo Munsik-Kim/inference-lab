@@ -51,6 +51,6 @@ The existing BF16/W4 files, Cases001–008 and modelpack code remain unchanged. 
 
 ## Reviewed software and diagnostics
 
-[CLI 0.1.1 wheel](../../downloads/diova_compare-0.1.1-py3-none-any.whl) · [Public ZIP](../../downloads/case009_serving_quality_reviewed_publication_v1.zip) · [Metadata](../../downloads/case009_serving_quality_reviewed_publication_v1.json) · [Review follow-up](publication/README.md)
+[CLI 0.1.1 wheel](../../downloads/diova_compare-0.1.1-py3-none-any.whl) · [Public ZIP](../../downloads/case009_serving_quality_reviewed_publication_v2.zip) · [Metadata](../../downloads/case009_serving_quality_reviewed_publication_v2.json) · [Review follow-up](publication/README.md)
 
 MMLU declined in all 57 subjects; WikiText likelihood declined on all 62 documents. The detailed report separates these observations, the original failed process exits and the new short lifecycle probes.

@@ -51,6 +51,6 @@ GSM strict-match와 flexible-extract는 같은 1,319개 출력의 공식 추출 
 
 ## 검토 반영 도구와 진단
 
-[CLI 0.1.1 wheel](../../downloads/diova_compare-0.1.1-py3-none-any.whl) · [공개 ZIP](../../downloads/case009_serving_quality_reviewed_publication_v1.zip) · [메타데이터](../../downloads/case009_serving_quality_reviewed_publication_v1.json) · [검토 반영 안내](publication/README.md)
+[CLI 0.1.1 wheel](../../downloads/diova_compare-0.1.1-py3-none-any.whl) · [공개 ZIP](../../downloads/case009_serving_quality_reviewed_publication_v2.zip) · [메타데이터](../../downloads/case009_serving_quality_reviewed_publication_v2.json) · [검토 반영 안내](publication/README.md)
 
 MMLU는 57과목 모두 정확도가 낮아졌고 WikiText는 62문서 모두 로그우도가 낮아졌습니다. 보고서에서 이 관측, 원래 프로세스 종료 실패와 새 짧은 lifecycle 진단을 나누어 확인합니다.

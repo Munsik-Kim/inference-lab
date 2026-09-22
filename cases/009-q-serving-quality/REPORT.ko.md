@@ -23,10 +23,7 @@ W4의 가중치 이동 감소가 decode 비용을 줄일 수 있지만 attention
 
 Linear의 연산량은 대략 2MKN이고 가중치 중심 전송량은 bytes-per-weight×KN에 scale 저장량을 더한 값입니다. M은 token-row 차원이며 client concurrency와 다릅니다. Amdahl 식 1/((1−f)+f/S)는 나머지 비용이 같다는 가정의 설명 도구입니다. 전체 요청 측정을 대신하거나 MARLIN 논문의 장치별 속도비를 RTX 5080 합격점으로 만들지 않습니다.
 
-정답 전환은 기준선 정답의 손실과 새 정답을 합친 값입니다. 전체 답변 불일치는 다른 오답으로의 변경도 포함합니다. 선택지 NLL·Brier·KL은 전체 continuation likelihood를 선택지 사이에서 정규화한 진단입니다. 
-제한된 진단은 24개 fresh-process attempt 모두 정상 종료했고 543.3초가 걸렸습니다. D0·D1 모두 통과했으며 D2는 선택하지 않았습니다. 상태는 **NOT_REPRODUCED_IN_SMALL_PROBE**로, 전체 평가 실패의 수정 완료가 아닙니다.
-
-전체 어휘 KL은 수집하지 않았습니다. WikiText perplexity는 exp(−loglikelihood 합/분모 합)이며 문서 perplexity의 단순 평균이 아닙니다.
+정답 전환은 기준선 정답의 손실과 새 정답을 합친 값입니다. 전체 답변 불일치는 다른 오답으로의 변경도 포함합니다. 선택지 NLL·Brier·KL은 전체 continuation likelihood를 선택지 사이에서 정규화한 진단입니다. 전체 어휘 KL은 수집하지 않았습니다. WikiText perplexity는 exp(−loglikelihood 합/분모 합)이며 문서 perplexity의 단순 평균이 아닙니다.
 
 <a id="methods"></a>
 ## 방법
@@ -104,10 +101,7 @@ TTFT는 첫 choice SSE까지, TPOT는 (마지막−첫 SSE)/(실제 출력 토�
 | MMLU acc (57 subjects) | 14042 | 1452 | 348 | 4974 | 600 | 2400 |
 
 
-Lost correct는 기준선 정답 손실, New correct는 새 정답, Changed wrong은 다른 오답으로의 변경입니다. 정확도 차이의 단위는 퍼센트포인트(pp)입니다. [MMLU 과목별 결과·점수·생성 상한·구간](results/derived/quality_summary.json) · [문항별 공개 스칼라](results/raw/quality_scalars.jsonl). 
-제한된 진단은 24개 fresh-process attempt 모두 정상 종료했고 543.3초가 걸렸습니다. D0·D1 모두 통과했으며 D2는 선택하지 않았습니다. 상태는 **NOT_REPRODUCED_IN_SMALL_PROBE**로, 전체 평가 실패의 수정 완료가 아닙니다.
-
-전체 어휘 KL은 **NOT_RUN**입니다. 제외된 지문·생성 이유·전체 tensor는 스칼라만으로 복원하지 않습니다.
+Lost correct는 기준선 정답 손실, New correct는 새 정답, Changed wrong은 다른 오답으로의 변경입니다. 정확도 차이의 단위는 퍼센트포인트(pp)입니다. [MMLU 과목별 결과·점수·생성 상한·구간](results/derived/quality_summary.json) · [문항별 공개 스칼라](results/raw/quality_scalars.jsonl). 전체 어휘 KL은 **NOT_RUN**입니다. 제외된 지문·생성 이유·전체 tensor는 스칼라만으로 복원하지 않습니다.
 
 ### 메모리와 대기열
 
@@ -159,12 +153,11 @@ R은 고정 구조의 ridge 보정과 구조를 복원하는 저장·로딩 구�
 
 ### 소프트웨어 수정과 별도 lifecycle
 
+제한된 진단은 24개 fresh-process attempt 모두 정상 종료했고 543.3초가 걸렸습니다. D0·D1 모두 통과했으며 D2는 선택하지 않았습니다. 상태는 **NOT_REPRODUCED_IN_SMALL_PROBE**로, 전체 평가 실패의 수정 완료가 아닙니다.
+
 `diova-compare` 0.1.1은 task/version 안의 지표 coverage 불일치를 명시적 오류로 거절하고, 극소 양수 확률의 KL을 로그 차이로 계산합니다. 이는 소프트웨어 결함 수정이며 새 모델 결과가 아닙니다. [수정 기록](../../packages/diova-compare/CHANGELOG.md).
 
 원래 전체 평가의 종료 상태는 4개 정상·4개 비정상으로 유지합니다. 별도 짧은 synthetic lifecycle 진단은 generation/continuation/rolling API와 객체 정리 시점을 비교합니다. 실제 attempt·worker·parent 종료 상태는 [진단 요약](supplemental/lifecycle-v1/summary.json)과 [진단 설명](supplemental/lifecycle-v1/README.md)에 있습니다. 작은 probe 성공은 과거 full split의 복구나 오류 원인 규명을 뜻하지 않습니다.
-
-
-제한된 진단은 24개 fresh-process attempt 모두 정상 종료했고 543.3초가 걸렸습니다. D0·D1 모두 통과했으며 D2는 선택하지 않았습니다. 상태는 **NOT_REPRODUCED_IN_SMALL_PROBE**로, 전체 평가 실패의 수정 완료가 아닙니다.
 
 전체 어휘 KL은 NOT_RUN이며 data-v2는 입력 CPU 검사만 완료했습니다. 현재 공개본·원검토본 복원은 [publication 안내](publication/README.md)에서 분리합니다.
 

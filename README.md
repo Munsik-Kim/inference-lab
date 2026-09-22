@@ -144,4 +144,4 @@ DIOVA stands for **Deep-learning Inference Optimization, Validation & Analysis**
 
 The project builds comparison runners, model-slicing adapters, numerical checks and evidence viewers around public models and execution libraries. The [portfolio](docs/en/PORTFOLIO.md#contribution-and-reuse) credits Qwen, Transformers, PyTorch, vLLM, SageAttention and the upstream methods and fixes. OpenAI Codex assisted implementation, execution, analysis and writing. [Apache-2.0](LICENSE) applies to project materials; case notices retain upstream terms. These studies support work on model-change evaluation and inference diagnostics; deployment suitability remains unevaluated.
 
-[Corrected CPU wheel 0.1.1](downloads/diova_compare-0.1.1-py3-none-any.whl) · [Case009 reviewed archive](downloads/case009_serving_quality_reviewed_publication_v1.zip) · [Metadata](downloads/case009_serving_quality_reviewed_publication_v1.json)
+[Corrected CPU wheel 0.1.1](downloads/diova_compare-0.1.1-py3-none-any.whl) · [Case009 reviewed archive](downloads/case009_serving_quality_reviewed_publication_v2.zip) · [Metadata](downloads/case009_serving_quality_reviewed_publication_v2.json)

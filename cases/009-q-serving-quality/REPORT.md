@@ -144,12 +144,11 @@ R remains a fixed-structure ridge correction and shape-aware save/reload impleme
 
 ### Software repair and separate lifecycle probes
 
+The bounded diagnostic completed 24 fresh-process attempts, all clean, in 543.3s. D0 and D1 both passed; D2 was not selected. Status: **NOT_REPRODUCED_IN_SMALL_PROBE**, not a repair of the full evaluation.
+
 `diova-compare` 0.1.1 rejects inconsistent effective metric coverage within task/version and calculates tiny-positive-probability KL using log differences. These are software fixes, not new model measurements. [Changelog](../../packages/diova-compare/CHANGELOG.md).
 
 Original full evaluation exits remain four clean and four failed. A separate short synthetic lifecycle study compares generation, continuation and rolling APIs plus object-lifetime policies. Actual attempts and parent/worker outcomes appear in the [summary](supplemental/lifecycle-v1/summary.json) and [diagnostic notes](supplemental/lifecycle-v1/README.md). Small-probe success does not repair a historical full split or establish its failure cause.
-
-
-The bounded diagnostic completed 24 fresh-process attempts, all clean, in 543.3s. D0 and D1 both passed; D2 was not selected. Status: **NOT_REPRODUCED_IN_SMALL_PROBE**, not a repair of the full evaluation.
 
 Full-vocabulary KL remains NOT_RUN; data-v2 has CPU input checks only. [Publication instructions](publication/README.md) distinguish current files from restored historical checks.
 

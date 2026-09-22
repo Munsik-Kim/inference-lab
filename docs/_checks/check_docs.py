@@ -393,7 +393,7 @@ def check_new_study(root: Path, errors: list[str]) -> set[str]:
             module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
             module.verify(root)
             known={p.relative_to(root).as_posix() for p in base.rglob('*') if p.is_file()}
-            for stem in ['case009_serving_quality_reviewed_publication_v1','diova_compare-0.1.1']:
+            for stem in ['case009_serving_quality_reviewed_publication_v2','diova_compare-0.1.1']:
                 meta_name=stem+'.json' if stem.startswith('case009') else stem+'.metadata.json'
                 meta=json.loads((root/'downloads'/meta_name).read_text());p=root/'downloads'/meta['filename']
                 if p.is_symlink() or sha(p)!=meta['sha256'] or p.stat().st_size!=meta['bytes']:

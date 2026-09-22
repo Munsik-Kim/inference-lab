@@ -144,4 +144,4 @@ DIOVA는 **Deep-learning Inference Optimization, Validation & Analysis**의 약�
 
 공개 모델과 실행 라이브러리에 비교 실행기, 행렬 축소 도구, 수치 검사와 근거 탐색기를 연결했습니다. [포트폴리오의 기여·출처](docs/ko/PORTFOLIO.md#contribution-and-reuse)에서 Qwen, Transformers, PyTorch, vLLM, SageAttention 및 기존 방법·수정의 저자를 확인할 수 있습니다. OpenAI Codex가 구현·실행·분석·작성을 지원했습니다. 프로젝트 자료는 [Apache-2.0](LICENSE)을 따르며 사례별 고지에 upstream 조건을 남겼습니다. 이 작업은 모델 변경 평가와 추론 문제 진단에 연결되며, 배포 적합성은 평가하지 않았습니다.
 
-[수정판 CPU wheel 0.1.1](downloads/diova_compare-0.1.1-py3-none-any.whl) · [Case009 공개 자료](downloads/case009_serving_quality_reviewed_publication_v1.zip) · [메타데이터](downloads/case009_serving_quality_reviewed_publication_v1.json)
+[수정판 CPU wheel 0.1.1](downloads/diova_compare-0.1.1-py3-none-any.whl) · [Case009 공개 자료](downloads/case009_serving_quality_reviewed_publication_v2.zip) · [메타데이터](downloads/case009_serving_quality_reviewed_publication_v2.json)
