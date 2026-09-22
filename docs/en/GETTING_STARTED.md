@@ -162,3 +162,11 @@ The earlier beginner-layer edit checked documentation, links and preservation on
 ## Case 008: report and standalone evidence bundle
 
 Read the [structured report](../../cases/008-build-reconstruct-reload/REPORT.md), then download the [code/recipe/evidence ZIP](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip) and [metadata](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.json). The extracted root includes tools/modelpack and the case. Open `cases/008-build-reconstruct-reload/demo/index.html` locally for its original English viewer. The bilingual site summary shows Q storage/memory and R before/after repair; the original viewer retains detailed records. [CPU and historical-restore commands](../../cases/008-build-reconstruct-reload/REPRODUCTION.md) are distinct from future GPU commands and do not include model weights.
+
+## Installable CPU result comparison
+
+[diova-compare](../../packages/diova-compare/README.md) validates paired inputs and computes correctness transitions and score changes. Install it in a dedicated CPU environment without a model runtime. The evidence_kind field distinguishes new measurements from historical reanalysis.
+
+## New graph-serving and official-task study
+
+[Case009 reproduction](../../cases/009-q-serving-quality/REPRODUCTION.md) separates the preserved serving environment, a new harness environment and the CPU package. Its [full curves and quality report](../../cases/009-q-serving-quality/REPORT.md) also records abnormal finalization in some quality processes. Public scalar reanalysis does not require downloading the benchmark datasets or models.

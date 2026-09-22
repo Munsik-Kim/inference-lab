@@ -1,0 +1,1361 @@
+{
+  "status": "FROZEN",
+  "created_utc": "2026-09-22T02:51:04.242569+00:00",
+  "harness_commit": "d6de81643928d653435c431bae19945d41d32520",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "model_arms": "same existing BF16/W4 artifacts as serving",
+  "evaluation_order": [
+    "arc_challenge",
+    "wikitext",
+    "gsm8k",
+    "mmlu"
+  ],
+  "shots": {
+    "arc_challenge": 0,
+    "wikitext": 0,
+    "gsm8k": 5,
+    "mmlu": 5
+  },
+  "template": "pinned model template once for ARC/GSM/MMLU; none for WikiText; fewshot_as_multiturn=False (single official fewshot-context block inside one user message), add_bos_token=False",
+  "generation": "GSM8K official worked-answer fewshots and official strict-match/flexible-extract filters; greedy max_gen_toks1024; official stops Question:, </s>, <|im_end|>",
+  "seeds": {
+    "python": 909222,
+    "numpy": 909222,
+    "torch": 909222,
+    "fewshot": 909222
+  },
+  "backend": {
+    "vllm": "0.29.0",
+    "dtype": "bfloat16",
+    "max_model_len": 8192,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 2048,
+    "kv_bytes": 4294967296,
+    "kv_dtype": "bfloat16",
+    "prefix_caching": false,
+    "chunked_prefill": true,
+    "async_scheduling": false,
+    "enforce_eager": false,
+    "attention": "FLASH_ATTN",
+    "reason": "Quality is separate from timing; common 8192 context prevents ARC/GSM/MMLU prompt truncation. Official rolling WikiText uses max_length-2 disjoint windows, context_len=1.",
+    "gpu_memory_utilization": 0.87
+  },
+  "budgets": {
+    "full_split_attempts_per_task_per_model": 1,
+    "dev": "at most two ARC validation and two WikiText validation documents per arm; not test outcomes",
+    "max_wall_time_hours": 12,
+    "retry": "retain failures; no automatic full-split repeats"
+  },
+  "request_freeze": {
+    "requests.jsonl": "b2d3e85f1c79aa8791294dc4b367d7ebd02395fc911448fa8540575a63516809",
+    "tasks.json": "9c07c16989ae74a6b474b5a0ecfa15c1085beaf653ffb48607dd69eae2699632"
+  },
+  "tasks": {
+    "arc_challenge": {
+      "n_documents": 1172,
+      "n_requests": 4687,
+      "max_context_tokens": 184,
+      "num_fewshot": 0,
+      "dataset_fingerprints": {
+        "train": {
+          "n": 1119,
+          "fingerprint": "4cad81c53cd88966"
+        },
+        "test": {
+          "n": 1172,
+          "fingerprint": "a4361c3f3e560fcd"
+        },
+        "validation": {
+          "n": 299,
+          "fingerprint": "7ad52fe9b4847f33"
+        }
+      },
+      "fewshot_draws_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "gsm8k": {
+      "n_documents": 1319,
+      "n_requests": 1319,
+      "max_context_tokens": 1552,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "train": {
+          "n": 7473,
+          "fingerprint": "c6f812ae33c9159d"
+        },
+        "test": {
+          "n": 1319,
+          "fingerprint": "59ec1b7f9357c7a2"
+        }
+      },
+      "fewshot_draws_sha256": "2095623e5eaf27caa8bb44d653b5e88d6715ccaf8d9cb7e301409eb1a6eef287"
+    },
+    "mmlu_abstract_algebra": {
+      "n_documents": 100,
+      "n_requests": 400,
+      "max_context_tokens": 418,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 100,
+          "fingerprint": "a405e35a20e96c3e"
+        },
+        "validation": {
+          "n": 11,
+          "fingerprint": "d1b279b9e9eca438"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "b1bb87f92915b281"
+        }
+      },
+      "fewshot_draws_sha256": "4008dacdae7b1e3afbdcc9c90122d62b485d2ae2b2c05b1b8bf25476cf8575e1"
+    },
+    "mmlu_anatomy": {
+      "n_documents": 135,
+      "n_requests": 540,
+      "max_context_tokens": 412,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 135,
+          "fingerprint": "f5316a25c7cd3834"
+        },
+        "validation": {
+          "n": 14,
+          "fingerprint": "67d1d415924b0d58"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "0334465adb519fff"
+        }
+      },
+      "fewshot_draws_sha256": "e5686bb02ca20acc80307f4988c973e4e046bd0a8bae66756542bcf0ec7318fe"
+    },
+    "mmlu_astronomy": {
+      "n_documents": 152,
+      "n_requests": 608,
+      "max_context_tokens": 685,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 152,
+          "fingerprint": "a9271288c1c8608a"
+        },
+        "validation": {
+          "n": 16,
+          "fingerprint": "11823ae9639bc8ef"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "2161b724e41707ef"
+        }
+      },
+      "fewshot_draws_sha256": "0db433f4577237c86bb683e5dcabc6955915cf2da54b747293c2e2d9a9855962"
+    },
+    "mmlu_business_ethics": {
+      "n_documents": 100,
+      "n_requests": 400,
+      "max_context_tokens": 630,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 100,
+          "fingerprint": "73d48c7e397703f2"
+        },
+        "validation": {
+          "n": 11,
+          "fingerprint": "cc5ce239a24d25e1"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "a67b9c21c9b987c0"
+        }
+      },
+      "fewshot_draws_sha256": "1a2a1ae7629f0b2e0dd0dbc680fcf7d938841591f1436901aefd9de446e86310"
+    },
+    "mmlu_clinical_knowledge": {
+      "n_documents": 265,
+      "n_requests": 1060,
+      "max_context_tokens": 475,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 265,
+          "fingerprint": "52dba1b9a7a1c715"
+        },
+        "validation": {
+          "n": 29,
+          "fingerprint": "92a35d7dd3ff5003"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "c71659d34d450a20"
+        }
+      },
+      "fewshot_draws_sha256": "ff071f4a113b30e34ca448655610856b8368d3228b0aa1551eb092d0817ef864"
+    },
+    "mmlu_college_biology": {
+      "n_documents": 144,
+      "n_requests": 576,
+      "max_context_tokens": 606,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 144,
+          "fingerprint": "f481f714da28f58e"
+        },
+        "validation": {
+          "n": 16,
+          "fingerprint": "b8e1f2ae97e320c1"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "a9c300cf1a5b5925"
+        }
+      },
+      "fewshot_draws_sha256": "b79ccf2390f062b37e23ceac6d8e926c9fe1d76c58744c605c5789ef411df07f"
+    },
+    "mmlu_college_chemistry": {
+      "n_documents": 100,
+      "n_requests": 400,
+      "max_context_tokens": 702,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 100,
+          "fingerprint": "c44cc25bbe4aa152"
+        },
+        "validation": {
+          "n": 8,
+          "fingerprint": "769b5ee20970e8fd"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "855f0ed77badaa16"
+        }
+      },
+      "fewshot_draws_sha256": "3c5ae983417ff14a38d010aaca4210b8700be777b649e8856a4877eaa7a3b12b"
+    },
+    "mmlu_college_computer_science": {
+      "n_documents": 100,
+      "n_requests": 400,
+      "max_context_tokens": 955,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 100,
+          "fingerprint": "17407d242be5fce7"
+        },
+        "validation": {
+          "n": 11,
+          "fingerprint": "6c6e58c6d350fa70"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "a6d2bb4faeca1df1"
+        }
+      },
+      "fewshot_draws_sha256": "3e2d03b8fab31f7267c5f6c8396eebdd7a48140f63962893cac45d85b0bf45e0"
+    },
+    "mmlu_college_mathematics": {
+      "n_documents": 100,
+      "n_requests": 400,
+      "max_context_tokens": 693,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 100,
+          "fingerprint": "cc8e8f1e82542ff9"
+        },
+        "validation": {
+          "n": 11,
+          "fingerprint": "cba8387ecabd9e49"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "1d559905775ea869"
+        }
+      },
+      "fewshot_draws_sha256": "78e9375fa10ef4eb224e56e1ebae31a0fd08afde33f906258dd23b27ef8b0493"
+    },
+    "mmlu_college_medicine": {
+      "n_documents": 173,
+      "n_requests": 692,
+      "max_context_tokens": 1390,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 173,
+          "fingerprint": "c9c5b9e4534c3ad9"
+        },
+        "validation": {
+          "n": 22,
+          "fingerprint": "08ca707fb62c5ebb"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "7640c1e675aa0691"
+        }
+      },
+      "fewshot_draws_sha256": "3a296b526e85da1c010d6c434c1e44c8fd3c322a76e8bf84516d0cd037822850"
+    },
+    "mmlu_college_physics": {
+      "n_documents": 102,
+      "n_requests": 408,
+      "max_context_tokens": 562,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 102,
+          "fingerprint": "661d2023229857f2"
+        },
+        "validation": {
+          "n": 11,
+          "fingerprint": "048a609bded8043c"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "9ebc0dd0a7927857"
+        }
+      },
+      "fewshot_draws_sha256": "3211ab24c6d40557640ec228cda54a72b3c0ec99a4d547ffd5f239081f516488"
+    },
+    "mmlu_computer_security": {
+      "n_documents": 100,
+      "n_requests": 400,
+      "max_context_tokens": 523,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 100,
+          "fingerprint": "c00551a55138390b"
+        },
+        "validation": {
+          "n": 11,
+          "fingerprint": "31f38e8a68879b3b"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "c1147324c78ee7b0"
+        }
+      },
+      "fewshot_draws_sha256": "0ed0f4831c430a493ac3456462b4a21c87266911a2b8a98bbaab19fb79388571"
+    },
+    "mmlu_conceptual_physics": {
+      "n_documents": 235,
+      "n_requests": 940,
+      "max_context_tokens": 344,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 235,
+          "fingerprint": "d9d38a5e9279b6ad"
+        },
+        "validation": {
+          "n": 26,
+          "fingerprint": "691e98abd1c692ac"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "388700e5ed58bc65"
+        }
+      },
+      "fewshot_draws_sha256": "44249315c412a61303c135c5aec0213e72dd619cc37a0ab8f92b3b7d3af620f5"
+    },
+    "mmlu_econometrics": {
+      "n_documents": 114,
+      "n_requests": 456,
+      "max_context_tokens": 719,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 114,
+          "fingerprint": "a054399942377de0"
+        },
+        "validation": {
+          "n": 12,
+          "fingerprint": "1c877069bb1b7390"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "bb4179396be05709"
+        }
+      },
+      "fewshot_draws_sha256": "03aea1000d7c1990232df843b82059d70907d660586d0df7542bc578b882896e"
+    },
+    "mmlu_electrical_engineering": {
+      "n_documents": 145,
+      "n_requests": 580,
+      "max_context_tokens": 519,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 145,
+          "fingerprint": "7f22056f089182dc"
+        },
+        "validation": {
+          "n": 16,
+          "fingerprint": "a8331763192a9248"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "581dd5a3a80e41e6"
+        }
+      },
+      "fewshot_draws_sha256": "e5e778e08bb5363a1ce9bd4a35240e061cf003d29b98fd66d7704eabba90f5df"
+    },
+    "mmlu_elementary_mathematics": {
+      "n_documents": 378,
+      "n_requests": 1512,
+      "max_context_tokens": 668,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 378,
+          "fingerprint": "ed1a2da884ddd4a4"
+        },
+        "validation": {
+          "n": 41,
+          "fingerprint": "c062b0a9c316675f"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "7d6f5ed81ac00958"
+        }
+      },
+      "fewshot_draws_sha256": "5a63da0ef76feaaee23ff257ac6e521c9627d313a2b409e53774ff3281f93d0c"
+    },
+    "mmlu_formal_logic": {
+      "n_documents": 126,
+      "n_requests": 504,
+      "max_context_tokens": 727,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 126,
+          "fingerprint": "6f88a8a590d6acc9"
+        },
+        "validation": {
+          "n": 14,
+          "fingerprint": "beab80593ce94b26"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "1868504ceacd49ca"
+        }
+      },
+      "fewshot_draws_sha256": "f261db593cc5550652bb2e4f0326734234d0cbc31e9a4a7ba09a0cae93f7f520"
+    },
+    "mmlu_global_facts": {
+      "n_documents": 100,
+      "n_requests": 400,
+      "max_context_tokens": 527,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 100,
+          "fingerprint": "36088c2f9bdfb126"
+        },
+        "validation": {
+          "n": 10,
+          "fingerprint": "820e7489b27bb201"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "34f433f4154e2a79"
+        }
+      },
+      "fewshot_draws_sha256": "d54e9bcb40ce6cebebe6db2df67010ca235fa9d39b23b30ec5a73ded99bc76a2"
+    },
+    "mmlu_high_school_biology": {
+      "n_documents": 310,
+      "n_requests": 1240,
+      "max_context_tokens": 614,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 310,
+          "fingerprint": "75b4e56cd1a20317"
+        },
+        "validation": {
+          "n": 32,
+          "fingerprint": "52bb58f1073d3a81"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "1ec9920e5764bafa"
+        }
+      },
+      "fewshot_draws_sha256": "fd87ce331a7377b0489e0216e26531a01d0f76fe825e8aed21bac7f1f74982d8"
+    },
+    "mmlu_high_school_chemistry": {
+      "n_documents": 203,
+      "n_requests": 812,
+      "max_context_tokens": 630,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 203,
+          "fingerprint": "20a956b6a2569eb1"
+        },
+        "validation": {
+          "n": 22,
+          "fingerprint": "a5b6cddd11ec93a4"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "798a91f155452499"
+        }
+      },
+      "fewshot_draws_sha256": "30cdebc955cac186aed87022629be1336e5cf6eed5bb645ceea78cc8846babc4"
+    },
+    "mmlu_high_school_computer_science": {
+      "n_documents": 100,
+      "n_requests": 400,
+      "max_context_tokens": 1156,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 100,
+          "fingerprint": "a1b962b5b71142b8"
+        },
+        "validation": {
+          "n": 9,
+          "fingerprint": "e5e526a43ddffb7d"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "7ccb6c680180f2cb"
+        }
+      },
+      "fewshot_draws_sha256": "d3a309035bfb3af97993b1b646f6ad0c8141eeb9344ae38c8bc916a2b160ea6a"
+    },
+    "mmlu_high_school_european_history": {
+      "n_documents": 165,
+      "n_requests": 660,
+      "max_context_tokens": 3109,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 165,
+          "fingerprint": "575860884e6c1a8a"
+        },
+        "validation": {
+          "n": 18,
+          "fingerprint": "d8a9f763198bc7ff"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "0a1573e4bf9ded85"
+        }
+      },
+      "fewshot_draws_sha256": "bd2acd93dfeadb69608a58b8309103bee0f4d5fab51ca10f30a28c59de209b96"
+    },
+    "mmlu_high_school_geography": {
+      "n_documents": 198,
+      "n_requests": 792,
+      "max_context_tokens": 457,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 198,
+          "fingerprint": "1af64fe7fa5c3d75"
+        },
+        "validation": {
+          "n": 22,
+          "fingerprint": "6fe0054db66b3a0e"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "51feb49490b26511"
+        }
+      },
+      "fewshot_draws_sha256": "5485f4125c1299b0e4a5dffc815c6a33e4610c92a589e86d3f1cfc424c5e6b3b"
+    },
+    "mmlu_high_school_government_and_politics": {
+      "n_documents": 193,
+      "n_requests": 772,
+      "max_context_tokens": 555,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 193,
+          "fingerprint": "22e5ed8bb3d3e3d7"
+        },
+        "validation": {
+          "n": 21,
+          "fingerprint": "8b81abd5b1979afe"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "980b4eaeb104cc14"
+        }
+      },
+      "fewshot_draws_sha256": "70b90d997af5635b8e0cd7416b2baebfeef821fa5c95028ce36c6965667874ff"
+    },
+    "mmlu_high_school_macroeconomics": {
+      "n_documents": 390,
+      "n_requests": 1560,
+      "max_context_tokens": 452,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 390,
+          "fingerprint": "b0e7889f1b1eda45"
+        },
+        "validation": {
+          "n": 43,
+          "fingerprint": "6cd80d62b59a7169"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "1acb0d46b0b2bfe4"
+        }
+      },
+      "fewshot_draws_sha256": "b2cff190e446670a1547d058177f5beebd203785f2cd849a980d014bcee33ee4"
+    },
+    "mmlu_high_school_mathematics": {
+      "n_documents": 270,
+      "n_requests": 1080,
+      "max_context_tokens": 676,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 270,
+          "fingerprint": "da582b35c4bf1d03"
+        },
+        "validation": {
+          "n": 29,
+          "fingerprint": "3172196e264896cf"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "3f56b8c66af81941"
+        }
+      },
+      "fewshot_draws_sha256": "58349a8d984ec90a4d40bfbae2c5d1b7c4c4dddb5458632e810659c71ba8ef0f"
+    },
+    "mmlu_high_school_microeconomics": {
+      "n_documents": 238,
+      "n_requests": 952,
+      "max_context_tokens": 493,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 238,
+          "fingerprint": "536acdd7215504fe"
+        },
+        "validation": {
+          "n": 26,
+          "fingerprint": "949566aa0383de9c"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "4bdd4236afa76e51"
+        }
+      },
+      "fewshot_draws_sha256": "b9fcae5803b79107b1e4d134d531b8064820bb16c09ce69ed44443a8ef05b921"
+    },
+    "mmlu_high_school_physics": {
+      "n_documents": 151,
+      "n_requests": 604,
+      "max_context_tokens": 734,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 151,
+          "fingerprint": "dad4eca037a60c47"
+        },
+        "validation": {
+          "n": 17,
+          "fingerprint": "5028958f067ac2d7"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "8aa813aea7a66fcb"
+        }
+      },
+      "fewshot_draws_sha256": "dcbfb98bc645206b43678cb0afef0a9b643af4fd6fde8a037d64e9918ddbe787"
+    },
+    "mmlu_high_school_psychology": {
+      "n_documents": 545,
+      "n_requests": 2180,
+      "max_context_tokens": 676,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 545,
+          "fingerprint": "4334e2718bb3a40b"
+        },
+        "validation": {
+          "n": 60,
+          "fingerprint": "80489f25b904a5fb"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "676255442c9c92cb"
+        }
+      },
+      "fewshot_draws_sha256": "7f3827d1934cefc5c39a2fa75537e04c19f8f9f704de4eaf84efa07922f45084"
+    },
+    "mmlu_high_school_statistics": {
+      "n_documents": 216,
+      "n_requests": 864,
+      "max_context_tokens": 1073,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 216,
+          "fingerprint": "b8e9ee7d04c1f3f8"
+        },
+        "validation": {
+          "n": 23,
+          "fingerprint": "6887d566376301f7"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "532311f4fb7130d4"
+        }
+      },
+      "fewshot_draws_sha256": "431162eb982c15ac5ea4310f4d21a175f4636294628710c59ba291d68dd33099"
+    },
+    "mmlu_high_school_us_history": {
+      "n_documents": 204,
+      "n_requests": 816,
+      "max_context_tokens": 2442,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 204,
+          "fingerprint": "9898bff8bf0da33d"
+        },
+        "validation": {
+          "n": 22,
+          "fingerprint": "57df28524d650327"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "caf8dc2718edab2f"
+        }
+      },
+      "fewshot_draws_sha256": "43cbccd5f653fdea18f6caa58fcff5433aafcb7490edcf7a98b3aafd2cc76d99"
+    },
+    "mmlu_high_school_world_history": {
+      "n_documents": 237,
+      "n_requests": 948,
+      "max_context_tokens": 1844,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 237,
+          "fingerprint": "7bc6897c1ad886c5"
+        },
+        "validation": {
+          "n": 26,
+          "fingerprint": "d3e78fe1040afcf1"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "81d1e4f4b632b291"
+        }
+      },
+      "fewshot_draws_sha256": "9664872800f3cfb7a63611fd3c05c986cef87b3beb5eedd47ad42f1f9fe3344a"
+    },
+    "mmlu_human_aging": {
+      "n_documents": 223,
+      "n_requests": 892,
+      "max_context_tokens": 358,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 223,
+          "fingerprint": "8d6c00ed2cd60d8e"
+        },
+        "validation": {
+          "n": 23,
+          "fingerprint": "e4be8f8841d819f6"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "2a692a8f7205c2e3"
+        }
+      },
+      "fewshot_draws_sha256": "9cc883899555198d25e9ea69d5d030c3030674f99614e77071ec8007be1ab04e"
+    },
+    "mmlu_human_sexuality": {
+      "n_documents": 131,
+      "n_requests": 524,
+      "max_context_tokens": 468,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 131,
+          "fingerprint": "e2dbebe685a8233a"
+        },
+        "validation": {
+          "n": 12,
+          "fingerprint": "6dbfd6cebf2d17df"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "07e5da0a42ccac50"
+        }
+      },
+      "fewshot_draws_sha256": "d943bc25104ac5c33d41c201f55d0e31a3112129ab73563d71156d80f169ec55"
+    },
+    "mmlu_international_law": {
+      "n_documents": 121,
+      "n_requests": 484,
+      "max_context_tokens": 707,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 121,
+          "fingerprint": "74c39d84b2740ac6"
+        },
+        "validation": {
+          "n": 13,
+          "fingerprint": "9b76fc5b227b6b84"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "5095eed6aa832fd9"
+        }
+      },
+      "fewshot_draws_sha256": "b9c99f851d3a8876408f678d1b381be08b3245c182d5b65eb00f48616c65b92a"
+    },
+    "mmlu_jurisprudence": {
+      "n_documents": 108,
+      "n_requests": 432,
+      "max_context_tokens": 490,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 108,
+          "fingerprint": "30241999021c8a10"
+        },
+        "validation": {
+          "n": 11,
+          "fingerprint": "5365aa5431ff5431"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "97a9bc09955f9886"
+        }
+      },
+      "fewshot_draws_sha256": "f23dbfe69539679271582ca786a04ad04b74f4a3e9f42421ace4de0f5fa2dd3a"
+    },
+    "mmlu_logical_fallacies": {
+      "n_documents": 163,
+      "n_requests": 652,
+      "max_context_tokens": 537,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 163,
+          "fingerprint": "f65d6f4a4236abee"
+        },
+        "validation": {
+          "n": 18,
+          "fingerprint": "fc8cfffaec25d77c"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "a1a9368c13dfa728"
+        }
+      },
+      "fewshot_draws_sha256": "bf6e2e630a48150b83af653a2be821afcf1da93b4f382052f8ce7fbeb9b673bb"
+    },
+    "mmlu_machine_learning": {
+      "n_documents": 112,
+      "n_requests": 448,
+      "max_context_tokens": 857,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 112,
+          "fingerprint": "43ddde1813be4e9f"
+        },
+        "validation": {
+          "n": 11,
+          "fingerprint": "35f63f50e4c1c3c8"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "9be0118da7b66c48"
+        }
+      },
+      "fewshot_draws_sha256": "a779c1d52f9f931302a28bd5977fa04fffe3cca767fd65bc8100c8a4e510527d"
+    },
+    "mmlu_management": {
+      "n_documents": 103,
+      "n_requests": 412,
+      "max_context_tokens": 314,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 103,
+          "fingerprint": "91c15f84eda754f9"
+        },
+        "validation": {
+          "n": 11,
+          "fingerprint": "d94b5b713a6dd09c"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "945042e33f22df97"
+        }
+      },
+      "fewshot_draws_sha256": "4434aebded23d9c3878624de32fd1a9e66955931a5ed9008851c536425721b44"
+    },
+    "mmlu_marketing": {
+      "n_documents": 234,
+      "n_requests": 936,
+      "max_context_tokens": 449,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 234,
+          "fingerprint": "8ae68060dbc57c5a"
+        },
+        "validation": {
+          "n": 25,
+          "fingerprint": "e12571679c6b547e"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "0a37e789e5d8fb5d"
+        }
+      },
+      "fewshot_draws_sha256": "0708bca2c2cfe3921380146c6e972b380fdb05a607f32e2e88eafdc7ff878613"
+    },
+    "mmlu_medical_genetics": {
+      "n_documents": 100,
+      "n_requests": 400,
+      "max_context_tokens": 380,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 100,
+          "fingerprint": "a937079f923db81c"
+        },
+        "validation": {
+          "n": 11,
+          "fingerprint": "b6103f6e38eada89"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "0deead56d72e04f0"
+        }
+      },
+      "fewshot_draws_sha256": "98fd00eff24be6169520f76336520b800878c18b153da7cf776d034ad06173bb"
+    },
+    "mmlu_miscellaneous": {
+      "n_documents": 783,
+      "n_requests": 3132,
+      "max_context_tokens": 507,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 783,
+          "fingerprint": "ca411d2cc3a3b57c"
+        },
+        "validation": {
+          "n": 86,
+          "fingerprint": "0580f08fe9ebc43e"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "d18810bbd117b0a6"
+        }
+      },
+      "fewshot_draws_sha256": "a8bde709f441c79a8bbe925caf4e31aff721864f642cdf9e0c0469ec7064ab32"
+    },
+    "mmlu_moral_disputes": {
+      "n_documents": 346,
+      "n_requests": 1384,
+      "max_context_tokens": 554,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 346,
+          "fingerprint": "fc1ad8e4522298d8"
+        },
+        "validation": {
+          "n": 38,
+          "fingerprint": "a53ef8948ad2ee84"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "b1c354145016b84c"
+        }
+      },
+      "fewshot_draws_sha256": "c8b37fa1f45686aad0f6bca29dd519c41f44d9db348e24b642deff5d785f5fd7"
+    },
+    "mmlu_moral_scenarios": {
+      "n_documents": 895,
+      "n_requests": 3580,
+      "max_context_tokens": 697,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 895,
+          "fingerprint": "f8618f6d3e96a1b5"
+        },
+        "validation": {
+          "n": 100,
+          "fingerprint": "d95c1713be664c91"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "1551c2ca61fa74fc"
+        }
+      },
+      "fewshot_draws_sha256": "19cc597afb7cda1ad00b3b70a9fe3afabfe1e3e6e876bc44e0781b87a57036fa"
+    },
+    "mmlu_nutrition": {
+      "n_documents": 306,
+      "n_requests": 1224,
+      "max_context_tokens": 694,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 306,
+          "fingerprint": "faf8758395cf46ba"
+        },
+        "validation": {
+          "n": 33,
+          "fingerprint": "b6153658218f3392"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "662069a14d56c86a"
+        }
+      },
+      "fewshot_draws_sha256": "c8d2c7f9a805e627f8a89a20b05d14669a289c41a4d9656b509392f642a68b13"
+    },
+    "mmlu_philosophy": {
+      "n_documents": 311,
+      "n_requests": 1244,
+      "max_context_tokens": 482,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 311,
+          "fingerprint": "1c9a94ff88dd0c16"
+        },
+        "validation": {
+          "n": 34,
+          "fingerprint": "f5f4d3649d98ee55"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "fab560d11fd290d6"
+        }
+      },
+      "fewshot_draws_sha256": "74f9b7488691f5614909ede0c136607b3bfc1b09d9a0677e5d72032eee77cc05"
+    },
+    "mmlu_prehistory": {
+      "n_documents": 324,
+      "n_requests": 1296,
+      "max_context_tokens": 628,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 324,
+          "fingerprint": "d536feaa2949a8e3"
+        },
+        "validation": {
+          "n": 35,
+          "fingerprint": "7d2c05d13e993ad4"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "8e3f6450e14a6f11"
+        }
+      },
+      "fewshot_draws_sha256": "cc4f34a89a053255f403f8306b01d845a5b7e154d14a9c3b1b0234c3338418e8"
+    },
+    "mmlu_professional_accounting": {
+      "n_documents": 282,
+      "n_requests": 1128,
+      "max_context_tokens": 863,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 282,
+          "fingerprint": "9e9625827c7bded6"
+        },
+        "validation": {
+          "n": 31,
+          "fingerprint": "6c61151424f77d5c"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "12501f3eb507ff67"
+        }
+      },
+      "fewshot_draws_sha256": "c861431652eb21b1d2ff3efd77c5b8447f39411903ac006d7f0ab976a56173c1"
+    },
+    "mmlu_professional_law": {
+      "n_documents": 1534,
+      "n_requests": 6136,
+      "max_context_tokens": 2171,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 1534,
+          "fingerprint": "c36e72f1d6cb6e5f"
+        },
+        "validation": {
+          "n": 170,
+          "fingerprint": "3b3a0b004c708733"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "5282aa28f352a666"
+        }
+      },
+      "fewshot_draws_sha256": "1416b0448962c08ed12b89a0795ab48c141091fe52184f1b3bc5f9e8093cd52f"
+    },
+    "mmlu_professional_medicine": {
+      "n_documents": 272,
+      "n_requests": 1088,
+      "max_context_tokens": 1339,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 272,
+          "fingerprint": "d1e11faf82469872"
+        },
+        "validation": {
+          "n": 31,
+          "fingerprint": "147c409951eb322c"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "a2ea1a94340e8846"
+        }
+      },
+      "fewshot_draws_sha256": "265851ecc9da9c52974655ed2d9facfd8b2491bc86aa13feebc9c489e606db0e"
+    },
+    "mmlu_professional_psychology": {
+      "n_documents": 612,
+      "n_requests": 2448,
+      "max_context_tokens": 760,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 612,
+          "fingerprint": "a445259986d2d927"
+        },
+        "validation": {
+          "n": 69,
+          "fingerprint": "85609cce831370d0"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "570817fc494dd5db"
+        }
+      },
+      "fewshot_draws_sha256": "54943532ff2c4fe13c027bc826e2dd84be93e5a52669bd2805f66bdc23681961"
+    },
+    "mmlu_public_relations": {
+      "n_documents": 110,
+      "n_requests": 440,
+      "max_context_tokens": 535,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 110,
+          "fingerprint": "c4c79891c4a06610"
+        },
+        "validation": {
+          "n": 12,
+          "fingerprint": "40b43b753478dc4a"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "7745913bdf7ac087"
+        }
+      },
+      "fewshot_draws_sha256": "b9f98a18e7b18c8518b00b53a0b1ab9fb84069435610dd72e87139b021822397"
+    },
+    "mmlu_security_studies": {
+      "n_documents": 245,
+      "n_requests": 980,
+      "max_context_tokens": 1411,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 245,
+          "fingerprint": "f3f8511396432fe4"
+        },
+        "validation": {
+          "n": 27,
+          "fingerprint": "52246d0c9eb73786"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "435bc367f3652360"
+        }
+      },
+      "fewshot_draws_sha256": "623a4f44db0b3714989515b23f88889f59e0a7c116a59c9fffcc9b475f8dea5c"
+    },
+    "mmlu_sociology": {
+      "n_documents": 201,
+      "n_requests": 804,
+      "max_context_tokens": 515,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 201,
+          "fingerprint": "ec8e27c2b3e16a55"
+        },
+        "validation": {
+          "n": 22,
+          "fingerprint": "1c50920203f7f1af"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "6a636fd07e796817"
+        }
+      },
+      "fewshot_draws_sha256": "2f73ef066ef93f1ebc94b51c068078b192d406d683d5e85b565730ebcf75e1bc"
+    },
+    "mmlu_us_foreign_policy": {
+      "n_documents": 100,
+      "n_requests": 400,
+      "max_context_tokens": 471,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 100,
+          "fingerprint": "5082afc2b0bc4dbe"
+        },
+        "validation": {
+          "n": 11,
+          "fingerprint": "73c2ffeb2e7448ec"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "a7b1e08a76be7789"
+        }
+      },
+      "fewshot_draws_sha256": "7bd6d95981356c95ee04597f4a36ed5ef11aff2d0c7c1b9b60fcfd95a67ada91"
+    },
+    "mmlu_virology": {
+      "n_documents": 166,
+      "n_requests": 664,
+      "max_context_tokens": 640,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 166,
+          "fingerprint": "6d133fea1047244b"
+        },
+        "validation": {
+          "n": 18,
+          "fingerprint": "e8aeb5b245ddf59d"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "31c0dbd005df6db9"
+        }
+      },
+      "fewshot_draws_sha256": "0c4ad04545efce4769a9d26f67ea309b5a0c7a9883865407f8d64ff146aaf888"
+    },
+    "mmlu_world_religions": {
+      "n_documents": 171,
+      "n_requests": 684,
+      "max_context_tokens": 301,
+      "num_fewshot": 5,
+      "dataset_fingerprints": {
+        "test": {
+          "n": 171,
+          "fingerprint": "c70e10ede8186900"
+        },
+        "validation": {
+          "n": 19,
+          "fingerprint": "d5eebcc9d47fa87a"
+        },
+        "dev": {
+          "n": 5,
+          "fingerprint": "9109cfe46e82cbae"
+        }
+      },
+      "fewshot_draws_sha256": "d3aa183d76ff1890de455e28bcc366cf2e39d7c919c87338082a141293cf2c28"
+    },
+    "wikitext": {
+      "n_documents": 62,
+      "n_requests": 62,
+      "max_context_tokens": 15620,
+      "num_fewshot": 0,
+      "dataset_fingerprints": {
+        "train": {
+          "n": 629,
+          "fingerprint": "35de03d316a46c28"
+        },
+        "validation": {
+          "n": 60,
+          "fingerprint": "0bcd5608ecfc6a90"
+        },
+        "test": {
+          "n": 62,
+          "fingerprint": "3b100fc026da3bad"
+        }
+      },
+      "fewshot_draws_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "analysis": {
+    "official_metrics": "ARC acc and acc_norm; MMLU subject/group acc; GSM exact_match strict-match/flexible-extract; WikiText word_perplexity, byte_perplexity, bits_per_byte",
+    "perplexity": "exp(-sum document loglikelihood/sum original document words or bytes); never mean document PPL",
+    "pairing": "task/version/doc_id + exact frozen arguments; no cross-benchmark average",
+    "bootstrap": "5000 pointwise paired item draws; MMLU also subject-cluster draws; seed909223",
+    "full_vocabulary_KL": "NOT_RUN; full vectors unavailable from official harness; task-choice diagnostics must remain separately named"
+  },
+  "frozen_utc": "2026-09-22T04:14:13.790211+00:00",
+  "runtime_dev": {
+    "dev-arc_challenge-BF16": "6144af944d6bb7b7dc29c88170c4624cc90e70646882761ae0377fce4d787237",
+    "dev-wikitext-W4": "0a4a40fa21a5204d49d7de39b141a264d9012fa27a5f41245c3fe457b882d74c",
+    "dev-arc_challenge-W4": "e8cb612f20f5be3dbaa579be22fccaed4268e01d8d77b964621e5fce4fd7205b",
+    "dev-wikitext-BF16": "cd06bb6bb00bd270427fff44c554fc6e539e954b9f5d72052ee26f3ee04c4291"
+  },
+  "dev_failure": "First ARC BF16 DEV produced results but failed native teardown; not rerun. Remaining planned DEV uses explicit engine shutdown and must exit zero. See provenance/quality_dev_failure.json.",
+  "execution_source_sha256": "31fe5772051f7fbde1cc985c2b5072ab661890e8c0f850eefce4ab27e293fc71",
+  "process_order": [
+    {
+      "task": "arc_challenge",
+      "arm": "BF16"
+    },
+    {
+      "task": "arc_challenge",
+      "arm": "W4"
+    },
+    {
+      "task": "wikitext",
+      "arm": "W4"
+    },
+    {
+      "task": "wikitext",
+      "arm": "BF16"
+    },
+    {
+      "task": "gsm8k",
+      "arm": "BF16"
+    },
+    {
+      "task": "gsm8k",
+      "arm": "W4"
+    },
+    {
+      "task": "mmlu",
+      "arm": "W4"
+    },
+    {
+      "task": "mmlu",
+      "arm": "BF16"
+    }
+  ]
+}

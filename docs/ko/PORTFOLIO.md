@@ -9,13 +9,21 @@
 <!-- claims: c008-tracks c008-artifact-implementation c007-implementation -->
 DIOVA는 학습된 모델을 더 가볍게 만드는 코드와, 변경한 모델을 다시 실행하고 비교하는 도구를 개발합니다. 실제 구현과 측정 결과를 프로젝트별로 확인할 수 있습니다.
 
-Case008은 GPTQ 저장본 제작, 압축 가중치 검사, 층별 구조 로더와 고정 MLP의 출력 복구를 연결합니다. Qwen 4B 가중치 파일은 **8.045 GB에서 2.652 GB로**, Qwen 0.6B의 한 층 MLP에서는 짧은 합성 평가 입력 192개의 삭제로 생긴 국소 제곱 출력 오차를 **94.1–95.4%** 줄였습니다. 서로 다른 모델과 지표입니다. [두 구현 과정 보기](https://munsik-kim.github.io/inference-lab/ko/case008.html) · [작은 CPU 저장·재로딩 예제 실행](GETTING_STARTED.md#tiny-model-demo).
+Case008은 GPTQ 저장본 제작, 압축 가중치 검사, 층별 구조 로더와 고정 MLP의 출력 복구를 연결합니다. Qwen 4B 경로는 **8.045 GB에서 2.652 GB로 줄인 가중치 파일**을 만듭니다. Qwen 0.6B 경로는 이미 작은 MLP에 보정값을 저장하고, 원래 checkpoint 없이 그 구조를 다시 불러옵니다. [두 구현 과정 보기](https://munsik-kim.github.io/inference-lab/ko/case008.html) · [작은 CPU 저장·재로딩 예제 실행](GETTING_STARTED.md#tiny-model-demo).
 
 Case007은 채널 그룹 선택을 실제 gate/up/down 행렬 축소로 연결합니다. Case006에서는 질문별 정답 확률, 정답 손실·개선과 동률을 살펴볼 수 있습니다. 결과 화면에서 실제 입력 하나를 고르고, 연결된 구현 코드를 읽은 뒤 공개 선택 계산을 재실행할 수 있습니다. [코드 투어](#code-tour) · [CPU 선택기](GETTING_STARTED.md#cpu-selector).
 
 ![고정 코드 입력 하나를 비교하는 실제 Case007 로컬 화면](../../presentation/screenshots/case007-comparison.png)
 
 *로컬 Edge 화면: 첫 고정 CODE 입력의 25% 삭제 비교입니다. [Case006 출력 계산 화면](../../presentation/screenshots/case006-readout.png)은 별도로 표시한 같은 입력 진단을 보여줍니다. 탐색을 안내하는 선택 화면이며 전체 성능 집계가 아닙니다.*
+
+## 구조 복원과 평가 도구의 기여
+
+R은 작은 down projection의 ridge 적합과 구조별 저장·재로딩을 연결합니다. 층별 metadata → meta skeleton → strict 할당 → 공유 가중치·buffer 복원 → 원본 없이 새 프로세스 실행 순서입니다. 지원 범위는 Qwen3의 한 층 MLP입니다. 국소 SSE와 정답 점수는 아래 성능 평가 및 원래 보고서에 남습니다.
+
+[기여 표](../../README.ko.md) · [선행연구와 구현 대응](../related-work/README.ko.md) · [CPU paired 비교 CLI](../../packages/diova-compare/README.ko.md) · [코드 설명 노트](../interview-notes.ko.md)
+
+Case009는 기존 Qwen 4B 저장본의 같은 조건 graph/eager 요청 측정과 공식 품질 과제 기록을 추가합니다. [전체 곡선과 품질 보고서](../../cases/009-q-serving-quality/REPORT.ko.md)는 프로세스 종료 실패도 계산값과 함께 남깁니다. 새 CLI는 이 스칼라와 과거 기록을 같은 버전 계약으로 읽습니다.
 
 ## 구현 역량과 실제 근거
 
@@ -54,7 +62,7 @@ Case007은 채널 그룹 선택을 실제 gate/up/down 행렬 축소로 연결�
 ## 도구의 성능 평가
 
 <!-- claims: c007-transfer c007-quality c006-native c006-readout -->
-Case008의 정답 점수 변화는 확률 지표와 보정 구조에 따라 달랐고, 측정한 요청 시간비 구간은 1을 포함했습니다. [Q 품질·속도 평가](https://munsik-kim.github.io/inference-lab/ko/case008.html#q-evaluation)와 [R 평가](https://munsik-kim.github.io/inference-lab/ko/case008.html#r-evaluation)에서 비교할 수 있습니다.
+Case008은 Qwen 0.6B의 한 층 MLP에서 짧은 합성 평가 입력 192개의 삭제로 생긴 국소 제곱 출력 오차를 **94.1–95.4%** 줄였습니다. 정답 점수 변화는 확률 지표와 보정 구조에 따라 달랐고, 측정한 요청 시간비 구간은 1을 포함했습니다. [Q 품질·속도 평가](https://munsik-kim.github.io/inference-lab/ko/case008.html#q-evaluation)와 [R 평가](https://munsik-kim.github.io/inference-lab/ko/case008.html#r-evaluation)에서 비교할 수 있습니다.
 
 MLP 25% 삭제에서 PAIRWISE의 국소 오차는 소폭 낮았고 기준선 선택을 더 많이 보존했지만, 정답 NLL은 INDEPENDENT가 더 좋았습니다. 50%의 선택 모듈은 같았으며 고정 판정은 **COMPLETED_NO_CLEAR_TRANSFER**입니다. Case006에서는 표준 192개 중 A_PUBLIC은 5개, V4는 8개의 선택이 달라졌습니다. 같은 입력의 사후 출력 계산 진단은 동률과 마지막 어휘 점수 계산을 살펴봅니다. 구현상 선택과 서로 다른 평가 목표를 이 예제들에서 확인할 수 있습니다. [사례 안내](CASEBOOK.md) · [로컬 화면 열기](GETTING_STARTED.md#local-showcase).
 
@@ -72,4 +80,4 @@ OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지�
 
 **모델 변경 전후 평가**, **로컬 추론 문제 진단**, **재현 가능한 분석 도구와 결과 화면**을 주제로 코드를 검토할 수 있습니다. 비교할 모델 경계, 공개 입력 ID, 평가 지표에서 논의를 시작할 수 있습니다. [저장소 이슈](https://github.com/Munsik-Kim/inference-lab/issues)는 공개 기술 질문 경로이며, 인증값이나 비공개 고객 자료는 공개 보고에 넣지 않습니다.
 
-근거는 특정 모델·장치 하나·합성 과제의 결과입니다. 배포 판단은 **NOT_ASSESSED**입니다. CPU 감사는 남긴 스칼라를 검산하며, 제외된 전체 벡터와 별도 GPU 재현의 확인 범위는 [재현 안내](GETTING_STARTED.md)에서 설명합니다.
+근거는 특정 모델·장치 하나에서 수행한 합성 실험과 Case009의 별도 공식 과제 결과입니다. 배포 판단은 **NOT_ASSESSED**입니다. CPU 감사는 남긴 스칼라를 검산하며, 제외된 전체 벡터와 별도 GPU 재현의 확인 범위는 [재현 안내](GETTING_STARTED.md)에서 설명합니다.

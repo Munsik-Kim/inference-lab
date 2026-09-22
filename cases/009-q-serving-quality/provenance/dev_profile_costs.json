@@ -1,0 +1,110 @@
+{
+  "scope": "DEV worker trace only, 12 scheduled worker steps maximum per control; category duration sums are not disjoint end-to-end costs and not primary timing",
+  "token_row_dimension": "NOT_RECORDED; client concurrency is not a GEMM row count",
+  "records": [
+    {
+      "arm": "BF16",
+      "client_concurrency": 1,
+      "trace_sha256": "50e2d5367a822e2707b5760882c1d03e8e38c3631c1081b3b9b50574d6496bb1",
+      "cudaGraphLaunch_count": 11,
+      "kernel_duration_sum_us": {
+        "elementwise/norm/activation/copy": 2234.994999999989,
+        "other": 921.8380000000108,
+        "other linear/GEMM": 121030.26099999963,
+        "KV write/cache": 679.9569999999993,
+        "attention": 4764.108000000018
+      },
+      "kernel_counts": {
+        "elementwise/norm/activation/copy": 1452,
+        "other": 852,
+        "other linear/GEMM": 1740,
+        "KV write/cache": 432,
+        "attention": 828
+      },
+      "DEV_observed_max_allocator_bytes": {
+        "Total Allocated": 12604814336,
+        "Total Reserved": 12752781312
+      },
+      "CPU_graph_launch_api_duration_sum_us": 4171.017
+    },
+    {
+      "arm": "BF16",
+      "client_concurrency": 16,
+      "trace_sha256": "bfd5498015984468017125af578a98b299b91b6bbc2eca2c1644418ca36eb9c6",
+      "cudaGraphLaunch_count": 10,
+      "kernel_duration_sum_us": {
+        "elementwise/norm/activation/copy": 9320.664999999999,
+        "other": 2098.5909999999963,
+        "other linear/GEMM": 256255.32000000044,
+        "KV write/cache": 1329.0020000000043,
+        "attention": 13022.020000000044
+      },
+      "kernel_counts": {
+        "elementwise/norm/activation/copy": 2161,
+        "other": 467,
+        "other linear/GEMM": 1740,
+        "KV write/cache": 432,
+        "attention": 792
+      },
+      "DEV_observed_max_allocator_bytes": {
+        "Total Allocated": 12743991296,
+        "Total Reserved": 12828278784
+      },
+      "CPU_graph_launch_api_duration_sum_us": 3322.369
+    },
+    {
+      "arm": "W4",
+      "client_concurrency": 1,
+      "trace_sha256": "bffdbe2c351ea21df712f4861b6ae430bee549a46d77df27341432189cb96e8a",
+      "cudaGraphLaunch_count": 11,
+      "kernel_duration_sum_us": {
+        "elementwise/norm/activation/copy": 253.9619999999999,
+        "other": 989.6950000000122,
+        "Marlin linear or fused linear/activation/norm": 42683.73700000013,
+        "KV write/cache": 683.5420000000012,
+        "attention": 5014.762999999992,
+        "other linear/GEMM": 11152.678
+      },
+      "kernel_counts": {
+        "elementwise/norm/activation/copy": 156,
+        "other": 852,
+        "Marlin linear or fused linear/activation/norm": 3024,
+        "KV write/cache": 432,
+        "attention": 828,
+        "other linear/GEMM": 12
+      },
+      "DEV_observed_max_allocator_bytes": {
+        "Total Allocated": 7111263232,
+        "Total Reserved": 7992246272
+      },
+      "CPU_graph_launch_api_duration_sum_us": 4382.479
+    },
+    {
+      "arm": "W4",
+      "client_concurrency": 16,
+      "trace_sha256": "7068a961d23d499b58bb2f698b716a542533ba0262a2e4f3b994433480ab812b",
+      "cudaGraphLaunch_count": 10,
+      "kernel_duration_sum_us": {
+        "elementwise/norm/activation/copy": 1620.1310000000008,
+        "other": 2019.3979999999954,
+        "Marlin linear or fused linear/activation/norm": 184618.85399999729,
+        "KV write/cache": 1267.021000000002,
+        "attention": 13388.345000000014,
+        "other linear/GEMM": 11127.928999999998
+      },
+      "kernel_counts": {
+        "elementwise/norm/activation/copy": 865,
+        "other": 467,
+        "Marlin linear or fused linear/activation/norm": 3240,
+        "KV write/cache": 432,
+        "attention": 792,
+        "other linear/GEMM": 12
+      },
+      "DEV_observed_max_allocator_bytes": {
+        "Total Allocated": 7245033472,
+        "Total Reserved": 7992246272
+      },
+      "CPU_graph_launch_api_duration_sum_us": 4507.385
+    }
+  ]
+}

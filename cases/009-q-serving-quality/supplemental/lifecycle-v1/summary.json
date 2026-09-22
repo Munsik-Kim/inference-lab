@@ -1,0 +1,827 @@
+{
+  "status": "NOT_REPRODUCED_IN_SMALL_PROBE",
+  "evidence_kind": "POST_HOC_SMALL_LIFECYCLE_DIAGNOSTIC",
+  "attempts": 24,
+  "clean": 24,
+  "failed": 0,
+  "not_run": 0,
+  "D2": "NOT_SELECTED_NO_NEW_ENVIRONMENT",
+  "walltime_seconds": 543.2798981666565,
+  "walltime_scope": "first child launch to final parent ledger write",
+  "original_full_split_retries": 0,
+  "original_quality_exits": "4 clean / 4 nonzero; unchanged",
+  "generation_requests": 16,
+  "continuation_requests": 16,
+  "rolling_requests": 16,
+  "requests_per_process": 2,
+  "protocol_sha256": "95215d23c6efa3b741da69ceb9a92c27bb115fcd33b0bd6a996ac5f518d370d5",
+  "repeated_output_checks": {
+    "D0/BF16/generate_until": {
+      "n": 2,
+      "output_byte_identity": true
+    },
+    "D0/BF16/loglikelihood": {
+      "n": 2,
+      "output_byte_identity": true
+    },
+    "D0/BF16/loglikelihood_rolling": {
+      "n": 2,
+      "output_byte_identity": true
+    },
+    "D0/W4/generate_until": {
+      "n": 2,
+      "output_byte_identity": true
+    },
+    "D0/W4/loglikelihood": {
+      "n": 2,
+      "output_byte_identity": true
+    },
+    "D0/W4/loglikelihood_rolling": {
+      "n": 2,
+      "output_byte_identity": false
+    },
+    "D1/BF16/generate_until": {
+      "n": 2,
+      "output_byte_identity": true
+    },
+    "D1/BF16/loglikelihood": {
+      "n": 2,
+      "output_byte_identity": true
+    },
+    "D1/BF16/loglikelihood_rolling": {
+      "n": 2,
+      "output_byte_identity": true
+    },
+    "D1/W4/generate_until": {
+      "n": 2,
+      "output_byte_identity": true
+    },
+    "D1/W4/loglikelihood": {
+      "n": 2,
+      "output_byte_identity": true
+    },
+    "D1/W4/loglikelihood_rolling": {
+      "n": 2,
+      "output_byte_identity": true
+    }
+  },
+  "ledger": [
+    {
+      "config": "D0",
+      "arm": "BF16",
+      "path": "generate_until",
+      "repeat": 1,
+      "elapsed_seconds": 55.02402869100479,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "5ae43b4b5c22103556287a9cf78c19b5857a76405de396bb190bee965afea588",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "complete"
+      ],
+      "input_hash": "35eef3b9ecda8ed11778eca2ef13494faf7d5e57e5b03c7b456151eff24f7acb",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "bc3aaa7a3e4575c726784a942ad8f8b36c0c6dbb67c155bff801e896d23b99eb"
+    },
+    {
+      "config": "D0",
+      "arm": "BF16",
+      "path": "loglikelihood",
+      "repeat": 1,
+      "elapsed_seconds": 20.559062726002594,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "e2975c1969ea24603efb178d0990e9ae8fcb289558d40f82d2b4fc9e13e7b283",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "complete"
+      ],
+      "input_hash": "9a3b28ea2f89883c86d2aaf5caac92c18c33ac7195b5ab991c96cbfc6038020d",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "7bb7fd6090c6c410bdd62270333ccb1e497763d1e00e41f6eea30d7c931515ab"
+    },
+    {
+      "config": "D0",
+      "arm": "BF16",
+      "path": "loglikelihood_rolling",
+      "repeat": 1,
+      "elapsed_seconds": 19.65660335100256,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "e970d1f0ba9809085e302b680aa7760f29e3b2b0e6fd556334c4077751804eed",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "complete"
+      ],
+      "input_hash": "4f58094d4c222195b734d5b36d7450f66a7d41ff49cb5d9baaca9d84d3098499",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "cb86c00f1e34bb64526066c74a78ff0ca970939199ad979b31441ac32bf120ec"
+    },
+    {
+      "config": "D0",
+      "arm": "W4",
+      "path": "generate_until",
+      "repeat": 1,
+      "elapsed_seconds": 43.6525226829981,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "0b061336a1b96ce8786961c87b59a353b0e6f83a90d36d8f028240392bc46281",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "complete"
+      ],
+      "input_hash": "35eef3b9ecda8ed11778eca2ef13494faf7d5e57e5b03c7b456151eff24f7acb",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "0dccf371bdd4223489b905ceb70d0e9fb952a426fa02c7f7928c359bd47dac3e"
+    },
+    {
+      "config": "D0",
+      "arm": "W4",
+      "path": "loglikelihood",
+      "repeat": 1,
+      "elapsed_seconds": 20.871657285002584,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "5bce9e0bf5d7e5d8b61d75f7002e71d8d6bbfc0743cf09bf02ffc716ddda272d",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "complete"
+      ],
+      "input_hash": "9a3b28ea2f89883c86d2aaf5caac92c18c33ac7195b5ab991c96cbfc6038020d",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "6ef04c26c08999d2e301a78a768130b3e40ff067da9df4a738f05021ac103318"
+    },
+    {
+      "config": "D0",
+      "arm": "W4",
+      "path": "loglikelihood_rolling",
+      "repeat": 1,
+      "elapsed_seconds": 20.058080463997612,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "66b4a2107cbd5c8987771c1965cd9dffadb63ebbddf9d338ccd541e8ac096633",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "complete"
+      ],
+      "input_hash": "4f58094d4c222195b734d5b36d7450f66a7d41ff49cb5d9baaca9d84d3098499",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "11b470b0b8e2a1ed0ba964af551896956c2ff0b006fa27d78d27c8c1911d8645"
+    },
+    {
+      "config": "D0",
+      "arm": "W4",
+      "path": "generate_until",
+      "repeat": 2,
+      "elapsed_seconds": 20.15676545900351,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "0b061336a1b96ce8786961c87b59a353b0e6f83a90d36d8f028240392bc46281",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "complete"
+      ],
+      "input_hash": "35eef3b9ecda8ed11778eca2ef13494faf7d5e57e5b03c7b456151eff24f7acb",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "3f0a1fb9e9bc00dd331065e56fd16b977af16fbbdde2802b4ddacaac748d4669"
+    },
+    {
+      "config": "D0",
+      "arm": "W4",
+      "path": "loglikelihood",
+      "repeat": 2,
+      "elapsed_seconds": 20.45672677100083,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "5bce9e0bf5d7e5d8b61d75f7002e71d8d6bbfc0743cf09bf02ffc716ddda272d",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "complete"
+      ],
+      "input_hash": "9a3b28ea2f89883c86d2aaf5caac92c18c33ac7195b5ab991c96cbfc6038020d",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "4c7a1cfb68aad5842229a606ae48c5ec220a960b01fecceef58dbe16906aebcf"
+    },
+    {
+      "config": "D0",
+      "arm": "W4",
+      "path": "loglikelihood_rolling",
+      "repeat": 2,
+      "elapsed_seconds": 20.160074464998615,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "11db505345773c2e6c2e290466421aee7f8e203df75116556ea363fce3a32e93",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "complete"
+      ],
+      "input_hash": "4f58094d4c222195b734d5b36d7450f66a7d41ff49cb5d9baaca9d84d3098499",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "cc7a01b1d7ecba0673fd257e572b3bbf26980aba995b630e0da1b9fb6f227d62"
+    },
+    {
+      "config": "D0",
+      "arm": "BF16",
+      "path": "generate_until",
+      "repeat": 2,
+      "elapsed_seconds": 19.957439136000175,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "5ae43b4b5c22103556287a9cf78c19b5857a76405de396bb190bee965afea588",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "complete"
+      ],
+      "input_hash": "35eef3b9ecda8ed11778eca2ef13494faf7d5e57e5b03c7b456151eff24f7acb",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "61a4c9038ea4ca0609c4a7485692692f2d68d8f2225a0d140ca18d4f7d99f9ff"
+    },
+    {
+      "config": "D0",
+      "arm": "BF16",
+      "path": "loglikelihood",
+      "repeat": 2,
+      "elapsed_seconds": 19.560509308998007,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "e2975c1969ea24603efb178d0990e9ae8fcb289558d40f82d2b4fc9e13e7b283",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "complete"
+      ],
+      "input_hash": "9a3b28ea2f89883c86d2aaf5caac92c18c33ac7195b5ab991c96cbfc6038020d",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "2ee2dbb886c025911a9ae3002e816facd20e6e14cf67ce3f164d59dc44d7e821"
+    },
+    {
+      "config": "D0",
+      "arm": "BF16",
+      "path": "loglikelihood_rolling",
+      "repeat": 2,
+      "elapsed_seconds": 19.81136178399902,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "e970d1f0ba9809085e302b680aa7760f29e3b2b0e6fd556334c4077751804eed",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "complete"
+      ],
+      "input_hash": "4f58094d4c222195b734d5b36d7450f66a7d41ff49cb5d9baaca9d84d3098499",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "37e29387787c33618415924745c45ab2e4fb3fcf6ec9d06259fc2ba0ec021845"
+    },
+    {
+      "config": "D1",
+      "arm": "BF16",
+      "path": "generate_until",
+      "repeat": 1,
+      "elapsed_seconds": 20.107323249998444,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "5ae43b4b5c22103556287a9cf78c19b5857a76405de396bb190bee965afea588",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "explicit_collect",
+        "complete"
+      ],
+      "input_hash": "35eef3b9ecda8ed11778eca2ef13494faf7d5e57e5b03c7b456151eff24f7acb",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "788f033be27d4c52801192b798fb913d4dfa2cc84a1779ad3f29cb14321f8c93"
+    },
+    {
+      "config": "D1",
+      "arm": "BF16",
+      "path": "loglikelihood",
+      "repeat": 1,
+      "elapsed_seconds": 20.25823884199781,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "e2975c1969ea24603efb178d0990e9ae8fcb289558d40f82d2b4fc9e13e7b283",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "explicit_collect",
+        "complete"
+      ],
+      "input_hash": "9a3b28ea2f89883c86d2aaf5caac92c18c33ac7195b5ab991c96cbfc6038020d",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "59a63e946121364190bac6ea7f186ca4c44791b1ae8542e93ac8071a71eaf9a0"
+    },
+    {
+      "config": "D1",
+      "arm": "BF16",
+      "path": "loglikelihood_rolling",
+      "repeat": 1,
+      "elapsed_seconds": 20.810095884000475,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "7e28fbbb0786fad5bb6a4b265f7366aa13cfa830d4ea07b408c2c7ee2fd32853",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "explicit_collect",
+        "complete"
+      ],
+      "input_hash": "4f58094d4c222195b734d5b36d7450f66a7d41ff49cb5d9baaca9d84d3098499",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "b4c13d72164a3126912583c698d6ed4df796a58b90f4f36e94c1eba43f7ac9e8"
+    },
+    {
+      "config": "D1",
+      "arm": "W4",
+      "path": "generate_until",
+      "repeat": 1,
+      "elapsed_seconds": 20.55937715699838,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "0b061336a1b96ce8786961c87b59a353b0e6f83a90d36d8f028240392bc46281",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "explicit_collect",
+        "complete"
+      ],
+      "input_hash": "35eef3b9ecda8ed11778eca2ef13494faf7d5e57e5b03c7b456151eff24f7acb",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "6fab241e5e13eda33944716ad92c85120e72a9150a5c8585e25f1259617d52d3"
+    },
+    {
+      "config": "D1",
+      "arm": "W4",
+      "path": "loglikelihood",
+      "repeat": 1,
+      "elapsed_seconds": 20.059096207995026,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "5bce9e0bf5d7e5d8b61d75f7002e71d8d6bbfc0743cf09bf02ffc716ddda272d",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "explicit_collect",
+        "complete"
+      ],
+      "input_hash": "9a3b28ea2f89883c86d2aaf5caac92c18c33ac7195b5ab991c96cbfc6038020d",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "adf5a660a78d4952c641b2375060bc2babadbd25495dcfbd7cb4477bc3675e8a"
+    },
+    {
+      "config": "D1",
+      "arm": "W4",
+      "path": "loglikelihood_rolling",
+      "repeat": 1,
+      "elapsed_seconds": 20.35761821900087,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "66b4a2107cbd5c8987771c1965cd9dffadb63ebbddf9d338ccd541e8ac096633",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "explicit_collect",
+        "complete"
+      ],
+      "input_hash": "4f58094d4c222195b734d5b36d7450f66a7d41ff49cb5d9baaca9d84d3098499",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "6ecc65d3b6ea4cba442c665160b6df650afafce4d7f566c104a4b92670cefccc"
+    },
+    {
+      "config": "D1",
+      "arm": "W4",
+      "path": "generate_until",
+      "repeat": 2,
+      "elapsed_seconds": 20.35879702400416,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "0b061336a1b96ce8786961c87b59a353b0e6f83a90d36d8f028240392bc46281",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "explicit_collect",
+        "complete"
+      ],
+      "input_hash": "35eef3b9ecda8ed11778eca2ef13494faf7d5e57e5b03c7b456151eff24f7acb",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "8cfee86d45c7d65d9bb87bff3765b23250cbd39c7a7f0a32752101946a13ec25"
+    },
+    {
+      "config": "D1",
+      "arm": "W4",
+      "path": "loglikelihood",
+      "repeat": 2,
+      "elapsed_seconds": 20.058064924000064,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "5bce9e0bf5d7e5d8b61d75f7002e71d8d6bbfc0743cf09bf02ffc716ddda272d",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "explicit_collect",
+        "complete"
+      ],
+      "input_hash": "9a3b28ea2f89883c86d2aaf5caac92c18c33ac7195b5ab991c96cbfc6038020d",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "1e081038a0903e5a7cc30c33cddb622d18459dace5a09e3b099c7694509920a7"
+    },
+    {
+      "config": "D1",
+      "arm": "W4",
+      "path": "loglikelihood_rolling",
+      "repeat": 2,
+      "elapsed_seconds": 20.31250631900184,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "66b4a2107cbd5c8987771c1965cd9dffadb63ebbddf9d338ccd541e8ac096633",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "explicit_collect",
+        "complete"
+      ],
+      "input_hash": "4f58094d4c222195b734d5b36d7450f66a7d41ff49cb5d9baaca9d84d3098499",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "ccf8e045b77f9350da92d5cde37f49a5e3c6cf65107e2d8fa01247f63a277ccc"
+    },
+    {
+      "config": "D1",
+      "arm": "BF16",
+      "path": "generate_until",
+      "repeat": 2,
+      "elapsed_seconds": 20.358974723996653,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "5ae43b4b5c22103556287a9cf78c19b5857a76405de396bb190bee965afea588",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "explicit_collect",
+        "complete"
+      ],
+      "input_hash": "35eef3b9ecda8ed11778eca2ef13494faf7d5e57e5b03c7b456151eff24f7acb",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "0fff6f616d4ff928c9f4f4683f45b7851f66c2adafafeb789ff5d34b5214ca81"
+    },
+    {
+      "config": "D1",
+      "arm": "BF16",
+      "path": "loglikelihood",
+      "repeat": 2,
+      "elapsed_seconds": 20.063721512000484,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "e2975c1969ea24603efb178d0990e9ae8fcb289558d40f82d2b4fc9e13e7b283",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "explicit_collect",
+        "complete"
+      ],
+      "input_hash": "9a3b28ea2f89883c86d2aaf5caac92c18c33ac7195b5ab991c96cbfc6038020d",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "6dc5c1b547add2ca7a5446c2fb207a8f2cce1a908f3b6a5724990749926989dc"
+    },
+    {
+      "config": "D1",
+      "arm": "BF16",
+      "path": "loglikelihood_rolling",
+      "repeat": 2,
+      "elapsed_seconds": 20.10800110099808,
+      "returncode": 0,
+      "signal": null,
+      "timeout": false,
+      "status": "PASS",
+      "result_valid": true,
+      "result_sha256": "7e28fbbb0786fad5bb6a4b265f7366aa13cfa830d4ea07b408c2c7ee2fd32853",
+      "worker_clean": true,
+      "worker_exitcodes": [
+        0
+      ],
+      "cleanup_owned_workers": 0,
+      "stages": [
+        "launch",
+        "init",
+        "workers",
+        "forward",
+        "result_write",
+        "shutdown_start",
+        "shutdown_return",
+        "explicit_collect",
+        "complete"
+      ],
+      "input_hash": "4f58094d4c222195b734d5b36d7450f66a7d41ff49cb5d9baaca9d84d3098499",
+      "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+      "log_sha256": "5a47d7760d9b4ceed004755c6b2324849066c8e9bf116883c1864e850594bc39"
+    }
+  ],
+  "interpretation": "All small probes can pass while original full tasks fail. Neither explicit shutdown nor gc is established as a fix. No full benchmark replay."
+}

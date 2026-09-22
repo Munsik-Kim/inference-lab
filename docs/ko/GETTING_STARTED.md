@@ -162,3 +162,11 @@ ZIP만 풀었다면 먼저 그 안의 `006-attention-decision-stability` 디렉�
 ## Case 008: 보고서와 독립 검산 묶음
 
 [구조화 보고서](../../cases/008-build-reconstruct-reload/REPORT.ko.md)를 읽고 [코드·recipe·측정 자료 ZIP](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)과 [메타데이터](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.json)를 내려받으세요. 압축 해제 루트에는 tools/modelpack과 사례 폴더가 함께 있습니다. `cases/008-build-reconstruct-reload/demo/index.html`을 열면 원래 영어 탐색기를 볼 수 있습니다. 한·영 사이트 요약은 Q의 파일·메모리와 R의 보정 전후를 보여주고, 원래 탐색기는 더 자세한 기록으로 이어집니다. [CPU 검사·원본 복원 명령(영어)](../../cases/008-build-reconstruct-reload/REPRODUCTION.md)은 향후 GPU 명령과 분리되어 있으며 모델 가중치는 포함하지 않습니다.
+
+## 설치 가능한 CPU 결과 비교
+
+[diova-compare](../../packages/diova-compare/README.ko.md)는 같은 입력의 결과를 검증하고 정답 전환·점수 변화를 계산합니다. 별도 CPU 환경에 설치하며 모델 runtime을 설치하지 않습니다. 실제 GPU 평가와 과거 결과 재계산은 evidence_kind로 구별합니다.
+
+## 새 graph 요청 측정과 공식 품질 과제
+
+[Case009 재현 안내·영어](../../cases/009-q-serving-quality/REPRODUCTION.md)는 기존 serving 환경, 새 harness 환경, CPU 패키지를 나눠 설명합니다. [전체 곡선과 품질 보고서](../../cases/009-q-serving-quality/REPORT.ko.md)에는 일부 품질 프로세스의 비정상 종료도 기록했습니다. 공개 스칼라 재계산에는 benchmark 데이터셋이나 모델 다운로드가 필요하지 않습니다.

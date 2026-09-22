@@ -1,0 +1,55 @@
+name: Paired package and serving-contract CPU checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: feedback-cpu-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      HF_HUB_OFFLINE: '1'
+      TRANSFORMERS_OFFLINE: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6; existing verified project pin
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6; existing project pin
+        with:
+          python-version: '3.12.14'
+      - name: Prepare external reports and pinned CPU build tools
+        run: |
+          mkdir -p "$RUNNER_TEMP/feedback-checks"
+          python -m pip install -r tools/showcase/requirements-cpu.txt
+          python -m pip install setuptools==80.10.2 wheel==0.48.0
+      - name: Reviewed publication, restored originals, regressions and installed wheel
+        run: python -B cases/009-q-serving-quality/publication/run_checks.py --root . --output "$RUNNER_TEMP/feedback-checks/reviewed"
+      - name: Case008 publication identity
+        run: python -B cases/008-build-reconstruct-reload/publication/verify_publication.py --root . --output "$RUNNER_TEMP/feedback-checks/case008-publication.json"
+      - name: Existing evidence preservation, scalars, documentation and site
+        run: python -B tools/showcase/run_checks.py --output "$RUNNER_TEMP/feedback-checks/portfolio"
+      - name: Retain CPU summaries (no models, private logs or tensors)
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # official v4 tag resolved 2026-09-22
+        with:
+          name: feedback-cpu-reports
+          path: |
+            ${{ runner.temp }}/feedback-checks/*.log
+            ${{ runner.temp }}/feedback-checks/*.json
+            ${{ runner.temp }}/feedback-checks/reviewed/*.json
+            ${{ runner.temp }}/feedback-checks/reviewed/*.log
+            ${{ runner.temp }}/feedback-checks/reviewed/official/audit.json
+            cases/009-q-serving-quality/publication/status.json
+            ${{ runner.temp }}/feedback-checks/portfolio/*.log
+            ${{ runner.temp }}/feedback-checks/portfolio/*.json
+          retention-days: 14
+          if-no-files-found: warn

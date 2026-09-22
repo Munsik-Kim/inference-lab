@@ -9,13 +9,21 @@ English | [한국어](../ko/PORTFOLIO.md) · [Home](../../README.md)
 <!-- claims: c008-tracks c008-artifact-implementation c007-implementation -->
 DIOVA develops tools to modify pretrained models, save and reload the results, and measure their behavior on real hardware. Explore the implementation and recorded results in each project.
 
-Case008 connects a GPTQ checkpoint builder, packed-weight validation, a structure-aware loader and fixed-MLP output reconstruction. The two paths reduce Qwen 4B weight files to **2.652 GB from 8.045 GB**, and reduce deletion-induced local squared output error by **94.1–95.4%** in one Qwen 0.6B MLP on 192 short synthetic held-out prompts. These are separate models and metrics. [Inspect the toolchains](https://munsik-kim.github.io/inference-lab/en/case008.html) · [Run the tiny CPU save–reload example](GETTING_STARTED.md#tiny-model-demo).
+Case008 connects a GPTQ checkpoint builder, packed-weight validation, a structure-aware loader and fixed-MLP output reconstruction. The Qwen 4B path produces **2.652 GB of weight files from 8.045 GB**. The Qwen 0.6B path stores a correction in an already smaller MLP and reloads its structure without the original checkpoint. [Inspect the toolchains](https://munsik-kim.github.io/inference-lab/en/case008.html) · [Run the tiny CPU save–reload example](GETTING_STARTED.md#tiny-model-demo).
 
 Case007 turns channel-group selections into smaller gate/up/down matrices. Case006 lets you inspect answer probabilities, lost correct answers, gains and ties for each question. Start with a result screen, open its implementation, then replay the public selection calculation. [Code tour](#code-tour) · [CPU selector](GETTING_STARTED.md#cpu-selector).
 
 ![Actual local Case007 comparison screen, showing one fixed code input](../../presentation/screenshots/case007-comparison.png)
 
 *Local Edge screenshot: the first fixed CODE input, 25% deletion. [Case006 readout screen](../../presentation/screenshots/case006-readout.png) shows the separately labelled same-input diagnostic. These are selected views for navigation, not aggregate performance summaries.*
+
+## Structure-aware loading and paired evaluation
+
+R connects a ridge fit in the smaller down projection with structure-aware checkpoint storage and reload: per-layer metadata → meta skeleton → strict assignment → tied-weight and buffer restoration → fresh-process execution without the original checkpoint. Current support covers one Qwen3 MLP layer. Local SSE and gold scores remain in the performance section and original reports.
+
+[Contribution table](../../README.md) · [Related work and implementation](../related-work/README.md) · [CPU paired comparison CLI](../../packages/diova-compare/README.md) · [Implementation interview notes (Korean)](../interview-notes.ko.md)
+
+Case009 adds matched graph/eager serving measurements and official quality-task records using the existing Qwen 4B artifacts. The [complete curves and quality report](../../cases/009-q-serving-quality/REPORT.md) retain runtime-exit failures alongside calculated metrics. The new CLI consumes these scalars and historical records through the same versioned contract.
 
 ## Working capabilities and their evidence
 
@@ -54,7 +62,7 @@ Case007 turns channel-group selections into smaller gate/up/down matrices. Case0
 ## Evaluating the tools
 
 <!-- claims: c007-transfer c007-quality c006-native c006-readout -->
-Case008 gold-score changes differed by probability metric and repaired structure. Its measured request-time intervals included 1. Inspect the [Q quality and runtime comparison](https://munsik-kim.github.io/inference-lab/en/case008.html#q-evaluation) and the [R comparison](https://munsik-kim.github.io/inference-lab/en/case008.html#r-evaluation).
+Case008 reduced deletion-induced local squared output error by **94.1–95.4%** in one Qwen 0.6B MLP on 192 short synthetic held-out prompts. Gold-score changes differed by probability metric and repaired structure. Its measured request-time intervals included 1. Inspect the [Q quality and runtime comparison](https://munsik-kim.github.io/inference-lab/en/case008.html#q-evaluation) and the [R comparison](https://munsik-kim.github.io/inference-lab/en/case008.html#r-evaluation).
 
 At 25% MLP deletion, PAIRWISE slightly lowered local error and preserved more baseline choices, but INDEPENDENT had better gold NLL. At 50%, the selected modules were identical; the frozen status is **COMPLETED_NO_CLEAR_TRANSFER**. In Case006, A_PUBLIC changed 5 of 192 standard choices and V4 changed 8 of 192. A same-input readout follow-up examines ties and the final vocabulary projection. These examples make both implementation choices and competing evaluation objectives visible. [Casebook](CASEBOOK.md) · [Open the local screen](GETTING_STARTED.md#local-showcase).
 
@@ -72,4 +80,4 @@ OpenAI Codex assisted implementation, local execution, tests, analysis and writi
 
 The code supports discussions about **model-change evaluation**, **local inference diagnosis** and **reproducible analysis tools and result screens**. A useful starting point is a model boundary, a public input ID and a metric to compare. [Repository issues](https://github.com/Munsik-Kim/inference-lab/issues) provide a public technical-question channel; keep credentials and private customer data out of public reports.
 
-The evidence covers specific models, one device and synthetic tasks. Deployment is **NOT_ASSESSED**. CPU audits check retained scalars; excluded full vectors and independent GPU replication have a separate verification scope in the [reproduction guide](GETTING_STARTED.md).
+The evidence covers specific models and one device, with synthetic studies and the separate official tasks in Case009. Deployment is **NOT_ASSESSED**. CPU audits check retained scalars; excluded full vectors and independent GPU replication have a separate verification scope in the [reproduction guide](GETTING_STARTED.md).

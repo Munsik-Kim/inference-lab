@@ -2,6 +2,7 @@
 from __future__ import annotations
 import argparse
 import hashlib
+import json
 import re
 from html.parser import HTMLParser
 from pathlib import Path
@@ -9,6 +10,7 @@ from urllib.parse import unquote, urlsplit
 from common import ROOT, read, require, sha, json_text, new_output
 from data import load
 from case008 import load_case008, render_case008
+from case009 import load_case009, render_case009, C9, SOURCE_COPIES
 from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
 
@@ -60,8 +62,8 @@ def check_home_outputs(html: str, data8: dict, lang: str) -> None:
     require(q['model'].split('/')[-1] in qt and 'GPTQ W4A16' in qt, 'Home Q model/precision scope missing')
     require(('Weight files' if lang=='en' else '가중치 파일') in qt, 'Home Q file scope missing')
     values=[100*v['recovery']['pooled_recovery'] for v in r['structures'].values()]
-    require(f'{min(values):.1f}–{max(values):.1f}%' in rt, 'Home R error reduction mismatch')
-    scope=('local squared output error','One MLP layer','192 short synthetic held-out prompts') if lang=='en' else ('국소 제곱 출력 오차','한 층 MLP','짧은 합성 평가 입력 192개')
+    require('strict' in rt and ('meta skeleton' if lang=='en' else 'meta skeleton') in rt, 'Home R loader implementation missing')
+    scope=('One MLP layer','192 short synthetic held-out prompts') if lang=='en' else ('한 층 MLP','짧은 합성 평가 입력 192개')
     require(r['model'].split('/')[-1] in rt and all(term in rt for term in scope), 'Home R error/model/input scope missing')
     for key in ('q','r'):
         require('case008.html#'+key+'-evaluation' in p.blocks['output-'+key]['links'], 'Missing direct quality/runtime link')
@@ -79,9 +81,12 @@ def check(root: Path, site: Path) -> dict:
         if p.is_file():
             require(p.stat().st_nlink == 1, 'Site hardlink')
             paths[p.relative_to(site).as_posix()]=p
-    require(set(paths)==EXPECTED, 'Unexpected/missing deploy artifact member')
+    data9=load_case009(root)
+    expected=EXPECTED|({'en/case009.html','ko/case009.html','data/case009.json','data/case009.js','assets/case009.js','assets/serving-L128.svg','assets/serving-L1024.svg',
+      'sources/diova-compare-core.py.txt','sources/diova-compare-tests.py.txt','sources/diova-compare-edge-tests.py.txt','sources/case009-serving.py.txt','sources/case009-quality.py.txt','sources/case009-report-en.md.txt','sources/case009-report-ko.md.txt','sources/case009-notice.md.txt'} if data9 else set())
+    require(set(paths)==expected, 'Unexpected/missing deploy artifact member')
     m=read(site/'build_manifest.json')
-    require(set(m['files'])==EXPECTED-{'build_manifest.json'}, 'Manifest coverage')
+    require(set(m['files'])==expected-{'build_manifest.json'}, 'Manifest coverage')
     for name,path in paths.items():
         if name!='build_manifest.json':require(sha(path)==m['files'][name], 'Changed build member: '+name)
     require(m['source_manifest_sha256']==sha(root/'presentation/source_manifest.json'), 'Wrong source manifest')
@@ -89,6 +94,19 @@ def check(root: Path, site: Path) -> dict:
         path=(root/name).resolve()
         require(path.is_relative_to(root.resolve()) and path.is_file() and sha(path)==digest, 'Stale presentation build')
     data8=load_case008(root)
+    if data9:
+        require(read(site/'data/case009.json')==data9,'Case009 numeric/source mismatch')
+        wrapped=(site/'data/case009.js').read_text()
+        prefix='window.CASE009_EVIDENCE = '
+        require(wrapped.startswith(prefix) and wrapped.endswith(';\n'),'Case009 offline data wrapper')
+        require(json.loads(wrapped[len(prefix):-2])==data9,'Case009 offline numeric/source mismatch')
+        require(m['case009_units']['source_files']==data9['sources'],'Case009 manifest source identity')
+        for name,path in SOURCE_COPIES.items():
+            require((site/'sources'/name).read_bytes()==(root/path).read_bytes(),'Changed source copy: '+name)
+        for length in (128,1024):
+            require((site/f'assets/serving-L{length}.svg').read_bytes()==(root/C9/f'figures/serving-L{length}.svg').read_bytes(),'Changed serving figure')
+        for lang in ('en','ko'):
+            require(render_case009(data9,lang) in (site/lang/'case009.html').read_text(),'Case009 rendering/scope mismatch')
     require(read(site/'data/case008.json') == data8, 'Case008 display mismatch')
     require(m['case008_source_manifest_sha256']==sha(root/'presentation/case008_sources.json'), 'Wrong Case008 source manifest')
     for lang in ('en','ko'):
@@ -98,7 +116,6 @@ def check(root: Path, site: Path) -> dict:
         require(read(site/f'data/{case}.json')==expected, 'Display numeric/source mismatch')
         text=(site/f'data/{case}.js').read_text()
         require(text.startswith('window.EVIDENCE = ') and text.endswith(';\n'), 'Wrong JS data wrapper')
-        import json
         require(json.loads(text[len('window.EVIDENCE = '):-2])==expected, 'JS/JSON mismatch')
         require('<' not in text and '\u2028' not in text and '\u2029' not in text, 'Unsafe embedded JSON')
     for case, data in payloads.items():

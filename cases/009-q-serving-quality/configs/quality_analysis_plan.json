@@ -1,0 +1,13 @@
+{
+  "status": "FROZEN_BEFORE_QUALITY_RESULTS",
+  "bootstrap_replicates": 5000,
+  "bootstrap_seed": 909223,
+  "interval": "pointwise percentile 95%; descriptive, no equivalence margin or success gate",
+  "arc_gsm_subject_unit": "paired official test item within task/filter; no pooling of benchmarks or GSM filters",
+  "mmlu_overall_unit": "paired subject cluster; resample 57 subjects with replacement, aggregate correct counts divided by item counts in sampled subjects",
+  "wikitext_unit": "paired document; resample 62 documents, sum loglikelihood and original-word/UTF8-byte denominators before exponentiation",
+  "metric_direction": "candidate W4 minus BF16 for accuracy and NLL; all-answer disagreement distinct from correctness flips",
+  "choice_diagnostics": "softmax of full-continuation choice loglikelihoods; not next-token full-vocabulary probabilities",
+  "full_vocabulary_KL": "NOT_RUN; serving API and official harness do not retain complete vocabulary vectors",
+  "failures": "retain every failed attempt; incomplete task/model pairs are unavailable, not silently intersected"
+}

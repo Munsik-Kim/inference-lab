@@ -365,3 +365,13 @@ body[data-case="index"] .diagram-data .group-axis { margin-top: 0; }
  .output-value { font-size:1.75rem; }
  .cap-hero .brand-definition { margin-bottom:22px; }
 }
+
+/* A compact implementation/upstream map; readable cells on narrow screens. */
+.contribution-table table { width:100%; table-layout:fixed; border-collapse:collapse; }
+.contribution-table th,.contribution-table td { padding:.75rem; text-align:left; vertical-align:top; border-bottom:1px solid var(--line,#d6cec5); overflow-wrap:anywhere; }
+.contribution-table th { font-size:.85rem; }
+.contribution-table td { font-size:.92rem; line-height:1.55; }
+.archive summary { cursor:pointer; padding:1rem 0; font-weight:600; }
+@media(max-width:520px) { .contribution-table th,.contribution-table td { padding:.5rem .3rem; font-size:.78rem; } }
+
+.serving-curve { display:block; width:100%; height:auto; }
