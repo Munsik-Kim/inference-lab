@@ -30,6 +30,13 @@ PUBLIC_FILES = (*PAGES, CONCEPT_FIGURE, 'docs/_meta/claims.json', 'docs/_meta/MA
                 'docs/_checks/check_docs.py', 'docs/_checks/test_check_docs.py')
 LINK = re.compile(r'!?\[[^\]\n]*\]\(([^\s()]+)\)')
 CLAIMS = re.compile(r'<!-- claims: ([a-zA-Z0-9_\- ]+) -->')
+FEEDBACK_DOCS = (
+    'docs/feedback_actions.md', 'docs/interview-notes.ko.md', 'docs/phase2a-design.md',
+    'docs/related-work/README.md', 'docs/related-work/README.ko.md',
+    'packages/diova-compare/README.md', 'packages/diova-compare/README.ko.md',
+    *(f'cases/009-q-serving-quality/{name}' for name in
+      ('README.md','README.ko.md','REPORT.md','REPORT.ko.md','METHODS.md','NOTICE.md','REPRODUCTION.md')),
+)
 
 
 def sha(path: Path) -> str:
@@ -356,22 +363,93 @@ def check_additional_publications(root: Path, mapping: dict, errors: list[str]) 
     return known
 
 
+def check_new_study(root: Path, errors: list[str]) -> set[str]:
+    """An exact new-case inventory; no exception within historical Cases001–008."""
+    base = root/'cases/009-q-serving-quality'
+    if not base.exists():
+        return set()
+    try:
+        protocol = base/'configs/serving_protocol.json'
+        if sha(protocol) != 'df84d13a33639f10102c372dc0ea55b7520fe068e030cc6818735a9df1e3f13f':
+            raise ValueError('Frozen serving protocol changed')
+        for name,digest in {
+            'quality_protocol.json':'bd2a8ae107e9abaf070e7bb99f30e059e06b141fd19daaeab165f6d2bdbb4052',
+            'quality_input_freeze.json':'f1145adb18a8e71c49a15096d8db07aa33f91930913a6c71538bda80a8c30cc1',
+            'quality_analysis_plan.json':'9be69986602eebe1ccbe4428dff683d12e22536da1dba09d921a1f535aa99650',
+        }.items():
+            if sha(base/'configs'/name) != digest:
+                raise ValueError('Frozen quality source changed: '+name)
+        for name,digest in {
+            'serving.py':'2d63b6a070fc08aeb148873173b5a2627955696fa284c94137a3f75cdeab44fd',
+            'freeze_quality_inputs.py':'d4d12e5fc04a19203293e82dde75d5d7c3a010bafe8600d32bf91d08d22ae152',
+            'quality.py':'31fe5772051f7fbde1cc985c2b5072ab661890e8c0f850eefce4ab27e293fc71',
+        }.items():
+            if sha(base/'scripts'/name) != digest:
+                raise ValueError('Frozen execution source changed: '+name)
+        publication = base/'publication/verify_publication.py'
+        if publication.exists():
+            import importlib.util
+            spec=importlib.util.spec_from_file_location('case009_publication_docs',publication)
+            module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+            module.verify(root)
+            known={p.relative_to(root).as_posix() for p in base.rglob('*') if p.is_file()}
+            for stem in ['case009_serving_quality_reviewed_publication_v2','diova_compare-0.1.1']:
+                meta_name=stem+'.json' if stem.startswith('case009') else stem+'.metadata.json'
+                meta=json.loads((root/'downloads'/meta_name).read_text());p=root/'downloads'/meta['filename']
+                if p.is_symlink() or sha(p)!=meta['sha256'] or p.stat().st_size!=meta['bytes']:
+                    raise ValueError('New publication download hash/size mismatch')
+                known.update(['downloads/'+meta_name,'downloads/'+meta['filename']])
+            return known
+        expected = {}
+        for line in (base/'SHA256SUMS').read_text().splitlines():
+            digest, name = line.split('  ', 1)
+            path = base/name
+            if name in expected or name == 'SHA256SUMS' or Path(name).is_absolute() or '..' in Path(name).parts or path.is_symlink() or not path.resolve().is_relative_to(base.resolve()):
+                raise ValueError('Unsafe/duplicate new-study inventory')
+            if sha(path) != digest:
+                raise ValueError('New-study checksum mismatch: '+name)
+            expected[name] = digest
+        actual = {p.relative_to(base).as_posix() for p in base.rglob('*') if p.is_file() or p.is_symlink()}
+        if actual != set(expected) | {'SHA256SUMS'}:
+            raise ValueError('New-study exact inventory mismatch')
+        return {'cases/009-q-serving-quality/'+name for name in actual}
+    except (OSError, ValueError) as exc:
+        errors.append('New study verification failed: '+str(exc))
+        return set()
+
+
+def check_feedback_docs(root: Path, errors: list[str]) -> int:
+    links = check_links(root, list(FEEDBACK_DOCS), errors)
+    check_copy_hygiene(root, FEEDBACK_DOCS, errors)
+    for folder,stem in [('docs/related-work','README'),('packages/diova-compare','README'),
+                        ('cases/009-q-serving-quality','README'),('cases/009-q-serving-quality','REPORT')]:
+        en,ko=root/folder/(stem+'.md'),root/folder/(stem+'.ko.md')
+        if not en.is_file() or not ko.is_file():
+            errors.append('Missing feedback language counterpart: '+folder+'/'+stem)
+        elif f']({stem}.ko.md)' not in en.read_text() or f']({stem}.md)' not in ko.read_text():
+            errors.append('Wrong feedback language link: '+folder+'/'+stem)
+    return links
+
+
 def audit(root: Path, inventory: Path | None = None) -> dict:
     root = root.resolve()
     errors: list[str] = []
     mapping = json.loads((root/'docs/_meta/claims.json').read_text())
     links = check_links(root, [*PAGES, 'docs/_meta/MAINTENANCE.md'], errors)
+    feedback_links = check_feedback_docs(root, errors) if (root/'cases/009-q-serving-quality').exists() else 0
     check_pairs(root, errors)
     check_beginner_routes(root, errors)
     check_concept_figure(root, errors)
     count = check_claims(root, mapping, list(PAGES), errors)
     additional = check_additional_publications(root, mapping, errors)
+    additional |= check_new_study(root, errors)
     protected = check_protection(root, mapping.get('protection_revision', mapping['source_revision']), errors, inventory, additional)
     check_copy_hygiene(root, (*PAGES, CONCEPT_FIGURE, 'docs/_meta/claims.json', 'docs/_meta/MAINTENANCE.md'), errors)
     downloads = check_packages(root, mapping, errors)
     return {'status': 'PASS' if not errors else 'FAIL', 'errors': errors,
             'markdown_parser': 'markdown-it-py' if MarkdownIt is not None else 'documented limited-syntax stdlib fallback',
             'authored_pages': len(PAGES), 'local_links_checked': links, 'claims_checked': count,
+            'feedback_local_links_checked': feedback_links,
             'protected_files_checked': protected, 'source_revision': mapping['source_revision'],
             'downloads': downloads, 'scope': 'Supported Markdown syntax, path/anchor existence, paired beginner routes and glossary IDs, declarative SVG, claim-ID coverage, source hashes/locators, selected literal displays, existing archive identity and protected bytes. No experimental result recalculation.',
             'not_proven': ['Semantic equivalence of translations (requires editorial review)',

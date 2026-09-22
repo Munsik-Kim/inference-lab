@@ -1,0 +1,3014 @@
+{
+  "tasks": [
+    {
+      "task": "arc_challenge",
+      "status": "COMPUTED_WITH_PROCESS_FAILURE",
+      "process_status": {
+        "BF16": "COMPLETE",
+        "W4": "FAILED"
+      },
+      "official_results": {
+        "BF16": {
+          "arc_challenge": {
+            "name": "arc_challenge",
+            "alias": "arc_challenge",
+            "sample_len": 1172,
+            "acc,none": 0.4325938566552901,
+            "acc_stderr,none": 0.014478005694182441,
+            "acc_norm,none": 0.4283276450511945,
+            "acc_norm_stderr,none": 0.01446049636759908
+          }
+        },
+        "W4": {
+          "arc_challenge": {
+            "name": "arc_challenge",
+            "alias": "arc_challenge",
+            "sample_len": 1172,
+            "acc,none": 0.439419795221843,
+            "acc_stderr,none": 0.014503747823580137,
+            "acc_norm,none": 0.4206484641638225,
+            "acc_norm_stderr,none": 0.014426211252508337
+          }
+        }
+      },
+      "groups": {
+        "arc_challenge/none": {
+          "n": 1172,
+          "baseline_correct": 507,
+          "candidate_correct": 515,
+          "both_correct": 458,
+          "correct_to_wrong": 49,
+          "wrong_to_correct": 57,
+          "both_wrong": 608,
+          "all_answer_disagreement": 171,
+          "wrong_to_different_wrong": 65,
+          "accuracy_delta_candidate_minus_baseline": 0.006825938566552901,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.010238907849829351,
+            0.023890784982935155
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 507,
+            "baseline_wrong": 665
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 106,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.08476033882526864,
+            "NLL_delta_pointwise_95_interval": [
+              -0.08396285641560379,
+              0.24685838384546246
+            ],
+            "mean_Brier_delta": 0.005588331400376145,
+            "mean_KL_BF16_to_W4_nats": 0.31581585305614485
+          },
+          "acc_norm": {
+            "n": 1172,
+            "baseline_correct": 502,
+            "candidate_correct": 493,
+            "both_correct": 448,
+            "correct_to_wrong": 54,
+            "wrong_to_correct": 45,
+            "both_wrong": 625,
+            "all_answer_disagreement": 144,
+            "wrong_to_different_wrong": 45,
+            "accuracy_delta_candidate_minus_baseline": -0.007679180887372013,
+            "accuracy_delta_pointwise_95_interval": [
+              -0.024744027303754267,
+              0.008532423208191127
+            ],
+            "conditional_denominators": {
+              "baseline_correct": 502,
+              "baseline_wrong": 670
+            },
+            "bootstrap_unit": "paired test item within task/filter",
+            "correctness_flips_Dutta_definition": 99
+          }
+        }
+      }
+    },
+    {
+      "task": "wikitext",
+      "status": "COMPUTED_WITH_PROCESS_FAILURE",
+      "process_status": {
+        "BF16": "FAILED",
+        "W4": "FAILED"
+      },
+      "official_results": {
+        "BF16": {
+          "wikitext": {
+            "name": "wikitext",
+            "alias": "wikitext",
+            "sample_len": 62,
+            "word_perplexity,none": 13.108064530458076,
+            "word_perplexity_stderr,none": "N/A",
+            "byte_perplexity,none": 1.6180252660824737,
+            "byte_perplexity_stderr,none": "N/A",
+            "bits_per_byte,none": 0.6942341361778324,
+            "bits_per_byte_stderr,none": "N/A"
+          }
+        },
+        "W4": {
+          "wikitext": {
+            "name": "wikitext",
+            "alias": "wikitext",
+            "sample_len": 62,
+            "word_perplexity,none": 14.519368283350634,
+            "word_perplexity_stderr,none": "N/A",
+            "byte_perplexity,none": 1.6492634410175768,
+            "byte_perplexity_stderr,none": "N/A",
+            "bits_per_byte,none": 0.7218218625071164,
+            "bits_per_byte_stderr,none": "N/A"
+          }
+        }
+      },
+      "groups": {
+        "wikitext/none": {
+          "arms": {
+            "BF16": {
+              "documents": 62,
+              "words": 241335,
+              "bytes": 1290527,
+              "loglikelihood": -621009.8958315642,
+              "word_perplexity": 13.108064530458076,
+              "byte_perplexity": 1.6180252660824737,
+              "bits_per_byte": 0.6942341361778324
+            },
+            "W4": {
+              "documents": 62,
+              "words": 241335,
+              "bytes": 1290527,
+              "loglikelihood": -645687.8109054347,
+              "word_perplexity": 14.519368283350634,
+              "byte_perplexity": 1.6492634410175768,
+              "bits_per_byte": 0.7218218625071164
+            }
+          },
+          "word_NLL_delta_nats": 0.10225584798670084,
+          "word_NLL_delta_pointwise_95_interval": [
+            0.09619734830181235,
+            0.10893167525798521
+          ],
+          "bootstrap_unit": "paired document, recomputed summed denominator"
+        }
+      }
+    },
+    {
+      "task": "gsm8k",
+      "status": "COMPLETE",
+      "process_status": {
+        "BF16": "COMPLETE",
+        "W4": "COMPLETE"
+      },
+      "official_results": {
+        "BF16": {
+          "gsm8k": {
+            "name": "gsm8k",
+            "alias": "gsm8k",
+            "sample_len": 1319,
+            "exact_match,strict-match": 0.868081880212282,
+            "exact_match_stderr,strict-match": 0.009321265253857515,
+            "exact_match,flexible-extract": 0.9181197877179682,
+            "exact_match_stderr,flexible-extract": 0.007552338527716939
+          }
+        },
+        "W4": {
+          "gsm8k": {
+            "name": "gsm8k",
+            "alias": "gsm8k",
+            "sample_len": 1319,
+            "exact_match,strict-match": 0.7793783169067475,
+            "exact_match_stderr,strict-match": 0.011421957796750187,
+            "exact_match,flexible-extract": 0.9029567854435178,
+            "exact_match_stderr,flexible-extract": 0.008153768274554716
+          }
+        }
+      },
+      "groups": {
+        "gsm8k/flexible-extract": {
+          "n": 1319,
+          "baseline_correct": 1211,
+          "candidate_correct": 1191,
+          "both_correct": 1158,
+          "correct_to_wrong": 53,
+          "wrong_to_correct": 33,
+          "both_wrong": 75,
+          "all_answer_disagreement": 125,
+          "wrong_to_different_wrong": 29,
+          "accuracy_delta_candidate_minus_baseline": -0.015163002274450341,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.029567854435178165,
+            -0.001516300227445034
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 1211,
+            "baseline_wrong": 108
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 86
+        },
+        "gsm8k/strict-match": {
+          "n": 1319,
+          "baseline_correct": 1145,
+          "candidate_correct": 1028,
+          "both_correct": 960,
+          "correct_to_wrong": 185,
+          "wrong_to_correct": 68,
+          "both_wrong": 106,
+          "all_answer_disagreement": 289,
+          "wrong_to_different_wrong": 36,
+          "accuracy_delta_candidate_minus_baseline": -0.0887035633055345,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.11144806671721001,
+            -0.06595905989385899
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 1145,
+            "baseline_wrong": 174
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 253
+        }
+      },
+      "generation_budget": {
+        "BF16": {
+          "n": 1319,
+          "finish_reasons": {
+            "stop": 1307,
+            "length": 12
+          },
+          "at_1024_token_cap": 12,
+          "total_generated_tokens": 244283
+        },
+        "W4": {
+          "n": 1319,
+          "finish_reasons": {
+            "stop": 1279,
+            "length": 40
+          },
+          "at_1024_token_cap": 40,
+          "total_generated_tokens": 306722
+        }
+      }
+    },
+    {
+      "task": "mmlu",
+      "status": "COMPUTED_WITH_PROCESS_FAILURE",
+      "process_status": {
+        "BF16": "COMPLETE",
+        "W4": "FAILED"
+      },
+      "official_results": {
+        "BF16": {
+          "mmlu_abstract_algebra": {
+            "name": "mmlu_abstract_algebra",
+            "alias": "abstract_algebra",
+            "sample_len": 100,
+            "acc,none": 0.31,
+            "acc_stderr,none": 0.04648231987117317
+          },
+          "mmlu_anatomy": {
+            "name": "mmlu_anatomy",
+            "alias": "anatomy",
+            "sample_len": 135,
+            "acc,none": 0.6,
+            "acc_stderr,none": 0.0423207369515159
+          },
+          "mmlu_astronomy": {
+            "name": "mmlu_astronomy",
+            "alias": "astronomy",
+            "sample_len": 152,
+            "acc,none": 0.7763157894736842,
+            "acc_stderr,none": 0.033911609343436046
+          },
+          "mmlu_college_biology": {
+            "name": "mmlu_college_biology",
+            "alias": "college_biology",
+            "sample_len": 144,
+            "acc,none": 0.8194444444444444,
+            "acc_stderr,none": 0.03216600808802272
+          },
+          "mmlu_college_chemistry": {
+            "name": "mmlu_college_chemistry",
+            "alias": "college_chemistry",
+            "sample_len": 100,
+            "acc,none": 0.51,
+            "acc_stderr,none": 0.05024183937956913
+          },
+          "mmlu_college_computer_science": {
+            "name": "mmlu_college_computer_science",
+            "alias": "college_computer_science",
+            "sample_len": 100,
+            "acc,none": 0.57,
+            "acc_stderr,none": 0.049756985195624305
+          },
+          "mmlu_college_mathematics": {
+            "name": "mmlu_college_mathematics",
+            "alias": "college_mathematics",
+            "sample_len": 100,
+            "acc,none": 0.39,
+            "acc_stderr,none": 0.04902071300001973
+          },
+          "mmlu_college_physics": {
+            "name": "mmlu_college_physics",
+            "alias": "college_physics",
+            "sample_len": 102,
+            "acc,none": 0.38235294117647056,
+            "acc_stderr,none": 0.048355036961072254
+          },
+          "mmlu_computer_security": {
+            "name": "mmlu_computer_security",
+            "alias": "computer_security",
+            "sample_len": 100,
+            "acc,none": 0.69,
+            "acc_stderr,none": 0.046482319871173176
+          },
+          "mmlu_conceptual_physics": {
+            "name": "mmlu_conceptual_physics",
+            "alias": "conceptual_physics",
+            "sample_len": 235,
+            "acc,none": 0.5829787234042553,
+            "acc_stderr,none": 0.03223276266711715
+          },
+          "mmlu_electrical_engineering": {
+            "name": "mmlu_electrical_engineering",
+            "alias": "electrical_engineering",
+            "sample_len": 145,
+            "acc,none": 0.4827586206896552,
+            "acc_stderr,none": 0.04164188720169378
+          },
+          "mmlu_elementary_mathematics": {
+            "name": "mmlu_elementary_mathematics",
+            "alias": "elementary_mathematics",
+            "sample_len": 378,
+            "acc,none": 0.5529100529100529,
+            "acc_stderr,none": 0.025606723995777025
+          },
+          "mmlu_high_school_biology": {
+            "name": "mmlu_high_school_biology",
+            "alias": "high_school_biology",
+            "sample_len": 310,
+            "acc,none": 0.7709677419354839,
+            "acc_stderr,none": 0.023904914311782696
+          },
+          "mmlu_high_school_chemistry": {
+            "name": "mmlu_high_school_chemistry",
+            "alias": "high_school_chemistry",
+            "sample_len": 203,
+            "acc,none": 0.5862068965517241,
+            "acc_stderr,none": 0.03465304488406797
+          },
+          "mmlu_high_school_computer_science": {
+            "name": "mmlu_high_school_computer_science",
+            "alias": "high_school_computer_science",
+            "sample_len": 100,
+            "acc,none": 0.8,
+            "acc_stderr,none": 0.04020151261036849
+          },
+          "mmlu_high_school_mathematics": {
+            "name": "mmlu_high_school_mathematics",
+            "alias": "high_school_mathematics",
+            "sample_len": 270,
+            "acc,none": 0.21851851851851853,
+            "acc_stderr,none": 0.025195752251823727
+          },
+          "mmlu_high_school_physics": {
+            "name": "mmlu_high_school_physics",
+            "alias": "high_school_physics",
+            "sample_len": 151,
+            "acc,none": 0.4370860927152318,
+            "acc_stderr,none": 0.040500357222306375
+          },
+          "mmlu_high_school_statistics": {
+            "name": "mmlu_high_school_statistics",
+            "alias": "high_school_statistics",
+            "sample_len": 216,
+            "acc,none": 0.6342592592592593,
+            "acc_stderr,none": 0.032847388576472014
+          },
+          "mmlu_machine_learning": {
+            "name": "mmlu_machine_learning",
+            "alias": "machine_learning",
+            "sample_len": 112,
+            "acc,none": 0.49107142857142855,
+            "acc_stderr,none": 0.04745033255489126
+          },
+          "mmlu_business_ethics": {
+            "name": "mmlu_business_ethics",
+            "alias": "business_ethics",
+            "sample_len": 100,
+            "acc,none": 0.54,
+            "acc_stderr,none": 0.05009082659620331
+          },
+          "mmlu_clinical_knowledge": {
+            "name": "mmlu_clinical_knowledge",
+            "alias": "clinical_knowledge",
+            "sample_len": 265,
+            "acc,none": 0.6981132075471698,
+            "acc_stderr,none": 0.028254200344438735
+          },
+          "mmlu_college_medicine": {
+            "name": "mmlu_college_medicine",
+            "alias": "college_medicine",
+            "sample_len": 173,
+            "acc,none": 0.7052023121387283,
+            "acc_stderr,none": 0.03476599607516476
+          },
+          "mmlu_global_facts": {
+            "name": "mmlu_global_facts",
+            "alias": "global_facts",
+            "sample_len": 100,
+            "acc,none": 0.41,
+            "acc_stderr,none": 0.04943110704237104
+          },
+          "mmlu_human_aging": {
+            "name": "mmlu_human_aging",
+            "alias": "human_aging",
+            "sample_len": 223,
+            "acc,none": 0.600896860986547,
+            "acc_stderr,none": 0.03286745312567959
+          },
+          "mmlu_management": {
+            "name": "mmlu_management",
+            "alias": "management",
+            "sample_len": 103,
+            "acc,none": 0.8252427184466019,
+            "acc_stderr,none": 0.03760178006026618
+          },
+          "mmlu_marketing": {
+            "name": "mmlu_marketing",
+            "alias": "marketing",
+            "sample_len": 234,
+            "acc,none": 0.8376068376068376,
+            "acc_stderr,none": 0.024161618127987734
+          },
+          "mmlu_medical_genetics": {
+            "name": "mmlu_medical_genetics",
+            "alias": "medical_genetics",
+            "sample_len": 100,
+            "acc,none": 0.64,
+            "acc_stderr,none": 0.048241815132442176
+          },
+          "mmlu_miscellaneous": {
+            "name": "mmlu_miscellaneous",
+            "alias": "miscellaneous",
+            "sample_len": 783,
+            "acc,none": 0.7918263090676884,
+            "acc_stderr,none": 0.014518592248904028
+          },
+          "mmlu_nutrition": {
+            "name": "mmlu_nutrition",
+            "alias": "nutrition",
+            "sample_len": 306,
+            "acc,none": 0.7156862745098039,
+            "acc_stderr,none": 0.025829163272757385
+          },
+          "mmlu_professional_accounting": {
+            "name": "mmlu_professional_accounting",
+            "alias": "professional_accounting",
+            "sample_len": 282,
+            "acc,none": 0.40070921985815605,
+            "acc_stderr,none": 0.029233465745573072
+          },
+          "mmlu_professional_medicine": {
+            "name": "mmlu_professional_medicine",
+            "alias": "professional_medicine",
+            "sample_len": 272,
+            "acc,none": 0.7242647058823529,
+            "acc_stderr,none": 0.02714627193662515
+          },
+          "mmlu_virology": {
+            "name": "mmlu_virology",
+            "alias": "virology",
+            "sample_len": 166,
+            "acc,none": 0.3433734939759036,
+            "acc_stderr,none": 0.036965843170105976
+          },
+          "mmlu_econometrics": {
+            "name": "mmlu_econometrics",
+            "alias": "econometrics",
+            "sample_len": 114,
+            "acc,none": 0.5789473684210527,
+            "acc_stderr,none": 0.04644602091222323
+          },
+          "mmlu_high_school_geography": {
+            "name": "mmlu_high_school_geography",
+            "alias": "high_school_geography",
+            "sample_len": 198,
+            "acc,none": 0.8282828282828283,
+            "acc_stderr,none": 0.02686971618742987
+          },
+          "mmlu_high_school_government_and_politics": {
+            "name": "mmlu_high_school_government_and_politics",
+            "alias": "high_school_government_and_politics",
+            "sample_len": 193,
+            "acc,none": 0.8497409326424871,
+            "acc_stderr,none": 0.025787723180723855
+          },
+          "mmlu_high_school_macroeconomics": {
+            "name": "mmlu_high_school_macroeconomics",
+            "alias": "high_school_macroeconomics",
+            "sample_len": 390,
+            "acc,none": 0.7205128205128205,
+            "acc_stderr,none": 0.02275238883977686
+          },
+          "mmlu_high_school_microeconomics": {
+            "name": "mmlu_high_school_microeconomics",
+            "alias": "high_school_microeconomics",
+            "sample_len": 238,
+            "acc,none": 0.7941176470588235,
+            "acc_stderr,none": 0.026265024608275907
+          },
+          "mmlu_high_school_psychology": {
+            "name": "mmlu_high_school_psychology",
+            "alias": "high_school_psychology",
+            "sample_len": 545,
+            "acc,none": 0.8495412844036697,
+            "acc_stderr,none": 0.015328563932669235
+          },
+          "mmlu_human_sexuality": {
+            "name": "mmlu_human_sexuality",
+            "alias": "human_sexuality",
+            "sample_len": 131,
+            "acc,none": 0.6793893129770993,
+            "acc_stderr,none": 0.04093329229834282
+          },
+          "mmlu_professional_psychology": {
+            "name": "mmlu_professional_psychology",
+            "alias": "professional_psychology",
+            "sample_len": 612,
+            "acc,none": 0.630718954248366,
+            "acc_stderr,none": 0.01952431674486635
+          },
+          "mmlu_public_relations": {
+            "name": "mmlu_public_relations",
+            "alias": "public_relations",
+            "sample_len": 110,
+            "acc,none": 0.5363636363636364,
+            "acc_stderr,none": 0.047764491623961985
+          },
+          "mmlu_security_studies": {
+            "name": "mmlu_security_studies",
+            "alias": "security_studies",
+            "sample_len": 245,
+            "acc,none": 0.7183673469387755,
+            "acc_stderr,none": 0.028795185574291244
+          },
+          "mmlu_sociology": {
+            "name": "mmlu_sociology",
+            "alias": "sociology",
+            "sample_len": 201,
+            "acc,none": 0.7611940298507462,
+            "acc_stderr,none": 0.03014777593540919
+          },
+          "mmlu_us_foreign_policy": {
+            "name": "mmlu_us_foreign_policy",
+            "alias": "us_foreign_policy",
+            "sample_len": 100,
+            "acc,none": 0.77,
+            "acc_stderr,none": 0.042295258468165065
+          },
+          "mmlu_formal_logic": {
+            "name": "mmlu_formal_logic",
+            "alias": "formal_logic",
+            "sample_len": 126,
+            "acc,none": 0.5158730158730159,
+            "acc_stderr,none": 0.044698818540726104
+          },
+          "mmlu_high_school_european_history": {
+            "name": "mmlu_high_school_european_history",
+            "alias": "high_school_european_history",
+            "sample_len": 165,
+            "acc,none": 0.8,
+            "acc_stderr,none": 0.031234752377721213
+          },
+          "mmlu_high_school_us_history": {
+            "name": "mmlu_high_school_us_history",
+            "alias": "high_school_us_history",
+            "sample_len": 204,
+            "acc,none": 0.8088235294117647,
+            "acc_stderr,none": 0.02759917430064072
+          },
+          "mmlu_high_school_world_history": {
+            "name": "mmlu_high_school_world_history",
+            "alias": "high_school_world_history",
+            "sample_len": 237,
+            "acc,none": 0.8227848101265823,
+            "acc_stderr,none": 0.024856364184503203
+          },
+          "mmlu_international_law": {
+            "name": "mmlu_international_law",
+            "alias": "international_law",
+            "sample_len": 121,
+            "acc,none": 0.7355371900826446,
+            "acc_stderr,none": 0.04026187527591209
+          },
+          "mmlu_jurisprudence": {
+            "name": "mmlu_jurisprudence",
+            "alias": "jurisprudence",
+            "sample_len": 108,
+            "acc,none": 0.5648148148148148,
+            "acc_stderr,none": 0.04792898170907059
+          },
+          "mmlu_logical_fallacies": {
+            "name": "mmlu_logical_fallacies",
+            "alias": "logical_fallacies",
+            "sample_len": 163,
+            "acc,none": 0.656441717791411,
+            "acc_stderr,none": 0.037311335196738946
+          },
+          "mmlu_moral_disputes": {
+            "name": "mmlu_moral_disputes",
+            "alias": "moral_disputes",
+            "sample_len": 346,
+            "acc,none": 0.6242774566473989,
+            "acc_stderr,none": 0.026074314851657072
+          },
+          "mmlu_moral_scenarios": {
+            "name": "mmlu_moral_scenarios",
+            "alias": "moral_scenarios",
+            "sample_len": 895,
+            "acc,none": 0.34301675977653634,
+            "acc_stderr,none": 0.015876912673057682
+          },
+          "mmlu_philosophy": {
+            "name": "mmlu_philosophy",
+            "alias": "philosophy",
+            "sample_len": 311,
+            "acc,none": 0.6559485530546624,
+            "acc_stderr,none": 0.02698147804364805
+          },
+          "mmlu_prehistory": {
+            "name": "mmlu_prehistory",
+            "alias": "prehistory",
+            "sample_len": 324,
+            "acc,none": 0.75,
+            "acc_stderr,none": 0.02409347123262133
+          },
+          "mmlu_professional_law": {
+            "name": "mmlu_professional_law",
+            "alias": "professional_law",
+            "sample_len": 1534,
+            "acc,none": 0.44132985658409385,
+            "acc_stderr,none": 0.012682016335646732
+          },
+          "mmlu_world_religions": {
+            "name": "mmlu_world_religions",
+            "alias": "world_religions",
+            "sample_len": 171,
+            "acc,none": 0.7660818713450293,
+            "acc_stderr,none": 0.032467217651178305
+          },
+          "mmlu_stem": {
+            "alias": "stem",
+            "name": "mmlu_stem",
+            "sample_len": 3153,
+            "acc,none": 0.562638756739613,
+            "acc_stderr,none": 0.008346445043278082,
+            "sample_count": {
+              "acc,none": 3153
+            }
+          },
+          "mmlu_other": {
+            "alias": "other",
+            "name": "mmlu_other",
+            "sample_len": 3107,
+            "acc,none": 0.6717090440939814,
+            "acc_stderr,none": 0.007997475223507907,
+            "sample_count": {
+              "acc,none": 3107
+            }
+          },
+          "mmlu_social_sciences": {
+            "alias": "social sciences",
+            "name": "mmlu_social_sciences",
+            "sample_len": 3077,
+            "acc,none": 0.7367565810854728,
+            "acc_stderr,none": 0.007773905621492847,
+            "sample_count": {
+              "acc,none": 3077
+            }
+          },
+          "mmlu_humanities": {
+            "alias": "humanities",
+            "name": "mmlu_humanities",
+            "sample_len": 4705,
+            "acc,none": 0.5509032943676939,
+            "acc_stderr,none": 0.006842087716170206,
+            "sample_count": {
+              "acc,none": 4705
+            }
+          },
+          "mmlu": {
+            "alias": "mmlu",
+            "name": "mmlu",
+            "sample_len": 14042,
+            "acc,none": 0.6209941603760148,
+            "acc_stderr,none": 0.0038472432408084975,
+            "sample_count": {
+              "acc,none": 14042
+            }
+          }
+        },
+        "W4": {
+          "mmlu_abstract_algebra": {
+            "name": "mmlu_abstract_algebra",
+            "alias": "abstract_algebra",
+            "sample_len": 100,
+            "acc,none": 0.21,
+            "acc_stderr,none": 0.040936018074033236
+          },
+          "mmlu_anatomy": {
+            "name": "mmlu_anatomy",
+            "alias": "anatomy",
+            "sample_len": 135,
+            "acc,none": 0.5111111111111111,
+            "acc_stderr,none": 0.043182754919779784
+          },
+          "mmlu_astronomy": {
+            "name": "mmlu_astronomy",
+            "alias": "astronomy",
+            "sample_len": 152,
+            "acc,none": 0.7171052631578947,
+            "acc_stderr,none": 0.03665349695640767
+          },
+          "mmlu_college_biology": {
+            "name": "mmlu_college_biology",
+            "alias": "college_biology",
+            "sample_len": 144,
+            "acc,none": 0.7083333333333334,
+            "acc_stderr,none": 0.03800968060554863
+          },
+          "mmlu_college_chemistry": {
+            "name": "mmlu_college_chemistry",
+            "alias": "college_chemistry",
+            "sample_len": 100,
+            "acc,none": 0.5,
+            "acc_stderr,none": 0.050251890762960605
+          },
+          "mmlu_college_computer_science": {
+            "name": "mmlu_college_computer_science",
+            "alias": "college_computer_science",
+            "sample_len": 100,
+            "acc,none": 0.48,
+            "acc_stderr,none": 0.05021167315686783
+          },
+          "mmlu_college_mathematics": {
+            "name": "mmlu_college_mathematics",
+            "alias": "college_mathematics",
+            "sample_len": 100,
+            "acc,none": 0.32,
+            "acc_stderr,none": 0.04688261722621507
+          },
+          "mmlu_college_physics": {
+            "name": "mmlu_college_physics",
+            "alias": "college_physics",
+            "sample_len": 102,
+            "acc,none": 0.35294117647058826,
+            "acc_stderr,none": 0.04755129616062946
+          },
+          "mmlu_computer_security": {
+            "name": "mmlu_computer_security",
+            "alias": "computer_security",
+            "sample_len": 100,
+            "acc,none": 0.59,
+            "acc_stderr,none": 0.04943110704237104
+          },
+          "mmlu_conceptual_physics": {
+            "name": "mmlu_conceptual_physics",
+            "alias": "conceptual_physics",
+            "sample_len": 235,
+            "acc,none": 0.4595744680851064,
+            "acc_stderr,none": 0.03257901482099833
+          },
+          "mmlu_electrical_engineering": {
+            "name": "mmlu_electrical_engineering",
+            "alias": "electrical_engineering",
+            "sample_len": 145,
+            "acc,none": 0.4482758620689655,
+            "acc_stderr,none": 0.041443118108781485
+          },
+          "mmlu_elementary_mathematics": {
+            "name": "mmlu_elementary_mathematics",
+            "alias": "elementary_mathematics",
+            "sample_len": 378,
+            "acc,none": 0.4603174603174603,
+            "acc_stderr,none": 0.025670080636909207
+          },
+          "mmlu_high_school_biology": {
+            "name": "mmlu_high_school_biology",
+            "alias": "high_school_biology",
+            "sample_len": 310,
+            "acc,none": 0.6870967741935484,
+            "acc_stderr,none": 0.02637756702864589
+          },
+          "mmlu_high_school_chemistry": {
+            "name": "mmlu_high_school_chemistry",
+            "alias": "high_school_chemistry",
+            "sample_len": 203,
+            "acc,none": 0.5467980295566502,
+            "acc_stderr,none": 0.035025446508458756
+          },
+          "mmlu_high_school_computer_science": {
+            "name": "mmlu_high_school_computer_science",
+            "alias": "high_school_computer_science",
+            "sample_len": 100,
+            "acc,none": 0.7,
+            "acc_stderr,none": 0.04605661864718383
+          },
+          "mmlu_high_school_mathematics": {
+            "name": "mmlu_high_school_mathematics",
+            "alias": "high_school_mathematics",
+            "sample_len": 270,
+            "acc,none": 0.2111111111111111,
+            "acc_stderr,none": 0.02488211685765511
+          },
+          "mmlu_high_school_physics": {
+            "name": "mmlu_high_school_physics",
+            "alias": "high_school_physics",
+            "sample_len": 151,
+            "acc,none": 0.40397350993377484,
+            "acc_stderr,none": 0.04006485685365344
+          },
+          "mmlu_high_school_statistics": {
+            "name": "mmlu_high_school_statistics",
+            "alias": "high_school_statistics",
+            "sample_len": 216,
+            "acc,none": 0.5972222222222222,
+            "acc_stderr,none": 0.0334488738299786
+          },
+          "mmlu_machine_learning": {
+            "name": "mmlu_machine_learning",
+            "alias": "machine_learning",
+            "sample_len": 112,
+            "acc,none": 0.4107142857142857,
+            "acc_stderr,none": 0.04669510663875191
+          },
+          "mmlu_business_ethics": {
+            "name": "mmlu_business_ethics",
+            "alias": "business_ethics",
+            "sample_len": 100,
+            "acc,none": 0.47,
+            "acc_stderr,none": 0.05016135580465919
+          },
+          "mmlu_clinical_knowledge": {
+            "name": "mmlu_clinical_knowledge",
+            "alias": "clinical_knowledge",
+            "sample_len": 265,
+            "acc,none": 0.6150943396226415,
+            "acc_stderr,none": 0.029946498567699993
+          },
+          "mmlu_college_medicine": {
+            "name": "mmlu_college_medicine",
+            "alias": "college_medicine",
+            "sample_len": 173,
+            "acc,none": 0.6184971098265896,
+            "acc_stderr,none": 0.03703851193099517
+          },
+          "mmlu_global_facts": {
+            "name": "mmlu_global_facts",
+            "alias": "global_facts",
+            "sample_len": 100,
+            "acc,none": 0.32,
+            "acc_stderr,none": 0.04688261722621507
+          },
+          "mmlu_human_aging": {
+            "name": "mmlu_human_aging",
+            "alias": "human_aging",
+            "sample_len": 223,
+            "acc,none": 0.40358744394618834,
+            "acc_stderr,none": 0.03292802819330314
+          },
+          "mmlu_management": {
+            "name": "mmlu_management",
+            "alias": "management",
+            "sample_len": 103,
+            "acc,none": 0.6019417475728155,
+            "acc_stderr,none": 0.048467482539772386
+          },
+          "mmlu_marketing": {
+            "name": "mmlu_marketing",
+            "alias": "marketing",
+            "sample_len": 234,
+            "acc,none": 0.7478632478632479,
+            "acc_stderr,none": 0.02844796547623104
+          },
+          "mmlu_medical_genetics": {
+            "name": "mmlu_medical_genetics",
+            "alias": "medical_genetics",
+            "sample_len": 100,
+            "acc,none": 0.61,
+            "acc_stderr,none": 0.04902071300001973
+          },
+          "mmlu_miscellaneous": {
+            "name": "mmlu_miscellaneous",
+            "alias": "miscellaneous",
+            "sample_len": 783,
+            "acc,none": 0.7305236270753512,
+            "acc_stderr,none": 0.01586624307321501
+          },
+          "mmlu_nutrition": {
+            "name": "mmlu_nutrition",
+            "alias": "nutrition",
+            "sample_len": 306,
+            "acc,none": 0.6241830065359477,
+            "acc_stderr,none": 0.027732834353363954
+          },
+          "mmlu_professional_accounting": {
+            "name": "mmlu_professional_accounting",
+            "alias": "professional_accounting",
+            "sample_len": 282,
+            "acc,none": 0.3120567375886525,
+            "acc_stderr,none": 0.027640120545169986
+          },
+          "mmlu_professional_medicine": {
+            "name": "mmlu_professional_medicine",
+            "alias": "professional_medicine",
+            "sample_len": 272,
+            "acc,none": 0.6544117647058824,
+            "acc_stderr,none": 0.0288881931039887
+          },
+          "mmlu_virology": {
+            "name": "mmlu_virology",
+            "alias": "virology",
+            "sample_len": 166,
+            "acc,none": 0.29518072289156627,
+            "acc_stderr,none": 0.035509201856896336
+          },
+          "mmlu_econometrics": {
+            "name": "mmlu_econometrics",
+            "alias": "econometrics",
+            "sample_len": 114,
+            "acc,none": 0.49122807017543857,
+            "acc_stderr,none": 0.0470288043204961
+          },
+          "mmlu_high_school_geography": {
+            "name": "mmlu_high_school_geography",
+            "alias": "high_school_geography",
+            "sample_len": 198,
+            "acc,none": 0.7525252525252525,
+            "acc_stderr,none": 0.030746300742124488
+          },
+          "mmlu_high_school_government_and_politics": {
+            "name": "mmlu_high_school_government_and_politics",
+            "alias": "high_school_government_and_politics",
+            "sample_len": 193,
+            "acc,none": 0.7772020725388601,
+            "acc_stderr,none": 0.030031147977641528
+          },
+          "mmlu_high_school_macroeconomics": {
+            "name": "mmlu_high_school_macroeconomics",
+            "alias": "high_school_macroeconomics",
+            "sample_len": 390,
+            "acc,none": 0.6205128205128205,
+            "acc_stderr,none": 0.024603626924097316
+          },
+          "mmlu_high_school_microeconomics": {
+            "name": "mmlu_high_school_microeconomics",
+            "alias": "high_school_microeconomics",
+            "sample_len": 238,
+            "acc,none": 0.6554621848739496,
+            "acc_stderr,none": 0.030868682604121605
+          },
+          "mmlu_high_school_psychology": {
+            "name": "mmlu_high_school_psychology",
+            "alias": "high_school_psychology",
+            "sample_len": 545,
+            "acc,none": 0.7669724770642202,
+            "acc_stderr,none": 0.018125669180861538
+          },
+          "mmlu_human_sexuality": {
+            "name": "mmlu_human_sexuality",
+            "alias": "human_sexuality",
+            "sample_len": 131,
+            "acc,none": 0.5725190839694656,
+            "acc_stderr,none": 0.043389203057924056
+          },
+          "mmlu_professional_psychology": {
+            "name": "mmlu_professional_psychology",
+            "alias": "professional_psychology",
+            "sample_len": 612,
+            "acc,none": 0.5179738562091504,
+            "acc_stderr,none": 0.020214761037872453
+          },
+          "mmlu_public_relations": {
+            "name": "mmlu_public_relations",
+            "alias": "public_relations",
+            "sample_len": 110,
+            "acc,none": 0.44545454545454544,
+            "acc_stderr,none": 0.04760548821460328
+          },
+          "mmlu_security_studies": {
+            "name": "mmlu_security_studies",
+            "alias": "security_studies",
+            "sample_len": 245,
+            "acc,none": 0.6122448979591837,
+            "acc_stderr,none": 0.03119223072679569
+          },
+          "mmlu_sociology": {
+            "name": "mmlu_sociology",
+            "alias": "sociology",
+            "sample_len": 201,
+            "acc,none": 0.6119402985074627,
+            "acc_stderr,none": 0.03445789964362745
+          },
+          "mmlu_us_foreign_policy": {
+            "name": "mmlu_us_foreign_policy",
+            "alias": "us_foreign_policy",
+            "sample_len": 100,
+            "acc,none": 0.67,
+            "acc_stderr,none": 0.04725815626252609
+          },
+          "mmlu_formal_logic": {
+            "name": "mmlu_formal_logic",
+            "alias": "formal_logic",
+            "sample_len": 126,
+            "acc,none": 0.47619047619047616,
+            "acc_stderr,none": 0.04467062628403266
+          },
+          "mmlu_high_school_european_history": {
+            "name": "mmlu_high_school_european_history",
+            "alias": "high_school_european_history",
+            "sample_len": 165,
+            "acc,none": 0.7515151515151515,
+            "acc_stderr,none": 0.03374402644139407
+          },
+          "mmlu_high_school_us_history": {
+            "name": "mmlu_high_school_us_history",
+            "alias": "high_school_us_history",
+            "sample_len": 204,
+            "acc,none": 0.7745098039215687,
+            "acc_stderr,none": 0.029331162294251714
+          },
+          "mmlu_high_school_world_history": {
+            "name": "mmlu_high_school_world_history",
+            "alias": "high_school_world_history",
+            "sample_len": 237,
+            "acc,none": 0.7215189873417721,
+            "acc_stderr,none": 0.029178682304842544
+          },
+          "mmlu_international_law": {
+            "name": "mmlu_international_law",
+            "alias": "international_law",
+            "sample_len": 121,
+            "acc,none": 0.6033057851239669,
+            "acc_stderr,none": 0.044658697805310066
+          },
+          "mmlu_jurisprudence": {
+            "name": "mmlu_jurisprudence",
+            "alias": "jurisprudence",
+            "sample_len": 108,
+            "acc,none": 0.4722222222222222,
+            "acc_stderr,none": 0.04826217294139892
+          },
+          "mmlu_logical_fallacies": {
+            "name": "mmlu_logical_fallacies",
+            "alias": "logical_fallacies",
+            "sample_len": 163,
+            "acc,none": 0.5460122699386503,
+            "acc_stderr,none": 0.03911701904677184
+          },
+          "mmlu_moral_disputes": {
+            "name": "mmlu_moral_disputes",
+            "alias": "moral_disputes",
+            "sample_len": 346,
+            "acc,none": 0.5433526011560693,
+            "acc_stderr,none": 0.026817718130348986
+          },
+          "mmlu_moral_scenarios": {
+            "name": "mmlu_moral_scenarios",
+            "alias": "moral_scenarios",
+            "sample_len": 895,
+            "acc,none": 0.2994413407821229,
+            "acc_stderr,none": 0.015318257745976803
+          },
+          "mmlu_philosophy": {
+            "name": "mmlu_philosophy",
+            "alias": "philosophy",
+            "sample_len": 311,
+            "acc,none": 0.5498392282958199,
+            "acc_stderr,none": 0.02825666072336021
+          },
+          "mmlu_prehistory": {
+            "name": "mmlu_prehistory",
+            "alias": "prehistory",
+            "sample_len": 324,
+            "acc,none": 0.7129629629629629,
+            "acc_stderr,none": 0.025171041915309698
+          },
+          "mmlu_professional_law": {
+            "name": "mmlu_professional_law",
+            "alias": "professional_law",
+            "sample_len": 1534,
+            "acc,none": 0.38722294654498046,
+            "acc_stderr,none": 0.012441155326854896
+          },
+          "mmlu_world_religions": {
+            "name": "mmlu_world_religions",
+            "alias": "world_religions",
+            "sample_len": 171,
+            "acc,none": 0.6491228070175439,
+            "acc_stderr,none": 0.03660298834049164
+          },
+          "mmlu_stem": {
+            "alias": "stem",
+            "name": "mmlu_stem",
+            "sample_len": 3153,
+            "acc,none": 0.49476688867745006,
+            "acc_stderr,none": 0.008515765373361184,
+            "sample_count": {
+              "acc,none": 3153
+            }
+          },
+          "mmlu_other": {
+            "alias": "other",
+            "name": "mmlu_other",
+            "sample_len": 3107,
+            "acc,none": 0.5841647891857097,
+            "acc_stderr,none": 0.008404426846621292,
+            "sample_count": {
+              "acc,none": 3107
+            }
+          },
+          "mmlu_social_sciences": {
+            "alias": "social sciences",
+            "name": "mmlu_social_sciences",
+            "sample_len": 3077,
+            "acc,none": 0.63438414039649,
+            "acc_stderr,none": 0.008502647528559915,
+            "sample_count": {
+              "acc,none": 3077
+            }
+          },
+          "mmlu_humanities": {
+            "alias": "humanities",
+            "name": "mmlu_humanities",
+            "sample_len": 4705,
+            "acc,none": 0.4865037194473964,
+            "acc_stderr,none": 0.0069345646014304695,
+            "sample_count": {
+              "acc,none": 4705
+            }
+          },
+          "mmlu": {
+            "alias": "mmlu",
+            "name": "mmlu",
+            "sample_len": 14042,
+            "acc,none": 0.5423728813559322,
+            "acc_stderr,none": 0.003998068696689776,
+            "sample_count": {
+              "acc,none": 14042
+            }
+          }
+        }
+      },
+      "groups": {
+        "mmlu_abstract_algebra/none": {
+          "n": 100,
+          "baseline_correct": 31,
+          "candidate_correct": 21,
+          "both_correct": 21,
+          "correct_to_wrong": 10,
+          "wrong_to_correct": 0,
+          "both_wrong": 69,
+          "all_answer_disagreement": 16,
+          "wrong_to_different_wrong": 6,
+          "accuracy_delta_candidate_minus_baseline": -0.1,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.16,
+            -0.05
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 31,
+            "baseline_wrong": 69
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 10,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.5940140702540275,
+            "NLL_delta_pointwise_95_interval": [
+              0.43455616944080083,
+              0.7662754772737626
+            ],
+            "mean_Brier_delta": 0.1546677965377812,
+            "mean_KL_BF16_to_W4_nats": 0.08407547105988966
+          }
+        },
+        "mmlu_anatomy/none": {
+          "n": 135,
+          "baseline_correct": 81,
+          "candidate_correct": 69,
+          "both_correct": 66,
+          "correct_to_wrong": 15,
+          "wrong_to_correct": 3,
+          "both_wrong": 51,
+          "all_answer_disagreement": 23,
+          "wrong_to_different_wrong": 5,
+          "accuracy_delta_candidate_minus_baseline": -0.08888888888888889,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.14814814814814814,
+            -0.02962962962962963
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 81,
+            "baseline_wrong": 54
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 18,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.39939947436029,
+            "NLL_delta_pointwise_95_interval": [
+              0.8759357837572118,
+              1.9971869226203312
+            ],
+            "mean_Brier_delta": 0.14885768124783572,
+            "mean_KL_BF16_to_W4_nats": 0.7906696836743701
+          }
+        },
+        "mmlu_astronomy/none": {
+          "n": 152,
+          "baseline_correct": 118,
+          "candidate_correct": 109,
+          "both_correct": 109,
+          "correct_to_wrong": 9,
+          "wrong_to_correct": 0,
+          "both_wrong": 34,
+          "all_answer_disagreement": 11,
+          "wrong_to_different_wrong": 2,
+          "accuracy_delta_candidate_minus_baseline": -0.05921052631578947,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.09868421052631579,
+            -0.02631578947368421
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 118,
+            "baseline_wrong": 34
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 9,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.6476727430517611,
+            "NLL_delta_pointwise_95_interval": [
+              0.29379229270719404,
+              1.0393135917326555
+            ],
+            "mean_Brier_delta": 0.12762617935398107,
+            "mean_KL_BF16_to_W4_nats": 0.30668663056427137
+          }
+        },
+        "mmlu_business_ethics/none": {
+          "n": 100,
+          "baseline_correct": 54,
+          "candidate_correct": 47,
+          "both_correct": 44,
+          "correct_to_wrong": 10,
+          "wrong_to_correct": 3,
+          "both_wrong": 43,
+          "all_answer_disagreement": 20,
+          "wrong_to_different_wrong": 7,
+          "accuracy_delta_candidate_minus_baseline": -0.07,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.14,
+            0.0
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 54,
+            "baseline_wrong": 46
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 13,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.9510002673053829,
+            "NLL_delta_pointwise_95_interval": [
+              0.35115279238423064,
+              1.585074265493166
+            ],
+            "mean_Brier_delta": 0.1370649892541191,
+            "mean_KL_BF16_to_W4_nats": 0.5476107397817465
+          }
+        },
+        "mmlu_clinical_knowledge/none": {
+          "n": 265,
+          "baseline_correct": 185,
+          "candidate_correct": 163,
+          "both_correct": 159,
+          "correct_to_wrong": 26,
+          "wrong_to_correct": 4,
+          "both_wrong": 76,
+          "all_answer_disagreement": 39,
+          "wrong_to_different_wrong": 9,
+          "accuracy_delta_candidate_minus_baseline": -0.0830188679245283,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.12452830188679245,
+            -0.045283018867924525
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 185,
+            "baseline_wrong": 80
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 30,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.1388319292745175,
+            "NLL_delta_pointwise_95_interval": [
+              0.6989595366486865,
+              1.6199892072705697
+            ],
+            "mean_Brier_delta": 0.16386049468010644,
+            "mean_KL_BF16_to_W4_nats": 0.9705226340136115
+          }
+        },
+        "mmlu_college_biology/none": {
+          "n": 144,
+          "baseline_correct": 118,
+          "candidate_correct": 102,
+          "both_correct": 100,
+          "correct_to_wrong": 18,
+          "wrong_to_correct": 2,
+          "both_wrong": 24,
+          "all_answer_disagreement": 23,
+          "wrong_to_different_wrong": 3,
+          "accuracy_delta_candidate_minus_baseline": -0.1111111111111111,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.1736111111111111,
+            -0.05555555555555555
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 118,
+            "baseline_wrong": 26
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 20,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.894974806570374,
+            "NLL_delta_pointwise_95_interval": [
+              0.5050305980635486,
+              1.3247965717695964
+            ],
+            "mean_Brier_delta": 0.21286300666853308,
+            "mean_KL_BF16_to_W4_nats": 0.6589217805667553
+          }
+        },
+        "mmlu_college_chemistry/none": {
+          "n": 100,
+          "baseline_correct": 51,
+          "candidate_correct": 50,
+          "both_correct": 41,
+          "correct_to_wrong": 10,
+          "wrong_to_correct": 9,
+          "both_wrong": 40,
+          "all_answer_disagreement": 30,
+          "wrong_to_different_wrong": 11,
+          "accuracy_delta_candidate_minus_baseline": -0.01,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.1,
+            0.07024999999999637
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 51,
+            "baseline_wrong": 49
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 19,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.15562270891848323,
+            "NLL_delta_pointwise_95_interval": [
+              -0.10008055097531633,
+              0.41898324123633995
+            ],
+            "mean_Brier_delta": 0.01461312597129006,
+            "mean_KL_BF16_to_W4_nats": 0.2627024329442969
+          }
+        },
+        "mmlu_college_computer_science/none": {
+          "n": 100,
+          "baseline_correct": 57,
+          "candidate_correct": 48,
+          "both_correct": 45,
+          "correct_to_wrong": 12,
+          "wrong_to_correct": 3,
+          "both_wrong": 40,
+          "all_answer_disagreement": 20,
+          "wrong_to_different_wrong": 5,
+          "accuracy_delta_candidate_minus_baseline": -0.09,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.16,
+            -0.02
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 57,
+            "baseline_wrong": 43
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 15,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.8705033089551578,
+            "NLL_delta_pointwise_95_interval": [
+              0.5249806155634886,
+              1.2358219856994332
+            ],
+            "mean_Brier_delta": 0.1906536001655585,
+            "mean_KL_BF16_to_W4_nats": 0.3525655492831747
+          }
+        },
+        "mmlu_college_mathematics/none": {
+          "n": 100,
+          "baseline_correct": 39,
+          "candidate_correct": 32,
+          "both_correct": 27,
+          "correct_to_wrong": 12,
+          "wrong_to_correct": 5,
+          "both_wrong": 56,
+          "all_answer_disagreement": 30,
+          "wrong_to_different_wrong": 13,
+          "accuracy_delta_candidate_minus_baseline": -0.07,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.15,
+            0.01
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 39,
+            "baseline_wrong": 61
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 17,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.36593748351645705,
+            "NLL_delta_pointwise_95_interval": [
+              0.1949176308618198,
+              0.5372914479828802
+            ],
+            "mean_Brier_delta": 0.058434314351468265,
+            "mean_KL_BF16_to_W4_nats": 0.1299063034631745
+          }
+        },
+        "mmlu_college_medicine/none": {
+          "n": 173,
+          "baseline_correct": 122,
+          "candidate_correct": 107,
+          "both_correct": 106,
+          "correct_to_wrong": 16,
+          "wrong_to_correct": 1,
+          "both_wrong": 50,
+          "all_answer_disagreement": 25,
+          "wrong_to_different_wrong": 8,
+          "accuracy_delta_candidate_minus_baseline": -0.08670520231213873,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.1329479768786127,
+            -0.046242774566473986
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 122,
+            "baseline_wrong": 51
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 17,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.1127516226376943,
+            "NLL_delta_pointwise_95_interval": [
+              0.7710191412747969,
+              1.478370808914639
+            ],
+            "mean_Brier_delta": 0.18710288543679604,
+            "mean_KL_BF16_to_W4_nats": 0.6436755091645935
+          }
+        },
+        "mmlu_college_physics/none": {
+          "n": 102,
+          "baseline_correct": 39,
+          "candidate_correct": 36,
+          "both_correct": 32,
+          "correct_to_wrong": 7,
+          "wrong_to_correct": 4,
+          "both_wrong": 59,
+          "all_answer_disagreement": 14,
+          "wrong_to_different_wrong": 3,
+          "accuracy_delta_candidate_minus_baseline": -0.029411764705882353,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.08823529411764706,
+            0.029411764705882353
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 39,
+            "baseline_wrong": 63
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 11,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.3028285012832707,
+            "NLL_delta_pointwise_95_interval": [
+              0.049369945646946085,
+              0.5822628252796366
+            ],
+            "mean_Brier_delta": 0.0797987474212036,
+            "mean_KL_BF16_to_W4_nats": 0.23242369107053895
+          }
+        },
+        "mmlu_computer_security/none": {
+          "n": 100,
+          "baseline_correct": 69,
+          "candidate_correct": 59,
+          "both_correct": 55,
+          "correct_to_wrong": 14,
+          "wrong_to_correct": 4,
+          "both_wrong": 27,
+          "all_answer_disagreement": 18,
+          "wrong_to_different_wrong": 0,
+          "accuracy_delta_candidate_minus_baseline": -0.1,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.18,
+            -0.02
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 69,
+            "baseline_wrong": 31
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 18,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.6774655523525501,
+            "NLL_delta_pointwise_95_interval": [
+              0.017944326744038223,
+              1.3564923724456694
+            ],
+            "mean_Brier_delta": 0.1846582736783757,
+            "mean_KL_BF16_to_W4_nats": 0.7617586088537943
+          }
+        },
+        "mmlu_conceptual_physics/none": {
+          "n": 235,
+          "baseline_correct": 137,
+          "candidate_correct": 108,
+          "both_correct": 105,
+          "correct_to_wrong": 32,
+          "wrong_to_correct": 3,
+          "both_wrong": 95,
+          "all_answer_disagreement": 49,
+          "wrong_to_different_wrong": 14,
+          "accuracy_delta_candidate_minus_baseline": -0.12340425531914893,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.1702127659574468,
+            -0.08085106382978724
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 137,
+            "baseline_wrong": 98
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 35,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.9408203002391943,
+            "NLL_delta_pointwise_95_interval": [
+              0.6501638401381932,
+              1.246936395751891
+            ],
+            "mean_Brier_delta": 0.21489607193045734,
+            "mean_KL_BF16_to_W4_nats": 0.49323072921311334
+          }
+        },
+        "mmlu_econometrics/none": {
+          "n": 114,
+          "baseline_correct": 66,
+          "candidate_correct": 56,
+          "both_correct": 52,
+          "correct_to_wrong": 14,
+          "wrong_to_correct": 4,
+          "both_wrong": 44,
+          "all_answer_disagreement": 22,
+          "wrong_to_different_wrong": 4,
+          "accuracy_delta_candidate_minus_baseline": -0.08771929824561403,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.15789473684210525,
+            -0.017543859649122806
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 66,
+            "baseline_wrong": 48
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 18,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.9207503026457033,
+            "NLL_delta_pointwise_95_interval": [
+              0.5272338020738582,
+              1.3329826019741744
+            ],
+            "mean_Brier_delta": 0.1435785755188486,
+            "mean_KL_BF16_to_W4_nats": 0.5327454326038155
+          }
+        },
+        "mmlu_electrical_engineering/none": {
+          "n": 145,
+          "baseline_correct": 70,
+          "candidate_correct": 65,
+          "both_correct": 60,
+          "correct_to_wrong": 10,
+          "wrong_to_correct": 5,
+          "both_wrong": 70,
+          "all_answer_disagreement": 23,
+          "wrong_to_different_wrong": 8,
+          "accuracy_delta_candidate_minus_baseline": -0.034482758620689655,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.08275862068965517,
+            0.020689655172413793
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 70,
+            "baseline_wrong": 75
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 15,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.2844549472000038,
+            "NLL_delta_pointwise_95_interval": [
+              -0.01740419825219362,
+              0.5894574280282331
+            ],
+            "mean_Brier_delta": 0.11179203798775571,
+            "mean_KL_BF16_to_W4_nats": 0.2615295825710864
+          }
+        },
+        "mmlu_elementary_mathematics/none": {
+          "n": 378,
+          "baseline_correct": 209,
+          "candidate_correct": 174,
+          "both_correct": 167,
+          "correct_to_wrong": 42,
+          "wrong_to_correct": 7,
+          "both_wrong": 162,
+          "all_answer_disagreement": 68,
+          "wrong_to_different_wrong": 19,
+          "accuracy_delta_candidate_minus_baseline": -0.09259259259259259,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.12698412698412698,
+            -0.0582010582010582
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 209,
+            "baseline_wrong": 169
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 49,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.41133238177564907,
+            "NLL_delta_pointwise_95_interval": [
+              0.26446545803865873,
+              0.5641692929822619
+            ],
+            "mean_Brier_delta": 0.12030293840146,
+            "mean_KL_BF16_to_W4_nats": 0.24674109897352686
+          }
+        },
+        "mmlu_formal_logic/none": {
+          "n": 126,
+          "baseline_correct": 65,
+          "candidate_correct": 60,
+          "both_correct": 52,
+          "correct_to_wrong": 13,
+          "wrong_to_correct": 8,
+          "both_wrong": 53,
+          "all_answer_disagreement": 29,
+          "wrong_to_different_wrong": 8,
+          "accuracy_delta_candidate_minus_baseline": -0.03968253968253968,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.1111111111111111,
+            0.031746031746031744
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 65,
+            "baseline_wrong": 61
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 21,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.8904212065846635,
+            "NLL_delta_pointwise_95_interval": [
+              0.6046638161714,
+              1.1819518741134942
+            ],
+            "mean_Brier_delta": 0.21495262419654576,
+            "mean_KL_BF16_to_W4_nats": 0.450137956080248
+          }
+        },
+        "mmlu_global_facts/none": {
+          "n": 100,
+          "baseline_correct": 41,
+          "candidate_correct": 32,
+          "both_correct": 25,
+          "correct_to_wrong": 16,
+          "wrong_to_correct": 7,
+          "both_wrong": 52,
+          "all_answer_disagreement": 35,
+          "wrong_to_different_wrong": 12,
+          "accuracy_delta_candidate_minus_baseline": -0.09,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.18,
+            0.0
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 41,
+            "baseline_wrong": 59
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 23,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.116632412551905,
+            "NLL_delta_pointwise_95_interval": [
+              0.5067201591144,
+              1.788664861686183
+            ],
+            "mean_Brier_delta": 0.1576358569262042,
+            "mean_KL_BF16_to_W4_nats": 1.1778006539465868
+          }
+        },
+        "mmlu_high_school_biology/none": {
+          "n": 310,
+          "baseline_correct": 239,
+          "candidate_correct": 213,
+          "both_correct": 206,
+          "correct_to_wrong": 33,
+          "wrong_to_correct": 7,
+          "both_wrong": 64,
+          "all_answer_disagreement": 41,
+          "wrong_to_different_wrong": 1,
+          "accuracy_delta_candidate_minus_baseline": -0.08387096774193549,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.12258064516129032,
+            -0.04516129032258064
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 239,
+            "baseline_wrong": 71
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 40,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.6887199916897113,
+            "NLL_delta_pointwise_95_interval": [
+              0.41585927578197956,
+              0.9756798221677295
+            ],
+            "mean_Brier_delta": 0.16710173160765482,
+            "mean_KL_BF16_to_W4_nats": 0.48566621713412483
+          }
+        },
+        "mmlu_high_school_chemistry/none": {
+          "n": 203,
+          "baseline_correct": 119,
+          "candidate_correct": 111,
+          "both_correct": 104,
+          "correct_to_wrong": 15,
+          "wrong_to_correct": 7,
+          "both_wrong": 77,
+          "all_answer_disagreement": 32,
+          "wrong_to_different_wrong": 10,
+          "accuracy_delta_candidate_minus_baseline": -0.03940886699507389,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.08374384236453201,
+            0.0049261083743842365
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 119,
+            "baseline_wrong": 84
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 22,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.4474879653882434,
+            "NLL_delta_pointwise_95_interval": [
+              0.1537893445914181,
+              0.740801418267889
+            ],
+            "mean_Brier_delta": 0.07314118371837545,
+            "mean_KL_BF16_to_W4_nats": 0.2953603439215885
+          }
+        },
+        "mmlu_high_school_computer_science/none": {
+          "n": 100,
+          "baseline_correct": 80,
+          "candidate_correct": 70,
+          "both_correct": 69,
+          "correct_to_wrong": 11,
+          "wrong_to_correct": 1,
+          "both_wrong": 19,
+          "all_answer_disagreement": 16,
+          "wrong_to_different_wrong": 4,
+          "accuracy_delta_candidate_minus_baseline": -0.1,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.17,
+            -0.04
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 80,
+            "baseline_wrong": 20
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 12,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.785010361937595,
+            "NLL_delta_pointwise_95_interval": [
+              0.39942884916524735,
+              1.228728865133466
+            ],
+            "mean_Brier_delta": 0.2057033730650797,
+            "mean_KL_BF16_to_W4_nats": 0.45113423111770135
+          }
+        },
+        "mmlu_high_school_european_history/none": {
+          "n": 165,
+          "baseline_correct": 132,
+          "candidate_correct": 124,
+          "both_correct": 122,
+          "correct_to_wrong": 10,
+          "wrong_to_correct": 2,
+          "both_wrong": 31,
+          "all_answer_disagreement": 15,
+          "wrong_to_different_wrong": 3,
+          "accuracy_delta_candidate_minus_baseline": -0.048484848484848485,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.09090909090909091,
+            -0.012121212121212121
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 132,
+            "baseline_wrong": 33
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 12,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.5023470378902086,
+            "NLL_delta_pointwise_95_interval": [
+              0.04855405135446744,
+              0.9824246769027466
+            ],
+            "mean_Brier_delta": 0.08813552844766363,
+            "mean_KL_BF16_to_W4_nats": 0.39053157179988274
+          }
+        },
+        "mmlu_high_school_geography/none": {
+          "n": 198,
+          "baseline_correct": 164,
+          "candidate_correct": 149,
+          "both_correct": 147,
+          "correct_to_wrong": 17,
+          "wrong_to_correct": 2,
+          "both_wrong": 32,
+          "all_answer_disagreement": 20,
+          "wrong_to_different_wrong": 1,
+          "accuracy_delta_candidate_minus_baseline": -0.07575757575757576,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.12121212121212122,
+            -0.03535353535353535
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 164,
+            "baseline_wrong": 34
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 19,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.7677537923530939,
+            "NLL_delta_pointwise_95_interval": [
+              0.4520574414157561,
+              1.1057461068121452
+            ],
+            "mean_Brier_delta": 0.120853285289076,
+            "mean_KL_BF16_to_W4_nats": 0.40123217671588635
+          }
+        },
+        "mmlu_high_school_government_and_politics/none": {
+          "n": 193,
+          "baseline_correct": 164,
+          "candidate_correct": 150,
+          "both_correct": 146,
+          "correct_to_wrong": 18,
+          "wrong_to_correct": 4,
+          "both_wrong": 25,
+          "all_answer_disagreement": 23,
+          "wrong_to_different_wrong": 1,
+          "accuracy_delta_candidate_minus_baseline": -0.07253886010362694,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.11917098445595854,
+            -0.025906735751295335
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 164,
+            "baseline_wrong": 29
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 22,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.6576608994283534,
+            "NLL_delta_pointwise_95_interval": [
+              0.2918597280430421,
+              1.0186147450050218
+            ],
+            "mean_Brier_delta": 0.12771003819756405,
+            "mean_KL_BF16_to_W4_nats": 0.5335672881286658
+          }
+        },
+        "mmlu_high_school_macroeconomics/none": {
+          "n": 390,
+          "baseline_correct": 281,
+          "candidate_correct": 242,
+          "both_correct": 231,
+          "correct_to_wrong": 50,
+          "wrong_to_correct": 11,
+          "both_wrong": 98,
+          "all_answer_disagreement": 79,
+          "wrong_to_different_wrong": 18,
+          "accuracy_delta_candidate_minus_baseline": -0.1,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.13846153846153847,
+            -0.0641025641025641
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 281,
+            "baseline_wrong": 109
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 61,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.5883426727903409,
+            "NLL_delta_pointwise_95_interval": [
+              0.34825950213791546,
+              0.8342048308926565
+            ],
+            "mean_Brier_delta": 0.16736701179057004,
+            "mean_KL_BF16_to_W4_nats": 0.6153038880856175
+          }
+        },
+        "mmlu_high_school_mathematics/none": {
+          "n": 270,
+          "baseline_correct": 59,
+          "candidate_correct": 57,
+          "both_correct": 55,
+          "correct_to_wrong": 4,
+          "wrong_to_correct": 2,
+          "both_wrong": 209,
+          "all_answer_disagreement": 10,
+          "wrong_to_different_wrong": 4,
+          "accuracy_delta_candidate_minus_baseline": -0.007407407407407408,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.025925925925925925,
+            0.011111111111111112
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 59,
+            "baseline_wrong": 211
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 6,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.023564505680041425,
+            "NLL_delta_pointwise_95_interval": [
+              -0.038959009037436466,
+              0.08795770957671546
+            ],
+            "mean_Brier_delta": -0.04031050762459596,
+            "mean_KL_BF16_to_W4_nats": 0.03675838777151512
+          }
+        },
+        "mmlu_high_school_microeconomics/none": {
+          "n": 238,
+          "baseline_correct": 189,
+          "candidate_correct": 156,
+          "both_correct": 153,
+          "correct_to_wrong": 36,
+          "wrong_to_correct": 3,
+          "both_wrong": 46,
+          "all_answer_disagreement": 44,
+          "wrong_to_different_wrong": 5,
+          "accuracy_delta_candidate_minus_baseline": -0.13865546218487396,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.18907563025210083,
+            -0.09243697478991597
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 189,
+            "baseline_wrong": 49
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 39,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.074288944398941,
+            "NLL_delta_pointwise_95_interval": [
+              0.775735557992541,
+              1.3922032923356755
+            ],
+            "mean_Brier_delta": 0.25619186024494695,
+            "mean_KL_BF16_to_W4_nats": 0.732350495152407
+          }
+        },
+        "mmlu_high_school_physics/none": {
+          "n": 151,
+          "baseline_correct": 66,
+          "candidate_correct": 61,
+          "both_correct": 55,
+          "correct_to_wrong": 11,
+          "wrong_to_correct": 6,
+          "both_wrong": 79,
+          "all_answer_disagreement": 23,
+          "wrong_to_different_wrong": 6,
+          "accuracy_delta_candidate_minus_baseline": -0.033112582781456956,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.08609271523178808,
+            0.019867549668874173
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 66,
+            "baseline_wrong": 85
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 17,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.5051073516413516,
+            "NLL_delta_pointwise_95_interval": [
+              0.2684327200389236,
+              0.7633855635055826
+            ],
+            "mean_Brier_delta": 0.08606645613002031,
+            "mean_KL_BF16_to_W4_nats": 0.275499712184851
+          }
+        },
+        "mmlu_high_school_psychology/none": {
+          "n": 545,
+          "baseline_correct": 463,
+          "candidate_correct": 418,
+          "both_correct": 406,
+          "correct_to_wrong": 57,
+          "wrong_to_correct": 12,
+          "both_wrong": 70,
+          "all_answer_disagreement": 73,
+          "wrong_to_different_wrong": 4,
+          "accuracy_delta_candidate_minus_baseline": -0.08256880733944955,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.11192660550458716,
+            -0.05321100917431193
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 463,
+            "baseline_wrong": 82
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 69,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.5126642611008946,
+            "NLL_delta_pointwise_95_interval": [
+              0.31316616614869014,
+              0.722524581835171
+            ],
+            "mean_Brier_delta": 0.14606193896273634,
+            "mean_KL_BF16_to_W4_nats": 0.5457784115090389
+          }
+        },
+        "mmlu_high_school_statistics/none": {
+          "n": 216,
+          "baseline_correct": 137,
+          "candidate_correct": 129,
+          "both_correct": 115,
+          "correct_to_wrong": 22,
+          "wrong_to_correct": 14,
+          "both_wrong": 65,
+          "all_answer_disagreement": 46,
+          "wrong_to_different_wrong": 10,
+          "accuracy_delta_candidate_minus_baseline": -0.037037037037037035,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.09259259259259259,
+            0.014004629629627945
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 137,
+            "baseline_wrong": 79
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 36,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.760911327871289,
+            "NLL_delta_pointwise_95_interval": [
+              0.5179796436447011,
+              1.0237612904312547
+            ],
+            "mean_Brier_delta": 0.1390212304347823,
+            "mean_KL_BF16_to_W4_nats": 0.3878286594555563
+          }
+        },
+        "mmlu_high_school_us_history/none": {
+          "n": 204,
+          "baseline_correct": 165,
+          "candidate_correct": 158,
+          "both_correct": 154,
+          "correct_to_wrong": 11,
+          "wrong_to_correct": 4,
+          "both_wrong": 35,
+          "all_answer_disagreement": 19,
+          "wrong_to_different_wrong": 4,
+          "accuracy_delta_candidate_minus_baseline": -0.03431372549019608,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.06862745098039216,
+            0.0
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 165,
+            "baseline_wrong": 39
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 15,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.5800485125937817,
+            "NLL_delta_pointwise_95_interval": [
+              0.18634587066471953,
+              1.0016047946668618
+            ],
+            "mean_Brier_delta": 0.07408055940069747,
+            "mean_KL_BF16_to_W4_nats": 0.5897842887887172
+          }
+        },
+        "mmlu_high_school_world_history/none": {
+          "n": 237,
+          "baseline_correct": 195,
+          "candidate_correct": 171,
+          "both_correct": 170,
+          "correct_to_wrong": 25,
+          "wrong_to_correct": 1,
+          "both_wrong": 41,
+          "all_answer_disagreement": 32,
+          "wrong_to_different_wrong": 6,
+          "accuracy_delta_candidate_minus_baseline": -0.10126582278481013,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.14345991561181434,
+            -0.06329113924050633
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 195,
+            "baseline_wrong": 42
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 26,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.7772506606779594,
+            "NLL_delta_pointwise_95_interval": [
+              0.4837414722057483,
+              1.1093135332854172
+            ],
+            "mean_Brier_delta": 0.164843984749505,
+            "mean_KL_BF16_to_W4_nats": 0.6148324748469891
+          }
+        },
+        "mmlu_human_aging/none": {
+          "n": 223,
+          "baseline_correct": 134,
+          "candidate_correct": 90,
+          "both_correct": 90,
+          "correct_to_wrong": 44,
+          "wrong_to_correct": 0,
+          "both_wrong": 89,
+          "all_answer_disagreement": 56,
+          "wrong_to_different_wrong": 12,
+          "accuracy_delta_candidate_minus_baseline": -0.19730941704035873,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.25112107623318386,
+            -0.14798206278026907
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 134,
+            "baseline_wrong": 89
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 44,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.9139700143636893,
+            "NLL_delta_pointwise_95_interval": [
+              1.4356458375826995,
+              2.387689295278566
+            ],
+            "mean_Brier_delta": 0.3516488353883591,
+            "mean_KL_BF16_to_W4_nats": 1.2847264155017795
+          }
+        },
+        "mmlu_human_sexuality/none": {
+          "n": 131,
+          "baseline_correct": 89,
+          "candidate_correct": 75,
+          "both_correct": 71,
+          "correct_to_wrong": 18,
+          "wrong_to_correct": 4,
+          "both_wrong": 38,
+          "all_answer_disagreement": 26,
+          "wrong_to_different_wrong": 4,
+          "accuracy_delta_candidate_minus_baseline": -0.10687022900763359,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.17557251908396945,
+            -0.03816793893129771
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 89,
+            "baseline_wrong": 42
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 22,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.2849004245890276,
+            "NLL_delta_pointwise_95_interval": [
+              0.6825325228898735,
+              1.877568653652654
+            ],
+            "mean_Brier_delta": 0.2125589408642073,
+            "mean_KL_BF16_to_W4_nats": 0.8907200264461783
+          }
+        },
+        "mmlu_international_law/none": {
+          "n": 121,
+          "baseline_correct": 89,
+          "candidate_correct": 73,
+          "both_correct": 71,
+          "correct_to_wrong": 18,
+          "wrong_to_correct": 2,
+          "both_wrong": 30,
+          "all_answer_disagreement": 23,
+          "wrong_to_different_wrong": 3,
+          "accuracy_delta_candidate_minus_baseline": -0.1322314049586777,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.2066115702479339,
+            -0.06611570247933884
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 89,
+            "baseline_wrong": 32
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 20,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.6337480352061748,
+            "NLL_delta_pointwise_95_interval": [
+              1.0197362578577926,
+              2.25064142301891
+            ],
+            "mean_Brier_delta": 0.27638464256055645,
+            "mean_KL_BF16_to_W4_nats": 1.1841878862913173
+          }
+        },
+        "mmlu_jurisprudence/none": {
+          "n": 108,
+          "baseline_correct": 61,
+          "candidate_correct": 51,
+          "both_correct": 50,
+          "correct_to_wrong": 11,
+          "wrong_to_correct": 1,
+          "both_wrong": 46,
+          "all_answer_disagreement": 16,
+          "wrong_to_different_wrong": 4,
+          "accuracy_delta_candidate_minus_baseline": -0.09259259259259259,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.1574074074074074,
+            -0.037037037037037035
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 61,
+            "baseline_wrong": 47
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 12,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.3322016279188105,
+            "NLL_delta_pointwise_95_interval": [
+              0.8179263669735393,
+              1.8936906965132028
+            ],
+            "mean_Brier_delta": 0.19031509146926837,
+            "mean_KL_BF16_to_W4_nats": 0.584062506496788
+          }
+        },
+        "mmlu_logical_fallacies/none": {
+          "n": 163,
+          "baseline_correct": 107,
+          "candidate_correct": 89,
+          "both_correct": 86,
+          "correct_to_wrong": 21,
+          "wrong_to_correct": 3,
+          "both_wrong": 53,
+          "all_answer_disagreement": 28,
+          "wrong_to_different_wrong": 4,
+          "accuracy_delta_candidate_minus_baseline": -0.11042944785276074,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.17177914110429449,
+            -0.05521472392638037
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 107,
+            "baseline_wrong": 56
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 24,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.28206180684199417,
+            "NLL_delta_pointwise_95_interval": [
+              -0.12046708144552808,
+              0.6924110346188054
+            ],
+            "mean_Brier_delta": 0.16467386152373462,
+            "mean_KL_BF16_to_W4_nats": 0.5380756825892764
+          }
+        },
+        "mmlu_machine_learning/none": {
+          "n": 112,
+          "baseline_correct": 55,
+          "candidate_correct": 46,
+          "both_correct": 45,
+          "correct_to_wrong": 10,
+          "wrong_to_correct": 1,
+          "both_wrong": 56,
+          "all_answer_disagreement": 18,
+          "wrong_to_different_wrong": 7,
+          "accuracy_delta_candidate_minus_baseline": -0.08035714285714286,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.14285714285714285,
+            -0.026785714285714284
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 55,
+            "baseline_wrong": 57
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 11,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.7546901272439297,
+            "NLL_delta_pointwise_95_interval": [
+              1.3003101134667694,
+              2.2302912504325745
+            ],
+            "mean_Brier_delta": 0.16730207444564213,
+            "mean_KL_BF16_to_W4_nats": 0.4665427743046453
+          }
+        },
+        "mmlu_management/none": {
+          "n": 103,
+          "baseline_correct": 85,
+          "candidate_correct": 62,
+          "both_correct": 60,
+          "correct_to_wrong": 25,
+          "wrong_to_correct": 2,
+          "both_wrong": 16,
+          "all_answer_disagreement": 27,
+          "wrong_to_different_wrong": 0,
+          "accuracy_delta_candidate_minus_baseline": -0.22330097087378642,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.3106796116504854,
+            -0.13592233009708737
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 85,
+            "baseline_wrong": 18
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 27,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 2.2430061189939323,
+            "NLL_delta_pointwise_95_interval": [
+              1.4529909242127739,
+              3.0975693078609017
+            ],
+            "mean_Brier_delta": 0.4515318263800688,
+            "mean_KL_BF16_to_W4_nats": 1.7061360048199745
+          }
+        },
+        "mmlu_marketing/none": {
+          "n": 234,
+          "baseline_correct": 196,
+          "candidate_correct": 175,
+          "both_correct": 172,
+          "correct_to_wrong": 24,
+          "wrong_to_correct": 3,
+          "both_wrong": 35,
+          "all_answer_disagreement": 32,
+          "wrong_to_different_wrong": 5,
+          "accuracy_delta_candidate_minus_baseline": -0.08974358974358974,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.13247863247863248,
+            -0.05128205128205128
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 196,
+            "baseline_wrong": 38
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 27,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.1310347639619402,
+            "NLL_delta_pointwise_95_interval": [
+              0.6834429772740294,
+              1.6152048823549676
+            ],
+            "mean_Brier_delta": 0.17039937323246326,
+            "mean_KL_BF16_to_W4_nats": 0.8081270885920839
+          }
+        },
+        "mmlu_medical_genetics/none": {
+          "n": 100,
+          "baseline_correct": 64,
+          "candidate_correct": 61,
+          "both_correct": 59,
+          "correct_to_wrong": 5,
+          "wrong_to_correct": 2,
+          "both_wrong": 34,
+          "all_answer_disagreement": 9,
+          "wrong_to_different_wrong": 2,
+          "accuracy_delta_candidate_minus_baseline": -0.03,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.08,
+            0.02
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 64,
+            "baseline_wrong": 36
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 7,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.1076121805011685,
+            "NLL_delta_pointwise_95_interval": [
+              0.5072246983679032,
+              1.711090871454428
+            ],
+            "mean_Brier_delta": 0.10803269826002275,
+            "mean_KL_BF16_to_W4_nats": 0.5139302613847998
+          }
+        },
+        "mmlu_miscellaneous/none": {
+          "n": 783,
+          "baseline_correct": 620,
+          "candidate_correct": 572,
+          "both_correct": 558,
+          "correct_to_wrong": 62,
+          "wrong_to_correct": 14,
+          "both_wrong": 149,
+          "all_answer_disagreement": 105,
+          "wrong_to_different_wrong": 29,
+          "accuracy_delta_candidate_minus_baseline": -0.06130268199233716,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.08301404853128991,
+            -0.03959131545338442
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 620,
+            "baseline_wrong": 163
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 76,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.5434914278151647,
+            "NLL_delta_pointwise_95_interval": [
+              0.3409213962096821,
+              0.7521073607026919
+            ],
+            "mean_Brier_delta": 0.11278654181408672,
+            "mean_KL_BF16_to_W4_nats": 0.7087248676339517
+          }
+        },
+        "mmlu_moral_disputes/none": {
+          "n": 346,
+          "baseline_correct": 216,
+          "candidate_correct": 188,
+          "both_correct": 181,
+          "correct_to_wrong": 35,
+          "wrong_to_correct": 7,
+          "both_wrong": 123,
+          "all_answer_disagreement": 55,
+          "wrong_to_different_wrong": 13,
+          "accuracy_delta_candidate_minus_baseline": -0.08092485549132948,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.11849710982658959,
+            -0.046242774566473986
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 216,
+            "baseline_wrong": 130
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 42,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.1157530860091303,
+            "NLL_delta_pointwise_95_interval": [
+              0.7790790928136907,
+              1.4564226484547205
+            ],
+            "mean_Brier_delta": 0.15981094572443286,
+            "mean_KL_BF16_to_W4_nats": 0.8320354729665829
+          }
+        },
+        "mmlu_moral_scenarios/none": {
+          "n": 895,
+          "baseline_correct": 307,
+          "candidate_correct": 268,
+          "both_correct": 250,
+          "correct_to_wrong": 57,
+          "wrong_to_correct": 18,
+          "both_wrong": 570,
+          "all_answer_disagreement": 110,
+          "wrong_to_different_wrong": 35,
+          "accuracy_delta_candidate_minus_baseline": -0.04357541899441341,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.06256983240223464,
+            -0.024581005586592177
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 307,
+            "baseline_wrong": 588
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 75,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": -0.7086315271062807,
+            "NLL_delta_pointwise_95_interval": [
+              -0.8617185457595437,
+              -0.554971420653022
+            ],
+            "mean_Brier_delta": 0.08166284279570514,
+            "mean_KL_BF16_to_W4_nats": 0.2800545292674918
+          }
+        },
+        "mmlu_nutrition/none": {
+          "n": 306,
+          "baseline_correct": 219,
+          "candidate_correct": 191,
+          "both_correct": 188,
+          "correct_to_wrong": 31,
+          "wrong_to_correct": 3,
+          "both_wrong": 84,
+          "all_answer_disagreement": 47,
+          "wrong_to_different_wrong": 13,
+          "accuracy_delta_candidate_minus_baseline": -0.0915032679738562,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.12745098039215685,
+            -0.05555555555555555
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 219,
+            "baseline_wrong": 87
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 34,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.7455875304196143,
+            "NLL_delta_pointwise_95_interval": [
+              0.4727343487597952,
+              1.0322296046274675
+            ],
+            "mean_Brier_delta": 0.15207178879400465,
+            "mean_KL_BF16_to_W4_nats": 0.5614454477698035
+          }
+        },
+        "mmlu_philosophy/none": {
+          "n": 311,
+          "baseline_correct": 204,
+          "candidate_correct": 171,
+          "both_correct": 164,
+          "correct_to_wrong": 40,
+          "wrong_to_correct": 7,
+          "both_wrong": 100,
+          "all_answer_disagreement": 57,
+          "wrong_to_different_wrong": 10,
+          "accuracy_delta_candidate_minus_baseline": -0.10610932475884244,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.14790996784565916,
+            -0.06430868167202572
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 204,
+            "baseline_wrong": 107
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 47,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.6458576799063613,
+            "NLL_delta_pointwise_95_interval": [
+              1.1823994345551123,
+              2.0915626246000327
+            ],
+            "mean_Brier_delta": 0.20247980217989456,
+            "mean_KL_BF16_to_W4_nats": 1.052019131782083
+          }
+        },
+        "mmlu_prehistory/none": {
+          "n": 324,
+          "baseline_correct": 243,
+          "candidate_correct": 231,
+          "both_correct": 218,
+          "correct_to_wrong": 25,
+          "wrong_to_correct": 13,
+          "both_wrong": 68,
+          "all_answer_disagreement": 45,
+          "wrong_to_different_wrong": 7,
+          "accuracy_delta_candidate_minus_baseline": -0.037037037037037035,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.07407407407407407,
+            0.0
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 243,
+            "baseline_wrong": 81
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 38,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.6124356316791861,
+            "NLL_delta_pointwise_95_interval": [
+              0.19857492901869375,
+              1.0331023683776988
+            ],
+            "mean_Brier_delta": 0.08949927624966962,
+            "mean_KL_BF16_to_W4_nats": 0.811197189800193
+          }
+        },
+        "mmlu_professional_accounting/none": {
+          "n": 282,
+          "baseline_correct": 113,
+          "candidate_correct": 88,
+          "both_correct": 80,
+          "correct_to_wrong": 33,
+          "wrong_to_correct": 8,
+          "both_wrong": 161,
+          "all_answer_disagreement": 57,
+          "wrong_to_different_wrong": 16,
+          "accuracy_delta_candidate_minus_baseline": -0.08865248226950355,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.13120567375886524,
+            -0.04609929078014184
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 113,
+            "baseline_wrong": 169
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 41,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.246050509851975,
+            "NLL_delta_pointwise_95_interval": [
+              0.9636064674799699,
+              1.5328409724029348
+            ],
+            "mean_Brier_delta": 0.14597838460856571,
+            "mean_KL_BF16_to_W4_nats": 0.4498928694944975
+          }
+        },
+        "mmlu_professional_law/none": {
+          "n": 1534,
+          "baseline_correct": 677,
+          "candidate_correct": 594,
+          "both_correct": 534,
+          "correct_to_wrong": 143,
+          "wrong_to_correct": 60,
+          "both_wrong": 797,
+          "all_answer_disagreement": 346,
+          "wrong_to_different_wrong": 143,
+          "accuracy_delta_candidate_minus_baseline": -0.05410691003911343,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.07235984354628422,
+            -0.03585397653194263
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 677,
+            "baseline_wrong": 857
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 203,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.2391234641555369,
+            "NLL_delta_pointwise_95_interval": [
+              1.1034419589210083,
+              1.3745763008290277
+            ],
+            "mean_Brier_delta": 0.1340885162350056,
+            "mean_KL_BF16_to_W4_nats": 0.7614560046523826
+          }
+        },
+        "mmlu_professional_medicine/none": {
+          "n": 272,
+          "baseline_correct": 197,
+          "candidate_correct": 178,
+          "both_correct": 165,
+          "correct_to_wrong": 32,
+          "wrong_to_correct": 13,
+          "both_wrong": 62,
+          "all_answer_disagreement": 60,
+          "wrong_to_different_wrong": 15,
+          "accuracy_delta_candidate_minus_baseline": -0.06985294117647059,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.11764705882352941,
+            -0.022058823529411766
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 197,
+            "baseline_wrong": 75
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 45,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.7922366690982223,
+            "NLL_delta_pointwise_95_interval": [
+              0.5261396605761193,
+              1.0646074754083894
+            ],
+            "mean_Brier_delta": 0.1618844307288215,
+            "mean_KL_BF16_to_W4_nats": 0.6920181608169552
+          }
+        },
+        "mmlu_professional_psychology/none": {
+          "n": 612,
+          "baseline_correct": 386,
+          "candidate_correct": 317,
+          "both_correct": 302,
+          "correct_to_wrong": 84,
+          "wrong_to_correct": 15,
+          "both_wrong": 211,
+          "all_answer_disagreement": 125,
+          "wrong_to_different_wrong": 26,
+          "accuracy_delta_candidate_minus_baseline": -0.11274509803921569,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.1437908496732026,
+            -0.08333333333333333
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 386,
+            "baseline_wrong": 226
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 99,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.8936598511876214,
+            "NLL_delta_pointwise_95_interval": [
+              0.6457642749675072,
+              1.1375663277554002
+            ],
+            "mean_Brier_delta": 0.21208207694347084,
+            "mean_KL_BF16_to_W4_nats": 0.7996976244408355
+          }
+        },
+        "mmlu_public_relations/none": {
+          "n": 110,
+          "baseline_correct": 59,
+          "candidate_correct": 49,
+          "both_correct": 44,
+          "correct_to_wrong": 15,
+          "wrong_to_correct": 5,
+          "both_wrong": 46,
+          "all_answer_disagreement": 25,
+          "wrong_to_different_wrong": 5,
+          "accuracy_delta_candidate_minus_baseline": -0.09090909090909091,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.17272727272727273,
+            -0.01818181818181818
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 59,
+            "baseline_wrong": 51
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 20,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.9417254112765431,
+            "NLL_delta_pointwise_95_interval": [
+              0.4574189512300071,
+              1.48056128193574
+            ],
+            "mean_Brier_delta": 0.15844657464923154,
+            "mean_KL_BF16_to_W4_nats": 0.7824476841194258
+          }
+        },
+        "mmlu_security_studies/none": {
+          "n": 245,
+          "baseline_correct": 176,
+          "candidate_correct": 150,
+          "both_correct": 145,
+          "correct_to_wrong": 31,
+          "wrong_to_correct": 5,
+          "both_wrong": 64,
+          "all_answer_disagreement": 43,
+          "wrong_to_different_wrong": 7,
+          "accuracy_delta_candidate_minus_baseline": -0.10612244897959183,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.15510204081632653,
+            -0.061224489795918366
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 176,
+            "baseline_wrong": 69
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 36,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.8073708381997702,
+            "NLL_delta_pointwise_95_interval": [
+              0.4989367686859786,
+              1.1246209104060778
+            ],
+            "mean_Brier_delta": 0.19203873898967286,
+            "mean_KL_BF16_to_W4_nats": 0.6458532953480768
+          }
+        },
+        "mmlu_sociology/none": {
+          "n": 201,
+          "baseline_correct": 153,
+          "candidate_correct": 123,
+          "both_correct": 121,
+          "correct_to_wrong": 32,
+          "wrong_to_correct": 2,
+          "both_wrong": 46,
+          "all_answer_disagreement": 37,
+          "wrong_to_different_wrong": 3,
+          "accuracy_delta_candidate_minus_baseline": -0.14925373134328357,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.20398009950248755,
+            -0.09937810945273813
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 153,
+            "baseline_wrong": 48
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 34,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.2892192263846052,
+            "NLL_delta_pointwise_95_interval": [
+              0.8335183536327602,
+              1.7801909434258547
+            ],
+            "mean_Brier_delta": 0.2796432658705679,
+            "mean_KL_BF16_to_W4_nats": 0.9020738258577267
+          }
+        },
+        "mmlu_us_foreign_policy/none": {
+          "n": 100,
+          "baseline_correct": 77,
+          "candidate_correct": 67,
+          "both_correct": 61,
+          "correct_to_wrong": 16,
+          "wrong_to_correct": 6,
+          "both_wrong": 17,
+          "all_answer_disagreement": 26,
+          "wrong_to_different_wrong": 4,
+          "accuracy_delta_candidate_minus_baseline": -0.1,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.19,
+            -0.01
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 77,
+            "baseline_wrong": 23
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 22,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.082115547473549,
+            "NLL_delta_pointwise_95_interval": [
+              0.20694525593401739,
+              1.9420199518654295
+            ],
+            "mean_Brier_delta": 0.19262435511349144,
+            "mean_KL_BF16_to_W4_nats": 1.5996909438030198
+          }
+        },
+        "mmlu_virology/none": {
+          "n": 166,
+          "baseline_correct": 57,
+          "candidate_correct": 49,
+          "both_correct": 47,
+          "correct_to_wrong": 10,
+          "wrong_to_correct": 2,
+          "both_wrong": 107,
+          "all_answer_disagreement": 23,
+          "wrong_to_different_wrong": 11,
+          "accuracy_delta_candidate_minus_baseline": -0.04819277108433735,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.09036144578313253,
+            -0.012048192771084338
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 57,
+            "baseline_wrong": 109
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 12,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 1.5481673305732677,
+            "NLL_delta_pointwise_95_interval": [
+              1.0849957873357021,
+              2.0245465271720446
+            ],
+            "mean_Brier_delta": 0.09237709883364223,
+            "mean_KL_BF16_to_W4_nats": 0.5789619676905102
+          }
+        },
+        "mmlu_world_religions/none": {
+          "n": 171,
+          "baseline_correct": 131,
+          "candidate_correct": 111,
+          "both_correct": 107,
+          "correct_to_wrong": 24,
+          "wrong_to_correct": 4,
+          "both_wrong": 36,
+          "all_answer_disagreement": 36,
+          "wrong_to_different_wrong": 8,
+          "accuracy_delta_candidate_minus_baseline": -0.11695906432748537,
+          "accuracy_delta_pointwise_95_interval": [
+            -0.17543859649122806,
+            -0.05847953216374269
+          ],
+          "conditional_denominators": {
+            "baseline_correct": 131,
+            "baseline_wrong": 40
+          },
+          "bootstrap_unit": "paired test item within task/filter",
+          "correctness_flips_Dutta_definition": 28,
+          "choice_score_diagnostic": {
+            "scope": "softmax of continuation choice likelihoods; not full vocabulary",
+            "mean_gold_NLL_delta_nats": 0.8804282790633248,
+            "NLL_delta_pointwise_95_interval": [
+              0.3166836894654728,
+              1.4664887821625998
+            ],
+            "mean_Brier_delta": 0.20294703254373211,
+            "mean_KL_BF16_to_W4_nats": 1.2536748127081307
+          }
+        }
+      },
+      "overall_paired": {
+        "subjects": 57,
+        "n": 14042,
+        "accuracy_delta": -0.0786212790200826,
+        "pointwise_95_interval": [
+          -0.0905024985007868,
+          -0.06872676413002707
+        ],
+        "bootstrap_unit": "paired subject cluster, item-weighted within resampled subjects",
+        "baseline_correct": 8720,
+        "candidate_correct": 7616,
+        "both_correct": 7268,
+        "correct_to_wrong": 1452,
+        "wrong_to_correct": 348,
+        "both_wrong": 4974,
+        "all_answer_disagreement": 2400,
+        "wrong_to_different_wrong": 600
+      }
+    }
+  ],
+  "full_vocabulary_KL": "NOT_RUN",
+  "scope": "official full-split calculations; DEV excluded; no aggregate across benchmarks. COMPUTED_WITH_PROCESS_FAILURE retains auditable completed calculations but is not successful execution. No failed split is rerun."
+}

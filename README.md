@@ -1,4 +1,4 @@
-**DIOVA**
+**Munsik-Kim | DIOVA**
 
 English | [한국어](README.ko.md)
 
@@ -6,13 +6,25 @@ English | [한국어](README.ko.md)
 
 # From model compression to working checkpoints.
 
-Quantized model builds, structural pruning, weight reconstruction, and GPU evaluation.
+Model conversion, structure-aware checkpoint loaders, and GPU performance and output comparison tools.
 
-DIOVA develops tools to modify pretrained models, save and reload the results, and measure their behavior on real hardware. Explore the implementation and recorded results in each project.
+Built checkpoint checks, weight reconstruction, physical matrix slicing and paired evaluation around public Qwen models. Follow the code and runnable examples, then inspect the measured results.
 
 **PyTorch · Transformers · LLM Compressor · safetensors · vLLM · NumPy**
 
 [Model build tools](docs/en/PORTFOLIO.md#code-tour) · [Run the CPU demo](docs/en/GETTING_STARTED.md#tiny-model-demo) · [Explore projects](#projects)
+
+
+## Project implementation and upstream components
+
+| Project implementation | Upstream components | Code and tests |
+|---|---|---|
+| Artifact validation, partial-output protection and strict reload | PyTorch · Transformers · safetensors | [code](tools/modelpack/artifact.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
+| Q conversion, copying and fresh-runtime checks | GPTQ · LLM Compressor · compressed-tensors · vLLM/Marlin | [code](tools/modelpack/quantized.py) · [tests](cases/008-build-reconstruct-reload/tests/test_boundaries.py) |
+| Fixed-structure ridge fitting and correction in smaller weights | NumPy linear algebra · channel-reconstruction research | [code](tools/modelpack/numerics.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
+| Matched-input measurement and paired result reports | vLLM benchmark · lm-evaluation-harness · comparison metrics | [code](packages/diova-compare/src/diova_compare/core.py) · [tests](packages/diova-compare/tests/test_compare.py) |
+
+[Related work and implementation boundaries](docs/related-work/README.md) · [CPU comparison package](packages/diova-compare/README.md)
 
 <a id="capabilities"></a>
 ## Capabilities
@@ -56,23 +68,21 @@ Python · JavaScript · GitHub Actions · GitHub Pages. [CPU selector replay](to
 <!-- claims: c008-tracks c008-artifact-implementation -->
 Two toolchains: build a quantized Qwen 4B checkpoint, or reconstruct the outputs of a smaller Qwen 0.6B MLP. Each has its own model, measurements and result screen.
 
-#### Q · 67.0% smaller Qwen 4B weight files
+#### Q · GPTQ conversion, storage and fresh-runtime execution
 
 Built a pipeline that converts Qwen weights to GPTQ W4A16, validates the packed checkpoint, and runs it in fresh vLLM processes.
 
-**8.045 GB → 2.652 GB** — Weight files · Original BF16 → GPTQ W4A16 · Decimal GB.
+**8.045 GB → 2.652 GB** · **67.0% smaller weight files** than native BF16 — Weight files · Original BF16 → GPTQ W4A16 · Decimal GB.
 
 Qwen3-4B-Instruct-2507 · GPTQ W4A16. **LLM Compressor · compressed-tensors · vLLM**.
 
 [Conversion code](tools/modelpack/quantized.py) · [Build and reload](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) · [Quality and runtime evaluation](https://munsik-kim.github.io/inference-lab/en/case008.html#q-evaluation)
 
-#### R · Reconstructing a smaller MLP’s outputs
+#### R · Structure-aware reload and fixed-weight reconstruction
 
-Fitted the smaller output projection to reduce deletion-induced local squared output error on held-out inputs. The correction is stored in the existing smaller weight matrix, with no additional inference matrix.
+Stores a ridge fit in the fixed smaller down projection. The loader uses per-layer shape metadata and a meta skeleton, strictly assigns saved tensors, restores tied weights and derived buffers, and reloads in a fresh process without the original checkpoint.
 
-**94.1–95.4%** — Reduction in deletion-induced local squared output error.
-
-Qwen3-0.6B · One MLP layer · 192 short synthetic held-out prompts. **PyTorch · NumPy · safetensors**.
+Qwen3-0.6B · One MLP layer · BF16 · Reconstruction evaluated on 192 short synthetic held-out prompts · **PyTorch · NumPy · safetensors**.
 
 [Structure-aware loader](tools/modelpack/artifact.py) · [Reconstruction method](https://munsik-kim.github.io/inference-lab/en/case008.html#track-r) · [Quality and runtime evaluation](https://munsik-kim.github.io/inference-lab/en/case008.html#r-evaluation)
 
@@ -101,7 +111,16 @@ Qwen3-0.6B · One attention layer · Fixed synthetic questions. **PyTorch · Tra
 [Explore comparisons](https://munsik-kim.github.io/inference-lab/en/case006.html#results) · [Attention adapter](cases/006-attention-decision-stability/src/intervention.py) · [Methods and results](https://munsik-kim.github.io/inference-lab/en/case006.html#design)
 
 
-## Eight questions, with working tools and recorded outcomes
+## New measurement — longer decode and client concurrency
+
+Case009 reuses the existing Qwen3-4B BF16/W4 checkpoints at 256 generated tokens and client concurrency 1/4/16/32. The complete graph grid and matched eager comparison retain all three server rounds. Official task calculations are separate; their native process-exit failures remain explicitly labelled.
+
+![Complete 128-input / 256-output TPOT and throughput curves on RTX 5080](cases/009-q-serving-quality/figures/serving-L128.png)
+
+[Both input lengths and quality table](cases/009-q-serving-quality/REPORT.md) · [CPU reanalysis](cases/009-q-serving-quality/REPRODUCTION.md) · [Installed paired CLI](packages/diova-compare/README.md)
+
+## Questions and recorded tools
+
 
 | Question | What the case provides |
 |---|---|
@@ -113,6 +132,7 @@ Qwen3-0.6B · One attention layer · Fixed synthetic questions. **PyTorch · Tra
 | [006 — Which individual answers change?](docs/en/CASEBOOK.md#case-006) | Paired answer scores, choices and equal-top-score diagnostics. Terms: NLL, top-score tie. |
 | [007 — Which groups should a smaller block keep?](docs/en/CASEBOOK.md#case-007) | Group selection, actual matrix slicing and evaluation on unused inputs. Terms: MLP, pruning. |
 | [008 — Can a changed model be saved and reloaded?](docs/en/CASEBOOK.md#case-008) | GPTQ checkpoint integration and fixed-MLP ridge reconstruction; smaller Q files and lower R local error, with mixed gold scores. |
+| [009 — How do longer decode and concurrency change cost?](cases/009-q-serving-quality/README.md) | Matched graph/eager serving curves and official quality calculations with recorded runtime-exit failures. |
 
 ## Go deeper
 
@@ -123,3 +143,5 @@ Read the five-minute [introduction](docs/en/START_HERE.md) or look up a term in 
 DIOVA stands for **Deep-learning Inference Optimization, Validation & Analysis**.
 
 The project builds comparison runners, model-slicing adapters, numerical checks and evidence viewers around public models and execution libraries. The [portfolio](docs/en/PORTFOLIO.md#contribution-and-reuse) credits Qwen, Transformers, PyTorch, vLLM, SageAttention and the upstream methods and fixes. OpenAI Codex assisted implementation, execution, analysis and writing. [Apache-2.0](LICENSE) applies to project materials; case notices retain upstream terms. These studies support work on model-change evaluation and inference diagnostics; deployment suitability remains unevaluated.
+
+[Corrected CPU wheel 0.1.1](downloads/diova_compare-0.1.1-py3-none-any.whl) · [Case009 reviewed archive](downloads/case009_serving_quality_reviewed_publication_v2.zip) · [Metadata](downloads/case009_serving_quality_reviewed_publication_v2.json)

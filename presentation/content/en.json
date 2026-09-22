@@ -168,22 +168,22 @@
   "projectResult8": "Separate models and metrics on short synthetic inputs; mixed gold scores and unresolved request speedup.",
   "report8": "Objectives, methods and results (GitHub)",
   "homeHeroTitle": "From model compression to working checkpoints.",
-  "homeHeroSubtitle": "Quantized model builds, structural pruning, weight reconstruction, and GPU evaluation.",
-  "homeOutcomeIntro": "DIOVA develops tools to modify pretrained models, save and reload the results, and measure their behavior on real hardware. Explore the implementation and recorded results in each project.",
+  "homeHeroSubtitle": "Model conversion, structure-aware checkpoint loaders, and GPU performance and output comparison tools.",
+  "homeOutcomeIntro": "Built checkpoint checks, weight reconstruction, physical matrix slicing and paired evaluation around public Qwen models. Follow the code and runnable examples, then inspect the measured results.",
   "homeBuildAction": "Model build tools",
   "homeCPUAction": "Run the CPU demo",
   "outputTitle8": "Build, reconstruct, reload",
   "outputIntro8": "Two toolchains: build a quantized Qwen 4B checkpoint, or reconstruct the outputs of a smaller Qwen 0.6B MLP. Each has its own model, measurements and result screen.",
-  "outputQTitle": "{reduction}% smaller Qwen 4B weight files",
+  "outputQTitle": "GPTQ conversion, storage and fresh-runtime execution",
   "outputQBody": "Built a pipeline that converts Qwen weights to GPTQ W4A16, validates the packed checkpoint, and runs it in fresh vLLM processes.",
   "outputQMetric": "Weight files · Original BF16 → GPTQ W4A16 · Decimal GB",
   "outputQScope": "Qwen3-4B-Instruct-2507 · GPTQ W4A16",
   "outputQCode": "Conversion code",
   "outputQProcess": "Build and reload",
-  "outputRTitle": "Reconstructing a smaller MLP’s outputs",
-  "outputRBody": "Fitted the smaller output projection to reduce deletion-induced local squared output error on held-out inputs. The correction is stored in the existing smaller weight matrix, with no additional inference matrix.",
+  "outputRTitle": "Structure-aware reload and fixed-weight reconstruction",
+  "outputRBody": "Stores a ridge fit in the fixed smaller down projection. The loader uses per-layer shape metadata and a meta skeleton, strictly assigns saved tensors, restores tied weights and derived buffers, and reloads in a fresh process without the original checkpoint.",
   "outputRMetric": "Reduction in deletion-induced local squared output error",
-  "outputRScope": "Qwen3-0.6B · One MLP layer · 192 short synthetic held-out prompts",
+  "outputRScope": "Qwen3-0.6B · One MLP layer · BF16 · Reconstruction evaluated on 192 short synthetic held-out prompts",
   "outputRCode": "Structure-aware loader",
   "outputRProcess": "Reconstruction method",
   "outputEvaluation": "Quality and runtime evaluation",
@@ -199,5 +199,31 @@
   "outputStages6": "Lost correct answers|New correct answers|Wrong-to-wrong changes",
   "outputScope6": "Qwen3-0.6B · One attention layer · Fixed synthetic questions",
   "outputAction6": "Explore comparisons",
-  "outputCode6": "Attention adapter"
+  "outputCode6": "Attention adapter",
+  "homeAuthor": "Munsik-Kim | DIOVA",
+  "contributionTitle": "Project implementation and upstream components",
+  "contributionHeaders": [
+    "Project implementation",
+    "Upstream components",
+    "Code and tests"
+  ],
+  "contributionRows": [
+    [
+      "Artifact validation, partial-output protection and strict reload",
+      "PyTorch · Transformers · safetensors"
+    ],
+    [
+      "Q conversion, copying and fresh-runtime checks",
+      "GPTQ · LLM Compressor · compressed-tensors · vLLM/Marlin"
+    ],
+    [
+      "Fixed-structure ridge fitting and correction in smaller weights",
+      "NumPy linear algebra · channel-reconstruction research"
+    ],
+    [
+      "Matched-input measurement and paired result reports",
+      "vLLM benchmark · lm-evaluation-harness · comparison metrics"
+    ]
+  ],
+  "archiveEarlier": "Earlier cases 001–005"
 }

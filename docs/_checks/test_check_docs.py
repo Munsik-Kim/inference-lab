@@ -257,5 +257,26 @@ class ProtectionScope(unittest.TestCase):
             self.assertIn('Protected file changed: cases/frozen.json',errors)
 
 
+class NewStudyBoundaryTests(unittest.TestCase):
+    def test_new_inventory_cannot_approve_changed_frozen_protocol(self):
+        from check_docs import check_new_study
+        import hashlib
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);case=root/'cases/009-q-serving-quality';(case/'configs').mkdir(parents=True)
+            p=case/'configs/serving_protocol.json';p.write_text('{"changed": true}\n')
+            (case/'SHA256SUMS').write_text(hashlib.sha256(p.read_bytes()).hexdigest()+'  configs/serving_protocol.json\n')
+            errors=[];self.assertEqual(check_new_study(root,errors),set())
+            self.assertTrue(any('Frozen serving protocol changed' in x for x in errors))
+
+    def test_new_docs_reject_missing_counterpart_and_broken_link(self):
+        from check_docs import check_feedback_docs
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);p=root/'docs/related-work/README.md';p.parent.mkdir(parents=True)
+            p.write_text('[Missing](absent.md)')
+            errors=[];check_feedback_docs(root,errors)
+            self.assertTrue(any('Broken local link' in x for x in errors))
+            self.assertTrue(any('Missing feedback language counterpart' in x for x in errors))
+
+
 if __name__ == '__main__':
     unittest.main()

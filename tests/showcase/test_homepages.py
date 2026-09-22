@@ -145,7 +145,7 @@ class Homepages(unittest.TestCase):
     def test_wrong_home_units_scope_and_missing_evaluation_rejected(self):
         data=load_case008(ROOT);html=(self.site/'en/index.html').read_text()
         mutations=[('8.045 GB','8.045 GiB','decimal GB'),
-                   ('local squared output error','accuracy','error/model/input scope'),
+                   ('strict','permissive','loader implementation'),
                    ('192 short synthetic held-out prompts','384 prompts','error/model/input scope'),
                    ('case008.html#q-evaluation','case008.html','quality/runtime'),
                    ('16 channel groups','all layers','tool scope')]
@@ -162,7 +162,10 @@ class Homepages(unittest.TestCase):
         self.assertNotEqual(m['reduction'],output_metrics(changed)['reduction'])
         for lang in ('en','ko'):
             doc=(ROOT/('README.md' if lang=='en' else 'README.ko.md')).read_text()
-            for value in (m['reduction']+'%',m['weight_files'],m['recovery']):self.assertIn(value,doc)
+            for value in (m['reduction']+'%',m['weight_files']):self.assertIn(value,doc)
+            self.assertNotIn(m['recovery'],doc)
+            for structure in d['tracks']['R']['structures'].values():
+                self.assertIn(f"{100*structure['recovery']['pooled_recovery']:.2f}%",(self.site/lang/'case008.html').read_text())
 
     def test_evaluation_links_reach_preserved_detail(self):
         for lang in ('en','ko'):

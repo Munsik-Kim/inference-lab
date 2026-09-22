@@ -1,4 +1,4 @@
-**DIOVA**
+**Munsik-Kim | DIOVA**
 
 [English](README.md) | 한국어
 
@@ -6,13 +6,25 @@
 
 # 모델 압축부터 저장·실행까지 구현합니다.
 
-양자화 모델 제작, 모델 구조 변경, 압축 후 계산 복구와 GPU 성능 평가.
+모델 변환·구조 복원 로더와 GPU 성능·출력 비교 도구를 개발합니다.
 
-DIOVA는 학습된 모델을 더 가볍게 만드는 코드와, 변경한 모델을 다시 실행하고 비교하는 도구를 개발합니다. 실제 구현과 측정 결과를 프로젝트별로 확인할 수 있습니다.
+공개 Qwen 모델에 저장본 검사, 가중치 보정, 실제 행렬 축소와 입력별 평가를 연결했습니다. 코드와 실행 예제로 구현을, 프로젝트별 결과로 관측을 확인할 수 있습니다.
 
 **PyTorch · Transformers · LLM Compressor · safetensors · vLLM · NumPy**
 
 [모델 제작 도구](docs/ko/PORTFOLIO.md#code-tour) · [CPU 데모 실행](docs/ko/GETTING_STARTED.md#tiny-model-demo) · [프로젝트 보기](#projects)
+
+
+## 직접 구현한 부분과 재사용한 기술
+
+| 프로젝트 구현 | upstream 제공 | 코드·테스트 |
+|---|---|---|
+| 저장본 검사·부분 저장 방지·strict reload | PyTorch · Transformers · safetensors | [code](tools/modelpack/artifact.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
+| Q 변환·저장·복사·새 runtime 검사 | GPTQ · LLM Compressor · compressed-tensors · vLLM/Marlin | [code](tools/modelpack/quantized.py) · [tests](cases/008-build-reconstruct-reload/tests/test_boundaries.py) |
+| 고정 구조 ridge 적합·작은 가중치에 보정 저장 | NumPy 선형대수 · 채널 재구성 선행연구 | [code](tools/modelpack/numerics.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
+| 동일 입력 측정·paired 결과 리포트 | vLLM benchmark · lm-evaluation-harness · 비교 지표 선행연구 | [code](packages/diova-compare/src/diova_compare/core.py) · [tests](packages/diova-compare/tests/test_compare.py) |
+
+[선행연구와 구현 대응](docs/related-work/README.ko.md) · [CPU 비교 도구](packages/diova-compare/README.ko.md)
 
 <a id="capabilities"></a>
 ## 구현 기능
@@ -56,23 +68,21 @@ Python · JavaScript · GitHub Actions · GitHub Pages. [CPU 선택기 재계산
 <!-- claims: c008-tracks c008-artifact-implementation -->
 Qwen 4B의 양자화 저장본 제작과 Qwen 0.6B의 작은 MLP 출력 복구를 구현했습니다. 모델과 측정 대상이 다른 두 결과물을 각각 살펴볼 수 있습니다.
 
-#### Q · Qwen 4B 가중치 파일 67.0% 절감
+#### Q · GPTQ 변환·저장·새 runtime 실행
 
 원본 모델을 GPTQ W4A16으로 변환하고, 압축된 가중치와 설정을 검사한 뒤 새 vLLM 프로세스에서 실행하는 파이프라인을 구현했습니다.
 
-**8.045 GB → 2.652 GB** — 가중치 파일 · 원본 BF16 → GPTQ W4A16 · 십진 GB.
+**8.045 GB → 2.652 GB** · 원본 대비 가중치 파일 **67.0% 감소** — 가중치 파일 · 원본 BF16 → GPTQ W4A16 · 십진 GB.
 
 Qwen3-4B-Instruct-2507 · GPTQ W4A16. **LLM Compressor · compressed-tensors · vLLM**.
 
 [변환 코드](tools/modelpack/quantized.py) · [저장·재실행 과정](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) · [품질·속도 평가](https://munsik-kim.github.io/inference-lab/ko/case008.html#q-evaluation)
 
-#### R · 같은 작은 MLP에서 계산 오차 복구
+#### R · 구조가 달라진 모델의 저장·재로딩과 가중치 보정
 
-출력 가중치를 다시 맞춰 삭제로 생긴 국소 제곱 출력 오차를 평가 입력에서 줄였습니다. 보정값은 기존 작은 행렬에 저장해 추가 추론 행렬 없이 실행합니다.
+고정된 작은 down projection에 ridge 보정값을 저장합니다. 층별 크기 metadata와 meta skeleton으로 구조를 구성하고, strict 할당·공유 가중치·파생 buffer를 복원해 원래 checkpoint 없이 새 프로세스에서 실행합니다.
 
-**94.1–95.4%** — 삭제로 생긴 국소 제곱 출력 오차 감소.
-
-Qwen3-0.6B · 한 층 MLP · 짧은 합성 평가 입력 192개. **PyTorch · NumPy · safetensors**.
+Qwen3-0.6B · 한 층 MLP · BF16 · 재구성 평가는 짧은 합성 평가 입력 192개 · **PyTorch · NumPy · safetensors**.
 
 [구조 복원 코드](tools/modelpack/artifact.py) · [보정 방법](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-r) · [품질·속도 평가](https://munsik-kim.github.io/inference-lab/ko/case008.html#r-evaluation)
 
@@ -101,7 +111,16 @@ Qwen3-0.6B · 한 층 attention · 고정 합성 질문. **PyTorch · Transforme
 [비교 화면](https://munsik-kim.github.io/inference-lab/ko/case006.html#results) · [연산 개입 코드](cases/006-attention-decision-stability/src/intervention.py) · [설계와 실험 결과](https://munsik-kim.github.io/inference-lab/ko/case006.html#design)
 
 
-## 여덟 질문과 구현물
+## 새 측정 — 긴 decode와 동시 요청
+
+Case009는 기존 Qwen3-4B BF16/W4 저장본을 출력 256토큰·동시 요청 상한 1/4/16/32에서 비교합니다. 전체 graph grid와 같은 조건의 eager 비교에 서버 3라운드를 모두 남겼습니다. 공식 품질 계산은 별도이며 native 프로세스 종료 실패도 표시합니다.
+
+![RTX 5080에서 입력 128·출력 256의 TPOT와 처리량 전체 곡선](cases/009-q-serving-quality/figures/serving-L128.png)
+
+영어 축 라벨입니다. [두 입력 길이와 품질표](cases/009-q-serving-quality/REPORT.ko.md) · [CPU 재계산·영어](cases/009-q-serving-quality/REPRODUCTION.md) · [설치형 paired CLI](packages/diova-compare/README.ko.md)
+
+## 질문과 구현물
+
 
 | 쉬운 질문 | 이 사례에서 볼 수 있는 것 |
 |---|---|
@@ -113,6 +132,7 @@ Qwen3-0.6B · 한 층 attention · 고정 합성 질문. **PyTorch · Transforme
 | [006 — 어느 질문의 답이 바뀌는가?](docs/ko/CASEBOOK.md#case-006) | 입력별 답변 점수·선택·최고점 동률 진단. 기술명: NLL, top-score tie. |
 | [007 — 작은 계산 블록에 어느 그룹을 남길까?](docs/ko/CASEBOOK.md#case-007) | 그룹 선택, 실제 행렬 축소, 선택에 쓰지 않은 입력의 평가. 기술명: MLP, pruning. |
 | [008 — 바꾼 모델을 저장하고 다시 실행할 수 있을까?](docs/ko/CASEBOOK.md#case-008) | GPTQ 저장·실행 통합과 고정 MLP ridge 복구. Q 파일과 R 국소 오차가 감소했고 정답 점수 변화는 혼재. |
+| [009 — 긴 decode와 동시 요청에서 비용은 어떻게 바뀔까?](cases/009-q-serving-quality/README.ko.md) | 같은 조건의 graph/eager 요청 비용과 공식 품질 계산. 비정상 프로세스 종료 기록도 함께 표시. |
 
 ## 더 깊게 보기
 
@@ -123,3 +143,5 @@ Qwen3-0.6B · 한 층 attention · 고정 합성 질문. **PyTorch · Transforme
 DIOVA는 **Deep-learning Inference Optimization, Validation & Analysis**의 약자입니다.
 
 공개 모델과 실행 라이브러리에 비교 실행기, 행렬 축소 도구, 수치 검사와 근거 탐색기를 연결했습니다. [포트폴리오의 기여·출처](docs/ko/PORTFOLIO.md#contribution-and-reuse)에서 Qwen, Transformers, PyTorch, vLLM, SageAttention 및 기존 방법·수정의 저자를 확인할 수 있습니다. OpenAI Codex가 구현·실행·분석·작성을 지원했습니다. 프로젝트 자료는 [Apache-2.0](LICENSE)을 따르며 사례별 고지에 upstream 조건을 남겼습니다. 이 작업은 모델 변경 평가와 추론 문제 진단에 연결되며, 배포 적합성은 평가하지 않았습니다.
+
+[수정판 CPU wheel 0.1.1](downloads/diova_compare-0.1.1-py3-none-any.whl) · [Case009 공개 자료](downloads/case009_serving_quality_reviewed_publication_v2.zip) · [메타데이터](downloads/case009_serving_quality_reviewed_publication_v2.json)

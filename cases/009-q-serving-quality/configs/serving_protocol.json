@@ -1,0 +1,394 @@
+{
+  "schema": 1,
+  "status": "FROZEN",
+  "frozen_utc": "2026-09-22T02:33:45.524536+00:00",
+  "study": "Case009 new serving workload, not a revision of Case008",
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "source_revision": "9f1e7cbca19334a168561e05be8884bb16815d69",
+  "runtime": "vLLM 0.29.0; Torch 2.13.0; V1 WSL runner",
+  "arms": [
+    "BF16",
+    "existing GPTQ W4A16"
+  ],
+  "kv_bytes": 4294967296,
+  "resource_choice": "DEV 3GiB left 2139MiB free; one common increase to 4GiB, retaining about 1GiB headroom. Long input C32 may exceed active capacity; preemption retained. No per-arm capacity expansion.",
+  "input_lengths": [
+    128,
+    1024
+  ],
+  "output_tokens": 256,
+  "max_model_len": 2048,
+  "max_num_seqs": 32,
+  "max_num_batched_tokens": 2048,
+  "activation_dtype": "bfloat16",
+  "kv_dtype": "bfloat16",
+  "tp": 1,
+  "prefix_cache": false,
+  "speculative_decoding": false,
+  "chunked_prefill": false,
+  "async_scheduling": false,
+  "attention_backend": "FLASH_ATTN",
+  "sampling": {
+    "temperature": 0,
+    "ignore_eos": true,
+    "seed": 909220,
+    "chat_template": "none; plain synthetic workload token IDs"
+  },
+  "graph_policy": "vLLM default FULL_AND_PIECEWISE, matched arms; explicit eager ablation",
+  "concurrency": [
+    1,
+    4,
+    16,
+    32
+  ],
+  "request_count": "max(64,8*C)",
+  "warmup": "2 requests before each cell, same fixed token IDs, excluded explicitly",
+  "request_rate": "unlimited arrival with client semaphore; client concurrency is not active GPU batch",
+  "request_manifest_hash": "46694c6171b5f82ca59d796e32ba813d33647ad6137d873f13675bc290520567",
+  "process_order": [
+    {
+      "round": 1,
+      "arm": "BF16",
+      "execution": "graph",
+      "conditions": [
+        [
+          1024,
+          1
+        ],
+        [
+          1024,
+          4
+        ],
+        [
+          1024,
+          16
+        ],
+        [
+          128,
+          4
+        ],
+        [
+          1024,
+          32
+        ],
+        [
+          128,
+          32
+        ],
+        [
+          128,
+          16
+        ],
+        [
+          128,
+          1
+        ]
+      ]
+    },
+    {
+      "round": 1,
+      "arm": "W4",
+      "execution": "graph",
+      "conditions": [
+        [
+          1024,
+          1
+        ],
+        [
+          1024,
+          4
+        ],
+        [
+          1024,
+          16
+        ],
+        [
+          128,
+          4
+        ],
+        [
+          1024,
+          32
+        ],
+        [
+          128,
+          32
+        ],
+        [
+          128,
+          16
+        ],
+        [
+          128,
+          1
+        ]
+      ]
+    },
+    {
+      "round": 2,
+      "arm": "W4",
+      "execution": "graph",
+      "conditions": [
+        [
+          1024,
+          16
+        ],
+        [
+          1024,
+          4
+        ],
+        [
+          1024,
+          1
+        ],
+        [
+          128,
+          1
+        ],
+        [
+          128,
+          32
+        ],
+        [
+          1024,
+          32
+        ],
+        [
+          128,
+          16
+        ],
+        [
+          128,
+          4
+        ]
+      ]
+    },
+    {
+      "round": 2,
+      "arm": "BF16",
+      "execution": "graph",
+      "conditions": [
+        [
+          1024,
+          16
+        ],
+        [
+          1024,
+          4
+        ],
+        [
+          1024,
+          1
+        ],
+        [
+          128,
+          1
+        ],
+        [
+          128,
+          32
+        ],
+        [
+          1024,
+          32
+        ],
+        [
+          128,
+          16
+        ],
+        [
+          128,
+          4
+        ]
+      ]
+    },
+    {
+      "round": 3,
+      "arm": "BF16",
+      "execution": "graph",
+      "conditions": [
+        [
+          128,
+          32
+        ],
+        [
+          1024,
+          16
+        ],
+        [
+          1024,
+          1
+        ],
+        [
+          128,
+          4
+        ],
+        [
+          1024,
+          32
+        ],
+        [
+          128,
+          1
+        ],
+        [
+          1024,
+          4
+        ],
+        [
+          128,
+          16
+        ]
+      ]
+    },
+    {
+      "round": 3,
+      "arm": "W4",
+      "execution": "graph",
+      "conditions": [
+        [
+          128,
+          32
+        ],
+        [
+          1024,
+          16
+        ],
+        [
+          1024,
+          1
+        ],
+        [
+          128,
+          4
+        ],
+        [
+          1024,
+          32
+        ],
+        [
+          128,
+          1
+        ],
+        [
+          1024,
+          4
+        ],
+        [
+          128,
+          16
+        ]
+      ]
+    },
+    {
+      "round": 1,
+      "arm": "BF16",
+      "execution": "eager",
+      "conditions": [
+        [
+          128,
+          16
+        ],
+        [
+          128,
+          1
+        ]
+      ]
+    },
+    {
+      "round": 1,
+      "arm": "W4",
+      "execution": "eager",
+      "conditions": [
+        [
+          128,
+          16
+        ],
+        [
+          128,
+          1
+        ]
+      ]
+    },
+    {
+      "round": 2,
+      "arm": "W4",
+      "execution": "eager",
+      "conditions": [
+        [
+          128,
+          16
+        ],
+        [
+          128,
+          1
+        ]
+      ]
+    },
+    {
+      "round": 2,
+      "arm": "BF16",
+      "execution": "eager",
+      "conditions": [
+        [
+          128,
+          16
+        ],
+        [
+          128,
+          1
+        ]
+      ]
+    },
+    {
+      "round": 3,
+      "arm": "BF16",
+      "execution": "eager",
+      "conditions": [
+        [
+          128,
+          16
+        ],
+        [
+          128,
+          1
+        ]
+      ]
+    },
+    {
+      "round": 3,
+      "arm": "W4",
+      "execution": "eager",
+      "conditions": [
+        [
+          128,
+          16
+        ],
+        [
+          128,
+          1
+        ]
+      ]
+    }
+  ],
+  "budgets": {
+    "ordinary_server_processes": 12,
+    "timed_cells": 60,
+    "timed_requests": 7296,
+    "generated_tokens": 1867776,
+    "wall_time_limit_hours": 8,
+    "retries": "none automatically; failed attempt is retained and diagnosis required"
+  },
+  "analysis": {
+    "time_ratio": "BF16/W4",
+    "throughput_ratio": "W4/BF16",
+    "independent_unit": "paired server-process round with matched condition block",
+    "primary": "per-round p50 TPOT seconds converted to ms/token; three round means and pointwise paired bootstrap 5000 replicates seed909221",
+    "throughput": "sum successful generated tokens / block elapsed seconds; failed count explicit",
+    "tpot": "(last choice SSE time - first choice SSE time)/(usage output_tokens-1)",
+    "ttft": "first choice SSE time minus request post start",
+    "device_peak": "1Hz nvidia-smi whole-device samples; includes non-study allocations; not torch allocator peak",
+    "quality": "separate forthcoming quality freeze; no timing request used for benchmark scores"
+  }
+}

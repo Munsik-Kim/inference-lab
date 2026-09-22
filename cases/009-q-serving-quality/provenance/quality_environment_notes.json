@@ -1,0 +1,21 @@
+{
+  "scope": "Separate quality environment. Original serving environment unchanged. Both quality arms share installed versions and runtime policy.",
+  "observed_DEV": [
+    {
+      "arm": "BF16",
+      "log_sha256": "527b5dcb4daea1e74e41dc0b26117cc40b5c86daa744e64faaa8a1a601907910",
+      "Numba_numpy_compatibility_warning": true,
+      "optional_ll_bf16_gemm_disabled": true,
+      "Marlin_route_logged": false
+    },
+    {
+      "arm": "W4",
+      "log_sha256": "9b99ea204d781c24e3d5d866c0b503a950660cb53470e0dcdf4f6982f2e406e8",
+      "Numba_numpy_compatibility_warning": true,
+      "optional_ll_bf16_gemm_disabled": true,
+      "Marlin_route_logged": true
+    }
+  ],
+  "interpretation": "Optional cuteDSL low-latency BF16 GEMM availability differs from the serving environment. No quality-time measurements are used as serving performance. The primary serving sweep used original NumPy 2.3.5; quality uses 2.5.3. This warning is not established as the cause of the first process-teardown failure.",
+  "no_silent_upgrade_or_retry": true
+}

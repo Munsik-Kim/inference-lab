@@ -1,0 +1,253 @@
+{
+  "schema_version": 1,
+  "frozen_at_UTC": "2026-09-22T08:51:04.173197+00:00",
+  "study": "POST_HOC_SMALL_LIFECYCLE_DIAGNOSTIC",
+  "configs": {
+    "D0": "Original environment; result write, existing shutdown(timeout=30), complete marker, normal Python exit.",
+    "D1": "Same environment and shutdown; explicit deletion of model/request references and gc.collect before marker/exit. Object-lifetime bundle, not single-cause proof.",
+    "D2": "NOT_RUN; no new environment needed for the bounded D0/D1 comparison."
+  },
+  "runtime": {
+    "dtype": "bfloat16",
+    "max_model_len": 8192,
+    "max_gen_toks": 32,
+    "tensor_parallel_size": 1,
+    "batch_size": "auto",
+    "add_bos_token": false,
+    "seed": 909222,
+    "enable_thinking": null,
+    "enforce_eager": false,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 2048,
+    "gpu_memory_utilization": 0.87,
+    "enable_prefix_caching": false,
+    "enable_chunked_prefill": true,
+    "async_scheduling": false,
+    "kv_cache_memory_bytes": 4294967296,
+    "kv_cache_dtype": "bfloat16",
+    "attention_config": {
+      "backend": "FLASH_ATTN"
+    },
+    "generation_config": "vllm"
+  },
+  "input_token_cap": 256,
+  "generation_cap": 32,
+  "requests_per_process": 2,
+  "walltime_seconds": 3600,
+  "attempt_timeout_seconds": 240,
+  "maximum_attempts": 24,
+  "attempt_order": [
+    {
+      "config": "D0",
+      "arm": "BF16",
+      "path": "generate_until",
+      "repeat": 1
+    },
+    {
+      "config": "D0",
+      "arm": "BF16",
+      "path": "loglikelihood",
+      "repeat": 1
+    },
+    {
+      "config": "D0",
+      "arm": "BF16",
+      "path": "loglikelihood_rolling",
+      "repeat": 1
+    },
+    {
+      "config": "D0",
+      "arm": "W4",
+      "path": "generate_until",
+      "repeat": 1
+    },
+    {
+      "config": "D0",
+      "arm": "W4",
+      "path": "loglikelihood",
+      "repeat": 1
+    },
+    {
+      "config": "D0",
+      "arm": "W4",
+      "path": "loglikelihood_rolling",
+      "repeat": 1
+    },
+    {
+      "config": "D0",
+      "arm": "W4",
+      "path": "generate_until",
+      "repeat": 2
+    },
+    {
+      "config": "D0",
+      "arm": "W4",
+      "path": "loglikelihood",
+      "repeat": 2
+    },
+    {
+      "config": "D0",
+      "arm": "W4",
+      "path": "loglikelihood_rolling",
+      "repeat": 2
+    },
+    {
+      "config": "D0",
+      "arm": "BF16",
+      "path": "generate_until",
+      "repeat": 2
+    },
+    {
+      "config": "D0",
+      "arm": "BF16",
+      "path": "loglikelihood",
+      "repeat": 2
+    },
+    {
+      "config": "D0",
+      "arm": "BF16",
+      "path": "loglikelihood_rolling",
+      "repeat": 2
+    },
+    {
+      "config": "D1",
+      "arm": "BF16",
+      "path": "generate_until",
+      "repeat": 1
+    },
+    {
+      "config": "D1",
+      "arm": "BF16",
+      "path": "loglikelihood",
+      "repeat": 1
+    },
+    {
+      "config": "D1",
+      "arm": "BF16",
+      "path": "loglikelihood_rolling",
+      "repeat": 1
+    },
+    {
+      "config": "D1",
+      "arm": "W4",
+      "path": "generate_until",
+      "repeat": 1
+    },
+    {
+      "config": "D1",
+      "arm": "W4",
+      "path": "loglikelihood",
+      "repeat": 1
+    },
+    {
+      "config": "D1",
+      "arm": "W4",
+      "path": "loglikelihood_rolling",
+      "repeat": 1
+    },
+    {
+      "config": "D1",
+      "arm": "W4",
+      "path": "generate_until",
+      "repeat": 2
+    },
+    {
+      "config": "D1",
+      "arm": "W4",
+      "path": "loglikelihood",
+      "repeat": 2
+    },
+    {
+      "config": "D1",
+      "arm": "W4",
+      "path": "loglikelihood_rolling",
+      "repeat": 2
+    },
+    {
+      "config": "D1",
+      "arm": "BF16",
+      "path": "generate_until",
+      "repeat": 2
+    },
+    {
+      "config": "D1",
+      "arm": "BF16",
+      "path": "loglikelihood",
+      "repeat": 2
+    },
+    {
+      "config": "D1",
+      "arm": "BF16",
+      "path": "loglikelihood_rolling",
+      "repeat": 2
+    }
+  ],
+  "inputs": {
+    "generate_until": [
+      [
+        "The next integer after 5 is",
+        {
+          "until": [
+            "\n"
+          ],
+          "max_gen_toks": 32,
+          "do_sample": false
+        }
+      ],
+      [
+        "Write one word for the color of grass.",
+        {
+          "until": [
+            "\n"
+          ],
+          "max_gen_toks": 32,
+          "do_sample": false
+        }
+      ]
+    ],
+    "loglikelihood": [
+      [
+        "The capital of France is",
+        " Paris."
+      ],
+      [
+        "Two plus two equals",
+        " four."
+      ]
+    ],
+    "loglikelihood_rolling": [
+      [
+        "A small bird rests on a branch. The wind moves the leaves."
+      ],
+      [
+        "The number sequence begins with one, two, and three."
+      ]
+    ]
+  },
+  "token_lengths": {
+    "generate_until": [
+      7,
+      9
+    ],
+    "loglikelihood": [
+      7,
+      6
+    ],
+    "loglikelihood_rolling": [
+      14,
+      12
+    ]
+  },
+  "input_hashes": {
+    "generate_until": "35eef3b9ecda8ed11778eca2ef13494faf7d5e57e5b03c7b456151eff24f7acb",
+    "loglikelihood": "9a3b28ea2f89883c86d2aaf5caac92c18c33ac7195b5ab991c96cbfc6038020d",
+    "loglikelihood_rolling": "4f58094d4c222195b734d5b36d7450f66a7d41ff49cb5d9baaca9d84d3098499"
+  },
+  "environment_identity": "3504c2c829f5da6f04c53c7e670968a5a7cce137afc17194bd45598944f4e987",
+  "artifact_identity": "4209603fe7a34512d6567da4a76e8c5d3f27112ae9fc2c2f9e9f006e53c41576",
+  "child_sha256": "80834b3082d6d166b7b948d0df7c83c8a4fd334069b9bdd991e6215ee3903a08",
+  "runner_sha256": "100de0c66b790a6bfdfe71f615c9f6461379e8b1b83e4eee87fb243daeeb3284",
+  "retry_policy": "none; failed attempts and unrun budget cells retained",
+  "original_full_split_retries": 0,
+  "interpretation": "Small synthetic API lifecycle, not full context or benchmark reproduction."
+}

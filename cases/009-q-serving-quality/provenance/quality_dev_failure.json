@@ -1,0 +1,16 @@
+{
+  "status": "FAILED_PROCESS_TEARDOWN",
+  "scope": "DEV only; two ARC validation documents, eight likelihood requests. No full test split started.",
+  "observed": "Computation and JSON writes completed; process then printed terminate called without an active exception. Queue stopped on nonzero return.",
+  "root_cause": "Unresolved native finalization; no quality outcome was used to change settings.",
+  "attempt": 1,
+  "retry_same_DEV_samples": false,
+  "runner_sha256": "91f5fb1701e9e508eec4bc32c0b4bfddbfe809877d9a7a730ad8320c22af8333",
+  "retained_files": {
+    "generation_audit.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "results.json": "ea9b30d828d2f1a2215336aba5f369c08e8fb46a780e8f851cf28ad84b09310b",
+    "complete.json": "6144af944d6bb7b7dc29c88170c4624cc90e70646882761ae0377fce4d787237"
+  },
+  "private_log_sha256": "527b5dcb4daea1e74e41dc0b26117cc40b5c86daa744e64faaa8a1a601907910",
+  "diagnostic_change": "Explicit installed vLLM engine_core.shutdown(timeout=30) before writing complete marker for subsequent planned DEV/tasks. No inference arguments or task requests changed."
+}
