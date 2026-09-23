@@ -23,6 +23,7 @@ Built checkpoint checks, weight reconstruction, physical matrix slicing and pair
 | Q conversion, copying and fresh-runtime checks | GPTQ · LLM Compressor · compressed-tensors · vLLM/Marlin | [code](tools/modelpack/quantized.py) · [tests](cases/008-build-reconstruct-reload/tests/test_boundaries.py) |
 | Fixed-structure ridge fitting and correction in smaller weights | NumPy linear algebra · channel-reconstruction research | [code](tools/modelpack/numerics.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
 | Matched-input measurement and paired result reports | vLLM benchmark · lm-evaluation-harness · comparison metrics | [code](packages/diova-compare/src/diova_compare/core.py) · [tests](packages/diova-compare/tests/test_compare.py) |
+| Low-bit state packing, failure persistence and fresh-process restart | NumPy · PyTorch · ComplexKDA recurrence | [implementation](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [synthetic restart tests](cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
 
 [Related work and implementation boundaries](docs/related-work/README.md) · [CPU comparison package](packages/diova-compare/README.md)
 
@@ -119,6 +120,15 @@ Case009 reuses the existing Qwen3-4B BF16/W4 checkpoints at 256 generated tokens
 
 [Both input lengths and quality table](cases/009-q-serving-quality/REPORT.md) · [CPU reanalysis](cases/009-q-serving-quality/REPRODUCTION.md) · [Installed paired CLI](packages/diova-compare/README.md)
 
+## Case 010 — Low-bit state storage, restart and memory horizon
+
+<!-- claims: c010-state-bytes -->
+Built packed recurrent-state storage and fresh-process resume that preserves numerical failure and per-stream randomness. The study compares the length of continuously correct readout and complete-call cost under explicit storage caps.
+
+**Serialized state per stream: 12,305 → 3,137 bytes, about 74.5% smaller** · Native FP32 → INT8. On fresh inputs for the same three trained CKDA checkpoints, each point estimate of the mean continuous-correct-length difference was under one token. These are state bytes, not whole-process RAM/VRAM or a quality-equivalence result.
+
+[Failure-aware implementation](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [CPU audits](cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.md) · [Methods and results of both stages](cases/010-ckda-finite-precision-memory-horizon/REPORT.md)
+
 ## Questions and recorded tools
 
 
@@ -133,6 +143,7 @@ Case009 reuses the existing Qwen3-4B BF16/W4 checkpoints at 256 generated tokens
 | [007 — Which groups should a smaller block keep?](docs/en/CASEBOOK.md#case-007) | Group selection, actual matrix slicing and evaluation on unused inputs. Terms: MLP, pruning. |
 | [008 — Can a changed model be saved and reloaded?](docs/en/CASEBOOK.md#case-008) | GPTQ checkpoint integration and fixed-MLP ridge reconstruction; smaller Q files and lower R local error, with mixed gold scores. |
 | [009 — How do longer decode and concurrency change cost?](cases/009-q-serving-quality/README.md) | Matched graph/eager serving curves and official quality calculations with recorded runtime-exit failures. |
+| [010 — Can low-bit state restart consistently after failure?](docs/en/CASEBOOK.md#case-010) | Actual bit packing, failure-aware serialization, first-error survival and byte-budget comparisons. |
 
 ## Go deeper
 

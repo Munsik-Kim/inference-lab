@@ -1,0 +1,51 @@
+{
+  "python": "3.12.14 (main, Sep  2 2026, 23:27:36) [GCC 15.3.0]",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "modules": {
+    "torch": {
+      "version": "2.13.0+cu130"
+    },
+    "numpy": {
+      "version": "2.3.5"
+    },
+    "matplotlib": {
+      "version": "3.11.2"
+    },
+    "scienceplots": {
+      "error": "module 'matplotlib.style' has no attribute 'core'",
+      "type": "AttributeError"
+    },
+    "transformers": {
+      "version": "5.17.0"
+    },
+    "einops": {
+      "version": "0.8.2"
+    },
+    "triton": {
+      "version": "3.7.1"
+    }
+  },
+  "gpu_visible": false,
+  "env": "dedicated venv; inherited base torch/numpy read-only; SciencePlots2.1.1 added locally",
+  "device": {
+    "name": "NVIDIA GeForce RTX 5080",
+    "driver": "610.47",
+    "memory_total_mib": 16303,
+    "audit_used_mib": 1796,
+    "audit_utilization_percent": 3,
+    "source": "nvidia-smi read-only before study",
+    "compute_capability": "12.0",
+    "sm": "SM120",
+    "training_observation_used_mib": 2233
+  },
+  "scope": "CPU codec evaluation; bounded GPU training only; no fused codec GPU measurement",
+  "recorded_environment_role": "initial dedicated environment audit; GPU visibility false in this audit process only",
+  "primary_evaluation_and_plotting": {
+    "torch": "2.13.0+cu130",
+    "numpy": "2.3.5",
+    "matplotlib": "3.10.8",
+    "environment": "existing compatible interpreter reused read-only",
+    "CUDA_VISIBLE_DEVICES": "",
+    "cpu_threads_per_process": 2
+  }
+}

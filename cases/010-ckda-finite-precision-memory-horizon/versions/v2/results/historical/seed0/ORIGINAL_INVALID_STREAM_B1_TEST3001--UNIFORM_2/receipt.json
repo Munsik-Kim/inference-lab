@@ -1,0 +1,550 @@
+{
+  "schema": "case010-historical-parity-result-v1",
+  "status": "PASS",
+  "identity": {
+    "schema": "case010-historical-parity-cell-v1",
+    "model_seed": 0,
+    "arm": "UNIFORM_2",
+    "cohort": "ORIGINAL_INVALID_STREAM_B1_TEST3001",
+    "checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+    "protocol_sha256": "3f5299e9bdaeb2c10b2a68281f05ca559402feeea9cd3d7cba5807f24546e523",
+    "tokens_sha256": "a18aa1dc20cc492564c0acd55bd0deaeb8cf0dae5a615ce24f5594e73e9fa40c",
+    "gold_sha256": "85ead259dccf380dc2e8389e3ff8c5d3ba6ee2ba740c336af5bea3f61de2e83c",
+    "sample_ids_sha256": "7982ee52c587135712420b4c67750faf3b2924c648a1b09a0a6d15314e73f4f3",
+    "runtime_config_sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af",
+    "codec_config_sha256": "4f1e66cf0a8953daba4230c63bbb391f4775b4c444da3e87cc3a1b4b2f0680e6",
+    "basis_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "legacy_codec_config_sha256": "e49785bc47c97dad2874de952781162ea064284110688e10a4bcee956dff28c3"
+  },
+  "diagnostic_only": true,
+  "fresh_primary_sample_count": 0,
+  "reviewer_probe_available": false,
+  "reviewer_probe_executed": false,
+  "N": 1,
+  "T": 2048,
+  "sample_ids": [
+    "S3:TEST:3001:000077"
+  ],
+  "boundaries": [
+    1,
+    17,
+    63,
+    256,
+    1024,
+    2048
+  ],
+  "BOS": "one initial BOS; all resumed calls include_bos=False; cache cursor records consumed writes",
+  "same_batch_shape": true,
+  "fresh_processes": 1,
+  "fresh_process_version": "v2",
+  "serialized_at_all_boundaries": [
+    "v1",
+    "v2"
+  ],
+  "fresh_serialized_boundary_trace_match": true,
+  "full_split_match": true,
+  "comparisons": {
+    "v1_full_vs_split": {
+      "available": true,
+      "predictions_match": false,
+      "first_prediction_difference": {
+        "kind": "prediction",
+        "row": 0,
+        "write_index": 1025,
+        "group_token_index": 1025,
+        "reference": -1,
+        "candidate": 3
+      },
+      "payload": {
+        "match": false,
+        "reference_sha256": "000ecc16bc48317661e5029c2aec30d40cd12c8766c4232cfd15614f8f356382",
+        "candidate_sha256": "4dfab569411891ca0a6ef32f6c8985d3a678c1d13ac26896f7c82228b3d4af4b",
+        "first_difference": {
+          "kind": "final_payload_byte",
+          "row": 0,
+          "byte_in_compared_region": 8,
+          "reference": 0,
+          "candidate": 22,
+          "time_scope": "final state only; not a per-write state trace"
+        }
+      }
+    },
+    "v1_vs_v2_full_body": {
+      "available": true,
+      "predictions_match": true,
+      "first_prediction_difference": null,
+      "payload": {
+        "match": false,
+        "reference_sha256": "8a082b4e328af113fb0dfcf2a4ead406c3b737ce6658795740c725310a5d5aec",
+        "candidate_sha256": "cba0277106a72e75b1c41977dd21630dcd1278a01e66fb73093252b9f9d42caa",
+        "first_difference": {
+          "kind": "final_payload_byte",
+          "row": 0,
+          "byte_in_compared_region": 0,
+          "reference": 0,
+          "candidate": 84,
+          "time_scope": "final state only; not a per-write state trace"
+        }
+      }
+    },
+    "v2_full_vs_split": {
+      "available": true,
+      "predictions_match": true,
+      "first_prediction_difference": null,
+      "payload": {
+        "match": true,
+        "reference_sha256": "f0d5ebf1464373798f500558d3fff24e99220a3c4c9503569f30e1632a88449f",
+        "candidate_sha256": "f0d5ebf1464373798f500558d3fff24e99220a3c4c9503569f30e1632a88449f",
+        "first_difference": null
+      }
+    },
+    "v2_full_vs_fresh": {
+      "available": true,
+      "predictions_match": true,
+      "first_prediction_difference": null,
+      "payload": {
+        "match": true,
+        "reference_sha256": "f0d5ebf1464373798f500558d3fff24e99220a3c4c9503569f30e1632a88449f",
+        "candidate_sha256": "f0d5ebf1464373798f500558d3fff24e99220a3c4c9503569f30e1632a88449f",
+        "first_difference": null
+      }
+    }
+  },
+  "legacy_error": null,
+  "legacy_chunk_revival": "Expected v1 contract defect if it occurs; not a v2 parity failure gate",
+  "v1_v2_body_equality_scope": "Compare bytes after different version headers; terminal-body differences are intentional",
+  "predictions_sha256": {
+    "v1_full": "592920cf73105029053bb197377b9fee83b045dec8bb1b16ab3cbba94759c90a",
+    "v1_split": "f62d9c7d338cf6f47ba313f726dab4b3ceb51ac26a80ee8f891e2ebc142b8080",
+    "v2_full": "592920cf73105029053bb197377b9fee83b045dec8bb1b16ab3cbba94759c90a",
+    "v2_split": "592920cf73105029053bb197377b9fee83b045dec8bb1b16ab3cbba94759c90a",
+    "v2_fresh": "592920cf73105029053bb197377b9fee83b045dec8bb1b16ab3cbba94759c90a"
+  },
+  "final_payload_sha256": {
+    "v1_full": "000ecc16bc48317661e5029c2aec30d40cd12c8766c4232cfd15614f8f356382",
+    "v1_split": "4dfab569411891ca0a6ef32f6c8985d3a678c1d13ac26896f7c82228b3d4af4b",
+    "v2_full": "f0d5ebf1464373798f500558d3fff24e99220a3c4c9503569f30e1632a88449f",
+    "v2_split": "f0d5ebf1464373798f500558d3fff24e99220a3c4c9503569f30e1632a88449f",
+    "v2_fresh": "f0d5ebf1464373798f500558d3fff24e99220a3c4c9503569f30e1632a88449f"
+  },
+  "predictions_artifact": {
+    "file": "predictions.npz",
+    "sha256": "199d6b8cb86f5d4a0086ef24a63178ec30fdb4b9bd65b99c536348853df0bdfa"
+  },
+  "final_terminal_codes": [
+    2
+  ],
+  "first_terminal_write": [
+    838
+  ],
+  "execution": {
+    "v1_full": {
+      "status": "NONFINITE_ROWS_ABSORBED",
+      "completed_writes": 2049,
+      "elapsed_seconds": 1.1625586379996093,
+      "nonfinite_output_sequence_steps": 0,
+      "absorbed_sequences": 1,
+      "first_invalid_write_position": [
+        838
+      ],
+      "invalid_write_position_zero_is_bos": true,
+      "diagnostics": null,
+      "diagnostics_include_bos": true,
+      "diagnostic_invalid_row_policy": "after state nonfinite detection, failed rows use zero placeholders and all later predictions remain failures; a nonfinite readout alone marks that prediction invalid while the finite state continues; BOS readout is unscored"
+    },
+    "v1_split": {
+      "calls": [
+        {
+          "group_start": 0,
+          "group_stop": 1,
+          "bos_included": true,
+          "execution": {
+            "status": "COMPLETE",
+            "completed_writes": 2,
+            "elapsed_seconds": 0.0013316959993971977,
+            "nonfinite_output_sequence_steps": 0,
+            "absorbed_sequences": 0,
+            "first_invalid_write_position": [
+              null
+            ],
+            "invalid_write_position_zero_is_bos": true,
+            "diagnostics": null,
+            "diagnostics_include_bos": true,
+            "diagnostic_invalid_row_policy": "after state nonfinite detection, failed rows use zero placeholders and all later predictions remain failures; a nonfinite readout alone marks that prediction invalid while the finite state continues; BOS readout is unscored"
+          }
+        },
+        {
+          "group_start": 1,
+          "group_stop": 17,
+          "bos_included": false,
+          "execution": {
+            "status": "COMPLETE",
+            "completed_writes": 16,
+            "elapsed_seconds": 0.00834983900131192,
+            "nonfinite_output_sequence_steps": 0,
+            "absorbed_sequences": 0,
+            "first_invalid_write_position": [
+              null
+            ],
+            "invalid_write_position_zero_is_bos": false,
+            "diagnostics": null,
+            "diagnostics_include_bos": true,
+            "diagnostic_invalid_row_policy": "after state nonfinite detection, failed rows use zero placeholders and all later predictions remain failures; a nonfinite readout alone marks that prediction invalid while the finite state continues; BOS readout is unscored"
+          }
+        },
+        {
+          "group_start": 17,
+          "group_stop": 63,
+          "bos_included": false,
+          "execution": {
+            "status": "COMPLETE",
+            "completed_writes": 46,
+            "elapsed_seconds": 0.025224367000191705,
+            "nonfinite_output_sequence_steps": 0,
+            "absorbed_sequences": 0,
+            "first_invalid_write_position": [
+              null
+            ],
+            "invalid_write_position_zero_is_bos": false,
+            "diagnostics": null,
+            "diagnostics_include_bos": true,
+            "diagnostic_invalid_row_policy": "after state nonfinite detection, failed rows use zero placeholders and all later predictions remain failures; a nonfinite readout alone marks that prediction invalid while the finite state continues; BOS readout is unscored"
+          }
+        },
+        {
+          "group_start": 63,
+          "group_stop": 256,
+          "bos_included": false,
+          "execution": {
+            "status": "COMPLETE",
+            "completed_writes": 193,
+            "elapsed_seconds": 0.10417074999713805,
+            "nonfinite_output_sequence_steps": 0,
+            "absorbed_sequences": 0,
+            "first_invalid_write_position": [
+              null
+            ],
+            "invalid_write_position_zero_is_bos": false,
+            "diagnostics": null,
+            "diagnostics_include_bos": true,
+            "diagnostic_invalid_row_policy": "after state nonfinite detection, failed rows use zero placeholders and all later predictions remain failures; a nonfinite readout alone marks that prediction invalid while the finite state continues; BOS readout is unscored"
+          }
+        },
+        {
+          "group_start": 256,
+          "group_stop": 1024,
+          "bos_included": false,
+          "execution": {
+            "status": "NONFINITE_ROWS_ABSORBED",
+            "completed_writes": 768,
+            "elapsed_seconds": 0.42304777599929366,
+            "nonfinite_output_sequence_steps": 0,
+            "absorbed_sequences": 1,
+            "first_invalid_write_position": [
+              581
+            ],
+            "invalid_write_position_zero_is_bos": false,
+            "diagnostics": null,
+            "diagnostics_include_bos": true,
+            "diagnostic_invalid_row_policy": "after state nonfinite detection, failed rows use zero placeholders and all later predictions remain failures; a nonfinite readout alone marks that prediction invalid while the finite state continues; BOS readout is unscored"
+          }
+        },
+        {
+          "group_start": 1024,
+          "group_stop": 2048,
+          "bos_included": false,
+          "execution": {
+            "status": "COMPLETE",
+            "completed_writes": 1024,
+            "elapsed_seconds": 0.5269496769979014,
+            "nonfinite_output_sequence_steps": 0,
+            "absorbed_sequences": 0,
+            "first_invalid_write_position": [
+              null
+            ],
+            "invalid_write_position_zero_is_bos": false,
+            "diagnostics": null,
+            "diagnostics_include_bos": true,
+            "diagnostic_invalid_row_policy": "after state nonfinite detection, failed rows use zero placeholders and all later predictions remain failures; a nonfinite readout alone marks that prediction invalid while the finite state continues; BOS readout is unscored"
+          }
+        }
+      ],
+      "trace": [
+        {
+          "group_stop": 1,
+          "prediction_sha256": "9f1afa4dc124cba73134e82ff50f17c8f7164257c79fed9a13f5943a6acb8e3d",
+          "payload_sha256": "bc50341d785fcc8d0a70fae27b29f8d9f2a49d9520143191bd9663c6c9e03655",
+          "payload_bytes": 824
+        },
+        {
+          "group_stop": 17,
+          "prediction_sha256": "c1c598090520ac8c1043572871e3ca1cd63e78651d7c95f74b6f246a05e42051",
+          "payload_sha256": "dcd0d2131581dad7608fefb967635074e73373426140a48362856e416449e728",
+          "payload_bytes": 824
+        },
+        {
+          "group_stop": 63,
+          "prediction_sha256": "72dca81d4986b3c48628d8e151ffc34a54be3a841ac9d53992ed0c94614b0370",
+          "payload_sha256": "26628a1a441b25af47f9316e9fcd7e8ae54a62d97756c7fc3eff619a6308afc4",
+          "payload_bytes": 824
+        },
+        {
+          "group_stop": 256,
+          "prediction_sha256": "6bbda5564f89f83d5c67efefb149eb5f1393094e3b1aa65a37418114cabdcd48",
+          "payload_sha256": "ca11837f7e22b28ba8595d8799f499331f2c72f3607f2e844042c8f5d3a1b0c4",
+          "payload_bytes": 824
+        },
+        {
+          "group_stop": 1024,
+          "prediction_sha256": "42c109864372c31aa930d2a3ea9484ef129868f35b58896982f39d92c33c0207",
+          "payload_sha256": "b894805aaeeacf19ac8dd4cf4e0d632ea51d7c680e34c4a305c9ec6a84d0b90e",
+          "payload_bytes": 824
+        },
+        {
+          "group_stop": 2048,
+          "prediction_sha256": "f62d9c7d338cf6f47ba313f726dab4b3ceb51ac26a80ee8f891e2ebc142b8080",
+          "payload_sha256": "4dfab569411891ca0a6ef32f6c8985d3a678c1d13ac26896f7c82228b3d4af4b",
+          "payload_bytes": 824
+        }
+      ],
+      "counts": {
+        "invalid_readout_counts": [
+          0
+        ],
+        "active_update_attempts": 0,
+        "terminal_noop_steps": 0
+      }
+    },
+    "v2_full": {
+      "elapsed_seconds": 0.4857259089985746,
+      "completed_writes": 2049,
+      "active_update_attempts": 839,
+      "terminal_noop_steps": 1210,
+      "invalid_readout_counts": [
+        0
+      ],
+      "terminal_codes": [
+        2
+      ],
+      "first_terminal_write": [
+        838
+      ],
+      "status": "COMPLETE_WITH_TERMINAL_STREAMS",
+      "finite_state_readout_failure_is_terminal": false,
+      "bos_included": true
+    },
+    "v2_split": {
+      "calls": [
+        {
+          "group_start": 0,
+          "group_stop": 1,
+          "bos_included": true,
+          "execution": {
+            "elapsed_seconds": 0.0020404229981068056,
+            "completed_writes": 2,
+            "active_update_attempts": 2,
+            "terminal_noop_steps": 0,
+            "invalid_readout_counts": [
+              0
+            ],
+            "terminal_codes": [
+              0
+            ],
+            "first_terminal_write": [
+              null
+            ],
+            "status": "COMPLETE",
+            "finite_state_readout_failure_is_terminal": false,
+            "bos_included": true
+          }
+        },
+        {
+          "group_start": 1,
+          "group_stop": 17,
+          "bos_included": false,
+          "execution": {
+            "elapsed_seconds": 0.008438552002189681,
+            "completed_writes": 16,
+            "active_update_attempts": 16,
+            "terminal_noop_steps": 0,
+            "invalid_readout_counts": [
+              0
+            ],
+            "terminal_codes": [
+              0
+            ],
+            "first_terminal_write": [
+              null
+            ],
+            "status": "COMPLETE",
+            "finite_state_readout_failure_is_terminal": false,
+            "bos_included": false
+          }
+        },
+        {
+          "group_start": 17,
+          "group_stop": 63,
+          "bos_included": false,
+          "execution": {
+            "elapsed_seconds": 0.02266325800155755,
+            "completed_writes": 46,
+            "active_update_attempts": 46,
+            "terminal_noop_steps": 0,
+            "invalid_readout_counts": [
+              0
+            ],
+            "terminal_codes": [
+              0
+            ],
+            "first_terminal_write": [
+              null
+            ],
+            "status": "COMPLETE",
+            "finite_state_readout_failure_is_terminal": false,
+            "bos_included": false
+          }
+        },
+        {
+          "group_start": 63,
+          "group_stop": 256,
+          "bos_included": false,
+          "execution": {
+            "elapsed_seconds": 0.09758237000278314,
+            "completed_writes": 193,
+            "active_update_attempts": 193,
+            "terminal_noop_steps": 0,
+            "invalid_readout_counts": [
+              0
+            ],
+            "terminal_codes": [
+              0
+            ],
+            "first_terminal_write": [
+              null
+            ],
+            "status": "COMPLETE",
+            "finite_state_readout_failure_is_terminal": false,
+            "bos_included": false
+          }
+        },
+        {
+          "group_start": 256,
+          "group_stop": 1024,
+          "bos_included": false,
+          "execution": {
+            "elapsed_seconds": 0.3087566139984119,
+            "completed_writes": 768,
+            "active_update_attempts": 582,
+            "terminal_noop_steps": 186,
+            "invalid_readout_counts": [
+              0
+            ],
+            "terminal_codes": [
+              2
+            ],
+            "first_terminal_write": [
+              838
+            ],
+            "status": "COMPLETE_WITH_TERMINAL_STREAMS",
+            "finite_state_readout_failure_is_terminal": false,
+            "bos_included": false
+          }
+        },
+        {
+          "group_start": 1024,
+          "group_stop": 2048,
+          "bos_included": false,
+          "execution": {
+            "elapsed_seconds": 0.05998883500069496,
+            "completed_writes": 1024,
+            "active_update_attempts": 0,
+            "terminal_noop_steps": 1024,
+            "invalid_readout_counts": [
+              0
+            ],
+            "terminal_codes": [
+              2
+            ],
+            "first_terminal_write": [
+              838
+            ],
+            "status": "COMPLETE_WITH_TERMINAL_STREAMS",
+            "finite_state_readout_failure_is_terminal": false,
+            "bos_included": false
+          }
+        }
+      ],
+      "trace": [
+        {
+          "group_stop": 1,
+          "prediction_sha256": "9f1afa4dc124cba73134e82ff50f17c8f7164257c79fed9a13f5943a6acb8e3d",
+          "payload_sha256": "6618e504bb62dc40a16007d868bfc26caff89bb51d4fe12dd5d0c0989b8405b2",
+          "payload_bytes": 833
+        },
+        {
+          "group_stop": 17,
+          "prediction_sha256": "c1c598090520ac8c1043572871e3ca1cd63e78651d7c95f74b6f246a05e42051",
+          "payload_sha256": "45c7888c6f119f536682b78f92314b06e7eda14be611088119d5614c99fc644c",
+          "payload_bytes": 833
+        },
+        {
+          "group_stop": 63,
+          "prediction_sha256": "72dca81d4986b3c48628d8e151ffc34a54be3a841ac9d53992ed0c94614b0370",
+          "payload_sha256": "9d513f55e1a873543a6bd9eeb8ea90527a9f66d45f5f1319c7dc354f4e712726",
+          "payload_bytes": 833
+        },
+        {
+          "group_stop": 256,
+          "prediction_sha256": "6bbda5564f89f83d5c67efefb149eb5f1393094e3b1aa65a37418114cabdcd48",
+          "payload_sha256": "ddcf6372092fea91ed41463a25d0130c652ce759e702ca545f978298bf3c89cd",
+          "payload_bytes": 833
+        },
+        {
+          "group_stop": 1024,
+          "prediction_sha256": "42c109864372c31aa930d2a3ea9484ef129868f35b58896982f39d92c33c0207",
+          "payload_sha256": "5791fbc4117731a876bfe232cef06f19913b83b8d9c363b6e4c8c8a1fe5dc1c8",
+          "payload_bytes": 833
+        },
+        {
+          "group_stop": 2048,
+          "prediction_sha256": "592920cf73105029053bb197377b9fee83b045dec8bb1b16ab3cbba94759c90a",
+          "payload_sha256": "f0d5ebf1464373798f500558d3fff24e99220a3c4c9503569f30e1632a88449f",
+          "payload_bytes": 833
+        }
+      ],
+      "counts": {
+        "invalid_readout_counts": [
+          0
+        ],
+        "active_update_attempts": 839,
+        "terminal_noop_steps": 1210
+      }
+    }
+  },
+  "full_payloads_public": false,
+  "source_sha256": {
+    "source/run_historical.py": "a57560e5008d24f77f15645af17280a31815b42a42fc8c3f57f10dd1e07295fd",
+    "source/online_v2.py": "6067e9dae6552551847abb4e0742fe761a4ee31ad502a9a1ecfbccba767926eb",
+    "source/evaluation.py": "4b743391447e05669e65db65436dfeb2932c1fbf40bde78473cf996b2bc383c4",
+    "source/common.py": "53191632804961b618b5bafef7fa1befc64d226b5af8b148b942c6dfa78d7ffe",
+    "source/checkpoint.py": "f1e335b09053cc134be19785285c29017aeec11ff3a2a31c54a65a8989cd6627",
+    "source/arms.py": "236f34cf409ea259ba41cd2ecc024478289ca65ae4a821dd600b9e4c39b188d4",
+    "source/reference.py": "8201203a85d04ed4d33b8bad51f748f98232ee3647497de22b730cef1b06b931"
+  },
+  "extra": {
+    "original_row": 77,
+    "sample_id": "S3:TEST:3001:000077",
+    "original_first_invalid_write": 838,
+    "original_batch_size": 512,
+    "replay_batch_size": 1,
+    "selector": "earliest non-null first_invalid_write_position, then lowest original row index",
+    "original_result_sha256": "c1f092699a0dcdba243a34e2132912f388770cbd7a35a9738c053ed451f59c6f"
+  },
+  "original_invalid_case_replay": {
+    "original_first_invalid_write": 838,
+    "v1_B1_first_invalid_write": 838,
+    "reproduced_numerical_failure": true,
+    "same_write_as_original": true,
+    "interpretation": "B1 failure reproduced; compare recorded write positions"
+  }
+}

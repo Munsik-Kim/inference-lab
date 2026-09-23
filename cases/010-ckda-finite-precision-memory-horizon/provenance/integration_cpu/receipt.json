@@ -1,0 +1,67 @@
+{
+  "status": "PASS",
+  "commands": [
+    {
+      "name": "unified-tests",
+      "exit_code": 0,
+      "log": "unified-tests.log"
+    },
+    {
+      "name": "v1-publication",
+      "exit_code": 0,
+      "log": "v1-publication.log"
+    },
+    {
+      "name": "v1-scalars",
+      "exit_code": 0,
+      "log": "v1-scalars.log"
+    },
+    {
+      "name": "v1-supplement",
+      "exit_code": 0,
+      "log": "v1-supplement.log"
+    },
+    {
+      "name": "v2-scalars",
+      "exit_code": 0,
+      "log": "v2-scalars.log"
+    },
+    {
+      "name": "v2-aggregate",
+      "exit_code": 0,
+      "log": "v2-aggregate.log"
+    },
+    {
+      "name": "v2-codec-tests",
+      "exit_code": 0,
+      "log": "v2-codec-tests.log"
+    },
+    {
+      "name": "synthetic-restart",
+      "exit_code": 0,
+      "log": "synthetic-restart.log"
+    },
+    {
+      "name": "v1-publication-after",
+      "exit_code": 0,
+      "log": "v1-publication-after.log"
+    }
+  ],
+  "scope": "Model-free CPU scalar audits, integration contracts, synthetic codec/restart tests.",
+  "v2_regenerated_byte_identical": [
+    "fresh_table.csv",
+    "paired_table.csv",
+    "bytes_table.csv",
+    "combined.json",
+    "source_hashes.json"
+  ],
+  "trained_checkpoint_runs": 0,
+  "new_GPU_runs": 0,
+  "not_run": [
+    "trained model replay",
+    "upstream-dependent native parity",
+    "fresh TEST inference",
+    "timing remeasurement"
+  ],
+  "historical_tests_not_reexecuted": "Full v1 and v2 suites require separate environment/upstream checks; this wrapper runs the explicitly named synthetic subset."
+}

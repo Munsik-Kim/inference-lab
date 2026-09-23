@@ -1,0 +1,25 @@
+{
+  "schema": "case010-cpu-execution-policy-v1",
+  "frozen_utc": "2026-09-23T01:43:33.142043+00:00",
+  "scope": "execution scheduling only; no model/codec/input/threshold changes",
+  "primary_evaluation_processes": 3,
+  "threads_per_process": 2,
+  "seed_directories_separate": true,
+  "gpu_training_complete_before_parallel_cpu": true,
+  "timing_policy": {
+    "embedded_runner_timing": "retained; background concurrent CPU evaluation can affect it; not isolated primary cost",
+    "final_complete_call_timing": "one fresh serial benchmark per seed after all primary processes finish",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "repeats_per_arm": 3,
+    "DEV_generator_seed": 2002,
+    "sequences": 16,
+    "length": 128,
+    "scope": "same existing benchmark function; allocation/projections/packing/transition/readout, diagnostics excluded",
+    "no_retry_for_favorable_cost": true
+  },
+  "no_new_gpu_forward": true
+}

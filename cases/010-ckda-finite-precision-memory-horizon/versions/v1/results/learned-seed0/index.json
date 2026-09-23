@@ -1,0 +1,480 @@
+{
+  "schema": "case010-learned-evaluation-v2-canonical-token-torch",
+  "family_size": 546,
+  "manifest": {
+    "schema": "case010-learned-evaluation-v2-canonical-token-torch",
+    "phase": "FROZEN_PRIMARY",
+    "protocol_sha256": "782d24a96dadd186878e639332a404dc3f5692155639ea5c56d9b4b667e320cb",
+    "runtime_sha256": "7494da323e41753d649a4568c8aaf673095e06fcbeb0c1286df3df5f95143bfa",
+    "checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+    "model_seed": 0,
+    "upstream_commit": "ef9d108d1692387cae37f5b2d539a71826a127c1",
+    "required_upstream_source_sha256": {
+      "group_word_problems/train_wordproblem.py": "100e30684a6f62e0da67ac6ca0d5e7fb705936c16f9d2751bcabf9df9d9c3ff3",
+      "fla/layers/complex_kda_layer.py": "1ef968f2c22616aea6ca8833fe9116e1e7e49b86441da56605d9e088bdab1824",
+      "fla/layers/utils.py": "efe401e0975bf099290e27c9fb25bbc406bd1784bd145608d164cb87e36c90cc",
+      "fla/ops/kda/naive.py": "60a32285d4b67068ff633b48bbe8ab31028066d24f00d27e12199a88fc73f016",
+      "fla/models/utils.py": "f9b94ae34afe3a0b49df7bf51ac543d8e08446cf90b9d8274e45f5954acaf804"
+    },
+    "source_sha256": {
+      "codec/learned.py": "f78296c765cc8950dabf90ef65cb5bb1317162a8cdc581359cfda15bb6c58857",
+      "codec/online.py": "e08dc9e5f76123a86086180719e39f5418bfee3232b98500fcb2b7d2066773c1",
+      "codec/packed.py": "8d88eca560d654a976263c44c851d45dc92e32f0cc51452841d4dc32f642097f",
+      "codec/groups.py": "ca3a7c91da6ca919b52526a2582eda55f1b19a0029e3806335c45de46cd7bded",
+      "codec/survival.py": "99165cf1d5b74a986433aab36387e888394a94ecb58d3653ec6202d8d3b68620",
+      "scripts/evaluate_learned.py": "f92cae10d7b807e9fa69a7d9f40b39fcd57f42b7899013912155221a5a7ce187"
+    },
+    "frozen_source_directory": "frozen-source",
+    "token_table_config_sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951",
+    "token_table_data_sha256": "207aefd8c591da3da58867d22afa92ddbea2b2487eeda7a4f3b3065d56cb89f5",
+    "shared_token_table_bytes": 29100,
+    "model_checkpoint_bytes": 233203,
+    "torch_version": "2.13.0+cu130",
+    "numpy_version": "2.3.5",
+    "actual_coefficients": {
+      "parameter_count": 56530,
+      "native_cache_elements": 3072,
+      "native_cache_dtype": "float32",
+      "native_cache_value_bytes": 12288,
+      "heads": 12,
+      "head_key_dim": 16,
+      "head_value_dim": 16,
+      "state_shape_per_stream": [
+        12,
+        16,
+        16
+      ],
+      "coefficient_shapes": {
+        "q": [
+          7,
+          12,
+          16
+        ],
+        "k": [
+          7,
+          12,
+          16
+        ],
+        "v": [
+          7,
+          12,
+          16
+        ],
+        "alpha": [
+          7,
+          12,
+          16
+        ],
+        "beta": [
+          7,
+          12
+        ],
+        "g": [
+          7,
+          12,
+          16
+        ],
+        "e": [
+          7,
+          48
+        ]
+      },
+      "coefficient_dtypes": {
+        "q": "float32",
+        "k": "float32",
+        "v": "float32",
+        "alpha": "float32",
+        "beta": "float32",
+        "g": "float32",
+        "e": "float32"
+      },
+      "alpha_min": -1.0,
+      "alpha_max": 1.0,
+      "alpha_negative_fraction": 0.4382440476190476,
+      "beta_min": 6.8744428857092404e-18,
+      "beta_max": 2.0,
+      "q_norm_min": 0.9999998807907104,
+      "q_norm_max": 1.0000001192092896,
+      "k_norm_min": 0.9999998807907104,
+      "k_norm_max": 1.0000001192092896
+    },
+    "coefficient_execution_policy": "each of seven token IDs projected separately at B=1,T=1; exact token-local table shared by every arm; no sequence-length-dependent projection; state and readout vectorized across streams",
+    "checkpoint_training_status": "TRAINING_COMPLETE",
+    "checkpoint_updates": 20000,
+    "native_arm": "physical-coordinate FP32 Torch recurrence with canonical B1,T1 coefficient table and exact official einsum read reduction; original FP32 readout modules; parity checked against official one-token gauge Cache path",
+    "arithmetic": "FP32 learned recurrence/weights/readout; FP64 offline CAL statistics/eigensolver and diagnostic reductions; codec quantizer uses FP64 temporary normalization; no FP64 learned recurrent-state arm",
+    "test_accessed": true,
+    "calibration_source_split": "CAL",
+    "calibration_sha256": "0b7dd5e249fe4c55b659610c0adebda2d50b4eea5427c7801e8ae330a3101b38"
+  },
+  "splits": {
+    "DEV": {
+      "NATIVE_FP32": {
+        "file": "DEV/NATIVE_FP32.json",
+        "sha256": "dfc6218951ae08008df8d0349e055c78ca77d6818f2343557606a3215100ad99",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.3203125
+      },
+      "UNIFORM_2": {
+        "file": "DEV/UNIFORM_2.json",
+        "sha256": "95e8141df21260a66245c5f0ac0a735f3e96f14a6cfac66b77932673f119937a",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 7.4296875
+      },
+      "UNIFORM_3": {
+        "file": "DEV/UNIFORM_3.json",
+        "sha256": "e3dc6795c43f3c6b163f5865b4071a777f77d5012cc420fb7e26ec3e6867eb2e",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 51.7890625
+      },
+      "UNIFORM_4": {
+        "file": "DEV/UNIFORM_4.json",
+        "sha256": "3c7d591b7431d1f4f7843172533a169baa267af396b7d741494ada24d2cec084",
+        "execution": "COMPLETE",
+        "final_survival": 0.546875,
+        "rmst": 115.21875
+      },
+      "UNIFORM_5": {
+        "file": "DEV/UNIFORM_5.json",
+        "sha256": "d26b9458884575e303b024266b620763b66dfe4eb5fd79e1c2763d9bf994f636",
+        "execution": "COMPLETE",
+        "final_survival": 0.9296875,
+        "rmst": 127.1328125
+      },
+      "UNIFORM_6": {
+        "file": "DEV/UNIFORM_6.json",
+        "sha256": "72fb2329af49209d0aae01d743fdd702c05393709c87088f69e9520c14c4ff94",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.5
+      },
+      "UNIFORM_7": {
+        "file": "DEV/UNIFORM_7.json",
+        "sha256": "138384d300160ad648ddbeca0954128f3ea43099d3c2f2fca00edec69018b67d",
+        "execution": "COMPLETE",
+        "final_survival": 0.96875,
+        "rmst": 127.1328125
+      },
+      "UNIFORM_8": {
+        "file": "DEV/UNIFORM_8.json",
+        "sha256": "543c55a1fe5e2709693eebf13e9bb3e61eedf4409b914e7a956a27a81d765a83",
+        "execution": "COMPLETE",
+        "final_survival": 0.96875,
+        "rmst": 127.171875
+      },
+      "UNIFORM_9": {
+        "file": "DEV/UNIFORM_9.json",
+        "sha256": "9fa6353f41cffe5ee71b1dee427bc830c9755f2517502a808d7545fa0e162971",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.3203125
+      },
+      "UNIFORM_10": {
+        "file": "DEV/UNIFORM_10.json",
+        "sha256": "ac062fcb1f897131b31cd472f676f9f7c11ed58379f85795bbdac2c7df593e36",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.3203125
+      },
+      "UNIFORM_11": {
+        "file": "DEV/UNIFORM_11.json",
+        "sha256": "8eda6244e687d43b49e081c90be83d9f1f4a17da83d1bda7d824fe2eeb4b5400",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.3203125
+      },
+      "UNIFORM_12": {
+        "file": "DEV/UNIFORM_12.json",
+        "sha256": "288e151610e65bae1aac7d21d0de8053d30d0b537231d6126343486cd4b47ec4",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.3203125
+      },
+      "UNIFORM_13": {
+        "file": "DEV/UNIFORM_13.json",
+        "sha256": "b0f5e02d7fd1bcb12932b7bf79b141c0e2571a01e722fe2dae9c9e11d499568e",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.3203125
+      },
+      "UNIFORM_14": {
+        "file": "DEV/UNIFORM_14.json",
+        "sha256": "4f8cb955aacd98d8d2eb9f560ad78b24db38860767be2ec924ffaa33bbc625b6",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.3203125
+      },
+      "UNIFORM_15": {
+        "file": "DEV/UNIFORM_15.json",
+        "sha256": "b5bba9bfdc2bdab4b5c3f813ff49558a9e23b943e9f6cf3167a346e65f02be77",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.3203125
+      },
+      "UNIFORM_16": {
+        "file": "DEV/UNIFORM_16.json",
+        "sha256": "18046903374eb6cda27b0f247438bf779bbc6e63b0fb5e14b9b12a1a64a6c7f5",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.3203125
+      },
+      "STOCHASTIC_4": {
+        "file": "DEV/STOCHASTIC_4.json",
+        "sha256": "2b09b0894836939a32fb0ed61814f2a6f790b518829ddcfd5db59d73d8c61565",
+        "execution": "COMPLETE",
+        "final_survival": 0.046875,
+        "rmst": 70.5859375
+      },
+      "FULL_RESIDUAL_4_4": {
+        "file": "DEV/FULL_RESIDUAL_4_4.json",
+        "sha256": "21387d17268a834e0127876f538303fddbaa6aab2ea67c2f800b1a501b282bf9",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.34375
+      },
+      "FULL_RESIDUAL_4_8": {
+        "file": "DEV/FULL_RESIDUAL_4_8.json",
+        "sha256": "0ee141180227cd48ba972e8b5a8eb60cc033cd84be24d50bd767af5f4446a887",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.3203125
+      },
+      "FULL_RESIDUAL_4_FP32": {
+        "file": "DEV/FULL_RESIDUAL_4_FP32.json",
+        "sha256": "9f932b434fdcffa858dcf13ffd54bd269970601f57f6276b758ed2bc473bd6b6",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.3203125
+      },
+      "LOWRANK_4_8_R1": {
+        "file": "DEV/LOWRANK_4_8_R1.json",
+        "sha256": "8c7107cc8ef31f91e4f44689fb5876f0b048ad6ddd53d398e355c9738e54f419",
+        "execution": "COMPLETE",
+        "final_survival": 0.8203125,
+        "rmst": 123.6171875
+      },
+      "LOWRANK_4_8_R2": {
+        "file": "DEV/LOWRANK_4_8_R2.json",
+        "sha256": "d5f040990d573cb6eb14eaa0839eb7c3e8dae3769114472f9b3be5f2e24cd482",
+        "execution": "COMPLETE",
+        "final_survival": 0.9609375,
+        "rmst": 126.9296875
+      },
+      "LOWRANK_4_8_R4": {
+        "file": "DEV/LOWRANK_4_8_R4.json",
+        "sha256": "6f3bf44216055908c7e88d010ef0c6fb78bd2f30a0321bd53611a8bddfad071d",
+        "execution": "COMPLETE",
+        "final_survival": 0.9609375,
+        "rmst": 127.125
+      },
+      "UNTRANSPORTED_4_4": {
+        "file": "DEV/UNTRANSPORTED_4_4.json",
+        "sha256": "5f1f8de558e99f747afc8eac5fe0565a13952c0899433a7ad628792548c4d9b3",
+        "execution": "COMPLETE",
+        "final_survival": 0.1015625,
+        "rmst": 77.7421875
+      },
+      "MIXED_4_8": {
+        "file": "DEV/MIXED_4_8.json",
+        "sha256": "89527223cb123effeea7ad564ee0a5c8ea92fdcaffe4c2f7d5c63e98d2d6ef4c",
+        "execution": "COMPLETE",
+        "final_survival": 0.9765625,
+        "rmst": 127.5546875
+      },
+      "MIXED_6_8": {
+        "file": "DEV/MIXED_6_8.json",
+        "sha256": "a1b946868ce2db1748b8b4e942bed6a941104f9bf1da21ae2bfb020b7e7d0ef9",
+        "execution": "COMPLETE",
+        "final_survival": 0.9609375,
+        "rmst": 127.1171875
+      }
+    },
+    "TEST": {
+      "NATIVE_FP32": {
+        "file": "TEST/NATIVE_FP32.json",
+        "sha256": "e0bca20dcc18f266c858757eb1fc0eb221e6127ed04b34dd4e390f8822adcb93",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 283.099609375
+      },
+      "UNIFORM_2": {
+        "file": "TEST/UNIFORM_2.json",
+        "sha256": "c1f092699a0dcdba243a34e2132912f388770cbd7a35a9738c053ed451f59c6f",
+        "execution": "NONFINITE_ROWS_ABSORBED",
+        "final_survival": 0.0,
+        "rmst": 7.962890625
+      },
+      "UNIFORM_3": {
+        "file": "TEST/UNIFORM_3.json",
+        "sha256": "ea90ece33f6c5123790a272c5a9826126928d1253d98c87889fce66fd7ff109a",
+        "execution": "NONFINITE_ROWS_ABSORBED",
+        "final_survival": 0.0,
+        "rmst": 50.783203125
+      },
+      "UNIFORM_4": {
+        "file": "TEST/UNIFORM_4.json",
+        "sha256": "43456578878df7cc3cdaf4b452dd3dee8f9c75cedf75a2f2dd068e3267fb350b",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 147.93359375
+      },
+      "UNIFORM_5": {
+        "file": "TEST/UNIFORM_5.json",
+        "sha256": "28a63b3bcfb341acad0bcfb5eb6ebb7d4753d2373eca6a2f3d9e120391b25b26",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 235.82421875
+      },
+      "UNIFORM_6": {
+        "file": "TEST/UNIFORM_6.json",
+        "sha256": "042899ac254c056dcebb416c0240983d5ce1cbc3dfae38145bf8c976c8bec584",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 273.939453125
+      },
+      "UNIFORM_7": {
+        "file": "TEST/UNIFORM_7.json",
+        "sha256": "51d3ab72117ce923eb5d3ddf30d904222c8d4da963492883dc9f6b30eae29058",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 282.333984375
+      },
+      "UNIFORM_8": {
+        "file": "TEST/UNIFORM_8.json",
+        "sha256": "a1ef414ff1c797757b086e266dfa748ed98d4a5af7169ef2ebcc6c5a704fa520",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 283.435546875
+      },
+      "UNIFORM_9": {
+        "file": "TEST/UNIFORM_9.json",
+        "sha256": "511e9c8be2f03dce301769beadd89a8b9d83458ef8e2ac988f04803fef528c02",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 284.83203125
+      },
+      "UNIFORM_10": {
+        "file": "TEST/UNIFORM_10.json",
+        "sha256": "4f371bf745278051b9ecabf1f0e422a2d6f5d33b16117c01594710026eb11267",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 283.822265625
+      },
+      "UNIFORM_11": {
+        "file": "TEST/UNIFORM_11.json",
+        "sha256": "d26a66e069a77d5a4a21974d65f97e2c0796b2fc96527006b39eb81406f01867",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 282.34765625
+      },
+      "UNIFORM_12": {
+        "file": "TEST/UNIFORM_12.json",
+        "sha256": "a7339aba82a52e1980efed92cd2364c585802ce15c4e4dc2cf9280587cd22f4c",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 282.982421875
+      },
+      "UNIFORM_13": {
+        "file": "TEST/UNIFORM_13.json",
+        "sha256": "0ec4b9c5ececb2e5d412ad39b2705d1bf59083b91e7629f69ad18f2dec64492d",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 283.041015625
+      },
+      "UNIFORM_14": {
+        "file": "TEST/UNIFORM_14.json",
+        "sha256": "7ec11fcdaf29caa21a47b723efabdc7a40afb582fc2b69495c543515e5a9c5d4",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 283.125
+      },
+      "UNIFORM_15": {
+        "file": "TEST/UNIFORM_15.json",
+        "sha256": "a6b5f5df4acca2ca7adb8efa49598a1da393dae48e1d7e63150e34d6df75b717",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 282.8125
+      },
+      "UNIFORM_16": {
+        "file": "TEST/UNIFORM_16.json",
+        "sha256": "5aa22cdd63f2419dedfce7aa3d63d771ee2b8b3ea85108b058d5c109d8d24256",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 283.099609375
+      },
+      "STOCHASTIC_4": {
+        "file": "TEST/STOCHASTIC_4.json",
+        "sha256": "4fb0dd3414cc4affb2020cd482e337edd2ed7dc3698605e76c2e7828b2066ffd",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 80.123046875
+      },
+      "FULL_RESIDUAL_4_4": {
+        "file": "TEST/FULL_RESIDUAL_4_4.json",
+        "sha256": "537b202c3648be90fd40b31ffd0e34c37a1a2d334b1e849c83974007c2ccada3",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 282.251953125
+      },
+      "FULL_RESIDUAL_4_8": {
+        "file": "TEST/FULL_RESIDUAL_4_8.json",
+        "sha256": "7dc2ba425acb8da10fddf533ac89609dbb43e348e2e81afe0976dce2a0c29777",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 282.884765625
+      },
+      "FULL_RESIDUAL_4_FP32": {
+        "file": "TEST/FULL_RESIDUAL_4_FP32.json",
+        "sha256": "defcee98fa50a477fb5125234c0e04b9966f450c9b3f18a9245ae991abd882cd",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 283.099609375
+      },
+      "LOWRANK_4_8_R1": {
+        "file": "TEST/LOWRANK_4_8_R1.json",
+        "sha256": "dd673747124ad02ce1ee701bafd79ec3eaab23ea1a17670dca4a75d5cd48a023",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 202.091796875
+      },
+      "LOWRANK_4_8_R2": {
+        "file": "TEST/LOWRANK_4_8_R2.json",
+        "sha256": "ccaf56039db2beff7fb3a7fd18d02495a2ca4410815b0e25bbfd74b84c417911",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 282.890625
+      },
+      "LOWRANK_4_8_R4": {
+        "file": "TEST/LOWRANK_4_8_R4.json",
+        "sha256": "9f49b4accf2f270b4692c10fb21550560d04cedf6bb098b9ab7ac546d4b42bee",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 241.79296875
+      },
+      "UNTRANSPORTED_4_4": {
+        "file": "TEST/UNTRANSPORTED_4_4.json",
+        "sha256": "5cb3460c19ec1d12f853e12c3377bc59ade75c5dbd857a0a6a192224ec03a657",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 84.509765625
+      },
+      "MIXED_4_8": {
+        "file": "TEST/MIXED_4_8.json",
+        "sha256": "e637ec3a3976426612aad748fe02dfd1dc19781c0552116414218c6b34ce8267",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 231.296875
+      },
+      "MIXED_6_8": {
+        "file": "TEST/MIXED_6_8.json",
+        "sha256": "2339246dc9135bec8b08e7fbcde7af7065f3c4784576e58662137aab13bec5cc",
+        "execution": "COMPLETE",
+        "final_survival": 0.0,
+        "rmst": 276.1171875
+      }
+    }
+  }
+}

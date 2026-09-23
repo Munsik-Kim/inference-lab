@@ -1,0 +1,581 @@
+{
+  "scope": "DEVELOPMENT_ROUTE_ONLY; 2 sequences x8 group tokens plus BOS; no gold accuracy or horizon metrics; not frozen32x2048 diagnostic cohort",
+  "seed": 1905,
+  "all_three_checkpoint_file_hashes_verified": {
+    "0": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+    "1": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+    "2": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9"
+  },
+  "tokens": [
+    [
+      4,
+      2,
+      3,
+      0,
+      0,
+      0,
+      3,
+      5
+    ],
+    [
+      0,
+      4,
+      0,
+      5,
+      0,
+      3,
+      4,
+      5
+    ]
+  ],
+  "atol": 2e-05,
+  "rtol": 0.0002,
+  "models": [
+    {
+      "model_seed": 0,
+      "checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+      "maximum_fp32_readout_difference": 0.0,
+      "dtype_trace": {
+        "D00": {
+          "transition_state": "torch.float32",
+          "transition_coefficients": "torch.float32",
+          "coefficient_source": "fixed_FP32_table",
+          "readout": {
+            "route": "unchanged_v1_original_modules",
+            "state_at_read_boundary": "torch.float32",
+            "parameters": "torch.float32",
+            "output": "torch.float32"
+          }
+        },
+        "D10": {
+          "transition_state": "torch.float64",
+          "transition_coefficients": "torch.float64",
+          "coefficient_source": "fixed_FP32_table",
+          "readout": {
+            "route": "unchanged_v1_original_modules",
+            "state_at_read_boundary": "torch.float32",
+            "parameters": "torch.float32",
+            "output": "torch.float32"
+          }
+        },
+        "D01": {
+          "transition_state": "torch.float32",
+          "transition_coefficients": "torch.float32",
+          "coefficient_source": "fixed_FP32_table",
+          "readout": {
+            "state_at_read_boundary": "torch.float64",
+            "q": "torch.float64",
+            "g": "torch.float64",
+            "e": "torch.float64",
+            "scaled_query": "torch.float64",
+            "state_read": "torch.float64",
+            "rms_square": "torch.float64",
+            "rms_mean_square": "torch.float64",
+            "rms_inverse": "torch.float64",
+            "rms_normalized": "torch.float64",
+            "rms_affine": "torch.float64",
+            "sigmoid_gate": "torch.float64",
+            "gated_output": "torch.float64",
+            "output_projection": "torch.float64",
+            "embedding_residual": "torch.float64",
+            "layer_norm": "torch.float64",
+            "hidden_linear": "torch.float64",
+            "gelu": "torch.float64",
+            "classifier": "torch.float64"
+          }
+        },
+        "D11": {
+          "transition_state": "torch.float64",
+          "transition_coefficients": "torch.float64",
+          "coefficient_source": "fixed_FP32_table",
+          "readout": {
+            "state_at_read_boundary": "torch.float64",
+            "q": "torch.float64",
+            "g": "torch.float64",
+            "e": "torch.float64",
+            "scaled_query": "torch.float64",
+            "state_read": "torch.float64",
+            "rms_square": "torch.float64",
+            "rms_mean_square": "torch.float64",
+            "rms_inverse": "torch.float64",
+            "rms_normalized": "torch.float64",
+            "rms_affine": "torch.float64",
+            "sigmoid_gate": "torch.float64",
+            "gated_output": "torch.float64",
+            "output_projection": "torch.float64",
+            "embedding_residual": "torch.float64",
+            "layer_norm": "torch.float64",
+            "hidden_linear": "torch.float64",
+            "gelu": "torch.float64",
+            "classifier": "torch.float64"
+          }
+        }
+      },
+      "metadata": {
+        "version": "case010-v2-fixed-coefficient-precision-v1",
+        "identity": {
+          "model_seed": 0,
+          "checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+          "verified_checkpoint_sha256": {
+            "0": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+            "1": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+            "2": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9"
+          },
+          "token_table_sha256": "207aefd8c591da3da58867d22afa92ddbea2b2487eeda7a4f3b3065d56cb89f5"
+        },
+        "limitations": [
+          "All normalized q/k, v, alpha, beta, output gates and embeddings are the exact stored FP32 values; FP64 promotion does not recompute projections or gates.",
+          "FP64 readout promotes the fixed FP32 readout parameters and explicitly uses FP64 RMS normalization, sigmoid, projection, LayerNorm, GELU and classifier.",
+          "F.linear/F.layer_norm/F.gelu and einsum retain the same mathematical order and epsilon/activation settings; dtype-dependent backend reduction algorithms need not have the same rounding order. This is not arbitrary-precision truth.",
+          "D10 casts its FP64 state to FP32 before the complete original readout; D01 promotes its already-rounded FP32 state before the complete FP64 readout.",
+          "State and logit differences are diagnostic comparisons, not causal proof of why the first label failed. Gold is used only by the external scalar summary."
+        ],
+        "shape": [
+          12,
+          16,
+          16
+        ],
+        "rms_eps": 1e-05,
+        "layer_norm_eps": 1e-05,
+        "gelu_approximate": "none",
+        "parameter_source_dtype": "torch.float32",
+        "coefficients_reprojected": false,
+        "fp32_readout_parity": [
+          {
+            "passed": true,
+            "atol": 2e-05,
+            "rtol": 0.0002,
+            "maximum_absolute_difference": 0.0,
+            "bitwise_equal": true,
+            "dtype_trace": {
+              "state_at_read_boundary": "torch.float32",
+              "q": "torch.float32",
+              "g": "torch.float32",
+              "e": "torch.float32",
+              "scaled_query": "torch.float32",
+              "state_read": "torch.float32",
+              "rms_square": "torch.float32",
+              "rms_mean_square": "torch.float32",
+              "rms_inverse": "torch.float32",
+              "rms_normalized": "torch.float32",
+              "rms_affine": "torch.float32",
+              "sigmoid_gate": "torch.float32",
+              "gated_output": "torch.float32",
+              "output_projection": "torch.float32",
+              "embedding_residual": "torch.float32",
+              "layer_norm": "torch.float32",
+              "hidden_linear": "torch.float32",
+              "gelu": "torch.float32",
+              "classifier": "torch.float32"
+            }
+          },
+          {
+            "passed": true,
+            "atol": 2e-05,
+            "rtol": 0.0002,
+            "maximum_absolute_difference": 0.0,
+            "bitwise_equal": true,
+            "dtype_trace": {
+              "state_at_read_boundary": "torch.float32",
+              "q": "torch.float32",
+              "g": "torch.float32",
+              "e": "torch.float32",
+              "scaled_query": "torch.float32",
+              "state_read": "torch.float32",
+              "rms_square": "torch.float32",
+              "rms_mean_square": "torch.float32",
+              "rms_inverse": "torch.float32",
+              "rms_normalized": "torch.float32",
+              "rms_affine": "torch.float32",
+              "sigmoid_gate": "torch.float32",
+              "gated_output": "torch.float32",
+              "output_projection": "torch.float32",
+              "embedding_residual": "torch.float32",
+              "layer_norm": "torch.float32",
+              "hidden_linear": "torch.float32",
+              "gelu": "torch.float32",
+              "classifier": "torch.float32"
+            }
+          }
+        ],
+        "parity_scope": "all seven tokens with zero and patterned nonzero states; original checkpoint readout modules",
+        "formula_order": [
+          "q_scaled_einsum_updated_state",
+          "RMSNorm",
+          "RMS_weight",
+          "sigmoid_gating",
+          "output_projection",
+          "embedding_add",
+          "LayerNorm",
+          "Linear",
+          "GELU",
+          "Linear"
+        ]
+      }
+    },
+    {
+      "model_seed": 1,
+      "checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+      "maximum_fp32_readout_difference": 0.0,
+      "dtype_trace": {
+        "D00": {
+          "transition_state": "torch.float32",
+          "transition_coefficients": "torch.float32",
+          "coefficient_source": "fixed_FP32_table",
+          "readout": {
+            "route": "unchanged_v1_original_modules",
+            "state_at_read_boundary": "torch.float32",
+            "parameters": "torch.float32",
+            "output": "torch.float32"
+          }
+        },
+        "D10": {
+          "transition_state": "torch.float64",
+          "transition_coefficients": "torch.float64",
+          "coefficient_source": "fixed_FP32_table",
+          "readout": {
+            "route": "unchanged_v1_original_modules",
+            "state_at_read_boundary": "torch.float32",
+            "parameters": "torch.float32",
+            "output": "torch.float32"
+          }
+        },
+        "D01": {
+          "transition_state": "torch.float32",
+          "transition_coefficients": "torch.float32",
+          "coefficient_source": "fixed_FP32_table",
+          "readout": {
+            "state_at_read_boundary": "torch.float64",
+            "q": "torch.float64",
+            "g": "torch.float64",
+            "e": "torch.float64",
+            "scaled_query": "torch.float64",
+            "state_read": "torch.float64",
+            "rms_square": "torch.float64",
+            "rms_mean_square": "torch.float64",
+            "rms_inverse": "torch.float64",
+            "rms_normalized": "torch.float64",
+            "rms_affine": "torch.float64",
+            "sigmoid_gate": "torch.float64",
+            "gated_output": "torch.float64",
+            "output_projection": "torch.float64",
+            "embedding_residual": "torch.float64",
+            "layer_norm": "torch.float64",
+            "hidden_linear": "torch.float64",
+            "gelu": "torch.float64",
+            "classifier": "torch.float64"
+          }
+        },
+        "D11": {
+          "transition_state": "torch.float64",
+          "transition_coefficients": "torch.float64",
+          "coefficient_source": "fixed_FP32_table",
+          "readout": {
+            "state_at_read_boundary": "torch.float64",
+            "q": "torch.float64",
+            "g": "torch.float64",
+            "e": "torch.float64",
+            "scaled_query": "torch.float64",
+            "state_read": "torch.float64",
+            "rms_square": "torch.float64",
+            "rms_mean_square": "torch.float64",
+            "rms_inverse": "torch.float64",
+            "rms_normalized": "torch.float64",
+            "rms_affine": "torch.float64",
+            "sigmoid_gate": "torch.float64",
+            "gated_output": "torch.float64",
+            "output_projection": "torch.float64",
+            "embedding_residual": "torch.float64",
+            "layer_norm": "torch.float64",
+            "hidden_linear": "torch.float64",
+            "gelu": "torch.float64",
+            "classifier": "torch.float64"
+          }
+        }
+      },
+      "metadata": {
+        "version": "case010-v2-fixed-coefficient-precision-v1",
+        "identity": {
+          "model_seed": 1,
+          "checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+          "verified_checkpoint_sha256": {
+            "0": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+            "1": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+            "2": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9"
+          },
+          "token_table_sha256": "09259c62f44051ad9183180b2fb4c6d54ed3326a699bc2e74197dfe856480975"
+        },
+        "limitations": [
+          "All normalized q/k, v, alpha, beta, output gates and embeddings are the exact stored FP32 values; FP64 promotion does not recompute projections or gates.",
+          "FP64 readout promotes the fixed FP32 readout parameters and explicitly uses FP64 RMS normalization, sigmoid, projection, LayerNorm, GELU and classifier.",
+          "F.linear/F.layer_norm/F.gelu and einsum retain the same mathematical order and epsilon/activation settings; dtype-dependent backend reduction algorithms need not have the same rounding order. This is not arbitrary-precision truth.",
+          "D10 casts its FP64 state to FP32 before the complete original readout; D01 promotes its already-rounded FP32 state before the complete FP64 readout.",
+          "State and logit differences are diagnostic comparisons, not causal proof of why the first label failed. Gold is used only by the external scalar summary."
+        ],
+        "shape": [
+          12,
+          16,
+          16
+        ],
+        "rms_eps": 1e-05,
+        "layer_norm_eps": 1e-05,
+        "gelu_approximate": "none",
+        "parameter_source_dtype": "torch.float32",
+        "coefficients_reprojected": false,
+        "fp32_readout_parity": [
+          {
+            "passed": true,
+            "atol": 2e-05,
+            "rtol": 0.0002,
+            "maximum_absolute_difference": 0.0,
+            "bitwise_equal": true,
+            "dtype_trace": {
+              "state_at_read_boundary": "torch.float32",
+              "q": "torch.float32",
+              "g": "torch.float32",
+              "e": "torch.float32",
+              "scaled_query": "torch.float32",
+              "state_read": "torch.float32",
+              "rms_square": "torch.float32",
+              "rms_mean_square": "torch.float32",
+              "rms_inverse": "torch.float32",
+              "rms_normalized": "torch.float32",
+              "rms_affine": "torch.float32",
+              "sigmoid_gate": "torch.float32",
+              "gated_output": "torch.float32",
+              "output_projection": "torch.float32",
+              "embedding_residual": "torch.float32",
+              "layer_norm": "torch.float32",
+              "hidden_linear": "torch.float32",
+              "gelu": "torch.float32",
+              "classifier": "torch.float32"
+            }
+          },
+          {
+            "passed": true,
+            "atol": 2e-05,
+            "rtol": 0.0002,
+            "maximum_absolute_difference": 0.0,
+            "bitwise_equal": true,
+            "dtype_trace": {
+              "state_at_read_boundary": "torch.float32",
+              "q": "torch.float32",
+              "g": "torch.float32",
+              "e": "torch.float32",
+              "scaled_query": "torch.float32",
+              "state_read": "torch.float32",
+              "rms_square": "torch.float32",
+              "rms_mean_square": "torch.float32",
+              "rms_inverse": "torch.float32",
+              "rms_normalized": "torch.float32",
+              "rms_affine": "torch.float32",
+              "sigmoid_gate": "torch.float32",
+              "gated_output": "torch.float32",
+              "output_projection": "torch.float32",
+              "embedding_residual": "torch.float32",
+              "layer_norm": "torch.float32",
+              "hidden_linear": "torch.float32",
+              "gelu": "torch.float32",
+              "classifier": "torch.float32"
+            }
+          }
+        ],
+        "parity_scope": "all seven tokens with zero and patterned nonzero states; original checkpoint readout modules",
+        "formula_order": [
+          "q_scaled_einsum_updated_state",
+          "RMSNorm",
+          "RMS_weight",
+          "sigmoid_gating",
+          "output_projection",
+          "embedding_add",
+          "LayerNorm",
+          "Linear",
+          "GELU",
+          "Linear"
+        ]
+      }
+    },
+    {
+      "model_seed": 2,
+      "checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+      "maximum_fp32_readout_difference": 0.0,
+      "dtype_trace": {
+        "D00": {
+          "transition_state": "torch.float32",
+          "transition_coefficients": "torch.float32",
+          "coefficient_source": "fixed_FP32_table",
+          "readout": {
+            "route": "unchanged_v1_original_modules",
+            "state_at_read_boundary": "torch.float32",
+            "parameters": "torch.float32",
+            "output": "torch.float32"
+          }
+        },
+        "D10": {
+          "transition_state": "torch.float64",
+          "transition_coefficients": "torch.float64",
+          "coefficient_source": "fixed_FP32_table",
+          "readout": {
+            "route": "unchanged_v1_original_modules",
+            "state_at_read_boundary": "torch.float32",
+            "parameters": "torch.float32",
+            "output": "torch.float32"
+          }
+        },
+        "D01": {
+          "transition_state": "torch.float32",
+          "transition_coefficients": "torch.float32",
+          "coefficient_source": "fixed_FP32_table",
+          "readout": {
+            "state_at_read_boundary": "torch.float64",
+            "q": "torch.float64",
+            "g": "torch.float64",
+            "e": "torch.float64",
+            "scaled_query": "torch.float64",
+            "state_read": "torch.float64",
+            "rms_square": "torch.float64",
+            "rms_mean_square": "torch.float64",
+            "rms_inverse": "torch.float64",
+            "rms_normalized": "torch.float64",
+            "rms_affine": "torch.float64",
+            "sigmoid_gate": "torch.float64",
+            "gated_output": "torch.float64",
+            "output_projection": "torch.float64",
+            "embedding_residual": "torch.float64",
+            "layer_norm": "torch.float64",
+            "hidden_linear": "torch.float64",
+            "gelu": "torch.float64",
+            "classifier": "torch.float64"
+          }
+        },
+        "D11": {
+          "transition_state": "torch.float64",
+          "transition_coefficients": "torch.float64",
+          "coefficient_source": "fixed_FP32_table",
+          "readout": {
+            "state_at_read_boundary": "torch.float64",
+            "q": "torch.float64",
+            "g": "torch.float64",
+            "e": "torch.float64",
+            "scaled_query": "torch.float64",
+            "state_read": "torch.float64",
+            "rms_square": "torch.float64",
+            "rms_mean_square": "torch.float64",
+            "rms_inverse": "torch.float64",
+            "rms_normalized": "torch.float64",
+            "rms_affine": "torch.float64",
+            "sigmoid_gate": "torch.float64",
+            "gated_output": "torch.float64",
+            "output_projection": "torch.float64",
+            "embedding_residual": "torch.float64",
+            "layer_norm": "torch.float64",
+            "hidden_linear": "torch.float64",
+            "gelu": "torch.float64",
+            "classifier": "torch.float64"
+          }
+        }
+      },
+      "metadata": {
+        "version": "case010-v2-fixed-coefficient-precision-v1",
+        "identity": {
+          "model_seed": 2,
+          "checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+          "verified_checkpoint_sha256": {
+            "0": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+            "1": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+            "2": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9"
+          },
+          "token_table_sha256": "d600ef70dd9c8d0b496e8c0c366940c725ba94d760344875dba7a5d1674f9e76"
+        },
+        "limitations": [
+          "All normalized q/k, v, alpha, beta, output gates and embeddings are the exact stored FP32 values; FP64 promotion does not recompute projections or gates.",
+          "FP64 readout promotes the fixed FP32 readout parameters and explicitly uses FP64 RMS normalization, sigmoid, projection, LayerNorm, GELU and classifier.",
+          "F.linear/F.layer_norm/F.gelu and einsum retain the same mathematical order and epsilon/activation settings; dtype-dependent backend reduction algorithms need not have the same rounding order. This is not arbitrary-precision truth.",
+          "D10 casts its FP64 state to FP32 before the complete original readout; D01 promotes its already-rounded FP32 state before the complete FP64 readout.",
+          "State and logit differences are diagnostic comparisons, not causal proof of why the first label failed. Gold is used only by the external scalar summary."
+        ],
+        "shape": [
+          12,
+          16,
+          16
+        ],
+        "rms_eps": 1e-05,
+        "layer_norm_eps": 1e-05,
+        "gelu_approximate": "none",
+        "parameter_source_dtype": "torch.float32",
+        "coefficients_reprojected": false,
+        "fp32_readout_parity": [
+          {
+            "passed": true,
+            "atol": 2e-05,
+            "rtol": 0.0002,
+            "maximum_absolute_difference": 0.0,
+            "bitwise_equal": true,
+            "dtype_trace": {
+              "state_at_read_boundary": "torch.float32",
+              "q": "torch.float32",
+              "g": "torch.float32",
+              "e": "torch.float32",
+              "scaled_query": "torch.float32",
+              "state_read": "torch.float32",
+              "rms_square": "torch.float32",
+              "rms_mean_square": "torch.float32",
+              "rms_inverse": "torch.float32",
+              "rms_normalized": "torch.float32",
+              "rms_affine": "torch.float32",
+              "sigmoid_gate": "torch.float32",
+              "gated_output": "torch.float32",
+              "output_projection": "torch.float32",
+              "embedding_residual": "torch.float32",
+              "layer_norm": "torch.float32",
+              "hidden_linear": "torch.float32",
+              "gelu": "torch.float32",
+              "classifier": "torch.float32"
+            }
+          },
+          {
+            "passed": true,
+            "atol": 2e-05,
+            "rtol": 0.0002,
+            "maximum_absolute_difference": 0.0,
+            "bitwise_equal": true,
+            "dtype_trace": {
+              "state_at_read_boundary": "torch.float32",
+              "q": "torch.float32",
+              "g": "torch.float32",
+              "e": "torch.float32",
+              "scaled_query": "torch.float32",
+              "state_read": "torch.float32",
+              "rms_square": "torch.float32",
+              "rms_mean_square": "torch.float32",
+              "rms_inverse": "torch.float32",
+              "rms_normalized": "torch.float32",
+              "rms_affine": "torch.float32",
+              "sigmoid_gate": "torch.float32",
+              "gated_output": "torch.float32",
+              "output_projection": "torch.float32",
+              "embedding_residual": "torch.float32",
+              "layer_norm": "torch.float32",
+              "hidden_linear": "torch.float32",
+              "gelu": "torch.float32",
+              "classifier": "torch.float32"
+            }
+          }
+        ],
+        "parity_scope": "all seven tokens with zero and patterned nonzero states; original checkpoint readout modules",
+        "formula_order": [
+          "q_scaled_einsum_updated_state",
+          "RMSNorm",
+          "RMS_weight",
+          "sigmoid_gating",
+          "output_projection",
+          "embedding_add",
+          "LayerNorm",
+          "Linear",
+          "GELU",
+          "Linear"
+        ]
+      }
+    }
+  ]
+}

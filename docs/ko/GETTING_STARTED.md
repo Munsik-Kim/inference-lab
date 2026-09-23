@@ -170,3 +170,14 @@ ZIP만 풀었다면 먼저 그 안의 `006-attention-decision-stability` 디렉�
 ## 새 graph 요청 측정과 공식 품질 과제
 
 [Case009 재현 안내·영어](../../cases/009-q-serving-quality/REPRODUCTION.md)는 기존 serving 환경, 새 harness 환경, CPU 패키지를 나눠 설명합니다. [전체 곡선과 품질 보고서](../../cases/009-q-serving-quality/REPORT.ko.md)에는 일부 품질 프로세스의 비정상 종료도 기록했습니다. 공개 스칼라 재계산에는 benchmark 데이터셋이나 모델 다운로드가 필요하지 않습니다.
+
+
+<a id="case010-cpu"></a>
+## Case010: 모델 없이 state·결과 검사
+
+[통합 재현 안내](../../cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.ko.md)는 원형 복원, 스칼라 검산과 failure-aware 합성 재시작 검사를 구분합니다. 모델·GPU는 필요하지 않습니다. 학습 checkpoint를 사용하는 연구 재실행은 별도 경로입니다.
+
+```bash
+python3 -B cases/010-ckda-finite-precision-memory-horizon/scripts/verify_unified.py
+python3 -B cases/010-ckda-finite-precision-memory-horizon/scripts/restore_workspace.py --output /tmp/diova-case010-restored-new
+```

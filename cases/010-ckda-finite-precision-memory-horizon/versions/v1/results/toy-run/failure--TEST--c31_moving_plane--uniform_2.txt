@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "CASE_ROOT/codec/toy.py", line 415, in run_protocol
+    result, correct, shared = evaluate_arm(condition, arm, calibrations[condition.name], batch,
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "CASE_ROOT/codec/toy.py", line 300, in evaluate_arm
+    state, output, diagnostics = adapter.step(state, affine_transition(operators))
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "CASE_ROOT/codec/online.py", line 115, in step
+    raise ValueError("entire transition output must have expected shape and be finite")
+ValueError: entire transition output must have expected shape and be finite

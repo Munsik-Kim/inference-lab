@@ -1,4 +1,4 @@
-# Eight questions about local inference
+# Ten questions about inference and model changes
 
 English | [한국어](../ko/CASEBOOK.md) · [Home](../../README.md)
 
@@ -16,6 +16,8 @@ Each case follows **objective → dataset → assumptions and theory → experim
 - [006 — When do scores and individual choices diverge?](#case-006)
 - [007 — Does joint importance select a better smaller MLP?](#case-007)
 - [008 — Build, reconstruct and reload](#case-008)
+- [009 — What changes with longer decode and concurrent requests?](#case-009)
+- [010 — Low-bit state storage, restart and readout horizon](#case-010)
 
 <a id="case-001"></a>
 ## 001 — Can a kernel-selection change unblock execution?
@@ -538,6 +540,29 @@ Q full NLL improves while conditional-choice NLL worsens. Same-record task analy
 Implemented checkpoint conversion/serialization/runtime integration and same-structure output reconstruction. Execution is COMPLETED; deployment is NOT_ASSESSED. The structured report carries definitions, source tables, code-task cues and reproduction commands.
 
 [Structured report](../../cases/008-build-reconstruct-reload/REPORT.md) · [Reproduction / source](../../cases/008-build-reconstruct-reload/REPRODUCTION.md) · [Measured summary](../../cases/008-build-reconstruct-reload/results/derived/summary.json)
+
+
+
+<a id="case-009"></a>
+## 009 — Longer decode and concurrent requests
+
+Compares graph/eager serving and official-task records for the existing Qwen 4B BF16/W4 artifacts. Inspect all three server rounds and distinguish calculated quality metrics from native process-exit failures.
+
+[Methods and results](../../cases/009-q-serving-quality/REPORT.md) · [CPU audits](../../cases/009-q-serving-quality/REPRODUCTION.md)
+
+<a id="case-010"></a>
+## 010 — Finite-precision recurrent memory: storage, restart and readout horizon
+
+<!-- claims: c010-state-bytes -->
+**Objective and implementation:** pack recurrent state into low-bit storage and restore failure, randomness and cursor together. The tools compare online residual transport, mixed precision, first-error survival and exact byte ledgers.
+
+**Data and design:** the same three S3 group-tracking checkpoints serve both stages. Stage A (v1) explores storage formats and strengthens comparators using 512 sequences per checkpoint. Stage B (v2) revises failure persistence and evaluates five arms on 1,024 fresh sequences per checkpoint. The cohorts and 546/630/195 confidence families stay separate.
+
+**Validation and results:** v2 is the current implementation. Serialized state falls from Native 12,305 to INT8 3,137 bytes per stream (about 74.5%), with each checkpoint's mean continuous-correct-length point difference under one token. Fresh-process byte/prediction checks distinguish synthetic contracts from historical measured-input diagnostics.
+
+**Interpretation and conclusion:** Rank2 does not consistently beat Mixed5/6 within the N128 storage cap. Mean length, empirical horizon and confidence-supported grid lower bound are different metrics. Failure persistence improves the execution contract; memory-horizon improvement is evaluated separately.
+
+[Unified report](../../cases/010-ckda-finite-precision-memory-horizon/REPORT.md) · [Current implementation](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [CPU audits](../../cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.md) · [Snapshot map](../../cases/010-ckda-finite-precision-memory-horizon/VERSION_MAP.md)
 
 
 ## Terms used here

@@ -145,6 +145,31 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
         expect(await e('location.hash')==='#'+section,'Evaluation reload/language anchor '+lang+section);
       }
     }
+    for(const lang of ['en','ko']) {
+      await send('Page.navigate',{url:new URL(lang+'/case010.html',base).href});await wait(250);
+      expect(await e('document.querySelector("h1").textContent.length>0 && document.querySelectorAll(".study-section").length===8'),'Case010 sections '+lang);
+      expect(await e('document.body.textContent.includes("12,305") && document.body.textContent.includes("3,137")'),'Case010 serialized byte units '+lang);
+      expect(await e('document.body.textContent.includes("292,633") && document.body.textContent.includes("292,469")'),'Case010 shared storage budgets '+lang);
+      expect(await e('document.querySelector("img.serving-curve").complete && document.querySelector("img.serving-curve").naturalWidth>0'),'Case010 actual plot loaded '+lang);
+      for(const width of [390,768,1280]) {
+        await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});await wait(80);
+        expect(await e('document.documentElement.scrollWidth<=innerWidth+2'),'Case010 layout '+lang+width);
+        for(const target of [null,'results']) {
+          await e(target?'document.getElementById('+JSON.stringify(target)+').scrollIntoView()':'scrollTo({top:0,left:0,behavior:"instant"})');await wait(60);
+          const shot=await send('Page.captureScreenshot',{format:'png'});
+          fs.writeFileSync(path.join(out,'case010-'+(target||'intro')+'-'+lang+'-'+width+'.png'),Buffer.from(shot.data,'base64'));
+        }
+      }
+      await e('location.hash="stage-b"');await wait(80);
+      await send('Page.reload');await wait(200);
+      expect(await e('location.hash')==='#stage-b','Case010 section reload '+lang);
+      await send('Page.navigate',{url:await e('document.getElementById("language").href')});await wait(200);
+      expect(await e('location.hash==="#stage-b" && !!document.getElementById("stage-b")'),'Case010 same section language '+lang);
+      await e('document.querySelector("#reproduce a").focus()');
+      expect(await e('getComputedStyle(document.activeElement).outlineStyle!=="none"'),'Case010 CPU link keyboard focus '+lang);
+      await send('Page.navigate',{url:new URL(lang+'/index.html',base).href});await wait(200);
+      expect(await e('document.querySelectorAll("#memory-study").length===1 && [...document.querySelectorAll(".archive-number")].filter(x=>x.textContent==="010").length===1'),'One Case010 project/archive entry '+lang);
+    }
     const forbidden=requests.filter(x=>/^https?:/.test(x)&&(u.protocol==='file:'||new URL(x).origin!==u.origin));
     expect(errors.length===0,'No console exceptions/errors');expect(responseErrors.length===0,'No HTTP resource failures');expect(forbidden.length===0,'No external runtime requests');
     fs.writeFileSync(path.join(out,'browser.json'),JSON.stringify({status:'PASS',browser:version.Browser,node:process.version,os:process.platform,protocol:u.protocol,method:'existing Edge, CDP, fresh temporary profile',viewports:[390,768,1280],checks,console_errors:errors,external_requests:forbidden,http_resource_failures:responseErrors,screenshots:fs.readdirSync(out).filter(name=>name.endsWith('.png')).sort(),real_ipad:'NOT_TESTED'},null,2));

@@ -220,6 +220,13 @@ def check_claims(root: Path, mapping: dict, pages: list[str], errors: list[str])
             c['source_revision'] == 'archive:'+entry['archive_sha256']
             and c['source_path'].startswith(entry['case_path']+'/')
             for entry in mapping.get('additional_publications', []))
+        archive_source |= any(
+            entry.get('case_path') == 'cases/010-ckda-finite-precision-memory-horizon'
+            and entry.get('version') == 'v2'
+            and entry.get('archive_sha256') == 'efe3ab2586a3cec757429386a7f874b594a9893fc771c804f5871dfaa61ed9cc'
+            and c['source_revision'] == 'archive:' + entry['archive_sha256']
+            and c['source_path'].startswith(entry['case_path'] + '/versions/v2/')
+            for entry in mapping.get('unified_snapshots', []))
         if not archive_source and (c['source_revision'] != mapping['source_revision'] or not re.fullmatch('[0-9a-f]{40}', c['source_revision'])):
             errors.append('Invalid source revision: ' + cid)
         for key in ('claim_en', 'claim_ko', 'scope', 'limits'):
@@ -418,6 +425,38 @@ def check_new_study(root: Path, errors: list[str]) -> set[str]:
         return set()
 
 
+def check_unified_case010(root: Path, errors: list[str]) -> set[str]:
+    """Accept only the exact verified unified tree; historical cases stay protected."""
+    relative = 'cases/010-ckda-finite-precision-memory-horizon'
+    case = root/relative
+    if not case.exists():
+        return set()
+    try:
+        run = subprocess.run([sys.executable, '-B', str(case/'scripts/verify_unified.py')],
+                             capture_output=True, text=True, cwd=root)
+        if run.returncode:
+            raise ValueError('Unified snapshot/current-inventory verification failed')
+        pages = [relative+'/'+name for name in (
+            'README.md','README.ko.md','REPORT.md','REPORT.ko.md',
+            'REPRODUCTION.md','REPRODUCTION.ko.md','VERSION_MAP.md','PORTFOLIO.md','NOTICE.md')]
+        check_links(root, pages, errors)
+        check_copy_hygiene(root, tuple(pages), errors)
+        for stem in ('README','REPORT','REPRODUCTION'):
+            en, ko = case/(stem+'.md'), case/(stem+'.ko.md')
+            if f']({stem}.ko.md)' not in en.read_text() or f']({stem}.md)' not in ko.read_text():
+                errors.append('Missing Case010 same-page language switch: '+stem)
+        for lang in ('en','ko'):
+            book = (root/f'docs/{lang}/CASEBOOK.md').read_text()
+            if book.count('<a id="case-010"></a>') != 1:
+                errors.append('Case010 must have one Casebook entry: '+lang)
+            if book.count('<a id="case-009"></a>') != 1:
+                errors.append('Missing/duplicate existing Case009 entry: '+lang)
+        return {p.relative_to(root).as_posix() for p in case.rglob('*') if p.is_file()}
+    except (OSError, ValueError) as exc:
+        errors.append('Case010 integration verification failed: '+str(exc))
+        return set()
+
+
 def check_feedback_docs(root: Path, errors: list[str]) -> int:
     links = check_links(root, list(FEEDBACK_DOCS), errors)
     check_copy_hygiene(root, FEEDBACK_DOCS, errors)
@@ -443,6 +482,7 @@ def audit(root: Path, inventory: Path | None = None) -> dict:
     count = check_claims(root, mapping, list(PAGES), errors)
     additional = check_additional_publications(root, mapping, errors)
     additional |= check_new_study(root, errors)
+    additional |= check_unified_case010(root, errors)
     protected = check_protection(root, mapping.get('protection_revision', mapping['source_revision']), errors, inventory, additional)
     check_copy_hygiene(root, (*PAGES, CONCEPT_FIGURE, 'docs/_meta/claims.json', 'docs/_meta/MAINTENANCE.md'), errors)
     downloads = check_packages(root, mapping, errors)

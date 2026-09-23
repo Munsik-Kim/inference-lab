@@ -1,0 +1,1412 @@
+{
+  "schema": "case010-v2-independent-scalar-audit-v1",
+  "status": "PASS",
+  "cells": [
+    {
+      "model_seed": 0,
+      "arm": "LOWRANK_4_8_R2",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        1,
+        2,
+        3,
+        10,
+        17,
+        47,
+        131,
+        263,
+        525,
+        978,
+        1024,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 277.46875,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 2033,
+        "shared_bytes": 32409,
+        "total_bytes": {
+          "1": 34442,
+          "16": 64937,
+          "128": 292633
+        },
+        "payload_bytes": 2081792,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed0/LOWRANK_4_8_R2/initial_payload.bin",
+            "bytes": 2033,
+            "sha256": "42e4ffdfe30928e52d119a36f1640b6eee5fe5387225af4aeb8a85caf62eb09f"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed0/LOWRANK_4_8_R2.json",
+            "bytes": 1403,
+            "sha256": "e0f5b8e83f8d59b301d3010a7ae1d97d53631c7bbea75a5acc0479f3961d8f39"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed0/LOWRANK_4_8_R2.basis.bin",
+            "bytes": 1536,
+            "sha256": "b0e9f0f7b69c7b9b3211c4674d60223453740cd029f55190e6784c7fe5283870"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed0/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed0/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "207aefd8c591da3da58867d22afa92ddbea2b2487eeda7a4f3b3065d56cb89f5"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "fde02869138f3a015344b0be5c3c444c13da5002db71b293fa2051adeb6eec4a",
+        "predictions.npz": "cf6f41876476d0a1bcd2be1817ef2088e24c34718c3b624f7f1a516d485d54a0"
+      },
+      "cell": "seed0/LOWRANK_4_8_R2"
+    },
+    {
+      "model_seed": 0,
+      "arm": "MIXED_5_6_BUDGET",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        0,
+        0,
+        3,
+        3,
+        16,
+        38,
+        115,
+        248,
+        531,
+        1001,
+        1024,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 268.1962890625,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 2043,
+        "shared_bytes": 30965,
+        "total_bytes": {
+          "1": 33008,
+          "16": 63653,
+          "128": 292469
+        },
+        "payload_bytes": 2092032,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed0/MIXED_5_6_BUDGET/initial_payload.bin",
+            "bytes": 2043,
+            "sha256": "1d78a9f93577c33d3fb5d0b1a880934e1eee0e4c4e7b7ec9633a840722cc2e47"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed0/MIXED_5_6_BUDGET.json",
+            "bytes": 1495,
+            "sha256": "455043efa4c095c87bb03163f0d331bf784743a435b5f75076d02a037a134f7b"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed0/MIXED_5_6_BUDGET.basis.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed0/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed0/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "207aefd8c591da3da58867d22afa92ddbea2b2487eeda7a4f3b3065d56cb89f5"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "a1692d67671afe4ef8dca61404b42415544c18394b0ba4d283086a52841a7eb9",
+        "predictions.npz": "e0f21bca60f14b3228900f0ade8768bd28ae1e3ee9408c1fdf834d29ecccaf61"
+      },
+      "cell": "seed0/MIXED_5_6_BUDGET"
+    },
+    {
+      "model_seed": 0,
+      "arm": "NATIVE_FP32",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        0,
+        1,
+        1,
+        3,
+        14,
+        36,
+        102,
+        208,
+        472,
+        972,
+        1024,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 288.568359375,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 12305,
+        "shared_bytes": 30344,
+        "total_bytes": {
+          "1": 42649,
+          "16": 227224,
+          "128": 1605384
+        },
+        "payload_bytes": 12600320,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed0/NATIVE_FP32/initial_payload.bin",
+            "bytes": 12305,
+            "sha256": "01cd72d3fbfcc0357468a2f85c5b331239a229e1ba78f96ec1dcae7511bab7bc"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed0/NATIVE_FP32.json",
+            "bytes": 874,
+            "sha256": "ff04e0a6cc760b35821fc2de326d5f54e5cc8a208c9302e1b872ccffeb843778"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed0/NATIVE_FP32.basis.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed0/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed0/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "207aefd8c591da3da58867d22afa92ddbea2b2487eeda7a4f3b3065d56cb89f5"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "e28b073227764618e6808df7093f3f4c0b32b4beb1e9a9c8958882542f4149de",
+        "predictions.npz": "2caede14f161773b7c02c5aa2d661d4631cfe6fd97cfb2b7127423f908714bbd"
+      },
+      "cell": "seed0/NATIVE_FP32"
+    },
+    {
+      "model_seed": 0,
+      "arm": "UNIFORM_5",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        0,
+        1,
+        5,
+        15,
+        29,
+        67,
+        172,
+        339,
+        661,
+        1012,
+        1024,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 242.845703125,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 1985,
+        "shared_bytes": 30560,
+        "total_bytes": {
+          "1": 32545,
+          "16": 62320,
+          "128": 284640
+        },
+        "payload_bytes": 2032640,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed0/UNIFORM_5/initial_payload.bin",
+            "bytes": 1985,
+            "sha256": "90da4de3496968860ceef28414245ed22bb96301c082f06a197cc350345fb064"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed0/UNIFORM_5.json",
+            "bytes": 1090,
+            "sha256": "4c7b19827b0b9c38ff04132ddf114d08919e09ad7bbd005558a1b2e3509e6370"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed0/UNIFORM_5.basis.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed0/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed0/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "207aefd8c591da3da58867d22afa92ddbea2b2487eeda7a4f3b3065d56cb89f5"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "98d656b3bf4b4b2e88b32e92fc5304890ed0589b137929a2007bf7478db702a5",
+        "predictions.npz": "bbce38d921efefe18f57669e66ce3225d9e00ac456113639b38286f3aeec6a53"
+      },
+      "cell": "seed0/UNIFORM_5"
+    },
+    {
+      "model_seed": 0,
+      "arm": "UNIFORM_8",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        0,
+        1,
+        1,
+        4,
+        14,
+        35,
+        101,
+        211,
+        474,
+        972,
+        1024,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 288.1201171875,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 3137,
+        "shared_bytes": 30560,
+        "total_bytes": {
+          "1": 33697,
+          "16": 80752,
+          "128": 432096
+        },
+        "payload_bytes": 3212288,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed0/UNIFORM_8/initial_payload.bin",
+            "bytes": 3137,
+            "sha256": "824de97794fdfa85d9dc86f0f82dea496e233ebf1e5a6106b396e2e14ad7a561"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed0/UNIFORM_8.json",
+            "bytes": 1090,
+            "sha256": "a31744dcadd4febc9fd29613d58cbf16ea9d9d2dff21a3ffd45e016fa3e89477"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed0/UNIFORM_8.basis.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed0/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed0/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "207aefd8c591da3da58867d22afa92ddbea2b2487eeda7a4f3b3065d56cb89f5"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "c3994525ba9b57a71a9c0fb9ef4982c23fa3d87b11df0380063d85b8b58bb84a",
+        "predictions.npz": "8f0daa551099d775bef356f1a1a9d89aef5eca4cdb5d05eb640de3e1a82aed86"
+      },
+      "cell": "seed0/UNIFORM_8"
+    },
+    {
+      "model_seed": 1,
+      "arm": "LOWRANK_4_8_R2",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        1,
+        2,
+        6,
+        25,
+        49,
+        105,
+        253,
+        439,
+        736,
+        1018,
+        1024,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 219.9677734375,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 2033,
+        "shared_bytes": 32409,
+        "total_bytes": {
+          "1": 34442,
+          "16": 64937,
+          "128": 292633
+        },
+        "payload_bytes": 2081792,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed1/LOWRANK_4_8_R2/initial_payload.bin",
+            "bytes": 2033,
+            "sha256": "42e4ffdfe30928e52d119a36f1640b6eee5fe5387225af4aeb8a85caf62eb09f"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed1/LOWRANK_4_8_R2.json",
+            "bytes": 1403,
+            "sha256": "13aaa0d2ff1f33e54d13161ad58a7c18607cc0a97ee679418b95671f8642ff7c"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed1/LOWRANK_4_8_R2.basis.bin",
+            "bytes": 1536,
+            "sha256": "180c6dc2b8c8802b63958bb43ee80038d56b8e562ac2a2ed9ec507dc7f405456"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed1/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed1/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "09259c62f44051ad9183180b2fb4c6d54ed3326a699bc2e74197dfe856480975"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "2b26d1ce150700e29ccbb828f3ec618b889a313d3882db87ca72b948bef012c0",
+        "predictions.npz": "677e81d8ced9e4aa08831b29d3a1b0583009c52f25a0babf34f0c02f4d60b959"
+      },
+      "cell": "seed1/LOWRANK_4_8_R2"
+    },
+    {
+      "model_seed": 1,
+      "arm": "MIXED_5_6_BUDGET",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        0,
+        0,
+        2,
+        25,
+        61,
+        103,
+        237,
+        383,
+        650,
+        1002,
+        1024,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 240.7294921875,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 2043,
+        "shared_bytes": 30965,
+        "total_bytes": {
+          "1": 33008,
+          "16": 63653,
+          "128": 292469
+        },
+        "payload_bytes": 2092032,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed1/MIXED_5_6_BUDGET/initial_payload.bin",
+            "bytes": 2043,
+            "sha256": "e6239f4a181f6bd4b0c99bc4099efdfe369822bb08ed944eed985ab909305a26"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed1/MIXED_5_6_BUDGET.json",
+            "bytes": 1495,
+            "sha256": "db3e7426f1de5f60e1c7b3549b5837ee1bac7672bc767475bf2bcded77914652"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed1/MIXED_5_6_BUDGET.basis.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed1/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed1/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "09259c62f44051ad9183180b2fb4c6d54ed3326a699bc2e74197dfe856480975"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "f96a24c848661e669edfd73d12730b0d69d18a0af3c7744b9df87eb1465fb030",
+        "predictions.npz": "c1fa8d59e7dc2e9fbce82885a5e0f41912e3ebb8bf84845dbacfbfe0d90f6f1d"
+      },
+      "cell": "seed1/MIXED_5_6_BUDGET"
+    },
+    {
+      "model_seed": 1,
+      "arm": "NATIVE_FP32",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        0,
+        1,
+        4,
+        18,
+        40,
+        77,
+        183,
+        296,
+        529,
+        971,
+        1023,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 271.154296875,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 12305,
+        "shared_bytes": 30344,
+        "total_bytes": {
+          "1": 42649,
+          "16": 227224,
+          "128": 1605384
+        },
+        "payload_bytes": 12600320,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed1/NATIVE_FP32/initial_payload.bin",
+            "bytes": 12305,
+            "sha256": "01cd72d3fbfcc0357468a2f85c5b331239a229e1ba78f96ec1dcae7511bab7bc"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed1/NATIVE_FP32.json",
+            "bytes": 874,
+            "sha256": "ff04e0a6cc760b35821fc2de326d5f54e5cc8a208c9302e1b872ccffeb843778"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed1/NATIVE_FP32.basis.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed1/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed1/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "09259c62f44051ad9183180b2fb4c6d54ed3326a699bc2e74197dfe856480975"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "42c1637a6d2306a25a7e8e4dbc98ea27f9447d230d2246fa29b1c4527c254554",
+        "predictions.npz": "4a6855c5834fe41998370df433b5256789f8209db399592a8cb397d7f69d8c08"
+      },
+      "cell": "seed1/NATIVE_FP32"
+    },
+    {
+      "model_seed": 1,
+      "arm": "UNIFORM_5",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        1,
+        2,
+        14,
+        50,
+        100,
+        158,
+        307,
+        454,
+        723,
+        1004,
+        1024,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 220.3466796875,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 1985,
+        "shared_bytes": 30560,
+        "total_bytes": {
+          "1": 32545,
+          "16": 62320,
+          "128": 284640
+        },
+        "payload_bytes": 2032640,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed1/UNIFORM_5/initial_payload.bin",
+            "bytes": 1985,
+            "sha256": "90da4de3496968860ceef28414245ed22bb96301c082f06a197cc350345fb064"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed1/UNIFORM_5.json",
+            "bytes": 1090,
+            "sha256": "4c7b19827b0b9c38ff04132ddf114d08919e09ad7bbd005558a1b2e3509e6370"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed1/UNIFORM_5.basis.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed1/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed1/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "09259c62f44051ad9183180b2fb4c6d54ed3326a699bc2e74197dfe856480975"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "8dd31a57840f02f89c4842bb616d81c4e08180950d56a9b55e606491643594bf",
+        "predictions.npz": "a0882cff419d7dcac3db6b508d37b961902de6fd59654fa3bd6f8bcc1d8e0bf0"
+      },
+      "cell": "seed1/UNIFORM_5"
+    },
+    {
+      "model_seed": 1,
+      "arm": "UNIFORM_8",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        0,
+        1,
+        3,
+        17,
+        40,
+        78,
+        188,
+        308,
+        533,
+        970,
+        1023,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 271.5703125,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 3137,
+        "shared_bytes": 30560,
+        "total_bytes": {
+          "1": 33697,
+          "16": 80752,
+          "128": 432096
+        },
+        "payload_bytes": 3212288,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed1/UNIFORM_8/initial_payload.bin",
+            "bytes": 3137,
+            "sha256": "824de97794fdfa85d9dc86f0f82dea496e233ebf1e5a6106b396e2e14ad7a561"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed1/UNIFORM_8.json",
+            "bytes": 1090,
+            "sha256": "a31744dcadd4febc9fd29613d58cbf16ea9d9d2dff21a3ffd45e016fa3e89477"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed1/UNIFORM_8.basis.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed1/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed1/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "09259c62f44051ad9183180b2fb4c6d54ed3326a699bc2e74197dfe856480975"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "e4fee85dcaa1b5eb9bee313ed61ff9087a7d49f668779bd4a05d05919beef759",
+        "predictions.npz": "75aeb4d1272cb19de08802fc3331954857fc36f58f7c5247306550797edabfbb"
+      },
+      "cell": "seed1/UNIFORM_8"
+    },
+    {
+      "model_seed": 2,
+      "arm": "LOWRANK_4_8_R2",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        7,
+        25,
+        101,
+        258,
+        656,
+        1023,
+        1024,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 235.5966796875,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 2033,
+        "shared_bytes": 32409,
+        "total_bytes": {
+          "1": 34442,
+          "16": 64937,
+          "128": 292633
+        },
+        "payload_bytes": 2081792,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed2/LOWRANK_4_8_R2/initial_payload.bin",
+            "bytes": 2033,
+            "sha256": "42e4ffdfe30928e52d119a36f1640b6eee5fe5387225af4aeb8a85caf62eb09f"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed2/LOWRANK_4_8_R2.json",
+            "bytes": 1403,
+            "sha256": "275b07c631e8e16d724f9e127b5dd8efba710c19ac8d71e1280a1c0d6d13460a"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed2/LOWRANK_4_8_R2.basis.bin",
+            "bytes": 1536,
+            "sha256": "d52b4c414be0975a2cf730b68ac1528315a29709cf58e38f60de5ca432802a15"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed2/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed2/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "d600ef70dd9c8d0b496e8c0c366940c725ba94d760344875dba7a5d1674f9e76"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "61fba7eaa458199854a90fc0ca45f4007cf3d51b49351ec04a84e36e0e81dab3",
+        "predictions.npz": "151019f5747b969c7db32df6b2dabd1a92927f75918f175326f7b9f75bafc9f3"
+      },
+      "cell": "seed2/LOWRANK_4_8_R2"
+    },
+    {
+      "model_seed": 2,
+      "arm": "MIXED_5_6_BUDGET",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        12,
+        33,
+        124,
+        301,
+        702,
+        1023,
+        1024,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 230.6875,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 2043,
+        "shared_bytes": 30965,
+        "total_bytes": {
+          "1": 33008,
+          "16": 63653,
+          "128": 292469
+        },
+        "payload_bytes": 2092032,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed2/MIXED_5_6_BUDGET/initial_payload.bin",
+            "bytes": 2043,
+            "sha256": "a0f0b76ab3ed7a0730d1381d672f377092671a041997f713dc91d310b4d0ad93"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed2/MIXED_5_6_BUDGET.json",
+            "bytes": 1495,
+            "sha256": "c126a1570d3a6712e17e6a0672861ade71d98dfde1f1cbe96b36f6518ea2f521"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed2/MIXED_5_6_BUDGET.basis.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed2/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed2/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "d600ef70dd9c8d0b496e8c0c366940c725ba94d760344875dba7a5d1674f9e76"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "31612e9a80c57ed2996f52e13a5eba5a06de05dde1f555071b773170f1abaf01",
+        "predictions.npz": "3ba6a4dbf39b90b29d4d938908cdba06b141e18209f84403aa7ea199e7833f8e"
+      },
+      "cell": "seed2/MIXED_5_6_BUDGET"
+    },
+    {
+      "model_seed": 2,
+      "arm": "NATIVE_FP32",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        10,
+        24,
+        116,
+        268,
+        654,
+        1024,
+        1024,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 238.2802734375,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 12305,
+        "shared_bytes": 30344,
+        "total_bytes": {
+          "1": 42649,
+          "16": 227224,
+          "128": 1605384
+        },
+        "payload_bytes": 12600320,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed2/NATIVE_FP32/initial_payload.bin",
+            "bytes": 12305,
+            "sha256": "01cd72d3fbfcc0357468a2f85c5b331239a229e1ba78f96ec1dcae7511bab7bc"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed2/NATIVE_FP32.json",
+            "bytes": 874,
+            "sha256": "ff04e0a6cc760b35821fc2de326d5f54e5cc8a208c9302e1b872ccffeb843778"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed2/NATIVE_FP32.basis.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed2/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed2/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "d600ef70dd9c8d0b496e8c0c366940c725ba94d760344875dba7a5d1674f9e76"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "5b96d986c16bc424d8adb2cb0dc1b72736b8fe633b8427381a342829f2fdf693",
+        "predictions.npz": "16e947d4aed293c7bf2ad7147f9f130a4c91098606961e06d90e6a05626513b2"
+      },
+      "cell": "seed2/NATIVE_FP32"
+    },
+    {
+      "model_seed": 2,
+      "arm": "UNIFORM_5",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        0,
+        0,
+        1,
+        5,
+        16,
+        39,
+        139,
+        324,
+        743,
+        1024,
+        1024,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 222.765625,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 1985,
+        "shared_bytes": 30560,
+        "total_bytes": {
+          "1": 32545,
+          "16": 62320,
+          "128": 284640
+        },
+        "payload_bytes": 2032640,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed2/UNIFORM_5/initial_payload.bin",
+            "bytes": 1985,
+            "sha256": "90da4de3496968860ceef28414245ed22bb96301c082f06a197cc350345fb064"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed2/UNIFORM_5.json",
+            "bytes": 1090,
+            "sha256": "4c7b19827b0b9c38ff04132ddf114d08919e09ad7bbd005558a1b2e3509e6370"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed2/UNIFORM_5.basis.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed2/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed2/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "d600ef70dd9c8d0b496e8c0c366940c725ba94d760344875dba7a5d1674f9e76"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "684ef6dea7a32c41902aaa79a403106ed4faf3cedc97930ed9a2e528242b605d",
+        "predictions.npz": "1f67492dfa847ac097472236326faad6418208b426f4afbfecaded122347e39e"
+      },
+      "cell": "seed2/UNIFORM_5"
+    },
+    {
+      "model_seed": 2,
+      "arm": "UNIFORM_8",
+      "cohort": "fresh",
+      "N": 1024,
+      "T": 2048,
+      "first_failures": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        11,
+        25,
+        116,
+        268,
+        659,
+        1024,
+        1024,
+        1024
+      ],
+      "right_censored_sequences": 0,
+      "RMST0": 237.4931640625,
+      "terminal_code_counts": {
+        "0": 1024,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "invalid_predictions_including_BOS": 0,
+      "ledger": {
+        "per_stream_bytes": 3137,
+        "shared_bytes": 30560,
+        "total_bytes": {
+          "1": 33697,
+          "16": 80752,
+          "128": 432096
+        },
+        "payload_bytes": 3212288,
+        "scope": "independent component and denominator arithmetic; no actual cache/config bytes supplied to this check"
+      },
+      "status": "PASS",
+      "gold_bytes_sha256": "933131e4b8221f27a7764995094d72c67801a155d605aca3da5df9850c57b6e6",
+      "input_identity": {
+        "manifest_sha256": "8d5f6f47824062244113907121fb573a52f5429cb8489299a54376dd84c41d4d",
+        "gold_file_sha256": "4912613db920e49105ecd86878fcf78b825a0dc4a5c0926f93d300ea55d79034",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31"
+      },
+      "actual_byte_verification": {
+        "status": "PASS",
+        "artifacts": {
+          "initial_payload": {
+            "path": "results/fresh/seed2/UNIFORM_8/initial_payload.bin",
+            "bytes": 3137,
+            "sha256": "824de97794fdfa85d9dc86f0f82dea496e233ebf1e5a6106b396e2e14ad7a561"
+          },
+          "codec_config": {
+            "path": "inputs/codecs/seed2/UNIFORM_8.json",
+            "bytes": 1090,
+            "sha256": "a31744dcadd4febc9fd29613d58cbf16ea9d9d2dff21a3ffd45e016fa3e89477"
+          },
+          "basis": {
+            "path": "inputs/codecs/seed2/UNIFORM_8.basis.bin",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "token_config": {
+            "path": "inputs/v1_calibration/seed2/token_coefficients.json",
+            "bytes": 540,
+            "sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951"
+          },
+          "token_data": {
+            "path": "inputs/v1_calibration/seed2/token_coefficients.bin",
+            "bytes": 28560,
+            "sha256": "d600ef70dd9c8d0b496e8c0c366940c725ba94d760344875dba7a5d1674f9e76"
+          },
+          "runtime_config": {
+            "path": "inputs/runtime.json",
+            "bytes": 370,
+            "sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af"
+          }
+        },
+        "scope": "actual one-stream initial payload and shared config/basis/table/runtime bytes; final hidden-state body excluded"
+      },
+      "artifacts": {
+        "summary.json": "9b6a0620e88270ed681a28f8ef4b5ea3564d79c01f27cf36201180eda552bd10",
+        "predictions.npz": "278121074d92ef46734a3d27f86b380e6b537eef248b34ab3bc26352c0f33213"
+      },
+      "cell": "seed2/UNIFORM_8"
+    }
+  ],
+  "missing_cells": [],
+  "pending_cell_paths": [],
+  "verified_cells": 15,
+  "sequences_per_cell": 1024,
+  "family_size": 195,
+  "auditor_sha256": "2b54a350283ff1e9d2fd64956de103a6ca08da1497d54d6534e7e8a113744550",
+  "numpy_version": "2.3.5",
+  "CP_validation": "independent finite-binomial endpoint equation with log-combinations; no root metrics import",
+  "model_inference_executed": false,
+  "excluded_streams": 0,
+  "scope": "retained predictions/gold and frozen input identities, packed correctness, absorbing terminal outputs, scalar reconstruction, actual fixed-size initial cache/shared bytes, and ledger arithmetic"
+}

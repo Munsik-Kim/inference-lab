@@ -1,0 +1,169 @@
+{
+  "kind": "CPU_COMPLETE_CALL_REMEASUREMENT",
+  "model_seed": 1,
+  "checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+  "protocol_sha256": "3f5299e9bdaeb2c10b2a68281f05ca559402feeea9cd3d7cba5807f24546e523",
+  "input_hash": "83f8479c43440ee538bc0dc31e143bdb1aa72b621ed7f52f7cde33d86014dfa6",
+  "N": 16,
+  "T": 128,
+  "generator_seed": 2002,
+  "threads": 2,
+  "timed": "transition + reconstruction/projection + packing + failure status + original readout; BOS included in call, denominator group tokens only",
+  "excluded": "model/table loading, gold/shadow/diagnostics, disk I/O",
+  "warmup": "one 4-group-token call per arm",
+  "repeats": 3,
+  "rows": [
+    {
+      "arm": "NATIVE_FP32",
+      "repeat": 0,
+      "seconds": 0.058115660001931246,
+      "ms_per_group_token": 0.02837678711031799,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "UNIFORM_8",
+      "repeat": 0,
+      "seconds": 0.184263925999403,
+      "ms_per_group_token": 0.089972620116896,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "UNIFORM_5",
+      "repeat": 0,
+      "seconds": 0.24885738699958893,
+      "ms_per_group_token": 0.12151239599589303,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "LOWRANK_4_8_R2",
+      "repeat": 0,
+      "seconds": 0.3054590769970673,
+      "ms_per_group_token": 0.14914993993997427,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "MIXED_5_6_BUDGET",
+      "repeat": 0,
+      "seconds": 0.24034295000092243,
+      "ms_per_group_token": 0.1173549560551379,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "NATIVE_FP32",
+      "repeat": 1,
+      "seconds": 0.0590380039975571,
+      "ms_per_group_token": 0.028827150389432177,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "UNIFORM_8",
+      "repeat": 1,
+      "seconds": 0.19968214300024556,
+      "ms_per_group_token": 0.09750104638683865,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "UNIFORM_5",
+      "repeat": 1,
+      "seconds": 0.2402479400006996,
+      "ms_per_group_token": 0.1173085644534666,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "LOWRANK_4_8_R2",
+      "repeat": 1,
+      "seconds": 0.2979211239980941,
+      "ms_per_group_token": 0.1454692988271944,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "MIXED_5_6_BUDGET",
+      "repeat": 1,
+      "seconds": 0.23758367600021302,
+      "ms_per_group_token": 0.11600765429697901,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "NATIVE_FP32",
+      "repeat": 2,
+      "seconds": 0.05892902800042066,
+      "ms_per_group_token": 0.0287739394533304,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "UNIFORM_8",
+      "repeat": 2,
+      "seconds": 0.2043938610004261,
+      "ms_per_group_token": 0.09980168994161431,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "UNIFORM_5",
+      "repeat": 2,
+      "seconds": 0.24697788200137438,
+      "ms_per_group_token": 0.12059466894598359,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "LOWRANK_4_8_R2",
+      "repeat": 2,
+      "seconds": 0.3233883089997107,
+      "ms_per_group_token": 0.157904447753765,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    },
+    {
+      "arm": "MIXED_5_6_BUDGET",
+      "repeat": 2,
+      "seconds": 0.23705874900042545,
+      "ms_per_group_token": 0.11575134228536399,
+      "active_updates": 2064,
+      "terminal_noops": 0,
+      "invalid_readout_tokens": 0,
+      "terminal_streams": 0
+    }
+  ],
+  "scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+  "temporary_memory": "intermediate floating arrays are transient; no RAM peak measurement performed; not serialized cache savings"
+}

@@ -1,0 +1,30 @@
+{
+  "scope": "Independent read-only agent reviews; not new tests or model runs",
+  "reviews": [
+    {
+      "area": "failure runtime and evaluation checkpoint",
+      "status": "NO_BLOCKER_FOUND",
+      "scope": "row atomicity, absorbing status, cursor/RNG, B continuation, gold separation, validated checkpoint resume",
+      "inference_runs": 0
+    },
+    {
+      "area": "figures and bilingual interpretation",
+      "status": "TWO_COPY_CORRECTIONS_APPLIED",
+      "changes": [
+        "Restrict fixed-projection statement to FP32 coefficient construction; FP64 readout recomputes output sigmoid/projection/norm/MLP.",
+        "Describe changing pre/post-failure conditional populations and valid sample counts."
+      ],
+      "science_source_changed": false
+    },
+    {
+      "area": "package and reproduction",
+      "status": "DOCUMENTATION_GAP_FIXED",
+      "changes": [
+        "Added four actual-failure boundary appendix with private dependency requirements.",
+        "Use module invocation for report/figure regeneration."
+      ],
+      "inference_runs": 0
+    }
+  ],
+  "semantic_parity": "editorial review; not an automatic proof"
+}

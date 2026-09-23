@@ -1,4 +1,4 @@
-# 로컬 추론을 조사하는 여덟 질문
+# 추론·모델 변경을 조사하는 열 가지 질문
 
 [English](../en/CASEBOOK.md) | 한국어 · [홈](../../README.ko.md)
 
@@ -16,6 +16,8 @@
 - [006 — 점수와 개별 답변 선택은 언제 달라지는가?](#case-006)
 - [007 — 함께 지울 그룹을 고려하면 더 나은 작은 MLP를 고를 수 있는가?](#case-007)
 - [008 — 양자화 저장·재실행과 작은 MLP 복구](#case-008)
+- [009 — 긴 생성과 동시 요청의 비용은?](#case-009)
+- [010 — 저비트 state의 저장·재시작과 기억 수명](#case-010)
 
 <a id="case-001"></a>
 ## 001 — 커널 선택 조건을 고치면 실행할 수 있는가?
@@ -553,3 +555,24 @@ Q 전체 NLL은 낮아졌지만 네 보기 조건부 NLL은 높아졌습니다. 
 - **최고점 동률:** 기록된 계산에서 허용 선택지의 최대 점수가 정확히 같은 경우입니다.
 - **사후 진단:** 결과를 본 뒤 동기가 생긴 분석으로, 원래 고정 평가와 구분합니다.
 - **Readout:** 최종 hidden state를 어휘 점수로 바꾸는 출력 projection입니다.
+
+<a id="case-009"></a>
+## 009 — 긴 생성과 동시 요청
+
+기존 Qwen 4B BF16/W4 저장본의 graph/eager 실행과 공식 과제 기록을 비교합니다. 세 server round의 비용 곡선과, 계산된 점수·프로세스 종료 실패를 함께 확인할 수 있습니다.
+
+[설계와 결과](../../cases/009-q-serving-quality/REPORT.ko.md) · [CPU 검산](../../cases/009-q-serving-quality/REPRODUCTION.md)
+
+<a id="case-010"></a>
+## 010 — 저정밀 recurrent state의 저장·재시작과 기억 수명
+
+<!-- claims: c010-state-bytes -->
+**목표·구현:** 반복 state를 저비트로 저장하고 실패·난수·커서를 함께 복원합니다. 온라인 잔차 보정, 혼합정밀도, 첫 판독 실패와 정확한 바이트 장부를 비교하는 도구입니다.
+
+**데이터·설계:** S3 group tracking을 학습한 같은 세 checkpoint를 사용합니다. 단계 A(v1)는 저장 방식 탐색과 비교군 보충이며 입력 512개/checkpoint입니다. 단계 B(v2)는 실패 보존 계약을 수정하고 새 입력 1,024개/checkpoint를 다섯 설정에서 평가했습니다. 두 코호트·546/630/195 신뢰 family를 합치지 않습니다.
+
+**검증·결과:** 현재 경로는 v2입니다. stream별 직렬화 state가 Native 12,305 → INT8 3,137 bytes(약 74.5% 감소)이며 평균 연속 정답 길이의 점추정 차이는 세 checkpoint 각각 1token 미만입니다. 새 프로세스 재시작의 바이트·예측 대응은 합성 계약 검사와 과거 실제 입력 진단으로 나눠 기록했습니다.
+
+**해석·결론:** 같은 N128 저장 한도에서 Rank2가 Mixed5/6보다 일관되게 우수하지 않았습니다. 평균 길이·경험적 horizon·신뢰지원 grid 하한은 다른 지표입니다. 실패를 저장하는 수정은 실행 계약의 개선이며 기억 수명 향상과 별도로 평가합니다.
+
+[통합 보고서](../../cases/010-ckda-finite-precision-memory-horizon/REPORT.ko.md) · [현재 구현](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [CPU 검산](../../cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.ko.md) · [원형 대응표](../../cases/010-ckda-finite-precision-memory-horizon/VERSION_MAP.md)

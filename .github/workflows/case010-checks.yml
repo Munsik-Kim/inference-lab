@@ -1,0 +1,43 @@
+name: Case010 snapshot and CPU scalar checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: case010-cpu-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      HF_HUB_OFFLINE: '1'
+      TRANSFORMERS_OFFLINE: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6; existing verified project pin
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6; existing verified project pin
+        with:
+          python-version: '3.12.14'
+      - name: Install only the recorded CPU array dependency
+        run: python -m pip install numpy==2.3.5
+      - name: Immutable snapshots, original scalar auditors and synthetic restart
+        run: python -B cases/010-ckda-finite-precision-memory-horizon/scripts/check_cpu.py --output "$RUNNER_TEMP/case010-cpu"
+      - name: Retain CPU receipts (no model or runtime tensors)
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4; existing verified project pin
+        with:
+          name: case010-cpu-receipts
+          path: |
+            ${{ runner.temp }}/case010-cpu/*.json
+            ${{ runner.temp }}/case010-cpu/*.log
+          retention-days: 14
+          if-no-files-found: warn

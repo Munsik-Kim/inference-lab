@@ -170,3 +170,14 @@ Read the [structured report](../../cases/008-build-reconstruct-reload/REPORT.md)
 ## New graph-serving and official-task study
 
 [Case009 reproduction](../../cases/009-q-serving-quality/REPRODUCTION.md) separates the preserved serving environment, a new harness environment and the CPU package. Its [full curves and quality report](../../cases/009-q-serving-quality/REPORT.md) also records abnormal finalization in some quality processes. Public scalar reanalysis does not require downloading the benchmark datasets or models.
+
+
+<a id="case010-cpu"></a>
+## Case010: state and result checks without a model
+
+[Unified reproduction guide](../../cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.md) separates historical-layout restoration, scalar audits and synthetic failure-aware restart tests. These need no model or GPU; checkpoint-based research replay is a separate path.
+
+```bash
+python3 -B cases/010-ckda-finite-precision-memory-horizon/scripts/verify_unified.py
+python3 -B cases/010-ckda-finite-precision-memory-horizon/scripts/restore_workspace.py --output /tmp/diova-case010-restored-new
+```

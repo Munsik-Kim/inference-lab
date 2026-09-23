@@ -1,0 +1,1631 @@
+{
+  "schema": "case010-v2-complete-fresh-aggregate-v1",
+  "status": "PASS",
+  "fresh_cells": 15,
+  "sequences_per_checkpoint_arm": 1024,
+  "pooled_checkpoint_estimate": false,
+  "simultaneous_grid_family": 195,
+  "paired_comparisons": [
+    {
+      "pair_index": 0,
+      "candidate": "LOWRANK_4_8_R2",
+      "baseline": "MIXED_5_6_BUDGET",
+      "model_seed": 0,
+      "N": 1024,
+      "RMST0_delta": 9.2724609375,
+      "pointwise_95_CI": [
+        1.0679199218750002,
+        17.352441406249987
+      ],
+      "bootstrap_seed": 60101,
+      "bootstrap_repeats": 5000,
+      "unit": "independent input sequence within one fixed checkpoint",
+      "positive_difference_sequences": 501,
+      "negative_difference_sequences": 496,
+      "grid_risk_difference": [
+        {
+          "horizon": 32,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 48,
+          "candidate_minus_baseline_F": 0.0009765625
+        },
+        {
+          "horizon": 64,
+          "candidate_minus_baseline_F": 0.001953125
+        },
+        {
+          "horizon": 80,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 96,
+          "candidate_minus_baseline_F": 0.0068359375
+        },
+        {
+          "horizon": 112,
+          "candidate_minus_baseline_F": 0.0009765625
+        },
+        {
+          "horizon": 128,
+          "candidate_minus_baseline_F": 0.0087890625
+        },
+        {
+          "horizon": 160,
+          "candidate_minus_baseline_F": 0.015625
+        },
+        {
+          "horizon": 192,
+          "candidate_minus_baseline_F": 0.0146484375
+        },
+        {
+          "horizon": 256,
+          "candidate_minus_baseline_F": -0.005859375
+        },
+        {
+          "horizon": 512,
+          "candidate_minus_baseline_F": -0.0224609375
+        },
+        {
+          "horizon": 1024,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 2048,
+          "candidate_minus_baseline_F": 0.0
+        }
+      ],
+      "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+      "checkpoint_pooling": false
+    },
+    {
+      "pair_index": 1,
+      "candidate": "LOWRANK_4_8_R2",
+      "baseline": "UNIFORM_5",
+      "model_seed": 0,
+      "N": 1024,
+      "RMST0_delta": 34.623046875,
+      "pointwise_95_CI": [
+        26.25654296875,
+        43.02966308593749
+      ],
+      "bootstrap_seed": 60102,
+      "bootstrap_repeats": 5000,
+      "unit": "independent input sequence within one fixed checkpoint",
+      "positive_difference_sequences": 596,
+      "negative_difference_sequences": 407,
+      "grid_risk_difference": [
+        {
+          "horizon": 32,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 48,
+          "candidate_minus_baseline_F": 0.0009765625
+        },
+        {
+          "horizon": 64,
+          "candidate_minus_baseline_F": 0.0009765625
+        },
+        {
+          "horizon": 80,
+          "candidate_minus_baseline_F": -0.001953125
+        },
+        {
+          "horizon": 96,
+          "candidate_minus_baseline_F": -0.0048828125
+        },
+        {
+          "horizon": 112,
+          "candidate_minus_baseline_F": -0.01171875
+        },
+        {
+          "horizon": 128,
+          "candidate_minus_baseline_F": -0.01953125
+        },
+        {
+          "horizon": 160,
+          "candidate_minus_baseline_F": -0.0400390625
+        },
+        {
+          "horizon": 192,
+          "candidate_minus_baseline_F": -0.07421875
+        },
+        {
+          "horizon": 256,
+          "candidate_minus_baseline_F": -0.1328125
+        },
+        {
+          "horizon": 512,
+          "candidate_minus_baseline_F": -0.033203125
+        },
+        {
+          "horizon": 1024,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 2048,
+          "candidate_minus_baseline_F": 0.0
+        }
+      ],
+      "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+      "checkpoint_pooling": false
+    },
+    {
+      "pair_index": 2,
+      "candidate": "UNIFORM_8",
+      "baseline": "NATIVE_FP32",
+      "model_seed": 0,
+      "N": 1024,
+      "RMST0_delta": -0.4482421875,
+      "pointwise_95_CI": [
+        -2.644677734375,
+        1.8496582031249993
+      ],
+      "bootstrap_seed": 60103,
+      "bootstrap_repeats": 5000,
+      "unit": "independent input sequence within one fixed checkpoint",
+      "positive_difference_sequences": 142,
+      "negative_difference_sequences": 153,
+      "grid_risk_difference": [
+        {
+          "horizon": 32,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 48,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 64,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 80,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 96,
+          "candidate_minus_baseline_F": 0.0009765625
+        },
+        {
+          "horizon": 112,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 128,
+          "candidate_minus_baseline_F": -0.0009765625
+        },
+        {
+          "horizon": 160,
+          "candidate_minus_baseline_F": -0.0009765625
+        },
+        {
+          "horizon": 192,
+          "candidate_minus_baseline_F": 0.0029296875
+        },
+        {
+          "horizon": 256,
+          "candidate_minus_baseline_F": 0.001953125
+        },
+        {
+          "horizon": 512,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 1024,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 2048,
+          "candidate_minus_baseline_F": 0.0
+        }
+      ],
+      "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+      "checkpoint_pooling": false
+    },
+    {
+      "pair_index": 0,
+      "candidate": "LOWRANK_4_8_R2",
+      "baseline": "MIXED_5_6_BUDGET",
+      "model_seed": 1,
+      "N": 1024,
+      "RMST0_delta": -20.76171875,
+      "pointwise_95_CI": [
+        -27.4133056640625,
+        -14.204980468750001
+      ],
+      "bootstrap_seed": 60201,
+      "bootstrap_repeats": 5000,
+      "unit": "independent input sequence within one fixed checkpoint",
+      "positive_difference_sequences": 420,
+      "negative_difference_sequences": 557,
+      "grid_risk_difference": [
+        {
+          "horizon": 32,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 48,
+          "candidate_minus_baseline_F": 0.0009765625
+        },
+        {
+          "horizon": 64,
+          "candidate_minus_baseline_F": 0.001953125
+        },
+        {
+          "horizon": 80,
+          "candidate_minus_baseline_F": 0.00390625
+        },
+        {
+          "horizon": 96,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 112,
+          "candidate_minus_baseline_F": -0.01171875
+        },
+        {
+          "horizon": 128,
+          "candidate_minus_baseline_F": 0.001953125
+        },
+        {
+          "horizon": 160,
+          "candidate_minus_baseline_F": 0.015625
+        },
+        {
+          "horizon": 192,
+          "candidate_minus_baseline_F": 0.0546875
+        },
+        {
+          "horizon": 256,
+          "candidate_minus_baseline_F": 0.083984375
+        },
+        {
+          "horizon": 512,
+          "candidate_minus_baseline_F": 0.015625
+        },
+        {
+          "horizon": 1024,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 2048,
+          "candidate_minus_baseline_F": 0.0
+        }
+      ],
+      "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+      "checkpoint_pooling": false
+    },
+    {
+      "pair_index": 1,
+      "candidate": "LOWRANK_4_8_R2",
+      "baseline": "UNIFORM_5",
+      "model_seed": 1,
+      "N": 1024,
+      "RMST0_delta": -0.37890625,
+      "pointwise_95_CI": [
+        -7.1250732421875,
+        6.240551757812495
+      ],
+      "bootstrap_seed": 60202,
+      "bootstrap_repeats": 5000,
+      "unit": "independent input sequence within one fixed checkpoint",
+      "positive_difference_sequences": 527,
+      "negative_difference_sequences": 464,
+      "grid_risk_difference": [
+        {
+          "horizon": 32,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 48,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 64,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 80,
+          "candidate_minus_baseline_F": -0.0078125
+        },
+        {
+          "horizon": 96,
+          "candidate_minus_baseline_F": -0.0244140625
+        },
+        {
+          "horizon": 112,
+          "candidate_minus_baseline_F": -0.0498046875
+        },
+        {
+          "horizon": 128,
+          "candidate_minus_baseline_F": -0.0517578125
+        },
+        {
+          "horizon": 160,
+          "candidate_minus_baseline_F": -0.052734375
+        },
+        {
+          "horizon": 192,
+          "candidate_minus_baseline_F": -0.0146484375
+        },
+        {
+          "horizon": 256,
+          "candidate_minus_baseline_F": 0.0126953125
+        },
+        {
+          "horizon": 512,
+          "candidate_minus_baseline_F": 0.013671875
+        },
+        {
+          "horizon": 1024,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 2048,
+          "candidate_minus_baseline_F": 0.0
+        }
+      ],
+      "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+      "checkpoint_pooling": false
+    },
+    {
+      "pair_index": 2,
+      "candidate": "UNIFORM_8",
+      "baseline": "NATIVE_FP32",
+      "model_seed": 1,
+      "N": 1024,
+      "RMST0_delta": 0.416015625,
+      "pointwise_95_CI": [
+        -2.14169921875,
+        3.0128173828124982
+      ],
+      "bootstrap_seed": 60203,
+      "bootstrap_repeats": 5000,
+      "unit": "independent input sequence within one fixed checkpoint",
+      "positive_difference_sequences": 165,
+      "negative_difference_sequences": 171,
+      "grid_risk_difference": [
+        {
+          "horizon": 32,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 48,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 64,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 80,
+          "candidate_minus_baseline_F": -0.0009765625
+        },
+        {
+          "horizon": 96,
+          "candidate_minus_baseline_F": -0.0009765625
+        },
+        {
+          "horizon": 112,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 128,
+          "candidate_minus_baseline_F": 0.0009765625
+        },
+        {
+          "horizon": 160,
+          "candidate_minus_baseline_F": 0.0048828125
+        },
+        {
+          "horizon": 192,
+          "candidate_minus_baseline_F": 0.01171875
+        },
+        {
+          "horizon": 256,
+          "candidate_minus_baseline_F": 0.00390625
+        },
+        {
+          "horizon": 512,
+          "candidate_minus_baseline_F": -0.0009765625
+        },
+        {
+          "horizon": 1024,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 2048,
+          "candidate_minus_baseline_F": 0.0
+        }
+      ],
+      "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+      "checkpoint_pooling": false
+    },
+    {
+      "pair_index": 0,
+      "candidate": "LOWRANK_4_8_R2",
+      "baseline": "MIXED_5_6_BUDGET",
+      "model_seed": 2,
+      "N": 1024,
+      "RMST0_delta": 4.9091796875,
+      "pointwise_95_CI": [
+        0.7782958984375,
+        8.93525390624999
+      ],
+      "bootstrap_seed": 60301,
+      "bootstrap_repeats": 5000,
+      "unit": "independent input sequence within one fixed checkpoint",
+      "positive_difference_sequences": 515,
+      "negative_difference_sequences": 435,
+      "grid_risk_difference": [
+        {
+          "horizon": 32,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 48,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 64,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 80,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 96,
+          "candidate_minus_baseline_F": -0.0029296875
+        },
+        {
+          "horizon": 112,
+          "candidate_minus_baseline_F": -0.0048828125
+        },
+        {
+          "horizon": 128,
+          "candidate_minus_baseline_F": -0.0078125
+        },
+        {
+          "horizon": 160,
+          "candidate_minus_baseline_F": -0.0224609375
+        },
+        {
+          "horizon": 192,
+          "candidate_minus_baseline_F": -0.0419921875
+        },
+        {
+          "horizon": 256,
+          "candidate_minus_baseline_F": -0.044921875
+        },
+        {
+          "horizon": 512,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 1024,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 2048,
+          "candidate_minus_baseline_F": 0.0
+        }
+      ],
+      "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+      "checkpoint_pooling": false
+    },
+    {
+      "pair_index": 1,
+      "candidate": "LOWRANK_4_8_R2",
+      "baseline": "UNIFORM_5",
+      "model_seed": 2,
+      "N": 1024,
+      "RMST0_delta": 12.8310546875,
+      "pointwise_95_CI": [
+        8.809228515625,
+        17.0029296875
+      ],
+      "bootstrap_seed": 60302,
+      "bootstrap_repeats": 5000,
+      "unit": "independent input sequence within one fixed checkpoint",
+      "positive_difference_sequences": 559,
+      "negative_difference_sequences": 384,
+      "grid_risk_difference": [
+        {
+          "horizon": 32,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 48,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 64,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 80,
+          "candidate_minus_baseline_F": -0.0009765625
+        },
+        {
+          "horizon": 96,
+          "candidate_minus_baseline_F": -0.0048828125
+        },
+        {
+          "horizon": 112,
+          "candidate_minus_baseline_F": -0.0087890625
+        },
+        {
+          "horizon": 128,
+          "candidate_minus_baseline_F": -0.013671875
+        },
+        {
+          "horizon": 160,
+          "candidate_minus_baseline_F": -0.037109375
+        },
+        {
+          "horizon": 192,
+          "candidate_minus_baseline_F": -0.064453125
+        },
+        {
+          "horizon": 256,
+          "candidate_minus_baseline_F": -0.0849609375
+        },
+        {
+          "horizon": 512,
+          "candidate_minus_baseline_F": -0.0009765625
+        },
+        {
+          "horizon": 1024,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 2048,
+          "candidate_minus_baseline_F": 0.0
+        }
+      ],
+      "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+      "checkpoint_pooling": false
+    },
+    {
+      "pair_index": 2,
+      "candidate": "UNIFORM_8",
+      "baseline": "NATIVE_FP32",
+      "model_seed": 2,
+      "N": 1024,
+      "RMST0_delta": -0.787109375,
+      "pointwise_95_CI": [
+        -1.9961181640625,
+        0.37600097656249964
+      ],
+      "bootstrap_seed": 60303,
+      "bootstrap_repeats": 5000,
+      "unit": "independent input sequence within one fixed checkpoint",
+      "positive_difference_sequences": 93,
+      "negative_difference_sequences": 117,
+      "grid_risk_difference": [
+        {
+          "horizon": 32,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 48,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 64,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 80,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 96,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 112,
+          "candidate_minus_baseline_F": 0.0009765625
+        },
+        {
+          "horizon": 128,
+          "candidate_minus_baseline_F": 0.0009765625
+        },
+        {
+          "horizon": 160,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 192,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 256,
+          "candidate_minus_baseline_F": 0.0048828125
+        },
+        {
+          "horizon": 512,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 1024,
+          "candidate_minus_baseline_F": 0.0
+        },
+        {
+          "horizon": 2048,
+          "candidate_minus_baseline_F": 0.0
+        }
+      ],
+      "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+      "checkpoint_pooling": false
+    }
+  ],
+  "fresh_table": [
+    {
+      "model_seed": 0,
+      "arm": "NATIVE_FP32",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 288.568359375,
+      "empirical_T05_all_tokens": 135,
+      "empirical_T01_all_tokens": 107,
+      "supported_T05_grid": 112,
+      "supported_T01_grid": 48,
+      "token_accuracy": 0.4369945526123047,
+      "final_quarter_accuracy": 0.19026565551757812,
+      "bos_accuracy": 1.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 12305,
+      "shared_bytes": 30344
+    },
+    {
+      "model_seed": 0,
+      "arm": "UNIFORM_8",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 288.1201171875,
+      "empirical_T05_all_tokens": 136,
+      "empirical_T01_all_tokens": 106,
+      "supported_T05_grid": 112,
+      "supported_T01_grid": 48,
+      "token_accuracy": 0.43370485305786133,
+      "final_quarter_accuracy": 0.1898784637451172,
+      "bos_accuracy": 1.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 3137,
+      "shared_bytes": 30560
+    },
+    {
+      "model_seed": 0,
+      "arm": "UNIFORM_5",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 242.845703125,
+      "empirical_T05_all_tokens": 123,
+      "empirical_T01_all_tokens": 90,
+      "supported_T05_grid": 96,
+      "supported_T01_grid": 48,
+      "token_accuracy": 0.44624757766723633,
+      "final_quarter_accuracy": 0.26331138610839844,
+      "bos_accuracy": 1.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 1985,
+      "shared_bytes": 30560
+    },
+    {
+      "model_seed": 0,
+      "arm": "LOWRANK_4_8_R2",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 277.46875,
+      "empirical_T05_all_tokens": 129,
+      "empirical_T01_all_tokens": 96,
+      "supported_T05_grid": 112,
+      "supported_T01_grid": 32,
+      "token_accuracy": 0.5445375442504883,
+      "final_quarter_accuracy": 0.36540985107421875,
+      "bos_accuracy": 1.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 2033,
+      "shared_bytes": 32409
+    },
+    {
+      "model_seed": 0,
+      "arm": "MIXED_5_6_BUDGET",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 268.1962890625,
+      "empirical_T05_all_tokens": 132,
+      "empirical_T01_all_tokens": 107,
+      "supported_T05_grid": 112,
+      "supported_T01_grid": 64,
+      "token_accuracy": 0.47318410873413086,
+      "final_quarter_accuracy": 0.29749298095703125,
+      "bos_accuracy": 1.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 2043,
+      "shared_bytes": 30965
+    },
+    {
+      "model_seed": 1,
+      "arm": "NATIVE_FP32",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 271.154296875,
+      "empirical_T05_all_tokens": 118,
+      "empirical_T01_all_tokens": 85,
+      "supported_T05_grid": 96,
+      "supported_T01_grid": 48,
+      "token_accuracy": 0.5125646591186523,
+      "final_quarter_accuracy": 0.3580036163330078,
+      "bos_accuracy": 0.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 12305,
+      "shared_bytes": 30344
+    },
+    {
+      "model_seed": 1,
+      "arm": "UNIFORM_8",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 271.5703125,
+      "empirical_T05_all_tokens": 118,
+      "empirical_T01_all_tokens": 87,
+      "supported_T05_grid": 96,
+      "supported_T01_grid": 48,
+      "token_accuracy": 0.5112829208374023,
+      "final_quarter_accuracy": 0.35669898986816406,
+      "bos_accuracy": 0.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 3137,
+      "shared_bytes": 30560
+    },
+    {
+      "model_seed": 1,
+      "arm": "UNIFORM_5",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 220.3466796875,
+      "empirical_T05_all_tokens": 96,
+      "empirical_T01_all_tokens": 77,
+      "supported_T05_grid": 80,
+      "supported_T01_grid": 32,
+      "token_accuracy": 0.46921825408935547,
+      "final_quarter_accuracy": 0.3391227722167969,
+      "bos_accuracy": 0.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 1985,
+      "shared_bytes": 30560
+    },
+    {
+      "model_seed": 1,
+      "arm": "LOWRANK_4_8_R2",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 219.9677734375,
+      "empirical_T05_all_tokens": 112,
+      "empirical_T01_all_tokens": 84,
+      "supported_T05_grid": 96,
+      "supported_T01_grid": 32,
+      "token_accuracy": 0.4552464485168457,
+      "final_quarter_accuracy": 0.33783912658691406,
+      "bos_accuracy": 0.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 2033,
+      "shared_bytes": 32409
+    },
+    {
+      "model_seed": 1,
+      "arm": "MIXED_5_6_BUDGET",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 240.7294921875,
+      "empirical_T05_all_tokens": 110,
+      "empirical_T01_all_tokens": 87,
+      "supported_T05_grid": 96,
+      "supported_T01_grid": 64,
+      "token_accuracy": 0.48019886016845703,
+      "final_quarter_accuracy": 0.33301734924316406,
+      "bos_accuracy": 0.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 2043,
+      "shared_bytes": 30965
+    },
+    {
+      "model_seed": 2,
+      "arm": "NATIVE_FP32",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 238.2802734375,
+      "empirical_T05_all_tokens": 142,
+      "empirical_T01_all_tokens": 114,
+      "supported_T05_grid": 128,
+      "supported_T01_grid": 80,
+      "token_accuracy": 0.3967013359069824,
+      "final_quarter_accuracy": 0.17353057861328125,
+      "bos_accuracy": 1.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 12305,
+      "shared_bytes": 30344
+    },
+    {
+      "model_seed": 2,
+      "arm": "UNIFORM_8",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 237.4931640625,
+      "empirical_T05_all_tokens": 141,
+      "empirical_T01_all_tokens": 110,
+      "supported_T05_grid": 128,
+      "supported_T01_grid": 80,
+      "token_accuracy": 0.3968524932861328,
+      "final_quarter_accuracy": 0.17405319213867188,
+      "bos_accuracy": 1.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 3137,
+      "shared_bytes": 30560
+    },
+    {
+      "model_seed": 2,
+      "arm": "UNIFORM_5",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 222.765625,
+      "empirical_T05_all_tokens": 133,
+      "empirical_T01_all_tokens": 106,
+      "supported_T05_grid": 112,
+      "supported_T01_grid": 64,
+      "token_accuracy": 0.37780094146728516,
+      "final_quarter_accuracy": 0.1672649383544922,
+      "bos_accuracy": 1.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 1985,
+      "shared_bytes": 30560
+    },
+    {
+      "model_seed": 2,
+      "arm": "LOWRANK_4_8_R2",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 235.5966796875,
+      "empirical_T05_all_tokens": 141,
+      "empirical_T01_all_tokens": 116,
+      "supported_T05_grid": 128,
+      "supported_T01_grid": 96,
+      "token_accuracy": 0.4079742431640625,
+      "final_quarter_accuracy": 0.18797683715820312,
+      "bos_accuracy": 1.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 2033,
+      "shared_bytes": 32409
+    },
+    {
+      "model_seed": 2,
+      "arm": "MIXED_5_6_BUDGET",
+      "N": 1024,
+      "T": 2048,
+      "family_size": 195,
+      "RMST0": 230.6875,
+      "empirical_T05_all_tokens": 139,
+      "empirical_T01_all_tokens": 108,
+      "supported_T05_grid": 112,
+      "supported_T01_grid": 80,
+      "token_accuracy": 0.3848404884338379,
+      "final_quarter_accuracy": 0.16634750366210938,
+      "bos_accuracy": 1.0,
+      "first_failure_censored": 0,
+      "terminal_count": 0,
+      "invalid_prediction_tokens": 0,
+      "execution_status": "COMPLETE",
+      "per_stream_bytes": 2043,
+      "shared_bytes": 30965
+    }
+  ],
+  "bytes_table": [
+    {
+      "model_seed": 0,
+      "arm": "NATIVE_FP32",
+      "N_streams": 1,
+      "per_stream_bytes": 12305,
+      "header_bytes": 17,
+      "shared_bytes": 30344,
+      "shared_codec_bytes": 874,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 42649,
+      "amortized_bytes": 42649.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "NATIVE_FP32",
+      "N_streams": 16,
+      "per_stream_bytes": 12305,
+      "header_bytes": 17,
+      "shared_bytes": 30344,
+      "shared_codec_bytes": 874,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 227224,
+      "amortized_bytes": 14201.5,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "NATIVE_FP32",
+      "N_streams": 128,
+      "per_stream_bytes": 12305,
+      "header_bytes": 17,
+      "shared_bytes": 30344,
+      "shared_codec_bytes": 874,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 1605384,
+      "amortized_bytes": 12542.0625,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "UNIFORM_8",
+      "N_streams": 1,
+      "per_stream_bytes": 3137,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 33697,
+      "amortized_bytes": 33697.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "UNIFORM_8",
+      "N_streams": 16,
+      "per_stream_bytes": 3137,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 80752,
+      "amortized_bytes": 5047.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "UNIFORM_8",
+      "N_streams": 128,
+      "per_stream_bytes": 3137,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 432096,
+      "amortized_bytes": 3375.75,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "UNIFORM_5",
+      "N_streams": 1,
+      "per_stream_bytes": 1985,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 32545,
+      "amortized_bytes": 32545.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "UNIFORM_5",
+      "N_streams": 16,
+      "per_stream_bytes": 1985,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 62320,
+      "amortized_bytes": 3895.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "UNIFORM_5",
+      "N_streams": 128,
+      "per_stream_bytes": 1985,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 284640,
+      "amortized_bytes": 2223.75,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "LOWRANK_4_8_R2",
+      "N_streams": 1,
+      "per_stream_bytes": 2033,
+      "header_bytes": 17,
+      "shared_bytes": 32409,
+      "shared_codec_bytes": 2939,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 34442,
+      "amortized_bytes": 34442.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "LOWRANK_4_8_R2",
+      "N_streams": 16,
+      "per_stream_bytes": 2033,
+      "header_bytes": 17,
+      "shared_bytes": 32409,
+      "shared_codec_bytes": 2939,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 64937,
+      "amortized_bytes": 4058.5625,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "LOWRANK_4_8_R2",
+      "N_streams": 128,
+      "per_stream_bytes": 2033,
+      "header_bytes": 17,
+      "shared_bytes": 32409,
+      "shared_codec_bytes": 2939,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 292633,
+      "amortized_bytes": 2286.1953125,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "MIXED_5_6_BUDGET",
+      "N_streams": 1,
+      "per_stream_bytes": 2043,
+      "header_bytes": 17,
+      "shared_bytes": 30965,
+      "shared_codec_bytes": 1495,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 33008,
+      "amortized_bytes": 33008.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "MIXED_5_6_BUDGET",
+      "N_streams": 16,
+      "per_stream_bytes": 2043,
+      "header_bytes": 17,
+      "shared_bytes": 30965,
+      "shared_codec_bytes": 1495,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 63653,
+      "amortized_bytes": 3978.3125,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 0,
+      "arm": "MIXED_5_6_BUDGET",
+      "N_streams": 128,
+      "per_stream_bytes": 2043,
+      "header_bytes": 17,
+      "shared_bytes": 30965,
+      "shared_codec_bytes": 1495,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 292469,
+      "amortized_bytes": 2284.9140625,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "NATIVE_FP32",
+      "N_streams": 1,
+      "per_stream_bytes": 12305,
+      "header_bytes": 17,
+      "shared_bytes": 30344,
+      "shared_codec_bytes": 874,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 42649,
+      "amortized_bytes": 42649.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "NATIVE_FP32",
+      "N_streams": 16,
+      "per_stream_bytes": 12305,
+      "header_bytes": 17,
+      "shared_bytes": 30344,
+      "shared_codec_bytes": 874,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 227224,
+      "amortized_bytes": 14201.5,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "NATIVE_FP32",
+      "N_streams": 128,
+      "per_stream_bytes": 12305,
+      "header_bytes": 17,
+      "shared_bytes": 30344,
+      "shared_codec_bytes": 874,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 1605384,
+      "amortized_bytes": 12542.0625,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "UNIFORM_8",
+      "N_streams": 1,
+      "per_stream_bytes": 3137,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 33697,
+      "amortized_bytes": 33697.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "UNIFORM_8",
+      "N_streams": 16,
+      "per_stream_bytes": 3137,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 80752,
+      "amortized_bytes": 5047.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "UNIFORM_8",
+      "N_streams": 128,
+      "per_stream_bytes": 3137,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 432096,
+      "amortized_bytes": 3375.75,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "UNIFORM_5",
+      "N_streams": 1,
+      "per_stream_bytes": 1985,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 32545,
+      "amortized_bytes": 32545.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "UNIFORM_5",
+      "N_streams": 16,
+      "per_stream_bytes": 1985,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 62320,
+      "amortized_bytes": 3895.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "UNIFORM_5",
+      "N_streams": 128,
+      "per_stream_bytes": 1985,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 284640,
+      "amortized_bytes": 2223.75,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "LOWRANK_4_8_R2",
+      "N_streams": 1,
+      "per_stream_bytes": 2033,
+      "header_bytes": 17,
+      "shared_bytes": 32409,
+      "shared_codec_bytes": 2939,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 34442,
+      "amortized_bytes": 34442.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "LOWRANK_4_8_R2",
+      "N_streams": 16,
+      "per_stream_bytes": 2033,
+      "header_bytes": 17,
+      "shared_bytes": 32409,
+      "shared_codec_bytes": 2939,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 64937,
+      "amortized_bytes": 4058.5625,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "LOWRANK_4_8_R2",
+      "N_streams": 128,
+      "per_stream_bytes": 2033,
+      "header_bytes": 17,
+      "shared_bytes": 32409,
+      "shared_codec_bytes": 2939,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 292633,
+      "amortized_bytes": 2286.1953125,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "MIXED_5_6_BUDGET",
+      "N_streams": 1,
+      "per_stream_bytes": 2043,
+      "header_bytes": 17,
+      "shared_bytes": 30965,
+      "shared_codec_bytes": 1495,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 33008,
+      "amortized_bytes": 33008.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "MIXED_5_6_BUDGET",
+      "N_streams": 16,
+      "per_stream_bytes": 2043,
+      "header_bytes": 17,
+      "shared_bytes": 30965,
+      "shared_codec_bytes": 1495,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 63653,
+      "amortized_bytes": 3978.3125,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 1,
+      "arm": "MIXED_5_6_BUDGET",
+      "N_streams": 128,
+      "per_stream_bytes": 2043,
+      "header_bytes": 17,
+      "shared_bytes": 30965,
+      "shared_codec_bytes": 1495,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 292469,
+      "amortized_bytes": 2284.9140625,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "NATIVE_FP32",
+      "N_streams": 1,
+      "per_stream_bytes": 12305,
+      "header_bytes": 17,
+      "shared_bytes": 30344,
+      "shared_codec_bytes": 874,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 42649,
+      "amortized_bytes": 42649.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "NATIVE_FP32",
+      "N_streams": 16,
+      "per_stream_bytes": 12305,
+      "header_bytes": 17,
+      "shared_bytes": 30344,
+      "shared_codec_bytes": 874,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 227224,
+      "amortized_bytes": 14201.5,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "NATIVE_FP32",
+      "N_streams": 128,
+      "per_stream_bytes": 12305,
+      "header_bytes": 17,
+      "shared_bytes": 30344,
+      "shared_codec_bytes": 874,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 1605384,
+      "amortized_bytes": 12542.0625,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "UNIFORM_8",
+      "N_streams": 1,
+      "per_stream_bytes": 3137,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 33697,
+      "amortized_bytes": 33697.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "UNIFORM_8",
+      "N_streams": 16,
+      "per_stream_bytes": 3137,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 80752,
+      "amortized_bytes": 5047.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "UNIFORM_8",
+      "N_streams": 128,
+      "per_stream_bytes": 3137,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 432096,
+      "amortized_bytes": 3375.75,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "UNIFORM_5",
+      "N_streams": 1,
+      "per_stream_bytes": 1985,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 32545,
+      "amortized_bytes": 32545.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "UNIFORM_5",
+      "N_streams": 16,
+      "per_stream_bytes": 1985,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 62320,
+      "amortized_bytes": 3895.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "UNIFORM_5",
+      "N_streams": 128,
+      "per_stream_bytes": 1985,
+      "header_bytes": 17,
+      "shared_bytes": 30560,
+      "shared_codec_bytes": 1090,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 284640,
+      "amortized_bytes": 2223.75,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "LOWRANK_4_8_R2",
+      "N_streams": 1,
+      "per_stream_bytes": 2033,
+      "header_bytes": 17,
+      "shared_bytes": 32409,
+      "shared_codec_bytes": 2939,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 34442,
+      "amortized_bytes": 34442.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "LOWRANK_4_8_R2",
+      "N_streams": 16,
+      "per_stream_bytes": 2033,
+      "header_bytes": 17,
+      "shared_bytes": 32409,
+      "shared_codec_bytes": 2939,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 64937,
+      "amortized_bytes": 4058.5625,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "LOWRANK_4_8_R2",
+      "N_streams": 128,
+      "per_stream_bytes": 2033,
+      "header_bytes": 17,
+      "shared_bytes": 32409,
+      "shared_codec_bytes": 2939,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 292633,
+      "amortized_bytes": 2286.1953125,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "MIXED_5_6_BUDGET",
+      "N_streams": 1,
+      "per_stream_bytes": 2043,
+      "header_bytes": 17,
+      "shared_bytes": 30965,
+      "shared_codec_bytes": 1495,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 33008,
+      "amortized_bytes": 33008.0,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "MIXED_5_6_BUDGET",
+      "N_streams": 16,
+      "per_stream_bytes": 2043,
+      "header_bytes": 17,
+      "shared_bytes": 30965,
+      "shared_codec_bytes": 1495,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 63653,
+      "amortized_bytes": 3978.3125,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    },
+    {
+      "model_seed": 2,
+      "arm": "MIXED_5_6_BUDGET",
+      "N_streams": 128,
+      "per_stream_bytes": 2043,
+      "header_bytes": 17,
+      "shared_bytes": 30965,
+      "shared_codec_bytes": 1495,
+      "shared_token_table_bytes": 29100,
+      "shared_runtime_metadata_bytes": 370,
+      "total_bytes": 292469,
+      "amortized_bytes": 2284.9140625,
+      "scope": "serialized cache/config/basis/table/runtime; common model weights and evaluator history excluded"
+    }
+  ],
+  "scope": "complete fresh cohort; 3 fixed checkpoints reported separately; paired RMST intervals are pointwise, not multiplicity-corrected superiority tests",
+  "historical_or_diagnostic_sequences_added_to_fresh_N": 0,
+  "independent_audit": {
+    "status": "PASS",
+    "verified_cells": 15,
+    "auditor_sha256": "2b54a350283ff1e9d2fd64956de103a6ca08da1497d54d6534e7e8a113744550"
+  },
+  "paired_metrics_source_sha256": "0ea290ba09e9b721733b4d83b57caf19b4bf039869175daf3144443706b04efa",
+  "source_hashes_file": "source_hashes.json",
+  "source_hashes_sha256": "728e73606ccd2bc4759e06a95a531a3b20c85a21689d83e9358871bc280c39d2",
+  "outputs": {
+    "fresh_table.csv": "55ed3e8338a61d54b3ff6fa7e40303290b82cbef7eeb3e1ffe98c0a4d64dff83",
+    "paired_table.csv": "6c89baea995cbfd7d3d021cb8d2a3f55bd4fae288e557946c7b281729b9961b3",
+    "bytes_table.csv": "67c29763136aa22648d83f8cd47cd2e42e9a41da34739753f6c909abd0acfa62"
+  }
+}

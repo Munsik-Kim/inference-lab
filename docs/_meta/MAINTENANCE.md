@@ -59,3 +59,14 @@ of GitHub. Never call an emulated viewport a real iPad test. Before publishing,
 compare against other open documentation PRs; this local layer does not merge them.
 
 Case008 claims use their explicit reviewed archive identity; the additional-publication checker runs its anchored verifier and checks its download metadata. Earlier protected files remain checked against the existing Git revision. A new package must be explicitly declared, never accepted as an entire editable case directory.
+
+## Case010 unified snapshots
+
+Case010 keeps v1 and v2 research subtrees byte-identical under `versions/`.
+Its fixed snapshot manifest maps all 1,462 files back to their historical paths;
+the unified verifier checks that identity before validating the current integration
+inventory. The document checker accepts only that verified tree, without changing
+any earlier case's protection rules. The new claim cites the original v2 archive
+and byte-ledger hash. Use the [unified reproduction guide](../../cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.md)
+for model-free restoration and scalar audits. Current integration receipts are
+separate from historical study tests and fresh-input evaluation.
