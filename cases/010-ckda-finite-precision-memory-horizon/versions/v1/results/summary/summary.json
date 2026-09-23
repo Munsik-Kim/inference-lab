@@ -1,0 +1,2120 @@
+{
+  "schema": "case010-results-summary-v1",
+  "toy": {
+    "primary_arm_count": 125,
+    "capacity_control_count": 5,
+    "evaluation_versions": {
+      "v1-unchanged-finite-nonstochastic": 118,
+      "v2-stochastic-seedkey": 5,
+      "v1b-row-local-numerical-failure": 2
+    },
+    "historical_failed_arms": [
+      {
+        "condition": "s4_rotated",
+        "arm": "uniform_2",
+        "error": "ValueError('entire transition output must have expected shape and be finite')"
+      },
+      {
+        "condition": "c31_moving_plane",
+        "arm": "uniform_2",
+        "error": "ValueError('entire transition output must have expected shape and be finite')"
+      }
+    ],
+    "historical_stochastic_v1_arms_retained": 5,
+    "canonical_protocol_sha256": "788cd52e13085f4094b2fb62b093bfff3a57e2ba1b417e29226e8194b2424bb1",
+    "protocol_file_sha256": "3bee25197503592ae10a740ced5499889e0a87f80e13e499885243135cd10a95",
+    "erratum_identity_file_sha256": "11ef68e68d3b404577236b7b10468d362bd163191ed4c85924f3b8213d3fca76",
+    "complete_call_timing": "NOT_MEASURED; diagnostic-loop seconds only",
+    "symbolic_capacity_controls": [
+      {
+        "condition": "s4_signed_lattice",
+        "failures": 0,
+        "stream_bytes": 9,
+        "shared_bytes": 1617,
+        "interpretation": "finite task-specific capacity control; not infinite memory"
+      },
+      {
+        "condition": "c31_rotation_2d",
+        "failures": 0,
+        "stream_bytes": 9,
+        "shared_bytes": 1731,
+        "interpretation": "finite task-specific capacity control; not infinite memory"
+      },
+      {
+        "condition": "s4_rotated",
+        "failures": 0,
+        "stream_bytes": 9,
+        "shared_bytes": 1617,
+        "interpretation": "finite task-specific capacity control; not infinite memory"
+      },
+      {
+        "condition": "c31_moving_plane",
+        "failures": 0,
+        "stream_bytes": 9,
+        "shared_bytes": 2244,
+        "interpretation": "finite task-specific capacity control; not infinite memory"
+      },
+      {
+        "condition": "c31_switching_plane",
+        "failures": 0,
+        "stream_bytes": 9,
+        "shared_bytes": 2260,
+        "interpretation": "finite task-specific capacity control; not infinite memory"
+      }
+    ]
+  },
+  "learned_seeds": [
+    {
+      "model_seed": 0,
+      "arms_available": 26,
+      "expected_arms": 26,
+      "complete_index_available": true,
+      "model_checkpoint_bytes_common": 233203,
+      "checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+      "manifest_file_sha256": "79c674372036f884587ec1d3e705235507071489944bf63d53959eabbb8d6431",
+      "protocol_sha256": "782d24a96dadd186878e639332a404dc3f5692155639ea5c56d9b4b667e320cb",
+      "timing_available": true,
+      "timing_sources": {
+        "embedded": {
+          "file_name": "timing.json",
+          "file_sha256": "70e17f1fb696f0d9cdd2e38df0e86f8a9358ae53590b6bc2a402321f0d3e7cb9",
+          "selection": "embedded runner artifact retained",
+          "contention_scope": "potential CPU contention; not isolated primary cost",
+          "model_seed_in_file": null,
+          "checkpoint_sha256_in_file": null,
+          "config": {
+            "sequences": 16,
+            "length": 128,
+            "repeats": 3,
+            "seed": 2002
+          },
+          "scope": "full causal sequence call: allocation, initial packing, BOS, token-table gather, decode, transition, projection, encode, after-write read, original FP32 norm/MLP; excludes optional MSE/norm diagnostics, gold, summaries, file I/O, model load and shared-table construction"
+        },
+        "isolated": {
+          "file_name": "seed0.json",
+          "file_sha256": "5744b9137eabc5cd469c0aa38dc34dfdfee5d9fffc40fff1e1e52fd6b938b522",
+          "selection": "explicit --isolated-timing",
+          "contention_scope": "reported isolated serial benchmark",
+          "model_seed_in_file": 0,
+          "checkpoint_sha256_in_file": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+          "config": {
+            "sequences": 16,
+            "length": 128,
+            "repeats": 3,
+            "seed": 2002
+          },
+          "scope": "full causal sequence call: allocation, initial packing, BOS, token-table gather, decode, transition, projection, encode, after-write read, original FP32 norm/MLP; excludes optional MSE/norm diagnostics, gold, summaries, file I/O, model load and shared-table construction"
+        }
+      },
+      "primary_timing_kind": "isolated",
+      "timing_policy": "isolated result selected explicitly; embedded result retained and labeled for potential contention",
+      "ledger_scope": "recurrent stream cache plus shared codec/basis/token table; common model checkpoint separate",
+      "completeness": "complete"
+    },
+    {
+      "model_seed": 1,
+      "arms_available": 26,
+      "expected_arms": 26,
+      "complete_index_available": true,
+      "model_checkpoint_bytes_common": 233203,
+      "checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+      "manifest_file_sha256": "906330ba8dd531b71f503e10179ba329bdf574b32288949bf15a2983c7d0eda7",
+      "protocol_sha256": "782d24a96dadd186878e639332a404dc3f5692155639ea5c56d9b4b667e320cb",
+      "timing_available": true,
+      "timing_sources": {
+        "embedded": {
+          "file_name": "timing.json",
+          "file_sha256": "8172a6bd9c0c2e988223ed5385692cf0158d04387b60fddc29011f131bc84087",
+          "selection": "embedded runner artifact retained",
+          "contention_scope": "potential CPU contention; not isolated primary cost",
+          "model_seed_in_file": null,
+          "checkpoint_sha256_in_file": null,
+          "config": {
+            "sequences": 16,
+            "length": 128,
+            "repeats": 3,
+            "seed": 2002
+          },
+          "scope": "full causal sequence call: allocation, initial packing, BOS, token-table gather, decode, transition, projection, encode, after-write read, original FP32 norm/MLP; excludes optional MSE/norm diagnostics, gold, summaries, file I/O, model load and shared-table construction"
+        },
+        "isolated": {
+          "file_name": "seed1.json",
+          "file_sha256": "e6e77f868a729bc84796857a33bc8cf206258825247af50700abbf5d8346d6e4",
+          "selection": "explicit --isolated-timing",
+          "contention_scope": "reported isolated serial benchmark",
+          "model_seed_in_file": 1,
+          "checkpoint_sha256_in_file": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+          "config": {
+            "sequences": 16,
+            "length": 128,
+            "repeats": 3,
+            "seed": 2002
+          },
+          "scope": "full causal sequence call: allocation, initial packing, BOS, token-table gather, decode, transition, projection, encode, after-write read, original FP32 norm/MLP; excludes optional MSE/norm diagnostics, gold, summaries, file I/O, model load and shared-table construction"
+        }
+      },
+      "primary_timing_kind": "isolated",
+      "timing_policy": "isolated result selected explicitly; embedded result retained and labeled for potential contention",
+      "ledger_scope": "recurrent stream cache plus shared codec/basis/token table; common model checkpoint separate",
+      "completeness": "complete"
+    },
+    {
+      "model_seed": 2,
+      "arms_available": 26,
+      "expected_arms": 26,
+      "complete_index_available": true,
+      "model_checkpoint_bytes_common": 233203,
+      "checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+      "manifest_file_sha256": "e8b998f064e281605130d55e3b5e321c882de4e09944b3e4bd6725d786839da7",
+      "protocol_sha256": "782d24a96dadd186878e639332a404dc3f5692155639ea5c56d9b4b667e320cb",
+      "timing_available": true,
+      "timing_sources": {
+        "embedded": {
+          "file_name": "timing.json",
+          "file_sha256": "d0b0e1c207319477c0cbd3747e31785255bc3cec2df446143a1ef4a7b104c2be",
+          "selection": "embedded runner artifact retained",
+          "contention_scope": "potential CPU contention; not isolated primary cost",
+          "model_seed_in_file": null,
+          "checkpoint_sha256_in_file": null,
+          "config": {
+            "sequences": 16,
+            "length": 128,
+            "repeats": 3,
+            "seed": 2002
+          },
+          "scope": "full causal sequence call: allocation, initial packing, BOS, token-table gather, decode, transition, projection, encode, after-write read, original FP32 norm/MLP; excludes optional MSE/norm diagnostics, gold, summaries, file I/O, model load and shared-table construction"
+        },
+        "isolated": {
+          "file_name": "seed2.json",
+          "file_sha256": "ebe827a6882d5addc3468f8d5bc3b49e63f8318db1f96511bc859fb2a33f5587",
+          "selection": "explicit --isolated-timing",
+          "contention_scope": "reported isolated serial benchmark",
+          "model_seed_in_file": 2,
+          "checkpoint_sha256_in_file": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+          "config": {
+            "sequences": 16,
+            "length": 128,
+            "repeats": 3,
+            "seed": 2002
+          },
+          "scope": "full causal sequence call: allocation, initial packing, BOS, token-table gather, decode, transition, projection, encode, after-write read, original FP32 norm/MLP; excludes optional MSE/norm diagnostics, gold, summaries, file I/O, model load and shared-table construction"
+        }
+      },
+      "primary_timing_kind": "isolated",
+      "timing_policy": "isolated result selected explicitly; embedded result retained and labeled for potential contention",
+      "ledger_scope": "recurrent stream cache plus shared codec/basis/token table; common model checkpoint separate",
+      "completeness": "complete"
+    }
+  ],
+  "groups": [
+    {
+      "domain": "toy",
+      "condition": "s4_signed_lattice",
+      "model_seed": null,
+      "arms": 25,
+      "selected_numeric_results": {
+        "NATIVE_FP32": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 24,
+          "shared_bytes": 4472,
+          "amortized_bytes": {
+            "1": 4496.0,
+            "16": 303.5,
+            "128": 58.9375
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_4": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 14,
+          "shared_bytes": 4688,
+          "amortized_bytes": {
+            "1": 4702.0,
+            "16": 307.0,
+            "128": 50.625
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_8": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 16,
+          "shared_bytes": 4688,
+          "amortized_bytes": {
+            "1": 4704.0,
+            "16": 309.0,
+            "128": 52.625
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_16": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 4689,
+          "amortized_bytes": {
+            "1": 4709.0,
+            "16": 313.0625,
+            "128": 56.6328125
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "STOCHASTIC_4": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 30,
+          "shared_bytes": 4740,
+          "amortized_bytes": {
+            "1": 4770.0,
+            "16": 326.25,
+            "128": 67.03125
+          },
+          "evaluation_version": "v2-stochastic-seedkey",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "FULL_RESIDUAL_4_4": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 4993,
+          "amortized_bytes": {
+            "1": 5013.0,
+            "16": 332.0625,
+            "128": 59.0078125
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "FULL_RESIDUAL_4_FP32": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 30,
+          "shared_bytes": 4777,
+          "amortized_bytes": {
+            "1": 4807.0,
+            "16": 328.5625,
+            "128": 67.3203125
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "LOWRANK_4_8": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 5029,
+          "amortized_bytes": {
+            "1": 5049.0,
+            "16": 334.3125,
+            "128": 59.2890625
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNTRANSPORTED_4_4": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 4995,
+          "amortized_bytes": {
+            "1": 5015.0,
+            "16": 332.1875,
+            "128": 59.0234375
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        }
+      },
+      "candidate_caps_N128": [
+        {
+          "candidate": "FULL_RESIDUAL_4_4",
+          "candidate_amortized_bytes": 59.0078125,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_4",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_4",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_4",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": 0.0
+        },
+        {
+          "candidate": "FULL_RESIDUAL_4_FP32",
+          "candidate_amortized_bytes": 67.3203125,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_4",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_4",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_4",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": 0.0
+        },
+        {
+          "candidate": "LOWRANK_4_8",
+          "candidate_amortized_bytes": 59.2890625,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_4",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_4",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_4",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": 0.0
+        },
+        {
+          "candidate": "UNTRANSPORTED_4_4",
+          "candidate_amortized_bytes": 59.0234375,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_4",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_4",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_4",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": 0.0
+        }
+      ]
+    },
+    {
+      "domain": "toy",
+      "condition": "c31_rotation_2d",
+      "model_seed": null,
+      "arms": 25,
+      "selected_numeric_results": {
+        "NATIVE_FP32": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 16,
+          "shared_bytes": 2119,
+          "amortized_bytes": {
+            "1": 2135.0,
+            "16": 148.4375,
+            "128": 32.5546875
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 11.16015625,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 13,
+          "shared_bytes": 2335,
+          "amortized_bytes": {
+            "1": 2348.0,
+            "16": 158.9375,
+            "128": 31.2421875
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_8": {
+          "failures": 244,
+          "F2048": 0.4765625,
+          "rmst": 1656.677734375,
+          "empirical_T05": 512,
+          "supported_T05": 256,
+          "empirical_T01": 256,
+          "supported_T01": null,
+          "stream_bytes": 14,
+          "shared_bytes": 2335,
+          "amortized_bytes": {
+            "1": 2349.0,
+            "16": 159.9375,
+            "128": 32.2421875
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_16": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 16,
+          "shared_bytes": 2336,
+          "amortized_bytes": {
+            "1": 2352.0,
+            "16": 162.0,
+            "128": 34.25
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "STOCHASTIC_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 6.392578125,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 29,
+          "shared_bytes": 2387,
+          "amortized_bytes": {
+            "1": 2416.0,
+            "16": 178.1875,
+            "128": 47.6484375
+          },
+          "evaluation_version": "v2-stochastic-seedkey",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "FULL_RESIDUAL_4_4": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 18,
+          "shared_bytes": 2640,
+          "amortized_bytes": {
+            "1": 2658.0,
+            "16": 183.0,
+            "128": 38.625
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "FULL_RESIDUAL_4_FP32": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 21,
+          "shared_bytes": 2424,
+          "amortized_bytes": {
+            "1": 2445.0,
+            "16": 172.5,
+            "128": 39.9375
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "LOWRANK_4_8": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 24.25390625,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 18,
+          "shared_bytes": 2652,
+          "amortized_bytes": {
+            "1": 2670.0,
+            "16": 183.75,
+            "128": 38.71875
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNTRANSPORTED_4_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 9.7890625,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 18,
+          "shared_bytes": 2642,
+          "amortized_bytes": {
+            "1": 2660.0,
+            "16": 183.125,
+            "128": 38.640625
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        }
+      },
+      "candidate_caps_N128": [
+        {
+          "candidate": "FULL_RESIDUAL_4_4",
+          "candidate_amortized_bytes": 38.625,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "NATIVE_FP32",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "NATIVE_FP32",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "NATIVE_FP32",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": 0.0
+        },
+        {
+          "candidate": "FULL_RESIDUAL_4_FP32",
+          "candidate_amortized_bytes": 39.9375,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "NATIVE_FP32",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "NATIVE_FP32",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "NATIVE_FP32",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": 0.0
+        },
+        {
+          "candidate": "LOWRANK_4_8",
+          "candidate_amortized_bytes": 38.71875,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "NATIVE_FP32",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "NATIVE_FP32",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "NATIVE_FP32",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": -2023.74609375
+        },
+        {
+          "candidate": "UNTRANSPORTED_4_4",
+          "candidate_amortized_bytes": 38.640625,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "NATIVE_FP32",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "NATIVE_FP32",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "NATIVE_FP32",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": -2038.2109375
+        }
+      ]
+    },
+    {
+      "domain": "toy",
+      "condition": "s4_rotated",
+      "model_seed": null,
+      "arms": 25,
+      "selected_numeric_results": {
+        "NATIVE_FP32": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 24,
+          "shared_bytes": 4465,
+          "amortized_bytes": {
+            "1": 4489.0,
+            "16": 303.0625,
+            "128": 58.8828125
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 67.8828125,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 14,
+          "shared_bytes": 4681,
+          "amortized_bytes": {
+            "1": 4695.0,
+            "16": 306.5625,
+            "128": 50.5703125
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_8": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 16,
+          "shared_bytes": 4681,
+          "amortized_bytes": {
+            "1": 4697.0,
+            "16": 308.5625,
+            "128": 52.5703125
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_16": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 4682,
+          "amortized_bytes": {
+            "1": 4702.0,
+            "16": 312.625,
+            "128": 56.578125
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "STOCHASTIC_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 37.986328125,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 30,
+          "shared_bytes": 4733,
+          "amortized_bytes": {
+            "1": 4763.0,
+            "16": 325.8125,
+            "128": 66.9765625
+          },
+          "evaluation_version": "v2-stochastic-seedkey",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "FULL_RESIDUAL_4_4": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 4986,
+          "amortized_bytes": {
+            "1": 5006.0,
+            "16": 331.625,
+            "128": 58.953125
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "FULL_RESIDUAL_4_FP32": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 30,
+          "shared_bytes": 4770,
+          "amortized_bytes": {
+            "1": 4800.0,
+            "16": 328.125,
+            "128": 67.265625
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "LOWRANK_4_8": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 145.57421875,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 5022,
+          "amortized_bytes": {
+            "1": 5042.0,
+            "16": 333.875,
+            "128": 59.234375
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNTRANSPORTED_4_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 44.79296875,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 4988,
+          "amortized_bytes": {
+            "1": 5008.0,
+            "16": 331.75,
+            "128": 58.96875
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        }
+      },
+      "candidate_caps_N128": [
+        {
+          "candidate": "FULL_RESIDUAL_4_4",
+          "candidate_amortized_bytes": 58.953125,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_8",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_8",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_8",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": 0.0
+        },
+        {
+          "candidate": "FULL_RESIDUAL_4_FP32",
+          "candidate_amortized_bytes": 67.265625,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_8",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_8",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_8",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": 0.0
+        },
+        {
+          "candidate": "LOWRANK_4_8",
+          "candidate_amortized_bytes": 59.234375,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_8",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_8",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_8",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": -1902.42578125
+        },
+        {
+          "candidate": "UNTRANSPORTED_4_4",
+          "candidate_amortized_bytes": 58.96875,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_8",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_8",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_8",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": -2003.20703125
+        }
+      ]
+    },
+    {
+      "domain": "toy",
+      "condition": "c31_moving_plane",
+      "model_seed": null,
+      "arms": 25,
+      "selected_numeric_results": {
+        "NATIVE_FP32": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 24,
+          "shared_bytes": 5610,
+          "amortized_bytes": {
+            "1": 5634.0,
+            "16": 374.625,
+            "128": 67.828125
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 12.0546875,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 14,
+          "shared_bytes": 5826,
+          "amortized_bytes": {
+            "1": 5840.0,
+            "16": 378.125,
+            "128": 59.515625
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_8": {
+          "failures": 211,
+          "F2048": 0.412109375,
+          "rmst": 1727.638671875,
+          "empirical_T05": 512,
+          "supported_T05": 512,
+          "empirical_T01": 256,
+          "supported_T01": null,
+          "stream_bytes": 16,
+          "shared_bytes": 5826,
+          "amortized_bytes": {
+            "1": 5842.0,
+            "16": 380.125,
+            "128": 61.515625
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_16": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 5827,
+          "amortized_bytes": {
+            "1": 5847.0,
+            "16": 384.1875,
+            "128": 65.5234375
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "STOCHASTIC_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 6.5390625,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 30,
+          "shared_bytes": 5878,
+          "amortized_bytes": {
+            "1": 5908.0,
+            "16": 397.375,
+            "128": 75.921875
+          },
+          "evaluation_version": "v2-stochastic-seedkey",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "FULL_RESIDUAL_4_4": {
+          "failures": 106,
+          "F2048": 0.20703125,
+          "rmst": 1914.140625,
+          "empirical_T05": 1024,
+          "supported_T05": 512,
+          "empirical_T01": 512,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 6131,
+          "amortized_bytes": {
+            "1": 6151.0,
+            "16": 403.1875,
+            "128": 67.8984375
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "FULL_RESIDUAL_4_FP32": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 30,
+          "shared_bytes": 5915,
+          "amortized_bytes": {
+            "1": 5945.0,
+            "16": 399.6875,
+            "128": 76.2109375
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "LOWRANK_4_8": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 21.267578125,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 6167,
+          "amortized_bytes": {
+            "1": 6187.0,
+            "16": 405.4375,
+            "128": 68.1796875
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNTRANSPORTED_4_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 9.490234375,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 6133,
+          "amortized_bytes": {
+            "1": 6153.0,
+            "16": 403.3125,
+            "128": 67.9140625
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        }
+      },
+      "candidate_caps_N128": [
+        {
+          "candidate": "FULL_RESIDUAL_4_4",
+          "candidate_amortized_bytes": 67.8984375,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_10",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_10",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_10",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": -133.859375
+        },
+        {
+          "candidate": "FULL_RESIDUAL_4_FP32",
+          "candidate_amortized_bytes": 76.2109375,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_10",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_10",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_10",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": 0.0
+        },
+        {
+          "candidate": "LOWRANK_4_8",
+          "candidate_amortized_bytes": 68.1796875,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_10",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_10",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_10",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": -2026.732421875
+        },
+        {
+          "candidate": "UNTRANSPORTED_4_4",
+          "candidate_amortized_bytes": 67.9140625,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_10",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_10",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_10",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": -2038.509765625
+        }
+      ]
+    },
+    {
+      "domain": "toy",
+      "condition": "c31_switching_plane",
+      "model_seed": null,
+      "arms": 25,
+      "selected_numeric_results": {
+        "NATIVE_FP32": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 24,
+          "shared_bytes": 5632,
+          "amortized_bytes": {
+            "1": 5656.0,
+            "16": 376.0,
+            "128": 68.0
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 11.16015625,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 14,
+          "shared_bytes": 5848,
+          "amortized_bytes": {
+            "1": 5862.0,
+            "16": 379.5,
+            "128": 59.6875
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_8": {
+          "failures": 244,
+          "F2048": 0.4765625,
+          "rmst": 1656.677734375,
+          "empirical_T05": 512,
+          "supported_T05": 256,
+          "empirical_T01": 256,
+          "supported_T01": null,
+          "stream_bytes": 16,
+          "shared_bytes": 5848,
+          "amortized_bytes": {
+            "1": 5864.0,
+            "16": 381.5,
+            "128": 61.6875
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNIFORM_16": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 5849,
+          "amortized_bytes": {
+            "1": 5869.0,
+            "16": 385.5625,
+            "128": 65.6953125
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "STOCHASTIC_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 6.693359375,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 30,
+          "shared_bytes": 5900,
+          "amortized_bytes": {
+            "1": 5930.0,
+            "16": 398.75,
+            "128": 76.09375
+          },
+          "evaluation_version": "v2-stochastic-seedkey",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "FULL_RESIDUAL_4_4": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 6153,
+          "amortized_bytes": {
+            "1": 6173.0,
+            "16": 404.5625,
+            "128": 68.0703125
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "FULL_RESIDUAL_4_FP32": {
+          "failures": 0,
+          "F2048": 0.0,
+          "rmst": 2048.0,
+          "empirical_T05": 2048,
+          "supported_T05": 2048,
+          "empirical_T01": 2048,
+          "supported_T01": null,
+          "stream_bytes": 30,
+          "shared_bytes": 5937,
+          "amortized_bytes": {
+            "1": 5967.0,
+            "16": 401.0625,
+            "128": 76.3828125
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "LOWRANK_4_8": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 43.76953125,
+          "empirical_T05": 32,
+          "supported_T05": 32,
+          "empirical_T01": 32,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 6189,
+          "amortized_bytes": {
+            "1": 6209.0,
+            "16": 406.8125,
+            "128": 68.3515625
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        },
+        "UNTRANSPORTED_4_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 9.78125,
+          "empirical_T05": null,
+          "supported_T05": null,
+          "empirical_T01": null,
+          "supported_T01": null,
+          "stream_bytes": 20,
+          "shared_bytes": 6155,
+          "amortized_bytes": {
+            "1": 6175.0,
+            "16": 404.6875,
+            "128": 68.0859375
+          },
+          "evaluation_version": "v1-unchanged-finite-nonstochastic",
+          "execution_status": null,
+          "absorbed_sequences": null,
+          "isolated_benchmark_ms_per_token": null,
+          "embedded_potentially_contended_ms_per_token": null
+        }
+      },
+      "candidate_caps_N128": [
+        {
+          "candidate": "FULL_RESIDUAL_4_4",
+          "candidate_amortized_bytes": 68.0703125,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_10",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_10",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_10",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": 0.0
+        },
+        {
+          "candidate": "FULL_RESIDUAL_4_FP32",
+          "candidate_amortized_bytes": 76.3828125,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_10",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_10",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_10",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": 0.0
+        },
+        {
+          "candidate": "LOWRANK_4_8",
+          "candidate_amortized_bytes": 68.3515625,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_10",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_10",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_10",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": -2004.23046875
+        },
+        {
+          "candidate": "UNTRANSPORTED_4_4",
+          "candidate_amortized_bytes": 68.0859375,
+          "native_fp32_feasible": true,
+          "best_TEST_supported_baseline": "UNIFORM_10",
+          "best_TEST_supported_T05": 2048,
+          "best_TEST_empirical_baseline": "UNIFORM_10",
+          "best_TEST_empirical_T05": 2048,
+          "best_TEST_rmst_baseline": "UNIFORM_10",
+          "best_TEST_baseline_rmst": 2048.0,
+          "descriptive_rmst_delta_vs_best_feasible": -2038.21875
+        }
+      ]
+    },
+    {
+      "domain": "learned",
+      "condition": "learned_s3",
+      "model_seed": 0,
+      "arms": 26,
+      "selected_numeric_results": {
+        "FULL_RESIDUAL_4_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 282.251953125,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 3176,
+          "shared_bytes": 29934,
+          "amortized_bytes": {
+            "1": 33110.0,
+            "16": 5046.875,
+            "128": 3409.859375
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.15779768457058196,
+          "embedded_potentially_contended_ms_per_token": 0.1669813828124589
+        },
+        "LOWRANK_4_8_R2": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 282.890625,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 2024,
+          "shared_bytes": 31475,
+          "amortized_bytes": {
+            "1": 33499.0,
+            "16": 3991.1875,
+            "128": 2269.8984375
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.1442499536130626,
+          "embedded_potentially_contended_ms_per_token": 0.15047163769477123
+        },
+        "LOWRANK_4_8_R4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 241.79296875,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 2408,
+          "shared_bytes": 33011,
+          "amortized_bytes": {
+            "1": 35419.0,
+            "16": 4471.1875,
+            "128": 2665.8984375
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.1595064721682249,
+          "embedded_potentially_contended_ms_per_token": 0.17044091357476532
+        },
+        "NATIVE_FP32": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 283.099609375,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 12296,
+          "shared_bytes": 29410,
+          "amortized_bytes": {
+            "1": 41706.0,
+            "16": 14134.125,
+            "128": 12525.765625
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.023419488769604868,
+          "embedded_potentially_contended_ms_per_token": 0.023438879882320407
+        },
+        "UNIFORM_16": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 283.099609375,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 6200,
+          "shared_bytes": 29627,
+          "amortized_bytes": {
+            "1": 35827.0,
+            "16": 8051.6875,
+            "128": 6431.4609375
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.14315830175792854,
+          "embedded_potentially_contended_ms_per_token": 0.15080001025413736
+        },
+        "UNIFORM_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 147.93359375,
+          "empirical_T05": 64,
+          "supported_T05": 32,
+          "empirical_T01": 32,
+          "supported_T01": null,
+          "stream_bytes": 1592,
+          "shared_bytes": 29626,
+          "amortized_bytes": {
+            "1": 31218.0,
+            "16": 3443.625,
+            "128": 1823.453125
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.09733764013741819,
+          "embedded_potentially_contended_ms_per_token": 0.0972135068355584
+        },
+        "UNIFORM_6": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 273.939453125,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 2360,
+          "shared_bytes": 29626,
+          "amortized_bytes": {
+            "1": 31986.0,
+            "16": 4211.625,
+            "128": 2591.453125
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.12312529394531424,
+          "embedded_potentially_contended_ms_per_token": 0.12832146826102786
+        },
+        "UNIFORM_8": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 283.435546875,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 3128,
+          "shared_bytes": 29626,
+          "amortized_bytes": {
+            "1": 32754.0,
+            "16": 4979.625,
+            "128": 3359.453125
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.09507251074225564,
+          "embedded_potentially_contended_ms_per_token": 0.10077508789052558
+        }
+      },
+      "candidate_caps_N128": [
+        {
+          "candidate": "FULL_RESIDUAL_4_4",
+          "candidate_amortized_bytes": 3409.859375,
+          "native_fp32_feasible": false,
+          "best_TEST_supported_baseline": "UNIFORM_8",
+          "best_TEST_supported_T05": 64,
+          "best_TEST_empirical_baseline": "UNIFORM_8",
+          "best_TEST_empirical_T05": 128,
+          "best_TEST_rmst_baseline": "UNIFORM_8",
+          "best_TEST_baseline_rmst": 283.435546875,
+          "descriptive_rmst_delta_vs_best_feasible": -1.18359375
+        },
+        {
+          "candidate": "LOWRANK_4_8_R2",
+          "candidate_amortized_bytes": 2269.8984375,
+          "native_fp32_feasible": false,
+          "best_TEST_supported_baseline": "UNIFORM_5",
+          "best_TEST_supported_T05": 64,
+          "best_TEST_empirical_baseline": "MIXED_4_8",
+          "best_TEST_empirical_T05": 128,
+          "best_TEST_rmst_baseline": "UNIFORM_5",
+          "best_TEST_baseline_rmst": 235.82421875,
+          "descriptive_rmst_delta_vs_best_feasible": 47.06640625
+        },
+        {
+          "candidate": "LOWRANK_4_8_R4",
+          "candidate_amortized_bytes": 2665.8984375,
+          "native_fp32_feasible": false,
+          "best_TEST_supported_baseline": "UNIFORM_6",
+          "best_TEST_supported_T05": 64,
+          "best_TEST_empirical_baseline": "UNIFORM_6",
+          "best_TEST_empirical_T05": 128,
+          "best_TEST_rmst_baseline": "UNIFORM_6",
+          "best_TEST_baseline_rmst": 273.939453125,
+          "descriptive_rmst_delta_vs_best_feasible": -32.146484375
+        }
+      ]
+    },
+    {
+      "domain": "learned",
+      "condition": "learned_s3",
+      "model_seed": 1,
+      "arms": 26,
+      "selected_numeric_results": {
+        "FULL_RESIDUAL_4_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 270.021484375,
+          "empirical_T05": 64,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 3176,
+          "shared_bytes": 29934,
+          "amortized_bytes": {
+            "1": 33110.0,
+            "16": 5046.875,
+            "128": 3409.859375
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.16146939599614996,
+          "embedded_potentially_contended_ms_per_token": 0.16176317871074986
+        },
+        "LOWRANK_4_8_R2": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 218.3984375,
+          "empirical_T05": 64,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 2024,
+          "shared_bytes": 31475,
+          "amortized_bytes": {
+            "1": 33499.0,
+            "16": 3991.1875,
+            "128": 2269.8984375
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.14663760791044922,
+          "embedded_potentially_contended_ms_per_token": 0.14784768847597718
+        },
+        "LOWRANK_4_8_R4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 235.818359375,
+          "empirical_T05": 64,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 2408,
+          "shared_bytes": 33011,
+          "amortized_bytes": {
+            "1": 35419.0,
+            "16": 4471.1875,
+            "128": 2665.8984375
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.15880566552795017,
+          "embedded_potentially_contended_ms_per_token": 0.15668949609359828
+        },
+        "NATIVE_FP32": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 271.23828125,
+          "empirical_T05": 64,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 12296,
+          "shared_bytes": 29410,
+          "amortized_bytes": {
+            "1": 41706.0,
+            "16": 14134.125,
+            "128": 12525.765625
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.02581903955078957,
+          "embedded_potentially_contended_ms_per_token": 0.02822279345693346
+        },
+        "UNIFORM_16": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 271.3828125,
+          "empirical_T05": 64,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 6200,
+          "shared_bytes": 29627,
+          "amortized_bytes": {
+            "1": 35827.0,
+            "16": 8051.6875,
+            "128": 6431.4609375
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.1387003598631864,
+          "embedded_potentially_contended_ms_per_token": 0.14255287793041305
+        },
+        "UNIFORM_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 124.3203125,
+          "empirical_T05": 32,
+          "supported_T05": 32,
+          "empirical_T01": 32,
+          "supported_T01": null,
+          "stream_bytes": 1592,
+          "shared_bytes": 29626,
+          "amortized_bytes": {
+            "1": 31218.0,
+            "16": 3443.625,
+            "128": 1823.453125
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.09625419433589855,
+          "embedded_potentially_contended_ms_per_token": 0.09752680175800776
+        },
+        "UNIFORM_6": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 258.01953125,
+          "empirical_T05": 64,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 2360,
+          "shared_bytes": 29626,
+          "amortized_bytes": {
+            "1": 31986.0,
+            "16": 4211.625,
+            "128": 2591.453125
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.11896164257763076,
+          "embedded_potentially_contended_ms_per_token": 0.12800995019546235
+        },
+        "UNIFORM_8": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 270.3125,
+          "empirical_T05": 64,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 3128,
+          "shared_bytes": 29626,
+          "amortized_bytes": {
+            "1": 32754.0,
+            "16": 4979.625,
+            "128": 3359.453125
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.0907108466803308,
+          "embedded_potentially_contended_ms_per_token": 0.09865223583993554
+        }
+      },
+      "candidate_caps_N128": [
+        {
+          "candidate": "FULL_RESIDUAL_4_4",
+          "candidate_amortized_bytes": 3409.859375,
+          "native_fp32_feasible": false,
+          "best_TEST_supported_baseline": "MIXED_6_8",
+          "best_TEST_supported_T05": 64,
+          "best_TEST_empirical_baseline": "MIXED_6_8",
+          "best_TEST_empirical_T05": 64,
+          "best_TEST_rmst_baseline": "MIXED_6_8",
+          "best_TEST_baseline_rmst": 271.06640625,
+          "descriptive_rmst_delta_vs_best_feasible": -1.044921875
+        },
+        {
+          "candidate": "LOWRANK_4_8_R2",
+          "candidate_amortized_bytes": 2269.8984375,
+          "native_fp32_feasible": false,
+          "best_TEST_supported_baseline": "UNIFORM_5",
+          "best_TEST_supported_T05": 64,
+          "best_TEST_empirical_baseline": "UNIFORM_5",
+          "best_TEST_empirical_T05": 64,
+          "best_TEST_rmst_baseline": "UNIFORM_5",
+          "best_TEST_baseline_rmst": 211.859375,
+          "descriptive_rmst_delta_vs_best_feasible": 6.5390625
+        },
+        {
+          "candidate": "LOWRANK_4_8_R4",
+          "candidate_amortized_bytes": 2665.8984375,
+          "native_fp32_feasible": false,
+          "best_TEST_supported_baseline": "UNIFORM_6",
+          "best_TEST_supported_T05": 64,
+          "best_TEST_empirical_baseline": "UNIFORM_6",
+          "best_TEST_empirical_T05": 64,
+          "best_TEST_rmst_baseline": "UNIFORM_6",
+          "best_TEST_baseline_rmst": 258.01953125,
+          "descriptive_rmst_delta_vs_best_feasible": -22.201171875
+        }
+      ]
+    },
+    {
+      "domain": "learned",
+      "condition": "learned_s3",
+      "model_seed": 2,
+      "arms": 26,
+      "selected_numeric_results": {
+        "FULL_RESIDUAL_4_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 238.890625,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 3176,
+          "shared_bytes": 29934,
+          "amortized_bytes": {
+            "1": 33110.0,
+            "16": 5046.875,
+            "128": 3409.859375
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.1510203876948779,
+          "embedded_potentially_contended_ms_per_token": 0.16042762158186008
+        },
+        "LOWRANK_4_8_R2": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 236.765625,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 2024,
+          "shared_bytes": 31475,
+          "amortized_bytes": {
+            "1": 33499.0,
+            "16": 3991.1875,
+            "128": 2269.8984375
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.14717563378940923,
+          "embedded_potentially_contended_ms_per_token": 0.14042383642554057
+        },
+        "LOWRANK_4_8_R4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 240.888671875,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 2408,
+          "shared_bytes": 33011,
+          "amortized_bytes": {
+            "1": 35419.0,
+            "16": 4471.1875,
+            "128": 2665.8984375
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.15546743847671962,
+          "embedded_potentially_contended_ms_per_token": 0.16135995361299393
+        },
+        "NATIVE_FP32": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 239.865234375,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 12296,
+          "shared_bytes": 29410,
+          "amortized_bytes": {
+            "1": 41706.0,
+            "16": 14134.125,
+            "128": 12525.765625
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.024536659667617755,
+          "embedded_potentially_contended_ms_per_token": 0.02406369921814644
+        },
+        "UNIFORM_16": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 239.990234375,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 6200,
+          "shared_bytes": 29627,
+          "amortized_bytes": {
+            "1": 35827.0,
+            "16": 8051.6875,
+            "128": 6431.4609375
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.1367416669921795,
+          "embedded_potentially_contended_ms_per_token": 0.14468635546904807
+        },
+        "UNIFORM_4": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 185.5078125,
+          "empirical_T05": 64,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 1592,
+          "shared_bytes": 29626,
+          "amortized_bytes": {
+            "1": 31218.0,
+            "16": 3443.625,
+            "128": 1823.453125
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.10087827294924523,
+          "embedded_potentially_contended_ms_per_token": 0.0967178955084691
+        },
+        "UNIFORM_6": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 235.453125,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 2360,
+          "shared_bytes": 29626,
+          "amortized_bytes": {
+            "1": 31986.0,
+            "16": 4211.625,
+            "128": 2591.453125
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.13055169921916132,
+          "embedded_potentially_contended_ms_per_token": 0.12632702050741074
+        },
+        "UNIFORM_8": {
+          "failures": 512,
+          "F2048": 1.0,
+          "rmst": 239.6171875,
+          "empirical_T05": 128,
+          "supported_T05": 64,
+          "empirical_T01": 64,
+          "supported_T01": null,
+          "stream_bytes": 3128,
+          "shared_bytes": 29626,
+          "amortized_bytes": {
+            "1": 32754.0,
+            "16": 4979.625,
+            "128": 3359.453125
+          },
+          "evaluation_version": "frozen-learned-primary",
+          "execution_status": "COMPLETE",
+          "absorbed_sequences": 0,
+          "isolated_benchmark_ms_per_token": 0.09870108056642124,
+          "embedded_potentially_contended_ms_per_token": 0.09823265527408864
+        }
+      },
+      "candidate_caps_N128": [
+        {
+          "candidate": "FULL_RESIDUAL_4_4",
+          "candidate_amortized_bytes": 3409.859375,
+          "native_fp32_feasible": false,
+          "best_TEST_supported_baseline": "UNIFORM_8",
+          "best_TEST_supported_T05": 64,
+          "best_TEST_empirical_baseline": "UNIFORM_8",
+          "best_TEST_empirical_T05": 128,
+          "best_TEST_rmst_baseline": "UNIFORM_8",
+          "best_TEST_baseline_rmst": 239.6171875,
+          "descriptive_rmst_delta_vs_best_feasible": -0.7265625
+        },
+        {
+          "candidate": "LOWRANK_4_8_R2",
+          "candidate_amortized_bytes": 2269.8984375,
+          "native_fp32_feasible": false,
+          "best_TEST_supported_baseline": "UNIFORM_5",
+          "best_TEST_supported_T05": 64,
+          "best_TEST_empirical_baseline": "UNIFORM_5",
+          "best_TEST_empirical_T05": 128,
+          "best_TEST_rmst_baseline": "UNIFORM_5",
+          "best_TEST_baseline_rmst": 226.484375,
+          "descriptive_rmst_delta_vs_best_feasible": 10.28125
+        },
+        {
+          "candidate": "LOWRANK_4_8_R4",
+          "candidate_amortized_bytes": 2665.8984375,
+          "native_fp32_feasible": false,
+          "best_TEST_supported_baseline": "UNIFORM_6",
+          "best_TEST_supported_T05": 64,
+          "best_TEST_empirical_baseline": "UNIFORM_6",
+          "best_TEST_empirical_T05": 128,
+          "best_TEST_rmst_baseline": "UNIFORM_6",
+          "best_TEST_baseline_rmst": 235.453125,
+          "descriptive_rmst_delta_vs_best_feasible": 5.435546875
+        }
+      ]
+    }
+  ],
+  "budget_comparison_rows": 609,
+  "all_arm_rows": 203,
+  "native_reference_rows": 21,
+  "interpretation": {
+    "budget_selection": "TEST descriptive best feasible baseline; not DEV-selected and not a statistical superiority test",
+    "null_horizon": "No evaluated grid horizon >=32 qualifies; not measured zero memory",
+    "censored_maximum": "Empirical maximum is a sample statement; population support comes only from the simultaneous confidence field",
+    "model_seeds": "reported separately, never pooled as new independent input sequences",
+    "byte_scope": "shared serialized bytes plus N times per-stream bytes, divided by N; no baseline padding",
+    "toy_timing": "diagnostic loop only; complete-call timing NOT_MEASURED",
+    "learned_timing": "isolated complete-call result is primary only when separately supplied; embedded potentially-contended timing retained explicitly; no GPU or whole-model speedup claim"
+  },
+  "figures": [
+    "figures/toy_first_failure.png",
+    "figures/toy_first_failure.pdf",
+    "figures/toy_budget_horizons_N128.png",
+    "figures/toy_budget_horizons_N128.pdf",
+    "figures/learned_first_failure.png",
+    "figures/learned_first_failure.pdf",
+    "figures/learned_budget_horizons_N128.png",
+    "figures/learned_budget_horizons_N128.pdf"
+  ],
+  "software": {
+    "numpy": "2.3.5",
+    "matplotlib": "3.10.8",
+    "style": "plain matplotlib; no SciencePlots"
+  },
+  "sources": {
+    "toy_original_results_sha256": "9d98b2ca6aedf0ed7369d5d39169df0df759e8af05e91acb95637d339b9b3998",
+    "toy_current_derived_results_sha256": "7e5a55d75dbea2ed295ca6bab00f91b7f7c425fd973d8bd4674d5791b63b61bf",
+    "summarizer_source_sha256": "983f1e1faed64782da85acddf0dc5e1ef17177e939f4eb914f9b0a388046f798"
+  }
+}

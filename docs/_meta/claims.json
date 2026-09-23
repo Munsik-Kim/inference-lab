@@ -1317,6 +1317,78 @@
         "docs/ko/PORTFOLIO.md"
       ],
       "display_checks": []
+    },
+    {
+      "claim_id": "c010-state-bytes",
+      "case_id": "010",
+      "claim_en": "Native FP32 and INT8 serialize 12305 and 3137 bytes per stream including the v2 failure envelope.",
+      "claim_ko": "v2 실패 header를 포함한 stream별 직렬화 상태는 Native FP32 12305 bytes, INT8 3137 bytes다.",
+      "source_revision": "archive:efe3ab2586a3cec757429386a7f874b594a9893fc771c804f5871dfaa61ed9cc",
+      "source_path": "cases/010-ckda-finite-precision-memory-horizon/versions/v2/results/runtime_byte_ledger.json",
+      "source_sha256": "c5ca4336539f8cdfd8906f1653beae8286b4528e20291f32c12fcd967576df6e",
+      "source_locator": {
+        "kind": "json",
+        "checks": [
+          {
+            "pointer": "/rows/0/v2/per_stream_persistent_bytes",
+            "equals": 12305
+          },
+          {
+            "pointer": "/rows/1/v2/per_stream_persistent_bytes",
+            "equals": 3137
+          }
+        ]
+      },
+      "metric": "serialized persistent state",
+      "value": [
+        12305,
+        3137
+      ],
+      "unit": "bytes per stream",
+      "denominator": "one recurrent stream; shared runtime metadata accounted separately",
+      "scope": "S3 CKDA, same three trained checkpoints, v2 failure-aware codecs",
+      "evidence_kind": "original-v2-record",
+      "limits": "Not RAM/VRAM or quality equivalence; v1/v2 cohorts and confidence families stay separate.",
+      "docs_locations": [
+        "README.md",
+        "README.ko.md",
+        "docs/en/CASEBOOK.md",
+        "docs/ko/CASEBOOK.md"
+      ],
+      "display_checks": [
+        {
+          "path": "README.md",
+          "contains": [
+            "12,305",
+            "3,137",
+            "74.5%"
+          ]
+        },
+        {
+          "path": "README.ko.md",
+          "contains": [
+            "12,305",
+            "3,137",
+            "74.5%"
+          ]
+        },
+        {
+          "path": "docs/en/CASEBOOK.md",
+          "contains": [
+            "12,305",
+            "3,137",
+            "74.5%"
+          ]
+        },
+        {
+          "path": "docs/ko/CASEBOOK.md",
+          "contains": [
+            "12,305",
+            "3,137",
+            "74.5%"
+          ]
+        }
+      ]
     }
   ],
   "protection_revision": "bc1da81a82bff2e2827c5b4cabc9082cb6db5484",
@@ -1326,6 +1398,14 @@
       "archive_sha256": "49cc2640b63d7662cf3d40c168eaf036505bbf5f7f5f73de8de48099d452daca",
       "manifest": "cases/008-build-reconstruct-reload/PUBLICATION_SHA256SUMS",
       "download_metadata": "downloads/case008_build_reconstruct_reload_reviewed_publication_v2.json"
+    }
+  ],
+  "unified_snapshots": [
+    {
+      "case_path": "cases/010-ckda-finite-precision-memory-horizon",
+      "version": "v2",
+      "archive_sha256": "efe3ab2586a3cec757429386a7f874b594a9893fc771c804f5871dfaa61ed9cc",
+      "snapshot_manifest": "cases/010-ckda-finite-precision-memory-horizon/provenance/snapshot_manifest.json"
     }
   ]
 }

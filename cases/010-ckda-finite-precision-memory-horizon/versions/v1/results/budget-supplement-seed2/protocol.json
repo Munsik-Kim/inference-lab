@@ -1,0 +1,156 @@
+{
+  "schema": "ckda-memory-horizon-v1",
+  "frozen_utc": "2026-09-23T01:10:01.273446+00:00",
+  "study": "official_S3_a11_b02_small_training",
+  "upstream_commit": "ef9d108d1692387cae37f5b2d539a71826a127c1",
+  "prior_exploration": {
+    "user_pilot": "EXPLORED_PROMPT_ONLY; source unavailable; not executed or treated as learned evidence",
+    "official_cpu_smoke": "20 updates batch8; train/result PASS; plot dependency failures",
+    "gpu_dev_smoke": "20 updates batch128 seed0; pipeline only; no TEST"
+  },
+  "architecture": {
+    "task": "S3 arbitrary elements; left cumulative product",
+    "d_model": 48,
+    "heads": 12,
+    "head_dim": 16,
+    "layers": 1,
+    "short_conv": false,
+    "readout": "MLP48-192-6",
+    "parameters": 56530,
+    "weight_compute_state_dtype": "float32"
+  },
+  "training": {
+    "backend": "naive_recurrent",
+    "max_updates": 20000,
+    "batch_size": 128,
+    "walltime_seconds": 1800,
+    "dev_batch_size": 256,
+    "dev_seed": 2001,
+    "log_every": 1000,
+    "curriculum": [
+      4,
+      6,
+      8,
+      16,
+      32
+    ],
+    "optimizer": "upstream Muon hidden matrices plus AdamW",
+    "lr": 0.005,
+    "muon_lr": 0.02,
+    "weight_decay": 1e-12,
+    "muon_momentum": 0.95,
+    "muon_ns_steps": 5,
+    "grad_clip": 1.0,
+    "checkpoint_selection": "final scheduled update only, no TEST selection"
+  },
+  "resource_budget": {
+    "global_training_gpu_seconds": 3600,
+    "seed0": 0,
+    "conditional_seeds": [
+      1,
+      2
+    ],
+    "condition": "seed0 scheduled training complete AND DEV32 all-prefix >=0.90 AND final-quarter >=0.95; only remaining global budget; same schedule; no extension",
+    "gpu_smoke_seconds": 4.983639232999849,
+    "no_parallel_gpu_runs": true,
+    "no_new_checkpoint_download": true
+  },
+  "splits": {
+    "CAL": {
+      "seed": 1001,
+      "sequences": 64,
+      "length": 32
+    },
+    "DEV": {
+      "seed": 2001,
+      "sequences": 128,
+      "length": 128
+    },
+    "TEST": {
+      "seed": 3001,
+      "sequences": 512,
+      "length": 2048
+    }
+  },
+  "input_law": "independent uniform over all six group elements; longest sequences reused for prefixes",
+  "evaluation": {
+    "horizons": [
+      32,
+      64,
+      128,
+      256,
+      512,
+      1024,
+      2048
+    ],
+    "epsilon_primary": 0.05,
+    "epsilon_secondary": 0.01,
+    "alpha": 0.05,
+    "max_model_seeds": 3,
+    "tie": "lowest label index, torch argmax",
+    "nonfinite": "entire output checked; nonfinite is first failure and execution marked",
+    "initial_state": "zero; untrained initial zero state not scored; BOS transition/read separately reported",
+    "bos": "one BOS token before t=1; codec applied also to BOS write; BOS excluded from tau",
+    "read_boundary": "after every token write, represented Z+decoded residual",
+    "coordinate_system": "physical; no retained cumulative gauge; normalized q/k and full original decoder",
+    "primary_sample": "all 512 TEST sequences, never baseline-conditioned filtering",
+    "empirical_horizon": "grid restricted; censored lower bound, never infinity",
+    "simultaneous_family": "all predeclared arms times7 horizons times3 possible seeds; Bonferroni exact upper binomial bounds",
+    "seed_variation": "separate strata, do not pool model seeds"
+  },
+  "calibration": {
+    "basis": "per-head covariance of local base INT4 self-update writeback residual; top eigenvectors rank1/2/4; sign canonical",
+    "mixed": "CAL error energy times next-transition column squared norm; stable index tie; not DAMP reproduction",
+    "ranges": "per-head dynamic maxabs per write; FP32 scale stored",
+    "candidate_selection": "no TEST-dependent selection; all frozen arms retained, budget frontiers descriptive with simultaneous bounds"
+  },
+  "arms": [
+    "NATIVE_FP32",
+    "UNIFORM_2",
+    "UNIFORM_3",
+    "UNIFORM_4",
+    "UNIFORM_5",
+    "UNIFORM_6",
+    "UNIFORM_7",
+    "UNIFORM_8",
+    "UNIFORM_9",
+    "UNIFORM_10",
+    "UNIFORM_11",
+    "UNIFORM_12",
+    "UNIFORM_13",
+    "UNIFORM_14",
+    "UNIFORM_15",
+    "UNIFORM_16",
+    "STOCHASTIC_4",
+    "FULL_RESIDUAL_4_4",
+    "FULL_RESIDUAL_4_8",
+    "FULL_RESIDUAL_4_FP32",
+    "LOWRANK_4_8_R1",
+    "LOWRANK_4_8_R2",
+    "LOWRANK_4_8_R4",
+    "UNTRANSPORTED_4_4",
+    "MIXED_4_8",
+    "MIXED_6_8"
+  ],
+  "storage": {
+    "streams": [
+      1,
+      16,
+      128
+    ],
+    "format": "actual uint8 packed payload, per-head FP32 maxabs scales, little endian, LSB-first",
+    "rounding": "ties-to-even; SplitMix64 stochastic with persistent seed+counter",
+    "shared": "canonical codec config + fixed basis bytes + any transition/readout table used",
+    "per_stream": "codes,residual,scales,RNG,8-byte cursor; no artificial padding",
+    "float_residual": "positive control, not low-byte winner",
+    "model_weights": "common fixed checkpoint reported separately; not candidate-specific cache; no model-VRAM claim"
+  },
+  "restrictions": [
+    "no coefficient quantization in learned primary",
+    "no retraining per codec",
+    "no gold/native/future input in candidate update",
+    "no TEST tuning",
+    "no remote writes",
+    "no unrelated research data"
+  ]
+}

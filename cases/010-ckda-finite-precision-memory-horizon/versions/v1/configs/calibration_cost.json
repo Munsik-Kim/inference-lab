@@ -1,0 +1,26 @@
+{
+  "schema": "case010-calibration-cost-v1",
+  "phase": "POST_HOC_COST_ONLY",
+  "frozen_utc": "2026-09-23T02:12:25.071780+00:00",
+  "original_protocol_sha256": "782d24a96dadd186878e639332a404dc3f5692155639ea5c56d9b4b667e320cb",
+  "model_seeds": [
+    0,
+    1,
+    2
+  ],
+  "split": "CAL",
+  "sequences": 64,
+  "length": 32,
+  "seed": 1001,
+  "cpu_threads": 2,
+  "timed_calls_per_model_seed": 1,
+  "execution": "serial fresh CPU process per seed, after all isolated inference timings complete",
+  "timed_scope": "one unchanged frozen calibrate(table, tokens) call: initial INT4 encoding, causal INT4 rollout, residual covariance, eigensolver, and mixed-channel scoring",
+  "excluded_from_timer": "model and source loading, input generation, token table construction and validation, reference loading, array comparison, hashing, and file I/O",
+  "storage_report": "sum of returned NumPy stats arrays' nbytes; stats storage only, not peak temporary/allocator memory",
+  "comparison": "compare every returned array with original calibration.npz; report byte equality, dtype/shape and actual differences; never replace primary arrays or codecs",
+  "no_model_codec_or_threshold_changes": true,
+  "no_test_generation": true,
+  "no_gpu": true,
+  "no_retry_for_favorable_cost": true
+}

@@ -1,0 +1,79 @@
+{
+  "schema": "case010-v2-restored-v1-verification-v1",
+  "status": "PASS",
+  "verified_utc": "2026-09-23T05:39:22.828426+00:00",
+  "scope": "New safe extraction of the original immutable review archive and actual rerun of its publication verifier and complete CPU unit-test discovery. Existing model-free scalar audits were not repeated. No training or GPU execution.",
+  "archive": {
+    "archive_file": "diova_ckda_memory_horizon_review_20260923_v1.zip",
+    "archive_sha256": "5297318b3762d1ecd43ec38aed1ac21a8b902efef746108dc1f70a4d8451fa8b",
+    "archive_bytes": 30945886,
+    "archive_members": 1081,
+    "archive_crc": "PASS",
+    "safe_paths": "PASS",
+    "duplicate_members": 0,
+    "links": 0,
+    "case_relative_path": "cases/010-ckda-finite-precision-memory-horizon",
+    "case_files": 1075,
+    "extracted_member_bytes": "PASS"
+  },
+  "publication_manifest_checks": {
+    "before": {
+      "file_count": 1074,
+      "identity_references": 385,
+      "manifest_sha256": "3b7e5ea988e9ede2c90d81a90c88267a98eef1867c168951788317dc580caefe",
+      "status": "PASS",
+      "total_file_bytes": 39012412
+    },
+    "after": {
+      "file_count": 1074,
+      "identity_references": 385,
+      "manifest_sha256": "3b7e5ea988e9ede2c90d81a90c88267a98eef1867c168951788317dc580caefe",
+      "status": "PASS",
+      "total_file_bytes": 39012412
+    }
+  },
+  "inventory_note": "Manifest covers 1074 files and excludes itself; extracted case contains 1075 files including the manifest.",
+  "unit_tests_this_execution": {
+    "tests_run": 141,
+    "passed": 141,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "skip_reasons": [],
+    "seconds": 8.102145191998716,
+    "CUDA_visible": false,
+    "torch_threads": 1,
+    "status": "PASS"
+  },
+  "test_count_interpretation": "141 tests actually ran in this restored tree; 141 passed, 0 skipped. These are a rerun of the previously reported tests, not 141 additional unique tests.",
+  "test_environment": {
+    "existing_environment_reused": true,
+    "pinned_upstream_supplied": true,
+    "bytecode_writes_disabled": true,
+    "CUDA_visibility": "hidden",
+    "initial_torch_threads": 2,
+    "final_torch_threads": 1,
+    "thread_note": "Some original tests change the process thread setting; final observed setting is recorded."
+  },
+  "auditor_sha256": "19e4fa8182dfe8b6c4424866cfffbb6dc4a76891ca571de42d80036141e9a495",
+  "extracted_case_unchanged_after_tests": true,
+  "original_archive_sha256_unchanged_after_tests": true,
+  "private_logs": {
+    "v1-restored-manifest-before.log": {
+      "sha256": "47f5be64af601dcd4c98367ec1508a2516307dd37af52239c27f5c1d6548d71a",
+      "publicly_included": false
+    },
+    "v1-restored-tests.log": {
+      "sha256": "e9b383431650d3ccaec3491b343542da6fcd3690b366552e6c5d6dccb2811973",
+      "publicly_included": false
+    },
+    "v1-restored-manifest-after.log": {
+      "sha256": "47f5be64af601dcd4c98367ec1508a2516307dd37af52239c27f5c1d6548d71a",
+      "publicly_included": false
+    }
+  },
+  "fresh_followup": {
+    "status": "NO_AVAILABLE_CELLS",
+    "note": "The fresh results directory did not yet exist at this check; no partial/final fresh audit is claimed."
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "development-attempt-ledger-v1",
+  "attempts": [
+    {
+      "id": "official_cpu_smoke",
+      "training_updates": 20,
+      "batch_size": 8,
+      "scope": "pipeline_only",
+      "training_result": "completed",
+      "plot_result": "failed: ModuleNotFoundError scienceplots",
+      "exit_code": 1
+    },
+    {
+      "id": "official_plot_dependency_retry",
+      "training_updates": 0,
+      "scope": "plot_only",
+      "result": "failed: SciencePlots2.1.1 calls removed matplotlib.style.core on matplotlib3.11.2",
+      "exit_code": 1,
+      "environment_change": "isolated new venv only; original environments unchanged"
+    },
+    {
+      "id": "gpu_dev_smoke",
+      "training_updates": 20,
+      "batch_size": 128,
+      "seed": 0,
+      "scope": "pipeline_only; noTEST",
+      "result": "TRAINING_COMPLETE",
+      "elapsed_training_seconds": 4.983639232999849,
+      "dev32_all_prefix_survival": 0.0,
+      "source_result_sha256": "d1efff9253a8ea2a168f2cde055ee67d38a4834c7b0c1a6ad5b957599b8f2535"
+    },
+    {
+      "id": "adapter_restart_development",
+      "scope": "synthetic CPU tests, not measured model effect",
+      "original_errors": [
+        "noncanonical nested codec JSON on restore",
+        "native format dispatch mismatch"
+      ],
+      "result": "fixed before scientific TEST; freshprocess payload+read equality passed"
+    },
+    {
+      "id": "official_plot_recovery",
+      "scope": "plot-only reuse of stored 20-step smoke, no training retry",
+      "result": "PASS",
+      "exit_code": 0,
+      "runtime": "existing CPU plotting interpreter matplotlib3.10.8 plus SciencePlots2.1.1 installed in dedicated new venv; original environments unchanged",
+      "font_fallback": "DejaVu Sans; requested Times New Roman unavailable"
+    },
+    {
+      "id": "metrics_finite_contract_fix",
+      "scope": "development before learned TEST",
+      "result": "NaN/Inf logit vectors cannot count as correct; old training adapter preserved",
+      "training_seed0_finite_recheck": "same DEV32 outputs all finite; all-prefix and final-quarter both1.0"
+    },
+    {
+      "id": "long_disabled_numpy_replay",
+      "scope": "DEV seed2004,2sequences,2048tokens; no TEST",
+      "result": "FAILED_FIXED_TOLERANCE",
+      "failure": "cached token projection rounding and NumPy recurrence differ from official Torch after long replay",
+      "max_absolute_logit_difference": 0.007013797760009766,
+      "mismatched_logits": 413,
+      "total_logits": 24588,
+      "tolerance_relaxed": false
+    },
+    {
+      "id": "canonical_torch_long_replay",
+      "scope": "DEV seed2004,2sequences,2048tokens,zero/nonzero initial states",
+      "result": "PASS_FIXED_TOLERANCE",
+      "atol": 2e-05,
+      "rtol": 0.0002,
+      "final_state_bitwise_equal": true,
+      "logit_tolerance_mismatch_count": 0,
+      "tolerance_relaxed": false,
+      "test_accessed": false,
+      "receipt": "native-dev-parity.json"
+    }
+  ],
+  "paper_mode_runs": 0,
+  "pilot_original_available": false,
+  "publication_actions": 0,
+  "prior_exploration_notice": "User pilot was described but unavailable. Toy mechanisms and DEV route checks informed implementation before learned TEST; they are not independent method confirmation. All learned arms were frozen before their CAL/DEV/TEST run."
+}

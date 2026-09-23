@@ -1,0 +1,100 @@
+{
+  "schema": "case010-historical-failure-boundaries-appendix-v1",
+  "created_utc": "2026-09-23T05:58:46.750808+00:00",
+  "role": "TECHNICAL_CONTINUATION_COVERAGE_ALREADY_OBSERVED_FAILURES",
+  "new_memory_trials": 0,
+  "no_hyperparameter_or_model_selection": true,
+  "original_protocol_unchanged": true,
+  "reason": "One fixed historical failure occurs after the final interior main-protocol cut; explicitly exercise continuation immediately before and after every selected actual failure.",
+  "protocol_sha256": "3f5299e9bdaeb2c10b2a68281f05ca559402feeea9cd3d7cba5807f24546e523",
+  "source_sha256": {
+    "source/run_historical.py": "a57560e5008d24f77f15645af17280a31815b42a42fc8c3f57f10dd1e07295fd",
+    "source/online_v2.py": "6067e9dae6552551847abb4e0742fe761a4ee31ad502a9a1ecfbccba767926eb",
+    "source/evaluation.py": "4b743391447e05669e65db65436dfeb2932c1fbf40bde78473cf996b2bc383c4",
+    "source/common.py": "53191632804961b618b5bafef7fa1befc64d226b5af8b148b942c6dfa78d7ffe",
+    "source/checkpoint.py": "f1e335b09053cc134be19785285c29017aeec11ff3a2a31c54a65a8989cd6627",
+    "source/arms.py": "236f34cf409ea259ba41cd2ecc024478289ca65ae4a821dd600b9e4c39b188d4",
+    "source/reference.py": "8201203a85d04ed4d33b8bad51f748f98232ee3647497de22b730cef1b06b931",
+    "source/run_failure_boundaries.py": "39ca68a9476ab9b652693874ae6247718729b77704d77f98bda0762afa223cc3"
+  },
+  "cases": [
+    {
+      "seed": 0,
+      "arm": "UNIFORM_2",
+      "original_row": 77,
+      "first_terminal_write": 838,
+      "group_token_cuts": [
+        837,
+        838,
+        839,
+        2048
+      ],
+      "fresh_process_resume_cut": 838,
+      "receipt": "results/historical/seed0/ORIGINAL_INVALID_STREAM_B1_TEST3001--UNIFORM_2/receipt.json",
+      "receipt_sha256": "c0345c3d037108542a6e8046e33f2d0d86ba60a46c7c2e1436dd494e9537810b",
+      "predictions": "results/historical/seed0/ORIGINAL_INVALID_STREAM_B1_TEST3001--UNIFORM_2/predictions.npz",
+      "predictions_sha256": "199d6b8cb86f5d4a0086ef24a63178ec30fdb4b9bd65b99c536348853df0bdfa"
+    },
+    {
+      "seed": 0,
+      "arm": "UNIFORM_3",
+      "original_row": 8,
+      "first_terminal_write": 1741,
+      "group_token_cuts": [
+        1740,
+        1741,
+        1742,
+        2048
+      ],
+      "fresh_process_resume_cut": 1741,
+      "receipt": "results/historical/seed0/ORIGINAL_INVALID_STREAM_B1_TEST3001--UNIFORM_3/receipt.json",
+      "receipt_sha256": "f511b097906e2191bc7d7ef2a2f78d7fce06b5ab2f196d1b770d67c91939e968",
+      "predictions": "results/historical/seed0/ORIGINAL_INVALID_STREAM_B1_TEST3001--UNIFORM_3/predictions.npz",
+      "predictions_sha256": "7db978703631a7cbb5caf8b4276f0bbb4b55dd5772701d426ac1fc324373443a"
+    },
+    {
+      "seed": 1,
+      "arm": "UNIFORM_2",
+      "original_row": 31,
+      "first_terminal_write": 623,
+      "group_token_cuts": [
+        622,
+        623,
+        624,
+        2048
+      ],
+      "fresh_process_resume_cut": 623,
+      "receipt": "results/historical/seed1/ORIGINAL_INVALID_STREAM_B1_TEST3001--UNIFORM_2/receipt.json",
+      "receipt_sha256": "a65a4b31e149a29db0783419d369f6312e89838a966b0a6a31dd4b03f70d95a3",
+      "predictions": "results/historical/seed1/ORIGINAL_INVALID_STREAM_B1_TEST3001--UNIFORM_2/predictions.npz",
+      "predictions_sha256": "d8988d207904e569dd85b34b08703d9999cc123c2914a9957b390ae18af13d6c"
+    },
+    {
+      "seed": 2,
+      "arm": "UNIFORM_2",
+      "original_row": 5,
+      "first_terminal_write": 867,
+      "group_token_cuts": [
+        866,
+        867,
+        868,
+        2048
+      ],
+      "fresh_process_resume_cut": 867,
+      "receipt": "results/historical/seed2/ORIGINAL_INVALID_STREAM_B1_TEST3001--UNIFORM_2/receipt.json",
+      "receipt_sha256": "b916e312adc9b6c754b74f548b387252c24e05cf44288fe48e0004c41a3291ce",
+      "predictions": "results/historical/seed2/ORIGINAL_INVALID_STREAM_B1_TEST3001--UNIFORM_2/predictions.npz",
+      "predictions_sha256": "4fb00e76332d560ae270c6b9690e6975fb3194bc55416f5df120dcb3693cf584"
+    }
+  ],
+  "batch_size": 1,
+  "horizon": 2048,
+  "fresh_processes_per_case": 1,
+  "assertions": [
+    "ACTIVE before failure",
+    "first terminal write equals fixed historical write",
+    "body and RNG bytes freeze while cursor advances",
+    "full/split/fresh predictions and final payload equal the retained full v2 run"
+  ],
+  "reviewer_probe_executed": false
+}

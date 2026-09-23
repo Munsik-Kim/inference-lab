@@ -1,0 +1,4366 @@
+{
+  "schema": "diova-case010-unified-summary-v1",
+  "derivation_scope": "Existing recorded scalars; no new inference, training, calibration, timing or TEST evaluation.",
+  "model": {
+    "name": "S3/a11_b02; original single-layer CKDA d_model48 heads12 head_dim16; same 3 trained checkpoints",
+    "checkpoint_sha256": {
+      "0": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+      "1": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+      "2": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9"
+    },
+    "upstream_commit": "ef9d108d1692387cae37f5b2d539a71826a127c1",
+    "architecture": {
+      "task": "S3 arbitrary elements; left cumulative product",
+      "d_model": 48,
+      "heads": 12,
+      "head_dim": 16,
+      "layers": 1,
+      "short_conv": false,
+      "readout": "MLP48-192-6",
+      "parameters": 56530,
+      "weight_compute_state_dtype": "float32"
+    },
+    "training": {
+      "backend": "naive_recurrent",
+      "max_updates": 20000,
+      "batch_size": 128,
+      "walltime_seconds": 1800,
+      "dev_batch_size": 256,
+      "dev_seed": 2001,
+      "log_every": 1000,
+      "curriculum": [
+        4,
+        6,
+        8,
+        16,
+        32
+      ],
+      "optimizer": "upstream Muon hidden matrices plus AdamW",
+      "lr": 0.005,
+      "muon_lr": 0.02,
+      "weight_decay": 1e-12,
+      "muon_momentum": 0.95,
+      "muon_ns_steps": 5,
+      "grad_clip": 1.0,
+      "checkpoint_selection": "final scheduled update only, no TEST selection"
+    }
+  },
+  "methods": {
+    "mixed_promoted_channels_by_seed": [
+      {
+        "model_seed": 0,
+        "count": 29,
+        "total_channels": 192,
+        "accepted_channels": [
+          176,
+          183,
+          181,
+          178,
+          117,
+          116,
+          113,
+          125,
+          120,
+          115,
+          122,
+          121,
+          112,
+          91,
+          82,
+          123,
+          127,
+          80,
+          145,
+          149,
+          151,
+          84,
+          147,
+          159,
+          153,
+          188,
+          114,
+          154,
+          126
+        ],
+        "rule": "global descending retained CAL mixed_scores; stable flattened head/key index ties; 5->6 bits until next real serialized allocation exceeds N128 rank2 cap",
+        "source": "versions/v2/inputs/codecs/seed0/selection.json"
+      },
+      {
+        "model_seed": 1,
+        "count": 29,
+        "total_channels": 192,
+        "accepted_channels": [
+          79,
+          69,
+          77,
+          68,
+          139,
+          129,
+          140,
+          136,
+          84,
+          143,
+          44,
+          32,
+          45,
+          142,
+          40,
+          34,
+          132,
+          15,
+          82,
+          11,
+          41,
+          138,
+          13,
+          46,
+          141,
+          137,
+          80,
+          0,
+          5
+        ],
+        "rule": "global descending retained CAL mixed_scores; stable flattened head/key index ties; 5->6 bits until next real serialized allocation exceeds N128 rank2 cap",
+        "source": "versions/v2/inputs/codecs/seed1/selection.json"
+      },
+      {
+        "model_seed": 2,
+        "count": 29,
+        "total_channels": 192,
+        "accepted_channels": [
+          96,
+          102,
+          107,
+          109,
+          97,
+          106,
+          184,
+          104,
+          99,
+          98,
+          185,
+          191,
+          189,
+          108,
+          129,
+          136,
+          141,
+          146,
+          139,
+          153,
+          145,
+          157,
+          128,
+          110,
+          131,
+          140,
+          134,
+          133,
+          137
+        ],
+        "rule": "global descending retained CAL mixed_scores; stable flattened head/key index ties; 5->6 bits until next real serialized allocation exceeds N128 rank2 cap",
+        "source": "versions/v2/inputs/codecs/seed2/selection.json"
+      }
+    ]
+  },
+  "stages": {
+    "v1": {
+      "phase": "A: storage exploration and stronger budget baselines",
+      "N": 512,
+      "T": 2048,
+      "grid": [
+        32,
+        64,
+        128,
+        256,
+        512,
+        1024,
+        2048
+      ],
+      "families": [
+        546,
+        630
+      ],
+      "original_arms": 26,
+      "supplemented_arms": 30,
+      "comparisons": {
+        "original_26arm_family546": {
+          "comparisons": 54,
+          "supported_T05_strict_improvements": 2
+        },
+        "joint_30arm_family630": {
+          "comparisons": 54,
+          "supported_T05_strict_improvements": 0
+        }
+      }
+    },
+    "v2": {
+      "phase": "B: failure-aware restart and fresh-input comparison",
+      "N": 1024,
+      "T": 2048,
+      "grid": [
+        32,
+        48,
+        64,
+        80,
+        96,
+        112,
+        128,
+        160,
+        192,
+        256,
+        512,
+        1024,
+        2048
+      ],
+      "family": 195,
+      "arms": [
+        "NATIVE_FP32",
+        "UNIFORM_8",
+        "UNIFORM_5",
+        "LOWRANK_4_8_R2",
+        "MIXED_5_6_BUDGET"
+      ],
+      "generator_seed": 50101,
+      "reuses_same_three_checkpoints": true
+    }
+  },
+  "headline": {
+    "native_stream_bytes": 12305,
+    "int8_stream_bytes": 3137,
+    "reduction_pct": 74.50629825274278,
+    "unit": "serialized recurrent-state bytes per stream",
+    "int8_minus_native_RMST0_by_seed": [
+      {
+        "model_seed": 0,
+        "delta_tokens": -0.4482421875
+      },
+      {
+        "model_seed": 1,
+        "delta_tokens": 0.416015625
+      },
+      {
+        "model_seed": 2,
+        "delta_tokens": -0.787109375
+      }
+    ]
+  },
+  "fresh": {
+    "rows": [
+      {
+        "model_seed": 0,
+        "arm": "NATIVE_FP32",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 288.568359375,
+        "empirical_T05_all_tokens": 135,
+        "supported_T05_grid": 112,
+        "token_accuracy": 0.4369945526123047,
+        "final_quarter_accuracy": 0.19026565551757812,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 64,
+            "failures": 1,
+            "F": 0.0009765625,
+            "survival": 0.9990234375,
+            "p_upper": 0.010429810189458093
+          },
+          {
+            "horizon": 80,
+            "failures": 1,
+            "F": 0.0009765625,
+            "survival": 0.9990234375,
+            "p_upper": 0.010429810189458093
+          },
+          {
+            "horizon": 96,
+            "failures": 3,
+            "F": 0.0029296875,
+            "survival": 0.9970703125,
+            "p_upper": 0.014333820916090652
+          },
+          {
+            "horizon": 112,
+            "failures": 14,
+            "F": 0.013671875,
+            "survival": 0.986328125,
+            "p_upper": 0.031199304239584263
+          },
+          {
+            "horizon": 128,
+            "failures": 36,
+            "F": 0.03515625,
+            "survival": 0.96484375,
+            "p_upper": 0.05967136201872145
+          },
+          {
+            "horizon": 160,
+            "failures": 102,
+            "F": 0.099609375,
+            "survival": 0.900390625,
+            "p_upper": 0.13592042804911192
+          },
+          {
+            "horizon": 192,
+            "failures": 208,
+            "F": 0.203125,
+            "survival": 0.796875,
+            "p_upper": 0.24964100883242862
+          },
+          {
+            "horizon": 256,
+            "failures": 472,
+            "F": 0.4609375,
+            "survival": 0.5390625,
+            "p_upper": 0.5156874508593894
+          },
+          {
+            "horizon": 512,
+            "failures": 972,
+            "F": 0.94921875,
+            "survival": 0.05078125,
+            "p_upper": 0.9698548194967156
+          },
+          {
+            "horizon": 1024,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.03058429980384858,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed0/NATIVE_FP32/summary.json"
+      },
+      {
+        "model_seed": 0,
+        "arm": "UNIFORM_8",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 288.1201171875,
+        "empirical_T05_all_tokens": 136,
+        "supported_T05_grid": 112,
+        "token_accuracy": 0.43370485305786133,
+        "final_quarter_accuracy": 0.1898784637451172,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 64,
+            "failures": 1,
+            "F": 0.0009765625,
+            "survival": 0.9990234375,
+            "p_upper": 0.010429810189458093
+          },
+          {
+            "horizon": 80,
+            "failures": 1,
+            "F": 0.0009765625,
+            "survival": 0.9990234375,
+            "p_upper": 0.010429810189458093
+          },
+          {
+            "horizon": 96,
+            "failures": 4,
+            "F": 0.00390625,
+            "survival": 0.99609375,
+            "p_upper": 0.016090386696299645
+          },
+          {
+            "horizon": 112,
+            "failures": 14,
+            "F": 0.013671875,
+            "survival": 0.986328125,
+            "p_upper": 0.031199304239584263
+          },
+          {
+            "horizon": 128,
+            "failures": 35,
+            "F": 0.0341796875,
+            "survival": 0.9658203125,
+            "p_upper": 0.05843899651786798
+          },
+          {
+            "horizon": 160,
+            "failures": 101,
+            "F": 0.0986328125,
+            "survival": 0.9013671875,
+            "p_upper": 0.13481129865226668
+          },
+          {
+            "horizon": 192,
+            "failures": 211,
+            "F": 0.2060546875,
+            "survival": 0.7939453125,
+            "p_upper": 0.25277753478704584
+          },
+          {
+            "horizon": 256,
+            "failures": 474,
+            "F": 0.462890625,
+            "survival": 0.537109375,
+            "p_upper": 0.5176405484248278
+          },
+          {
+            "horizon": 512,
+            "failures": 972,
+            "F": 0.94921875,
+            "survival": 0.05078125,
+            "p_upper": 0.9698548194967156
+          },
+          {
+            "horizon": 1024,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.09391181494144973,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed0/UNIFORM_8/summary.json"
+      },
+      {
+        "model_seed": 0,
+        "arm": "UNIFORM_5",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 242.845703125,
+        "empirical_T05_all_tokens": 123,
+        "supported_T05_grid": 96,
+        "token_accuracy": 0.44624757766723633,
+        "final_quarter_accuracy": 0.26331138610839844,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 64,
+            "failures": 1,
+            "F": 0.0009765625,
+            "survival": 0.9990234375,
+            "p_upper": 0.010429810189458093
+          },
+          {
+            "horizon": 80,
+            "failures": 5,
+            "F": 0.0048828125,
+            "survival": 0.9951171875,
+            "p_upper": 0.017769996364509127
+          },
+          {
+            "horizon": 96,
+            "failures": 15,
+            "F": 0.0146484375,
+            "survival": 0.9853515625,
+            "p_upper": 0.03258537078882297
+          },
+          {
+            "horizon": 112,
+            "failures": 29,
+            "F": 0.0283203125,
+            "survival": 0.9716796875,
+            "p_upper": 0.05095222981049834
+          },
+          {
+            "horizon": 128,
+            "failures": 67,
+            "F": 0.0654296875,
+            "survival": 0.9345703125,
+            "p_upper": 0.09642758708957423
+          },
+          {
+            "horizon": 160,
+            "failures": 172,
+            "F": 0.16796875,
+            "survival": 0.83203125,
+            "p_upper": 0.21170854920791635
+          },
+          {
+            "horizon": 192,
+            "failures": 339,
+            "F": 0.3310546875,
+            "survival": 0.6689453125,
+            "p_upper": 0.383870358385384
+          },
+          {
+            "horizon": 256,
+            "failures": 661,
+            "F": 0.6455078125,
+            "survival": 0.3544921875,
+            "p_upper": 0.6965638049429203
+          },
+          {
+            "horizon": 512,
+            "failures": 1012,
+            "F": 0.98828125,
+            "survival": 0.01171875,
+            "p_upper": 0.9966153408495797
+          },
+          {
+            "horizon": 1024,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.12090391650509957,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed0/UNIFORM_5/summary.json"
+      },
+      {
+        "model_seed": 0,
+        "arm": "LOWRANK_4_8_R2",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 277.46875,
+        "empirical_T05_all_tokens": 129,
+        "supported_T05_grid": 112,
+        "token_accuracy": 0.5445375442504883,
+        "final_quarter_accuracy": 0.36540985107421875,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 1,
+            "F": 0.0009765625,
+            "survival": 0.9990234375,
+            "p_upper": 0.010429810189458093
+          },
+          {
+            "horizon": 64,
+            "failures": 2,
+            "F": 0.001953125,
+            "survival": 0.998046875,
+            "p_upper": 0.012468294399966032
+          },
+          {
+            "horizon": 80,
+            "failures": 3,
+            "F": 0.0029296875,
+            "survival": 0.9970703125,
+            "p_upper": 0.014333820916090652
+          },
+          {
+            "horizon": 96,
+            "failures": 10,
+            "F": 0.009765625,
+            "survival": 0.990234375,
+            "p_upper": 0.0254900519230663
+          },
+          {
+            "horizon": 112,
+            "failures": 17,
+            "F": 0.0166015625,
+            "survival": 0.9833984375,
+            "p_upper": 0.03531842712265293
+          },
+          {
+            "horizon": 128,
+            "failures": 47,
+            "F": 0.0458984375,
+            "survival": 0.9541015625,
+            "p_upper": 0.07299570409019457
+          },
+          {
+            "horizon": 160,
+            "failures": 131,
+            "F": 0.1279296875,
+            "survival": 0.8720703125,
+            "p_upper": 0.16771652327716627
+          },
+          {
+            "horizon": 192,
+            "failures": 263,
+            "F": 0.2568359375,
+            "survival": 0.7431640625,
+            "p_upper": 0.3066315723762468
+          },
+          {
+            "horizon": 256,
+            "failures": 525,
+            "F": 0.5126953125,
+            "survival": 0.4873046875,
+            "p_upper": 0.5671654744544437
+          },
+          {
+            "horizon": 512,
+            "failures": 978,
+            "F": 0.955078125,
+            "survival": 0.044921875,
+            "p_upper": 0.9743296634451525
+          },
+          {
+            "horizon": 1024,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.14384124560429257,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed0/LOWRANK_4_8_R2/summary.json"
+      },
+      {
+        "model_seed": 0,
+        "arm": "MIXED_5_6_BUDGET",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 268.1962890625,
+        "empirical_T05_all_tokens": 132,
+        "supported_T05_grid": 112,
+        "token_accuracy": 0.47318410873413086,
+        "final_quarter_accuracy": 0.29749298095703125,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 64,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 80,
+            "failures": 3,
+            "F": 0.0029296875,
+            "survival": 0.9970703125,
+            "p_upper": 0.014333820916090652
+          },
+          {
+            "horizon": 96,
+            "failures": 3,
+            "F": 0.0029296875,
+            "survival": 0.9970703125,
+            "p_upper": 0.014333820916090652
+          },
+          {
+            "horizon": 112,
+            "failures": 16,
+            "F": 0.015625,
+            "survival": 0.984375,
+            "p_upper": 0.03395802948260895
+          },
+          {
+            "horizon": 128,
+            "failures": 38,
+            "F": 0.037109375,
+            "survival": 0.962890625,
+            "p_upper": 0.06212441074315813
+          },
+          {
+            "horizon": 160,
+            "failures": 115,
+            "F": 0.1123046875,
+            "survival": 0.8876953125,
+            "p_upper": 0.1502572591535914
+          },
+          {
+            "horizon": 192,
+            "failures": 248,
+            "F": 0.2421875,
+            "survival": 0.7578125,
+            "p_upper": 0.2911903050962231
+          },
+          {
+            "horizon": 256,
+            "failures": 531,
+            "F": 0.5185546875,
+            "survival": 0.4814453125,
+            "p_upper": 0.5729567154183887
+          },
+          {
+            "horizon": 512,
+            "failures": 1001,
+            "F": 0.9775390625,
+            "survival": 0.0224609375,
+            "p_upper": 0.9902778549056748
+          },
+          {
+            "horizon": 1024,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.11849846435652012,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed0/MIXED_5_6_BUDGET/summary.json"
+      },
+      {
+        "model_seed": 1,
+        "arm": "NATIVE_FP32",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 271.154296875,
+        "empirical_T05_all_tokens": 118,
+        "supported_T05_grid": 96,
+        "token_accuracy": 0.5125646591186523,
+        "final_quarter_accuracy": 0.3580036163330078,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 64,
+            "failures": 1,
+            "F": 0.0009765625,
+            "survival": 0.9990234375,
+            "p_upper": 0.010429810189458093
+          },
+          {
+            "horizon": 80,
+            "failures": 4,
+            "F": 0.00390625,
+            "survival": 0.99609375,
+            "p_upper": 0.016090386696299645
+          },
+          {
+            "horizon": 96,
+            "failures": 18,
+            "F": 0.017578125,
+            "survival": 0.982421875,
+            "p_upper": 0.03666755363568056
+          },
+          {
+            "horizon": 112,
+            "failures": 40,
+            "F": 0.0390625,
+            "survival": 0.9609375,
+            "p_upper": 0.06456282713385526
+          },
+          {
+            "horizon": 128,
+            "failures": 77,
+            "F": 0.0751953125,
+            "survival": 0.9248046875,
+            "p_upper": 0.1078713120351377
+          },
+          {
+            "horizon": 160,
+            "failures": 183,
+            "F": 0.1787109375,
+            "survival": 0.8212890625,
+            "p_upper": 0.2233598854529543
+          },
+          {
+            "horizon": 192,
+            "failures": 296,
+            "F": 0.2890625,
+            "survival": 0.7109375,
+            "p_upper": 0.3403636440544361
+          },
+          {
+            "horizon": 256,
+            "failures": 529,
+            "F": 0.5166015625,
+            "survival": 0.4833984375,
+            "p_upper": 0.5710271261968957
+          },
+          {
+            "horizon": 512,
+            "failures": 971,
+            "F": 0.9482421875,
+            "survival": 0.0517578125,
+            "p_upper": 0.9691001782439985
+          },
+          {
+            "horizon": 1024,
+            "failures": 1023,
+            "F": 0.9990234375,
+            "survival": 0.0009765625,
+            "p_upper": 0.9999997495672822
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.0287739394533304,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed1/NATIVE_FP32/summary.json"
+      },
+      {
+        "model_seed": 1,
+        "arm": "UNIFORM_8",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 271.5703125,
+        "empirical_T05_all_tokens": 118,
+        "supported_T05_grid": 96,
+        "token_accuracy": 0.5112829208374023,
+        "final_quarter_accuracy": 0.35669898986816406,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 64,
+            "failures": 1,
+            "F": 0.0009765625,
+            "survival": 0.9990234375,
+            "p_upper": 0.010429810189458093
+          },
+          {
+            "horizon": 80,
+            "failures": 3,
+            "F": 0.0029296875,
+            "survival": 0.9970703125,
+            "p_upper": 0.014333820916090652
+          },
+          {
+            "horizon": 96,
+            "failures": 17,
+            "F": 0.0166015625,
+            "survival": 0.9833984375,
+            "p_upper": 0.03531842712265293
+          },
+          {
+            "horizon": 112,
+            "failures": 40,
+            "F": 0.0390625,
+            "survival": 0.9609375,
+            "p_upper": 0.06456282713385526
+          },
+          {
+            "horizon": 128,
+            "failures": 78,
+            "F": 0.076171875,
+            "survival": 0.923828125,
+            "p_upper": 0.10900768032000502
+          },
+          {
+            "horizon": 160,
+            "failures": 188,
+            "F": 0.18359375,
+            "survival": 0.81640625,
+            "p_upper": 0.2286375156179164
+          },
+          {
+            "horizon": 192,
+            "failures": 308,
+            "F": 0.30078125,
+            "survival": 0.69921875,
+            "p_upper": 0.3525537633741554
+          },
+          {
+            "horizon": 256,
+            "failures": 533,
+            "F": 0.5205078125,
+            "survival": 0.4794921875,
+            "p_upper": 0.5748854797557023
+          },
+          {
+            "horizon": 512,
+            "failures": 970,
+            "F": 0.947265625,
+            "survival": 0.052734375,
+            "p_upper": 0.9683431932718407
+          },
+          {
+            "horizon": 1024,
+            "failures": 1023,
+            "F": 0.9990234375,
+            "survival": 0.0009765625,
+            "p_upper": 0.9999997495672822
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.09750104638683865,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed1/UNIFORM_8/summary.json"
+      },
+      {
+        "model_seed": 1,
+        "arm": "UNIFORM_5",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 220.3466796875,
+        "empirical_T05_all_tokens": 96,
+        "supported_T05_grid": 80,
+        "token_accuracy": 0.46921825408935547,
+        "final_quarter_accuracy": 0.3391227722167969,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 1,
+            "F": 0.0009765625,
+            "survival": 0.9990234375,
+            "p_upper": 0.010429810189458093
+          },
+          {
+            "horizon": 64,
+            "failures": 2,
+            "F": 0.001953125,
+            "survival": 0.998046875,
+            "p_upper": 0.012468294399966032
+          },
+          {
+            "horizon": 80,
+            "failures": 14,
+            "F": 0.013671875,
+            "survival": 0.986328125,
+            "p_upper": 0.031199304239584263
+          },
+          {
+            "horizon": 96,
+            "failures": 50,
+            "F": 0.048828125,
+            "survival": 0.951171875,
+            "p_upper": 0.07656722910268779
+          },
+          {
+            "horizon": 112,
+            "failures": 100,
+            "F": 0.09765625,
+            "survival": 0.90234375,
+            "p_upper": 0.1337012121414805
+          },
+          {
+            "horizon": 128,
+            "failures": 158,
+            "F": 0.154296875,
+            "survival": 0.845703125,
+            "p_upper": 0.19679327803455535
+          },
+          {
+            "horizon": 160,
+            "failures": 307,
+            "F": 0.2998046875,
+            "survival": 0.7001953125,
+            "p_upper": 0.35153940180775034
+          },
+          {
+            "horizon": 192,
+            "failures": 454,
+            "F": 0.443359375,
+            "survival": 0.556640625,
+            "p_upper": 0.49807209903271304
+          },
+          {
+            "horizon": 256,
+            "failures": 723,
+            "F": 0.7060546875,
+            "survival": 0.2939453125,
+            "p_upper": 0.7541512173660296
+          },
+          {
+            "horizon": 512,
+            "failures": 1004,
+            "F": 0.98046875,
+            "survival": 0.01953125,
+            "p_upper": 0.992136687548537
+          },
+          {
+            "horizon": 1024,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.12059466894598359,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed1/UNIFORM_5/summary.json"
+      },
+      {
+        "model_seed": 1,
+        "arm": "LOWRANK_4_8_R2",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 219.9677734375,
+        "empirical_T05_all_tokens": 112,
+        "supported_T05_grid": 96,
+        "token_accuracy": 0.4552464485168457,
+        "final_quarter_accuracy": 0.33783912658691406,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 1,
+            "F": 0.0009765625,
+            "survival": 0.9990234375,
+            "p_upper": 0.010429810189458093
+          },
+          {
+            "horizon": 64,
+            "failures": 2,
+            "F": 0.001953125,
+            "survival": 0.998046875,
+            "p_upper": 0.012468294399966032
+          },
+          {
+            "horizon": 80,
+            "failures": 6,
+            "F": 0.005859375,
+            "survival": 0.994140625,
+            "p_upper": 0.01939142264909298
+          },
+          {
+            "horizon": 96,
+            "failures": 25,
+            "F": 0.0244140625,
+            "survival": 0.9755859375,
+            "p_upper": 0.045856789079690916
+          },
+          {
+            "horizon": 112,
+            "failures": 49,
+            "F": 0.0478515625,
+            "survival": 0.9521484375,
+            "p_upper": 0.07537930906829897
+          },
+          {
+            "horizon": 128,
+            "failures": 105,
+            "F": 0.1025390625,
+            "survival": 0.8974609375,
+            "p_upper": 0.13924219558764075
+          },
+          {
+            "horizon": 160,
+            "failures": 253,
+            "F": 0.2470703125,
+            "survival": 0.7529296875,
+            "p_upper": 0.2963453313880491
+          },
+          {
+            "horizon": 192,
+            "failures": 439,
+            "F": 0.4287109375,
+            "survival": 0.5712890625,
+            "p_upper": 0.4833407521058005
+          },
+          {
+            "horizon": 256,
+            "failures": 736,
+            "F": 0.71875,
+            "survival": 0.28125,
+            "p_upper": 0.7660987491171766
+          },
+          {
+            "horizon": 512,
+            "failures": 1018,
+            "F": 0.994140625,
+            "survival": 0.005859375,
+            "p_upper": 0.9991669092291557
+          },
+          {
+            "horizon": 1024,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.14914993993997427,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed1/LOWRANK_4_8_R2/summary.json"
+      },
+      {
+        "model_seed": 1,
+        "arm": "MIXED_5_6_BUDGET",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 240.7294921875,
+        "empirical_T05_all_tokens": 110,
+        "supported_T05_grid": 96,
+        "token_accuracy": 0.48019886016845703,
+        "final_quarter_accuracy": 0.33301734924316406,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 64,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 80,
+            "failures": 2,
+            "F": 0.001953125,
+            "survival": 0.998046875,
+            "p_upper": 0.012468294399966032
+          },
+          {
+            "horizon": 96,
+            "failures": 25,
+            "F": 0.0244140625,
+            "survival": 0.9755859375,
+            "p_upper": 0.045856789079690916
+          },
+          {
+            "horizon": 112,
+            "failures": 61,
+            "F": 0.0595703125,
+            "survival": 0.9404296875,
+            "p_upper": 0.08948332527207956
+          },
+          {
+            "horizon": 128,
+            "failures": 103,
+            "F": 0.1005859375,
+            "survival": 0.8994140625,
+            "p_upper": 0.13702861268046498
+          },
+          {
+            "horizon": 160,
+            "failures": 237,
+            "F": 0.2314453125,
+            "survival": 0.7685546875,
+            "p_upper": 0.279820314874692
+          },
+          {
+            "horizon": 192,
+            "failures": 383,
+            "F": 0.3740234375,
+            "survival": 0.6259765625,
+            "p_upper": 0.4279159838984471
+          },
+          {
+            "horizon": 256,
+            "failures": 650,
+            "F": 0.634765625,
+            "survival": 0.365234375,
+            "p_upper": 0.6862487845174411
+          },
+          {
+            "horizon": 512,
+            "failures": 1002,
+            "F": 0.978515625,
+            "survival": 0.021484375,
+            "p_upper": 0.9909058124727724
+          },
+          {
+            "horizon": 1024,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.11600765429697901,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed1/MIXED_5_6_BUDGET/summary.json"
+      },
+      {
+        "model_seed": 2,
+        "arm": "NATIVE_FP32",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 238.2802734375,
+        "empirical_T05_all_tokens": 142,
+        "supported_T05_grid": 128,
+        "token_accuracy": 0.3967013359069824,
+        "final_quarter_accuracy": 0.17353057861328125,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 64,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 80,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 96,
+            "failures": 2,
+            "F": 0.001953125,
+            "survival": 0.998046875,
+            "p_upper": 0.012468294399966032
+          },
+          {
+            "horizon": 112,
+            "failures": 10,
+            "F": 0.009765625,
+            "survival": 0.990234375,
+            "p_upper": 0.0254900519230663
+          },
+          {
+            "horizon": 128,
+            "failures": 24,
+            "F": 0.0234375,
+            "survival": 0.9765625,
+            "p_upper": 0.04456732933220457
+          },
+          {
+            "horizon": 160,
+            "failures": 116,
+            "F": 0.11328125,
+            "survival": 0.88671875,
+            "p_upper": 0.1513541644854001
+          },
+          {
+            "horizon": 192,
+            "failures": 268,
+            "F": 0.26171875,
+            "survival": 0.73828125,
+            "p_upper": 0.3117630873077592
+          },
+          {
+            "horizon": 256,
+            "failures": 654,
+            "F": 0.638671875,
+            "survival": 0.361328125,
+            "p_upper": 0.6900029566104671
+          },
+          {
+            "horizon": 512,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 1024,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.030608241699425776,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed2/NATIVE_FP32/summary.json"
+      },
+      {
+        "model_seed": 2,
+        "arm": "UNIFORM_8",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 237.4931640625,
+        "empirical_T05_all_tokens": 141,
+        "supported_T05_grid": 128,
+        "token_accuracy": 0.3968524932861328,
+        "final_quarter_accuracy": 0.17405319213867188,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 64,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 80,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 96,
+            "failures": 2,
+            "F": 0.001953125,
+            "survival": 0.998046875,
+            "p_upper": 0.012468294399966032
+          },
+          {
+            "horizon": 112,
+            "failures": 11,
+            "F": 0.0107421875,
+            "survival": 0.9892578125,
+            "p_upper": 0.026945960853892174
+          },
+          {
+            "horizon": 128,
+            "failures": 25,
+            "F": 0.0244140625,
+            "survival": 0.9755859375,
+            "p_upper": 0.045856789079690916
+          },
+          {
+            "horizon": 160,
+            "failures": 116,
+            "F": 0.11328125,
+            "survival": 0.88671875,
+            "p_upper": 0.1513541644854001
+          },
+          {
+            "horizon": 192,
+            "failures": 268,
+            "F": 0.26171875,
+            "survival": 0.73828125,
+            "p_upper": 0.3117630873077592
+          },
+          {
+            "horizon": 256,
+            "failures": 659,
+            "F": 0.6435546875,
+            "survival": 0.3564453125,
+            "p_upper": 0.6946904458086394
+          },
+          {
+            "horizon": 512,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 1024,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.09457696337911159,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed2/UNIFORM_8/summary.json"
+      },
+      {
+        "model_seed": 2,
+        "arm": "UNIFORM_5",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 222.765625,
+        "empirical_T05_all_tokens": 133,
+        "supported_T05_grid": 112,
+        "token_accuracy": 0.37780094146728516,
+        "final_quarter_accuracy": 0.1672649383544922,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 64,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 80,
+            "failures": 1,
+            "F": 0.0009765625,
+            "survival": 0.9990234375,
+            "p_upper": 0.010429810189458093
+          },
+          {
+            "horizon": 96,
+            "failures": 5,
+            "F": 0.0048828125,
+            "survival": 0.9951171875,
+            "p_upper": 0.017769996364509127
+          },
+          {
+            "horizon": 112,
+            "failures": 16,
+            "F": 0.015625,
+            "survival": 0.984375,
+            "p_upper": 0.03395802948260895
+          },
+          {
+            "horizon": 128,
+            "failures": 39,
+            "F": 0.0380859375,
+            "survival": 0.9619140625,
+            "p_upper": 0.06334538162709472
+          },
+          {
+            "horizon": 160,
+            "failures": 139,
+            "F": 0.1357421875,
+            "survival": 0.8642578125,
+            "p_upper": 0.17637863920623512
+          },
+          {
+            "horizon": 192,
+            "failures": 324,
+            "F": 0.31640625,
+            "survival": 0.68359375,
+            "p_upper": 0.36874783534454686
+          },
+          {
+            "horizon": 256,
+            "failures": 743,
+            "F": 0.7255859375,
+            "survival": 0.2744140625,
+            "p_upper": 0.7725123377864996
+          },
+          {
+            "horizon": 512,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 1024,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.10895508007813248,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed2/UNIFORM_5/summary.json"
+      },
+      {
+        "model_seed": 2,
+        "arm": "LOWRANK_4_8_R2",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 235.5966796875,
+        "empirical_T05_all_tokens": 141,
+        "supported_T05_grid": 128,
+        "token_accuracy": 0.4079742431640625,
+        "final_quarter_accuracy": 0.18797683715820312,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 64,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 80,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 96,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 112,
+            "failures": 7,
+            "F": 0.0068359375,
+            "survival": 0.9931640625,
+            "p_upper": 0.02096681064812004
+          },
+          {
+            "horizon": 128,
+            "failures": 25,
+            "F": 0.0244140625,
+            "survival": 0.9755859375,
+            "p_upper": 0.045856789079690916
+          },
+          {
+            "horizon": 160,
+            "failures": 101,
+            "F": 0.0986328125,
+            "survival": 0.9013671875,
+            "p_upper": 0.13481129865226668
+          },
+          {
+            "horizon": 192,
+            "failures": 258,
+            "F": 0.251953125,
+            "survival": 0.748046875,
+            "p_upper": 0.3014923691501598
+          },
+          {
+            "horizon": 256,
+            "failures": 656,
+            "F": 0.640625,
+            "survival": 0.359375,
+            "p_upper": 0.6918786515500229
+          },
+          {
+            "horizon": 512,
+            "failures": 1023,
+            "F": 0.9990234375,
+            "survival": 0.0009765625,
+            "p_upper": 0.9999997495672822
+          },
+          {
+            "horizon": 1024,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.1418681953122558,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed2/LOWRANK_4_8_R2/summary.json"
+      },
+      {
+        "model_seed": 2,
+        "arm": "MIXED_5_6_BUDGET",
+        "N": 1024,
+        "T": 2048,
+        "RMST0": 230.6875,
+        "empirical_T05_all_tokens": 139,
+        "supported_T05_grid": 112,
+        "token_accuracy": 0.3848404884338379,
+        "final_quarter_accuracy": 0.16634750366210938,
+        "terminal_count": 0,
+        "grid_rows": [
+          {
+            "horizon": 32,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 48,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 64,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 80,
+            "failures": 0,
+            "F": 0.0,
+            "survival": 1.0,
+            "p_upper": 0.008042418731722218
+          },
+          {
+            "horizon": 96,
+            "failures": 3,
+            "F": 0.0029296875,
+            "survival": 0.9970703125,
+            "p_upper": 0.014333820916090652
+          },
+          {
+            "horizon": 112,
+            "failures": 12,
+            "F": 0.01171875,
+            "survival": 0.98828125,
+            "p_upper": 0.02838133968769603
+          },
+          {
+            "horizon": 128,
+            "failures": 33,
+            "F": 0.0322265625,
+            "survival": 0.9677734375,
+            "p_upper": 0.055961788074888295
+          },
+          {
+            "horizon": 160,
+            "failures": 124,
+            "F": 0.12109375,
+            "survival": 0.87890625,
+            "p_upper": 0.16010137139502426
+          },
+          {
+            "horizon": 192,
+            "failures": 301,
+            "F": 0.2939453125,
+            "survival": 0.7060546875,
+            "p_upper": 0.3454476019083191
+          },
+          {
+            "horizon": 256,
+            "failures": 702,
+            "F": 0.685546875,
+            "survival": 0.314453125,
+            "p_upper": 0.7347548818721155
+          },
+          {
+            "horizon": 512,
+            "failures": 1023,
+            "F": 0.9990234375,
+            "survival": 0.0009765625,
+            "p_upper": 0.9999997495672822
+          },
+          {
+            "horizon": 1024,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          },
+          {
+            "horizon": 2048,
+            "failures": 1024,
+            "F": 1.0,
+            "survival": 0.0,
+            "p_upper": 1.0
+          }
+        ],
+        "checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+        "tokens_sha256": "007023b6bf22445f33bba04f08ca7652746a6faeeb47b817bd67e375e66e85c8",
+        "sample_ids_sha256": "b216dadd9afa4c21b12c92d74c2860213638b29b2f321cfbbd0f075bbd6d0c31",
+        "cpu_ms_per_group_token": 0.11189741064399072,
+        "cpu_timing_scope": "Python/NumPy/PyTorch CPU reference prototype; not single-request latency or GPU speed",
+        "source": "versions/v2/results/fresh/seed2/MIXED_5_6_BUDGET/summary.json"
+      }
+    ],
+    "paired_comparisons": [
+      {
+        "pair_index": 0,
+        "candidate": "LOWRANK_4_8_R2",
+        "baseline": "MIXED_5_6_BUDGET",
+        "model_seed": 0,
+        "N": 1024,
+        "RMST0_delta": 9.2724609375,
+        "pointwise_95_CI": [
+          1.0679199218750002,
+          17.352441406249987
+        ],
+        "bootstrap_seed": 60101,
+        "bootstrap_repeats": 5000,
+        "unit": "independent input sequence within one fixed checkpoint",
+        "positive_difference_sequences": 501,
+        "negative_difference_sequences": 496,
+        "grid_risk_difference": [
+          {
+            "horizon": 32,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 48,
+            "candidate_minus_baseline_F": 0.0009765625
+          },
+          {
+            "horizon": 64,
+            "candidate_minus_baseline_F": 0.001953125
+          },
+          {
+            "horizon": 80,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 96,
+            "candidate_minus_baseline_F": 0.0068359375
+          },
+          {
+            "horizon": 112,
+            "candidate_minus_baseline_F": 0.0009765625
+          },
+          {
+            "horizon": 128,
+            "candidate_minus_baseline_F": 0.0087890625
+          },
+          {
+            "horizon": 160,
+            "candidate_minus_baseline_F": 0.015625
+          },
+          {
+            "horizon": 192,
+            "candidate_minus_baseline_F": 0.0146484375
+          },
+          {
+            "horizon": 256,
+            "candidate_minus_baseline_F": -0.005859375
+          },
+          {
+            "horizon": 512,
+            "candidate_minus_baseline_F": -0.0224609375
+          },
+          {
+            "horizon": 1024,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 2048,
+            "candidate_minus_baseline_F": 0.0
+          }
+        ],
+        "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+        "checkpoint_pooling": false
+      },
+      {
+        "pair_index": 1,
+        "candidate": "LOWRANK_4_8_R2",
+        "baseline": "UNIFORM_5",
+        "model_seed": 0,
+        "N": 1024,
+        "RMST0_delta": 34.623046875,
+        "pointwise_95_CI": [
+          26.25654296875,
+          43.02966308593749
+        ],
+        "bootstrap_seed": 60102,
+        "bootstrap_repeats": 5000,
+        "unit": "independent input sequence within one fixed checkpoint",
+        "positive_difference_sequences": 596,
+        "negative_difference_sequences": 407,
+        "grid_risk_difference": [
+          {
+            "horizon": 32,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 48,
+            "candidate_minus_baseline_F": 0.0009765625
+          },
+          {
+            "horizon": 64,
+            "candidate_minus_baseline_F": 0.0009765625
+          },
+          {
+            "horizon": 80,
+            "candidate_minus_baseline_F": -0.001953125
+          },
+          {
+            "horizon": 96,
+            "candidate_minus_baseline_F": -0.0048828125
+          },
+          {
+            "horizon": 112,
+            "candidate_minus_baseline_F": -0.01171875
+          },
+          {
+            "horizon": 128,
+            "candidate_minus_baseline_F": -0.01953125
+          },
+          {
+            "horizon": 160,
+            "candidate_minus_baseline_F": -0.0400390625
+          },
+          {
+            "horizon": 192,
+            "candidate_minus_baseline_F": -0.07421875
+          },
+          {
+            "horizon": 256,
+            "candidate_minus_baseline_F": -0.1328125
+          },
+          {
+            "horizon": 512,
+            "candidate_minus_baseline_F": -0.033203125
+          },
+          {
+            "horizon": 1024,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 2048,
+            "candidate_minus_baseline_F": 0.0
+          }
+        ],
+        "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+        "checkpoint_pooling": false
+      },
+      {
+        "pair_index": 2,
+        "candidate": "UNIFORM_8",
+        "baseline": "NATIVE_FP32",
+        "model_seed": 0,
+        "N": 1024,
+        "RMST0_delta": -0.4482421875,
+        "pointwise_95_CI": [
+          -2.644677734375,
+          1.8496582031249993
+        ],
+        "bootstrap_seed": 60103,
+        "bootstrap_repeats": 5000,
+        "unit": "independent input sequence within one fixed checkpoint",
+        "positive_difference_sequences": 142,
+        "negative_difference_sequences": 153,
+        "grid_risk_difference": [
+          {
+            "horizon": 32,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 48,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 64,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 80,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 96,
+            "candidate_minus_baseline_F": 0.0009765625
+          },
+          {
+            "horizon": 112,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 128,
+            "candidate_minus_baseline_F": -0.0009765625
+          },
+          {
+            "horizon": 160,
+            "candidate_minus_baseline_F": -0.0009765625
+          },
+          {
+            "horizon": 192,
+            "candidate_minus_baseline_F": 0.0029296875
+          },
+          {
+            "horizon": 256,
+            "candidate_minus_baseline_F": 0.001953125
+          },
+          {
+            "horizon": 512,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 1024,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 2048,
+            "candidate_minus_baseline_F": 0.0
+          }
+        ],
+        "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+        "checkpoint_pooling": false
+      },
+      {
+        "pair_index": 0,
+        "candidate": "LOWRANK_4_8_R2",
+        "baseline": "MIXED_5_6_BUDGET",
+        "model_seed": 1,
+        "N": 1024,
+        "RMST0_delta": -20.76171875,
+        "pointwise_95_CI": [
+          -27.4133056640625,
+          -14.204980468750001
+        ],
+        "bootstrap_seed": 60201,
+        "bootstrap_repeats": 5000,
+        "unit": "independent input sequence within one fixed checkpoint",
+        "positive_difference_sequences": 420,
+        "negative_difference_sequences": 557,
+        "grid_risk_difference": [
+          {
+            "horizon": 32,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 48,
+            "candidate_minus_baseline_F": 0.0009765625
+          },
+          {
+            "horizon": 64,
+            "candidate_minus_baseline_F": 0.001953125
+          },
+          {
+            "horizon": 80,
+            "candidate_minus_baseline_F": 0.00390625
+          },
+          {
+            "horizon": 96,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 112,
+            "candidate_minus_baseline_F": -0.01171875
+          },
+          {
+            "horizon": 128,
+            "candidate_minus_baseline_F": 0.001953125
+          },
+          {
+            "horizon": 160,
+            "candidate_minus_baseline_F": 0.015625
+          },
+          {
+            "horizon": 192,
+            "candidate_minus_baseline_F": 0.0546875
+          },
+          {
+            "horizon": 256,
+            "candidate_minus_baseline_F": 0.083984375
+          },
+          {
+            "horizon": 512,
+            "candidate_minus_baseline_F": 0.015625
+          },
+          {
+            "horizon": 1024,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 2048,
+            "candidate_minus_baseline_F": 0.0
+          }
+        ],
+        "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+        "checkpoint_pooling": false
+      },
+      {
+        "pair_index": 1,
+        "candidate": "LOWRANK_4_8_R2",
+        "baseline": "UNIFORM_5",
+        "model_seed": 1,
+        "N": 1024,
+        "RMST0_delta": -0.37890625,
+        "pointwise_95_CI": [
+          -7.1250732421875,
+          6.240551757812495
+        ],
+        "bootstrap_seed": 60202,
+        "bootstrap_repeats": 5000,
+        "unit": "independent input sequence within one fixed checkpoint",
+        "positive_difference_sequences": 527,
+        "negative_difference_sequences": 464,
+        "grid_risk_difference": [
+          {
+            "horizon": 32,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 48,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 64,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 80,
+            "candidate_minus_baseline_F": -0.0078125
+          },
+          {
+            "horizon": 96,
+            "candidate_minus_baseline_F": -0.0244140625
+          },
+          {
+            "horizon": 112,
+            "candidate_minus_baseline_F": -0.0498046875
+          },
+          {
+            "horizon": 128,
+            "candidate_minus_baseline_F": -0.0517578125
+          },
+          {
+            "horizon": 160,
+            "candidate_minus_baseline_F": -0.052734375
+          },
+          {
+            "horizon": 192,
+            "candidate_minus_baseline_F": -0.0146484375
+          },
+          {
+            "horizon": 256,
+            "candidate_minus_baseline_F": 0.0126953125
+          },
+          {
+            "horizon": 512,
+            "candidate_minus_baseline_F": 0.013671875
+          },
+          {
+            "horizon": 1024,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 2048,
+            "candidate_minus_baseline_F": 0.0
+          }
+        ],
+        "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+        "checkpoint_pooling": false
+      },
+      {
+        "pair_index": 2,
+        "candidate": "UNIFORM_8",
+        "baseline": "NATIVE_FP32",
+        "model_seed": 1,
+        "N": 1024,
+        "RMST0_delta": 0.416015625,
+        "pointwise_95_CI": [
+          -2.14169921875,
+          3.0128173828124982
+        ],
+        "bootstrap_seed": 60203,
+        "bootstrap_repeats": 5000,
+        "unit": "independent input sequence within one fixed checkpoint",
+        "positive_difference_sequences": 165,
+        "negative_difference_sequences": 171,
+        "grid_risk_difference": [
+          {
+            "horizon": 32,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 48,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 64,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 80,
+            "candidate_minus_baseline_F": -0.0009765625
+          },
+          {
+            "horizon": 96,
+            "candidate_minus_baseline_F": -0.0009765625
+          },
+          {
+            "horizon": 112,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 128,
+            "candidate_minus_baseline_F": 0.0009765625
+          },
+          {
+            "horizon": 160,
+            "candidate_minus_baseline_F": 0.0048828125
+          },
+          {
+            "horizon": 192,
+            "candidate_minus_baseline_F": 0.01171875
+          },
+          {
+            "horizon": 256,
+            "candidate_minus_baseline_F": 0.00390625
+          },
+          {
+            "horizon": 512,
+            "candidate_minus_baseline_F": -0.0009765625
+          },
+          {
+            "horizon": 1024,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 2048,
+            "candidate_minus_baseline_F": 0.0
+          }
+        ],
+        "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+        "checkpoint_pooling": false
+      },
+      {
+        "pair_index": 0,
+        "candidate": "LOWRANK_4_8_R2",
+        "baseline": "MIXED_5_6_BUDGET",
+        "model_seed": 2,
+        "N": 1024,
+        "RMST0_delta": 4.9091796875,
+        "pointwise_95_CI": [
+          0.7782958984375,
+          8.93525390624999
+        ],
+        "bootstrap_seed": 60301,
+        "bootstrap_repeats": 5000,
+        "unit": "independent input sequence within one fixed checkpoint",
+        "positive_difference_sequences": 515,
+        "negative_difference_sequences": 435,
+        "grid_risk_difference": [
+          {
+            "horizon": 32,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 48,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 64,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 80,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 96,
+            "candidate_minus_baseline_F": -0.0029296875
+          },
+          {
+            "horizon": 112,
+            "candidate_minus_baseline_F": -0.0048828125
+          },
+          {
+            "horizon": 128,
+            "candidate_minus_baseline_F": -0.0078125
+          },
+          {
+            "horizon": 160,
+            "candidate_minus_baseline_F": -0.0224609375
+          },
+          {
+            "horizon": 192,
+            "candidate_minus_baseline_F": -0.0419921875
+          },
+          {
+            "horizon": 256,
+            "candidate_minus_baseline_F": -0.044921875
+          },
+          {
+            "horizon": 512,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 1024,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 2048,
+            "candidate_minus_baseline_F": 0.0
+          }
+        ],
+        "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+        "checkpoint_pooling": false
+      },
+      {
+        "pair_index": 1,
+        "candidate": "LOWRANK_4_8_R2",
+        "baseline": "UNIFORM_5",
+        "model_seed": 2,
+        "N": 1024,
+        "RMST0_delta": 12.8310546875,
+        "pointwise_95_CI": [
+          8.809228515625,
+          17.0029296875
+        ],
+        "bootstrap_seed": 60302,
+        "bootstrap_repeats": 5000,
+        "unit": "independent input sequence within one fixed checkpoint",
+        "positive_difference_sequences": 559,
+        "negative_difference_sequences": 384,
+        "grid_risk_difference": [
+          {
+            "horizon": 32,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 48,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 64,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 80,
+            "candidate_minus_baseline_F": -0.0009765625
+          },
+          {
+            "horizon": 96,
+            "candidate_minus_baseline_F": -0.0048828125
+          },
+          {
+            "horizon": 112,
+            "candidate_minus_baseline_F": -0.0087890625
+          },
+          {
+            "horizon": 128,
+            "candidate_minus_baseline_F": -0.013671875
+          },
+          {
+            "horizon": 160,
+            "candidate_minus_baseline_F": -0.037109375
+          },
+          {
+            "horizon": 192,
+            "candidate_minus_baseline_F": -0.064453125
+          },
+          {
+            "horizon": 256,
+            "candidate_minus_baseline_F": -0.0849609375
+          },
+          {
+            "horizon": 512,
+            "candidate_minus_baseline_F": -0.0009765625
+          },
+          {
+            "horizon": 1024,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 2048,
+            "candidate_minus_baseline_F": 0.0
+          }
+        ],
+        "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+        "checkpoint_pooling": false
+      },
+      {
+        "pair_index": 2,
+        "candidate": "UNIFORM_8",
+        "baseline": "NATIVE_FP32",
+        "model_seed": 2,
+        "N": 1024,
+        "RMST0_delta": -0.787109375,
+        "pointwise_95_CI": [
+          -1.9961181640625,
+          0.37600097656249964
+        ],
+        "bootstrap_seed": 60303,
+        "bootstrap_repeats": 5000,
+        "unit": "independent input sequence within one fixed checkpoint",
+        "positive_difference_sequences": 93,
+        "negative_difference_sequences": 117,
+        "grid_risk_difference": [
+          {
+            "horizon": 32,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 48,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 64,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 80,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 96,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 112,
+            "candidate_minus_baseline_F": 0.0009765625
+          },
+          {
+            "horizon": 128,
+            "candidate_minus_baseline_F": 0.0009765625
+          },
+          {
+            "horizon": 160,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 192,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 256,
+            "candidate_minus_baseline_F": 0.0048828125
+          },
+          {
+            "horizon": 512,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 1024,
+            "candidate_minus_baseline_F": 0.0
+          },
+          {
+            "horizon": 2048,
+            "candidate_minus_baseline_F": 0.0
+          }
+        ],
+        "interval_scope": "pointwise paired RMST bootstrap; not a multiple-comparison confirmatory claim",
+        "checkpoint_pooling": false
+      }
+    ],
+    "interval_scope": "complete fresh cohort; 3 fixed checkpoints reported separately; paired RMST intervals are pointwise, not multiplicity-corrected superiority tests",
+    "pooled_checkpoint_estimate": false,
+    "RMST0_definition": "Mean consecutive correct group tokens before first failure, excluding the failing token; censored streams contribute Tmax."
+  },
+  "storage": {
+    "rows": [
+      {
+        "model_seed": 0,
+        "arm": "NATIVE_FP32",
+        "v2": {
+          "per_stream_persistent_bytes": 12305,
+          "state_code_bytes": 12288,
+          "residual_code_bytes": 0,
+          "scale_bytes": 0,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30344,
+          "shared_config_bytes": 874,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 42649,
+            "16": 227224,
+            "128": 1605384
+          },
+          "payload_tensor_storage_bytes": 12305,
+          "serialized_payload_bytes": 12305,
+          "shared_codec_bytes": 874,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 12296,
+          "state_code_bytes": 12288,
+          "residual_code_bytes": 0,
+          "scale_bytes": 0,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 29410,
+          "shared_config_bytes": 310,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 41706,
+            "16": 226146,
+            "128": 1603298
+          },
+          "payload_tensor_storage_bytes": 12296,
+          "shared_codec_bytes": 310,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": true,
+        "v2_serialized_one_stream_bytes": 12305,
+        "old_envelope_one_stream_bytes": 12296,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": false,
+          "16": false,
+          "128": false
+        }
+      },
+      {
+        "model_seed": 0,
+        "arm": "UNIFORM_8",
+        "v2": {
+          "per_stream_persistent_bytes": 3137,
+          "state_code_bytes": 3072,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30560,
+          "shared_config_bytes": 1090,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 33697,
+            "16": 80752,
+            "128": 432096
+          },
+          "payload_tensor_storage_bytes": 3137,
+          "serialized_payload_bytes": 3137,
+          "shared_codec_bytes": 1090,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 3128,
+          "state_code_bytes": 3072,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 29626,
+          "shared_config_bytes": 526,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 32754,
+            "16": 79674,
+            "128": 430010
+          },
+          "payload_tensor_storage_bytes": 3128,
+          "shared_codec_bytes": 526,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": true,
+        "v2_serialized_one_stream_bytes": 3137,
+        "old_envelope_one_stream_bytes": 3128,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": true,
+          "16": false,
+          "128": false
+        }
+      },
+      {
+        "model_seed": 0,
+        "arm": "UNIFORM_5",
+        "v2": {
+          "per_stream_persistent_bytes": 1985,
+          "state_code_bytes": 1920,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30560,
+          "shared_config_bytes": 1090,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 32545,
+            "16": 62320,
+            "128": 284640
+          },
+          "payload_tensor_storage_bytes": 1985,
+          "serialized_payload_bytes": 1985,
+          "shared_codec_bytes": 1090,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 1976,
+          "state_code_bytes": 1920,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 29626,
+          "shared_config_bytes": 526,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 31602,
+            "16": 61242,
+            "128": 282554
+          },
+          "payload_tensor_storage_bytes": 1976,
+          "shared_codec_bytes": 526,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": true,
+        "v2_serialized_one_stream_bytes": 1985,
+        "old_envelope_one_stream_bytes": 1976,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": true,
+          "16": true,
+          "128": true
+        }
+      },
+      {
+        "model_seed": 0,
+        "arm": "LOWRANK_4_8_R2",
+        "v2": {
+          "per_stream_persistent_bytes": 2033,
+          "state_code_bytes": 1536,
+          "residual_code_bytes": 384,
+          "scale_bytes": 96,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 32409,
+          "shared_config_bytes": 1403,
+          "shared_basis_bytes": 1536,
+          "total_bytes": {
+            "1": 34442,
+            "16": 64937,
+            "128": 292633
+          },
+          "payload_tensor_storage_bytes": 2033,
+          "serialized_payload_bytes": 2033,
+          "shared_codec_bytes": 2939,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 2024,
+          "state_code_bytes": 1536,
+          "residual_code_bytes": 384,
+          "scale_bytes": 96,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 31475,
+          "shared_config_bytes": 839,
+          "shared_basis_bytes": 1536,
+          "total_bytes": {
+            "1": 33499,
+            "16": 63859,
+            "128": 290547
+          },
+          "payload_tensor_storage_bytes": 2024,
+          "shared_codec_bytes": 2375,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": true,
+        "v2_serialized_one_stream_bytes": 2033,
+        "old_envelope_one_stream_bytes": 2024,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": true,
+          "16": true,
+          "128": true
+        }
+      },
+      {
+        "model_seed": 0,
+        "arm": "MIXED_5_6_BUDGET",
+        "v2": {
+          "per_stream_persistent_bytes": 2043,
+          "state_code_bytes": 1978,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30965,
+          "shared_config_bytes": 1495,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 33008,
+            "16": 63653,
+            "128": 292469
+          },
+          "payload_tensor_storage_bytes": 2043,
+          "serialized_payload_bytes": 2043,
+          "shared_codec_bytes": 1495,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 2034,
+          "state_code_bytes": 1978,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30031,
+          "shared_config_bytes": 931,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 32065,
+            "16": 62575,
+            "128": 290383
+          },
+          "payload_tensor_storage_bytes": 2034,
+          "shared_codec_bytes": 931,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": false,
+        "v2_serialized_one_stream_bytes": 2043,
+        "old_envelope_one_stream_bytes": 2034,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": true,
+          "16": true,
+          "128": true
+        }
+      },
+      {
+        "model_seed": 1,
+        "arm": "NATIVE_FP32",
+        "v2": {
+          "per_stream_persistent_bytes": 12305,
+          "state_code_bytes": 12288,
+          "residual_code_bytes": 0,
+          "scale_bytes": 0,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30344,
+          "shared_config_bytes": 874,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 42649,
+            "16": 227224,
+            "128": 1605384
+          },
+          "payload_tensor_storage_bytes": 12305,
+          "serialized_payload_bytes": 12305,
+          "shared_codec_bytes": 874,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 12296,
+          "state_code_bytes": 12288,
+          "residual_code_bytes": 0,
+          "scale_bytes": 0,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 29410,
+          "shared_config_bytes": 310,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 41706,
+            "16": 226146,
+            "128": 1603298
+          },
+          "payload_tensor_storage_bytes": 12296,
+          "shared_codec_bytes": 310,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": true,
+        "v2_serialized_one_stream_bytes": 12305,
+        "old_envelope_one_stream_bytes": 12296,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": false,
+          "16": false,
+          "128": false
+        }
+      },
+      {
+        "model_seed": 1,
+        "arm": "UNIFORM_8",
+        "v2": {
+          "per_stream_persistent_bytes": 3137,
+          "state_code_bytes": 3072,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30560,
+          "shared_config_bytes": 1090,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 33697,
+            "16": 80752,
+            "128": 432096
+          },
+          "payload_tensor_storage_bytes": 3137,
+          "serialized_payload_bytes": 3137,
+          "shared_codec_bytes": 1090,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 3128,
+          "state_code_bytes": 3072,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 29626,
+          "shared_config_bytes": 526,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 32754,
+            "16": 79674,
+            "128": 430010
+          },
+          "payload_tensor_storage_bytes": 3128,
+          "shared_codec_bytes": 526,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": true,
+        "v2_serialized_one_stream_bytes": 3137,
+        "old_envelope_one_stream_bytes": 3128,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": true,
+          "16": false,
+          "128": false
+        }
+      },
+      {
+        "model_seed": 1,
+        "arm": "UNIFORM_5",
+        "v2": {
+          "per_stream_persistent_bytes": 1985,
+          "state_code_bytes": 1920,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30560,
+          "shared_config_bytes": 1090,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 32545,
+            "16": 62320,
+            "128": 284640
+          },
+          "payload_tensor_storage_bytes": 1985,
+          "serialized_payload_bytes": 1985,
+          "shared_codec_bytes": 1090,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 1976,
+          "state_code_bytes": 1920,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 29626,
+          "shared_config_bytes": 526,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 31602,
+            "16": 61242,
+            "128": 282554
+          },
+          "payload_tensor_storage_bytes": 1976,
+          "shared_codec_bytes": 526,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": true,
+        "v2_serialized_one_stream_bytes": 1985,
+        "old_envelope_one_stream_bytes": 1976,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": true,
+          "16": true,
+          "128": true
+        }
+      },
+      {
+        "model_seed": 1,
+        "arm": "LOWRANK_4_8_R2",
+        "v2": {
+          "per_stream_persistent_bytes": 2033,
+          "state_code_bytes": 1536,
+          "residual_code_bytes": 384,
+          "scale_bytes": 96,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 32409,
+          "shared_config_bytes": 1403,
+          "shared_basis_bytes": 1536,
+          "total_bytes": {
+            "1": 34442,
+            "16": 64937,
+            "128": 292633
+          },
+          "payload_tensor_storage_bytes": 2033,
+          "serialized_payload_bytes": 2033,
+          "shared_codec_bytes": 2939,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 2024,
+          "state_code_bytes": 1536,
+          "residual_code_bytes": 384,
+          "scale_bytes": 96,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 31475,
+          "shared_config_bytes": 839,
+          "shared_basis_bytes": 1536,
+          "total_bytes": {
+            "1": 33499,
+            "16": 63859,
+            "128": 290547
+          },
+          "payload_tensor_storage_bytes": 2024,
+          "shared_codec_bytes": 2375,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": true,
+        "v2_serialized_one_stream_bytes": 2033,
+        "old_envelope_one_stream_bytes": 2024,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": true,
+          "16": true,
+          "128": true
+        }
+      },
+      {
+        "model_seed": 1,
+        "arm": "MIXED_5_6_BUDGET",
+        "v2": {
+          "per_stream_persistent_bytes": 2043,
+          "state_code_bytes": 1978,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30965,
+          "shared_config_bytes": 1495,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 33008,
+            "16": 63653,
+            "128": 292469
+          },
+          "payload_tensor_storage_bytes": 2043,
+          "serialized_payload_bytes": 2043,
+          "shared_codec_bytes": 1495,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 2034,
+          "state_code_bytes": 1978,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30031,
+          "shared_config_bytes": 931,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 32065,
+            "16": 62575,
+            "128": 290383
+          },
+          "payload_tensor_storage_bytes": 2034,
+          "shared_codec_bytes": 931,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": false,
+        "v2_serialized_one_stream_bytes": 2043,
+        "old_envelope_one_stream_bytes": 2034,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": true,
+          "16": true,
+          "128": true
+        }
+      },
+      {
+        "model_seed": 2,
+        "arm": "NATIVE_FP32",
+        "v2": {
+          "per_stream_persistent_bytes": 12305,
+          "state_code_bytes": 12288,
+          "residual_code_bytes": 0,
+          "scale_bytes": 0,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30344,
+          "shared_config_bytes": 874,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 42649,
+            "16": 227224,
+            "128": 1605384
+          },
+          "payload_tensor_storage_bytes": 12305,
+          "serialized_payload_bytes": 12305,
+          "shared_codec_bytes": 874,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 12296,
+          "state_code_bytes": 12288,
+          "residual_code_bytes": 0,
+          "scale_bytes": 0,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 29410,
+          "shared_config_bytes": 310,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 41706,
+            "16": 226146,
+            "128": 1603298
+          },
+          "payload_tensor_storage_bytes": 12296,
+          "shared_codec_bytes": 310,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": true,
+        "v2_serialized_one_stream_bytes": 12305,
+        "old_envelope_one_stream_bytes": 12296,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": false,
+          "16": false,
+          "128": false
+        }
+      },
+      {
+        "model_seed": 2,
+        "arm": "UNIFORM_8",
+        "v2": {
+          "per_stream_persistent_bytes": 3137,
+          "state_code_bytes": 3072,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30560,
+          "shared_config_bytes": 1090,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 33697,
+            "16": 80752,
+            "128": 432096
+          },
+          "payload_tensor_storage_bytes": 3137,
+          "serialized_payload_bytes": 3137,
+          "shared_codec_bytes": 1090,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 3128,
+          "state_code_bytes": 3072,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 29626,
+          "shared_config_bytes": 526,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 32754,
+            "16": 79674,
+            "128": 430010
+          },
+          "payload_tensor_storage_bytes": 3128,
+          "shared_codec_bytes": 526,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": true,
+        "v2_serialized_one_stream_bytes": 3137,
+        "old_envelope_one_stream_bytes": 3128,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": true,
+          "16": false,
+          "128": false
+        }
+      },
+      {
+        "model_seed": 2,
+        "arm": "UNIFORM_5",
+        "v2": {
+          "per_stream_persistent_bytes": 1985,
+          "state_code_bytes": 1920,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30560,
+          "shared_config_bytes": 1090,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 32545,
+            "16": 62320,
+            "128": 284640
+          },
+          "payload_tensor_storage_bytes": 1985,
+          "serialized_payload_bytes": 1985,
+          "shared_codec_bytes": 1090,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 1976,
+          "state_code_bytes": 1920,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 29626,
+          "shared_config_bytes": 526,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 31602,
+            "16": 61242,
+            "128": 282554
+          },
+          "payload_tensor_storage_bytes": 1976,
+          "shared_codec_bytes": 526,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": true,
+        "v2_serialized_one_stream_bytes": 1985,
+        "old_envelope_one_stream_bytes": 1976,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": true,
+          "16": true,
+          "128": true
+        }
+      },
+      {
+        "model_seed": 2,
+        "arm": "LOWRANK_4_8_R2",
+        "v2": {
+          "per_stream_persistent_bytes": 2033,
+          "state_code_bytes": 1536,
+          "residual_code_bytes": 384,
+          "scale_bytes": 96,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 32409,
+          "shared_config_bytes": 1403,
+          "shared_basis_bytes": 1536,
+          "total_bytes": {
+            "1": 34442,
+            "16": 64937,
+            "128": 292633
+          },
+          "payload_tensor_storage_bytes": 2033,
+          "serialized_payload_bytes": 2033,
+          "shared_codec_bytes": 2939,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 2024,
+          "state_code_bytes": 1536,
+          "residual_code_bytes": 384,
+          "scale_bytes": 96,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 31475,
+          "shared_config_bytes": 839,
+          "shared_basis_bytes": 1536,
+          "total_bytes": {
+            "1": 33499,
+            "16": 63859,
+            "128": 290547
+          },
+          "payload_tensor_storage_bytes": 2024,
+          "shared_codec_bytes": 2375,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": true,
+        "v2_serialized_one_stream_bytes": 2033,
+        "old_envelope_one_stream_bytes": 2024,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": true,
+          "16": true,
+          "128": true
+        }
+      },
+      {
+        "model_seed": 2,
+        "arm": "MIXED_5_6_BUDGET",
+        "v2": {
+          "per_stream_persistent_bytes": 2043,
+          "state_code_bytes": 1978,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "terminal_code_bytes": 1,
+          "first_terminal_write_bytes": 8,
+          "header_bytes": 17,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30965,
+          "shared_config_bytes": 1495,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 33008,
+            "16": 63653,
+            "128": 292469
+          },
+          "payload_tensor_storage_bytes": 2043,
+          "serialized_payload_bytes": 2043,
+          "shared_codec_bytes": 1495,
+          "shared_token_table_bytes": 29100,
+          "shared_runtime_metadata_bytes": 370,
+          "scope": "actual serialized runtime cache/config/table, common checkpoint separate; evaluator history excluded and separately measured"
+        },
+        "v1_equivalent_envelope": {
+          "per_stream_persistent_bytes": 2034,
+          "state_code_bytes": 1978,
+          "residual_code_bytes": 0,
+          "scale_bytes": 48,
+          "rng_bytes": 0,
+          "cursor_bytes": 8,
+          "gauge_bytes": 0,
+          "padding_bytes": 0,
+          "shared_bytes": 30031,
+          "shared_config_bytes": 931,
+          "shared_basis_bytes": 0,
+          "total_bytes": {
+            "1": 32065,
+            "16": 62575,
+            "128": 290383
+          },
+          "payload_tensor_storage_bytes": 2034,
+          "shared_codec_bytes": 931,
+          "shared_token_coefficient_bytes": 29100,
+          "scope": "exact serialized recurrent cache plus shared codec/basis/token table; common checkpoint separate; temporary workspaces excluded"
+        },
+        "historical_original_arm": false,
+        "v2_serialized_one_stream_bytes": 2043,
+        "old_envelope_one_stream_bytes": 2034,
+        "stream_added_bytes": 9,
+        "shared_added_bytes": 934,
+        "common_model_parameter_values_bytes": 226120,
+        "common_checkpoint_file_bytes": 233203,
+        "transient_single_state_tensor_bytes_N1_16_128_1024": {
+          "1": 12288,
+          "16": 196608,
+          "128": 1572864,
+          "1024": 12582912
+        },
+        "transient_note": "one FP32 working state array only, not process RAM peak; multiple temporaries coexist",
+        "same_rank2_cap_by_N": {
+          "1": true,
+          "16": true,
+          "128": true
+        }
+      }
+    ],
+    "scope": "actual serialization with shared config/basis/table/runtime metadata; common weights and temporary RAM separate",
+    "comparison_stream_count": 128,
+    "evaluation_sequence_count": 1024,
+    "timing_N": 16,
+    "timing_T": 128,
+    "timing_repeats": 3,
+    "timing_threads": 2
+  },
+  "restart": {
+    "counts": {
+      "historical_cells": 19,
+      "main_first16_cells": 12,
+      "fixed_DEV_extra_cells": 3,
+      "numerically_healthy_cells": 15,
+      "selected_actual_failure_cases": 4,
+      "technical_failure_boundary_checks": 4,
+      "v2_full_split_fresh_prediction_matches": 19,
+      "v2_full_split_fresh_final_payload_hash_matches": 19,
+      "v1_v2_uninterrupted_prediction_matches": 19,
+      "healthy_v1_v2_body_hash_matches": 15,
+      "v1_uninterrupted_split_prediction_mismatches": 3,
+      "exact_original_failure_write_reproductions": 4
+    },
+    "interpretation": [
+      "All 19 uninterrupted v1/v2 prediction sequences match; 15 numerically healthy cases also retain equal state-body hashes.",
+      "Three U2 legacy replays differ after restarting at group-token1024; the earliest split difference is write1025.",
+      "The U3 failure at write1741 lies after the last interior original cut1024. Its original split equality alone does not test a restart after failure; the separately frozen appendix does.",
+      "All four selected actual failures reproduce at their original recorded positions. Their boundary checks preserve terminal body/RNG hashes and advancing cursors through fresh-process continuation.",
+      "These are historical implementation diagnostics, not independent memory-capacity confirmation or numerical-failure incidence estimates."
+    ],
+    "failure_cases": [
+      {
+        "model_seed": 0,
+        "arm": "UNIFORM_2",
+        "original_failure_write": 838,
+        "actual_terminal_write": 838,
+        "v1_full_split_predictions_equal": false,
+        "v2_full_split_predictions_equal": true,
+        "fresh_resume_immediately_after_failure": true
+      },
+      {
+        "model_seed": 0,
+        "arm": "UNIFORM_3",
+        "original_failure_write": 1741,
+        "actual_terminal_write": 1741,
+        "v1_full_split_predictions_equal": true,
+        "v2_full_split_predictions_equal": true,
+        "fresh_resume_immediately_after_failure": true
+      },
+      {
+        "model_seed": 1,
+        "arm": "UNIFORM_2",
+        "original_failure_write": 623,
+        "actual_terminal_write": 623,
+        "v1_full_split_predictions_equal": false,
+        "v2_full_split_predictions_equal": true,
+        "fresh_resume_immediately_after_failure": true
+      },
+      {
+        "model_seed": 2,
+        "arm": "UNIFORM_2",
+        "original_failure_write": 867,
+        "actual_terminal_write": 867,
+        "v1_full_split_predictions_equal": false,
+        "v2_full_split_predictions_equal": true,
+        "fresh_resume_immediately_after_failure": true
+      }
+    ],
+    "scope": "Historical diagnostics retained from v2, not new model executions in this integration."
+  },
+  "precision": {
+    "N": 32,
+    "T": 2048,
+    "pairs": [
+      {
+        "model_seed": "0",
+        "mode_a": "D00",
+        "mode_b": "D10",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "0",
+        "mode_a": "D00",
+        "mode_b": "D01",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "0",
+        "mode_a": "D00",
+        "mode_b": "D11",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "0",
+        "mode_a": "D10",
+        "mode_b": "D01",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "0",
+        "mode_a": "D10",
+        "mode_b": "D11",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "0",
+        "mode_a": "D01",
+        "mode_b": "D11",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "1",
+        "mode_a": "D00",
+        "mode_b": "D10",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "1",
+        "mode_a": "D00",
+        "mode_b": "D01",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "1",
+        "mode_a": "D00",
+        "mode_b": "D11",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "1",
+        "mode_a": "D10",
+        "mode_b": "D01",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "1",
+        "mode_a": "D10",
+        "mode_b": "D11",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "1",
+        "mode_a": "D01",
+        "mode_b": "D11",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "2",
+        "mode_a": "D00",
+        "mode_b": "D10",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "2",
+        "mode_a": "D00",
+        "mode_b": "D01",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "2",
+        "mode_a": "D00",
+        "mode_b": "D11",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "2",
+        "mode_a": "D10",
+        "mode_b": "D01",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "2",
+        "mode_a": "D10",
+        "mode_b": "D11",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      },
+      {
+        "model_seed": "2",
+        "mode_a": "D01",
+        "mode_b": "D11",
+        "N": "32",
+        "scored_prediction_denominator": "65536",
+        "scored_prediction_disagreements": "0",
+        "scored_disagreement_fraction": "0.0",
+        "BOS_denominator": "32",
+        "BOS_disagreements": "0",
+        "tau_equal_sequences": "32",
+        "tau_comparison_denominator": "32"
+      }
+    ],
+    "endpoints": [
+      {
+        "model_seed": "0",
+        "mode": "D00",
+        "N": "32",
+        "scored_tokens_per_sequence": "2048",
+        "RMST0": "290.375",
+        "empirical_T05_all_tokens": "129",
+        "token_accuracy": "0.454254150390625",
+        "final_quarter_accuracy": "0.173828125",
+        "S128": "1.0",
+        "S512": "0.0625",
+        "S2048": "0.0",
+        "BOS_accuracy": "1.0",
+        "terminal_sequences": "0",
+        "confidence_family": ""
+      },
+      {
+        "model_seed": "0",
+        "mode": "D10",
+        "N": "32",
+        "scored_tokens_per_sequence": "2048",
+        "RMST0": "290.375",
+        "empirical_T05_all_tokens": "129",
+        "token_accuracy": "0.454254150390625",
+        "final_quarter_accuracy": "0.173828125",
+        "S128": "1.0",
+        "S512": "0.0625",
+        "S2048": "0.0",
+        "BOS_accuracy": "1.0",
+        "terminal_sequences": "0",
+        "confidence_family": ""
+      },
+      {
+        "model_seed": "0",
+        "mode": "D01",
+        "N": "32",
+        "scored_tokens_per_sequence": "2048",
+        "RMST0": "290.375",
+        "empirical_T05_all_tokens": "129",
+        "token_accuracy": "0.454254150390625",
+        "final_quarter_accuracy": "0.173828125",
+        "S128": "1.0",
+        "S512": "0.0625",
+        "S2048": "0.0",
+        "BOS_accuracy": "1.0",
+        "terminal_sequences": "0",
+        "confidence_family": ""
+      },
+      {
+        "model_seed": "0",
+        "mode": "D11",
+        "N": "32",
+        "scored_tokens_per_sequence": "2048",
+        "RMST0": "290.375",
+        "empirical_T05_all_tokens": "129",
+        "token_accuracy": "0.454254150390625",
+        "final_quarter_accuracy": "0.173828125",
+        "S128": "1.0",
+        "S512": "0.0625",
+        "S2048": "0.0",
+        "BOS_accuracy": "1.0",
+        "terminal_sequences": "0",
+        "confidence_family": ""
+      },
+      {
+        "model_seed": "1",
+        "mode": "D00",
+        "N": "32",
+        "scored_tokens_per_sequence": "2048",
+        "RMST0": "279.6875",
+        "empirical_T05_all_tokens": "141",
+        "token_accuracy": "0.525299072265625",
+        "final_quarter_accuracy": "0.35137939453125",
+        "S128": "0.96875",
+        "S512": "0.0625",
+        "S2048": "0.0",
+        "BOS_accuracy": "0.0",
+        "terminal_sequences": "0",
+        "confidence_family": ""
+      },
+      {
+        "model_seed": "1",
+        "mode": "D10",
+        "N": "32",
+        "scored_tokens_per_sequence": "2048",
+        "RMST0": "279.6875",
+        "empirical_T05_all_tokens": "141",
+        "token_accuracy": "0.525299072265625",
+        "final_quarter_accuracy": "0.35137939453125",
+        "S128": "0.96875",
+        "S512": "0.0625",
+        "S2048": "0.0",
+        "BOS_accuracy": "0.0",
+        "terminal_sequences": "0",
+        "confidence_family": ""
+      },
+      {
+        "model_seed": "1",
+        "mode": "D01",
+        "N": "32",
+        "scored_tokens_per_sequence": "2048",
+        "RMST0": "279.6875",
+        "empirical_T05_all_tokens": "141",
+        "token_accuracy": "0.525299072265625",
+        "final_quarter_accuracy": "0.35137939453125",
+        "S128": "0.96875",
+        "S512": "0.0625",
+        "S2048": "0.0",
+        "BOS_accuracy": "0.0",
+        "terminal_sequences": "0",
+        "confidence_family": ""
+      },
+      {
+        "model_seed": "1",
+        "mode": "D11",
+        "N": "32",
+        "scored_tokens_per_sequence": "2048",
+        "RMST0": "279.6875",
+        "empirical_T05_all_tokens": "141",
+        "token_accuracy": "0.525299072265625",
+        "final_quarter_accuracy": "0.35137939453125",
+        "S128": "0.96875",
+        "S512": "0.0625",
+        "S2048": "0.0",
+        "BOS_accuracy": "0.0",
+        "terminal_sequences": "0",
+        "confidence_family": ""
+      },
+      {
+        "model_seed": "2",
+        "mode": "D00",
+        "N": "32",
+        "scored_tokens_per_sequence": "2048",
+        "RMST0": "236.75",
+        "empirical_T05_all_tokens": "157",
+        "token_accuracy": "0.3914031982421875",
+        "final_quarter_accuracy": "0.1568603515625",
+        "S128": "0.96875",
+        "S512": "0.0",
+        "S2048": "0.0",
+        "BOS_accuracy": "1.0",
+        "terminal_sequences": "0",
+        "confidence_family": ""
+      },
+      {
+        "model_seed": "2",
+        "mode": "D10",
+        "N": "32",
+        "scored_tokens_per_sequence": "2048",
+        "RMST0": "236.75",
+        "empirical_T05_all_tokens": "157",
+        "token_accuracy": "0.3914031982421875",
+        "final_quarter_accuracy": "0.1568603515625",
+        "S128": "0.96875",
+        "S512": "0.0",
+        "S2048": "0.0",
+        "BOS_accuracy": "1.0",
+        "terminal_sequences": "0",
+        "confidence_family": ""
+      },
+      {
+        "model_seed": "2",
+        "mode": "D01",
+        "N": "32",
+        "scored_tokens_per_sequence": "2048",
+        "RMST0": "236.75",
+        "empirical_T05_all_tokens": "157",
+        "token_accuracy": "0.3914031982421875",
+        "final_quarter_accuracy": "0.1568603515625",
+        "S128": "0.96875",
+        "S512": "0.0",
+        "S2048": "0.0",
+        "BOS_accuracy": "1.0",
+        "terminal_sequences": "0",
+        "confidence_family": ""
+      },
+      {
+        "model_seed": "2",
+        "mode": "D11",
+        "N": "32",
+        "scored_tokens_per_sequence": "2048",
+        "RMST0": "236.75",
+        "empirical_T05_all_tokens": "157",
+        "token_accuracy": "0.3914031982421875",
+        "final_quarter_accuracy": "0.1568603515625",
+        "S128": "0.96875",
+        "S512": "0.0",
+        "S2048": "0.0",
+        "BOS_accuracy": "1.0",
+        "terminal_sequences": "0",
+        "confidence_family": ""
+      }
+    ],
+    "scope": "Promote retained FP32 q/k/v/alpha/beta/g/e representation; never recompute projections/gates in double"
+  },
+  "trace": {
+    "rank2_state_norm_extrema": [
+      {
+        "model_seed": "0",
+        "arm": "LOWRANK_4_8_R2",
+        "metric": "state_norm",
+        "valid_sample_writes": "65568",
+        "maximum": "1283199223.1309147",
+        "sample_index": "19",
+        "sample_id": "S3:DEV:40101:000019",
+        "write_position": "2048",
+        "first_failure_tau": "273",
+        "is_BOS": "False",
+        "at_or_after_first_failure": "True",
+        "strictly_after_first_failure": "True"
+      },
+      {
+        "model_seed": "1",
+        "arm": "LOWRANK_4_8_R2",
+        "metric": "state_norm",
+        "valid_sample_writes": "65568",
+        "maximum": "1515136279.8510985",
+        "sample_index": "6",
+        "sample_id": "S3:DEV:40101:000006",
+        "write_position": "2048",
+        "first_failure_tau": "65",
+        "is_BOS": "False",
+        "at_or_after_first_failure": "True",
+        "strictly_after_first_failure": "True"
+      },
+      {
+        "model_seed": "2",
+        "arm": "LOWRANK_4_8_R2",
+        "metric": "state_norm",
+        "valid_sample_writes": "65568",
+        "maximum": "4.485518051129944e+16",
+        "sample_index": "12",
+        "sample_id": "S3:DEV:40101:000012",
+        "write_position": "2048",
+        "first_failure_tau": "218",
+        "is_BOS": "False",
+        "at_or_after_first_failure": "True",
+        "strictly_after_first_failure": "True"
+      }
+    ],
+    "scope": "Separate 32-input diagnostic cohort; extrema are not causal explanations."
+  },
+  "sources": [
+    {
+      "path": "versions/v1/configs/protocol.json",
+      "sha256": "782d24a96dadd186878e639332a404dc3f5692155639ea5c56d9b4b667e320cb",
+      "bytes": 5126
+    },
+    {
+      "path": "versions/v2/inputs/codecs/seed0/selection.json",
+      "sha256": "1cfa8b153832ee6c6f60748f2109e41347d708fa3552ffcff7410b812a4b20ba",
+      "bytes": 13702
+    },
+    {
+      "path": "versions/v2/inputs/codecs/seed1/selection.json",
+      "sha256": "8af2a3d8aa510a706c505c337c3c1d03129b9d76da800998e457e4577c3b90fd",
+      "bytes": 13665
+    },
+    {
+      "path": "versions/v2/inputs/codecs/seed2/selection.json",
+      "sha256": "0ecb8d398f58bd78a99c862718b19113f873e53c468b7f04d68a18a12d0c1996",
+      "bytes": 13706
+    },
+    {
+      "path": "versions/v2/protocol_v2.json",
+      "sha256": "3f5299e9bdaeb2c10b2a68281f05ca559402feeea9cd3d7cba5807f24546e523",
+      "bytes": 7178
+    },
+    {
+      "path": "versions/v2/results/diagnostic-summary/precision_endpoints.csv",
+      "sha256": "22cdc0693ff4e461176808f14a286f1d95a68c28a99de2a39391926204ddaa60",
+      "bytes": 1189
+    },
+    {
+      "path": "versions/v2/results/diagnostic-summary/precision_pairs.csv",
+      "sha256": "78ba65cab12f57d59298467ca093163902e4fc35a3853c8c5dd6091181840682",
+      "bytes": 866
+    },
+    {
+      "path": "versions/v2/results/diagnostic-summary/trace_extrema.csv",
+      "sha256": "e128858276b105a1476ee789d398236082576497756c735c74afde03615df0b9",
+      "bytes": 9250
+    },
+    {
+      "path": "versions/v2/results/fresh-summary/combined.json",
+      "sha256": "f1bbbdfbfa9c688a4d37f9084bd03f65d9e4fb032edbbb5bd1560c622a3f6408",
+      "bytes": 48926
+    },
+    {
+      "path": "versions/v2/results/fresh/seed0/LOWRANK_4_8_R2/summary.json",
+      "sha256": "fde02869138f3a015344b0be5c3c444c13da5002db71b293fa2051adeb6eec4a",
+      "bytes": 43471
+    },
+    {
+      "path": "versions/v2/results/fresh/seed0/MIXED_5_6_BUDGET/summary.json",
+      "sha256": "a1692d67671afe4ef8dca61404b42415544c18394b0ba4d283086a52841a7eb9",
+      "bytes": 43443
+    },
+    {
+      "path": "versions/v2/results/fresh/seed0/NATIVE_FP32/summary.json",
+      "sha256": "e28b073227764618e6808df7093f3f4c0b32b4beb1e9a9c8958882542f4149de",
+      "bytes": 43441
+    },
+    {
+      "path": "versions/v2/results/fresh/seed0/UNIFORM_5/summary.json",
+      "sha256": "98d656b3bf4b4b2e88b32e92fc5304890ed0589b137929a2007bf7478db702a5",
+      "bytes": 43422
+    },
+    {
+      "path": "versions/v2/results/fresh/seed0/UNIFORM_8/summary.json",
+      "sha256": "c3994525ba9b57a71a9c0fb9ef4982c23fa3d87b11df0380063d85b8b58bb84a",
+      "bytes": 43436
+    },
+    {
+      "path": "versions/v2/results/fresh/seed1/LOWRANK_4_8_R2/summary.json",
+      "sha256": "2b26d1ce150700e29ccbb828f3ec618b889a313d3882db87ca72b948bef012c0",
+      "bytes": 43453
+    },
+    {
+      "path": "versions/v2/results/fresh/seed1/MIXED_5_6_BUDGET/summary.json",
+      "sha256": "f96a24c848661e669edfd73d12730b0d69d18a0af3c7744b9df87eb1465fb030",
+      "bytes": 43430
+    },
+    {
+      "path": "versions/v2/results/fresh/seed1/NATIVE_FP32/summary.json",
+      "sha256": "42c1637a6d2306a25a7e8e4dbc98ea27f9447d230d2246fa29b1c4527c254554",
+      "bytes": 43463
+    },
+    {
+      "path": "versions/v2/results/fresh/seed1/UNIFORM_5/summary.json",
+      "sha256": "8dd31a57840f02f89c4842bb616d81c4e08180950d56a9b55e606491643594bf",
+      "bytes": 43395
+    },
+    {
+      "path": "versions/v2/results/fresh/seed1/UNIFORM_8/summary.json",
+      "sha256": "e4fee85dcaa1b5eb9bee313ed61ff9087a7d49f668779bd4a05d05919beef759",
+      "bytes": 43444
+    },
+    {
+      "path": "versions/v2/results/fresh/seed2/LOWRANK_4_8_R2/summary.json",
+      "sha256": "61fba7eaa458199854a90fc0ca45f4007cf3d51b49351ec04a84e36e0e81dab3",
+      "bytes": 43415
+    },
+    {
+      "path": "versions/v2/results/fresh/seed2/MIXED_5_6_BUDGET/summary.json",
+      "sha256": "31612e9a80c57ed2996f52e13a5eba5a06de05dde1f555071b773170f1abaf01",
+      "bytes": 43425
+    },
+    {
+      "path": "versions/v2/results/fresh/seed2/NATIVE_FP32/summary.json",
+      "sha256": "5b96d986c16bc424d8adb2cb0dc1b72736b8fe633b8427381a342829f2fdf693",
+      "bytes": 43379
+    },
+    {
+      "path": "versions/v2/results/fresh/seed2/UNIFORM_5/summary.json",
+      "sha256": "684ef6dea7a32c41902aaa79a403106ed4faf3cedc97930ed9a2e528242b605d",
+      "bytes": 43379
+    },
+    {
+      "path": "versions/v2/results/fresh/seed2/UNIFORM_8/summary.json",
+      "sha256": "9b6a0620e88270ed681a28f8ef4b5ea3564d79c01f27cf36201180eda552bd10",
+      "bytes": 43371
+    },
+    {
+      "path": "versions/v2/results/historical-reanalysis/summary.json",
+      "sha256": "901fcb8a8fe81f13c0cbffd194855ee9e7c648b77d050b9e15acb715ade9d0ef",
+      "bytes": 4216
+    },
+    {
+      "path": "versions/v2/results/historical-summary/summary.json",
+      "sha256": "25506f800a4d0a1ea80f4a2a39ca0746abc55ae71b4690848f200aa0c6fe1530",
+      "bytes": 61815
+    },
+    {
+      "path": "versions/v2/results/runtime_byte_ledger.json",
+      "sha256": "c5ca4336539f8cdfd8906f1653beae8286b4528e20291f32c12fcd967576df6e",
+      "bytes": 36745
+    },
+    {
+      "path": "versions/v2/results/timing/seed0/timing.json",
+      "sha256": "a82d437e48133dcc7b51831438a88523f8ee1b3244c3cc6ff4f9169f0e4eb673",
+      "bytes": 4942
+    },
+    {
+      "path": "versions/v2/results/timing/seed1/timing.json",
+      "sha256": "1e6ca1c3c0061d85c4c0fd5267fd0306233b3050bda9a741d582c9ac7fcb2a3f",
+      "bytes": 4934
+    },
+    {
+      "path": "versions/v2/results/timing/seed2/timing.json",
+      "sha256": "1d87bbbf87ccb1d7dbbb4745c002c7534fd4c6b19f3209da5614a763f3092311",
+      "bytes": 4940
+    }
+  ]
+}

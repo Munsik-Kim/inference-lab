@@ -1,0 +1,27 @@
+{
+  "schema": "case010-evaluation-runtime-v2-canonical-token-torch",
+  "frozen_before_primary_test": true,
+  "cpu_threads": 2,
+  "route_parity": {
+    "split": "DEV",
+    "sequences": 2,
+    "length": 2048,
+    "seed": 2004,
+    "selection_allowed": false,
+    "atol": 2e-05,
+    "rtol": 0.0002
+  },
+  "benchmark": {
+    "sequences": 16,
+    "length": 128,
+    "repeats": 3,
+    "seed": 2002
+  },
+  "execution_route": {
+    "coefficient_projection": "canonical official B=1,T=1 per token ID, serialized shared table",
+    "transition": "torch FP32 codec.learned.transition",
+    "read": "official torch.einsum read reduction, original FP32 norm/projection/MLP",
+    "bulk_sequence_GEMM_equivalence_claimed": false,
+    "restart": "same batch shape; coefficients independent of sequence length/prefix/suffix"
+  }
+}

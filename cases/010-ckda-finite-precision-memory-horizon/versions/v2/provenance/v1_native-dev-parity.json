@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "atol": 2e-05,
+  "rtol": 0.0002,
+  "comparisons": [
+    {
+      "nonzero_initial_state": false,
+      "maximum_logit_difference": 3.814697265625e-05,
+      "maximum_state_difference": 0.0,
+      "native_final_state_bitwise_equal": true,
+      "logit_tolerance_mismatch_count": 0
+    },
+    {
+      "nonzero_initial_state": true,
+      "maximum_logit_difference": 3.0517578125e-05,
+      "maximum_state_difference": 0.0,
+      "native_final_state_bitwise_equal": true,
+      "logit_tolerance_mismatch_count": 0
+    }
+  ],
+  "group_sequences": 2,
+  "group_horizon": 2048,
+  "token_sha256": "e91092bce2e5def2a7fe95c35ed22688b1add141c2541fd580c34b55059360cc",
+  "official_scope": "each sequence replayed through original Cache independently with B=1,T=1; physical_forward likewise B=1,T=1; candidate physical recurrence/readout vectorized across these sequences",
+  "scope": "route parity only, both zero/nonzero initial states; no model/codec selection; original bulk GEMM route is not claimed bitwise equivalent",
+  "checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+  "evaluator_sha256": "f92cae10d7b807e9fa69a7d9f40b39fcd57f42b7899013912155221a5a7ce187",
+  "runtime_sha256": "7494da323e41753d649a4568c8aaf673095e06fcbeb0c1286df3df5f95143bfa",
+  "test_accessed": false,
+  "split": "DEV",
+  "seed": 2004
+}

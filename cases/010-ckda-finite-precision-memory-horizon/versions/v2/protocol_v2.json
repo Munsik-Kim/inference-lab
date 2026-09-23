@@ -1,0 +1,231 @@
+{
+  "schema": "case010-failure-aware-v2-protocol-v1",
+  "frozen_utc": "2026-09-23T05:33:38.727581+00:00",
+  "scope": "Local implementation/restart validation and fixed-checkpoint inference; no training, publication or model upload.",
+  "source_base": "eb1b1e582791ad0f96603bdd2c06a96eb2d73109",
+  "v1_archive_sha256": "5297318b3762d1ecd43ec38aed1ac21a8b902efef746108dc1f70a4d8451fa8b",
+  "upstream_commit": "ef9d108d1692387cae37f5b2d539a71826a127c1",
+  "checkpoint_sha256": {
+    "0": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+    "1": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+    "2": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9"
+  },
+  "model": "S3/a11_b02; original single-layer CKDA d_model48 heads12 head_dim16; same 3 trained checkpoints",
+  "fresh": {
+    "cohort": "fresh",
+    "generator_seed": 50101,
+    "N": 1024,
+    "T": 2048,
+    "arms": [
+      "NATIVE_FP32",
+      "UNIFORM_8",
+      "UNIFORM_5",
+      "LOWRANK_4_8_R2",
+      "MIXED_5_6_BUDGET"
+    ],
+    "model_seeds": [
+      0,
+      1,
+      2
+    ],
+    "epsilon_primary": 0.05,
+    "epsilon_secondary": 0.01,
+    "alpha": 0.05,
+    "confidence_grid": [
+      32,
+      48,
+      64,
+      80,
+      96,
+      112,
+      128,
+      160,
+      192,
+      256,
+      512,
+      1024,
+      2048
+    ],
+    "simultaneous_family": 195,
+    "empirical_horizon": "all observed group-token positions; not a confidence lower bound",
+    "supported_horizon": "largest declared grid position with one-sided exact binomial upper bound <= epsilon, Bonferroni alpha/195",
+    "zero_event_upper": 0.008042418731722178,
+    "zero_event_eps01_possible": true,
+    "rmst": "mean(min(tau-1,T)); no failure contributes T",
+    "tau": "first wrong or INVALID group-token prediction; no recovery in survival",
+    "pairs": [
+      [
+        "LOWRANK_4_8_R2",
+        "MIXED_5_6_BUDGET"
+      ],
+      [
+        "LOWRANK_4_8_R2",
+        "UNIFORM_5"
+      ],
+      [
+        "UNIFORM_8",
+        "NATIVE_FP32"
+      ]
+    ],
+    "paired_bootstrap_repeats": 5000,
+    "paired_bootstrap_seed_rule": "60101+100*model_seed+pair_index",
+    "bootstrap_scope": "pointwise input-paired within checkpoint, no seed pooling",
+    "batch_shape": 1024,
+    "checkpoint_group_offsets": [
+      256,
+      512,
+      1024,
+      1536,
+      2048
+    ]
+  },
+  "candidate_selection": {
+    "rank_basis": "unchanged v1 CAL basis, no refit",
+    "cal_seed": 1001,
+    "cal_shape": [
+      64,
+      32
+    ],
+    "mixed": "start5bits; descending v1 mixed_scores over192head/keychannels, stable flattened-index tie; promote6bits until next actual N128 serialized total exceeds R2 cap",
+    "prior_outcome_influence": "This narrow follow-up candidate list uses already explored v1 observations. The comparator uses only frozen CAL scores and measured serialization lengths.",
+    "promoted_channels_each_seed": 29,
+    "rank2_cap_N128": 292633,
+    "mixed_actual_N128": 292469
+  },
+  "runtime": {
+    "coordinate": "physical",
+    "read_boundary": "after every committed write",
+    "BOS_write": 0,
+    "first_scored_token_write": 1,
+    "argmax_tie": "lowest class index",
+    "nonfinite_readout": "prediction=-1, finite state remains active",
+    "numeric_state_failure": "terminal; preserve previous committed body and RNG; consume cursor",
+    "terminal_noop": "consume cursor only; no transition/RNG; invalid output",
+    "bad_program_input_checkpoint_oom_crash": "execution error, never algorithmic terminal event",
+    "header": "cursor<u8, terminal_codeu1, first_terminal_write<u8; active sentinel UINT64_MAX",
+    "header_bytes": 17,
+    "v1_stream_header_bytes": 8
+  },
+  "historical": {
+    "kind": "HISTORICAL_PARITY_DIAGNOSTIC",
+    "cohort": "historical",
+    "original_split": "TEST3001 first16",
+    "N": 16,
+    "T": 2048,
+    "arms": [
+      "NATIVE_FP32",
+      "UNIFORM_8",
+      "UNIFORM_5",
+      "LOWRANK_4_8_R2"
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "chunk_boundaries": [
+      1,
+      17,
+      63,
+      256,
+      1024,
+      2048
+    ],
+    "extras": {
+      "seed": 0,
+      "input": "first4 original DEV2001",
+      "T": 64,
+      "arms": [
+        "STOCHASTIC_8",
+        "FULL_RESIDUAL_4_4",
+        "LOWRANK_4_8_R1"
+      ]
+    },
+    "selected_numeric_failures": "Four original arm/seed cells; smallest recorded first_invalid_write_position, ties smallest original stream index; exact input replay at B1; report any mismatch vs original B512",
+    "v1_reviewer_probe": "Requested independent review archive absent at design freeze; separately recreated synthetic contract probe from prompt, not claimed reviewer script execution"
+  },
+  "precision": {
+    "cohort": "diagnostic",
+    "seed": 40101,
+    "N": 32,
+    "T": 2048,
+    "models": [
+      0,
+      1,
+      2
+    ],
+    "coefficients": "Promote retained FP32 q/k/v/alpha/beta/g/e representation; never recompute projections/gates in double",
+    "D00": "FP32 recurrence/original FP32 readout",
+    "D10": "FP64 recurrence/cast state FP32/original readout",
+    "D01": "FP32 recurrence/promote state/fixed weight explicit FP64 readout",
+    "D11": "FP64 recurrence/fixed weight explicit FP64 readout",
+    "statistical_role": "diagnostic only; no simultaneous family or codec selection"
+  },
+  "trace": {
+    "cohort": "diagnostic",
+    "N": 32,
+    "T": 2048,
+    "arms": [
+      "NATIVE_FP32",
+      "UNIFORM_8",
+      "UNIFORM_5",
+      "LOWRANK_4_8_R2",
+      "MIXED_5_6_BUDGET"
+    ],
+    "models": [
+      0,
+      1,
+      2
+    ],
+    "reference": "independent evaluator native FP32 and FP64 shadows; never passed to candidate",
+    "validity": "Terminal scratch zeros excluded; scalar-only NPZ, finite masks/nulls; before/after first error",
+    "metrics": [
+      "state/residual norm",
+      "scale range",
+      "self-writeback error",
+      "projection loss",
+      "native/shadow difference",
+      "top2/gold margin"
+    ]
+  },
+  "timing": {
+    "cohort": "timing",
+    "generator_seed": 2002,
+    "N": 16,
+    "T": 128,
+    "repeats": 3,
+    "models": [
+      0,
+      1,
+      2
+    ],
+    "arms": [
+      "NATIVE_FP32",
+      "UNIFORM_8",
+      "UNIFORM_5",
+      "LOWRANK_4_8_R2",
+      "MIXED_5_6_BUDGET"
+    ],
+    "torch_threads": 2,
+    "serial_only": true,
+    "scope": "complete transition/projection/packing/status/original readout, denominator16*128 group tokens; load/io/gold/shadow outside timer",
+    "arm_order": "ARMS fixed order repeated3; descriptive prototype cost, no speedup claim"
+  },
+  "resource_caps": {
+    "new_training_updates": 0,
+    "fresh_cells": 15,
+    "precision_modes_times_checkpoints": 12,
+    "trace_cells": 15,
+    "cpu_wall_seconds": 14400,
+    "gpu_wall_seconds": 1800,
+    "gpu_planned": false
+  },
+  "resume": "same logical input order/batch shape; persist verified runtime plus cumulative evaluator history atomically; no overwrite completed results",
+  "attempts": "technical repair may resume same incomplete settings with new attempt record; no outcome-driven rerun",
+  "environment": {
+    "python": "3.12.14",
+    "torch_threads": 2,
+    "device": "CPU",
+    "package_upgrade": false
+  }
+}

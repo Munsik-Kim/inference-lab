@@ -1,0 +1,99 @@
+{
+  "schema": "ckda-local-review-status-v1",
+  "status": "LOCAL_REVIEW_COMPLETE",
+  "scientific_interpretation": "NO_DEMONSTRATED_EQUAL_BUDGET_SUPPORTED_HORIZON_GAIN_IN_TESTED_MENU",
+  "interpretation_limits": "Descriptive comparison of simultaneous confidence-supported lower bounds; not a superiority test or global optimality proof. Some RMST gains remain.",
+  "repository_base_revision": "eb1b1e582791ad0f96603bdd2c06a96eb2d73109",
+  "source_upstream_revision": "ef9d108d1692387cae37f5b2d539a71826a127c1",
+  "learned_protocol_sha256": "782d24a96dadd186878e639332a404dc3f5692155639ea5c56d9b4b667e320cb",
+  "budget_supplement_sha256": "c888c3458db76f78e0a40c5699e9c0370759c706f4084933af486fab7d4519c6",
+  "completed": {
+    "toy_current_arm_condition_records": 125,
+    "learned_primary_arm_seed_records": 78,
+    "supplementary_arm_seed_records": 12,
+    "training_seeds": [
+      0,
+      1,
+      2
+    ],
+    "scheduled_updates_per_seed": 20000,
+    "batch_size": 128,
+    "gpu_development_smoke_updates": 20,
+    "gpu_development_smoke_is_trained_result": false,
+    "cal_dev_test_shapes": [
+      [
+        64,
+        32
+      ],
+      [
+        128,
+        128
+      ],
+      [
+        512,
+        2048
+      ]
+    ],
+    "learned_restart_child_processes": 15,
+    "generic_restart_child_processes": 2,
+    "unique_cpu_unit_tests": 141,
+    "unit_failures": 0,
+    "unit_skips": 0,
+    "primary_scalar_audit": "PASS",
+    "supplement_scalar_audit": "PASS",
+    "isolated_complete_call_timing": "CPU two-thread, DEV16x128, 3 repeats per original arm per model seed",
+    "calibration_cost": "POST_HOC_COST_ONLY, 3 unchanged fits; retained arrays byte-identical"
+  },
+  "joint_result": {
+    "family_size": 630,
+    "residual_budget_comparisons": 54,
+    "candidate_supported_T05_above_best_feasible": 0,
+    "N_streams": [
+      1,
+      16,
+      128
+    ],
+    "same_TEST_reused": true,
+    "independent_confirmation": false,
+    "source": "results/supplement-summary/budget_comparisons.csv",
+    "source_sha256": "39caf2a251db448e22bfc18eb633127e7c00b80c39076b32b955726be29ce6e1"
+  },
+  "retained_failures": {
+    "primary_nonfinite_absorbing_arm_seed_records": 4,
+    "nonfinite_sequences_uniform2_by_seed": [
+      248,
+      483,
+      496
+    ],
+    "nonfinite_sequences_uniform3_seed0": 9,
+    "denominators_preserved": 512,
+    "development_failures": "provenance/development_attempts.json",
+    "toy_historical_repairs": "results/toy-repair-v1b/erratum-identity.json"
+  },
+  "not_run_or_measured": [
+    "full official paper training schedule",
+    "S4/A5 or language-model training",
+    "fused CUDA packed-state codec",
+    "GPU codec timing",
+    "whole-model VRAM reduction",
+    "supplementary complete-call timing",
+    "learned native-state tensor MSE or phase recomputation",
+    "shifted input-law evaluation",
+    "CAL/DEV-trained long-horizon failure predictor",
+    "new independent TEST confirmation of budget supplement",
+    "browser or real iPad testing (no site UI changed)"
+  ],
+  "weights_in_review_package": false,
+  "checkpoint_identity": "provenance/checkpoints.json",
+  "publication": {
+    "stage": false,
+    "commit": false,
+    "push": false,
+    "pr": false,
+    "merge": false,
+    "pages": false,
+    "release": false,
+    "checkpoint_upload": false
+  },
+  "checks_scope": "Recorded-label audits do not recreate predictions from withheld weights; full model replay requires separate checkpoints and pinned upstream."
+}

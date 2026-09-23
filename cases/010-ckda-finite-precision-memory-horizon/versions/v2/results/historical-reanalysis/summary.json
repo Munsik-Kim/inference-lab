@@ -1,0 +1,126 @@
+{
+  "schema": "case010-v2-model-free-v1-reanalysis-v1",
+  "status": "PASS",
+  "phase": "POST_HOC_HISTORICAL_V1_SAME_TEST",
+  "audit": {
+    "status": "PASS",
+    "toy_current_records": 125,
+    "learned_records": 78,
+    "supplement_records": 12,
+    "model_inference_executed": false,
+    "checkpoint_bytes_reverified": false,
+    "receipts": {
+      "primary_audit.json": "861d1f32b13d4a4808c2cb32dfe5b0ff827c04c1ee2ed7868a0844845fcc6e5d",
+      "supplement_audit.json": "f0c5d44576fce1ff91e0c08f08db98cd553ed8fccdb373633425296a1ef34c94"
+    },
+    "original_auditor_sha256": {
+      "scripts/audit_records.py": "a8bfd390976b7fd7563d8f31fba02ba6a0c4e27f4023e7926175d0f53d9b7c13",
+      "scripts/audit_budget_supplement.py": "c65f6e672ce67d63a7f8b7266a24edceb1c85b1429de4aed77633c378d51531d"
+    }
+  },
+  "historical_comparisons": {
+    "original_26arm_family546": {
+      "comparisons": 54,
+      "supported_T05_strict_improvements": 2
+    },
+    "joint_30arm_family630": {
+      "comparisons": 54,
+      "supported_T05_strict_improvements": 0
+    }
+  },
+  "model_seeds": [
+    0,
+    1,
+    2
+  ],
+  "arms_per_seed": 30,
+  "sequences_per_seed": 512,
+  "seed_pooling": false,
+  "max_horizon": 2048,
+  "bootstrap": {
+    "seed": 41001,
+    "repeats": 5000,
+    "method": "paired sequence percentile bootstrap, 95% pointwise CI; SeedSequence([41001, model_seed]); NumPy linear quantiles",
+    "selection_limitation": "comparator maximizes retained TEST RMST within cap; bootstrap conditions on this selected comparator; neither selection nor multiplicity corrected"
+  },
+  "native_per_token": [
+    {
+      "model_seed": 0,
+      "epsilon": 0.05,
+      "n_sequences": 512,
+      "max_horizon": 2048,
+      "empirical_per_token_T_epsilon": 139,
+      "failures_at_T": 25,
+      "failures_at_T_plus_1": 27,
+      "rmst_tokens": 283.099609375,
+      "scope": "post-hoc empirical integer-token grid; no population bound"
+    },
+    {
+      "model_seed": 0,
+      "epsilon": 0.01,
+      "n_sequences": 512,
+      "max_horizon": 2048,
+      "empirical_per_token_T_epsilon": 108,
+      "failures_at_T": 5,
+      "failures_at_T_plus_1": 6,
+      "rmst_tokens": 283.099609375,
+      "scope": "post-hoc empirical integer-token grid; no population bound"
+    },
+    {
+      "model_seed": 1,
+      "epsilon": 0.05,
+      "n_sequences": 512,
+      "max_horizon": 2048,
+      "empirical_per_token_T_epsilon": 108,
+      "failures_at_T": 24,
+      "failures_at_T_plus_1": 28,
+      "rmst_tokens": 271.23828125,
+      "scope": "post-hoc empirical integer-token grid; no population bound"
+    },
+    {
+      "model_seed": 1,
+      "epsilon": 0.01,
+      "n_sequences": 512,
+      "max_horizon": 2048,
+      "empirical_per_token_T_epsilon": 87,
+      "failures_at_T": 5,
+      "failures_at_T_plus_1": 6,
+      "rmst_tokens": 271.23828125,
+      "scope": "post-hoc empirical integer-token grid; no population bound"
+    },
+    {
+      "model_seed": 2,
+      "epsilon": 0.05,
+      "n_sequences": 512,
+      "max_horizon": 2048,
+      "empirical_per_token_T_epsilon": 144,
+      "failures_at_T": 22,
+      "failures_at_T_plus_1": 26,
+      "rmst_tokens": 239.865234375,
+      "scope": "post-hoc empirical integer-token grid; no population bound"
+    },
+    {
+      "model_seed": 2,
+      "epsilon": 0.01,
+      "n_sequences": 512,
+      "max_horizon": 2048,
+      "empirical_per_token_T_epsilon": 112,
+      "failures_at_T": 5,
+      "failures_at_T_plus_1": 6,
+      "rmst_tokens": 239.865234375,
+      "scope": "post-hoc empirical integer-token grid; no population bound"
+    }
+  ],
+  "immutable_consumed_sources_unchanged": true,
+  "source_file_count": 186,
+  "source_hashes_file": "source_hashes.json",
+  "analysis_file_sha256": "570bd6f7e5d4bd9966097bb52e3db4700c395a49c15f95fae54451fb3c58af24",
+  "numpy_version": "2.3.5",
+  "figures": {
+    "historical_v1_30arm_budget.png": "238c887a3a90bf844b029765890fff46fcb9111f00b793e816f14d1658644fa0",
+    "historical_v1_30arm_budget.pdf": "010eb07897dcb18a41d5155cd72904bcbda62ea90352ec9b50e1bfc573f18b99"
+  },
+  "new_model_inference": false,
+  "new_gpu_execution": false,
+  "scientific_scope": "historical descriptive reanalysis only; no independent confirmation or superiority claim"
+}

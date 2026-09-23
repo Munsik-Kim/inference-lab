@@ -1,0 +1,47 @@
+{
+  "scope": "32 frozen diagnostic sequences per fixed checkpoint; no pooling checkpoints, confidence intervals, fitted threshold, new inference, or causal attribution",
+  "indexing": "BOS is write0 and unscored; group token t is write t, t=1..2048",
+  "missing": "CSV empty field / JSON null means unavailable; raw NPZ NaN is an invalid or inapplicable scalar and is excluded with explicit finite counts",
+  "precision_endpoints": {
+    "RMST0": "mean(min(tau-1,2048)); censored contributes2048; units consecutive correct group tokens",
+    "empirical_T05_all_tokens": "largest integer t in1..2048 whose observed first-failure fraction is <=0.05; empirical only, no confidence support",
+    "token_accuracy": "correct predictions divided by32*2048 scored token positions, including recovery after first error",
+    "final_quarter_accuracy": "correct predictions at1537..2048 divided by32*512",
+    "S128/S512/S2048": "fraction of32 sequences with tau greater than the named horizon",
+    "BOS_accuracy": "fraction of32 BOS predictions equal to identity class0; excluded from tau",
+    "terminal_sequences": "number with an absorbing nonfinite recurrent-state failure, distinct from finite-state wrong labels"
+  },
+  "precision_pairs": "All6 unordered mode pairs per seed; compare complete integer predictions, not logits. Scored denominator65536; BOS denominator32; tau_equal_sequences denominator32.",
+  "precision_D00_errors": {
+    "population": "all2049 writes including BOS and post-label-failure rollout; each scalar has its own finite valid sample-write count",
+    "state_relative_l2": "||S_mode-S_D00||F / ||S_D00||F, only when both stored scalars are finite and D00 norm strictly positive; no epsilon floor",
+    "state_difference_l2_from_D00": "Frobenius distance between current precision-mode and D00 states, diagnostically accumulated inFP64",
+    "state_difference_mse_from_D00": "mean squared difference over3072 state entries of one sample/current write",
+    "logit_max_difference_from_D00": "maximum absolute difference among6 current class logits; state/readout precision varies as frozen"
+  },
+  "trace_metrics": {
+    "state_norm": "Frobenius norm of the full represented after-write candidate state, all12*16*16 entries",
+    "residual_norm": "Frobenius norm of the decoded residual expanded through its fixed basis; zero when no residual exists",
+    "native_state_norm": "Frobenius norm of independently advanced evaluator FP32 state; not passed to candidate",
+    "fp64_shadow_state_norm": "Frobenius norm of independent FP64 recurrence using promoted fixed FP32 coefficients; not arbitrary-precision ground truth",
+    "state_scale_minimum/state_scale_maximum": "minimum/maximum of12 stored per-head max-absolute FP32 scales for the base state; absent for native floating codec",
+    "residual_scale_minimum/residual_scale_maximum": "minimum/maximum of12 stored residual-coefficient scales; absent when residual codec absent",
+    "self_writeback_mse": "mean over3072 entries of(candidate's own FP32 updated state - represented after-write state)^2, with subtraction/squaring diagnosed inFP64; not native-state error",
+    "projection_leakage_mse": "mean over3072 entries of(error32 - expand64(project32(error32)))^2; error32=own update-decoded base; zero when no projection basis; distinct from residual-code rounding",
+    "native_state_error_l2/native_state_error_mse": "Frobenius distance / mean squared per-entry difference from independent FP32 shadow at the same write; valid only if candidate and shadow active",
+    "fp64_shadow_error_l2/fp64_shadow_error_mse": "corresponding distance / per-entry MSE from independent FP64 shadow",
+    "gold_margin": "gold logit minus largest other-class logit; negative indicates strictly losing gold, zero permits a tie",
+    "top_two_margin": "largest minus second-largest logit, independent of whether winner is correct"
+  },
+  "trace_fixed_times": "At each declared group position128/512/2048, statistics summarize only finite metric values among32 samples; valid_N is a stream count. Active_N counts nonterminal candidate streams; before/after counts refer to label tau and need not equal active_N.",
+  "rank2_before_after": "BOS excluded. Before:1<=t<tau. At/after:tau<=t<=2048. Each row pools eligible sample-writes; valid_sample_writes is not an independent sample N. contributing_sequences counts samples with any finite eligible value; mean_of_sequence_means weights contributing samples equally, while mean weights each valid sample-write equally. Temporal dependence is not treated as independent evidence.",
+  "trace_extrema": "Maximum finite scalar over all32*2049 writes including BOS/post-failure; first flattened(sample then write) maximizer retained. Flags identify whether the extremum occurs at/after or strictly after that sample's first wrong label; no causal interpretation.",
+  "statistics": "mean, median, minimum, maximum over explicitly counted finite values; FP64 mean scales values before summation; no intervals or tests. Counts in fixed-time and pooled-time tables have different units.",
+  "precision_modes": {
+    "D00": "FP32 recurrence / original FP32 readout",
+    "D10": "FP64 recurrence / state castFP32 then original readout",
+    "D01": "FP32 recurrence / explicit trueFP64 readout",
+    "D11": "FP64 recurrence / explicit trueFP64 readout"
+  },
+  "fixed_values": "Existing FP32 coefficient and parameter values are promoted, never reprojected or retrained; reduction order limitations remain in source precision metadata"
+}

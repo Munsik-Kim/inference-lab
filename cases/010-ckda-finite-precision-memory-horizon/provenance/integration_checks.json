@@ -1,0 +1,77 @@
+{
+  "status": "LOCAL_CHECKS_VERIFIED",
+  "scope": "Integration of retained evidence; no new learned-model inference",
+  "snapshot_files": {
+    "v1": 1075,
+    "v2": 387
+  },
+  "cpu": {
+    "unified_unique_tests": 18,
+    "original_v2_synthetic_subset_tests": 17,
+    "skipped": 0,
+    "v1_toy_records": 125,
+    "v1_learned_records": 78,
+    "v1_supplement_records": 12,
+    "v2_fresh_cells": 15,
+    "v2_aggregate_files_byte_identical": 5,
+    "paired_bootstrap_repeats": 5000,
+    "final_wrapper_commands": 9
+  },
+  "documentation": {
+    "unit_tests": 39,
+    "full_link_check": "PASS",
+    "claim_count": 25,
+    "existing_guide_links": 571,
+    "full_report": "External local receipt: docs-final-check.json"
+  },
+  "showcase": {
+    "unit_tests": 68,
+    "new_case010_tests_included": 8,
+    "site_check": {
+      "status": "PASS",
+      "files": 54,
+      "local_links": 346,
+      "records": {
+        "case007": 768,
+        "case006": 952
+      },
+      "evidence_revision": "bc1da81a82bff2e2827c5b4cabc9082cb6db5484",
+      "browser_check": "SEPARATE",
+      "scope": "Display projection equality, source hashes, artifact allowlist, local paths and static privacy checks"
+    }
+  },
+  "browser": {
+    "status": "PASS",
+    "assertions": 178,
+    "viewports": [
+      390,
+      768,
+      1280
+    ],
+    "browser": "Edge with existing Windows Node via CDP",
+    "real_ipad": "NOT_TESTED",
+    "HTTPS": "NOT_TESTED",
+    "scope": "Local HTTP preview; existing Case006/007/008 interactions, home and Case010 bilingual anchors, layout, keyboard, source-linked values and PNG"
+  },
+  "not_run": [
+    "new training",
+    "trained checkpoint inference",
+    "TEST reevaluation",
+    "timing remeasurement",
+    "GPU",
+    "physical iPad"
+  ],
+  "publication_state": "Feature-branch publication recorded separately in the PR and final receipt; historical version status files are unchanged.",
+  "preservation": {
+    "protected_files": 2134,
+    "changed": 0,
+    "v1_byte_identical": 1075,
+    "v2_byte_identical": 387,
+    "old_site_non_home_files_byte_identical": 37
+  },
+  "private_identifier_scan": {
+    "actual_private_paths": 0,
+    "credential_markers": 0,
+    "synthetic_fixture_exception": "versions/v2/tests/test_v1_reanalysis.py: /home/person/checkpoint.pt is the frozen synthetic path-rejection fixture, not a user path"
+  }
+}

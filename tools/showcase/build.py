@@ -11,6 +11,7 @@ from layout import home, language_index, report8_url, C8_PATH, C8_REVISION
 from study import render as study_render, method_labels
 from case008 import load_case008, render_case008
 from case009 import load_case009, render_case009, C9, SOURCE_COPIES
+from case010 import load_case010, render_case010, C10, SOURCE_COPIES as C10_SOURCES, FIGURE_SOURCE, FIGURE_ASSET
 
 def link(url, text, cls=''):
     return f'<a class="{cls}" href="{escape(url, quote=True)}">{escape(text)}</a>'
@@ -37,6 +38,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     payloads = load(root)
     data8 = load_case008(root)
     data9 = load_case009(root)
+    data10 = load_case010(root)
     manifest = source_manifest(root)
     rev = manifest['evidence_revision']
     languages = {lang:read(root/f'presentation/content/{lang}.json') for lang in ('en','ko')}
@@ -57,22 +59,36 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         for name,path in SOURCE_COPIES.items():files['sources/'+name]=(root/path).read_bytes()
         for length in (128,1024):
             files[f'assets/serving-L{length}.svg']=(root/C9/f'figures/serving-L{length}.svg').read_bytes()
+    if data10:
+        files['data/case010.json'] = (json_text(data10)+'\n').encode()
+        files[FIGURE_ASSET] = (root/FIGURE_SOURCE).read_bytes()
+        for name,path in C10_SOURCES.items():
+            files['sources/'+name] = (root/path).read_bytes()
+        files['assets/case010.js'] = (root/'presentation/assets/case010.js').read_bytes()
     files['index.html'] = language_index().encode()
     case_paths = sorted(p.parent.relative_to(root).as_posix() for p in (root/'cases').glob('*/README.md'))
     names = {'en':['Execution compatibility','BF16 / FP8 extraction','Softmax approximation','Complete attention cost','Precision–cost settings','Answer decisions and ties','Structured MLP pruning','Model build, reload and MLP reconstruction'],
              'ko':['실행 호환성','BF16 / FP8 문서 추출','Softmax 수치 근사','Attention 전체 호출 비용','정밀도와 비용의 절충','답변 선택과 동률','구조화 MLP 압축','모델 제작·재실행과 MLP 출력 복구']}
-    if len(case_paths)==9:
+    require(8 <= len(case_paths) <= 10, 'Unexpected case count; provide an explicit translated title')
+    if len(case_paths)>=9:
         require(data9 is not None,'Case009 README requires measured display records')
         names['en'].append('Graph serving and official quality evaluation')
         names['ko'].append('Graph 요청 비용과 공식 품질 평가')
+    if len(case_paths)==10:
+        require(data10 is not None, 'Case010 README requires verified unified records')
+        names['en'].append('Recurrent-state storage, restart and readout horizon')
+        names['ko'].append('반복 상태의 저장·재시작과 판독 수명')
     for lang,t in languages.items():
         t['methodLabels']=method_labels(lang)
         files[f'assets/{lang}.js'] = ('window.TEXT = '+script_json(t)+';\n').encode()
         other = 'ko' if lang == 'en' else 'en'
-        for page in ('index','case008','case007','case006','guide')+(('case009',) if data9 else ()):
+        for page in ('index','case008','case007','case006','guide')+(('case009',) if data9 else ())+(('case010',) if data10 else ()):
             scripts = ''
             if page == 'index':
-                body = home(t, lang, payloads, case_paths, names[lang], rev, data8, data9)
+                body = home(t, lang, payloads, case_paths, names[lang], rev, data8, data9, data10)
+            elif page == 'case010':
+                body = render_case010(data10,lang)
+                scripts = '<script defer src="../assets/case010.js"></script>'
             elif page == 'case009':
                 body = render_case009(data9,lang)
                 scripts = '<script defer src="../data/case009.js"></script><script defer src="../assets/case009.js"></script>'
@@ -91,14 +107,14 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 path=C7 if page=='case007' else C6
                 body += '<div class="actions">'+link(source_url(rev,path+'/REPRODUCTION.md'),t['original'])+'</div>'
                 scripts=f'<script defer src="../assets/{lang}.js"></script><script defer src="../data/{page}.js"></script><script defer src="../assets/state.js"></script><script defer src="../assets/app.js"></script>'
-            page_rev = 'Case009 reviewed snapshot (file hashes in JSON)' if page=='case009' else C8_REVISION if page == 'case008' else rev
+            page_rev = 'Case010 v1/v2 recorded snapshots (file hashes in JSON)' if page=='case010' else 'Case009 reviewed snapshot (file hashes in JSON)' if page=='case009' else C8_REVISION if page == 'case008' else rev
             body+=f'<details class="provenance"><summary>{t["evidence"]}</summary><p class="small">{t["evidence"]}: <code>{page_rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p></details>'
             navigation = ''.join('<a'+(' aria-current="page"' if page==target else '')+' href="'+target+'.html">'+escape(label)+'</a>' for target,label in [('case008','Case 008'),('case007','Case 007'),('case006','Case 006'),('guide',t['navGuide'])])
             if page == 'index':
                 navigation = ''.join(link('#'+target,t[key]) for target,key in [('capabilities','navCapabilities'),('tech-stack','navStack'),('projects','navProjects')])
-            notice = '../sources/case009-notice.md.txt' if page=='case009' else source_url(C8_REVISION,C8_PATH+'/NOTICE.md') if page=='case008' else source_url(rev,C7+'/NOTICE.md')
-            html=template.substitute(lang=lang,title=escape('Case 009 · Serving and quality' if page=='case009' else t['siteTitle'] if page=='index' else t['guide'] if page=='guide' else t['homeTitle8'] if page=='case008' else t['case007' if page=='case007' else 'case006']),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=t['language'],body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=notice,scripts=scripts)
-            if page in ('case006','case007'):
+            notice = '../sources/case010-notice.md.txt' if page=='case010' else '../sources/case009-notice.md.txt' if page=='case009' else source_url(C8_REVISION,C8_PATH+'/NOTICE.md') if page=='case008' else source_url(rev,C7+'/NOTICE.md')
+            html=template.substitute(lang=lang,title=escape(('Case 010 · Recurrent memory' if lang=='en' else 'Case 010 · 반복 상태와 기억 수명') if page=='case010' else 'Case 009 · Serving and quality' if page=='case009' else t['siteTitle'] if page=='index' else t['guide'] if page=='guide' else t['homeTitle8'] if page=='case008' else t['case007' if page=='case007' else 'case006']),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=t['language'],body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=notice,scripts=scripts)
+            if page in ('case006','case007','case010'):
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/study.css"></head>')
             if page == 'case008':
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/case008.css"></head>')
@@ -121,6 +137,12 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
             'quality': 'task-specific paired items; MMLU subject clusters; WikiText document denominators',
             'source_identity': data9['source_identity'],
             'source_files': data9['sources'],
+        }
+    if data10:
+        report['case010_units'] = {
+            'stages': 'separate v1 512-input and v2 1024-input evaluations of the same three checkpoints',
+            'storage': 'serialized bytes; N128 capacity is separate from 1024 evaluation inputs',
+            'source_files': data10['sources'],
         }
     files['build_manifest.json']=(json_text(report)+'\n').encode()
     output.mkdir(parents=True)

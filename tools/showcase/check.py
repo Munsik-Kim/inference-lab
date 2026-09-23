@@ -11,6 +11,7 @@ from common import ROOT, read, require, sha, json_text, new_output
 from data import load
 from case008 import load_case008, render_case008
 from case009 import load_case009, render_case009, C9, SOURCE_COPIES
+from case010 import load_case010, render_case010, home_case010, SOURCE_COPIES as C10_SOURCES, FIGURE_ASSET, FIGURE_SOURCE
 from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
 
@@ -82,8 +83,12 @@ def check(root: Path, site: Path) -> dict:
             require(p.stat().st_nlink == 1, 'Site hardlink')
             paths[p.relative_to(site).as_posix()]=p
     data9=load_case009(root)
+    data10=load_case010(root)
     expected=EXPECTED|({'en/case009.html','ko/case009.html','data/case009.json','data/case009.js','assets/case009.js','assets/serving-L128.svg','assets/serving-L1024.svg',
       'sources/diova-compare-core.py.txt','sources/diova-compare-tests.py.txt','sources/diova-compare-edge-tests.py.txt','sources/case009-serving.py.txt','sources/case009-quality.py.txt','sources/case009-report-en.md.txt','sources/case009-report-ko.md.txt','sources/case009-notice.md.txt'} if data9 else set())
+    if data10:
+        expected |= {'en/case010.html','ko/case010.html','data/case010.json','assets/case010.js',FIGURE_ASSET}
+        expected |= {'sources/'+name for name in C10_SOURCES}
     require(set(paths)==expected, 'Unexpected/missing deploy artifact member')
     m=read(site/'build_manifest.json')
     require(set(m['files'])==expected-{'build_manifest.json'}, 'Manifest coverage')
@@ -93,6 +98,18 @@ def check(root: Path, site: Path) -> dict:
     for name,digest in m['presentation_files'].items():
         path=(root/name).resolve()
         require(path.is_relative_to(root.resolve()) and path.is_file() and sha(path)==digest, 'Stale presentation build')
+    if data10:
+        require(read(site/'data/case010.json')==data10, 'Case010 numeric/source mismatch')
+        require(m['case010_units']['source_files']==data10['sources'], 'Case010 source identity mismatch')
+        require((site/FIGURE_ASSET).read_bytes()==(root/FIGURE_SOURCE).read_bytes(), 'Changed Case010 figure bytes')
+        for name,path in C10_SOURCES.items():
+            require((site/'sources'/name).read_bytes()==(root/path).read_bytes(), 'Changed Case010 source copy: '+name)
+        for lang in ('en','ko'):
+            require(render_case010(data10,lang) in (site/lang/'case010.html').read_text(), 'Case010 rendering/scope mismatch')
+            home=(site/lang/'index.html').read_text()
+            require(home_case010(data10,lang) in home, 'Missing Case010 home feature')
+            require(home.count('id="memory-study"')==1, 'Duplicate Case010 home project')
+            require(home.count('<span class="archive-number">010</span>')==1, 'Case010 archive entry must occur once')
     data8=load_case008(root)
     if data9:
         require(read(site/'data/case009.json')==data9,'Case009 numeric/source mismatch')
@@ -151,7 +168,11 @@ def check(root: Path, site: Path) -> dict:
     # Static privacy bounds supplement the retained-source allowlist, not arbitrary redaction.
     forbidden=('ghp_','hf_','sk-proj-','BEGIN PRIVATE KEY')
     private_path=re.compile(r'/home/[^/\s]+/|/mnt/[a-z]/|[A-Za-z]:\\Users\\')
-    for path in paths.values():
+    for name,path in paths.items():
+        if data10 and name==FIGURE_ASSET:
+            # One explicit binary artifact, already compared byte-for-byte above.
+            require(path.read_bytes().startswith(b'\x89PNG\r\n\x1a\n'), 'Invalid Case010 PNG signature')
+            continue
         text=path.read_text()
         require(not private_path.search(text) and not any(marker in text for marker in forbidden), 'Private path/credential marker in site')
     return {'status':'PASS','files':len(paths),'local_links':n,'records':m['record_counts'],

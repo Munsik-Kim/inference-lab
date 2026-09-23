@@ -23,6 +23,7 @@
 | Q 변환·저장·복사·새 runtime 검사 | GPTQ · LLM Compressor · compressed-tensors · vLLM/Marlin | [code](tools/modelpack/quantized.py) · [tests](cases/008-build-reconstruct-reload/tests/test_boundaries.py) |
 | 고정 구조 ridge 적합·작은 가중치에 보정 저장 | NumPy 선형대수 · 채널 재구성 선행연구 | [code](tools/modelpack/numerics.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
 | 동일 입력 측정·paired 결과 리포트 | vLLM benchmark · lm-evaluation-harness · 비교 지표 선행연구 | [code](packages/diova-compare/src/diova_compare/core.py) · [tests](packages/diova-compare/tests/test_compare.py) |
+| 저비트 state packing·실패 보존·새 프로세스 재시작 | NumPy · PyTorch · ComplexKDA recurrence | [구현](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [합성 재시작 테스트](cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
 
 [선행연구와 구현 대응](docs/related-work/README.ko.md) · [CPU 비교 도구](packages/diova-compare/README.ko.md)
 
@@ -119,6 +120,15 @@ Case009는 기존 Qwen3-4B BF16/W4 저장본을 출력 256토큰·동시 요청 
 
 영어 축 라벨입니다. [두 입력 길이와 품질표](cases/009-q-serving-quality/REPORT.ko.md) · [CPU 재계산·영어](cases/009-q-serving-quality/REPRODUCTION.md) · [설치형 paired CLI](packages/diova-compare/README.ko.md)
 
+## Case 010 — 저정밀 state의 저장·재시작과 기억 수명
+
+<!-- claims: c010-state-bytes -->
+반복해서 갱신하는 recurrent state를 실제 저비트로 저장하고, 수치 실패 상태와 난수를 보존해 새 프로세스에서 이어 실행하는 도구를 구현했습니다. 같은 저장 한도에서 첫 오답까지의 길이와 계산 비용을 비교합니다.
+
+**stream별 직렬화 state 12,305 → 3,137 bytes, 약 74.5% 감소** · Native FP32 → INT8. 같은 세 학습 CKDA의 새 입력에서 평균 연속 정답 길이 점추정 차이는 각각 1token 미만이었습니다. 전체 RAM·VRAM이나 품질 동등성을 나타내는 수치는 아닙니다.
+
+[실패를 보존하는 구현](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [CPU 검산](cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.ko.md) · [두 단계의 방법과 결과](cases/010-ckda-finite-precision-memory-horizon/REPORT.ko.md)
+
 ## 질문과 구현물
 
 
@@ -133,6 +143,7 @@ Case009는 기존 Qwen3-4B BF16/W4 저장본을 출력 256토큰·동시 요청 
 | [007 — 작은 계산 블록에 어느 그룹을 남길까?](docs/ko/CASEBOOK.md#case-007) | 그룹 선택, 실제 행렬 축소, 선택에 쓰지 않은 입력의 평가. 기술명: MLP, pruning. |
 | [008 — 바꾼 모델을 저장하고 다시 실행할 수 있을까?](docs/ko/CASEBOOK.md#case-008) | GPTQ 저장·실행 통합과 고정 MLP ridge 복구. Q 파일과 R 국소 오차가 감소했고 정답 점수 변화는 혼재. |
 | [009 — 긴 decode와 동시 요청에서 비용은 어떻게 바뀔까?](cases/009-q-serving-quality/README.ko.md) | 같은 조건의 graph/eager 요청 비용과 공식 품질 계산. 비정상 프로세스 종료 기록도 함께 표시. |
+| [010 — 저비트 state를 실패 이후에도 재시작할 수 있는가?](docs/ko/CASEBOOK.md#case-010) | 실제 bit packing, 실패 상태 직렬화, 최초 판독 실패와 저장 예산 비교. |
 
 ## 더 깊게 보기
 

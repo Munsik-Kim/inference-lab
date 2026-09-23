@@ -1,5 +1,6 @@
 """Presentation-only layouts. Selection diagrams use retained group IDs."""
 from html import escape
+from case010 import home_case010
 
 C8_PATH = 'cases/008-build-reconstruct-reload'
 C8_REVISION = '9bc8b8fced8dfd5147f9bfdc67564eda04670810'
@@ -29,7 +30,7 @@ def output_metrics(data8: dict) -> dict[str, str]:
 
 
 def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
-         revision: str, data8: dict | None = None, data9: dict | None = None) -> str:
+         revision: str, data8: dict | None = None, data9: dict | None = None, data10: dict | None = None) -> str:
     if len(case_paths) != len(names):
         raise ValueError('Every case needs a translated archive title')
     docs = f'https://github.com/Munsik-Kim/inference-lab/blob/main/docs/{lang}/'
@@ -112,6 +113,8 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     out += '</div><aside class="diagram project-diagram"><div class="diagram-description"><p class="eyebrow">CASE 007 · 4 / 16 · 25%</p><h3>'+text('diagramSection')+'</h3><p>'+text('diagramCaption')+'</p>'+anchor(source+'cases/007-interaction-aware-mlp-pruning/results/raw/selection.json',t['recordedSelection'],'text-link')+'</div><div class="diagram-data">'+diagram+'</div></aside></section>'
     if data9:
         out += '<section class="panel" id="serving-study"><p class="eyebrow">CASE 009 · SERVING & QUALITY</p><h2>'+('긴 decode와 동시 요청의 비용' if lang=='ko' else 'Serving cost across concurrency and longer decode')+'</h2><p>'+('기존 Qwen 4B BF16·W4 저장본을 출력 256토큰, 동시성 1/4/16/32에서 비교했습니다. 전체 TPOT·처리량 곡선을 별도의 공식 품질 평가와 함께 확인합니다.' if lang=='ko' else 'Compare the existing Qwen 4B BF16/W4 artifacts at 256 output tokens and client concurrency 1/4/16/32. Read the complete TPOT/throughput curves alongside separate official quality tasks.')+'</p><figure><img class="serving-curve" src="../assets/serving-L128.svg" alt="'+('입력 128·출력 256의 TPOT·처리량 전체 곡선' if lang=='ko' else 'Complete TPOT and throughput curves, input128/output256')+'"><figcaption>'+('서버 3라운드 · 막대는 라운드 범위 · 영어 축 라벨. 품질 계산의 프로세스 종료 실패는 상세 표에 표시합니다.' if lang=='ko' else 'Three server rounds; whiskers show round range. Quality-process exit failures are marked in the detailed table.')+'</figcaption></figure>'+anchor('case009.html#serving','전체 요청 비용 곡선' if lang=='ko' else 'Complete serving curves','text-link')+' · '+anchor('case009.html#quality','공식 품질과 실행 상태' if lang=='ko' else 'Official quality and execution status','text-link')+'</section>'
+    if data10:
+        out += home_case010(data10, lang)
     reading = '<section class="reading-strip"><div><p class="eyebrow">START HERE</p><h2>'+text('readingTitle')+'</h2><p>'+text('readingIntro')+'</p></div><div class="reading-links">'
     for url, key in [(docs+'START_HERE.md','beginner'),(docs+'GLOSSARY.md','glossary'),('guide.html','guide')]:
         reading += anchor(url,t[key]+' ↗','reading-link')
@@ -120,7 +123,7 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     out += '</ol><details><summary>'+text('archiveEarlier')+'</summary><ol class="case-list">'
     for i,(path,name) in enumerate(zip(case_paths,names),1):
         if i == 6: out += '</ol></details><ol class="case-list">'
-        url='case009.html' if i==9 and data9 else docs+f'CASEBOOK.md#case-{i:03}'
+        url='case010.html' if i==10 and data10 else 'case009.html' if i==9 and data9 else docs+f'CASEBOOK.md#case-{i:03}'
         out += '<li>'+anchor(url,name,'case-name')+f'<span class="archive-number">{i:03}</span><span class="archive-arrow" aria-hidden="true">↗</span></li>'
     out += '</ol></section>'+reading+'<section class="contact-strip"><h2>'+text('collaboration')+'</h2><p>'+text('collaborationIntro')+'</p><div class="actions">'+anchor(docs+'PORTFOLIO.md',t['code'],'text-link')+anchor('https://github.com/Munsik-Kim/inference-lab/issues',t['contact'],'quiet-link')+'</div></section>'
     return out

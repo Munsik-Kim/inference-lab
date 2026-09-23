@@ -1,0 +1,106 @@
+{
+  "schema": "case010-learned-evaluation-v2-canonical-token-torch",
+  "phase": "FROZEN_PRIMARY",
+  "protocol_sha256": "782d24a96dadd186878e639332a404dc3f5692155639ea5c56d9b4b667e320cb",
+  "runtime_sha256": "7494da323e41753d649a4568c8aaf673095e06fcbeb0c1286df3df5f95143bfa",
+  "checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+  "model_seed": 2,
+  "upstream_commit": "ef9d108d1692387cae37f5b2d539a71826a127c1",
+  "required_upstream_source_sha256": {
+    "group_word_problems/train_wordproblem.py": "100e30684a6f62e0da67ac6ca0d5e7fb705936c16f9d2751bcabf9df9d9c3ff3",
+    "fla/layers/complex_kda_layer.py": "1ef968f2c22616aea6ca8833fe9116e1e7e49b86441da56605d9e088bdab1824",
+    "fla/layers/utils.py": "efe401e0975bf099290e27c9fb25bbc406bd1784bd145608d164cb87e36c90cc",
+    "fla/ops/kda/naive.py": "60a32285d4b67068ff633b48bbe8ab31028066d24f00d27e12199a88fc73f016",
+    "fla/models/utils.py": "f9b94ae34afe3a0b49df7bf51ac543d8e08446cf90b9d8274e45f5954acaf804"
+  },
+  "source_sha256": {
+    "codec/learned.py": "f78296c765cc8950dabf90ef65cb5bb1317162a8cdc581359cfda15bb6c58857",
+    "codec/online.py": "e08dc9e5f76123a86086180719e39f5418bfee3232b98500fcb2b7d2066773c1",
+    "codec/packed.py": "8d88eca560d654a976263c44c851d45dc92e32f0cc51452841d4dc32f642097f",
+    "codec/groups.py": "ca3a7c91da6ca919b52526a2582eda55f1b19a0029e3806335c45de46cd7bded",
+    "codec/survival.py": "99165cf1d5b74a986433aab36387e888394a94ecb58d3653ec6202d8d3b68620",
+    "scripts/evaluate_learned.py": "f92cae10d7b807e9fa69a7d9f40b39fcd57f42b7899013912155221a5a7ce187"
+  },
+  "frozen_source_directory": "frozen-source",
+  "token_table_config_sha256": "3762d8b7d1b91031ee77650cc10363fa2033b696f936bf28383ee2399ec7a951",
+  "token_table_data_sha256": "d600ef70dd9c8d0b496e8c0c366940c725ba94d760344875dba7a5d1674f9e76",
+  "shared_token_table_bytes": 29100,
+  "model_checkpoint_bytes": 233203,
+  "torch_version": "2.13.0+cu130",
+  "numpy_version": "2.3.5",
+  "actual_coefficients": {
+    "parameter_count": 56530,
+    "native_cache_elements": 3072,
+    "native_cache_dtype": "float32",
+    "native_cache_value_bytes": 12288,
+    "heads": 12,
+    "head_key_dim": 16,
+    "head_value_dim": 16,
+    "state_shape_per_stream": [
+      12,
+      16,
+      16
+    ],
+    "coefficient_shapes": {
+      "q": [
+        7,
+        12,
+        16
+      ],
+      "k": [
+        7,
+        12,
+        16
+      ],
+      "v": [
+        7,
+        12,
+        16
+      ],
+      "alpha": [
+        7,
+        12,
+        16
+      ],
+      "beta": [
+        7,
+        12
+      ],
+      "g": [
+        7,
+        12,
+        16
+      ],
+      "e": [
+        7,
+        48
+      ]
+    },
+    "coefficient_dtypes": {
+      "q": "float32",
+      "k": "float32",
+      "v": "float32",
+      "alpha": "float32",
+      "beta": "float32",
+      "g": "float32",
+      "e": "float32"
+    },
+    "alpha_min": -1.0,
+    "alpha_max": 1.0,
+    "alpha_negative_fraction": 0.36904761904761907,
+    "beta_min": 2.2175576930294483e-09,
+    "beta_max": 2.0,
+    "q_norm_min": 0.9999998807907104,
+    "q_norm_max": 1.0000001192092896,
+    "k_norm_min": 0.9999998807907104,
+    "k_norm_max": 1.0
+  },
+  "coefficient_execution_policy": "each of seven token IDs projected separately at B=1,T=1; exact token-local table shared by every arm; no sequence-length-dependent projection; state and readout vectorized across streams",
+  "checkpoint_training_status": "TRAINING_COMPLETE",
+  "checkpoint_updates": 20000,
+  "native_arm": "physical-coordinate FP32 Torch recurrence with canonical B1,T1 coefficient table and exact official einsum read reduction; original FP32 readout modules; parity checked against official one-token gauge Cache path",
+  "arithmetic": "FP32 learned recurrence/weights/readout; FP64 offline CAL statistics/eigensolver and diagnostic reductions; codec quantizer uses FP64 temporary normalization; no FP64 learned recurrent-state arm",
+  "test_accessed": true,
+  "calibration_source_split": "CAL",
+  "calibration_sha256": "6cc71fcb5c09e25071a76f06a7d01f64a28cf0a26174f24b9133adef1ade9b59"
+}

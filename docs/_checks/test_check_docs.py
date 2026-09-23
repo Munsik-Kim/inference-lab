@@ -8,7 +8,8 @@ from unittest.mock import patch
 from pathlib import Path
 from check_docs import (anchors, check_claims, check_links, check_pairs, check_packages,
                         check_protected_additions, check_protection,
-                        check_beginner_routes, check_concept_figure, check_copy_hygiene, CONCEPT_FIGURE, PAGES)
+                        check_beginner_routes, check_concept_figure, check_copy_hygiene,
+                        check_unified_case010, CONCEPT_FIGURE, PAGES)
 
 
 class DocumentChecks(unittest.TestCase):
@@ -56,6 +57,22 @@ class DocumentChecks(unittest.TestCase):
         (folder/'extra.md').write_text('Unapproved fixture addition')
         errors=[];check_protected_additions(self.root,set(),errors)
         self.assertTrue(any('Unexpected file in protected tree' in e for e in errors))
+
+    def test_incomplete_unified_case_is_not_added_to_protection_allowlist(self):
+        case = self.root/'cases/010-ckda-finite-precision-memory-horizon'
+        case.mkdir(parents=True)
+        (case/'README.md').write_text('Synthetic incomplete integration fixture')
+        errors = []
+        self.assertEqual(check_unified_case010(self.root, errors), set())
+        self.assertTrue(any('Case010 integration verification failed' in e for e in errors))
+
+    def test_unified_archive_claim_cannot_authorize_unrelated_source(self):
+        self.mapping['unified_snapshots'] = [{
+            'case_path':'cases/010-ckda-finite-precision-memory-horizon',
+            'version':'v2',
+            'archive_sha256':'efe3ab2586a3cec757429386a7f874b594a9893fc771c804f5871dfaa61ed9cc'}]
+        self.mapping['claims'][0]['source_revision'] = 'archive:' + self.mapping['unified_snapshots'][0]['archive_sha256']
+        self.assertTrue(any('Invalid source revision' in e for e in self.claims_errors()))
 
     def test_broken_local_link(self):
         with (self.root/'README.md').open('a') as f:f.write('[Broken](absent.md)\n')

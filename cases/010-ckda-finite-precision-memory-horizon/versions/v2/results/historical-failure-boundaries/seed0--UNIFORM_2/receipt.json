@@ -1,0 +1,114 @@
+{
+  "schema": "case010-historical-failure-boundaries-appendix-v1",
+  "status": "PASS",
+  "seed": 0,
+  "arm": "UNIFORM_2",
+  "role": "TECHNICAL_CONTINUATION_COVERAGE_ALREADY_OBSERVED_FAILURES",
+  "new_memory_trials": 0,
+  "original_protocol_unchanged": true,
+  "source_sha256": {
+    "source/run_historical.py": "a57560e5008d24f77f15645af17280a31815b42a42fc8c3f57f10dd1e07295fd",
+    "source/online_v2.py": "6067e9dae6552551847abb4e0742fe761a4ee31ad502a9a1ecfbccba767926eb",
+    "source/evaluation.py": "4b743391447e05669e65db65436dfeb2932c1fbf40bde78473cf996b2bc383c4",
+    "source/common.py": "53191632804961b618b5bafef7fa1befc64d226b5af8b148b942c6dfa78d7ffe",
+    "source/checkpoint.py": "f1e335b09053cc134be19785285c29017aeec11ff3a2a31c54a65a8989cd6627",
+    "source/arms.py": "236f34cf409ea259ba41cd2ecc024478289ca65ae4a821dd600b9e4c39b188d4",
+    "source/reference.py": "8201203a85d04ed4d33b8bad51f748f98232ee3647497de22b730cef1b06b931",
+    "source/run_failure_boundaries.py": "39ca68a9476ab9b652693874ae6247718729b77704d77f98bda0762afa223cc3"
+  },
+  "appendix_sha256": "afdd53257e071820196f89b10aee6e8f76c32743ba4337c7970e175a96d514b9",
+  "original_receipt": "results/historical/seed0/ORIGINAL_INVALID_STREAM_B1_TEST3001--UNIFORM_2/receipt.json",
+  "original_receipt_sha256": "c0345c3d037108542a6e8046e33f2d0d86ba60a46c7c2e1436dd494e9537810b",
+  "first_terminal_write": 838,
+  "original_row": 77,
+  "N": 1,
+  "T": 2048,
+  "group_token_cuts": [
+    837,
+    838,
+    839,
+    2048
+  ],
+  "fresh_process_resume_cut": 838,
+  "fresh_processes": 1,
+  "comparisons": {
+    "parent_matches_retained_predictions": true,
+    "fresh_matches_retained_predictions": true,
+    "parent_matches_retained_final_payload": true,
+    "fresh_matches_retained_final_payload": true,
+    "fresh_boundary_trace_matches_parent": true,
+    "fresh_consumed_counts_match_parent": true
+  },
+  "trace": [
+    {
+      "group_stop": 837,
+      "cursor": 838,
+      "terminal_code": 0,
+      "first_terminal_write": null,
+      "body_sha256": "cba0277106a72e75b1c41977dd21630dcd1278a01e66fb73093252b9f9d42caa",
+      "final_payload_sha256": "b371541b29d55bea37bf7a4b3520abbc2bb6cbcc97a1658f1ac2668191761f6a",
+      "prediction_sha256": "f55a59d2c00d4a3528bb7dd1952e434b9cc373542a233b81b6debec77f49c5a4"
+    },
+    {
+      "group_stop": 838,
+      "cursor": 839,
+      "terminal_code": 2,
+      "first_terminal_write": 838,
+      "body_sha256": "cba0277106a72e75b1c41977dd21630dcd1278a01e66fb73093252b9f9d42caa",
+      "final_payload_sha256": "019bc539aa8283d14e0be8e3b6b9cb986ac8c32e1634f5c7e08f86e743e7ecf1",
+      "prediction_sha256": "3b95559da1318fa7e0807368ec2ba199a57449cb60fd542c9abb9428f36e11d6"
+    },
+    {
+      "group_stop": 839,
+      "cursor": 840,
+      "terminal_code": 2,
+      "first_terminal_write": 838,
+      "body_sha256": "cba0277106a72e75b1c41977dd21630dcd1278a01e66fb73093252b9f9d42caa",
+      "final_payload_sha256": "93c25b09a9bdadc627755182a9fef94de5ab7b16e6a40ed667f5ec0b8b8bd87d",
+      "prediction_sha256": "dc2cb272162d07865aa026bd96a32894b375b841dd104b99bf260459edf96143"
+    },
+    {
+      "group_stop": 2048,
+      "cursor": 2049,
+      "terminal_code": 2,
+      "first_terminal_write": 838,
+      "body_sha256": "cba0277106a72e75b1c41977dd21630dcd1278a01e66fb73093252b9f9d42caa",
+      "final_payload_sha256": "f0d5ebf1464373798f500558d3fff24e99220a3c4c9503569f30e1632a88449f",
+      "prediction_sha256": "592920cf73105029053bb197377b9fee83b045dec8bb1b16ab3cbba94759c90a"
+    }
+  ],
+  "fresh_trace": [
+    {
+      "group_stop": 839,
+      "cursor": 840,
+      "terminal_code": 2,
+      "first_terminal_write": 838,
+      "body_sha256": "cba0277106a72e75b1c41977dd21630dcd1278a01e66fb73093252b9f9d42caa",
+      "final_payload_sha256": "93c25b09a9bdadc627755182a9fef94de5ab7b16e6a40ed667f5ec0b8b8bd87d",
+      "prediction_sha256": "dc2cb272162d07865aa026bd96a32894b375b841dd104b99bf260459edf96143"
+    },
+    {
+      "group_stop": 2048,
+      "cursor": 2049,
+      "terminal_code": 2,
+      "first_terminal_write": 838,
+      "body_sha256": "cba0277106a72e75b1c41977dd21630dcd1278a01e66fb73093252b9f9d42caa",
+      "final_payload_sha256": "f0d5ebf1464373798f500558d3fff24e99220a3c4c9503569f30e1632a88449f",
+      "prediction_sha256": "592920cf73105029053bb197377b9fee83b045dec8bb1b16ab3cbba94759c90a"
+    }
+  ],
+  "counts": {
+    "invalid_readout_counts": [
+      0
+    ],
+    "active_update_attempts": 839,
+    "terminal_noop_steps": 1210
+  },
+  "predictions_artifact": {
+    "file": "predictions.npz",
+    "sha256": "bf6d2abf11bc6f52583b465b0a0cc8489107ca20f92104992579602536ce23d4"
+  },
+  "first_prediction_difference": null,
+  "full_payloads_public": false,
+  "reviewer_probe_executed": false
+}

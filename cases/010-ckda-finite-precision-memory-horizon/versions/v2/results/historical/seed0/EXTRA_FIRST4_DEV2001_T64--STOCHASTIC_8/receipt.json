@@ -1,0 +1,479 @@
+{
+  "schema": "case010-historical-parity-result-v1",
+  "status": "PASS",
+  "identity": {
+    "schema": "case010-historical-parity-cell-v1",
+    "model_seed": 0,
+    "arm": "STOCHASTIC_8",
+    "cohort": "EXTRA_FIRST4_DEV2001_T64",
+    "checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+    "protocol_sha256": "3f5299e9bdaeb2c10b2a68281f05ca559402feeea9cd3d7cba5807f24546e523",
+    "tokens_sha256": "0491f27ca06dce2c87134ad5e57cb6a5ba8af5ea47e09d483c666c9e09df7a2b",
+    "gold_sha256": "d528d4daed791d9174261374fd08133036a4e028f9b31b65e4486e9cfe356965",
+    "sample_ids_sha256": "234a8f6b7340c231fface550871a0ccb104b714da5bae4ebb8e0081bf72e7a51",
+    "runtime_config_sha256": "9a66c4f0f45b5fd028cc7188e4f4943773be4b81c0aedf5bc7f4877306ead9af",
+    "codec_config_sha256": "cb142cec9606620502e6e4138ce57ba71d1565814d8e267c94ffad83ea204035",
+    "basis_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "legacy_codec_config_sha256": "9ccca92545bd9f3117a98db2b3d20cfa25d4d6d75375893b1276a012c5764465"
+  },
+  "diagnostic_only": true,
+  "fresh_primary_sample_count": 0,
+  "reviewer_probe_available": false,
+  "reviewer_probe_executed": false,
+  "N": 4,
+  "T": 64,
+  "sample_ids": [
+    "S3:DEV:2001:000000",
+    "S3:DEV:2001:000001",
+    "S3:DEV:2001:000002",
+    "S3:DEV:2001:000003"
+  ],
+  "boundaries": [
+    1,
+    17,
+    63,
+    64
+  ],
+  "BOS": "one initial BOS; all resumed calls include_bos=False; cache cursor records consumed writes",
+  "same_batch_shape": true,
+  "fresh_processes": 1,
+  "fresh_process_version": "v2",
+  "serialized_at_all_boundaries": [
+    "v1",
+    "v2"
+  ],
+  "fresh_serialized_boundary_trace_match": true,
+  "full_split_match": true,
+  "comparisons": {
+    "v1_full_vs_split": {
+      "available": true,
+      "predictions_match": true,
+      "first_prediction_difference": null,
+      "payload": {
+        "match": true,
+        "reference_sha256": "3b0de40601e5a7be52d164003c62960eb41e775e4b0e80792811944b1359a1d4",
+        "candidate_sha256": "3b0de40601e5a7be52d164003c62960eb41e775e4b0e80792811944b1359a1d4",
+        "first_difference": null
+      }
+    },
+    "v1_vs_v2_full_body": {
+      "available": true,
+      "predictions_match": true,
+      "first_prediction_difference": null,
+      "payload": {
+        "match": true,
+        "reference_sha256": "d8b4bc8df48b57bdda7c9bd29257b97006e6f601c7e9d17988edf9766297a334",
+        "candidate_sha256": "d8b4bc8df48b57bdda7c9bd29257b97006e6f601c7e9d17988edf9766297a334",
+        "first_difference": null
+      }
+    },
+    "v2_full_vs_split": {
+      "available": true,
+      "predictions_match": true,
+      "first_prediction_difference": null,
+      "payload": {
+        "match": true,
+        "reference_sha256": "e3434c0159917c08e6ab9d6a5e6ed73951ec41cf7765c0e4c4779163204527fb",
+        "candidate_sha256": "e3434c0159917c08e6ab9d6a5e6ed73951ec41cf7765c0e4c4779163204527fb",
+        "first_difference": null
+      }
+    },
+    "v2_full_vs_fresh": {
+      "available": true,
+      "predictions_match": true,
+      "first_prediction_difference": null,
+      "payload": {
+        "match": true,
+        "reference_sha256": "e3434c0159917c08e6ab9d6a5e6ed73951ec41cf7765c0e4c4779163204527fb",
+        "candidate_sha256": "e3434c0159917c08e6ab9d6a5e6ed73951ec41cf7765c0e4c4779163204527fb",
+        "first_difference": null
+      }
+    }
+  },
+  "legacy_error": null,
+  "legacy_chunk_revival": "Expected v1 contract defect if it occurs; not a v2 parity failure gate",
+  "v1_v2_body_equality_scope": "Compare bytes after different version headers; terminal-body differences are intentional",
+  "predictions_sha256": {
+    "v1_full": "6c69bdd4433ccdecdee9a164009750fd0210822b27fbdc9941ddb7ed575bca9b",
+    "v1_split": "6c69bdd4433ccdecdee9a164009750fd0210822b27fbdc9941ddb7ed575bca9b",
+    "v2_full": "6c69bdd4433ccdecdee9a164009750fd0210822b27fbdc9941ddb7ed575bca9b",
+    "v2_split": "6c69bdd4433ccdecdee9a164009750fd0210822b27fbdc9941ddb7ed575bca9b",
+    "v2_fresh": "6c69bdd4433ccdecdee9a164009750fd0210822b27fbdc9941ddb7ed575bca9b"
+  },
+  "final_payload_sha256": {
+    "v1_full": "3b0de40601e5a7be52d164003c62960eb41e775e4b0e80792811944b1359a1d4",
+    "v1_split": "3b0de40601e5a7be52d164003c62960eb41e775e4b0e80792811944b1359a1d4",
+    "v2_full": "e3434c0159917c08e6ab9d6a5e6ed73951ec41cf7765c0e4c4779163204527fb",
+    "v2_split": "e3434c0159917c08e6ab9d6a5e6ed73951ec41cf7765c0e4c4779163204527fb",
+    "v2_fresh": "e3434c0159917c08e6ab9d6a5e6ed73951ec41cf7765c0e4c4779163204527fb"
+  },
+  "predictions_artifact": {
+    "file": "predictions.npz",
+    "sha256": "029341f74990a2206d378fc42d715b0907f4f684b5ac230c232402921d4a6e99"
+  },
+  "final_terminal_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "first_terminal_write": [
+    null,
+    null,
+    null,
+    null
+  ],
+  "execution": {
+    "v1_full": {
+      "status": "COMPLETE",
+      "completed_writes": 65,
+      "elapsed_seconds": 0.0778479700020398,
+      "nonfinite_output_sequence_steps": 0,
+      "absorbed_sequences": 0,
+      "first_invalid_write_position": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "invalid_write_position_zero_is_bos": true,
+      "diagnostics": null,
+      "diagnostics_include_bos": true,
+      "diagnostic_invalid_row_policy": "after state nonfinite detection, failed rows use zero placeholders and all later predictions remain failures; a nonfinite readout alone marks that prediction invalid while the finite state continues; BOS readout is unscored"
+    },
+    "v1_split": {
+      "calls": [
+        {
+          "group_start": 0,
+          "group_stop": 1,
+          "bos_included": true,
+          "execution": {
+            "status": "COMPLETE",
+            "completed_writes": 2,
+            "elapsed_seconds": 0.0022769110000808723,
+            "nonfinite_output_sequence_steps": 0,
+            "absorbed_sequences": 0,
+            "first_invalid_write_position": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "invalid_write_position_zero_is_bos": true,
+            "diagnostics": null,
+            "diagnostics_include_bos": true,
+            "diagnostic_invalid_row_policy": "after state nonfinite detection, failed rows use zero placeholders and all later predictions remain failures; a nonfinite readout alone marks that prediction invalid while the finite state continues; BOS readout is unscored"
+          }
+        },
+        {
+          "group_start": 1,
+          "group_stop": 17,
+          "bos_included": false,
+          "execution": {
+            "status": "COMPLETE",
+            "completed_writes": 16,
+            "elapsed_seconds": 0.015518902000621893,
+            "nonfinite_output_sequence_steps": 0,
+            "absorbed_sequences": 0,
+            "first_invalid_write_position": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "invalid_write_position_zero_is_bos": false,
+            "diagnostics": null,
+            "diagnostics_include_bos": true,
+            "diagnostic_invalid_row_policy": "after state nonfinite detection, failed rows use zero placeholders and all later predictions remain failures; a nonfinite readout alone marks that prediction invalid while the finite state continues; BOS readout is unscored"
+          }
+        },
+        {
+          "group_start": 17,
+          "group_stop": 63,
+          "bos_included": false,
+          "execution": {
+            "status": "COMPLETE",
+            "completed_writes": 46,
+            "elapsed_seconds": 0.05768275299851666,
+            "nonfinite_output_sequence_steps": 0,
+            "absorbed_sequences": 0,
+            "first_invalid_write_position": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "invalid_write_position_zero_is_bos": false,
+            "diagnostics": null,
+            "diagnostics_include_bos": true,
+            "diagnostic_invalid_row_policy": "after state nonfinite detection, failed rows use zero placeholders and all later predictions remain failures; a nonfinite readout alone marks that prediction invalid while the finite state continues; BOS readout is unscored"
+          }
+        },
+        {
+          "group_start": 63,
+          "group_stop": 64,
+          "bos_included": false,
+          "execution": {
+            "status": "COMPLETE",
+            "completed_writes": 1,
+            "elapsed_seconds": 0.001160257997980807,
+            "nonfinite_output_sequence_steps": 0,
+            "absorbed_sequences": 0,
+            "first_invalid_write_position": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "invalid_write_position_zero_is_bos": false,
+            "diagnostics": null,
+            "diagnostics_include_bos": true,
+            "diagnostic_invalid_row_policy": "after state nonfinite detection, failed rows use zero placeholders and all later predictions remain failures; a nonfinite readout alone marks that prediction invalid while the finite state continues; BOS readout is unscored"
+          }
+        }
+      ],
+      "trace": [
+        {
+          "group_stop": 1,
+          "prediction_sha256": "a2abe7a40ffb6a41d4a04ece07b81652757c84db6ca93d58b64726ec62b14c3c",
+          "payload_sha256": "ad903003d6c7ae53021b402010ae6353c8b022db84dd0490dac013a907a3bdf0",
+          "payload_bytes": 12576
+        },
+        {
+          "group_stop": 17,
+          "prediction_sha256": "d9c4b3b10f021677df35d3d2f201bc7e4774bf7385150ee1e4e62c01cb371a5a",
+          "payload_sha256": "66dcca78aad4a15e81412942e7643832341ab4d2bf51b4f119c0ff44416c7335",
+          "payload_bytes": 12576
+        },
+        {
+          "group_stop": 63,
+          "prediction_sha256": "05f1f1ccd2ebdf2d77343c8578cc23da032696689b5b86e3d63bb6d4796eecaa",
+          "payload_sha256": "d9b5f68624ef42c87ea32b1c05d5ab1cab4f5acc9e1a0e45794973445aac8ce5",
+          "payload_bytes": 12576
+        },
+        {
+          "group_stop": 64,
+          "prediction_sha256": "6c69bdd4433ccdecdee9a164009750fd0210822b27fbdc9941ddb7ed575bca9b",
+          "payload_sha256": "3b0de40601e5a7be52d164003c62960eb41e775e4b0e80792811944b1359a1d4",
+          "payload_bytes": 12576
+        }
+      ],
+      "counts": {
+        "invalid_readout_counts": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "active_update_attempts": 0,
+        "terminal_noop_steps": 0
+      }
+    },
+    "v2_full": {
+      "elapsed_seconds": 0.05930829999851994,
+      "completed_writes": 65,
+      "active_update_attempts": 260,
+      "terminal_noop_steps": 0,
+      "invalid_readout_counts": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "terminal_codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "first_terminal_write": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "status": "COMPLETE",
+      "finite_state_readout_failure_is_terminal": false,
+      "bos_included": true
+    },
+    "v2_split": {
+      "calls": [
+        {
+          "group_start": 0,
+          "group_stop": 1,
+          "bos_included": true,
+          "execution": {
+            "elapsed_seconds": 0.0023382199979096185,
+            "completed_writes": 2,
+            "active_update_attempts": 8,
+            "terminal_noop_steps": 0,
+            "invalid_readout_counts": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "terminal_codes": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "first_terminal_write": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "status": "COMPLETE",
+            "finite_state_readout_failure_is_terminal": false,
+            "bos_included": true
+          }
+        },
+        {
+          "group_start": 1,
+          "group_stop": 17,
+          "bos_included": false,
+          "execution": {
+            "elapsed_seconds": 0.014456451001024107,
+            "completed_writes": 16,
+            "active_update_attempts": 64,
+            "terminal_noop_steps": 0,
+            "invalid_readout_counts": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "terminal_codes": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "first_terminal_write": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "status": "COMPLETE",
+            "finite_state_readout_failure_is_terminal": false,
+            "bos_included": false
+          }
+        },
+        {
+          "group_start": 17,
+          "group_stop": 63,
+          "bos_included": false,
+          "execution": {
+            "elapsed_seconds": 0.043386436002037954,
+            "completed_writes": 46,
+            "active_update_attempts": 184,
+            "terminal_noop_steps": 0,
+            "invalid_readout_counts": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "terminal_codes": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "first_terminal_write": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "status": "COMPLETE",
+            "finite_state_readout_failure_is_terminal": false,
+            "bos_included": false
+          }
+        },
+        {
+          "group_start": 63,
+          "group_stop": 64,
+          "bos_included": false,
+          "execution": {
+            "elapsed_seconds": 0.0010371479984314647,
+            "completed_writes": 1,
+            "active_update_attempts": 4,
+            "terminal_noop_steps": 0,
+            "invalid_readout_counts": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "terminal_codes": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "first_terminal_write": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "status": "COMPLETE",
+            "finite_state_readout_failure_is_terminal": false,
+            "bos_included": false
+          }
+        }
+      ],
+      "trace": [
+        {
+          "group_stop": 1,
+          "prediction_sha256": "a2abe7a40ffb6a41d4a04ece07b81652757c84db6ca93d58b64726ec62b14c3c",
+          "payload_sha256": "3f759d97cf0c2b4966d7722b12af5d3da3e3f4d5df482e0aa0214d82941ec0e8",
+          "payload_bytes": 12612
+        },
+        {
+          "group_stop": 17,
+          "prediction_sha256": "d9c4b3b10f021677df35d3d2f201bc7e4774bf7385150ee1e4e62c01cb371a5a",
+          "payload_sha256": "a1e7946b0249279e142da0676adeab3360b64f31abb1a1ca07ed3ebe3d0324e2",
+          "payload_bytes": 12612
+        },
+        {
+          "group_stop": 63,
+          "prediction_sha256": "05f1f1ccd2ebdf2d77343c8578cc23da032696689b5b86e3d63bb6d4796eecaa",
+          "payload_sha256": "aa3322022e0c4ff70ae19500d0c72aa12cba0e0b83ac7c31ec5880f23fe461d4",
+          "payload_bytes": 12612
+        },
+        {
+          "group_stop": 64,
+          "prediction_sha256": "6c69bdd4433ccdecdee9a164009750fd0210822b27fbdc9941ddb7ed575bca9b",
+          "payload_sha256": "e3434c0159917c08e6ab9d6a5e6ed73951ec41cf7765c0e4c4779163204527fb",
+          "payload_bytes": 12612
+        }
+      ],
+      "counts": {
+        "invalid_readout_counts": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "active_update_attempts": 260,
+        "terminal_noop_steps": 0
+      }
+    }
+  },
+  "full_payloads_public": false,
+  "source_sha256": {
+    "source/run_historical.py": "a57560e5008d24f77f15645af17280a31815b42a42fc8c3f57f10dd1e07295fd",
+    "source/online_v2.py": "6067e9dae6552551847abb4e0742fe761a4ee31ad502a9a1ecfbccba767926eb",
+    "source/evaluation.py": "4b743391447e05669e65db65436dfeb2932c1fbf40bde78473cf996b2bc383c4",
+    "source/common.py": "53191632804961b618b5bafef7fa1befc64d226b5af8b148b942c6dfa78d7ffe",
+    "source/checkpoint.py": "f1e335b09053cc134be19785285c29017aeec11ff3a2a31c54a65a8989cd6627",
+    "source/arms.py": "236f34cf409ea259ba41cd2ecc024478289ca65ae4a821dd600b9e4c39b188d4",
+    "source/reference.py": "8201203a85d04ed4d33b8bad51f748f98232ee3647497de22b730cef1b06b931"
+  },
+  "extra": null
+}

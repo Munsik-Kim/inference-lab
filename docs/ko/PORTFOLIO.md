@@ -81,3 +81,8 @@ OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지�
 **모델 변경 전후 평가**, **로컬 추론 문제 진단**, **재현 가능한 분석 도구와 결과 화면**을 주제로 코드를 검토할 수 있습니다. 비교할 모델 경계, 공개 입력 ID, 평가 지표에서 논의를 시작할 수 있습니다. [저장소 이슈](https://github.com/Munsik-Kim/inference-lab/issues)는 공개 기술 질문 경로이며, 인증값이나 비공개 고객 자료는 공개 보고에 넣지 않습니다.
 
 근거는 특정 모델·장치 하나에서 수행한 합성 실험과 Case009의 별도 공식 과제 결과입니다. 배포 판단은 **NOT_ASSESSED**입니다. CPU 감사는 남긴 스칼라를 검산하며, 제외된 전체 벡터와 별도 GPU 재현의 확인 범위는 [재현 안내](GETTING_STARTED.md)에서 설명합니다.
+
+
+## Case010 — state 저장과 실패 보존
+
+반복 state의 packing, residual transport, 행 단위 갱신과 실패 상태 직렬화를 연결했습니다. [v2 구현](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py), [새 프로세스 합성 테스트](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py), [저장 예산과 판독 길이 비교](../../cases/010-ckda-finite-precision-memory-horizon/REPORT.ko.md) 순서로 확인할 수 있습니다. [CPU 검산 안내](GETTING_STARTED.md#case010-cpu). ComplexKDA의 전이·학습 모델과 프로젝트의 codec·평가 도구는 [출처 안내](../../cases/010-ckda-finite-precision-memory-horizon/NOTICE.md)에 구분했습니다.
