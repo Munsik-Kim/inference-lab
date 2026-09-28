@@ -181,3 +181,15 @@ ZIP만 풀었다면 먼저 그 안의 `006-attention-decision-stability` 디렉�
 python3 -B cases/010-ckda-finite-precision-memory-horizon/scripts/verify_unified.py
 python3 -B cases/010-ckda-finite-precision-memory-horizon/scripts/restore_workspace.py --output /tmp/diova-case010-restored-new
 ```
+
+<a id="case011-cpu"></a>
+## Case011: 기록 검산과 판독층 patch 검사
+
+[쉽게 살펴보기](https://munsik-kim.github.io/inference-lab/ko/case011.html#overview)에서 구현·관측을 읽고, [재현 안내](../../cases/011-frozen-state-readout-adaptation/REPRODUCTION.md)에서 기록 검산과 합성 검사를 고릅니다. 아래는 저장소 또는 공개 ZIP 루트에서 Python/NumPy만으로 실행하는 명령입니다. 출력 경로는 아직 없어야 합니다.
+
+```bash
+python -B cases/011-frozen-state-readout-adaptation/publication/run_checks.py \
+  --output /tmp/diova-case011-publication-check-new
+```
+
+`--synthetic`을 더하면 Torch가 필요한 작은 계약 검사도 실행합니다. 원래 checkpoint의 12개 새 프로세스 재로딩·30개 저장 경계는 과거 receipt이며 위 명령이 모델을 다시 실행하는 것은 아닙니다. 실제 모델과 보정 head weights는 공개 ZIP에 없으며 재실행에는 원래 환경과 별도 파일이 필요합니다.

@@ -1,0 +1,24 @@
+{
+  "schema": "case011-posthoc-same-records-v1",
+  "evidence_kind": "POST_HOC_SAME_RECORDS",
+  "frozen_before_posthoc_computation": true,
+  "scope": "Existing predictions and per-position score sums only; no model forward or fitting",
+  "bands_inclusive": [[1,32],[33,128],[129,256],[257,512],[513,1024],[1025,2048]],
+  "comparison": "MIXED_REFIT minus ORIGINAL, independently within each checkpoint and storage",
+  "interaction": "(UNIFORM_8 MIXED-ORIGINAL) - (NATIVE_FP32 MIXED-ORIGINAL), paired on the same base sequence",
+  "posthoc_interaction_interval": {
+    "confidence": 0.95,
+    "bootstrap_repetitions": 5000,
+    "bootstrap_seed_rule": "71101 + checkpoint_seed",
+    "sampling_unit": "base sequence, jointly across both storage and both readout conditions",
+    "quantile_method": "linear",
+    "multiplicity": "descriptive pointwise interval; no new confirmatory family; distinct from original primary 98.333333% intervals"
+  },
+  "primary_interval": "Recompute original protocol 5000 paired base-sequence resamples; seed63001+checkpoint_seed; confidence1-0.05/3; linear quantiles; unchanged",
+  "rmst0": "mean(min(tau-1,Tmax)); no error contributes Tmax; INVALID counts as wrong",
+  "first_error_counts": "Counts of first errors within a band / all 1024 input sequences, not a conditional hazard",
+  "transition_partition": ["both_correct", "original_only_correct", "mixed_only_correct", "both_wrong_same_answer", "wrong_to_wrong_different_answer"],
+  "conditional_margin": "Only if saved per-item/per-position logits or margin exist; otherwise unavailable. Per-position sums cannot recover a selected-item conditional mean.",
+  "control": "Audit frozen implementation and same item/position denominator. Overall chance-like accuracy does not imply each position is at chance.",
+  "solver": "Inspect all18 candidate traces and selected6 metadata; no refitting, no new gradients, no extrapolating missing parameter deltas. FP32 equality from preserved diagnostics and patch hashes."
+}

@@ -1,0 +1,153 @@
+{
+  "schema": "case011-design-v1",
+  "question": "Does adapting only the final Linear increase first-error lifetime with unchanged state dynamics?",
+  "base_sha": "9bd0f52efc3065f94da7133d6d2414e2dfc301f8",
+  "upstream_commit": "ef9d108d1692387cae37f5b2d539a71826a127c1",
+  "checkpoint_seeds": [
+    0,
+    1,
+    2
+  ],
+  "parameter_names": [
+    "mlp.2.weight",
+    "mlp.2.bias"
+  ],
+  "parameter_shapes": [
+    [
+      6,
+      192
+    ],
+    [
+      6
+    ]
+  ],
+  "trainable_parameters": 1158,
+  "feature_boundary": "case011-original-modules-post-gelu-pre-mlp2-fp32-v1",
+  "storage": [
+    "NATIVE_FP32",
+    "UNIFORM_8"
+  ],
+  "readouts": [
+    "ORIGINAL",
+    "SHORT_REFIT",
+    "MIXED_REFIT"
+  ],
+  "fit_native_only": true,
+  "cohorts": {
+    "smoke": [
+      61601,
+      8,
+      32
+    ],
+    "fit": [
+      61101,
+      512,
+      256
+    ],
+    "dev": [
+      61201,
+      128,
+      256
+    ],
+    "fresh": [
+      61301,
+      1024,
+      2048
+    ]
+  },
+  "short_positions": [
+    1,
+    32
+  ],
+  "mixed_bands": [
+    [
+      1,
+      32
+    ],
+    [
+      33,
+      64
+    ],
+    [
+      65,
+      128
+    ],
+    [
+      129,
+      256
+    ]
+  ],
+  "mixed_rows_per_band_per_sequence": 8,
+  "mixed_position_rng_seed": 61501,
+  "supervised_rows_each": 16384,
+  "lambdas": [
+    0.0001,
+    0.01,
+    1
+  ],
+  "solver": {
+    "library": "torch.optim.LBFGS",
+    "device": "cpu",
+    "dtype": "float64",
+    "max_iterations": 200,
+    "max_objective_evaluations": 1000,
+    "line_search": "strong_wolfe",
+    "tolerance_grad": 1e-07,
+    "tolerance_change": 1e-09,
+    "history_size": 100,
+    "feature_scaling": "none",
+    "objective": "mean CE + lambda*sum squared displacement of W,b from original",
+    "execution_dtype": "float32",
+    "selection": "equal four-band DEV CE from FP32 head; exact tie larger lambda",
+    "budget_exhaustion": "finite max-iteration accepted iterate eligible but explicitly not converged; interrupted line-search objective-cap candidate rejected"
+  },
+  "max_candidates": 18,
+  "primary": "INT8 MIXED_REFIT minus INT8 ORIGINAL RMST0 separately per checkpoint",
+  "primary_bootstrap": {
+    "repetitions": 5000,
+    "resampling": "paired base sequence",
+    "seed": "63001+checkpoint_seed",
+    "family": 3,
+    "each_interval_confidence": 0.9833333333333333,
+    "quantile": "linear",
+    "kind": "approximate percentile"
+  },
+  "secondary_bootstrap": {
+    "confidence": 0.95,
+    "seed": "63101+checkpoint_seed*10+pair_index",
+    "pairs": [
+      "Native MIXED-ORIGINAL",
+      "INT8 MIXED-SHORT",
+      "INT8-Native ORIGINAL",
+      "INT8-Native SHORT",
+      "INT8-Native MIXED"
+    ]
+  },
+  "summary_positions": [
+    32,
+    128,
+    256,
+    512,
+    1024,
+    2048
+  ],
+  "empirical_t005": "descriptive every-token; no simultaneous confidence horizon",
+  "input_only": "FIT-only add-one token x four-position-band label frequencies; >256 uses band4; lowest label tie",
+  "shuffle": "seed61401; position/current-token bucket random ordering then cyclic shift; singleton unchanged counted; no labels",
+  "bos": "present write0 unscored; first scored group write1",
+  "readout_invalid": "-1; finite state continues",
+  "terminal": "Case010 v2 unchanged; no resurrection",
+  "timing": {
+    "threads": 2,
+    "sequences": 16,
+    "length": 128,
+    "repeats": 3,
+    "input": "Case010 timing2002 reused for cost only",
+    "scope": "individual same-shape head complete-call; gold/control/shadow/I-O/load outside timer"
+  },
+  "new_backbone_training": 0,
+  "new_codec": 0,
+  "remote_writes": 0,
+  "frozen_utc": "2026-09-28T07:12:34.704599+00:00",
+  "input_manifest_sha256": "a15b25b60da7c76b994e3301f82ccb2d9aa5e725b1d0f2c2b73a33e0a881aac3"
+}

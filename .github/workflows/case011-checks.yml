@@ -1,0 +1,66 @@
+name: Case011 recorded evidence and CPU contracts
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: case011-cpu-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+env:
+  CUDA_VISIBLE_DEVICES: ''
+  HF_HUB_OFFLINE: '1'
+  TRANSFORMERS_OFFLINE: '1'
+  PYTHONDONTWRITEBYTECODE: '1'
+  OMP_NUM_THREADS: '2'
+  MKL_NUM_THREADS: '2'
+  OPENBLAS_NUM_THREADS: '2'
+jobs:
+  recorded-scalars:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6; existing verified project pin
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6; existing project pin
+        with:
+          python-version: '3.12.14'
+      - run: python -m pip install -r cases/011-frozen-state-readout-adaptation/publication/requirements-cpu.txt
+      - name: Original restoration, paired scalar recomputation and publication contracts
+        run: python -B cases/011-frozen-state-readout-adaptation/publication/run_checks.py --require-full-repository --output "$RUNNER_TEMP/case011-recorded"
+      - name: Keep audit receipts and failure logs only
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4; existing verified project pin
+        with:
+          name: case011-recorded-receipts
+          path: |
+            ${{ runner.temp }}/case011-recorded/*.json
+            ${{ runner.temp }}/case011-recorded/*.log
+          if-no-files-found: warn
+          retention-days: 14
+  synthetic-contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6; existing verified project pin
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6; existing project pin
+        with:
+          python-version: '3.12.14'
+      - run: python -m pip install -r cases/011-frozen-state-readout-adaptation/publication/requirements-synthetic.txt
+      - name: Restored historical synthetic contracts, no learned model forward
+        run: python -B cases/011-frozen-state-readout-adaptation/publication/run_checks.py --require-full-repository --synthetic-only --output "$RUNNER_TEMP/case011-synthetic"
+      - name: Keep synthetic receipts and failure logs only
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4; existing verified project pin
+        with:
+          name: case011-synthetic-receipts
+          path: |
+            ${{ runner.temp }}/case011-synthetic/*.json
+            ${{ runner.temp }}/case011-synthetic/*.log
+          if-no-files-found: warn
+          retention-days: 14

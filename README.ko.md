@@ -24,6 +24,7 @@
 | 고정 구조 ridge 적합·작은 가중치에 보정 저장 | NumPy 선형대수 · 채널 재구성 선행연구 | [code](tools/modelpack/numerics.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
 | 동일 입력 측정·paired 결과 리포트 | vLLM benchmark · lm-evaluation-harness · 비교 지표 선행연구 | [code](packages/diova-compare/src/diova_compare/core.py) · [tests](packages/diova-compare/tests/test_compare.py) |
 | 저비트 state packing·실패 보존·새 프로세스 재시작 | NumPy · PyTorch · ComplexKDA recurrence | [구현](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [합성 재시작 테스트](cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
+| 같은 state의 최종 판독층 교체·patch 저장·재적용 | ComplexKDA · PyTorch L-BFGS · NumPy | [adapter](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [patch 검사](cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
 
 [선행연구와 구현 대응](docs/related-work/README.ko.md) · [CPU 비교 도구](packages/diova-compare/README.ko.md)
 
@@ -129,6 +130,18 @@ Case009는 기존 Qwen3-4B BF16/W4 저장본을 출력 256토큰·동시 요청 
 
 [실패를 보존하는 구현](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [CPU 검산](cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.ko.md) · [두 단계의 방법과 결과](cases/010-ckda-finite-precision-memory-horizon/REPORT.ko.md)
 
+## Case 011 — 같은 상태, 다른 판독기
+
+모델이 저장한 상태는 유지하고, 답을 읽는 마지막 층만 교체하는 도구를 만들었습니다. 보정한 두 tensor를 patch로 저장하고 새 프로세스에서 다시 적용해 결과를 비교합니다.
+
+**마지막 층 1,158개 값 · 추가 recurrent-state 저장 0 B · 새 프로세스 재적용**
+
+정답 확률 점수는 개선됐지만, 처음부터 연속해서 맞히는 평균 길이는 짧아졌습니다. 같은 상태에서도 정답에 높은 점수를 주는 것과 첫 오류를 늦추는 것은 달랐습니다.
+
+CKDA 기호 상태추적 · 기존 checkpoint 3개 · 마지막 선형층만 지도 보정. 상태는 입력마다 갱신되며, 같은 저장 방식의 판독기들이 그 상태를 공유합니다.
+
+[쉽게 살펴보기](https://munsik-kim.github.io/inference-lab/ko/case011.html#overview) · [구현 코드](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [상세 결과](https://munsik-kim.github.io/inference-lab/ko/case011.html#results)
+
 ## 질문과 구현물
 
 
@@ -144,6 +157,7 @@ Case009는 기존 Qwen3-4B BF16/W4 저장본을 출력 256토큰·동시 요청 
 | [008 — 바꾼 모델을 저장하고 다시 실행할 수 있을까?](docs/ko/CASEBOOK.md#case-008) | GPTQ 저장·실행 통합과 고정 MLP ridge 복구. Q 파일과 R 국소 오차가 감소했고 정답 점수 변화는 혼재. |
 | [009 — 긴 decode와 동시 요청에서 비용은 어떻게 바뀔까?](cases/009-q-serving-quality/README.ko.md) | 같은 조건의 graph/eager 요청 비용과 공식 품질 계산. 비정상 프로세스 종료 기록도 함께 표시. |
 | [010 — 저비트 state를 실패 이후에도 재시작할 수 있는가?](docs/ko/CASEBOOK.md#case-010) | 실제 bit packing, 실패 상태 직렬화, 최초 판독 실패와 저장 예산 비교. |
+| [011 — 같은 상태에서 판독기만 바꾸면?](docs/ko/CASEBOOK.md#case-011) | 마지막 층 두 tensor 보정·재적용, 정답 점수와 첫 오류 길이의 비교. |
 
 ## 더 깊게 보기
 

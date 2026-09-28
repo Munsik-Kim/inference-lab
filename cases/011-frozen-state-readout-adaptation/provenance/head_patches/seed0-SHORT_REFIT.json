@@ -1,0 +1,91 @@
+{
+  "additional_recurrent_state_bytes": 0,
+  "metadata": {
+    "base_checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+    "code_sha256": "4ea8b4f597e12bad382e14ae106991c336d439d72bf5cc87121bbef7fe1d594b",
+    "condition": "SHORT_REFIT",
+    "dev_input_sha256": "27776f59c15d5815b840640521c076117a219df2f1103ae08842424b58123ceb",
+    "feature_boundary": "case011-original-modules-post-gelu-pre-mlp2-fp32-v1",
+    "fit_input_sha256": "93e783d6adc972e3077dd34a62f2ff49a4fc74be6389b689bf45b03a56526473",
+    "model_seed": 0,
+    "protocol_sha256": "59af91cd63a2ee08692e7121eeb79c1c291b77fade8f6f64fa8da3cac170c04f",
+    "regularization": 1.0,
+    "solver": {
+      "algorithm": "torch.optim.LBFGS",
+      "closure_calls": 1,
+      "cpu_threads": 2,
+      "device": "cpu",
+      "elapsed_seconds": 0.004018914998596301,
+      "eligible_for_dev": true,
+      "evaluation_limit_fallback": null,
+      "execution_dtype": "float32",
+      "feature_columns": 192,
+      "feature_rows": 16384,
+      "feature_scaling": "none",
+      "final_ce": 2.7105054312137608e-20,
+      "final_max_abs_gradient": 6.290135004314121e-19,
+      "final_objective": 2.7105054312137608e-20,
+      "fitting_dtype": "float64",
+      "fitting_source_sha256": "4ea8b4f597e12bad382e14ae106991c336d439d72bf5cc87121bbef7fe1d594b",
+      "gradient_tolerance_met": true,
+      "iterations": 0,
+      "library_version": "2.13.0+cu130",
+      "objective": "mean_cross_entropy + lambda*(sum((W-W0)^2)+sum((b-b0)^2))",
+      "objective_evaluations": 1,
+      "objective_trace": [
+        {
+          "ce": 2.7105054312137608e-20,
+          "centered_l2": 0.0,
+          "evaluation": 1,
+          "max_abs_gradient": 6.290135004314121e-19,
+          "objective": 2.7105054312137608e-20
+        }
+      ],
+      "optimizer_signature": "(params: collections.abc.Iterable[torch.Tensor] | collections.abc.Iterable[dict[str, typing.Any]] | collections.abc.Iterable[tuple[str, torch.Tensor]], lr: float | torch.Tensor = 1, max_iter: int = 20, max_eval: int | None = None, tolerance_grad: float = 1e-07, tolerance_change: float = 1e-09, history_size: int = 100, line_search_fn: str | None = None) -> None",
+      "optimizer_source_sha256": "9edf08e57df5f85c8223a6b7c3632f70a9247e5fb9d39ce8372a37f1602c0cb3",
+      "options": {
+        "history_size": 100,
+        "line_search_fn": "strong_wolfe",
+        "lr": 1.0,
+        "max_eval": 1000,
+        "max_iter": 200,
+        "tolerance_change": 1e-09,
+        "tolerance_grad": 1e-07
+      },
+      "regularization": 1.0,
+      "status": "GRADIENT_TOLERANCE_MET",
+      "trainable_parameter_count": 1158
+    }
+  },
+  "payload_bytes": 4632,
+  "requires_base_checkpoint": true,
+  "schema": "diova-case011-final-linear-patch-v1",
+  "tensors": [
+    {
+      "bytes": 4608,
+      "dtype": "float32",
+      "endianness": "little",
+      "file": "mlp.2.weight.f32le",
+      "name": "mlp.2.weight",
+      "order": "C",
+      "sha256": "ac76c82dcd55d959a63d5ce85a8a85324baef89ad53b9b06bbf798cb62f6faf3",
+      "shape": [
+        6,
+        192
+      ]
+    },
+    {
+      "bytes": 24,
+      "dtype": "float32",
+      "endianness": "little",
+      "file": "mlp.2.bias.f32le",
+      "name": "mlp.2.bias",
+      "order": "C",
+      "sha256": "d017f9a5664ab9035f9e93ae5cd394a5a09bf3fa9dfb61b2ef2f27d923f8e08e",
+      "shape": [
+        6
+      ]
+    }
+  ],
+  "trainable_parameters": 1158
+}

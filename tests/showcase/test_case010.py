@@ -67,7 +67,8 @@ class UnifiedCaseDisplay(unittest.TestCase):
             html = (self.site/lang/'index.html').read_text()
             self.assertEqual(html.count('id="memory-study"'), 1)
             self.assertEqual(html.count('<span class="archive-number">010</span>'), 1)
-            self.assertNotIn('<span class="archive-number">011</span>',html)
+            self.assertEqual(html.count('<span class="archive-number">011</span>'), 1)
+            self.assertIn('case011.html', html)
             for i in range(1,10):
                 self.assertIn(f'<span class="archive-number">{i:03}</span>', html)
 

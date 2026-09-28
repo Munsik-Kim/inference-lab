@@ -70,3 +70,14 @@ any earlier case's protection rules. The new claim cites the original v2 archive
 and byte-ledger hash. Use the [unified reproduction guide](../../cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.md)
 for model-free restoration and scalar audits. Current integration receipts are
 separate from historical study tests and fresh-input evaluation.
+
+## Case011 readout publication
+
+The Case011 document checker first verifies the fixed original review identity,
+the separate exact publication inventory and its download metadata. Edited case
+documents have byte-identical originals in `publication/original_docs`; research
+sources, inputs, fitting records and measured outputs remain unchanged. Use the
+[publication audit](../../cases/011-frozen-state-readout-adaptation/publication/README.md)
+to restore the historical paths and recompute saved scalar results. New post-hoc
+tables are explicitly separate from the original primary comparison. This
+extension grants no directory-wide exception for unverified scientific files.

@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "scope": "independent saved-prediction/gold scalar recomputation; no model forward",
+  "predictions_sha256": "f0234ae6f2d6f9a8eeb9a615392bf89f516fef1fbeb2456edf24abf664262845",
+  "summary_sha256": "753d0e06f4e9e9a2e24a0d3b8fe292783715f7dccd34934438f5eb6d437d7227",
+  "identity": {
+    "checkpoint_seed": 1,
+    "storage": "UNIFORM_8",
+    "checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+    "input_hash": "5e9110e302f1128ab7db4905ee2c601c6b56de6903d4728d67fc8a2767dc516b",
+    "sample_ids_sha256": "1551cf99ad6aecc50356281c20ce0049607fb20195e71437457e57fe47c22359",
+    "gold_sha256": "ed4fc1b063189ee881318c42ef83d98ae0d7d16045d3a7a6ab28084ff872d224"
+  },
+  "checkpoint_seed": 1,
+  "n_sequences": 1024,
+  "max_group_tokens": 2048,
+  "per_head_rmst0": {
+    "ORIGINAL": 264.59375,
+    "SHORT_REFIT": 264.59375,
+    "MIXED_REFIT": 254.1923828125
+  },
+  "primary_recomputed": {
+    "mean_delta_tokens": -10.4013671875,
+    "interval_tokens": [
+      -15.713728841145834,
+      -5.1564860026041615
+    ],
+    "confidence": 0.9833333333333333,
+    "bootstrap_repetitions": 5000,
+    "bootstrap_seed": 63002,
+    "n_paired_sequences": 1024,
+    "quantile_method": "linear",
+    "family_size": 3,
+    "family_alpha": 0.05
+  },
+  "primary_interval_compared": true
+}

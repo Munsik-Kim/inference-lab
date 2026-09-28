@@ -1,0 +1,62 @@
+{
+  "status": "PASS_CPU_PUBLICATION_VALIDATION",
+  "checks": [
+    {
+      "check": "historical-identity",
+      "exit_code": 0,
+      "log_sha256": "8545ac31fbf3b659161075bb5e79d73a1e12a5a6fa7067d6452777c8a52f27f5"
+    },
+    {
+      "check": "historical-scalars",
+      "exit_code": 0,
+      "log_sha256": "15c395ad2ca398447c8cf1e33b95866bf2ab39c42bb65f37f5ef120ba6000cf0"
+    },
+    {
+      "check": "posthoc",
+      "exit_code": 0,
+      "log_sha256": "979289d756af6a3ff75dc61062236933873c74c4fdaf1c13020d0463c80ea745"
+    },
+    {
+      "check": "publication-tests",
+      "exit_code": 0,
+      "log_sha256": "55a40dd527de246f8433f66d0ee3f642960663a9860c70a2f03ad9a896823f91"
+    },
+    {
+      "check": "original-synthetic-tests",
+      "exit_code": 0,
+      "log_sha256": "940f8ead556d19948ea6ad1099da2394877db66543f7314c849d3a6130551005"
+    }
+  ],
+  "test_suites": [
+    {
+      "suite": "publication-tests",
+      "tests": 20,
+      "skipped": 0
+    },
+    {
+      "suite": "original-synthetic-tests",
+      "tests": 79,
+      "skipped": 0
+    }
+  ],
+  "counts_are_this_run_only": true,
+  "historical_real_reload_receipt_checks": 12,
+  "historical_saved_boundary_receipt_checks": 30,
+  "real_checkpoint_replays_this_run": 0,
+  "new_research_fitting": 0,
+  "synthetic_solver_contracts_executed": true,
+  "new_test_inference": 0,
+  "gpu_runs": 0,
+  "scope": "saved-record CPU recomputation and optional synthetic contracts; no learned model execution",
+  "source": "this publication execution, separate from original provenance/validation_receipt.json",
+  "original_real_process_receipts": "identity reviewed; 12 original reloads and30saved boundaries not rerun",
+  "private_checkpoint_head_values_rechecked": 6,
+  "browser_checks": "separate docs/previews/case011/browser.json and external deployment receipt",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "torch": "2.13.0+cpu",
+    "original_environment_modified": false
+  },
+  "remote_status": "not encoded here; PR, CI and deployment receipts record their actual head SHAs"
+}

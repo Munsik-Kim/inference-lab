@@ -86,3 +86,9 @@ The evidence covers specific models and one device, with synthetic studies and t
 ## Case010 — State storage and failure persistence
 
 Connected actual state packing, residual transport, atomic row updates and failure-aware serialization. Follow the [v2 implementation](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py), [fresh-process synthetic tests](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) and [byte-budget/readout comparison](../../cases/010-ckda-finite-precision-memory-horizon/REPORT.md). [CPU guide](GETTING_STARTED.md#case010-cpu). The [notice](../../cases/010-ckda-finite-precision-memory-horizon/NOTICE.md) separates ComplexKDA transitions and training from the project’s codec and evaluation tools.
+
+## Case011 — Replace the readout on the same state
+
+Three readouts share a cache, while two-tensor patches validate shape and base-checkpoint identity before fresh-process application. Read the [feature boundary](../../cases/011-frozen-state-readout-adaptation/source/adapter.py), [patch loader](../../cases/011-frozen-state-readout-adaptation/source/head_patch.py), [contract tests](../../cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) and [independent auditor](../../cases/011-frozen-state-readout-adaptation/analysis/audit.py) in that order.
+
+Additional recurrent-state storage is 0 B. Gold CE improved beyond fitting support, while INT8 mean uninterrupted correct length fell on all three checkpoints. [Walkthrough](https://munsik-kim.github.io/inference-lab/en/case011.html) · [Exact results and solver status](../../cases/011-frozen-state-readout-adaptation/REPORT.md) · [CPU checks](GETTING_STARTED.md#case011-cpu). [Attribution](../../cases/011-frozen-state-readout-adaptation/NOTICE.md) distinguishes PyTorch/NumPy and ComplexKDA from the project integration.

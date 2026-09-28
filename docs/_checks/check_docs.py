@@ -59,7 +59,7 @@ def anchors(text: str) -> set[str]:
     return result
 
 
-def check_links(root: Path, pages: list[str], errors: list[str]) -> int:
+def check_links(root: Path, pages: list[str], errors: list[str], allow_disclosures: bool = False) -> int:
     count = 0
     for name in pages:
         path = root / name
@@ -70,6 +70,21 @@ def check_links(root: Path, pages: list[str], errors: list[str]) -> int:
         if re.search(r'\[[^\]\n]+\]\s*\[|^\s*\[[^\]\n]+\]:', text, re.M):
             errors.append('Unsupported reference-link syntax: ' + name)
         clean = re.sub(r'<!--.*?-->|<a id="[\w-]+"></a>', '', text, flags=re.S)
+        if allow_disclosures:
+            # Case011 reports use native disclosures; allow only balanced,
+            # attribute-free details/summary tags. Other HTML remains rejected.
+            stack=[]
+            for tag in re.findall(r'</?(?:details|summary)>', clean):
+                tag_name=tag.strip('</>')
+                if tag.startswith('</'):
+                    if not stack or stack.pop()!=tag_name:
+                        errors.append('Unbalanced disclosure: '+name)
+                else:
+                    if tag_name=='summary' and (not stack or stack[-1]!='details'):
+                        errors.append('Summary outside details: '+name)
+                    stack.append(tag_name)
+            if stack:errors.append('Unclosed disclosure: '+name)
+            clean=re.sub(r'</?(?:details|summary)>','',clean)
         if re.search(r'<\s*/?[A-Za-z][^>]*>', clean):
             errors.append('Unsupported HTML: ' + name)
         links = list(LINK.finditer(text))
@@ -470,6 +485,39 @@ def check_feedback_docs(root: Path, errors: list[str]) -> int:
     return links
 
 
+def check_case011(root: Path, errors: list[str]) -> set[str]:
+    """Add only the verified Case011 inventory and its exact public download."""
+    relative='cases/011-frozen-state-readout-adaptation'
+    case=root/relative
+    if not case.exists():return set()
+    try:
+        identity=case/'publication/original_identity.json'
+        if sha(identity)!='d08cc444193ffa499c3abad20340b2d67991375cc683f0be75ef7cbb653f8aac':
+            raise ValueError('Original review identity changed')
+        proc=subprocess.run([sys.executable,'-B',str(case/'publication/verify_publication.py')],
+                            cwd=root,capture_output=True,text=True)
+        if proc.returncode:raise ValueError('Original/publication verification failed')
+        pages=[relative+'/'+name for name in ('README.md','README.ko.md','REPORT.md','REPORT.ko.md',
+                                             'REPRODUCTION.md','PORTFOLIO.md','NOTICE.md')]
+        check_links(root,pages,errors,allow_disclosures=True);check_copy_hygiene(root,tuple(pages),errors)
+        for stem in ('README','REPORT'):
+            if f']({stem}.ko.md)' not in (case/(stem+'.md')).read_text() or f']({stem}.md)' not in (case/(stem+'.ko.md')).read_text():
+                errors.append('Case011 same-page language switch missing: '+stem)
+        for lang in ('en','ko'):
+            if (root/f'docs/{lang}/CASEBOOK.md').read_text().count('<a id="case-011"></a>')!=1:
+                errors.append('Case011 must have one Casebook entry: '+lang)
+        meta_name='downloads/case011_readout_adaptation_reviewed_publication_v1.json'
+        meta=json.loads((root/meta_name).read_text())
+        name='downloads/case011_readout_adaptation_reviewed_publication_v1.zip'
+        if meta['filename']!=Path(name).name or sha(root/name)!=meta['sha256'] or (root/name).stat().st_size!=meta['bytes']:
+            raise ValueError('Case011 public download identity mismatch')
+        if meta['publication_manifest_sha256']!=sha(case/'publication/PUBLICATION_SHA256SUMS'):
+            raise ValueError('Case011 download/current publication mismatch')
+        return {p.relative_to(root).as_posix() for p in case.rglob('*') if p.is_file()} | {name,meta_name}
+    except (OSError,ValueError,KeyError) as exc:
+        errors.append('Case011 publication verification failed: '+str(exc));return set()
+
+
 def audit(root: Path, inventory: Path | None = None) -> dict:
     root = root.resolve()
     errors: list[str] = []
@@ -483,6 +531,7 @@ def audit(root: Path, inventory: Path | None = None) -> dict:
     additional = check_additional_publications(root, mapping, errors)
     additional |= check_new_study(root, errors)
     additional |= check_unified_case010(root, errors)
+    additional |= check_case011(root, errors)
     protected = check_protection(root, mapping.get('protection_revision', mapping['source_revision']), errors, inventory, additional)
     check_copy_hygiene(root, (*PAGES, CONCEPT_FIGURE, 'docs/_meta/claims.json', 'docs/_meta/MAINTENANCE.md'), errors)
     downloads = check_packages(root, mapping, errors)

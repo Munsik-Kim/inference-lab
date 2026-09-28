@@ -1,0 +1,332 @@
+{
+  "schema": "case011-fresh-process-reload-v1",
+  "evidence_kind": "ACTUAL_CHECKPOINT_SMOKE",
+  "status": "PASS",
+  "input_sha256": "38bbc424efc4b9e9110bfc97a772118120dcad4e879c79a463416d2e02e57824",
+  "sequences": 8,
+  "group_tokens": 32,
+  "BOS_included_in_logits_and_cache_checks": true,
+  "rows": [
+    {
+      "model_seed": 0,
+      "storage": "NATIVE_FP32",
+      "readout": "SHORT_REFIT",
+      "child_exit_code": 0,
+      "checks": {
+        "logits_bitwise": true,
+        "labels_bitwise": true,
+        "entire_logits_finite": true,
+        "feature_bitwise": true,
+        "all_cache_boundaries_identical": true,
+        "final_payload_bytes_identical": true,
+        "cursor_terminal_rng_state_identical": true,
+        "table_identity": true,
+        "only_final_tensor_changes": true,
+        "no_gradients": true
+      },
+      "status": "PASS",
+      "max_abs_logit_difference": 0.0,
+      "base_checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+      "patch_manifest_sha256": "cf161c6b14c18a752cb7017f6ce5bf4fbc4428c1e721a4456999b949ab2dc5f7",
+      "final_payload_sha256": "d3d5a549d3c60a4ddf3a84554293e8ccf85d0c71428543116f66de304c1bbeac",
+      "final_payload_bytes": 98440,
+      "changed_tensors": []
+    },
+    {
+      "model_seed": 0,
+      "storage": "NATIVE_FP32",
+      "readout": "MIXED_REFIT",
+      "child_exit_code": 0,
+      "checks": {
+        "logits_bitwise": true,
+        "labels_bitwise": true,
+        "entire_logits_finite": true,
+        "feature_bitwise": true,
+        "all_cache_boundaries_identical": true,
+        "final_payload_bytes_identical": true,
+        "cursor_terminal_rng_state_identical": true,
+        "table_identity": true,
+        "only_final_tensor_changes": true,
+        "no_gradients": true
+      },
+      "status": "PASS",
+      "max_abs_logit_difference": 0.0,
+      "base_checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+      "patch_manifest_sha256": "7d764a1281f7d5e851e9a00b0cb39083664a7dde9bccf0e4b9ec588610de2958",
+      "final_payload_sha256": "d3d5a549d3c60a4ddf3a84554293e8ccf85d0c71428543116f66de304c1bbeac",
+      "final_payload_bytes": 98440,
+      "changed_tensors": [
+        "mlp.2.bias",
+        "mlp.2.weight"
+      ]
+    },
+    {
+      "model_seed": 0,
+      "storage": "UNIFORM_8",
+      "readout": "SHORT_REFIT",
+      "child_exit_code": 0,
+      "checks": {
+        "logits_bitwise": true,
+        "labels_bitwise": true,
+        "entire_logits_finite": true,
+        "feature_bitwise": true,
+        "all_cache_boundaries_identical": true,
+        "final_payload_bytes_identical": true,
+        "cursor_terminal_rng_state_identical": true,
+        "table_identity": true,
+        "only_final_tensor_changes": true,
+        "no_gradients": true
+      },
+      "status": "PASS",
+      "max_abs_logit_difference": 0.0,
+      "base_checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+      "patch_manifest_sha256": "cf161c6b14c18a752cb7017f6ce5bf4fbc4428c1e721a4456999b949ab2dc5f7",
+      "final_payload_sha256": "486bec828b0ded547fbe2230769ad6f381a4730152e9b989257a3b384ee3688c",
+      "final_payload_bytes": 25096,
+      "changed_tensors": []
+    },
+    {
+      "model_seed": 0,
+      "storage": "UNIFORM_8",
+      "readout": "MIXED_REFIT",
+      "child_exit_code": 0,
+      "checks": {
+        "logits_bitwise": true,
+        "labels_bitwise": true,
+        "entire_logits_finite": true,
+        "feature_bitwise": true,
+        "all_cache_boundaries_identical": true,
+        "final_payload_bytes_identical": true,
+        "cursor_terminal_rng_state_identical": true,
+        "table_identity": true,
+        "only_final_tensor_changes": true,
+        "no_gradients": true
+      },
+      "status": "PASS",
+      "max_abs_logit_difference": 0.0,
+      "base_checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+      "patch_manifest_sha256": "7d764a1281f7d5e851e9a00b0cb39083664a7dde9bccf0e4b9ec588610de2958",
+      "final_payload_sha256": "486bec828b0ded547fbe2230769ad6f381a4730152e9b989257a3b384ee3688c",
+      "final_payload_bytes": 25096,
+      "changed_tensors": [
+        "mlp.2.bias",
+        "mlp.2.weight"
+      ]
+    },
+    {
+      "model_seed": 1,
+      "storage": "NATIVE_FP32",
+      "readout": "SHORT_REFIT",
+      "child_exit_code": 0,
+      "checks": {
+        "logits_bitwise": true,
+        "labels_bitwise": true,
+        "entire_logits_finite": true,
+        "feature_bitwise": true,
+        "all_cache_boundaries_identical": true,
+        "final_payload_bytes_identical": true,
+        "cursor_terminal_rng_state_identical": true,
+        "table_identity": true,
+        "only_final_tensor_changes": true,
+        "no_gradients": true
+      },
+      "status": "PASS",
+      "max_abs_logit_difference": 0.0,
+      "base_checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+      "patch_manifest_sha256": "9074f5b9e97d73e6fc40a2a537bcc9c90d902a4c3abe7f18ffb8ad3b741fd39a",
+      "final_payload_sha256": "f532507207ee63f0c47490757e99489f1d236805852f484a365a42cc2cc655e7",
+      "final_payload_bytes": 98440,
+      "changed_tensors": []
+    },
+    {
+      "model_seed": 1,
+      "storage": "NATIVE_FP32",
+      "readout": "MIXED_REFIT",
+      "child_exit_code": 0,
+      "checks": {
+        "logits_bitwise": true,
+        "labels_bitwise": true,
+        "entire_logits_finite": true,
+        "feature_bitwise": true,
+        "all_cache_boundaries_identical": true,
+        "final_payload_bytes_identical": true,
+        "cursor_terminal_rng_state_identical": true,
+        "table_identity": true,
+        "only_final_tensor_changes": true,
+        "no_gradients": true
+      },
+      "status": "PASS",
+      "max_abs_logit_difference": 0.0,
+      "base_checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+      "patch_manifest_sha256": "1fde24fa5229044c3febf93ac3f75609ecd2782732ceea55b8019349a0e1792f",
+      "final_payload_sha256": "f532507207ee63f0c47490757e99489f1d236805852f484a365a42cc2cc655e7",
+      "final_payload_bytes": 98440,
+      "changed_tensors": [
+        "mlp.2.bias",
+        "mlp.2.weight"
+      ]
+    },
+    {
+      "model_seed": 1,
+      "storage": "UNIFORM_8",
+      "readout": "SHORT_REFIT",
+      "child_exit_code": 0,
+      "checks": {
+        "logits_bitwise": true,
+        "labels_bitwise": true,
+        "entire_logits_finite": true,
+        "feature_bitwise": true,
+        "all_cache_boundaries_identical": true,
+        "final_payload_bytes_identical": true,
+        "cursor_terminal_rng_state_identical": true,
+        "table_identity": true,
+        "only_final_tensor_changes": true,
+        "no_gradients": true
+      },
+      "status": "PASS",
+      "max_abs_logit_difference": 0.0,
+      "base_checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+      "patch_manifest_sha256": "9074f5b9e97d73e6fc40a2a537bcc9c90d902a4c3abe7f18ffb8ad3b741fd39a",
+      "final_payload_sha256": "9e05e9ba9fe768d859c52fb597f710771f4b50730fae88fa56f405e481180c70",
+      "final_payload_bytes": 25096,
+      "changed_tensors": []
+    },
+    {
+      "model_seed": 1,
+      "storage": "UNIFORM_8",
+      "readout": "MIXED_REFIT",
+      "child_exit_code": 0,
+      "checks": {
+        "logits_bitwise": true,
+        "labels_bitwise": true,
+        "entire_logits_finite": true,
+        "feature_bitwise": true,
+        "all_cache_boundaries_identical": true,
+        "final_payload_bytes_identical": true,
+        "cursor_terminal_rng_state_identical": true,
+        "table_identity": true,
+        "only_final_tensor_changes": true,
+        "no_gradients": true
+      },
+      "status": "PASS",
+      "max_abs_logit_difference": 0.0,
+      "base_checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+      "patch_manifest_sha256": "1fde24fa5229044c3febf93ac3f75609ecd2782732ceea55b8019349a0e1792f",
+      "final_payload_sha256": "9e05e9ba9fe768d859c52fb597f710771f4b50730fae88fa56f405e481180c70",
+      "final_payload_bytes": 25096,
+      "changed_tensors": [
+        "mlp.2.bias",
+        "mlp.2.weight"
+      ]
+    },
+    {
+      "model_seed": 2,
+      "storage": "NATIVE_FP32",
+      "readout": "SHORT_REFIT",
+      "child_exit_code": 0,
+      "checks": {
+        "logits_bitwise": true,
+        "labels_bitwise": true,
+        "entire_logits_finite": true,
+        "feature_bitwise": true,
+        "all_cache_boundaries_identical": true,
+        "final_payload_bytes_identical": true,
+        "cursor_terminal_rng_state_identical": true,
+        "table_identity": true,
+        "only_final_tensor_changes": true,
+        "no_gradients": true
+      },
+      "status": "PASS",
+      "max_abs_logit_difference": 0.0,
+      "base_checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+      "patch_manifest_sha256": "022237093165f74488eebbbc81dd514eba6f0d2aa0e315193a0a585c482f7a07",
+      "final_payload_sha256": "a644ac31e21d7b718f2cc08190d260d38a5338f81107ddd6788a1bb668df13b2",
+      "final_payload_bytes": 98440,
+      "changed_tensors": []
+    },
+    {
+      "model_seed": 2,
+      "storage": "NATIVE_FP32",
+      "readout": "MIXED_REFIT",
+      "child_exit_code": 0,
+      "checks": {
+        "logits_bitwise": true,
+        "labels_bitwise": true,
+        "entire_logits_finite": true,
+        "feature_bitwise": true,
+        "all_cache_boundaries_identical": true,
+        "final_payload_bytes_identical": true,
+        "cursor_terminal_rng_state_identical": true,
+        "table_identity": true,
+        "only_final_tensor_changes": true,
+        "no_gradients": true
+      },
+      "status": "PASS",
+      "max_abs_logit_difference": 0.0,
+      "base_checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+      "patch_manifest_sha256": "0f240996f8dac16649a2684d6b5163e5edcbf84ae92efa57f7fc2d5517f7d1dc",
+      "final_payload_sha256": "a644ac31e21d7b718f2cc08190d260d38a5338f81107ddd6788a1bb668df13b2",
+      "final_payload_bytes": 98440,
+      "changed_tensors": [
+        "mlp.2.bias",
+        "mlp.2.weight"
+      ]
+    },
+    {
+      "model_seed": 2,
+      "storage": "UNIFORM_8",
+      "readout": "SHORT_REFIT",
+      "child_exit_code": 0,
+      "checks": {
+        "logits_bitwise": true,
+        "labels_bitwise": true,
+        "entire_logits_finite": true,
+        "feature_bitwise": true,
+        "all_cache_boundaries_identical": true,
+        "final_payload_bytes_identical": true,
+        "cursor_terminal_rng_state_identical": true,
+        "table_identity": true,
+        "only_final_tensor_changes": true,
+        "no_gradients": true
+      },
+      "status": "PASS",
+      "max_abs_logit_difference": 0.0,
+      "base_checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+      "patch_manifest_sha256": "022237093165f74488eebbbc81dd514eba6f0d2aa0e315193a0a585c482f7a07",
+      "final_payload_sha256": "b6775b8b4ae6adc609ff6bc822faf952b453405f9d67d4f39a529a8668e8d86b",
+      "final_payload_bytes": 25096,
+      "changed_tensors": []
+    },
+    {
+      "model_seed": 2,
+      "storage": "UNIFORM_8",
+      "readout": "MIXED_REFIT",
+      "child_exit_code": 0,
+      "checks": {
+        "logits_bitwise": true,
+        "labels_bitwise": true,
+        "entire_logits_finite": true,
+        "feature_bitwise": true,
+        "all_cache_boundaries_identical": true,
+        "final_payload_bytes_identical": true,
+        "cursor_terminal_rng_state_identical": true,
+        "table_identity": true,
+        "only_final_tensor_changes": true,
+        "no_gradients": true
+      },
+      "status": "PASS",
+      "max_abs_logit_difference": 0.0,
+      "base_checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+      "patch_manifest_sha256": "0f240996f8dac16649a2684d6b5163e5edcbf84ae92efa57f7fc2d5517f7d1dc",
+      "final_payload_sha256": "b6775b8b4ae6adc609ff6bc822faf952b453405f9d67d4f39a529a8668e8d86b",
+      "final_payload_bytes": 25096,
+      "changed_tensors": [
+        "mlp.2.bias",
+        "mlp.2.weight"
+      ]
+    }
+  ],
+  "fresh_child_processes": 12,
+  "model_weights_uploaded": false,
+  "recurrent_rollouts_for_quality_inference": false
+}
