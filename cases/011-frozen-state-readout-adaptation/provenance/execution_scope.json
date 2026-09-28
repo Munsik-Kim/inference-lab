@@ -1,0 +1,19 @@
+{
+  "task": "Case011 frozen-state readout adaptation",
+  "scope": "LOCAL_REVIEW",
+  "base_head": "9bd0f52efc3065f94da7133d6d2414e2dfc301f8",
+  "branch": "research/case011-frozen-state-readout",
+  "new_backbone_training_updates": 0,
+  "new_quantizer_or_codec": 0,
+  "new_model_seeds": 0,
+  "gpu_runs": 0,
+  "remote_writes": 0,
+  "development_corrections_before_test": [
+    "Verified beta coefficient table shape is (7,12), not a per-key tensor.",
+    "Strengthened input ID/shape/hash checks before fitting freeze.",
+    "Original-head equality check must skip the all-terminal branch where v2 intentionally omits readout; fixed before TEST and regression-tested."
+  ],
+  "technical_shell_note": "System command python was absent for one metadata-writing command; repeated with python3 before fitting. No model outputs or protocol choices were involved.",
+  "test_retries_so_far": 0,
+  "interpretation": "Synthetic contract checks and model SMOKE replay are separate from final TEST and from optimizer candidates."
+}

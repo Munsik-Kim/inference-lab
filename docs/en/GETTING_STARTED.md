@@ -181,3 +181,15 @@ Read the [structured report](../../cases/008-build-reconstruct-reload/REPORT.md)
 python3 -B cases/010-ckda-finite-precision-memory-horizon/scripts/verify_unified.py
 python3 -B cases/010-ckda-finite-precision-memory-horizon/scripts/restore_workspace.py --output /tmp/diova-case010-restored-new
 ```
+
+<a id="case011-cpu"></a>
+## Case011: saved-record audits and readout patch checks
+
+Start with the [walkthrough](https://munsik-kim.github.io/inference-lab/en/case011.html#overview), then choose saved-record or synthetic checks in the [reproduction guide](../../cases/011-frozen-state-readout-adaptation/REPRODUCTION.md). From a repository or public ZIP root, this command needs Python/NumPy and a new output directory.
+
+```bash
+python -B cases/011-frozen-state-readout-adaptation/publication/run_checks.py \
+  --output /tmp/diova-case011-publication-check-new
+```
+
+Add `--synthetic` for small contract tests requiring Torch. The original 12 fresh-checkpoint reloads and 30 saved-boundary checks are historical receipts; this command does not repeat model inference. The public ZIP excludes original checkpoints and fitted head weights, so model replay requires the recorded environment and separate files.

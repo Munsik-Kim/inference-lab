@@ -1,4 +1,4 @@
-# Ten questions about inference and model changes
+# Eleven questions about inference and model changes
 
 English | [한국어](../ko/CASEBOOK.md) · [Home](../../README.md)
 
@@ -18,6 +18,7 @@ Each case follows **objective → dataset → assumptions and theory → experim
 - [008 — Build, reconstruct and reload](#case-008)
 - [009 — What changes with longer decode and concurrent requests?](#case-009)
 - [010 — Low-bit state storage, restart and readout horizon](#case-010)
+- [011 — What changes when only the readout changes?](#case-011)
 
 <a id="case-001"></a>
 ## 001 — Can a kernel-selection change unblock execution?
@@ -578,3 +579,18 @@ Compares graph/eager serving and official-task records for the existing Qwen 4B 
 - **Top-score tie:** exact equality at the maximum allowed-option score under the recorded arithmetic.
 - **Post-hoc diagnostic:** analysis motivated after results were known, labelled separately from the original fixed evaluation.
 - **Readout:** the output projection converting a final hidden state into vocabulary scores.
+
+The follow-up using Case010 state storage is [Case011 readout adaptation](#case-011).
+
+<a id="case-011"></a>
+## 011 — Same State, Different Readout
+
+**Objective and implementation:** adapt, save and reload only the final readout weight/bias while preserving state transitions and storage. Three readouts within a storage mode see the same evolving feature; answers do not affect the next state.
+
+**Data and method:** three existing CKDA checkpoints, Native/INT8 storage, and 16,384 Native feature rows for each refit. SHORT fits positions 1–32; MIXED covers 1–256. Selection uses DEV CE, followed by the same 1,024 fresh sequences through 2,048 symbolic steps.
+
+**Checks and findings:** the tool checks a two-tensor, 1,158-value final layer with 0 additional recurrent-state bytes. INT8 MIXED changed mean uninterrupted correct length by −9.89/−10.40/−13.49 tokens on seeds 0/1/2, while gold CE beyond fitting support decreased in all three. SHORT exported unchanged weights; two selected MIXED fits reached the 200-iteration cap.
+
+**Interpretation:** better gold probability scores did not delay the first error. Same-record error shifts and storage interactions are labelled post-hoc analyses. This bounded fitting result does not establish what every possible decoder could recover.
+
+[Overview](https://munsik-kim.github.io/inference-lab/en/case011.html#overview) · [Report](../../cases/011-frozen-state-readout-adaptation/REPORT.md) · [Intervention code](../../cases/011-frozen-state-readout-adaptation/source/adapter.py) · [CPU reanalysis](../../cases/011-frozen-state-readout-adaptation/REPRODUCTION.md)

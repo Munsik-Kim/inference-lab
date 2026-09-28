@@ -1,4 +1,4 @@
-# 추론·모델 변경을 조사하는 열 가지 질문
+# 추론·모델 변경을 조사하는 열한 가지 질문
 
 [English](../en/CASEBOOK.md) | 한국어 · [홈](../../README.ko.md)
 
@@ -18,6 +18,7 @@
 - [008 — 양자화 저장·재실행과 작은 MLP 복구](#case-008)
 - [009 — 긴 생성과 동시 요청의 비용은?](#case-009)
 - [010 — 저비트 state의 저장·재시작과 기억 수명](#case-010)
+- [011 — 같은 상태에서 판독기만 바꾸면?](#case-011)
 
 <a id="case-001"></a>
 ## 001 — 커널 선택 조건을 고치면 실행할 수 있는가?
@@ -576,3 +577,18 @@ Q 전체 NLL은 낮아졌지만 네 보기 조건부 NLL은 높아졌습니다. 
 **해석·결론:** 같은 N128 저장 한도에서 Rank2가 Mixed5/6보다 일관되게 우수하지 않았습니다. 평균 길이·경험적 horizon·신뢰지원 grid 하한은 다른 지표입니다. 실패를 저장하는 수정은 실행 계약의 개선이며 기억 수명 향상과 별도로 평가합니다.
 
 [통합 보고서](../../cases/010-ckda-finite-precision-memory-horizon/REPORT.ko.md) · [현재 구현](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [CPU 검산](../../cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.ko.md) · [원형 대응표](../../cases/010-ckda-finite-precision-memory-horizon/VERSION_MAP.md)
+
+Case010의 저장 구현을 사용하는 후속 질문은 [Case011의 판독층 보정](#case-011)입니다.
+
+<a id="case-011"></a>
+## 011 — 같은 상태, 다른 판독기
+
+**목표·구현:** 상태를 갱신하는 방식과 저장 형식을 유지하고 마지막 판독층의 weight/bias만 보정·저장·재적용합니다. 같은 저장 방식에서 세 판독기가 매 시점 같은 특징을 읽으며, 답은 다음 상태에 영향을 주지 않습니다.
+
+**데이터·방법:** 기존 CKDA checkpoint 세 개에서 Native/INT8 두 저장 방식을 비교했습니다. SHORT와 MIXED는 Native 특징 16,384행씩을 사용하고 각각 위치 1–32/1–256에서 적합했습니다. DEV의 CE로 선택한 뒤 같은 새 입력 1,024개를 2,048 기호 단계까지 평가했습니다.
+
+**검증·결과:** 마지막 Linear의 1,158개 값과 두 tensor patch를 검사하며 추가 recurrent-state 저장은 0 B입니다. INT8 MIXED의 평균 연속 정답 길이 변화는 seed0/1/2에서 −9.89/−10.40/−13.49 token이었습니다. 반면 fitting 범위 밖의 정답 CE는 3/3에서 감소했습니다. SHORT는 최종 가중치가 원형과 같고, 선택 MIXED 두 개는 200 iteration 상한에 도달했습니다.
+
+**해석:** 정답에 높은 확률을 주는 것과 첫 오류를 늦추는 것은 달랐습니다. 같은 기록의 오류 이동·저장 방식 차이는 사후 분석으로 구분합니다. 이 fitting 예산의 결과가 모든 decoder의 정보 복원 가능성을 결정하지는 않습니다.
+
+[쉽게 살펴보기](https://munsik-kim.github.io/inference-lab/ko/case011.html#overview) · [보고서](../../cases/011-frozen-state-readout-adaptation/REPORT.ko.md) · [개입 코드](../../cases/011-frozen-state-readout-adaptation/source/adapter.py) · [CPU 재계산](../../cases/011-frozen-state-readout-adaptation/REPRODUCTION.md)

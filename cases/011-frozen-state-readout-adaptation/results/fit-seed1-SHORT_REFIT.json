@@ -1,0 +1,297 @@
+{
+  "original_dev": {
+    "equal_band_ce": 0.7276895847740069,
+    "bands": [
+      {
+        "start": 1,
+        "end": 32,
+        "rows": 4096,
+        "ce": 5.688808799030868e-16
+      },
+      {
+        "start": 33,
+        "end": 64,
+        "rows": 4096,
+        "ce": 3.690469014647011e-11
+      },
+      {
+        "start": 65,
+        "end": 128,
+        "rows": 8192,
+        "ce": 0.07346578282297646
+      },
+      {
+        "start": 129,
+        "end": 256,
+        "rows": 16384,
+        "ce": 2.8372925562361457
+      }
+    ],
+    "logit_dtype": "float32",
+    "score_dtype": "float64"
+  },
+  "selection": {
+    "candidate_index": 2,
+    "regularization": 1.0,
+    "dev_scores": [
+      {
+        "candidate_index": 0,
+        "regularization": 0.0001,
+        "eligible_for_dev": true,
+        "equal_band_ce": 0.7276895847740069,
+        "bands": [
+          {
+            "start": 1,
+            "end": 32,
+            "rows": 4096,
+            "ce": 5.688808799030868e-16
+          },
+          {
+            "start": 33,
+            "end": 64,
+            "rows": 4096,
+            "ce": 3.690469014647011e-11
+          },
+          {
+            "start": 65,
+            "end": 128,
+            "rows": 8192,
+            "ce": 0.07346578282297646
+          },
+          {
+            "start": 129,
+            "end": 256,
+            "rows": 16384,
+            "ce": 2.8372925562361457
+          }
+        ],
+        "logit_dtype": "float32",
+        "score_dtype": "float64"
+      },
+      {
+        "candidate_index": 1,
+        "regularization": 0.01,
+        "eligible_for_dev": true,
+        "equal_band_ce": 0.7276895847740069,
+        "bands": [
+          {
+            "start": 1,
+            "end": 32,
+            "rows": 4096,
+            "ce": 5.688808799030868e-16
+          },
+          {
+            "start": 33,
+            "end": 64,
+            "rows": 4096,
+            "ce": 3.690469014647011e-11
+          },
+          {
+            "start": 65,
+            "end": 128,
+            "rows": 8192,
+            "ce": 0.07346578282297646
+          },
+          {
+            "start": 129,
+            "end": 256,
+            "rows": 16384,
+            "ce": 2.8372925562361457
+          }
+        ],
+        "logit_dtype": "float32",
+        "score_dtype": "float64"
+      },
+      {
+        "candidate_index": 2,
+        "regularization": 1.0,
+        "eligible_for_dev": true,
+        "equal_band_ce": 0.7276895847740069,
+        "bands": [
+          {
+            "start": 1,
+            "end": 32,
+            "rows": 4096,
+            "ce": 5.688808799030868e-16
+          },
+          {
+            "start": 33,
+            "end": 64,
+            "rows": 4096,
+            "ce": 3.690469014647011e-11
+          },
+          {
+            "start": 65,
+            "end": 128,
+            "rows": 8192,
+            "ce": 0.07346578282297646
+          },
+          {
+            "start": 129,
+            "end": 256,
+            "rows": 16384,
+            "ce": 2.8372925562361457
+          }
+        ],
+        "logit_dtype": "float32",
+        "score_dtype": "float64"
+      }
+    ],
+    "rule": "minimum_FP32_head_equal_band_CE; exact_tie_larger_lambda"
+  },
+  "selected": {
+    "model_seed": 1,
+    "condition": "SHORT_REFIT",
+    "patch_directory": "seed1-SHORT_REFIT",
+    "regularization": 1.0,
+    "base_checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+    "manifest_sha256": "9074f5b9e97d73e6fc40a2a537bcc9c90d902a4c3abe7f18ffb8ad3b741fd39a",
+    "payload_bytes": 4632,
+    "manifest_bytes": 3412,
+    "total_file_bytes": 8044,
+    "tensor_names": [
+      "mlp.2.weight",
+      "mlp.2.bias"
+    ]
+  },
+  "solvers": [
+    {
+      "algorithm": "torch.optim.LBFGS",
+      "library_version": "2.13.0+cu130",
+      "optimizer_source_sha256": "9edf08e57df5f85c8223a6b7c3632f70a9247e5fb9d39ce8372a37f1602c0cb3",
+      "fitting_source_sha256": "4ea8b4f597e12bad382e14ae106991c336d439d72bf5cc87121bbef7fe1d594b",
+      "device": "cpu",
+      "fitting_dtype": "float64",
+      "execution_dtype": "float32",
+      "feature_scaling": "none",
+      "trainable_parameter_count": 1158,
+      "feature_rows": 16384,
+      "feature_columns": 192,
+      "regularization": 0.0001,
+      "objective": "mean_cross_entropy + lambda*(sum((W-W0)^2)+sum((b-b0)^2))",
+      "options": {
+        "lr": 1.0,
+        "max_iter": 200,
+        "max_eval": 1000,
+        "tolerance_grad": 1e-07,
+        "tolerance_change": 1e-09,
+        "history_size": 100,
+        "line_search_fn": "strong_wolfe"
+      },
+      "iterations": 0,
+      "objective_evaluations": 1,
+      "closure_calls": 1,
+      "status": "GRADIENT_TOLERANCE_MET",
+      "eligible_for_dev": true,
+      "gradient_tolerance_met": true,
+      "evaluation_limit_fallback": null,
+      "final_objective": 9.18088847131228e-16,
+      "final_ce": 9.18088847131228e-16,
+      "final_max_abs_gradient": 1.6057683429297834e-14,
+      "optimizer_signature": "(params: collections.abc.Iterable[torch.Tensor] | collections.abc.Iterable[dict[str, typing.Any]] | collections.abc.Iterable[tuple[str, torch.Tensor]], lr: float | torch.Tensor = 1, max_iter: int = 20, max_eval: int | None = None, tolerance_grad: float = 1e-07, tolerance_change: float = 1e-09, history_size: int = 100, line_search_fn: str | None = None) -> None",
+      "elapsed_seconds": 0.0032782039997982793,
+      "cpu_threads": 2,
+      "objective_trace": [
+        {
+          "evaluation": 1,
+          "objective": 9.18088847131228e-16,
+          "ce": 9.18088847131228e-16,
+          "centered_l2": 0.0,
+          "max_abs_gradient": 1.6057683429297834e-14
+        }
+      ]
+    },
+    {
+      "algorithm": "torch.optim.LBFGS",
+      "library_version": "2.13.0+cu130",
+      "optimizer_source_sha256": "9edf08e57df5f85c8223a6b7c3632f70a9247e5fb9d39ce8372a37f1602c0cb3",
+      "fitting_source_sha256": "4ea8b4f597e12bad382e14ae106991c336d439d72bf5cc87121bbef7fe1d594b",
+      "device": "cpu",
+      "fitting_dtype": "float64",
+      "execution_dtype": "float32",
+      "feature_scaling": "none",
+      "trainable_parameter_count": 1158,
+      "feature_rows": 16384,
+      "feature_columns": 192,
+      "regularization": 0.01,
+      "objective": "mean_cross_entropy + lambda*(sum((W-W0)^2)+sum((b-b0)^2))",
+      "options": {
+        "lr": 1.0,
+        "max_iter": 200,
+        "max_eval": 1000,
+        "tolerance_grad": 1e-07,
+        "tolerance_change": 1e-09,
+        "history_size": 100,
+        "line_search_fn": "strong_wolfe"
+      },
+      "iterations": 0,
+      "objective_evaluations": 1,
+      "closure_calls": 1,
+      "status": "GRADIENT_TOLERANCE_MET",
+      "eligible_for_dev": true,
+      "gradient_tolerance_met": true,
+      "evaluation_limit_fallback": null,
+      "final_objective": 9.18088847131228e-16,
+      "final_ce": 9.18088847131228e-16,
+      "final_max_abs_gradient": 1.6057683429297834e-14,
+      "optimizer_signature": "(params: collections.abc.Iterable[torch.Tensor] | collections.abc.Iterable[dict[str, typing.Any]] | collections.abc.Iterable[tuple[str, torch.Tensor]], lr: float | torch.Tensor = 1, max_iter: int = 20, max_eval: int | None = None, tolerance_grad: float = 1e-07, tolerance_change: float = 1e-09, history_size: int = 100, line_search_fn: str | None = None) -> None",
+      "elapsed_seconds": 0.00321214100040379,
+      "cpu_threads": 2,
+      "objective_trace": [
+        {
+          "evaluation": 1,
+          "objective": 9.18088847131228e-16,
+          "ce": 9.18088847131228e-16,
+          "centered_l2": 0.0,
+          "max_abs_gradient": 1.6057683429297834e-14
+        }
+      ]
+    },
+    {
+      "algorithm": "torch.optim.LBFGS",
+      "library_version": "2.13.0+cu130",
+      "optimizer_source_sha256": "9edf08e57df5f85c8223a6b7c3632f70a9247e5fb9d39ce8372a37f1602c0cb3",
+      "fitting_source_sha256": "4ea8b4f597e12bad382e14ae106991c336d439d72bf5cc87121bbef7fe1d594b",
+      "device": "cpu",
+      "fitting_dtype": "float64",
+      "execution_dtype": "float32",
+      "feature_scaling": "none",
+      "trainable_parameter_count": 1158,
+      "feature_rows": 16384,
+      "feature_columns": 192,
+      "regularization": 1.0,
+      "objective": "mean_cross_entropy + lambda*(sum((W-W0)^2)+sum((b-b0)^2))",
+      "options": {
+        "lr": 1.0,
+        "max_iter": 200,
+        "max_eval": 1000,
+        "tolerance_grad": 1e-07,
+        "tolerance_change": 1e-09,
+        "history_size": 100,
+        "line_search_fn": "strong_wolfe"
+      },
+      "iterations": 0,
+      "objective_evaluations": 1,
+      "closure_calls": 1,
+      "status": "GRADIENT_TOLERANCE_MET",
+      "eligible_for_dev": true,
+      "gradient_tolerance_met": true,
+      "evaluation_limit_fallback": null,
+      "final_objective": 9.18088847131228e-16,
+      "final_ce": 9.18088847131228e-16,
+      "final_max_abs_gradient": 1.6057683429297834e-14,
+      "optimizer_signature": "(params: collections.abc.Iterable[torch.Tensor] | collections.abc.Iterable[dict[str, typing.Any]] | collections.abc.Iterable[tuple[str, torch.Tensor]], lr: float | torch.Tensor = 1, max_iter: int = 20, max_eval: int | None = None, tolerance_grad: float = 1e-07, tolerance_change: float = 1e-09, history_size: int = 100, line_search_fn: str | None = None) -> None",
+      "elapsed_seconds": 0.0032410849998996127,
+      "cpu_threads": 2,
+      "objective_trace": [
+        {
+          "evaluation": 1,
+          "objective": 9.18088847131228e-16,
+          "ce": 9.18088847131228e-16,
+          "centered_l2": 0.0,
+          "max_abs_gradient": 1.6057683429297834e-14
+        }
+      ]
+    }
+  ]
+}

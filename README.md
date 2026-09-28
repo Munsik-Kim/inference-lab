@@ -24,6 +24,7 @@ Built checkpoint checks, weight reconstruction, physical matrix slicing and pair
 | Fixed-structure ridge fitting and correction in smaller weights | NumPy linear algebra · channel-reconstruction research | [code](tools/modelpack/numerics.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
 | Matched-input measurement and paired result reports | vLLM benchmark · lm-evaluation-harness · comparison metrics | [code](packages/diova-compare/src/diova_compare/core.py) · [tests](packages/diova-compare/tests/test_compare.py) |
 | Low-bit state packing, failure persistence and fresh-process restart | NumPy · PyTorch · ComplexKDA recurrence | [implementation](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [synthetic restart tests](cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
+| Same-state final-layer intervention and two-tensor patch reload | ComplexKDA · PyTorch L-BFGS · NumPy | [adapter](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [patch tests](cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
 
 [Related work and implementation boundaries](docs/related-work/README.md) · [CPU comparison package](packages/diova-compare/README.md)
 
@@ -129,6 +130,18 @@ Built packed recurrent-state storage and fresh-process resume that preserves num
 
 [Failure-aware implementation](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [CPU audits](cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.md) · [Methods and results of both stages](cases/010-ckda-finite-precision-memory-horizon/REPORT.md)
 
+## Case 011 — Same State, Different Readout
+
+Built a tool that keeps the model's evolving state unchanged across readout comparisons and replaces only the final layer used to read an answer. The adapted two-tensor patch can be saved and applied in a fresh process.
+
+**1,158 final-layer values · 0 extra recurrent-state bytes · Fresh-process patch reload**
+
+Gold-label scores improved, but the average uninterrupted correct prefix became shorter. On the same state, better probability scores did not translate into a later first error.
+
+CKDA symbolic state tracking · Three existing checkpoints · Final-layer supervised adaptation. The state evolves with each input; readouts within a storage mode share that trajectory.
+
+[Overview](https://munsik-kim.github.io/inference-lab/en/case011.html#overview) · [Implementation](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [Detailed results](https://munsik-kim.github.io/inference-lab/en/case011.html#results)
+
 ## Questions and recorded tools
 
 
@@ -144,6 +157,7 @@ Built packed recurrent-state storage and fresh-process resume that preserves num
 | [008 — Can a changed model be saved and reloaded?](docs/en/CASEBOOK.md#case-008) | GPTQ checkpoint integration and fixed-MLP ridge reconstruction; smaller Q files and lower R local error, with mixed gold scores. |
 | [009 — How do longer decode and concurrency change cost?](cases/009-q-serving-quality/README.md) | Matched graph/eager serving curves and official quality calculations with recorded runtime-exit failures. |
 | [010 — Can low-bit state restart consistently after failure?](docs/en/CASEBOOK.md#case-010) | Actual bit packing, failure-aware serialization, first-error survival and byte-budget comparisons. |
+| [011 — What changes when only the readout changes?](docs/en/CASEBOOK.md#case-011) | Two-tensor adaptation and reload; paired gold-score and first-error comparisons on the same state. |
 
 ## Go deeper
 

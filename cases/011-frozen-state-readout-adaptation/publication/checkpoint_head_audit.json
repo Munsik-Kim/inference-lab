@@ -1,0 +1,144 @@
+{
+  "status": "PASS",
+  "scope": "read-only existing checkpoint and patch tensor comparison; no model instantiation, fitting or forward",
+  "rows": [
+    {
+      "seed": 0,
+      "head": "SHORT_REFIT",
+      "base_checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+      "tensors": [
+        {
+          "name": "mlp.2.weight",
+          "original_sha256": "ac76c82dcd55d959a63d5ce85a8a85324baef89ad53b9b06bbf798cb62f6faf3",
+          "patch_sha256": "ac76c82dcd55d959a63d5ce85a8a85324baef89ad53b9b06bbf798cb62f6faf3",
+          "bitwise_identical": true,
+          "changed_values": 0,
+          "max_abs_delta": 0.0
+        },
+        {
+          "name": "mlp.2.bias",
+          "original_sha256": "d017f9a5664ab9035f9e93ae5cd394a5a09bf3fa9dfb61b2ef2f27d923f8e08e",
+          "patch_sha256": "d017f9a5664ab9035f9e93ae5cd394a5a09bf3fa9dfb61b2ef2f27d923f8e08e",
+          "bitwise_identical": true,
+          "changed_values": 0,
+          "max_abs_delta": 0.0
+        }
+      ]
+    },
+    {
+      "seed": 0,
+      "head": "MIXED_REFIT",
+      "base_checkpoint_sha256": "2c3a4fb99aa9bf94c14f28ee38c1022e5a6f62dbf896f3dad18bd19e35249535",
+      "tensors": [
+        {
+          "name": "mlp.2.weight",
+          "original_sha256": "ac76c82dcd55d959a63d5ce85a8a85324baef89ad53b9b06bbf798cb62f6faf3",
+          "patch_sha256": "b79e1bda92b866f02057c1d434609ddb2bdb5f602937201b682ff17478884a30",
+          "bitwise_identical": false,
+          "changed_values": 1152,
+          "max_abs_delta": 0.8799508959054947
+        },
+        {
+          "name": "mlp.2.bias",
+          "original_sha256": "d017f9a5664ab9035f9e93ae5cd394a5a09bf3fa9dfb61b2ef2f27d923f8e08e",
+          "patch_sha256": "24e92a2b5962b379a8659db8f200509641ffeb6ce5f52f3e7ae260044ab52d8f",
+          "bitwise_identical": false,
+          "changed_values": 6,
+          "max_abs_delta": 0.04890691488981247
+        }
+      ]
+    },
+    {
+      "seed": 1,
+      "head": "SHORT_REFIT",
+      "base_checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+      "tensors": [
+        {
+          "name": "mlp.2.weight",
+          "original_sha256": "198d5d0da0789cacfcf0bc3c2602da21e2d48dc255bb4eb2c7379bba770f9510",
+          "patch_sha256": "198d5d0da0789cacfcf0bc3c2602da21e2d48dc255bb4eb2c7379bba770f9510",
+          "bitwise_identical": true,
+          "changed_values": 0,
+          "max_abs_delta": 0.0
+        },
+        {
+          "name": "mlp.2.bias",
+          "original_sha256": "9d0b49638133e2cc4d3b8faf4796bf5650e1371a22dbfbc28b1d1d18211f56dd",
+          "patch_sha256": "9d0b49638133e2cc4d3b8faf4796bf5650e1371a22dbfbc28b1d1d18211f56dd",
+          "bitwise_identical": true,
+          "changed_values": 0,
+          "max_abs_delta": 0.0
+        }
+      ]
+    },
+    {
+      "seed": 1,
+      "head": "MIXED_REFIT",
+      "base_checkpoint_sha256": "1ebb25155612a66f53a2e59be0dab819360307d02256f55104906579bf40644e",
+      "tensors": [
+        {
+          "name": "mlp.2.weight",
+          "original_sha256": "198d5d0da0789cacfcf0bc3c2602da21e2d48dc255bb4eb2c7379bba770f9510",
+          "patch_sha256": "1c18f4d2b1f9fafe1909a935b2b03f50cde5fc603be3f8a32ad75555f737c473",
+          "bitwise_identical": false,
+          "changed_values": 1152,
+          "max_abs_delta": 0.7876362651586533
+        },
+        {
+          "name": "mlp.2.bias",
+          "original_sha256": "9d0b49638133e2cc4d3b8faf4796bf5650e1371a22dbfbc28b1d1d18211f56dd",
+          "patch_sha256": "3aa5ba9d3315f02cc8d89ec3c418c75c8afd0b1b6a3a54d9c90bf444baa33c63",
+          "bitwise_identical": false,
+          "changed_values": 6,
+          "max_abs_delta": 0.08311994187533855
+        }
+      ]
+    },
+    {
+      "seed": 2,
+      "head": "SHORT_REFIT",
+      "base_checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+      "tensors": [
+        {
+          "name": "mlp.2.weight",
+          "original_sha256": "65ffd13ef691150d7b9014f279945c24b75f72dd43baa7abc5fef7057e56eeff",
+          "patch_sha256": "65ffd13ef691150d7b9014f279945c24b75f72dd43baa7abc5fef7057e56eeff",
+          "bitwise_identical": true,
+          "changed_values": 0,
+          "max_abs_delta": 0.0
+        },
+        {
+          "name": "mlp.2.bias",
+          "original_sha256": "6b0b655069604cf702a82ea992f54cdac6570ef5853f84b20011b0db7a740c67",
+          "patch_sha256": "6b0b655069604cf702a82ea992f54cdac6570ef5853f84b20011b0db7a740c67",
+          "bitwise_identical": true,
+          "changed_values": 0,
+          "max_abs_delta": 0.0
+        }
+      ]
+    },
+    {
+      "seed": 2,
+      "head": "MIXED_REFIT",
+      "base_checkpoint_sha256": "381bd6b7f8db4f2416021433423aeba11137d033dfe9bd4216c19b8360fd96d9",
+      "tensors": [
+        {
+          "name": "mlp.2.weight",
+          "original_sha256": "65ffd13ef691150d7b9014f279945c24b75f72dd43baa7abc5fef7057e56eeff",
+          "patch_sha256": "89d02a6ad2312384f7fd8e89a80a5dc595d2681e7f76739a6cb1bc9c1a797912",
+          "bitwise_identical": false,
+          "changed_values": 1152,
+          "max_abs_delta": 0.7520168721675873
+        },
+        {
+          "name": "mlp.2.bias",
+          "original_sha256": "6b0b655069604cf702a82ea992f54cdac6570ef5853f84b20011b0db7a740c67",
+          "patch_sha256": "991f4689cfcd3b0e849350a93b9972aa5aea112715cc4159bc26bd8b120ec90e",
+          "bitwise_identical": false,
+          "changed_values": 6,
+          "max_abs_delta": 0.02204197645187378
+        }
+      ]
+    }
+  ]
+}

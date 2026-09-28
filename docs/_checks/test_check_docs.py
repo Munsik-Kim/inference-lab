@@ -275,6 +275,27 @@ class ProtectionScope(unittest.TestCase):
 
 
 class NewStudyBoundaryTests(unittest.TestCase):
+    def test_case_report_disclosure_is_narrow_and_balanced(self):
+        from check_docs import check_links
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);p=root/'REPORT.md'
+            p.write_text('<details>\n<summary>Data</summary>\n\n[Self](REPORT.md)\n\n</details>')
+            errors=[];self.assertEqual(check_links(root,['REPORT.md'],errors,allow_disclosures=True),1)
+            self.assertEqual(errors,[])
+            errors=[];check_links(root,['REPORT.md'],errors)
+            self.assertTrue(any('Unsupported HTML' in x for x in errors))
+            for raw in ('<details><summary>Data</details>','<details onclick="x()"><summary>X</summary></details>','<script>bad()</script>'):
+                p.write_text(raw);errors=[];check_links(root,['REPORT.md'],errors,allow_disclosures=True)
+                self.assertTrue(errors)
+
+    def test_case011_is_not_an_unverified_directory_exception(self):
+        from check_docs import check_case011
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);pub=root/'cases/011-frozen-state-readout-adaptation/publication'
+            pub.mkdir(parents=True);(pub/'original_identity.json').write_text('{"changed":true}')
+            errors=[];self.assertEqual(check_case011(root,errors),set())
+            self.assertTrue(any('Original review identity changed' in x for x in errors))
+
     def test_new_inventory_cannot_approve_changed_frozen_protocol(self):
         from check_docs import check_new_study
         import hashlib

@@ -86,3 +86,9 @@ OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지�
 ## Case010 — state 저장과 실패 보존
 
 반복 state의 packing, residual transport, 행 단위 갱신과 실패 상태 직렬화를 연결했습니다. [v2 구현](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py), [새 프로세스 합성 테스트](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py), [저장 예산과 판독 길이 비교](../../cases/010-ckda-finite-precision-memory-horizon/REPORT.ko.md) 순서로 확인할 수 있습니다. [CPU 검산 안내](GETTING_STARTED.md#case010-cpu). ComplexKDA의 전이·학습 모델과 프로젝트의 codec·평가 도구는 [출처 안내](../../cases/010-ckda-finite-precision-memory-horizon/NOTICE.md)에 구분했습니다.
+
+## Case011 — 같은 상태에서 판독층만 교체하기
+
+같은 cache를 세 판독기가 읽게 하고, 마지막 두 tensor의 저장·shape·원본 hash를 검사해 새 프로세스에서 다시 적용합니다. [특징 경계](../../cases/011-frozen-state-readout-adaptation/source/adapter.py) → [patch loader](../../cases/011-frozen-state-readout-adaptation/source/head_patch.py) → [계약 테스트](../../cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) → [독립 검산기](../../cases/011-frozen-state-readout-adaptation/analysis/audit.py) 순서로 읽을 수 있습니다.
+
+추가 recurrent-state 저장은 0 B입니다. fitting 범위 밖의 정답 CE는 개선됐지만 INT8의 평균 연속 정답 길이는 세 checkpoint 모두 감소했습니다. [쉬운 화면](https://munsik-kim.github.io/inference-lab/ko/case011.html) · [정확한 결과와 solver 상태](../../cases/011-frozen-state-readout-adaptation/REPORT.ko.md) · [CPU 실행](GETTING_STARTED.md#case011-cpu). PyTorch/NumPy와 ComplexKDA의 역할은 [기여·출처](../../cases/011-frozen-state-readout-adaptation/NOTICE.md)에 있습니다.

@@ -12,6 +12,7 @@ from data import load
 from case008 import load_case008, render_case008
 from case009 import load_case009, render_case009, C9, SOURCE_COPIES
 from case010 import load_case010, render_case010, home_case010, SOURCE_COPIES as C10_SOURCES, FIGURE_ASSET, FIGURE_SOURCE
+from case011 import load_case011, load_items, render_case011, home_case011, C11, SOURCE_COPIES as C11_SOURCES, FIGURE_ASSETS as C11_FIGURES, figures as case011_figures, SECTIONS as C11_SECTIONS
 from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
 
@@ -84,11 +85,15 @@ def check(root: Path, site: Path) -> dict:
             paths[p.relative_to(site).as_posix()]=p
     data9=load_case009(root)
     data10=load_case010(root)
+    data11=load_case011(root)
     expected=EXPECTED|({'en/case009.html','ko/case009.html','data/case009.json','data/case009.js','assets/case009.js','assets/serving-L128.svg','assets/serving-L1024.svg',
       'sources/diova-compare-core.py.txt','sources/diova-compare-tests.py.txt','sources/diova-compare-edge-tests.py.txt','sources/case009-serving.py.txt','sources/case009-quality.py.txt','sources/case009-report-en.md.txt','sources/case009-report-ko.md.txt','sources/case009-notice.md.txt'} if data9 else set())
     if data10:
         expected |= {'en/case010.html','ko/case010.html','data/case010.json','assets/case010.js',FIGURE_ASSET}
         expected |= {'sources/'+name for name in C10_SOURCES}
+    if data11:
+        expected |= {'en/case011.html','ko/case011.html','data/case011.json','data/case011-items.json','data/case011-items.js','assets/case011.js','assets/case011.css',*C11_FIGURES}
+        expected |= {'sources/'+name for name in C11_SOURCES}
     require(set(paths)==expected, 'Unexpected/missing deploy artifact member')
     m=read(site/'build_manifest.json')
     require(set(m['files'])==expected-{'build_manifest.json'}, 'Manifest coverage')
@@ -110,6 +115,28 @@ def check(root: Path, site: Path) -> dict:
             require(home_case010(data10,lang) in home, 'Missing Case010 home feature')
             require(home.count('id="memory-study"')==1, 'Duplicate Case010 home project')
             require(home.count('<span class="archive-number">010</span>')==1, 'Case010 archive entry must occur once')
+    if data11:
+        require(read(site/'data/case011.json')==data11, 'Case011 numeric/source mismatch')
+        require(m['case011_units']['source_files']==data11['sources'], 'Case011 source identity mismatch')
+        require(read(site/'data/case011-items.json')==load_items(root), 'Case011 item-source mismatch')
+        require(m['case011_units']['items_source']=={C11+'/publication/posthoc/data/items.json':sha(root/C11/'publication/posthoc/data/items.json')}, 'Case011 item source identity mismatch')
+        wrapped=(site/'data/case011-items.js').read_text();prefix='window.CASE011_ITEMS = '
+        require(wrapped.startswith(prefix) and wrapped.endswith(';\n'), 'Case011 offline wrapper')
+        require(json.loads(wrapped[len(prefix):-2])==load_items(root), 'Case011 offline item mismatch')
+        require('<' not in wrapped, 'Unsafe Case011 item wrapper')
+        for name,path in C11_SOURCES.items():
+            require((site/'sources'/name).read_bytes()==(root/path).read_bytes(), 'Changed Case011 source copy: '+name)
+        for name,blob in case011_figures(root).items():
+            require((site/name).read_bytes()==blob, 'Changed Case011 source-derived figure: '+name)
+        for lang in ('en','ko'):
+            html=(site/lang/'case011.html').read_text()
+            require(render_case011(data11,lang) in html, 'Case011 rendering/scope mismatch')
+            parser=Links();parser.feed(html)
+            require(set(C11_SECTIONS)<=parser.ids, 'Missing Case011 section')
+            home=(site/lang/'index.html').read_text()
+            require(home_case011(data11,lang) in home, 'Missing Case011 home feature')
+            require(home.count('id="readout-study"')==1, 'Duplicate Case011 home project')
+            require(home.count('<span class="archive-number">011</span>')==1, 'Case011 archive entry must occur once')
     data8=load_case008(root)
     if data9:
         require(read(site/'data/case009.json')==data9,'Case009 numeric/source mismatch')
