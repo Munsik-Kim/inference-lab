@@ -2,7 +2,7 @@
 
 [한국어](REPORT.ko.md)
 
-Built a measured-budget runner, paired records, blind annotation and bilingual inspection tools for one Looped-DiT B/32 checkpoint. All planned MAIN and SMOKE images are generated; quality judgement awaits annotation.
+Built a measured-budget runner, paired records, blind annotation and bilingual inspection tools for one Looped-DiT B/32 checkpoint. Planned generation is complete and an AI has assessed all 192 saved MAIN images. L2/L4 each meet every listed constraint in 53/64 images, versus 51/64 at L1.
 
 ## Contents
 
@@ -72,25 +72,44 @@ Completed192/192 MAIN and24/24 SMOKE images. Official Euler pre-PIL tensors and 
 
 ![MAIN complete-request medians and observed min–max](figures/complete-request-time.png)
 
-### Quality
+### AI assessment of all 192 saved MAIN images
 
-**Annotations pending.** The primary and paired quality changes are null; no evaluator judgement has been supplied. Blind annotation shows individual images without setting/time/seed labels, supports JSON export/import and image/rubric identity checks. localStorage is supplementary.
+A code agent inspected each original PNG individually: **one AI rater, zero human raters**. Settings, time and seed labels were masked. The session had previously seen 48 example images, so this is not independent fully blind evaluation. The original human-pending record is preserved; this supplement has its own [protocol](publication/assessment_v1/protocol.json) and [item judgments](publication/assessment_v1/annotations.json).
 
-Primary means satisfying every item in the frozen prompt-specific checklist. Count-category items score count; color-binding, relation and composite categories score their listed constraints. This is not a single score for every phrase in the English prompt or for aesthetic quality. `uncertain` counts as failure for primary with a separate optimistic sensitivity. Missing annotation is not zero failure or one success.
+| Loops / Steps | Median request time (s) | Every listed constraint met — AI assessment |
+|---|---:|---:|
+| 1 / 89 | 4.534 | 51/64 (79.69%) |
+| 2 / 66 | 4.385 | 53/64 (82.81%) |
+| 4 / 50 | 4.762 | 53/64 (82.81%) |
 
-After annotation,64 pairs provide both-pass/A-only/C-only/neither and per-constraint gains/losses. A paired5000-repetition prompt-cluster bootstrap (seed72501, linear95% quantiles) keeps seeds/settings together. Four related template families and a small pilot limit interpretation;192 images are not192 independent prompts.
+Each setting has 64 images from the same 64 prompt–noise pairs. A pass requires every frozen checklist item to be `satisfied`. This does not score aesthetics or every phrase in the prose prompt. Count prompts score count only; other categories score their explicit color, relation and compound items.
+
+**Primary L4−L1: +3.12 percentage points**, with a 95% paired prompt-cluster bootstrap interval [-3.12, +10.94] pp. The interval includes zero. It resamples 16 prompts 5,000 times and does not include AI judgment error. There are four related template families in this small experiment.
+
+Across 64 paired inputs: both pass 49, L1 only 2, L4 only 4, neither 9. Individual constraints show 7 gains and 6 losses. These compare final images; they are not observations of one image being corrected within a loop trajectory.
+
+| Category | L1/S89 | L2/S66 | L4/S50 |
+|---|---:|---:|---:|
+| Count | 11/16 | 12/16 | 13/16 |
+| Object colors | 15/16 | 15/16 | 15/16 |
+| Left/right | 16/16 | 16/16 | 16/16 |
+| Compound | 9/16 | 10/16 | 9/16 |
+
+Category denominators are 16 images per setting. The 7 `uncertain` constraint labels count as failures for the primary score. Treating all of them as passes gives the optimistic sensitivity: L1 81.25%, L2 84.38%, L4 87.50%. Inspect every image and its evidence in [the full comparison](publication/IMAGES.md).
+
+These are quality–time observations near a budget. DEV missed the ±5% time target, and MAIN times differ too. L2 reached the same pass count as L4 at a shorter median time, without establishing general quality superiority or a quality-ranked preset. [Shared result JSON](publication/assessment_v1/summary.json) · [Independent CPU arithmetic audit](publication/assessment_v1/audit.py)
 
 <a id="s7"></a>
 ## 7. Analysis
 
 Similar joint-block proxies do not imply equal requests: T5, preamble, output and per-step overhead differ. Because DEV missed the tolerance, results must be read as an actual quality–time comparison near a budget, not an exact equal-time superiority test.
 
-Current evidence establishes generation, paired initial noise, measurement and reproduction contracts. Whether additional loops gain or lose requested conditions awaits human annotation. The study compares final images, not an observed within-image loop-correction trajectory.
+AI scoring gives a positive L4−L1 point estimate, with an interval containing zero. Count-category passes increase and compound-category passes stay equal, while paired gains and losses coexist. The study compares final images, not an observed within-image loop-correction trajectory.
 
 Cold first samples and load time are separate records; repeated timing adds no independent quality inputs. Full GenEval, CLIP/FID and external/large judges were not run.
 
 
-### Additional analysis of saved records — publication preparation
+### Initial publication analysis — before full AI assessment
 
 The same 273 record JSON files support recalculation of 192 MAIN and 18 repeated-timing requests. New model executions and quality annotations are zero. This is **POST_HOC_SAME_RECORDED_SCALARS**. [Paired times and source hashes](publication/posthoc/analysis.json)
 
@@ -100,14 +119,14 @@ In 45 of 192 MAIN records, the sampler CUDA event exceeds the surrounding CPU wa
 
 Non-blind AI inspection of all 16 prompts at the first frozen seed72301 (48 images) finds five balloons where four were requested at every setting, and three requested cubes appearing as three at L1/2 but four at L4. These examples do not replace human quality annotations for all 192 images. [Post-hoc example identity](publication/example_identity.json) · [Every image](publication/IMAGES.md)
 
-The present result is a recorded comparison for investigating which constraints different budget allocations gain or lose. Attractive appearance and correct requested composition must be assessed separately. Final quality rankings and presets await blind annotations and the original prompt-cluster aggregation.
+The present result is a recorded comparison for investigating which constraints different budget allocations gain or lose. Attractive appearance and correct requested composition must be assessed separately. Quality scores were unavailable at that stage. The separate full AI assessment is reported above, preserving the original pending summary.
 
 <a id="s8"></a>
 ## 8. Conclusion
 
-Implemented frozen-model L/S execution, measured-time selection, atomic records, blind annotation and bilingual inspection, and completed planned generation. The shared budget ledger records **302 full generations** and **1337.1s** of generation-process wall time, below320/14400s. Quality winners and quality-ranked presets remain **ANNOTATION_PENDING**.
+Implemented frozen-model L/S execution, measured-time selection, atomic records, blind annotation and bilingual inspection, and completed planned generation. The shared budget ledger records **302 full generations** and **1337.1s** of generation-process wall time, below320/14400s. **AI assessment is complete** for all 192 saved images. The primary difference is uncertain and no quality winner is declared. Human assessment and inter-rater agreement remain unmeasured.
 
-Continue with [blind annotation](demo/annotation.en.html), [all paired images](demo/viewer.en.html) or [model-free auditing](REPRODUCTION.md). No new training, extra quality sweep or GitHub/Pages publication was performed.
+Continue with [blind annotation](demo/annotation.en.html), [all paired images](demo/viewer.en.html) or [model-free auditing](REPRODUCTION.md). New training and image generation are zero. Current publication scope is a feature branch and review PR; main merge and Pages deployment are separate.
 
 <a id="s9"></a>
 ## 9. References and contributions

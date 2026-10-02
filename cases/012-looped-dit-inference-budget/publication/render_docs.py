@@ -278,7 +278,9 @@ Keep generated receipts, environments and annotation exports outside the publish
 
 The paired image Markdown can be read on GitHub. The HTML viewer/annotation UI runs locally after cloning; no Pages deployment or browser-hosted model execution is implied. The post-hoc illustration is non-blind AI visual inspection, not human labels or a new primary score. The raw CPU wall and CUDA event values are both retained; do not subtract them to estimate preprocessing overhead.
 ''')
-    print('Rendered bilingual introductions, all 64 pairs, and post-hoc report sections.')
+    from render_assessment import apply_assessment
+    apply_assessment(ROOT)
+    print('Rendered bilingual introductions, all 64 assessed pairs, and supplemental AI results.')
 
 
 if __name__ == '__main__':

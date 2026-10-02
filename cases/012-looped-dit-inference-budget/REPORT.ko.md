@@ -2,7 +2,7 @@
 
 [English](REPORT.md)
 
-같은 Looped-DiT B/32에서 loop·step 예산을 배분하고, 생성·측정·판독을 연결하는 도구를 구현했습니다. 현재 모든 예정 이미지와 시간 기록을 확보했으며 품질 주석을 기다립니다.
+같은 Looped-DiT B/32에서 loop·step 예산을 배분하고, 생성·측정·판독을 연결하는 도구를 구현했습니다. 예정된 생성·측정을 완료하고, 저장된 MAIN 192장을 AI가 판독했습니다. L2/L4는 각각 53/64장, L1은 51/64장이 모든 명시 조건을 충족했습니다.
 
 ## 목차
 
@@ -28,7 +28,7 @@ Looped-DiT 저자는 이미 loop와 step 비교를 다뤘습니다. 여기서는
 
 주 질문은 가까운 측정 시간에서 L=4가 L=1보다 모든 명시 평가 조건을 더 자주 만족하는가입니다. 주 비교는 **C_time−A_time**의 all-constraint pass rate입니다. L=2는 중간 trade-off 조건입니다. 더 많은 loop가 조건을 얻거나 이미 충족한 조건을 잃을 가능성을 모두 비교합니다.
 
-선택에는 LATENCY-DEV의 시간만 사용했습니다. 품질을 보고 prompt·seed·CFG·step·rubric를 바꾸지 않았습니다. 품질 결과는 아직 계산하지 않았습니다.
+선택에는 LATENCY-DEV의 시간만 사용했습니다. 품질을 보고 prompt·seed·CFG·step·rubric를 바꾸지 않았습니다. 원래 사람 평가 대기 단계 이후, 사용자 요청에 따라 같은 checklist의 AI 판독을 별도 프로토콜로 추가했습니다. 새 생성이나 설정 선택은 없습니다.
 
 <a id="s3"></a>
 ## 3. 이론과 비용 모델
@@ -89,25 +89,44 @@ MAIN192/192와 SMOKE24/24를 생성했습니다. 원형 Euler의 pre-PIL tensor 
 
 ![MAIN 요청 시간 median과 관측 min–max](figures/complete-request-time.png)
 
-### 품질 판독
+### 저장된 MAIN 192장의 AI 평가
 
-**주석 대기입니다.** Primary score와 paired 품질 변화는 null이며 평가자는 아직 없습니다. Blind UI는 개별 이미지를 먼저 제시하고 L/S·시간·seed를 숨깁니다. JSON export/import와 이미지/rubric hash 검사를 지원합니다. localStorage는 파일 내보내기를 대신하지 않습니다.
+코드 에이전트가 원본 PNG 192장을 하나씩 판독했습니다. **AI 평가자 1개, 인간 평가자 0명**입니다. 설정·시간·seed 표시는 가렸으며, 이 세션에서 앞서 48장의 예시를 본 이력이 있어 독립적인 완전 블라인드 평가로 부르지 않습니다. 원래 사람 평가 대기 기록은 보존하고, 새 평가는 별도 [프로토콜](publication/assessment_v1/protocol.json)과 [개별 판독](publication/assessment_v1/annotations.json)으로 추가했습니다.
 
-Primary는 prompt별 사전 명시 checklist의 모든 조건 충족입니다. 개수 범주의 checklist는 개수를 채점하고, 색 대응·좌우·복합 조건은 각각 해당 명시 항목을 채점합니다. 모든 영어 문장의 표현이나 시각적 아름다움을 하나의 점수로 평가하지 않습니다. `uncertain`은 primary에서 미충족이며 별도 낙관적 sensitivity를 제공합니다. 미주석은 실패0이나 정답1이 아닙니다.
+| Loop / Step | 요청 시간 중앙값(초) | 모든 평가 조건 충족 — AI 판독 |
+|---|---:|---:|
+| 1 / 89 | 4.534 | 51/64 (79.69%) |
+| 2 / 66 | 4.385 | 53/64 (82.81%) |
+| 4 / 50 | 4.762 | 53/64 (82.81%) |
 
-주석 후 같은64쌍을 both-pass/A-only/C-only/neither로, constraint별 얻음/잃음으로 집계합니다. Prompt를 cluster로 paired bootstrap5000회(seed72501, linear quantile95%구간) 재표집하며 같은 prompt의 seed와 설정은 함께 유지합니다. 관련된 네 family와 작은 pilot 범위는 해석에 포함합니다. 192장을 독립 문항으로 세지 않습니다.
+각 설정 64장, 동일한 64개 문장·초기 잡음 쌍입니다. 충족은 동결 checklist의 모든 항목이 `satisfied`인 경우입니다. 미적 외관이나 문장 속 모든 표현을 채점한 값은 아닙니다. 체크리스트는 개수 범주에서 개수만, 다른 범주에서 명시된 색·관계·복합 항목을 평가합니다.
+
+**주 비교 L4−L1은 +3.12 percentage points**였습니다. 16개 문장 cluster를 5,000회 재표집한 95% bootstrap 구간은 [-3.12, +10.94] pp입니다. 0을 포함하며, 한 AI 판독자의 판단 오류는 이 구간에 포함되지 않습니다. 네 관련 template family의 작은 실험입니다.
+
+같은 입력 64쌍에서 둘 다 충족 49쌍, L1만 충족 2쌍, L4만 충족 4쌍, 둘 다 미충족 9쌍입니다. 개별 조건에서는 획득 7건·손실 6건이었습니다. 이는 서로 다른 최종 이미지의 비교이며, 내부 반복이 한 이미지를 수정한 궤적은 아닙니다.
+
+| 범주 | L1/S89 | L2/S66 | L4/S50 |
+|---|---:|---:|---:|
+| 개수 | 11/16 | 12/16 | 13/16 |
+| 대상별 색 | 15/16 | 15/16 | 15/16 |
+| 좌우 관계 | 16/16 | 16/16 | 16/16 |
+| 복합 조건 | 9/16 | 10/16 | 9/16 |
+
+범주별 분모는 설정당 16장입니다. `uncertain` 7개 항목은 기본 점수에서 미충족입니다. 모두 충족으로 바꾸는 낙관적 민감도에서는 L1 81.25%, L2 84.38%, L4 87.50%가 됩니다. 개수·색·관계의 판독 근거와 모든 입력은 [전체 이미지](publication/IMAGES.ko.md)에서 확인할 수 있습니다.
+
+가까운 시간 예산에서의 quality–time 관측입니다. DEV의 ±5% 시간 맞추기는 실패했고, MAIN의 시간도 같지 않습니다. L2는 L4와 같은 충족 장수를 더 짧은 중앙 시간에 얻었지만, 이 자료만으로 모든 문장의 품질 우위나 추천 preset을 확정하지 않습니다. [공통 결과 JSON](publication/assessment_v1/summary.json) · [독립 CPU 산술 검사](publication/assessment_v1/audit.py)
 
 <a id="s7"></a>
 ## 7. 결과 분석
 
 Block proxy가 비슷한 세 설정도 T5·preamble·출력·단계별 overhead가 달라 요청 시간이 같을 필요는 없습니다. DEV에서 허용 오차를 달성하지 못했으므로 정확한 동일 시간의 품질 우위가 아닌 실제 quality–time 관계로 해석해야 합니다.
 
-현재 판정 가능한 것은 생성 경로·동일 초기 잡음·측정·재현 계약입니다. 더 많은 loop가 개수·색·좌우 정답을 개선하거나 훼손했는지는 사람의 주석 후 확인합니다. 서로 다른 최종 이미지를 비교하는 것이며 내부 loop가 실제로 한 이미지를 고친 궤적을 측정한 것은 아닙니다.
+AI 판독에서는 L4−L1의 전체 충족률 점추정이 양수였으나 구간은 0을 포함했습니다. 개수 범주의 장수는 늘고 복합 범주의 전체 충족 장수는 같았으며, 동일 입력의 획득과 손실이 공존합니다. 서로 다른 최종 이미지를 비교하는 것이며 내부 loop가 실제로 한 이미지를 고친 궤적을 측정한 것은 아닙니다.
 
 Cold first sample과 model load는 별도 기록하고, 반복 생성은 독립 품질 입력으로 늘리지 않았습니다. GenEval 전체 evaluator·CLIP/FID·외부 또는 대형 judge는 실행하지 않았습니다.
 
 
-### 저장된 기록의 추가 분석 — 이번 공개 정리
+### 첫 공개 정리의 기록 분석 — 전체 AI 평가 이전
 
 같은273개 record JSON에서 MAIN192개와 반복18개를 다시 계산했습니다. 새 모델 실행과 품질 주석은0건이며, 이 분석은 **POST_HOC_SAME_RECORDED_SCALARS**입니다. [입력별 시간과 source hashes](publication/posthoc/analysis.json)
 
@@ -117,14 +136,14 @@ Sampler CUDA event가 전체 CPU wall 시간보다 긴 기록이192건 중45건 
 
 첫 고정 seed72301의 전체16문항·48장에 대한 비블라인드 AI 시각 점검에서는 풍선4개 요청이 세 설정 모두5개였고, cube3개 요청이 L1/2에서3개·L4에서4개로 보였습니다. 이 사례는 전체192장의 인간 품질 평가를 대체하지 않습니다. [사후 예시의 image identity](publication/example_identity.json) · [모든 이미지](publication/IMAGES.ko.md)
 
-현재는 예산 배분에 따라 요구 조건을 얻거나 잃을 수 있는지 비교할 자료를 확보한 단계입니다. 요청된 개수·색·좌우를 각각 평가해야 그럴듯한 외관과 정확한 구성의 차이를 확인할 수 있습니다. 최종 품질 우위와 preset은 실제 blind 주석 후 원래 prompt-cluster 집계로 판단합니다.
+현재는 예산 배분에 따라 요구 조건을 얻거나 잃을 수 있는지 비교할 자료를 확보한 단계입니다. 요청된 개수·색·좌우를 각각 평가해야 그럴듯한 외관과 정확한 구성의 차이를 확인할 수 있습니다. 그 당시 품질 점수는 미계산이었습니다. 이번 전체 AI 점수는 위 별도 평가 절에서 제시하며, 원래 pending summary는 보존합니다.
 
 <a id="s8"></a>
 ## 8. 결론
 
-동일 저장본의 L/S 실행·시간 선택·원자적 기록·blind 평가·한영 탐색 도구를 구현하고 예정된 MAIN/SMOKE 생성을 완료했습니다. 실제 생성 예산은 302회, GPU generation-process ledger는 1337.1초로 사전320회/14400초 한도 안입니다. 품질 기반 winner와 preset은 **ANNOTATION_PENDING**입니다.
+동일 저장본의 L/S 실행·시간 선택·원자적 기록·blind 평가·한영 탐색 도구를 구현하고 예정된 MAIN/SMOKE 생성을 완료했습니다. 실제 생성 예산은 302회, GPU generation-process ledger는 1337.1초로 사전320회/14400초 한도 안입니다. 저장된 192장의 **AI 평가를 완료**했습니다. 주 차이는 불확실하며 품질 winner를 선언하지 않습니다. 사람 평가와 판독자 간 일치도는 미수행입니다.
 
-다음 행동은 [조건을 가린 평가](demo/annotation.ko.html), [전체 이미지 비교](demo/viewer.ko.html), [모델 없는 검산](REPRODUCTION.md)입니다. 새 학습·추가 품질 sweep·GitHub/Pages 게시는 수행하지 않았습니다.
+다음 행동은 [조건을 가린 평가](demo/annotation.ko.html), [전체 이미지 비교](demo/viewer.ko.html), [모델 없는 검산](REPRODUCTION.md)입니다. 새 학습·추가 이미지 생성은 0건입니다. 현재 공개 범위는 feature branch와 검토 PR이며 main 병합·Pages 배포는 별도입니다.
 
 <a id="s9"></a>
 ## 9. 레퍼런스와 기여

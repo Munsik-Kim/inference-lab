@@ -5,12 +5,15 @@ import json
 import statistics
 from pathlib import Path
 from restore_original import original_bytes
+from assessment_v1.audit import audit as audit_assessment
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def verify(root=ROOT):
     root = Path(root).resolve()
+    if hashlib.sha256((root / 'publication/original_inventory.json').read_bytes()).hexdigest() != '3cf346b6ce9303a7100e39ca48d67dd3388cf1d38a9e83e0dd7375d51a110278':
+        raise ValueError('Frozen original inventory identity changed')
     original = json.loads((root / 'publication/original_inventory.json').read_text())
     count = 0
     for name, meta in original['files'].items():
@@ -69,7 +72,16 @@ def verify(root=ROOT):
         text = (root / 'publication' / name).read_text()
         if text.count('### Seed ') != 64 or text.count('../demo/thumbs/') != 192:
             raise ValueError('Incomplete image comparison: ' + name)
-    return {'status': 'PASS', 'original_files': count, 'publication_files': len(listed), 'original_archive_sha256': original['source_archive_sha256'], 'main_images': 192, 'quality': 'ANNOTATION_PENDING', 'clock_discrepancies': neg, 'new_generations': 0}
+    assessment = audit_assessment(root)
+    status = json.loads((root / 'publication/status.json').read_text())
+    if status['quality_score'] != 'publication/assessment_v1/summary.json' or status['new_model_assisted_images'] != 192 or status['new_human_annotations'] != 0:
+        raise ValueError('Publication evaluation scope mismatch')
+    for name in ['README.md', 'README.ko.md']:
+        text = (root / name).read_text()
+        for value in ['51/64', '53/64', 'assessment_v1', 'AI']:
+            if value not in text:
+                raise ValueError('Missing assessment route: ' + name)
+    return {'status': 'PASS', 'original_files': count, 'publication_files': len(listed), 'original_archive_sha256': original['source_archive_sha256'], 'main_images': 192, 'historical_quality': 'ANNOTATION_PENDING', 'current_quality': assessment['assessment'], 'human_raters': 0, 'clock_discrepancies': neg, 'new_generations': 0}
 
 
 if __name__ == '__main__':

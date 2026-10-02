@@ -31,6 +31,8 @@ jobs:
         run: python cases/012-looped-dit-inference-budget/publication/verify.py --output "$RUNNER_TEMP/case012/publication.json"
       - name: Independent saved PNG and scalar audit
         run: python cases/012-looped-dit-inference-budget/analysis/audit.py --output "$RUNNER_TEMP/case012/scalars.json"
+      - name: Supplemental AI labels, original pending scope and paired quality arithmetic
+        run: python cases/012-looped-dit-inference-budget/publication/assessment_v1/audit.py --output "$RUNNER_TEMP/case012/ai-assessment.json"
       - name: Links, privacy and original source freeze
         run: python cases/012-looped-dit-inference-budget/analysis/check_bundle.py --output "$RUNNER_TEMP/case012/links.json"
       - name: Model-free contracts; PyTorch synthetic adapter is a separate original check

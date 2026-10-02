@@ -601,6 +601,6 @@ Case010의 저장 구현을 사용하는 후속 질문은 [Case011의 판독층 
 
 **데이터·결과:** 같은 Looped-DiT B/32 저장본과16문장·4초기 잡음으로 MAIN 192장을 생성했습니다. Loop1/Step89, Loop2/Step66, Loop4/Step50의 요청 중앙 시간은4.534/4.385/4.762초였습니다. 시간에는 text encoder와CPU 이미지 변환이 포함됩니다. 정확한 동일 시간 맞추기 목표는 달성하지 못했습니다.
 
-**해석:** 첫 고정 seed의48장에 대한 AI 시각 점검에는 더 깊은 loop·더 적은 step 조합이 맞힌 개수 조건을 잃는 사례가 있었습니다. 이는 전체 인간 평가의 정답률이 아닙니다. 조건 충족률·paired 획득/손실은 주석 대기이며, 동일 시간을 쓴 최종 품질 우위는 아직 판단하지 않습니다.
+**AI 평가:** MAIN 192장을 같은 checklist로 판독했습니다. L1 51/64장, L2 53/64장, L4 53/64장이 모든 항목을 충족했습니다. L4−L1은 +3.12pp, 95% prompt-cluster bootstrap 구간 [-3.12, +10.94]pp로 0을 포함합니다. 같은 입력에서 L4만 충족 4쌍, L1만 충족 2쌍입니다. AI 판독자 1개·인간 0명이며, 7개 애매한 항목은 기본 점수에서 미충족입니다. 이전 예시 노출과 시간 불일치를 포함한 평가 범위는 별도 [평가 문서](../../cases/012-looped-dit-inference-budget/publication/assessment_v1/README.ko.md)에 있습니다.
 
 [쉬운 소개](../../cases/012-looped-dit-inference-budget/README.ko.md) · [모든 이미지 비교](../../cases/012-looped-dit-inference-budget/publication/IMAGES.ko.md) · [실행 코드](../../cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU 검산](../../cases/012-looped-dit-inference-budget/REPRODUCTION.md) · [정식 보고서](../../cases/012-looped-dit-inference-budget/REPORT.ko.md)

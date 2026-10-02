@@ -149,7 +149,7 @@ Built a runner to divide image-generation time between successive updates and in
 
 **Identical initial noise · Per-setting time and memory · Blinded annotation**
 
-Generation and measurement are complete for 192 MAIN images. Loops 2 / Steps 66 had the shortest median; visual inspection also found a deeper-loop/fewer-step example that lost a previously met count condition. Overall constraint pass rates await human annotation.
+Generation, measurement and AI assessment are complete for 192 MAIN images. Every listed constraint is met in 51/64 images at Loops 1 and 53/64 each at Loops 2 and 4. Loops 2 / Steps 66 had the shortest median; the Loops 4 vs 1 pass-rate difference was uncertain. Paired gains and losses are both reported. One AI rater; zero human raters.
 
 [Plain-language overview](cases/012-looped-dit-inference-budget/README.md) · [Compare every image](cases/012-looped-dit-inference-budget/publication/IMAGES.md) · [Adapter code](cases/012-looped-dit-inference-budget/source/adapter.py) · [Methods and results](cases/012-looped-dit-inference-budget/REPORT.md)
 
@@ -169,7 +169,7 @@ Generation and measurement are complete for 192 MAIN images. Loops 2 / Steps 66 
 | [009 — How do longer decode and concurrency change cost?](cases/009-q-serving-quality/README.md) | Matched graph/eager serving curves and official quality calculations with recorded runtime-exit failures. |
 | [010 — Can low-bit state restart consistently after failure?](docs/en/CASEBOOK.md#case-010) | Actual bit packing, failure-aware serialization, first-error survival and byte-budget comparisons. |
 | [011 — What changes when only the readout changes?](docs/en/CASEBOOK.md#case-011) | Two-tensor adaptation and reload; paired gold-score and first-error comparisons on the same state. |
-| [012 — Where should image-generation time go?](docs/en/CASEBOOK.md#case-012) | Paired-noise loop/step runner, timing and image inspection. Quality annotations are pending. |
+| [012 — Where should image-generation time go?](docs/en/CASEBOOK.md#case-012) | Paired-noise loop/step runner, timing and image inspection. AI assessment of all 192 images with paired constraint gains and losses. |
 
 ## Go deeper
 

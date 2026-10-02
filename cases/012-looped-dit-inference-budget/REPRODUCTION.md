@@ -72,7 +72,7 @@ ComfyUI use is limited to supplying PNGs and reading the preset JSON in an exist
 
 ## 5. Public GitHub edition and historical documents
 
-The public edition adds beginner-facing bilingual README text, every MAIN image in GitHub-readable Markdown, and explicitly post-hoc analysis of saved records. No new generation or quality labels were added. `publication/original_docs/` preserves prior document bytes; `publication/original_inventory.json` maps every original case file to its original size and hash.
+The public edition adds beginner-facing bilingual README text, every MAIN image in GitHub-readable Markdown, and explicitly post-hoc analysis of saved records. The initial edition added no quality labels. A later, separately frozen AI supplement now scores every MAIN image; it changes no generation record or the original human-pending summary. `publication/original_docs/` preserves prior document bytes; `publication/original_inventory.json` maps every original case file to its original size and hash.
 
 ```bash
 ../../.venv-case012-cpu/bin/python publication/verify.py
@@ -94,3 +94,28 @@ python analysis/audit.py
 Keep generated receipts, environments and annotation exports outside the published study subtree. Its exact-inventory verifier checks the preserved public files, not a modified annotation workspace.
 
 The paired image Markdown can be read on GitHub. The HTML viewer/annotation UI runs locally after cloning; no Pages deployment or browser-hosted model execution is implied. The post-hoc illustration is non-blind AI visual inspection, not human labels or a new primary score. The raw CPU wall and CUDA event values are both retained; do not subtract them to estimate preprocessing overhead.
+
+## 6. Completed supplemental AI assessment — no model or judge API
+
+The AI judgments already exist in `publication/assessment_v1/annotations.json`.
+These commands recalculate them; they do not ask an AI to judge new images.
+One AI rater assessed all 192 MAIN images with setting labels masked, with
+prior exposure to 48 examples disclosed. Human verification was not performed.
+`uncertain` counts as failure in the primary score, with a separate sensitivity.
+
+```bash
+python publication/assessment_v1/audit.py
+python publication/assessment_v1/analyze.py --output /your/new-scratch/ai-recalculated.json
+```
+
+Run from Case012 with the CPU environment activated. The output child must not
+already exist. `analyze.py` reads the frozen original records and completed AI
+labels without rewriting historical `analysis/summary.json`. `audit.py` uses a
+separate scalar implementation for counts, pairing and the original bootstrap.
+Arithmetic agreement is not independent visual or human verification.
+
+Open `publication/assessment_v1/viewer.ko.html` or `viewer.en.html` locally for
+the completed AI results, or read `publication/IMAGES.*.md` directly on GitHub.
+The original `demo/viewer.*.html` remains the historical pre-annotation snapshot.
+The annotation UI supports a future human export in a restored scratch copy;
+do not overwrite the AI supplement or publish a synthetic UI test as labels.
