@@ -1,0 +1,117 @@
+# Case 012 — Allocating an Image-Generation Budget: Loops vs Steps
+
+[한국어](REPORT.ko.md)
+
+Built a measured-budget runner, paired records, blind annotation and bilingual inspection tools for one Looped-DiT B/32 checkpoint. All planned MAIN and SMOKE images are generated; quality judgement awaits annotation.
+
+## Contents
+
+1. [Background](#s1)
+2. [Hypotheses and questions](#s2)
+3. [Theory and cost model](#s3)
+4. [Methods](#s4)
+5. [Experiments](#s5)
+6. [Results](#s6)
+7. [Analysis](#s7)
+8. [Conclusion](#s8)
+9. [References and contributions](#s9)
+
+<a id="s1"></a>
+## 1. Background
+
+Image generation spends computation across denoising steps and model blocks within each step. This Case measures complete requests and prepares evaluation of explicitly listed count, color-binding and image-coordinate relations. Looped-DiT authors already compare loops with steps; this work contributes a local measured-budget execution and inspection tool.
+
+<a id="s2"></a>
+## 2. Hypotheses and questions
+
+The primary question is whether L4 satisfies all listed constraints more often than L1 near a measured time budget: **C_time−A_time** all-constraint pass rate. L2 provides an intermediate trade-off. Both constraint gains and losses are retained. LATENCY-DEV time alone selected settings; no image quality, new seed or rewritten prompt was used for selection.
+
+<a id="s3"></a>
+## 3. Theory and cost model
+
+Joint visits per forward are `6+5L+6`. CFG6 uses conditional/unconditional calls separately: `2S` model calls and `2S(12+5L)` joint visits. Proxy L1/S94, L2/S73 and L4/S50 give 3196/3212/3200 visits (1598/1606/1600 before CFG). Text-only preamble runs twice per forward. Embeddings, output heads, T5, transfer and Python costs are outside this proxy; it is neither equal FLOPs nor equal latency. Actual module visits were recorded in diagnostic TRACE requests, excluded from performance aggregates.
+
+<a id="s4"></a>
+## 4. Methods
+
+Checkpoint/EMA, tokenizer, prompt length256, CFG6, image size512, noise scale2, Euler equations, eager execution and TF32 policies remain fixed. Only L/S changes. No VAE or timestep conditioning is added. Actual denoiser dtype is BF16; the original T5 loading default produced FP32. Initial pixel noise is BF16; the original Euler write-back becomes FP32 after its first update.
+
+Dedicated per-pair CUDA generators produce the same initial noise across settings, with shape/dtype and actual byte hashes. Model-load and warmup RNG consumption cannot change that noise. Different step schedules are not treated as matching intermediate trajectories.
+
+Complete-request time includes string→tokenization→T5→sampling→CPU/PIL with CUDA completion synchronization. Downloads, cold load, PNG disk writes, evaluation and profiling are excluded. Sampler CUDA events use encoded text and exclude text encoding and noise construction. Finite checks/hashes run after performance timing; per-step checks/hooks run separately in TRACE/native parity.
+
+Attempts are written to `.partial`, verified by inventory/hash, then renamed on the same filesystem. Completed results are verified and reused, not overwritten; failed starts charge the same budget.
+
+<a id="s5"></a>
+## 5. Experiments
+
+RTX5080 SM12.0, driver610.43.02, Python3.12.14, PyTorch2.9.1+cu128, CPU2threads, batch1. Denoiser and T5 remain GPU-resident; no offload/compile/new attention path. Original environments are unchanged.
+
+SMOKE is 4 prompts ×2 seeds ×3 block proxies (24 images). DEV has 3 timing prompts ×L1/2/4 ×S25/50/75 (27 requests), plus six one-estimate verification requests. MAIN is 16 prompts ×four seeds ×three settings (192 images /64 paired prompt–seed inputs). Timing repeats use two fixed pairs ×three settings ×three fresh processes (18 requests), adding zero independent quality samples.
+
+Four categories/families cover count, color binding, left/right and composite constraints. English inputs remain fixed; Korean is display text. Prompts/rubric/protocol were frozen before generation and actual MAIN settings/order before MAIN.
+
+DEV reference L4/S50 median was 4.535896s. A single integer estimate/verification per L1/L2 within S25–125 selected S89/S66. L1/S89 extrapolates beyond the initial measured grid ending at75; L2/S66 interpolates. The nearest actually measured settings still missed the5% target (+7.09%/+7.25%); no further search followed.
+
+<a id="s6"></a>
+## 6. Results
+
+### Implementation and generation
+
+Completed192/192 MAIN and24/24 SMOKE images. Official Euler pre-PIL tensors and generate PNG pixels were bitwise identical to the adapter at all three loops. Beyond the initial S2 probe, **full MAIN step counts89/66/50 also passed bitwise parity and every-step finite checks**. TRACE logs record actual call/block counts.
+
+### Actual timing and memory
+
+| Setting | L | S | Complete median (s) | Complete min–max (s) | Sampler median (ms) | Allocated peak (GiB) | Reserved peak (GiB) |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| A_time | 1 | 89 | 4.534 | 3.519–5.354 | 4506.6 | 1.880 | 1.895 |
+| B_time | 2 | 66 | 4.385 | 3.491–5.150 | 4357.2 | 1.880 | 1.895 |
+| C_time | 4 | 50 | 4.762 | 3.689–5.506 | 4732.4 | 1.880 | 1.895 |
+
+64 requests per setting. Error bars below are observed min–max, not confidence intervals. Device observations differ from torch allocated/reserved memory; text-encoder residency is identical. Three fresh-process repeat medians are in [summary](analysis/summary.json).
+
+![MAIN complete-request medians and observed min–max](figures/complete-request-time.png)
+
+### Quality
+
+**Annotations pending.** The primary and paired quality changes are null; no evaluator judgement has been supplied. Blind annotation shows individual images without setting/time/seed labels, supports JSON export/import and image/rubric identity checks. localStorage is supplementary.
+
+Primary means satisfying every item in the frozen prompt-specific checklist. Count-category items score count; color-binding, relation and composite categories score their listed constraints. This is not a single score for every phrase in the English prompt or for aesthetic quality. `uncertain` counts as failure for primary with a separate optimistic sensitivity. Missing annotation is not zero failure or one success.
+
+After annotation,64 pairs provide both-pass/A-only/C-only/neither and per-constraint gains/losses. A paired5000-repetition prompt-cluster bootstrap (seed72501, linear95% quantiles) keeps seeds/settings together. Four related template families and a small pilot limit interpretation;192 images are not192 independent prompts.
+
+<a id="s7"></a>
+## 7. Analysis
+
+Similar joint-block proxies do not imply equal requests: T5, preamble, output and per-step overhead differ. Because DEV missed the tolerance, results must be read as an actual quality–time comparison near a budget, not an exact equal-time superiority test.
+
+Current evidence establishes generation, paired initial noise, measurement and reproduction contracts. Whether additional loops gain or lose requested conditions awaits human annotation. The study compares final images, not an observed within-image loop-correction trajectory.
+
+Cold first samples and load time are separate records; repeated timing adds no independent quality inputs. Full GenEval, CLIP/FID and external/large judges were not run.
+
+
+### Additional analysis of saved records — publication preparation
+
+The same 273 record JSON files support recalculation of 192 MAIN and 18 repeated-timing requests. New model executions and quality annotations are zero. This is **POST_HOC_SAME_RECORDED_SCALARS**. [Paired times and source hashes](publication/posthoc/analysis.json)
+
+The L2/S66 MAIN median is 3.28% shorter than L1/S89 and 7.93% shorter than L4/S50. It is faster in 45 and 47 of the corresponding 64 pairs. MAIN shares one process; these are not 64 independent runtime experiments. L2 remains shortest in repeats of two fixed inputs across fresh processes, but the L1/L4 ranking changes.
+
+In 45 of 192 MAIN records, the sampler CUDA event exceeds the surrounding CPU wall time, by up to about 116ms. Subtracting the two clocks cannot estimate T5, transfer or PIL cost. The cause remains undiagnosed and the original values are preserved. Complete-request summaries and repeats remain descriptive; small differences are not presented as a stable performance advantage.
+
+Non-blind AI inspection of all 16 prompts at the first frozen seed72301 (48 images) finds five balloons where four were requested at every setting, and three requested cubes appearing as three at L1/2 but four at L4. These examples do not replace human quality annotations for all 192 images. [Post-hoc example identity](publication/example_identity.json) · [Every image](publication/IMAGES.md)
+
+The present result is a recorded comparison for investigating which constraints different budget allocations gain or lose. Attractive appearance and correct requested composition must be assessed separately. Final quality rankings and presets await blind annotations and the original prompt-cluster aggregation.
+
+<a id="s8"></a>
+## 8. Conclusion
+
+Implemented frozen-model L/S execution, measured-time selection, atomic records, blind annotation and bilingual inspection, and completed planned generation. The shared budget ledger records **302 full generations** and **1337.1s** of generation-process wall time, below320/14400s. Quality winners and quality-ranked presets remain **ANNOTATION_PENDING**.
+
+Continue with [blind annotation](demo/annotation.en.html), [all paired images](demo/viewer.en.html) or [model-free auditing](REPRODUCTION.md). No new training, extra quality sweep or GitHub/Pages publication was performed.
+
+<a id="s9"></a>
+## 9. References and contributions
+
+- [OpenSenseNova/Looped-DiT](https://github.com/OpenSenseNova/Looped-DiT), pinned MIT model/code; [paper v1](https://arxiv.org/abs/2609.40305v1), architecture and evaluation sections including author loop/step comparisons. This is not independent reproduction of author tables.
+- [B/32 model card](https://huggingface.co/sensenova/Looped-DiT-B32), [FLAN-T5-Large](https://huggingface.co/google/flan-t5-large), [GenEval](https://github.com/djghosh13/geneval). The local user subset is not the full official benchmark.
+- Source/model/prompt identities: [provenance](provenance/models.json), [input freeze](configs/input_freeze.json). DIOVA implementation and Codex assistance are attributed in [NOTICE](NOTICE.md).

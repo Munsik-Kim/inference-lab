@@ -13,6 +13,7 @@ from case008 import load_case008, render_case008
 from case009 import load_case009, render_case009, C9, SOURCE_COPIES
 from case010 import load_case010, render_case010, C10, SOURCE_COPIES as C10_SOURCES, FIGURE_SOURCE, FIGURE_ASSET
 from case011 import load_case011, load_items, render_case011, C11, SOURCE_COPIES as C11_SOURCES, figures as case011_figures
+from case012 import load_case012
 
 def link(url, text, cls=''):
     return f'<a class="{cls}" href="{escape(url, quote=True)}">{escape(text)}</a>'
@@ -41,6 +42,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     data9 = load_case009(root)
     data10 = load_case010(root)
     data11 = load_case011(root)
+    data12 = load_case012(root)
     manifest = source_manifest(root)
     rev = manifest['evidence_revision']
     languages = {lang:read(root/f'presentation/content/{lang}.json') for lang in ('en','ko')}
@@ -83,12 +85,15 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
              'ko':['실행 호환성','BF16 / FP8 문서 추출','Softmax 수치 근사','Attention 전체 호출 비용','정밀도와 비용의 절충','답변 선택과 동률','구조화 MLP 압축','모델 제작·재실행과 MLP 출력 복구']}
     # IDs, translated archive labels, and verified projections are explicit.
     ids = [int(Path(path).name.split('-')[0]) for path in case_paths]
-    require(ids == list(range(1, len(ids)+1)) and 8 <= len(ids) <= 11,
+    require(ids == list(range(1, len(ids)+1)) and 8 <= len(ids) <= 12,
             'Unexpected case identity/count; extend the explicit display registry')
     registry = {
         9: (data9, 'Graph serving and official quality evaluation', 'Graph 요청 비용과 공식 품질 평가'),
         10: (data10, 'Recurrent-state storage, restart and readout horizon', '반복 상태의 저장·재시작과 판독 수명'),
         11: (data11, 'Same state, different readout', '같은 상태, 다른 판독기'),
+        # Archive links to the same-language GitHub Casebook. No Case012 page,
+        # images or pending quality scores are added to the deploy artifact.
+        12: (data12, 'Image-generation budget: loops vs steps', '이미지 생성 시간: 반복과 단계'),
     }
     for case_id in ids[8:]:
         data, en, ko = registry[case_id]

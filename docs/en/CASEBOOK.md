@@ -1,4 +1,4 @@
-# Eleven questions about inference and model changes
+# Twelve questions about inference and model changes
 
 English | [한국어](../ko/CASEBOOK.md) · [Home](../../README.md)
 
@@ -19,6 +19,7 @@ Each case follows **objective → dataset → assumptions and theory → experim
 - [009 — What changes with longer decode and concurrent requests?](#case-009)
 - [010 — Low-bit state storage, restart and readout horizon](#case-010)
 - [011 — What changes when only the readout changes?](#case-011)
+- [012 — Where should an image-generation budget go?](#case-012)
 
 <a id="case-001"></a>
 ## 001 — Can a kernel-selection change unblock execution?
@@ -594,3 +595,14 @@ The follow-up using Case010 state storage is [Case011 readout adaptation](#case-
 **Interpretation:** better gold probability scores did not delay the first error. Same-record error shifts and storage interactions are labelled post-hoc analyses. This bounded fitting result does not establish what every possible decoder could recover.
 
 [Overview](https://munsik-kim.github.io/inference-lab/en/case011.html#overview) · [Report](../../cases/011-frozen-state-readout-adaptation/REPORT.md) · [Intervention code](../../cases/011-frozen-state-readout-adaptation/source/adapter.py) · [CPU reanalysis](../../cases/011-frozen-state-readout-adaptation/REPRODUCTION.md)
+
+<a id="case-012"></a>
+## 012 — Where should an image-generation budget go?
+
+**Objective and implementation:** a runner divides time between successive image updates (steps) and repeated core computation within each update (loops). It saves images from identical initial noise and compares time, memory and count/color/left-right requirements.
+
+**Data and results:** one Looped-DiT B/32 checkpoint generated 192 MAIN images from 16 prompts and four initial noises each. Loops 1 / Steps 89, Loops 2 / Steps 66 and Loops 4 / Steps 50 had request medians of 4.534/4.385/4.762 seconds, including text encoding and CPU image conversion. The exact time-matching target was missed.
+
+**Interpretation:** AI visual inspection of 48 images from the first frozen seed found a deeper-loop/fewer-step example that lost a previously met count condition. This is not an overall human accuracy score. Constraint pass rates and paired gains/losses await annotation; equal-time final quality superiority remains unassessed.
+
+[Plain-language overview](../../cases/012-looped-dit-inference-budget/README.md) · [Compare every image](../../cases/012-looped-dit-inference-budget/publication/IMAGES.md) · [Adapter code](../../cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU audit](../../cases/012-looped-dit-inference-budget/REPRODUCTION.md) · [Full report](../../cases/012-looped-dit-inference-budget/REPORT.md)

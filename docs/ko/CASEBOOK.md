@@ -1,4 +1,4 @@
-# 추론·모델 변경을 조사하는 열한 가지 질문
+# 추론·모델 변경을 조사하는 열두 가지 질문
 
 [English](../en/CASEBOOK.md) | 한국어 · [홈](../../README.ko.md)
 
@@ -19,6 +19,7 @@
 - [009 — 긴 생성과 동시 요청의 비용은?](#case-009)
 - [010 — 저비트 state의 저장·재시작과 기억 수명](#case-010)
 - [011 — 같은 상태에서 판독기만 바꾸면?](#case-011)
+- [012 — 이미지 생성 시간, 어디에 계산을 더 쓸까?](#case-012)
 
 <a id="case-001"></a>
 ## 001 — 커널 선택 조건을 고치면 실행할 수 있는가?
@@ -592,3 +593,14 @@ Case010의 저장 구현을 사용하는 후속 질문은 [Case011의 판독층 
 **해석:** 정답에 높은 확률을 주는 것과 첫 오류를 늦추는 것은 달랐습니다. 같은 기록의 오류 이동·저장 방식 차이는 사후 분석으로 구분합니다. 이 fitting 예산의 결과가 모든 decoder의 정보 복원 가능성을 결정하지는 않습니다.
 
 [쉽게 살펴보기](https://munsik-kim.github.io/inference-lab/ko/case011.html#overview) · [보고서](../../cases/011-frozen-state-readout-adaptation/REPORT.ko.md) · [개입 코드](../../cases/011-frozen-state-readout-adaptation/source/adapter.py) · [CPU 재계산](../../cases/011-frozen-state-readout-adaptation/REPRODUCTION.md)
+
+<a id="case-012"></a>
+## 012 — 이미지 생성 시간, 어디에 계산을 더 쓸까?
+
+**목표·구현:** 이미지가 갱신되는 단계 수(Step)와 각 단계에서 핵심 계산을 반복하는 횟수(Loop)에 시간을 나눠 쓰는 실행기입니다. 같은 초기 잡음에서 생성한 이미지를 저장하고, 시간·메모리와 요청한 개수·색·좌우 조건을 비교할 수 있습니다.
+
+**데이터·결과:** 같은 Looped-DiT B/32 저장본과16문장·4초기 잡음으로 MAIN 192장을 생성했습니다. Loop1/Step89, Loop2/Step66, Loop4/Step50의 요청 중앙 시간은4.534/4.385/4.762초였습니다. 시간에는 text encoder와CPU 이미지 변환이 포함됩니다. 정확한 동일 시간 맞추기 목표는 달성하지 못했습니다.
+
+**해석:** 첫 고정 seed의48장에 대한 AI 시각 점검에는 더 깊은 loop·더 적은 step 조합이 맞힌 개수 조건을 잃는 사례가 있었습니다. 이는 전체 인간 평가의 정답률이 아닙니다. 조건 충족률·paired 획득/손실은 주석 대기이며, 동일 시간을 쓴 최종 품질 우위는 아직 판단하지 않습니다.
+
+[쉬운 소개](../../cases/012-looped-dit-inference-budget/README.ko.md) · [모든 이미지 비교](../../cases/012-looped-dit-inference-budget/publication/IMAGES.ko.md) · [실행 코드](../../cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU 검산](../../cases/012-looped-dit-inference-budget/REPRODUCTION.md) · [정식 보고서](../../cases/012-looped-dit-inference-budget/REPORT.ko.md)

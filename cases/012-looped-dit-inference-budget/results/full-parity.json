@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "rows": [
+    {
+      "setting": "A_time",
+      "loops": 1,
+      "steps": 89,
+      "noise_sha256": "017f321c7afa66e4b8d52468a53cddb1b789831bf168aa24f03aea32622ec575",
+      "pre_pil_bitwise": true,
+      "max_absolute_difference": 0.0,
+      "official_generate_png_equal": true,
+      "finite_every_step": true,
+      "adapter_png_sha256": "8bc61043ee3bc4646d24f73c74159645065382dc1a5e82b1ff8e1a1cff956aa5",
+      "model_calls_each_sampler": 178,
+      "purpose": "native parity only, no new quality sample"
+    },
+    {
+      "setting": "B_time",
+      "loops": 2,
+      "steps": 66,
+      "noise_sha256": "017f321c7afa66e4b8d52468a53cddb1b789831bf168aa24f03aea32622ec575",
+      "pre_pil_bitwise": true,
+      "max_absolute_difference": 0.0,
+      "official_generate_png_equal": true,
+      "finite_every_step": true,
+      "adapter_png_sha256": "0a736e4ae8e582dc2a01d3931c0286efca2d7be3dda82b95c2c8be77ad248578",
+      "model_calls_each_sampler": 132,
+      "purpose": "native parity only, no new quality sample"
+    },
+    {
+      "setting": "C_time",
+      "loops": 4,
+      "steps": 50,
+      "noise_sha256": "017f321c7afa66e4b8d52468a53cddb1b789831bf168aa24f03aea32622ec575",
+      "pre_pil_bitwise": true,
+      "max_absolute_difference": 0.0,
+      "official_generate_png_equal": true,
+      "finite_every_step": true,
+      "adapter_png_sha256": "ed5963aed40987916b3180b384fd9389c28efa389f203681f630da4a15a4336e",
+      "model_calls_each_sampler": 100,
+      "purpose": "native parity only, no new quality sample"
+    }
+  ],
+  "environment": {
+    "device": "NVIDIA GeForce RTX 5080",
+    "capability": [
+      12,
+      0
+    ],
+    "torch": "2.9.1+cu128",
+    "cuda": "12.8",
+    "encoder_dtype": "torch.float32",
+    "denoiser_dtype": "torch.bfloat16",
+    "prompt_length": 256,
+    "model_parameters": 260189568,
+    "encoder_parameters": 341231104,
+    "load_seconds": 2.7446120559998235,
+    "compile": false,
+    "tf32_matmul": true,
+    "tf32_cudnn": true,
+    "cpu_threads": 2
+  },
+  "settings_sha256": "276bc72fb2ebe4cb0a613e915e6e7010db6b688f8a85e5df973aa1be21a15a76",
+  "tolerance": "bitwise required; fixed before full parity"
+}

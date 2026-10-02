@@ -25,6 +25,7 @@
 | 동일 입력 측정·paired 결과 리포트 | vLLM benchmark · lm-evaluation-harness · 비교 지표 선행연구 | [code](packages/diova-compare/src/diova_compare/core.py) · [tests](packages/diova-compare/tests/test_compare.py) |
 | 저비트 state packing·실패 보존·새 프로세스 재시작 | NumPy · PyTorch · ComplexKDA recurrence | [구현](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [합성 재시작 테스트](cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
 | 같은 state의 최종 판독층 교체·patch 저장·재적용 | ComplexKDA · PyTorch L-BFGS · NumPy | [adapter](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [patch 검사](cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
+| 같은 잡음의 loop/step 실행·시간 예산 선택·이미지 평가 | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [adapter](cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU 검사](cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
 
 [선행연구와 구현 대응](docs/related-work/README.ko.md) · [CPU 비교 도구](packages/diova-compare/README.ko.md)
 
@@ -142,6 +143,16 @@ CKDA 기호 상태추적 · 기존 checkpoint 3개 · 마지막 선형층만 지
 
 [쉽게 살펴보기](https://munsik-kim.github.io/inference-lab/ko/case011.html#overview) · [구현 코드](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [상세 결과](https://munsik-kim.github.io/inference-lab/ko/case011.html#results)
 
+## Case 012 — 이미지 생성 시간, 어디에 계산을 더 쓸까?
+
+이미지를 고치는 생성 단계와 각 단계의 내부 반복에 시간을 나눠 쓰는 도구를 구현했습니다. 같은 초기 잡음의 세 이미지를 저장하고, 개수·색·좌우 요구와 실제 시간을 함께 비교할 수 있습니다.
+
+**동일 초기 잡음 · 설정별 시간·메모리 · 조건을 가린 평가 화면**
+
+MAIN 192장의 생성·측정을 완료했습니다. Loop2/Step66이 가장 짧은 중앙 시간을 보였고, 시각 점검에서는 더 깊은 반복·더 적은 단계 조합이 맞힌 개수 조건을 잃는 사례도 보였습니다. 전체 조건 충족률은 사람의 주석을 기다립니다.
+
+[쉽게 살펴보기](cases/012-looped-dit-inference-budget/README.ko.md) · [모든 이미지 비교](cases/012-looped-dit-inference-budget/publication/IMAGES.ko.md) · [실행 코드](cases/012-looped-dit-inference-budget/source/adapter.py) · [설계와 결과](cases/012-looped-dit-inference-budget/REPORT.ko.md)
+
 ## 질문과 구현물
 
 
@@ -158,6 +169,7 @@ CKDA 기호 상태추적 · 기존 checkpoint 3개 · 마지막 선형층만 지
 | [009 — 긴 decode와 동시 요청에서 비용은 어떻게 바뀔까?](cases/009-q-serving-quality/README.ko.md) | 같은 조건의 graph/eager 요청 비용과 공식 품질 계산. 비정상 프로세스 종료 기록도 함께 표시. |
 | [010 — 저비트 state를 실패 이후에도 재시작할 수 있는가?](docs/ko/CASEBOOK.md#case-010) | 실제 bit packing, 실패 상태 직렬화, 최초 판독 실패와 저장 예산 비교. |
 | [011 — 같은 상태에서 판독기만 바꾸면?](docs/ko/CASEBOOK.md#case-011) | 마지막 층 두 tensor 보정·재적용, 정답 점수와 첫 오류 길이의 비교. |
+| [012 — 이미지 생성 시간을 어디에 더 쓸까?](docs/ko/CASEBOOK.md#case-012) | 같은 잡음의 loop/step 실행·시간 비교·이미지 판독 도구. 품질 주석은 대기 중. |
 
 ## 더 깊게 보기
 

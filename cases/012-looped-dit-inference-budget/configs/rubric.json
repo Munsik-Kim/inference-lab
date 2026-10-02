@@ -1,0 +1,15 @@
+{
+  "schema": "case012-rubric-v1",
+  "values": [
+    "satisfied",
+    "not_satisfied",
+    "uncertain"
+  ],
+  "primary_uncertain": "not_satisfied",
+  "evaluator": "human pending",
+  "count": "Count visibly distinct main bodies of the requested class. Exactly means no tolerance. Count partially cropped/occluded bodies if identifiable; if a required body/count cannot be determined choose uncertain. Reflections and cast shadows are not extra objects. Visible background instances of the requested class count. Ignore printed depictions and decorative icons, unless indistinguishable from an actual object (uncertain).",
+  "color": "Judge the dominant color of the main body; handles/trim, highlights and shadows need not have the same color. Missing required object is not_satisfied. Ambiguous color is uncertain.",
+  "relation": "Use image coordinates and visible main-body centers; left/right is relative between requested centers, not viewer-independent world coordinates. A tie, ambiguous center or indistinguishable identity is uncertain. Missing objects or reversed order are not_satisfied.",
+  "invalid": "Blank, nonfinite, failed or wrong-resolution outputs remain in the planned denominator and fail every constraint. They cannot receive a pass label.",
+  "blinding": "Individual image judgment first; no loop/step/time/seed/expectation label. Pairing key is separate. No second rater or model-assisted scoring in this version."
+}

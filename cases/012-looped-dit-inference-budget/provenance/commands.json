@@ -1,0 +1,28 @@
+{
+  "cwd": "cases/012-looped-dit-inference-budget",
+  "gpu_environment": "new isolated environment, exact package freeze in provenance/runtime-freeze.txt",
+  "gpu": [
+    "python -m source.run --checkpoint <PINNED_B32> --encoder <PINNED_ENCODER> --phase parity",
+    "python -m source.run --checkpoint <PINNED_B32> --encoder <PINNED_ENCODER> --phase pilot",
+    "python -m source.run --checkpoint <PINNED_B32> --encoder <PINNED_ENCODER> --phase trace",
+    "python -m source.run --checkpoint <PINNED_B32> --encoder <PINNED_ENCODER> --phase dev",
+    "python -m source.run --checkpoint <PINNED_B32> --encoder <PINNED_ENCODER> --phase verify",
+    "python -m source.run --checkpoint <PINNED_B32> --encoder <PINNED_ENCODER> --phase smoke",
+    "python -m source.run --checkpoint <PINNED_B32> --encoder <PINNED_ENCODER> --phase main",
+    "python -m source.run --checkpoint <PINNED_B32> --encoder <PINNED_ENCODER> --phase repeat --round 0",
+    "python -m source.run --checkpoint <PINNED_B32> --encoder <PINNED_ENCODER> --phase repeat --round 1",
+    "python -m source.run --checkpoint <PINNED_B32> --encoder <PINNED_ENCODER> --phase repeat --round 2",
+    "python -m source.parity_full --checkpoint <PINNED_B32> --encoder <PINNED_ENCODER>"
+  ],
+  "selection": [
+    "python -m source.select_time predict",
+    "python -m source.select_time freeze"
+  ],
+  "cpu": [
+    "python analysis/analyze.py",
+    "python analysis/audit.py --output audit-receipt.json",
+    "python demo/build.py"
+  ],
+  "new_training": 0,
+  "quality_annotation_runs": 0
+}

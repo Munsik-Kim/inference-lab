@@ -9,7 +9,7 @@ from pathlib import Path
 from check_docs import (anchors, check_claims, check_links, check_pairs, check_packages,
                         check_protected_additions, check_protection,
                         check_beginner_routes, check_concept_figure, check_copy_hygiene,
-                        check_unified_case010, CONCEPT_FIGURE, PAGES)
+                        check_unified_case010, check_case012, CONCEPT_FIGURE, PAGES)
 
 
 class DocumentChecks(unittest.TestCase):
@@ -65,6 +65,22 @@ class DocumentChecks(unittest.TestCase):
         errors = []
         self.assertEqual(check_unified_case010(self.root, errors), set())
         self.assertTrue(any('Case010 integration verification failed' in e for e in errors))
+
+    def test_incomplete_case012_is_not_added_to_protection_allowlist(self):
+        case = self.root/'cases/012-looped-dit-inference-budget'
+        case.mkdir(parents=True)
+        (case/'README.md').write_text('Synthetic incomplete publication')
+        errors = []
+        self.assertEqual(check_case012(self.root, errors), set())
+        self.assertTrue(any('Case012 publication verification failed' in e for e in errors))
+
+    def test_rehashed_case012_original_cannot_authorize_source_changes(self):
+        case = self.root/'cases/012-looped-dit-inference-budget/publication'
+        case.mkdir(parents=True)
+        (case/'original_inventory.json').write_text('{"files": {}}')
+        errors = []
+        self.assertEqual(check_case012(self.root, errors), set())
+        self.assertTrue(any('inventory changed' in e for e in errors))
 
     def test_unified_archive_claim_cannot_authorize_unrelated_source(self):
         self.mapping['unified_snapshots'] = [{

@@ -25,6 +25,7 @@ Built checkpoint checks, weight reconstruction, physical matrix slicing and pair
 | Matched-input measurement and paired result reports | vLLM benchmark · lm-evaluation-harness · comparison metrics | [code](packages/diova-compare/src/diova_compare/core.py) · [tests](packages/diova-compare/tests/test_compare.py) |
 | Low-bit state packing, failure persistence and fresh-process restart | NumPy · PyTorch · ComplexKDA recurrence | [implementation](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [synthetic restart tests](cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
 | Same-state final-layer intervention and two-tensor patch reload | ComplexKDA · PyTorch L-BFGS · NumPy | [adapter](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [patch tests](cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
+| Paired-noise loop/step execution, time selection and image annotation | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [adapter](cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU tests](cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
 
 [Related work and implementation boundaries](docs/related-work/README.md) · [CPU comparison package](packages/diova-compare/README.md)
 
@@ -142,6 +143,16 @@ CKDA symbolic state tracking · Three existing checkpoints · Final-layer superv
 
 [Overview](https://munsik-kim.github.io/inference-lab/en/case011.html#overview) · [Implementation](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [Detailed results](https://munsik-kim.github.io/inference-lab/en/case011.html#results)
 
+## Case 012 — Image-generation time: loops vs steps
+
+Built a runner to divide image-generation time between successive updates and internal model repetition. It saves three images from identical initial noise and compares count, color and left/right requirements alongside measured time.
+
+**Identical initial noise · Per-setting time and memory · Blinded annotation**
+
+Generation and measurement are complete for 192 MAIN images. Loops 2 / Steps 66 had the shortest median; visual inspection also found a deeper-loop/fewer-step example that lost a previously met count condition. Overall constraint pass rates await human annotation.
+
+[Plain-language overview](cases/012-looped-dit-inference-budget/README.md) · [Compare every image](cases/012-looped-dit-inference-budget/publication/IMAGES.md) · [Adapter code](cases/012-looped-dit-inference-budget/source/adapter.py) · [Methods and results](cases/012-looped-dit-inference-budget/REPORT.md)
+
 ## Questions and recorded tools
 
 
@@ -158,6 +169,7 @@ CKDA symbolic state tracking · Three existing checkpoints · Final-layer superv
 | [009 — How do longer decode and concurrency change cost?](cases/009-q-serving-quality/README.md) | Matched graph/eager serving curves and official quality calculations with recorded runtime-exit failures. |
 | [010 — Can low-bit state restart consistently after failure?](docs/en/CASEBOOK.md#case-010) | Actual bit packing, failure-aware serialization, first-error survival and byte-budget comparisons. |
 | [011 — What changes when only the readout changes?](docs/en/CASEBOOK.md#case-011) | Two-tensor adaptation and reload; paired gold-score and first-error comparisons on the same state. |
+| [012 — Where should image-generation time go?](docs/en/CASEBOOK.md#case-012) | Paired-noise loop/step runner, timing and image inspection. Quality annotations are pending. |
 
 ## Go deeper
 

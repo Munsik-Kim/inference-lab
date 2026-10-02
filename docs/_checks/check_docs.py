@@ -518,6 +518,38 @@ def check_case011(root: Path, errors: list[str]) -> set[str]:
         errors.append('Case011 publication verification failed: '+str(exc));return set()
 
 
+def check_case012(root: Path, errors: list[str]) -> set[str]:
+    """Accept the new case only after its original and public identities pass."""
+    relative = 'cases/012-looped-dit-inference-budget'
+    case = root / relative
+    if not case.exists():
+        return set()
+    try:
+        identity = case / 'publication/original_inventory.json'
+        if sha(identity) != '3cf346b6ce9303a7100e39ca48d67dd3388cf1d38a9e83e0dd7375d51a110278':
+            raise ValueError('Original Case012 review inventory changed')
+        proc = subprocess.run([sys.executable, '-B', str(case / 'publication/verify.py')],
+                              cwd=root, capture_output=True, text=True)
+        if proc.returncode:
+            raise ValueError('Case012 original/publication verification failed')
+        pages = [relative + '/' + name for name in ('README.md', 'README.ko.md', 'REPORT.md', 'REPORT.ko.md',
+                                                   'REPRODUCTION.md', 'NOTICE.md', 'publication/README.md',
+                                                   'publication/IMAGES.md', 'publication/IMAGES.ko.md')]
+        check_links(root, pages, errors)
+        check_copy_hygiene(root, tuple(pages), errors)
+        for stem in ('README', 'REPORT'):
+            if f']({stem}.ko.md)' not in (case / (stem + '.md')).read_text() or f']({stem}.md)' not in (case / (stem + '.ko.md')).read_text():
+                errors.append('Case012 same-language counterpart missing: ' + stem)
+        for lang in ('en', 'ko'):
+            if (root / f'docs/{lang}/CASEBOOK.md').read_text().count('<a id="case-012"></a>') != 1:
+                errors.append('Case012 must have one Casebook entry: ' + lang)
+        return {p.relative_to(root).as_posix() for p in case.rglob('*')
+                if p.is_file() and not {'__pycache__', '.pytest_cache'} & set(p.parts)}
+    except (OSError, ValueError, KeyError) as exc:
+        errors.append('Case012 publication verification failed: ' + str(exc))
+        return set()
+
+
 def audit(root: Path, inventory: Path | None = None) -> dict:
     root = root.resolve()
     errors: list[str] = []
@@ -532,6 +564,7 @@ def audit(root: Path, inventory: Path | None = None) -> dict:
     additional |= check_new_study(root, errors)
     additional |= check_unified_case010(root, errors)
     additional |= check_case011(root, errors)
+    additional |= check_case012(root, errors)
     protected = check_protection(root, mapping.get('protection_revision', mapping['source_revision']), errors, inventory, additional)
     check_copy_hygiene(root, (*PAGES, CONCEPT_FIGURE, 'docs/_meta/claims.json', 'docs/_meta/MAINTENANCE.md'), errors)
     downloads = check_packages(root, mapping, errors)
