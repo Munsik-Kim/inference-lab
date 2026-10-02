@@ -244,7 +244,7 @@ def render_viewer(root, summary, lookup, prompts, ko):
     rows = []
     for s in NAMES:
         t, v = summary['timing'][s], q['settings'][s]
-        rows.append(f'<tr><th scope="row">L{t["loops"]} / S{t["steps"]}</th><td>{t["main_complete_median_seconds"]:.3f}s</td><td>{v["passed_images"]}/{v["images"]} ({percent(v["all_constraint_pass_rate"])})</td></tr>')
+        rows.append(f'<tr><th scope="row">L{t["loops"]} / S{t["steps"]}</th><td>{t["main_complete_median_seconds"]:.3f}s</td><td>{v["passed_images"]}/{v["images"]}<span class="scope">{percent(v["all_constraint_pass_rate"])}</span></td></tr>')
     articles = []
     for p in prompts:
         checklist = ''.join(f'<li>{e(c["id"])}: {e(c["ko" if ko else "en"])}</li>' for c in p['constraints'])
@@ -267,7 +267,7 @@ def render_viewer(root, summary, lookup, prompts, ko):
     # No model or annotation mutation runs in this viewer. All results are HTML
     # before JavaScript; JS only offers an optional prompt filter.
     text = f'''<!doctype html>
-<html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{e(title)} — DIOVA</title><link rel="stylesheet" href="../../demo/style.css"></head>
+<html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{e(title)} — DIOVA</title><link rel="stylesheet" href="../../demo/style.css"><style>#results th{{white-space:normal}}#results td .scope{{display:block}}</style></head>
 <body><a class="skip" href="#content">{"본문으로 이동" if ko else "Skip to content"}</a><header><div><a href="../../{'README.ko.md' if ko else 'README.md'}">DIOVA · Case 012</a><a id="language" href="viewer.{other}.html">{"English" if ko else "한국어"}</a></div></header>
 <main id="content"><p class="eyebrow">{"저장된 결과 · AI 1개 판독자" if ko else "Saved results · One AI rater"}</p><h1>{e(title)}</h1><p>{finding}</p>
 <nav><a href="#results">{"핵심 결과" if ko else "Results"}</a><a href="#images">{"모든 이미지" if ko else "Every image"}</a><a href="#method">{"평가 방법" if ko else "Assessment method"}</a><a href="../../{'REPORT.ko.md' if ko else 'REPORT.md'}">{"정식 보고서" if ko else "Full report"}</a></nav>
