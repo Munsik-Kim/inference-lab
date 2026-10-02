@@ -1,0 +1,118 @@
+"""Source-backed Pages and synthetic human-file contracts; no model forward."""
+import copy
+import hashlib
+import json
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0,str(ROOT/'tools/showcase'))
+from build import build
+from check import check, Links
+from case012_pages import load_case012, annotation_data, C12, SECTIONS
+from score_case012 import score
+
+
+class Case012Pages(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.site = Path(cls.tmp.name)/'site'
+        cls.manifest = build(ROOT,cls.site,'/inference-lab/')
+        cls.data = load_case012(ROOT)
+        cls.inputs = annotation_data(ROOT,cls.data)
+
+    @classmethod
+    def tearDownClass(cls): cls.tmp.cleanup()
+
+    def test_original_MAIN_PNGs_have_exact_bytes(self):
+        self.assertEqual(len(self.data['images']),192)
+        for name,path in self.data['images'].items():
+            self.assertEqual((self.site/name).read_bytes(),(ROOT/path).read_bytes())
+
+    def test_human_input_masks_config_and_has_no_AI_prefill(self):
+        inputs = json.loads((self.site/'data/case012-annotation.json').read_text())
+        self.assertEqual(inputs,self.inputs)
+        self.assertEqual(len(inputs['items']),192)
+        for item in inputs['items']:
+            self.assertFalse({'setting','loops','steps','seed_label','complete_seconds','values'} & set(item))
+
+    def test_visible_AI_results_are_separate_from_human_scope(self):
+        self.assertEqual(self.data['recorded_quality_status'],'ANNOTATION_PENDING')
+        self.assertEqual(self.data['evaluator']['human_raters'],0)
+        self.assertEqual([self.data['quality']['settings'][s]['passed_images'] for s in ('A_time','B_time','C_time')],[51,53,53])
+        for lang in ('en','ko'):
+            main=(self.site/lang/'case012.html').read_text(); parser=Links(); parser.feed(main)
+            self.assertTrue(set(SECTIONS)<=parser.ids)
+            self.assertIn('51/64',main); self.assertIn('53/64',main)
+            self.assertIn('case012-annotate.html',main)
+            form=(self.site/lang/'case012-annotate.html').read_text()
+            self.assertNotIn('data/case012.json',form)
+            self.assertNotIn('51/64',form)
+            self.assertIn('id="export"',form); self.assertIn('id="import"',form)
+            self.assertIn('../'+('ko' if lang=='en' else 'en')+'/case012-annotate.html',form)
+
+    def test_unknown_artifact_and_tampered_PNG_cannot_be_rehashed_to_pass(self):
+        name=next(iter(self.data['images'])); target=self.site/name
+        original=target.read_bytes(); manifest=self.site/'build_manifest.json'; old=manifest.read_bytes()
+        try:
+            target.write_bytes(original+b'corruption'); m=json.loads(old)
+            m['files'][name]=hashlib.sha256(target.read_bytes()).hexdigest(); manifest.write_text(json.dumps(m))
+            with self.assertRaisesRegex(ValueError,'Changed Case012 original PNG'): check(ROOT,self.site)
+        finally: target.write_bytes(original); manifest.write_bytes(old)
+        extra=self.site/'assets/unlisted.png'; extra.write_bytes(original)
+        try:
+            with self.assertRaisesRegex(ValueError,'Unexpected/missing deploy'): check(ROOT,self.site)
+        finally: extra.unlink()
+
+    def test_tampered_human_identity_is_rejected_even_after_manifest_update(self):
+        target=self.site/'data/case012-annotation.json'; old=target.read_bytes()
+        manifest=self.site/'build_manifest.json'; old_m=manifest.read_bytes()
+        try:
+            data=json.loads(old); data['items'][0]['image_sha256']='0'*64; target.write_text(json.dumps(data))
+            m=json.loads(old_m); m['files']['data/case012-annotation.json']=hashlib.sha256(target.read_bytes()).hexdigest()
+            manifest.write_text(json.dumps(m))
+            with self.assertRaisesRegex(ValueError,'Case012 human input mismatch'): check(ROOT,self.site)
+        finally: target.write_bytes(old); manifest.write_bytes(old_m)
+
+    def annotation_fixture(self, complete=False):
+        items=self.inputs['items']; rows=[]
+        if complete:
+            rows=[{'image_id':i['image_id'],'image_sha256':i['image_sha256'],
+                   'values':{c['id']:'satisfied' for c in i['constraints']}} for i in items]
+        return {'schema':'case012-annotations-v1','scope':'MAIN_ONLY',
+                'image_set_sha256':self.inputs['image_set_sha256'],'rubric_sha256':self.inputs['rubric_sha256'],
+                'evaluator':{'type':'human','id':'SYNTHETIC_TEST_ONLY'},
+                'status':'COMPLETE' if complete else 'PARTIAL','rows':rows,'draft_rows':[],
+                'incomplete_image_ids':[] if complete else [i['image_id'] for i in items],
+                'cursor':0,'current_image_id':items[0]['image_id']}
+
+    def test_partial_human_file_has_no_quality_score(self):
+        q=score(ROOT,self.annotation_fixture())['quality']
+        self.assertEqual(q['status'],'ANNOTATION_PENDING'); self.assertIsNone(q['primary'])
+        self.assertEqual(q['coverage']['expected'],192)
+
+    def test_synthetic_complete_labels_preserve_full_denominator(self):
+        # Contract fixture only; these fabricated labels are never published as observations.
+        q=score(ROOT,self.annotation_fixture(True))['quality']
+        self.assertEqual(q['coverage']['annotated'],192)
+        self.assertEqual(q['primary']['estimate'],0)
+        self.assertEqual(q['paired']['both_pass'],64)
+
+    def test_bad_human_files_and_AI_import_are_rejected(self):
+        f=self.annotation_fixture(True)
+        for change in ('AI','duplicate','hash','status','cursor'):
+            x=copy.deepcopy(f)
+            if change=='AI': x['evaluator']['type']='model-assisted'
+            if change=='duplicate': x['rows'].append(x['rows'][0])
+            if change=='hash': x['rows'][0]['image_sha256']='other'
+            if change=='status': x['status']='PARTIAL'
+            if change=='cursor': x['cursor']=192
+            with self.subTest(change=change),self.assertRaises(ValueError): score(ROOT,x)
+
+    def test_site_has_no_model_weights_or_new_quality_run(self):
+        self.assertFalse(any(name.endswith(('.pt','.bin','.zip','.npz')) for name in self.manifest['files']))
+        self.assertEqual(self.manifest['case012_units']['images'],192)
+        check(ROOT,self.site)

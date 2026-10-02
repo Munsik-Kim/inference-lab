@@ -604,3 +604,5 @@ Case010의 저장 구현을 사용하는 후속 질문은 [Case011의 판독층 
 **AI 평가:** MAIN 192장을 같은 checklist로 판독했습니다. L1 51/64장, L2 53/64장, L4 53/64장이 모든 항목을 충족했습니다. L4−L1은 +3.12pp, 95% prompt-cluster bootstrap 구간 [-3.12, +10.94]pp로 0을 포함합니다. 같은 입력에서 L4만 충족 4쌍, L1만 충족 2쌍입니다. AI 판독자 1개·인간 0명이며, 7개 애매한 항목은 기본 점수에서 미충족입니다. 이전 예시 노출과 시간 불일치를 포함한 평가 범위는 별도 [평가 문서](../../cases/012-looped-dit-inference-budget/publication/assessment_v1/README.ko.md)에 있습니다.
 
 [쉬운 소개](../../cases/012-looped-dit-inference-budget/README.ko.md) · [모든 이미지 비교](../../cases/012-looped-dit-inference-budget/publication/IMAGES.ko.md) · [실행 코드](../../cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU 검산](../../cases/012-looped-dit-inference-budget/REPRODUCTION.md) · [정식 보고서](../../cases/012-looped-dit-inference-budget/REPORT.ko.md)
+
+[사이트에서 직접 정답 체크하기](https://munsik-kim.github.io/inference-lab/ko/case012-annotate.html) · [실제 결과](https://munsik-kim.github.io/inference-lab/ko/case012.html). 부분 체크도 JSON으로 내려받고 나중에 가져와 이어서 할 수 있습니다. 사람의 기록은 AI 점수와 별도이며 자동 업로드되지 않습니다.

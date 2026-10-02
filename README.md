@@ -153,6 +153,8 @@ Generation, measurement and AI assessment are complete for 192 MAIN images. Ever
 
 [Plain-language overview](cases/012-looped-dit-inference-budget/README.md) · [Compare every image](cases/012-looped-dit-inference-budget/publication/IMAGES.md) · [Adapter code](cases/012-looped-dit-inference-budget/source/adapter.py) · [Methods and results](cases/012-looped-dit-inference-budget/REPORT.md)
 
+[Check the images yourself on the site](https://munsik-kim.github.io/inference-lab/en/case012-annotate.html) · [Result page](https://munsik-kim.github.io/inference-lab/en/case012.html). Download JSON at any point and import it later to resume. Browser records are not automatically uploaded; human labels are recalculated separately from AI scores.
+
 ## Questions and recorded tools
 
 

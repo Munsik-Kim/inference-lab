@@ -1,4 +1,4 @@
-"""Keep Case012 discoverable without implying a deployed result page."""
+"""Retain historical pending scope while exposing a separate assessed Pages view."""
 import json
 import sys
 import unittest
@@ -22,9 +22,10 @@ class Case012Archive(unittest.TestCase):
                 html = (site / lang / 'index.html').read_text()
                 for n in range(1, 13):
                     self.assertEqual(html.count(f'<span class="archive-number">{n:03}</span>'), 1)
-                self.assertIn(f'docs/{lang}/CASEBOOK.md#case-012', html)
-                self.assertFalse((site / lang / 'case012.html').exists())
-            self.assertFalse((site / 'data/case012.json').exists())
+                self.assertIn('href="case012.html"', html)
+                self.assertTrue((site / lang / 'case012.html').exists())
+                self.assertTrue((site / lang / 'case012-annotate.html').exists())
+            self.assertEqual(json.loads((site / 'data/case012.json').read_text())['recorded_quality_status'], 'ANNOTATION_PENDING')
             check(ROOT, site)
 
     def test_pending_archive_rejects_invented_quality(self):

@@ -2,6 +2,7 @@
 from html import escape
 from case010 import home_case010
 from case011 import home_case011
+from case012_pages import home_case012
 
 C8_PATH = 'cases/008-build-reconstruct-reload'
 C8_REVISION = '9bc8b8fced8dfd5147f9bfdc67564eda04670810'
@@ -31,7 +32,7 @@ def output_metrics(data8: dict) -> dict[str, str]:
 
 
 def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
-         revision: str, data8: dict | None = None, data9: dict | None = None, data10: dict | None = None, data11: dict | None = None) -> str:
+         revision: str, data8: dict | None = None, data9: dict | None = None, data10: dict | None = None, data11: dict | None = None, data12: dict | None = None) -> str:
     if len(case_paths) != len(names):
         raise ValueError('Every case needs a translated archive title')
     docs = f'https://github.com/Munsik-Kim/inference-lab/blob/main/docs/{lang}/'
@@ -118,6 +119,8 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
         out += home_case010(data10, lang)
     if data11:
         out += home_case011(data11, lang)
+    if data12:
+        out += home_case012(data12, lang)
     reading = '<section class="reading-strip"><div><p class="eyebrow">START HERE</p><h2>'+text('readingTitle')+'</h2><p>'+text('readingIntro')+'</p></div><div class="reading-links">'
     for url, key in [(docs+'START_HERE.md','beginner'),(docs+'GLOSSARY.md','glossary'),('guide.html','guide')]:
         reading += anchor(url,t[key]+' ↗','reading-link')
@@ -126,7 +129,7 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     out += '</ol><details><summary>'+text('archiveEarlier')+'</summary><ol class="case-list">'
     for i,(path,name) in enumerate(zip(case_paths,names),1):
         if i == 6: out += '</ol></details><ol class="case-list">'
-        url='case011.html' if i==11 and data11 else 'case010.html' if i==10 and data10 else 'case009.html' if i==9 and data9 else docs+f'CASEBOOK.md#case-{i:03}'
+        url='case012.html' if i==12 and data12 else 'case011.html' if i==11 and data11 else 'case010.html' if i==10 and data10 else 'case009.html' if i==9 and data9 else docs+f'CASEBOOK.md#case-{i:03}'
         out += '<li>'+anchor(url,name,'case-name')+f'<span class="archive-number">{i:03}</span><span class="archive-arrow" aria-hidden="true">↗</span></li>'
     out += '</ol></section>'+reading+'<section class="contact-strip"><h2>'+text('collaboration')+'</h2><p>'+text('collaborationIntro')+'</p><div class="actions">'+anchor(docs+'PORTFOLIO.md',t['code'],'text-link')+anchor('https://github.com/Munsik-Kim/inference-lab/issues',t['contact'],'quiet-link')+'</div></section>'
     return out

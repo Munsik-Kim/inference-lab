@@ -153,6 +153,8 @@ MAIN 192장의 생성·측정과 AI 판독을 마쳤습니다. 모든 평가 조
 
 [쉽게 살펴보기](cases/012-looped-dit-inference-budget/README.ko.md) · [모든 이미지 비교](cases/012-looped-dit-inference-budget/publication/IMAGES.ko.md) · [실행 코드](cases/012-looped-dit-inference-budget/source/adapter.py) · [설계와 결과](cases/012-looped-dit-inference-budget/REPORT.ko.md)
 
+[사이트에서 직접 정답 체크하기](https://munsik-kim.github.io/inference-lab/ko/case012-annotate.html) · [결과 페이지](https://munsik-kim.github.io/inference-lab/ko/case012.html). 진행 중에도 JSON을 다운로드하고 나중에 가져와 이어서 체크할 수 있습니다. 브라우저 기록은 자동 업로드되지 않으며, 사람의 평가는 AI 점수와 별도로 검산합니다.
+
 ## 질문과 구현물
 
 
