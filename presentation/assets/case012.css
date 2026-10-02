@@ -1,0 +1,26 @@
+/* Reuse existing ink/copper typography; keep human labels in their own form. */
+.case012-study { min-width:0; }
+.case012-toc { display:flex; gap:12px 24px; flex-wrap:wrap; margin:24px 0 40px; }
+.case012-study table { width:100%; font-variant-numeric:tabular-nums; }
+.case012-study .study-table th { min-width:0; white-space:normal; }
+.case012-study .study-table td { overflow-wrap:normal; }
+.case012-study details { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:16px 20px; margin:20px 0; }
+.case012-study summary { cursor:pointer; font-weight:600; }
+.case012-study details[open]>summary { margin-bottom:18px; }
+.case012-study pre { max-width:100%; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; }
+.case012-study fieldset { min-width:0; border:1px solid var(--border); border-radius:8px; padding:16px; margin:0 0 16px; }
+.case012-study legend { font-weight:600; padding:0 5px; }
+.case012-study input { max-width:100%; }
+.case012-study button { min-height:44px; }
+.case012-study [hidden] { display:none!important; }
+.case012-annotation-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:32px; margin:24px 0; }
+.case012-annotation-grid img { width:100%; height:auto; display:block; border-radius:8px; }
+.case012-annotation-grid label { display:flex; flex-direction:row; align-items:center; gap:10px; min-height:44px; cursor:pointer; font-size:1rem; }
+.case012-annotation-grid input[type=radio] { width:20px; height:20px; min-height:20px; padding:0; flex:0 0 20px; accent-color:var(--accent); }
+.annotation-save-note { border-left:3px solid var(--accent); padding:12px 18px; background:var(--tint); }
+.case012-study .import-label { display:flex; flex-direction:column; gap:8px; }
+@media(max-width:700px) {
+ .case012-annotation-grid { grid-template-columns:1fr; gap:24px; }
+ .case012-study .study-table th,.case012-study .study-table td { font-size:.92rem; padding:12px 8px; }
+ .case012-toc { gap:10px 18px; }
+}

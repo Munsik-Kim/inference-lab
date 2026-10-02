@@ -1,0 +1,2581 @@
+{
+  "evaluator": {
+    "human_raters": 0,
+    "id": "codex-visual-assessor-20261002",
+    "implementation": "OpenAI Codex multimodal assistant viewing original saved PNGs in this session",
+    "inter_rater_agreement": "NOT_MEASURED",
+    "model_revision": "Not exposed by this session; unavailable, not inferred",
+    "paid_or_external_judge_api_invocations": 0,
+    "rater_count": 1,
+    "type": "model-assisted"
+  },
+  "human_evaluation": "NOT_RUN",
+  "limitations": {
+    "masking": {
+      "hide": [
+        "loop_depth",
+        "steps",
+        "seed_label",
+        "setting_id",
+        "latency",
+        "paired_other_images"
+      ],
+      "prior_exposure": "Evaluator session previously received non-blind interpretations of 48 first-seed images and the selected cube example. Configuration-masked review is not independent fully blind human evaluation.",
+      "visible": [
+        "original_PNG",
+        "opaque_image_ID",
+        "English_prompt",
+        "frozen_constraint_text"
+      ]
+    },
+    "sampling": "16 prompts, four noise seeds each, four related template families",
+    "scoring_scope": "Explicit frozen constraints only; not every prose requirement, aesthetics or official GenEval",
+    "time_matching": "DEV +/-5% target missed; not an exact equal-time result",
+    "uncertainty": "Input resampling uncertainty conditional on one AI rater; does not include judge error or guarantee population coverage."
+  },
+  "new_generations": 0,
+  "new_training": 0,
+  "quality": {
+    "categories": {
+      "color_binding": {
+        "A_time": {
+          "all_constraint_pass_rate": 0.9375,
+          "n": 16
+        },
+        "B_time": {
+          "all_constraint_pass_rate": 0.9375,
+          "n": 16
+        },
+        "C_time": {
+          "all_constraint_pass_rate": 0.9375,
+          "n": 16
+        }
+      },
+      "compound": {
+        "A_time": {
+          "all_constraint_pass_rate": 0.5625,
+          "n": 16
+        },
+        "B_time": {
+          "all_constraint_pass_rate": 0.625,
+          "n": 16
+        },
+        "C_time": {
+          "all_constraint_pass_rate": 0.5625,
+          "n": 16
+        }
+      },
+      "count": {
+        "A_time": {
+          "all_constraint_pass_rate": 0.6875,
+          "n": 16
+        },
+        "B_time": {
+          "all_constraint_pass_rate": 0.75,
+          "n": 16
+        },
+        "C_time": {
+          "all_constraint_pass_rate": 0.8125,
+          "n": 16
+        }
+      },
+      "left_right": {
+        "A_time": {
+          "all_constraint_pass_rate": 1.0,
+          "n": 16
+        },
+        "B_time": {
+          "all_constraint_pass_rate": 1.0,
+          "n": 16
+        },
+        "C_time": {
+          "all_constraint_pass_rate": 1.0,
+          "n": 16
+        }
+      }
+    },
+    "constraint_gains": {
+      "main-color-1/c1": 0,
+      "main-color-1/c2": 0,
+      "main-color-2/c1": 0,
+      "main-color-2/c2": 0,
+      "main-color-3/c1": 0,
+      "main-color-3/c2": 0,
+      "main-color-4/c1": 0,
+      "main-color-4/c2": 0,
+      "main-compound-1/c1": 0,
+      "main-compound-1/c2": 0,
+      "main-compound-1/c3": 0,
+      "main-compound-1/c4": 0,
+      "main-compound-2/c1": 1,
+      "main-compound-2/c2": 0,
+      "main-compound-2/c3": 0,
+      "main-compound-2/c4": 0,
+      "main-compound-3/c1": 1,
+      "main-compound-3/c2": 0,
+      "main-compound-3/c3": 0,
+      "main-compound-3/c4": 0,
+      "main-compound-4/c1": 2,
+      "main-compound-4/c2": 0,
+      "main-compound-4/c3": 0,
+      "main-compound-4/c4": 0,
+      "main-count-1/c1": 0,
+      "main-count-2/c1": 2,
+      "main-count-3/c1": 1,
+      "main-count-4/c1": 0,
+      "main-position-1/c1": 0,
+      "main-position-1/c2": 0,
+      "main-position-1/c3": 0,
+      "main-position-2/c1": 0,
+      "main-position-2/c2": 0,
+      "main-position-2/c3": 0,
+      "main-position-3/c1": 0,
+      "main-position-3/c2": 0,
+      "main-position-3/c3": 0,
+      "main-position-4/c1": 0,
+      "main-position-4/c2": 0,
+      "main-position-4/c3": 0
+    },
+    "constraint_losses": {
+      "main-color-1/c1": 0,
+      "main-color-1/c2": 0,
+      "main-color-2/c1": 0,
+      "main-color-2/c2": 0,
+      "main-color-3/c1": 0,
+      "main-color-3/c2": 0,
+      "main-color-4/c1": 0,
+      "main-color-4/c2": 0,
+      "main-compound-1/c1": 0,
+      "main-compound-1/c2": 0,
+      "main-compound-1/c3": 0,
+      "main-compound-1/c4": 0,
+      "main-compound-2/c1": 1,
+      "main-compound-2/c2": 0,
+      "main-compound-2/c3": 0,
+      "main-compound-2/c4": 1,
+      "main-compound-3/c1": 0,
+      "main-compound-3/c2": 0,
+      "main-compound-3/c3": 0,
+      "main-compound-3/c4": 0,
+      "main-compound-4/c1": 0,
+      "main-compound-4/c2": 1,
+      "main-compound-4/c3": 1,
+      "main-compound-4/c4": 1,
+      "main-count-1/c1": 0,
+      "main-count-2/c1": 0,
+      "main-count-3/c1": 1,
+      "main-count-4/c1": 0,
+      "main-position-1/c1": 0,
+      "main-position-1/c2": 0,
+      "main-position-1/c3": 0,
+      "main-position-2/c1": 0,
+      "main-position-2/c2": 0,
+      "main-position-2/c3": 0,
+      "main-position-3/c1": 0,
+      "main-position-3/c2": 0,
+      "main-position-3/c3": 0,
+      "main-position-4/c1": 0,
+      "main-position-4/c2": 0,
+      "main-position-4/c3": 0
+    },
+    "coverage": {
+      "annotated": 192,
+      "complete": true,
+      "expected": 192,
+      "missing": []
+    },
+    "evaluator": {
+      "human_raters": 0,
+      "id": "codex-visual-assessor-20261002",
+      "implementation": "OpenAI Codex multimodal assistant viewing original saved PNGs in this session",
+      "inter_rater_agreement": "NOT_MEASURED",
+      "model_revision": "Not exposed by this session; unavailable, not inferred",
+      "paid_or_external_judge_api_invocations": 0,
+      "rater_count": 1,
+      "type": "model-assisted"
+    },
+    "paired": {
+      "A_only": 2,
+      "C_only": 4,
+      "both_pass": 49,
+      "neither": 9
+    },
+    "per_image": {
+      "001a444bc6d87e48f280e328": {
+        "assessment_index": 16,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Three distinct banana bodies are visible."
+      },
+      "01d02e4b9168d4deba554c80": {
+        "assessment_index": 44,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One blue airplane left of one red locomotive."
+      },
+      "02672aebac2717a987bc51b7": {
+        "assessment_index": 56,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One purple chair left of one orange table."
+      },
+      "02b5116a2b2a3d799e797b44": {
+        "assessment_index": 187,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Three banana bodies are visible."
+      },
+      "046250dc9d73edb9daaf77af": {
+        "assessment_index": 98,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two blue toy cars are left of one red toy bus."
+      },
+      "08452a5cc00ea20fb380d6da": {
+        "assessment_index": 152,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "One mug body is visible."
+      },
+      "08cd943070fd3d949572bd53": {
+        "assessment_index": 96,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Exactly four distinct balloon bodies are visible."
+      },
+      "09d4afc852f4317d39708974": {
+        "assessment_index": 43,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One blue car and one red bicycle."
+      },
+      "0a29416b371fa88c2b90141d": {
+        "assessment_index": 148,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two blue toy cars are left of one red toy bus."
+      },
+      "0a9065837c02797be176a81d": {
+        "assessment_index": 101,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Only one red mug body is visible; one blue bottle is right of it."
+      },
+      "0ccc76ec1b99b7faf4b347ad": {
+        "assessment_index": 97,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Three distinct banana bodies are visible."
+      },
+      "0ec3924746c0d6f50693948c": {
+        "assessment_index": 78,
+        "fraction": 0.5,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "Two green mugs are visible rather than one; one yellow plate."
+      },
+      "0fdc3ccfc9efa2eec12fccd0": {
+        "assessment_index": 143,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One red cube is left of one blue sphere."
+      },
+      "14d320d47411af23b3b42e38": {
+        "assessment_index": 162,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "One mug body is visible."
+      },
+      "169c44a026f6d5b5caeb9d21": {
+        "assessment_index": 51,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One green mug and one yellow plate."
+      },
+      "16e06a1c0687269615d087d9": {
+        "assessment_index": 124,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Three distinct banana bodies are visible."
+      },
+      "19fd9997eb0e63ddd71f5f9f": {
+        "assessment_index": 183,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One red cube is left of one blue sphere."
+      },
+      "1c85a3c8ef06a49b2cfee282": {
+        "assessment_index": 26,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two red mugs left of one blue bottle."
+      },
+      "1dd13cf396a3b3a29cdd9a25": {
+        "assessment_index": 33,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One red cube and one blue sphere."
+      },
+      "1dd1a71897bce17ac2b293e6": {
+        "assessment_index": 147,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One green bottle is left of one yellow mug."
+      },
+      "1f7596012ea845592d3c6f72": {
+        "assessment_index": 62,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One green bottle left of one yellow mug."
+      },
+      "20a5dbc1560818602146a4b4": {
+        "assessment_index": 140,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Two apple bodies are visible."
+      },
+      "21c5d717c06843fa5a42c740": {
+        "assessment_index": 50,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One blue airplane left of one red toy locomotive."
+      },
+      "240f193b45fbf70cb038a1f9": {
+        "assessment_index": 149,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Five blue toy-car bodies are visible, rather than two; the red bus is to their right."
+      },
+      "26b51e958a80b190faa4c2f9": {
+        "assessment_index": 27,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One identifiable red cube left of one blue sphere."
+      },
+      "276c591f175acf74430c7e32": {
+        "assessment_index": 34,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two purple balloons, one orange gift box, correct colors, both balloon centers left of the box."
+      },
+      "282c6e850f1f4c9a0f42c819": {
+        "assessment_index": 113,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One green mug and one yellow plate are visible."
+      },
+      "2a462a197b451261b88848ad": {
+        "assessment_index": 174,
+        "fraction": 0.0,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied"
+        },
+        "visible_evidence": "Five balloon bodies are visible, rather than four."
+      },
+      "2bd625d7486d6a681df81eae": {
+        "assessment_index": 180,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two purple balloons are left of one orange gift box."
+      },
+      "2c6a44725f97445d415cf74e": {
+        "assessment_index": 156,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Two apple bodies are visible."
+      },
+      "2d0c7413c546fff450715a88": {
+        "assessment_index": 135,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Two apple bodies are visible despite overlap."
+      },
+      "2ea459078e79bc11080871b8": {
+        "assessment_index": 14,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One yellow suitcase and one purple backpack."
+      },
+      "3252dc0ea68a4fddcdc64c41": {
+        "assessment_index": 121,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "One mug body is visible."
+      },
+      "33d121329b0f55d0cc937215": {
+        "assessment_index": 167,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One purple chair is left of one orange table."
+      },
+      "38603bdf84efaf9b538e6c66": {
+        "assessment_index": 11,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "One mug is visible."
+      },
+      "3965475e2831b18e80f081dd": {
+        "assessment_index": 137,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "One mug body is visible."
+      },
+      "39b9e1cd308df37eeb6469fe": {
+        "assessment_index": 131,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Two apple bodies are visible."
+      },
+      "3a413a57dbb126a3f0a90585": {
+        "assessment_index": 136,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One green bottle is left of one yellow mug."
+      },
+      "3b1c2ad779e2a6a3ff54b19c": {
+        "assessment_index": 21,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One green bottle left of one yellow mug."
+      },
+      "3c56ed1480149c11d60b7c2d": {
+        "assessment_index": 40,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two identifiable overlapping blue car bodies/fronts and one red bus; both car centers are left of the bus."
+      },
+      "409a3ee05dfc2922d77e12ff": {
+        "assessment_index": 157,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "The yellow group includes cylindrical bodies, not three cubes; one green sphere is to the right."
+      },
+      "410b94eacf31ff32ed3dcaa1": {
+        "assessment_index": 170,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two red mugs are left of one blue bottle."
+      },
+      "4559ca47f0df59109ec4397d": {
+        "assessment_index": 8,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Three distinct yellow cube bodies, including a partly occluded rear cube, and one green sphere; all cube centers are left of the sphere."
+      },
+      "477135ae63e33d9f773e5926": {
+        "assessment_index": 144,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One green bottle is left of one yellow mug."
+      },
+      "489e8abfa8f523f03a63f69a": {
+        "assessment_index": 117,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One blue toy car and one red bicycle are visible."
+      },
+      "49831dccf254f90655428c21": {
+        "assessment_index": 145,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Three banana bodies are visible."
+      },
+      "49bee65c32d29cbe7f9eca0a": {
+        "assessment_index": 75,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two blue cars left of one red bus."
+      },
+      "4aaf0d852f9b9875f9d8c8d5": {
+        "assessment_index": 128,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One blue toy airplane is left of one red toy train."
+      },
+      "4b157d175f54315370ea6e32": {
+        "assessment_index": 67,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Four yellow block bodies are visible, including two stacked at center; one green sphere and correct colors/order."
+      },
+      "4b6dd2cc05fb8e5efce10b9c": {
+        "assessment_index": 58,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Four yellow blocks are visible as two stacks of two, not three; one green sphere, correct colors and left-right order."
+      },
+      "4bbbfd7b6b0a244015f3b582": {
+        "assessment_index": 119,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One yellow suitcase and one purple backpack are visible."
+      },
+      "4dd0edbcfe4104c921dedfc8": {
+        "assessment_index": 82,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One purple chair left of one orange table."
+      },
+      "4e554cacdf3d03a389c87874": {
+        "assessment_index": 150,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two purple balloons are left of one orange gift box."
+      },
+      "5017a6244f4f247258ee0e54": {
+        "assessment_index": 114,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "One mug body is visible."
+      },
+      "5061c8494ee266c043d17a6d": {
+        "assessment_index": 118,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One green mug and one yellow plate are visible."
+      },
+      "5116485a8f4a6ebc73b1b3ac": {
+        "assessment_index": 109,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Three blue toy-car bodies are visible to the left of one red bus, rather than two cars."
+      },
+      "516cd0b97763ac780f059c66": {
+        "assessment_index": 141,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One purple chair is left of one orange table."
+      },
+      "532c752593b8e3a3f0dc432e": {
+        "assessment_index": 29,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One purple chair left of one orange table."
+      },
+      "53dd19cb12bf5c1f8315a918": {
+        "assessment_index": 81,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One purple chair left of one orange table."
+      },
+      "541e33c18bf438cf53c1565a": {
+        "assessment_index": 176,
+        "fraction": 0.75,
+        "optimistic_pass": 1,
+        "pass": 0,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "uncertain"
+        },
+        "visible_evidence": "Two purple balloons and one orange box are visible; the right balloon is nearly centered above the box, so strict left placement is ambiguous."
+      },
+      "55dba078a93263546c09fa54": {
+        "assessment_index": 188,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Four balloon bodies are visible."
+      },
+      "55f5815caa4d0527642b8dd5": {
+        "assessment_index": 71,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One yellow suitcase and one purple backpack."
+      },
+      "5947d18347415abaf006c962": {
+        "assessment_index": 17,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One purple chair left of one orange table."
+      },
+      "59d07ac66390b96d0133bbda": {
+        "assessment_index": 68,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two purple balloon bodies and one orange gift box; both balloon centers left of the box."
+      },
+      "5ac2cd5f18572c7905a0a995": {
+        "assessment_index": 138,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One green bottle is left of one yellow mug."
+      },
+      "5ad1eaf2b6e470510f5391bd": {
+        "assessment_index": 48,
+        "fraction": 0.0,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied"
+        },
+        "visible_evidence": "Five distinct balloon bodies are visible, not four."
+      },
+      "5bfa3ea2c3e96a7276a750f6": {
+        "assessment_index": 165,
+        "fraction": 0.0,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied"
+        },
+        "visible_evidence": "Three balloon bodies are visible, rather than four."
+      },
+      "5d17c5a3f6f209dba49369e9": {
+        "assessment_index": 1,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "One clearly identifiable green mug."
+      },
+      "5d1d0f0510d074fd7e34e8bf": {
+        "assessment_index": 7,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One blue car and one red bicycle."
+      },
+      "5df27b1d3df7e11171171863": {
+        "assessment_index": 10,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Only two distinct yellow cube bodies are visible; one green sphere and correct left/right placement."
+      },
+      "63ab505b752ad052541a6377": {
+        "assessment_index": 73,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One blue toy car and one red bicycle."
+      },
+      "63eb5f4f95c3190d1b857a25": {
+        "assessment_index": 72,
+        "fraction": 0.0,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied"
+        },
+        "visible_evidence": "Only two distinct banana bodies are visible."
+      },
+      "68690327d31867bfdd13772d": {
+        "assessment_index": 163,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One red cube is left of one blue sphere."
+      },
+      "68faf5bf3a0b4a33a99d75d9": {
+        "assessment_index": 111,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Two apple bodies are visible."
+      },
+      "6a29789c01a9706edb274944": {
+        "assessment_index": 154,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Three banana bodies are visible."
+      },
+      "6b24c2ab166c918ca5363cda": {
+        "assessment_index": 146,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two red mugs are left of one blue bottle."
+      },
+      "6d0bdae10df25534b4cfa2c8": {
+        "assessment_index": 158,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One purple chair is left of one orange table."
+      },
+      "6d925be92c84ab3a9a333dc8": {
+        "assessment_index": 49,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Two distinct apple bodies."
+      },
+      "6dd7ba55223a5b31f46300df": {
+        "assessment_index": 175,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two red mugs are left of one blue bottle."
+      },
+      "6df38e775b1e9567e8ea8554": {
+        "assessment_index": 132,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One red cube and one blue sphere are visible."
+      },
+      "6ef607855ae1822d09c3ffe7": {
+        "assessment_index": 19,
+        "fraction": 0.0,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied"
+        },
+        "visible_evidence": "Two distinct banana bodies are visible, not three."
+      },
+      "7036aa7fa528bc2f1e6c1012": {
+        "assessment_index": 60,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Two distinct apple bodies, one partly occluded."
+      },
+      "705d1270e2df264a5bcde1e3": {
+        "assessment_index": 54,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Two identifiable apples, one partly occluded."
+      },
+      "7107c94ed711d4bd032014e8": {
+        "assessment_index": 84,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two purple balloon bodies, one orange gift box; both balloon centers left of the box."
+      },
+      "7155fb92c67673a4066bf1ed": {
+        "assessment_index": 92,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "One mug is visible."
+      },
+      "72fbe56691fb9c29b2b7a5b6": {
+        "assessment_index": 142,
+        "fraction": 0.75,
+        "optimistic_pass": 1,
+        "pass": 0,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "uncertain"
+        },
+        "visible_evidence": "Two purple balloons and one orange box are visible; the right balloon center is nearly aligned above the box center, so strict left placement is ambiguous."
+      },
+      "73481671fb9d14361a2272c9": {
+        "assessment_index": 3,
+        "fraction": 0.0,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied"
+        },
+        "visible_evidence": "Three distinct balloon bodies are visible, not four."
+      },
+      "740562010ecbaad5541cc2f7": {
+        "assessment_index": 160,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One blue toy airplane is left of one red toy train."
+      },
+      "746e801068b637b0552a71a4": {
+        "assessment_index": 95,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One green bottle left of one yellow mug."
+      },
+      "76297af091721c9159d2e6f8": {
+        "assessment_index": 31,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two red mugs left of one blue bottle."
+      },
+      "790af92541a80b43e2905bb5": {
+        "assessment_index": 6,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One green bottle at left and one yellow mug at right."
+      },
+      "79633a85dda7e1ff9b2e801c": {
+        "assessment_index": 129,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One red cube and one blue sphere are visible."
+      },
+      "7b9cd248fc21980555f421cc": {
+        "assessment_index": 126,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One blue toy car and one red bicycle are visible."
+      },
+      "7d89f526d80c30910d2233e0": {
+        "assessment_index": 30,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One blue toy airplane left of one red locomotive."
+      },
+      "7dad27ca229e2ba16aebd570": {
+        "assessment_index": 122,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One red cube is left of one blue sphere."
+      },
+      "7f4a4027609915023b89d2d6": {
+        "assessment_index": 90,
+        "fraction": 0.75,
+        "optimistic_pass": 1,
+        "pass": 0,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "uncertain"
+        },
+        "visible_evidence": "Three yellow cube bodies and one green sphere; the rightmost cube and sphere centers are nearly aligned, so strict left-of relation is ambiguous."
+      },
+      "7ff44c4303c6efad2277124a": {
+        "assessment_index": 127,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One red cube and one blue sphere are visible."
+      },
+      "8002dfcdba765ac53c1f0388": {
+        "assessment_index": 4,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Two distinct apples are visible."
+      },
+      "80d82c6f480bb7ee0e847fa6": {
+        "assessment_index": 88,
+        "fraction": 0.5,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "not_satisfied"
+        },
+        "visible_evidence": "Three purple balloon bodies are visible, including two overlapping at left. The rightmost balloon center is slightly right of the gift-box body center."
+      },
+      "8161ebb8d1cd9814ad3f7749": {
+        "assessment_index": 9,
+        "fraction": 0.0,
+        "optimistic_pass": 1,
+        "pass": 0,
+        "values": {
+          "c1": "uncertain"
+        },
+        "visible_evidence": "Overlapping banana bodies and a partly obscured lower contour make the exact count ambiguous."
+      },
+      "82b6836f50e3e3e867cce6d0": {
+        "assessment_index": 110,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "One mug body is visible."
+      },
+      "84ab698343d345b89e434e54": {
+        "assessment_index": 20,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One purple chair at left and one orange table at right."
+      },
+      "84f782ea82df650b7e6fd17b": {
+        "assessment_index": 168,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two red mugs are left of one blue bottle."
+      },
+      "853b823af67d58d867f698be": {
+        "assessment_index": 22,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One blue car and one red bicycle."
+      },
+      "867ff19b84e1a0fa832ab4e5": {
+        "assessment_index": 85,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One red cube left of one blue sphere."
+      },
+      "89adc6cc3da07bf42157606c": {
+        "assessment_index": 25,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One blue toy car and one red bicycle are identifiable; a detached wheel does not constitute another bicycle."
+      },
+      "8a00368721ee8830105e5d51": {
+        "assessment_index": 102,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One red cube and one blue sphere are visible."
+      },
+      "8b98fa096f36e2226fa7c27b": {
+        "assessment_index": 41,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "One mug is visible."
+      },
+      "8d7a0fd00d897bf425f4f8a0": {
+        "assessment_index": 153,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One green bottle is left of one yellow mug."
+      },
+      "8d89a7d8afe9416bbe14bad0": {
+        "assessment_index": 46,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One red cube left of one blue sphere."
+      },
+      "8e9c36cba01533eae5bf2ef9": {
+        "assessment_index": 37,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One red cube and one blue sphere."
+      },
+      "9133bcf7fd0787996b5e9c4a": {
+        "assessment_index": 186,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One yellow suitcase and one purple backpack are visible."
+      },
+      "924da5e96fc9443e05659866": {
+        "assessment_index": 15,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Two apples are visible."
+      },
+      "9a49e2316bef9c3e0d8d76f7": {
+        "assessment_index": 2,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One blue toy car and one red bicycle are identifiable; edge cropping does not prevent their identification."
+      },
+      "9b1c38376b061254b97d35ff": {
+        "assessment_index": 164,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One blue toy car and one red bicycle are visible."
+      },
+      "9bb0048765d4181b6a524841": {
+        "assessment_index": 123,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One red cube is left of one blue sphere."
+      },
+      "9bbdee1679289626f6625c92": {
+        "assessment_index": 179,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One blue toy airplane is left of one predominantly red toy train."
+      },
+      "9da272108beb7d7c582fb2ce": {
+        "assessment_index": 45,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One yellow suitcase and one purple backpack."
+      },
+      "9e601f62f64c007dcee742f8": {
+        "assessment_index": 91,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "One red mug body, not two; one blue capped bottle with a handle, correct colors and order."
+      },
+      "9e7bb7ccb082ed7ea81736d1": {
+        "assessment_index": 61,
+        "fraction": 0.5,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "Two green mugs are visible rather than one; one yellow plate."
+      },
+      "9eb65881d49062b50b5963a7": {
+        "assessment_index": 87,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two purple balloons and one orange gift box; both balloon centers left of the box."
+      },
+      "a1f64f33919c913a6f521192": {
+        "assessment_index": 57,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One green bottle left of one yellow mug."
+      },
+      "a8317a391b1606464851a46a": {
+        "assessment_index": 89,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two blue cars left of one red bus."
+      },
+      "a853d2092c16b58421cca841": {
+        "assessment_index": 182,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two yellow cubes are visible, rather than three; one green sphere is to their right."
+      },
+      "a8d8ab08b2c0f41d6eb74424": {
+        "assessment_index": 70,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One yellow suitcase and one purple backpack."
+      },
+      "a9eb014849c02244f4510071": {
+        "assessment_index": 13,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two red mugs and one blue capped bottle; both mugs are left of the bottle."
+      },
+      "a9f1cf98fe8d6e40e92878ab": {
+        "assessment_index": 83,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One red cube and one blue sphere."
+      },
+      "ac09047bf66f93b25d1fa34d": {
+        "assessment_index": 42,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two purple balloon bodies and one orange gift box; both balloon centers left of the box."
+      },
+      "adab3887458195f0d7dc16dd": {
+        "assessment_index": 80,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Only one red mug body with two handles is visible, not two mugs; one blue bottle and correct colors/order."
+      },
+      "adbbf762784403515d2d12d7": {
+        "assessment_index": 181,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One blue toy car and one red bicycle are visible."
+      },
+      "adcddfe3a1fb9f38f3570ddb": {
+        "assessment_index": 173,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Four balloon bodies are visible."
+      },
+      "b03cb55acf2ef1381789e9a2": {
+        "assessment_index": 169,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Four balloon bodies are visible."
+      },
+      "b1c0cdc6ef9ad14dea80e4f0": {
+        "assessment_index": 12,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One blue toy airplane at left and one red locomotive at right."
+      },
+      "b2e1b86c6b523fb47d1fbd41": {
+        "assessment_index": 38,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One green mug and one yellow plate."
+      },
+      "b3a0d9029b162d472cf610a4": {
+        "assessment_index": 77,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One red cube left of one blue sphere."
+      },
+      "b45d63662afeceb5422eba99": {
+        "assessment_index": 112,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two red mugs and one blue bottle are visible; both mugs are left of the bottle."
+      },
+      "b5e63042f791d500b377c68b": {
+        "assessment_index": 66,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One yellow suitcase and one purple backpack."
+      },
+      "b6cb32213594677bac6ee8c8": {
+        "assessment_index": 76,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One blue winged toy airplane left of one red locomotive."
+      },
+      "b6e7e392c2d4c78c54bce748": {
+        "assessment_index": 64,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One yellow suitcase and one purple backpack."
+      },
+      "b6f41d6f4d03fa22d54c6bcb": {
+        "assessment_index": 191,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One red cube and one blue sphere are visible."
+      },
+      "b987297b91348c5acf80ad3b": {
+        "assessment_index": 79,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One yellow suitcase and one purple backpack."
+      },
+      "ba74dff757927e983d876962": {
+        "assessment_index": 166,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two yellow cubes are visible, rather than three; one green sphere is to their right."
+      },
+      "be0308d3d1e8e46d95e8e6c8": {
+        "assessment_index": 185,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two yellow cubes are visible, rather than three; one green sphere is to their right."
+      },
+      "bf16e1ce3558e299e1837349": {
+        "assessment_index": 189,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One blue toy airplane is left of one red toy train."
+      },
+      "c0caa0e32e418c09505bd058": {
+        "assessment_index": 159,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One purple chair is left of one orange table."
+      },
+      "c137be1c53da9ec08a78e39b": {
+        "assessment_index": 86,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One red cube and one blue sphere."
+      },
+      "c2975e0e9ed756c998027834": {
+        "assessment_index": 65,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Four stacked yellow blocks are visible, not three; one green sphere and correct colors/order."
+      },
+      "c76cfb4696917d3f0109c40d": {
+        "assessment_index": 32,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One green mug and one yellow plate."
+      },
+      "c77afa61985b14f83cb30091": {
+        "assessment_index": 151,
+        "fraction": 0.0,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied"
+        },
+        "visible_evidence": "Five balloon bodies are visible, rather than four."
+      },
+      "c8609edc23e335dfcb921a9f": {
+        "assessment_index": 103,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One yellow suitcase and one purple backpack are visible."
+      },
+      "c87445f1a15de94ad78e4974": {
+        "assessment_index": 134,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One green mug and one yellow plate are visible."
+      },
+      "c90b235056d309b18669e148": {
+        "assessment_index": 106,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One yellow suitcase and one purple backpack are visible."
+      },
+      "caf55a48a4f76efc03f2e35c": {
+        "assessment_index": 52,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One blue airplane left of one red-and-black locomotive with a red cab and chassis."
+      },
+      "cb092ac98e819c89f3499df6": {
+        "assessment_index": 24,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One blue car and one red bicycle remain identifiable despite edge cropping."
+      },
+      "cd0899d2c92e9072519a93c7": {
+        "assessment_index": 55,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One red cube and one blue sphere."
+      },
+      "cd98cfe4b4d7ab35db5a6421": {
+        "assessment_index": 18,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Three identifiable banana bodies with three visible left tips."
+      },
+      "d171c7ae1cea37975f6bb4ea": {
+        "assessment_index": 171,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Four yellow cubes are visible in two stacks, rather than three; one green sphere is to their right."
+      },
+      "d2a436c0e8b39ac35a61e73b": {
+        "assessment_index": 63,
+        "fraction": 0.25,
+        "optimistic_pass": 1,
+        "pass": 0,
+        "values": {
+          "c1": "satisfied",
+          "c2": "uncertain",
+          "c3": "uncertain",
+          "c4": "uncertain"
+        },
+        "visible_evidence": "Two blue toy cars are identifiable. The red vehicle resembles a short van/car; whether it is a toy bus is uncertain, so bus-dependent identity/color/relation claims are uncertain."
+      },
+      "d4f4779a0ad95860b2b0ed31": {
+        "assessment_index": 184,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One yellow suitcase and one purple backpack are visible."
+      },
+      "d5b5c3c6147af0a096b7f22b": {
+        "assessment_index": 74,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two distinct blue toy cars left of one clearly identifiable red bus."
+      },
+      "d640e391f3a0cc0e9ee6d69f": {
+        "assessment_index": 47,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One red cube left of one blue sphere."
+      },
+      "d6f75fdddfa308b4b4cc4c3f": {
+        "assessment_index": 130,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One purple chair is left of one orange table."
+      },
+      "da9250d8288179263f43dbd4": {
+        "assessment_index": 120,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Four distinct balloon bodies are visible."
+      },
+      "dc6d7c1b223e2adba42f2fb2": {
+        "assessment_index": 94,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One green mug and one yellow plate."
+      },
+      "de827647c6e7ae220dd0e234": {
+        "assessment_index": 28,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One blue toy airplane left of one red toy train."
+      },
+      "df53401af9bbfd448b67a550": {
+        "assessment_index": 59,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One green bottle left of one yellow mug."
+      },
+      "dfd3c043e85df0792ef6dc04": {
+        "assessment_index": 39,
+        "fraction": 0.0,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied"
+        },
+        "visible_evidence": "Five distinct blue balloon bodies are visible, not four."
+      },
+      "e065c184d24ff99e223004f0": {
+        "assessment_index": 116,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One green mug and one yellow plate are visible."
+      },
+      "e1600eeb85674b20c883fc5d": {
+        "assessment_index": 5,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two purple balloon bodies and one orange gift box; both balloon centers lie left of the box center."
+      },
+      "e3253ec99fe56c1ef3faf680": {
+        "assessment_index": 190,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One red cube and one blue sphere are visible."
+      },
+      "e4e79c90aa6e8fe9ff116c25": {
+        "assessment_index": 192,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One red cube is left of one blue sphere."
+      },
+      "e8ecff1e6770ec890b9d4242": {
+        "assessment_index": 99,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Two distinct apple bodies are visible."
+      },
+      "e9af498b7a1f00dbfa95bfd2": {
+        "assessment_index": 172,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two red mugs are left of one blue bottle."
+      },
+      "eabc2db9dad4fc9453ae71a5": {
+        "assessment_index": 100,
+        "fraction": 0.0,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied"
+        },
+        "visible_evidence": "Four banana bodies are visible in two overlapping pairs, rather than three."
+      },
+      "ecc6634d3e58181ab010a5ca": {
+        "assessment_index": 23,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One red cube and one blue sphere."
+      },
+      "ecebb2e3a517a3d6fc102d80": {
+        "assessment_index": 107,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One green bottle is left of one yellow mug."
+      },
+      "edae3b65a6bb4dd09a48fb57": {
+        "assessment_index": 105,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "One mug body is visible."
+      },
+      "edced57e44db3c800a73f7ed": {
+        "assessment_index": 115,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two blue toy cars are left of one red toy bus."
+      },
+      "ede0334a0729bad9ae8ccb59": {
+        "assessment_index": 155,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One red cube is left of one blue sphere."
+      },
+      "f4eb6942b003db9c60eed8b6": {
+        "assessment_index": 139,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One blue toy car and one red bicycle are visible."
+      },
+      "f6c4f3f0633014a0552d1c8e": {
+        "assessment_index": 35,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two blue toy cars and one red toy bus; both cars left of the bus."
+      },
+      "fa6819b04d5bf693b9ad2c08": {
+        "assessment_index": 161,
+        "fraction": 0.5,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "Two green mugs are visible, rather than one; one yellow plate is visible."
+      },
+      "fa8eb52af88303f250aaf913": {
+        "assessment_index": 125,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two purple balloons are left of one orange gift box."
+      },
+      "fae8a19adaa2e37159b5f337": {
+        "assessment_index": 108,
+        "fraction": 0.0,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied"
+        },
+        "visible_evidence": "Five balloon bodies are visible, rather than four."
+      },
+      "fba7ac71003a4a071864a09a": {
+        "assessment_index": 177,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied"
+        },
+        "visible_evidence": "One green mug and one yellow plate are visible."
+      },
+      "fc68b8d8e8e722015bbbe637": {
+        "assessment_index": 178,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Two blue toy cars are left of one red toy bus."
+      },
+      "fd4fcff35b8fa9656b415b32": {
+        "assessment_index": 133,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One purple chair is left of one orange table."
+      },
+      "fd8b9fd8980331a844141584": {
+        "assessment_index": 53,
+        "fraction": 0.75,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied",
+          "c4": "satisfied"
+        },
+        "visible_evidence": "Only two yellow cubes are visible; one green sphere and correct colors/left-right order."
+      },
+      "fdc136e9000e443655559d5b": {
+        "assessment_index": 36,
+        "fraction": 0.0,
+        "optimistic_pass": 0,
+        "pass": 0,
+        "values": {
+          "c1": "not_satisfied"
+        },
+        "visible_evidence": "Two distinct banana bodies are visible, not three."
+      },
+      "fddfd03e495a1388a8776848": {
+        "assessment_index": 93,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "Two apple bodies are visible."
+      },
+      "ff967172a00fd9044b884dc0": {
+        "assessment_index": 69,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied",
+          "c2": "satisfied",
+          "c3": "satisfied"
+        },
+        "visible_evidence": "One blue airplane left of one red locomotive."
+      },
+      "ffd2d0b28cbd5aa1cb48ccd9": {
+        "assessment_index": 104,
+        "fraction": 1.0,
+        "optimistic_pass": 1,
+        "pass": 1,
+        "values": {
+          "c1": "satisfied"
+        },
+        "visible_evidence": "One mug body is visible."
+      }
+    },
+    "primary": {
+      "direction": "C_time minus A_time, higher better",
+      "estimate": 0.03125,
+      "interval": [
+        -0.03125,
+        0.109375
+      ],
+      "level": 0.95,
+      "method": "paired prompt-cluster bootstrap, seeds and settings kept together",
+      "prompt_clusters": 16,
+      "repetitions": 5000,
+      "seed": 72501,
+      "template_family_limit": "four related families; no population guarantee"
+    },
+    "settings": {
+      "A_time": {
+        "all_constraint_pass_rate": 0.796875,
+        "all_uncertain_as_pass_rate": 0.8125,
+        "constraint_labels": {
+          "not_satisfied": 13,
+          "satisfied": 146,
+          "uncertain": 1
+        },
+        "images": 64,
+        "mean_constraint_fraction": 0.8828125,
+        "passed_images": 51,
+        "uncertain_images": 1
+      },
+      "B_time": {
+        "all_constraint_pass_rate": 0.828125,
+        "all_uncertain_as_pass_rate": 0.84375,
+        "constraint_labels": {
+          "not_satisfied": 10,
+          "satisfied": 149,
+          "uncertain": 1
+        },
+        "images": 64,
+        "mean_constraint_fraction": 0.90625,
+        "passed_images": 53,
+        "uncertain_images": 1
+      },
+      "C_time": {
+        "all_constraint_pass_rate": 0.828125,
+        "all_uncertain_as_pass_rate": 0.875,
+        "constraint_labels": {
+          "not_satisfied": 8,
+          "satisfied": 147,
+          "uncertain": 5
+        },
+        "images": 64,
+        "mean_constraint_fraction": 0.91015625,
+        "passed_images": 53,
+        "uncertain_images": 3
+      }
+    },
+    "status": "ANNOTATED",
+    "uncertain_constraint_count": 7
+  },
+  "schema": "case012-model-assisted-summary-v1",
+  "scope": "Supplemental scoring of saved MAIN PNGs; original human-pending summary preserved",
+  "source_hashes": {
+    "analysis/analyze.py": "f112f480de984cfc9594b8ace107715050f58d8a0ccfc41a3986cd1d8912b85b",
+    "analysis/annotation_items.json": "d6ddb1b79a7f7e13e048a4f3192f69f9a9aac50572fcbc349fbf5be69c96ab07",
+    "analysis/record_index.json": "068f0a3d1bd96af1b2297ffedbd6fe0f1e0175af5d3f8827d6f7793c5151034c",
+    "analysis/summary.json": "00dcd89b3851be1efe1cd721be8c66509aa294cbe5637ca8291291905b7f0567",
+    "configs/main_settings.json": "276bc72fb2ebe4cb0a613e915e6e7010db6b688f8a85e5df973aa1be21a15a76",
+    "configs/prompts.json": "6763f729b681b7a9709825ff157648c6046c4a8767da83aa8bbc4ec488be4f6e",
+    "configs/protocol.json": "e08e34e7fa3a316b658e8787486c54c329e0c4bb92a9a32b66b44fe03eea04d9",
+    "configs/rubric.json": "211842848057e419e365b9726caaf80bffbc80363eb1c563c7bef929bf14aab5",
+    "publication/assessment_v1/analyze.py": "e3c53f555e4b3952b623fb8b7c3fccdfdbe2207ea0d2c8a0750caaa928afcb21",
+    "publication/assessment_v1/annotations.json": "12367bad474de2923739c4702b50e5ea67d0d258b19e768ec45ef002f66e85e6",
+    "publication/assessment_v1/input_manifest.json": "931b9abb542d65cb7d4d4a8d266716e7cb51aaea1083e35d1c84f08ad6ced7df",
+    "publication/assessment_v1/protocol.json": "4f755d9b88ceb2e6d3bc99c2c0306419b8309a88e1e434ff5dd35c68346642e6",
+    "source/contracts.py": "b5fe61b34b6d2f025e31f7a97c63ccd88efddb8439163e24f5ddb2d3dc449e05"
+  },
+  "status": "MODEL_ASSISTED_EVALUATION_COMPLETE",
+  "timing": {
+    "A_time": {
+      "images": 64,
+      "loops": 1,
+      "main_complete_median_seconds": 4.533662608499981,
+      "main_complete_minmax_seconds": [
+        3.5187157780001144,
+        5.35378933299944
+      ],
+      "main_peak_allocated_bytes": 2018232320,
+      "main_peak_reserved_bytes": 2034237440,
+      "main_sampler_gpu_median_ms": 4506.6279296875,
+      "repeat_process_medians": [
+        {
+          "median_seconds": 4.737083176500164,
+          "n": 2,
+          "round": 0
+        },
+        {
+          "median_seconds": 3.99643012550041,
+          "n": 2,
+          "round": 1
+        },
+        {
+          "median_seconds": 4.413433374000306,
+          "n": 2,
+          "round": 2
+        }
+      ],
+      "steps": 89
+    },
+    "B_time": {
+      "images": 64,
+      "loops": 2,
+      "main_complete_median_seconds": 4.384736665500441,
+      "main_complete_minmax_seconds": [
+        3.4914548990000185,
+        5.150492681999822
+      ],
+      "main_peak_allocated_bytes": 2018232320,
+      "main_peak_reserved_bytes": 2034237440,
+      "main_sampler_gpu_median_ms": 4357.192626953125,
+      "repeat_process_medians": [
+        {
+          "median_seconds": 4.221700079500806,
+          "n": 2,
+          "round": 0
+        },
+        {
+          "median_seconds": 3.870803391499976,
+          "n": 2,
+          "round": 1
+        },
+        {
+          "median_seconds": 3.995471966999503,
+          "n": 2,
+          "round": 2
+        }
+      ],
+      "steps": 66
+    },
+    "C_time": {
+      "images": 64,
+      "loops": 4,
+      "main_complete_median_seconds": 4.76248693100024,
+      "main_complete_minmax_seconds": [
+        3.6886858919997394,
+        5.505595609000011
+      ],
+      "main_peak_allocated_bytes": 2018232320,
+      "main_peak_reserved_bytes": 2034237440,
+      "main_sampler_gpu_median_ms": 4732.39599609375,
+      "repeat_process_medians": [
+        {
+          "median_seconds": 4.533676470498904,
+          "n": 2,
+          "round": 0
+        },
+        {
+          "median_seconds": 4.8496684685005675,
+          "n": 2,
+          "round": 1
+        },
+        {
+          "median_seconds": 4.343366075000631,
+          "n": 2,
+          "round": 2
+        }
+      ],
+      "steps": 50
+    }
+  }
+}

@@ -109,7 +109,10 @@ class UnifiedCaseDisplay(unittest.TestCase):
     def test_deploy_excludes_snapshot_tensors_and_archives(self):
         names=set(self.manifest['files'])
         self.assertFalse(any('/versions/' in name or name.endswith(('.zip','.pt','.npy','.npz')) for name in names))
-        self.assertEqual({name for name in names if name.endswith('.png')},{FIGURE_ASSET})
+        from case012_pages import load_case012
+        image_study = load_case012(ROOT)
+        expected_pngs = {FIGURE_ASSET} | (set(image_study['images']) if image_study else set())
+        self.assertEqual({name for name in names if name.endswith('.png')},expected_pngs)
         self.assertEqual(self.manifest['case010_units']['source_files'],self.data['sources'])
 
 

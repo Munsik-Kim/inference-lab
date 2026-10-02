@@ -1,0 +1,50 @@
+name: Case012 saved images and CPU publication checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: case012-cpu-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+env:
+  CUDA_VISIBLE_DEVICES: ''
+  HF_HUB_OFFLINE: '1'
+  TRANSFORMERS_OFFLINE: '1'
+  PYTHONDONTWRITEBYTECODE: '1'
+jobs:
+  recorded-images:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12.14'
+      - name: Install only saved-record CPU requirements
+        run: python -m pip install -r cases/012-looped-dit-inference-budget/requirements-cpu.txt
+      - name: Original identities and current publication contracts
+        run: python cases/012-looped-dit-inference-budget/publication/verify.py --output "$RUNNER_TEMP/case012/publication.json"
+      - name: Independent saved PNG and scalar audit
+        run: python cases/012-looped-dit-inference-budget/analysis/audit.py --output "$RUNNER_TEMP/case012/scalars.json"
+      - name: Supplemental AI labels, original pending scope and paired quality arithmetic
+        run: python cases/012-looped-dit-inference-budget/publication/assessment_v1/audit.py --output "$RUNNER_TEMP/case012/ai-assessment.json"
+      - name: Links, privacy and original source freeze
+        run: python cases/012-looped-dit-inference-budget/analysis/check_bundle.py --output "$RUNNER_TEMP/case012/links.json"
+      - name: Model-free contracts; PyTorch synthetic adapter is a separate original check
+        working-directory: cases/012-looped-dit-inference-budget
+        run: python -m pytest -q -p no:cacheprovider tests --ignore=tests/test_adapter_cpu.py --junitxml="$RUNNER_TEMP/case012/tests.xml"
+      - name: Keep CPU receipts only
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: case012-cpu-receipts
+          path: |
+            ${{ runner.temp }}/case012/*.json
+            ${{ runner.temp }}/case012/*.xml
+          if-no-files-found: warn
+          retention-days: 14

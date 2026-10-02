@@ -1,4 +1,4 @@
-# Eleven questions about inference and model changes
+# Twelve questions about inference and model changes
 
 English | [한국어](../ko/CASEBOOK.md) · [Home](../../README.md)
 
@@ -19,6 +19,7 @@ Each case follows **objective → dataset → assumptions and theory → experim
 - [009 — What changes with longer decode and concurrent requests?](#case-009)
 - [010 — Low-bit state storage, restart and readout horizon](#case-010)
 - [011 — What changes when only the readout changes?](#case-011)
+- [012 — Where should an image-generation budget go?](#case-012)
 
 <a id="case-001"></a>
 ## 001 — Can a kernel-selection change unblock execution?
@@ -594,3 +595,16 @@ The follow-up using Case010 state storage is [Case011 readout adaptation](#case-
 **Interpretation:** better gold probability scores did not delay the first error. Same-record error shifts and storage interactions are labelled post-hoc analyses. This bounded fitting result does not establish what every possible decoder could recover.
 
 [Overview](https://munsik-kim.github.io/inference-lab/en/case011.html#overview) · [Report](../../cases/011-frozen-state-readout-adaptation/REPORT.md) · [Intervention code](../../cases/011-frozen-state-readout-adaptation/source/adapter.py) · [CPU reanalysis](../../cases/011-frozen-state-readout-adaptation/REPRODUCTION.md)
+
+<a id="case-012"></a>
+## 012 — Where should an image-generation budget go?
+
+**Objective and implementation:** a runner divides time between successive image updates (steps) and repeated core computation within each update (loops). It saves images from identical initial noise and compares time, memory and count/color/left-right requirements.
+
+**Data and results:** one Looped-DiT B/32 checkpoint generated 192 MAIN images from 16 prompts and four initial noises each. Loops 1 / Steps 89, Loops 2 / Steps 66 and Loops 4 / Steps 50 had request medians of 4.534/4.385/4.762 seconds, including text encoding and CPU image conversion. The exact time-matching target was missed.
+
+**AI assessment:** all 192 MAIN images were judged with the same checklist. Every item is met in L1 51/64, L2 53/64 and L4 53/64 images. L4−L1 is +3.12pp, with a 95% prompt-cluster bootstrap interval [-3.12, +10.94]pp including zero. L4 alone passes 4 pairs and L1 alone passes 2. One AI rater, zero humans; 7 uncertain items count as failures. Prior example exposure and time mismatch are disclosed in the [assessment supplement](../../cases/012-looped-dit-inference-budget/publication/assessment_v1/README.md).
+
+[Plain-language overview](../../cases/012-looped-dit-inference-budget/README.md) · [Compare every image](../../cases/012-looped-dit-inference-budget/publication/IMAGES.md) · [Adapter code](../../cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU audit](../../cases/012-looped-dit-inference-budget/REPRODUCTION.md) · [Full report](../../cases/012-looped-dit-inference-budget/REPORT.md)
+
+[Interactive human checklist](https://munsik-kim.github.io/inference-lab/en/case012-annotate.html) · [Measured results](https://munsik-kim.github.io/inference-lab/en/case012.html). Your partial labels can be downloaded as JSON and restored later; they remain separate from the AI scores and are not automatically uploaded.

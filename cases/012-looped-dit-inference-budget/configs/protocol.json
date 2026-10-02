@@ -1,0 +1,137 @@
+{
+  "schema": "case012-protocol-v1",
+  "question": "One frozen checkpoint: allocate complete-request time to loops versus Euler steps.",
+  "checkpoint_id": "sensenova/Looped-DiT-B32@83a623e2d2e34d47e4f118dae84726901c5640df",
+  "code_commit": "92a9c1914258361f78e03426588c7c215944b504",
+  "encoder_id": "google/flan-t5-large@0613663d0d48ea86ba8cb3d7a44f0f65dc596a2a",
+  "fixed": {
+    "image_size": 512,
+    "cfg_scale": 6.0,
+    "noise_scale": 2.0,
+    "sampler": "Euler, original torch.linspace float32 grid, original x0-to-velocity clamp_min(.05)",
+    "diffusion_dtype": "bfloat16",
+    "encoder_dtype": "original from_pretrained default, measured before forward",
+    "weights": "ema",
+    "eager": true,
+    "tf32_matmul": true,
+    "tf32_cudnn": true,
+    "text_encoder_residency": "GPU, no offload",
+    "batch_size": 1,
+    "initial_noise": "CUDA BF16 torch.randn with per-request dedicated CUDA generator then multiply noise_scale; hash before write-back; noise same across all L/S for pair"
+  },
+  "block_proxy": [
+    {
+      "id": "proxy_A",
+      "loops": 1,
+      "steps": 94
+    },
+    {
+      "id": "proxy_B",
+      "loops": 2,
+      "steps": 73
+    },
+    {
+      "id": "proxy_C",
+      "loops": 4,
+      "steps": 50
+    }
+  ],
+  "latency_dev": {
+    "loops": [
+      1,
+      2,
+      4
+    ],
+    "initial_steps": [
+      25,
+      50,
+      75
+    ],
+    "requests_each_cell": 3,
+    "target": "median warmed complete request L4/S50",
+    "allowed_steps": [
+      25,
+      125
+    ],
+    "integer_prediction_attempts_per_loop": 1,
+    "method": "Least-squares straight line across the three DEV step counts, round nearest integer, clip to allowed range, verify on all three DEV prompts. If outside measured grid mark extrapolated. No further grid search; if >5% mismatch retain nearest actually measured setting and report quality-time, not exact equal-time.",
+    "tolerance_relative": 0.05,
+    "selection_uses_images": false
+  },
+  "data": {
+    "smoke_prompts": 4,
+    "smoke_seeds": [
+      72101,
+      72102
+    ],
+    "main_prompts": 16,
+    "main_seeds": [
+      72301,
+      72302,
+      72303,
+      72304
+    ],
+    "dev_seeds": [
+      72201,
+      72202,
+      72203
+    ],
+    "parity_seed": 72001,
+    "order_seed": 72401,
+    "noise_seed": "seed_label + 100000*prompt_index; stable mapping frozen in job manifest",
+    "same_maximum_workload_each_setting": true
+  },
+  "repeat_timing": {
+    "fresh_process_rounds": 3,
+    "main_pairs": [
+      {
+        "prompt_id": "main-count-1",
+        "seed_label": 72301
+      },
+      {
+        "prompt_id": "main-compound-1",
+        "seed_label": 72302
+      }
+    ],
+    "quality_independent_samples_added": 0,
+    "setting_orders": [
+      [
+        "A_time",
+        "B_time",
+        "C_time"
+      ],
+      [
+        "C_time",
+        "A_time",
+        "B_time"
+      ],
+      [
+        "B_time",
+        "C_time",
+        "A_time"
+      ]
+    ]
+  },
+  "budget": {
+    "max_full_generations": 320,
+    "max_generation_gpu_process_seconds": 14400,
+    "includes": "pilot, warmup, parity, diagnostics, DEV, MAIN and repeat timing; failed starts are charged",
+    "new_training": 0,
+    "extra_quality_sweep": 0
+  },
+  "evaluation": {
+    "primary": "all-constraint pass rate C_time minus A_time",
+    "independent_clusters": "16 prompts; four related template families are a further dependence limitation",
+    "bootstrap_repetitions": 5000,
+    "bootstrap_seed": 72501,
+    "quantile": "numpy.quantile method=linear, 2.5/97.5 percentiles, descriptive 95% paired prompt-cluster interval",
+    "seeds_and_settings": "resampled together within prompt",
+    "no_annotation": "ANNOTATION_PENDING; quality score=null, not zero",
+    "uncertain": "failure for primary; count plus all-uncertain-as-pass sensitivity separate",
+    "timing": "warmed string-to-tokenization/T5/sampling/CPU-PIL complete; cold load, PNG write, evaluator/profiler excluded; sampler-only CUDA event excludes text encode and initial noise construction"
+  },
+  "source_hashes": {
+    "prompts.json": "6763f729b681b7a9709825ff157648c6046c4a8767da83aa8bbc4ec488be4f6e",
+    "rubric.json": "211842848057e419e365b9726caaf80bffbc80363eb1c563c7bef929bf14aab5"
+  }
+}

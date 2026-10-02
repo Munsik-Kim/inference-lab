@@ -13,6 +13,7 @@ from case008 import load_case008, render_case008
 from case009 import load_case009, render_case009, C9, SOURCE_COPIES
 from case010 import load_case010, render_case010, C10, SOURCE_COPIES as C10_SOURCES, FIGURE_SOURCE, FIGURE_ASSET
 from case011 import load_case011, load_items, render_case011, C11, SOURCE_COPIES as C11_SOURCES, figures as case011_figures
+from case012_pages import load_case012, render_case012, render_annotation, annotation_data, image_viewer, C12, SOURCE_COPIES as C12_SOURCES
 
 def link(url, text, cls=''):
     return f'<a class="{cls}" href="{escape(url, quote=True)}">{escape(text)}</a>'
@@ -41,6 +42,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     data9 = load_case009(root)
     data10 = load_case010(root)
     data11 = load_case011(root)
+    data12 = load_case012(root)
     manifest = source_manifest(root)
     rev = manifest['evidence_revision']
     languages = {lang:read(root/f'presentation/content/{lang}.json') for lang in ('en','ko')}
@@ -77,18 +79,31 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         for name in ('case011.js','case011.css'):
             files['assets/'+name] = (root/'presentation/assets'/name).read_bytes()
         files.update(case011_figures(root))
+    if data12:
+        human12 = annotation_data(root, data12)
+        files['data/case012.json'] = (json_text(data12)+'\n').encode()
+        files['data/case012-annotation.json'] = (json_text(human12)+'\n').encode()
+        files['data/case012-annotation.js'] = ('window.CASE012_ANNOTATION = '+script_json(human12)+';\n').encode()
+        for name,path in C12_SOURCES.items(): files['sources/'+name] = (root/path).read_bytes()
+        for asset,path in data12['images'].items(): files[asset] = (root/path).read_bytes()
+        for name in ('case012.css', 'case012-annotation.js'):
+            files['assets/'+name] = (root/'presentation/assets'/name).read_bytes()
+        files['assets/case012-review.css'] = (root/C12/'demo/style.css').read_bytes()
+        files['assets/case012-images.js'] = (root/C12/'publication/assessment_v1/viewer.js').read_bytes()
     files['index.html'] = language_index().encode()
     case_paths = sorted(p.parent.relative_to(root).as_posix() for p in (root/'cases').glob('*/README.md'))
     names = {'en':['Execution compatibility','BF16 / FP8 extraction','Softmax approximation','Complete attention cost','Precision–cost settings','Answer decisions and ties','Structured MLP pruning','Model build, reload and MLP reconstruction'],
              'ko':['실행 호환성','BF16 / FP8 문서 추출','Softmax 수치 근사','Attention 전체 호출 비용','정밀도와 비용의 절충','답변 선택과 동률','구조화 MLP 압축','모델 제작·재실행과 MLP 출력 복구']}
     # IDs, translated archive labels, and verified projections are explicit.
     ids = [int(Path(path).name.split('-')[0]) for path in case_paths]
-    require(ids == list(range(1, len(ids)+1)) and 8 <= len(ids) <= 11,
+    require(ids == list(range(1, len(ids)+1)) and 8 <= len(ids) <= 12,
             'Unexpected case identity/count; extend the explicit display registry')
     registry = {
         9: (data9, 'Graph serving and official quality evaluation', 'Graph 요청 비용과 공식 품질 평가'),
         10: (data10, 'Recurrent-state storage, restart and readout horizon', '반복 상태의 저장·재시작과 판독 수명'),
         11: (data11, 'Same state, different readout', '같은 상태, 다른 판독기'),
+        # Current AI assessment and blank human form retain the historical scope.
+        12: (data12, 'Image-generation budget: loops vs steps', '이미지 생성 시간: 반복과 단계'),
     }
     for case_id in ids[8:]:
         data, en, ko = registry[case_id]
@@ -98,10 +113,15 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         t['methodLabels']=method_labels(lang)
         files[f'assets/{lang}.js'] = ('window.TEXT = '+script_json(t)+';\n').encode()
         other = 'ko' if lang == 'en' else 'en'
-        for page in ('index','case008','case007','case006','guide')+(('case009',) if data9 else ())+(('case010',) if data10 else ())+(('case011',) if data11 else ()):
+        for page in ('index','case008','case007','case006','guide')+(('case009',) if data9 else ())+(('case010',) if data10 else ())+(('case011',) if data11 else ())+(('case012','case012-annotate') if data12 else ()):
             scripts = ''
             if page == 'index':
-                body = home(t, lang, payloads, case_paths, names[lang], rev, data8, data9, data10, data11)
+                body = home(t, lang, payloads, case_paths, names[lang], rev, data8, data9, data10, data11, data12)
+            elif page == 'case012':
+                body = render_case012(data12, lang)
+            elif page == 'case012-annotate':
+                body = render_annotation(lang)
+                scripts = '<script defer src="../data/case012-annotation.js"></script><script defer src="../assets/case012-annotation.js"></script>'
             elif page == 'case011':
                 body = render_case011(data11,lang)
                 scripts = '<script defer src="../data/case011-items.js"></script><script defer src="../assets/case011.js"></script>'
@@ -126,20 +146,26 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 path=C7 if page=='case007' else C6
                 body += '<div class="actions">'+link(source_url(rev,path+'/REPRODUCTION.md'),t['original'])+'</div>'
                 scripts=f'<script defer src="../assets/{lang}.js"></script><script defer src="../data/{page}.js"></script><script defer src="../assets/state.js"></script><script defer src="../assets/app.js"></script>'
-            page_rev = 'Case011 original snapshot and post-hoc file hashes (JSON)' if page=='case011' else 'Case010 v1/v2 recorded snapshots (file hashes in JSON)' if page=='case010' else 'Case009 reviewed snapshot (file hashes in JSON)' if page=='case009' else C8_REVISION if page == 'case008' else rev
+            page_rev = 'Case012 recorded PNGs and separate AI assessment (file hashes in JSON)' if page.startswith('case012') else 'Case011 original snapshot and post-hoc file hashes (JSON)' if page=='case011' else 'Case010 v1/v2 recorded snapshots (file hashes in JSON)' if page=='case010' else 'Case009 reviewed snapshot (file hashes in JSON)' if page=='case009' else C8_REVISION if page == 'case008' else rev
             body+=f'<details class="provenance"><summary>{t["evidence"]}</summary><p class="small">{t["evidence"]}: <code>{page_rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p></details>'
             navigation = ''.join('<a'+(' aria-current="page"' if page==target else '')+' href="'+target+'.html">'+escape(label)+'</a>' for target,label in [('case008','Case 008'),('case007','Case 007'),('case006','Case 006'),('guide',t['navGuide'])])
             if page == 'index':
                 navigation = ''.join(link('#'+target,t[key]) for target,key in [('capabilities','navCapabilities'),('tech-stack','navStack'),('projects','navProjects')])
-            notice = '../sources/case011-notice.md.txt' if page=='case011' else '../sources/case010-notice.md.txt' if page=='case010' else '../sources/case009-notice.md.txt' if page=='case009' else source_url(C8_REVISION,C8_PATH+'/NOTICE.md') if page=='case008' else source_url(rev,C7+'/NOTICE.md')
+            notice = '../sources/case012-notice.md.txt' if page.startswith('case012') else '../sources/case011-notice.md.txt' if page=='case011' else '../sources/case010-notice.md.txt' if page=='case010' else '../sources/case009-notice.md.txt' if page=='case009' else source_url(C8_REVISION,C8_PATH+'/NOTICE.md') if page=='case008' else source_url(rev,C7+'/NOTICE.md')
             html=template.substitute(lang=lang,title=escape(('Case 011 · Same state, different readout' if lang=='en' else 'Case 011 · 같은 상태, 다른 판독기') if page=='case011' else ('Case 010 · Recurrent memory' if lang=='en' else 'Case 010 · 반복 상태와 기억 수명') if page=='case010' else 'Case 009 · Serving and quality' if page=='case009' else t['siteTitle'] if page=='index' else t['guide'] if page=='guide' else t['homeTitle8'] if page=='case008' else t['case007' if page=='case007' else 'case006']),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=t['language'],body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=notice,scripts=scripts)
             if page in ('case006','case007','case010','case011'):
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/study.css"></head>')
+            if page.startswith('case012'):
+                title12 = ('Case 012 · 직접 정답 체크하기' if lang=='ko' else 'Case 012 · Human image annotation') if page.endswith('annotate') else ('Case 012 · 이미지 생성 시간 배분' if lang=='ko' else 'Case 012 · Loops vs steps')
+                html = html.replace('<title>'+escape(t['case006'])+' · '+escape(t['brand'])+'</title>', '<title>'+escape(title12)+' · '+escape(t['brand'])+'</title>')
+                html = html.replace('</head>', '<link rel="stylesheet" href="../assets/study.css"><link rel="stylesheet" href="../assets/case012.css"></head>')
             if page in ('index','case011') and data11:
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/case011.css"></head>')
             if page == 'case008':
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/case008.css"></head>')
             files[f'{lang}/{page}.html']=html.encode()
+        if data12:
+            files[f'{lang}/case012-images.html'] = image_viewer(root, data12, lang).encode()
     # Explicit file set: no recursive copy of repository data, caches or archives.
     source_files = [p for folder in ('presentation','tools/showcase') for p in (root/folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts]
     presentation_hashes={p.relative_to(root).as_posix():sha(p) for p in sorted(source_files)}
@@ -168,6 +194,11 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     if data11:
         report['case011_units'] = {**data11['units'], 'source_files': data11['sources'],
                                   'items_source': {C11+'/publication/posthoc/data/items.json': sha(root/C11/'publication/posthoc/data/items.json')}}
+    if data12:
+        report['case012_units'] = {**data12['units'], 'source_files': data12['sources'],
+                                  'human_input_sha256': human12['image_set_sha256'],
+                                  'image_assets': {name:data12['sources'][path] for name,path in data12['images'].items()},
+                                  'human_evaluation': data12['human_evaluation']}
     files['build_manifest.json']=(json_text(report)+'\n').encode()
     output.mkdir(parents=True)
     for name,blob in files.items():

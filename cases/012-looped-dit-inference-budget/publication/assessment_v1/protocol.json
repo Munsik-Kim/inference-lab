@@ -1,0 +1,67 @@
+{
+  "schema": "case012-model-assisted-assessment-v1",
+  "frozen_before_this_full_assessment_utc": "2026-10-02T06:14:02.916817+00:00",
+  "authorization": "User requested completion of evaluation followed by GitHub publication on 2026-10-02.",
+  "status": "FROZEN_BEFORE_FULL_ASSESSMENT",
+  "source_generation_protocol_sha256": "e08e34e7fa3a316b658e8787486c54c329e0c4bb92a9a32b66b44fe03eea04d9",
+  "source_rubric_sha256": "211842848057e419e365b9726caaf80bffbc80363eb1c563c7bef929bf14aab5",
+  "input_manifest_sha256": "931b9abb542d65cb7d4d4a8d266716e7cb51aaea1083e35d1c84f08ad6ced7df",
+  "scope": "Supplemental evaluation of saved MAIN PNGs only. Original human-pending rubric/protocol and original summary are preserved. This supplement introduces model-assisted scoring; it is not the originally pending human evaluation.",
+  "evaluator": {
+    "type": "model-assisted",
+    "id": "codex-visual-assessor-20261002",
+    "implementation": "OpenAI Codex multimodal assistant viewing original saved PNGs in this session",
+    "model_revision": "Not exposed by this session; unavailable, not inferred",
+    "rater_count": 1,
+    "human_raters": 0,
+    "inter_rater_agreement": "NOT_MEASURED",
+    "paid_or_external_judge_api_invocations": 0
+  },
+  "masking": {
+    "hide": [
+      "loop_depth",
+      "steps",
+      "seed_label",
+      "setting_id",
+      "latency",
+      "paired_other_images"
+    ],
+    "visible": [
+      "original_PNG",
+      "opaque_image_ID",
+      "English_prompt",
+      "frozen_constraint_text"
+    ],
+    "prior_exposure": "Evaluator session previously received non-blind interpretations of 48 first-seed images and the selected cube example. Configuration-masked review is not independent fully blind human evaluation."
+  },
+  "coverage": {
+    "MAIN": 192,
+    "SMOKE": 0,
+    "SMOKE_reason": "Pipeline-check cohort excluded from quality estimation."
+  },
+  "labels": [
+    "satisfied",
+    "not_satisfied",
+    "uncertain"
+  ],
+  "primary_uncertain": "not_satisfied",
+  "constraints": "Frozen explicit checklist only; do not add unscored prompt requirements or judge aesthetics.",
+  "inspection": "Original 512x512 PNG, no filtering/resampling. Identify counts and object-body colors; relation by image-coordinate centers. Record short visible evidence for each image. Re-open ambiguous original only; do not change rubric after seeing outputs.",
+  "primary": {
+    "contrast": "C_time minus A_time all-constraint pass rate",
+    "n_prompt_seed_pairs": 64,
+    "prompt_clusters": 16,
+    "bootstrap_repetitions": 5000,
+    "bootstrap_seed": 72501,
+    "quantile_method": "linear",
+    "interval": [
+      0.025,
+      0.975
+    ],
+    "template_family_count": 4,
+    "interpretation": "Input resampling uncertainty conditional on one AI rater; does not include judge error or guarantee population coverage."
+  },
+  "new_generations": 0,
+  "selection_changes": 0,
+  "original_source_modifications": 0
+}

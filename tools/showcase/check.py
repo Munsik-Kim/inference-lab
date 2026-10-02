@@ -13,6 +13,7 @@ from case008 import load_case008, render_case008
 from case009 import load_case009, render_case009, C9, SOURCE_COPIES
 from case010 import load_case010, render_case010, home_case010, SOURCE_COPIES as C10_SOURCES, FIGURE_ASSET, FIGURE_SOURCE
 from case011 import load_case011, load_items, render_case011, home_case011, C11, SOURCE_COPIES as C11_SOURCES, FIGURE_ASSETS as C11_FIGURES, figures as case011_figures, SECTIONS as C11_SECTIONS
+from case012_pages import load_case012, annotation_data, render_case012, render_annotation, image_viewer, home_case012, SOURCE_COPIES as C12_SOURCES, C12, SECTIONS as C12_SECTIONS
 from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
 
@@ -86,6 +87,7 @@ def check(root: Path, site: Path) -> dict:
     data9=load_case009(root)
     data10=load_case010(root)
     data11=load_case011(root)
+    data12=load_case012(root)
     expected=EXPECTED|({'en/case009.html','ko/case009.html','data/case009.json','data/case009.js','assets/case009.js','assets/serving-L128.svg','assets/serving-L1024.svg',
       'sources/diova-compare-core.py.txt','sources/diova-compare-tests.py.txt','sources/diova-compare-edge-tests.py.txt','sources/case009-serving.py.txt','sources/case009-quality.py.txt','sources/case009-report-en.md.txt','sources/case009-report-ko.md.txt','sources/case009-notice.md.txt'} if data9 else set())
     if data10:
@@ -94,6 +96,11 @@ def check(root: Path, site: Path) -> dict:
     if data11:
         expected |= {'en/case011.html','ko/case011.html','data/case011.json','data/case011-items.json','data/case011-items.js','assets/case011.js','assets/case011.css',*C11_FIGURES}
         expected |= {'sources/'+name for name in C11_SOURCES}
+    if data12:
+        expected |= {lang+'/'+page+'.html' for lang in ('en','ko') for page in ('case012','case012-annotate','case012-images')}
+        expected |= {'data/case012.json','data/case012-annotation.json','data/case012-annotation.js',
+                     'assets/case012.css','assets/case012-annotation.js','assets/case012-review.css','assets/case012-images.js'}
+        expected |= {'sources/'+name for name in C12_SOURCES} | set(data12['images'])
     require(set(paths)==expected, 'Unexpected/missing deploy artifact member')
     m=read(site/'build_manifest.json')
     require(set(m['files'])==expected-{'build_manifest.json'}, 'Manifest coverage')
@@ -103,6 +110,32 @@ def check(root: Path, site: Path) -> dict:
     for name,digest in m['presentation_files'].items():
         path=(root/name).resolve()
         require(path.is_relative_to(root.resolve()) and path.is_file() and sha(path)==digest, 'Stale presentation build')
+    if data12:
+        require(read(site/'data/case012.json') == data12, 'Case012 numeric/source mismatch')
+        human12 = annotation_data(root, data12)
+        require(read(site/'data/case012-annotation.json') == human12, 'Case012 human input mismatch')
+        wrapper = (site/'data/case012-annotation.js').read_text(); prefix = 'window.CASE012_ANNOTATION = '
+        require(wrapper.startswith(prefix) and wrapper.endswith(';\n') and '<' not in wrapper, 'Case012 safe offline wrapper')
+        require(json.loads(wrapper[len(prefix):-2]) == human12, 'Case012 human JS/JSON mismatch')
+        require(m['case012_units']['source_files'] == data12['sources']
+                and m['case012_units']['human_input_sha256'] == human12['image_set_sha256'], 'Case012 manifest source identity')
+        require(m['case012_units']['image_assets'] == {name:data12['sources'][path] for name,path in data12['images'].items()}, 'Case012 image manifest identity')
+        for asset, source in data12['images'].items():
+            require((site/asset).read_bytes() == (root/source).read_bytes(), 'Changed Case012 original PNG: '+asset)
+        for name, source in C12_SOURCES.items():
+            require((site/'sources'/name).read_bytes() == (root/source).read_bytes(), 'Changed Case012 source copy')
+        for name in ('case012.css','case012-annotation.js'):
+            require((site/'assets'/name).read_bytes() == (root/'presentation/assets'/name).read_bytes(), 'Changed Case012 runtime asset')
+        require((site/'assets/case012-review.css').read_bytes() == (root/C12/'demo/style.css').read_bytes(), 'Changed Case012 viewer CSS')
+        require((site/'assets/case012-images.js').read_bytes() == (root/C12/'publication/assessment_v1/viewer.js').read_bytes(), 'Changed Case012 viewer JS')
+        for lang in ('en','ko'):
+            html = (site/lang/'case012.html').read_text(); parser = Links(); parser.feed(html)
+            require(render_case012(data12,lang) in html and set(C12_SECTIONS) <= parser.ids, 'Case012 rendering/scope mismatch')
+            require(render_annotation(lang) in (site/lang/'case012-annotate.html').read_text(), 'Case012 human form mismatch')
+            require(image_viewer(root,data12,lang) == (site/lang/'case012-images.html').read_text(), 'Case012 all-image viewer mismatch')
+            home = (site/lang/'index.html').read_text()
+            require(home_case012(data12,lang) in home and home.count('id="image-budget-study"') == 1, 'Case012 home feature mismatch')
+            require(home.count('<span class="archive-number">012</span>') == 1, 'Duplicate/missing Case012 archive entry')
     if data10:
         require(read(site/'data/case010.json')==data10, 'Case010 numeric/source mismatch')
         require(m['case010_units']['source_files']==data10['sources'], 'Case010 source identity mismatch')
@@ -196,6 +229,10 @@ def check(root: Path, site: Path) -> dict:
     forbidden=('ghp_','hf_','sk-proj-','BEGIN PRIVATE KEY')
     private_path=re.compile(r'/home/[^/\s]+/|/mnt/[a-z]/|[A-Za-z]:\\Users\\')
     for name,path in paths.items():
+        if data12 and name in data12['images']:
+            # Only the exact 192 source-verified MAIN PNGs are binary artifacts.
+            require(path.read_bytes().startswith(b'\x89PNG\r\n\x1a\n'), 'Invalid Case012 PNG signature')
+            continue
         if data10 and name==FIGURE_ASSET:
             # One explicit binary artifact, already compared byte-for-byte above.
             require(path.read_bytes().startswith(b'\x89PNG\r\n\x1a\n'), 'Invalid Case010 PNG signature')
