@@ -51,12 +51,28 @@
     validateFile(file, data); return file;
   }
 
-  const api = {validateFile, exportFile};
+  function groupedOrder(data, copy) {
+    if (!copy) return data.items.map((_,i)=>i);
+    const ids=new Set(copy.groups.map(g=>g.prompt_id));
+    if (ids.size!==copy.groups.length) fail('Duplicate review group');
+    const order=copy.groups.flatMap(g=>data.items.flatMap((i,n)=>copy.items[i.image_id]===g.prompt_id?[n]:[]));
+    if (order.length!==data.items.length || new Set(order).size!==data.items.length) fail('Review group coverage mismatch');
+    return order;
+  }
+  function nextUnfinished(answers,pos,data,order) {
+    const current=order.indexOf(pos);
+    for(let offset=1;offset<=order.length;offset++) {
+      const n=order[(current+offset)%order.length], item=data.items[n];
+      if(item.constraints.some(c=>!VALUES.has(answers[item.image_id]?.[c.id]))) return n;
+    }
+    return -1;
+  }
+  const api = {validateFile, exportFile, groupedOrder, nextUnfinished};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   global.Case012Human = api;
   if (!global.document || !global.CASE012_ANNOTATION) return;
 
-  const data = global.CASE012_ANNOTATION, ko = document.documentElement.lang === 'ko';
+  const data = global.CASE012_ANNOTATION, copy=global.CASE012_REVIEW_COPY, order=groupedOrder(data,copy), ko = document.documentElement.lang === 'ko';
   const el = id => document.getElementById(id), t = (en, korean) => ko ? korean : en;
   const key = 'case012-human-main-v1:' + data.image_set_sha256;
   let pos = 0, answers = {}, storageProblem = false;
@@ -83,18 +99,36 @@
   }
   function progress() {
     const n = data.items.filter(i => i.constraints.every(c => VALUES.has(answers[i.image_id]?.[c.id]))).length;
-    el('progress').textContent = t(`Complete images ${n}/${data.items.length}. Export JSON to keep a backup.`, `완료 이미지 ${n}/${data.items.length} · JSON을 내려받아 보관하세요.`);
+    el('progress').textContent = t(`Complete images ${n}/${data.items.length}. Export JSON to keep a backup.`, `체크 완료 ${n}/${data.items.length}장 · 남은 ${data.items.length-n}장`);
+    if(copy&&el('request')) for(const option of el('request').options) {
+      const index=copy.groups.findIndex(g=>g.prompt_id===option.value), g=copy.groups[index];
+      const members=data.items.filter(i=>copy.items[i.image_id]===g.prompt_id);
+      const complete=members.filter(i=>i.constraints.every(c=>VALUES.has(answers[i.image_id]?.[c.id]))).length;
+      option.textContent=`${index+1}. ${ko?g.ko.title:g.english.split('. ')[0]} · ${complete}/${members.length}`;
+    }
   }
   function render() {
     const item = data.items[pos];
+    const group=copy?.groups.find(g=>g.prompt_id===copy.items[item.image_id]);
+    if (el('request') && copy) {
+      el('request').replaceChildren();
+      for (const [index,g] of copy.groups.entries()) {
+        const members=data.items.filter(i=>copy.items[i.image_id]===g.prompt_id);
+        const complete=members.filter(i=>i.constraints.every(c=>VALUES.has(answers[i.image_id]?.[c.id]))).length;
+        const option=document.createElement('option'); option.value=g.prompt_id;
+        option.textContent=`${index+1}. ${ko?g.ko.title:g.english.split('. ')[0]} · ${complete}/${members.length}`;
+        option.selected=g===group; el('request').append(option);
+      }
+    }
     el('image').src = item.path; el('original-image').href = item.path;
-    el('prompt-text').textContent = ko ? item.korean_display : item.english;
+    el('prompt-text').textContent = ko ? (group?.ko.request || item.korean_display) : item.english;
     el('model-input').textContent = item.english;
-    el('position').textContent = `${pos+1} / ${data.items.length}`;
+    const members=group?order.filter(n=>copy.items[data.items[n].image_id]===group.prompt_id):order;
+    el('position').textContent=t(`Image ${members.indexOf(pos)+1}/${members.length} in this request`, `이 요청의 ${members.indexOf(pos)+1}/${members.length}번째 이미지`);
     el('constraints').replaceChildren();
     for (const constraint of item.constraints) {
       const f = document.createElement('fieldset'), g = document.createElement('legend');
-      g.textContent = constraint[ko ? 'ko' : 'en']; f.append(g);
+      g.textContent = ko ? (group?.ko.constraints[constraint.id] || constraint.ko) : constraint.en; f.append(g);
       for (const [value, en, korean] of [['satisfied', 'Satisfied', '충족'], ['not_satisfied', 'Not satisfied', '미충족'], ['uncertain', 'Uncertain', '판단 불확실']]) {
         const label = document.createElement('label'), radio = document.createElement('input');
         radio.type = 'radio'; radio.name = constraint.id; radio.value = value;
@@ -102,20 +136,25 @@
         radio.addEventListener('change', () => {
           (answers[item.image_id] ??= {})[constraint.id] = value; save(); progress();
         });
-        label.append(radio, document.createTextNode(t(en, korean))); f.append(label);
+        const text=document.createElement('span'); text.textContent=t(en,korean); label.append(radio,text); f.append(label);
       }
       el('constraints').append(f);
     }
-    el('prev').disabled = pos === 0; el('next').disabled = pos === data.items.length-1;
+    el('prev').disabled = order.indexOf(pos) === 0; el('next').disabled = order.indexOf(pos) === order.length-1;
     try { history.replaceState(null, '', '#'+item.image_id); } catch {}
     el('language').href = '../'+(ko ? 'en' : 'ko')+'/case012-annotate.html#'+item.image_id;
     progress();
   }
   function move(n) { pos = n; save(); render(); }
-  el('prev').onclick = () => move(pos-1);
-  el('next').onclick = () => move(pos+1);
+  el('prev').onclick = () => move(order[order.indexOf(pos)-1]);
+  el('next').onclick = () => move(order[order.indexOf(pos)+1]);
+  if(el('request')&&copy) el('request').onchange=()=>{
+    const members=order.filter(n=>copy.items[data.items[n].image_id]===el('request').value);
+    const unfinished=members.find(n=>data.items[n].constraints.some(c=>!VALUES.has(answers[data.items[n].image_id]?.[c.id])));
+    move(unfinished??members[0]);
+  };
   el('unrated').onclick = () => {
-    const n = data.items.findIndex(i => i.constraints.some(c => !VALUES.has(answers[i.image_id]?.[c.id])));
+    const n = nextUnfinished(answers,pos,data,order);
     if (n >= 0) move(n);
   };
   el('evaluator').addEventListener('change', save);

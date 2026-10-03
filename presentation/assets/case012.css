@@ -24,3 +24,11 @@
  .case012-study .study-table th,.case012-study .study-table td { font-size:.92rem; padding:12px 8px; }
  .case012-toc { gap:10px 18px; }
 }
+/* Compact answers; one request description for its twelve individual images. */
+.case012-annotation-grid fieldset { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; padding:12px; }
+.case012-annotation-grid legend { font-size:1rem; line-height:1.65; margin-bottom:10px; }
+.case012-annotation-grid label { justify-content:center; gap:6px; border:1px solid var(--border); border-radius:6px; padding:8px 3px; font-size:.92rem; }
+.case012-annotation-grid label:has(input:checked) { background:var(--tint); border-color:var(--accent); }
+.case012-annotation-grid input[type=radio] { width:16px; height:16px; min-height:16px; flex-basis:16px; }
+.case012-annotation-grid label:focus-within { outline:2px solid var(--accent); outline-offset:2px; }
+.case012-study #request { width:100%; max-width:100%; margin-bottom:12px; }
