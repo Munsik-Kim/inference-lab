@@ -13,6 +13,7 @@ from case008 import load_case008, render_case008
 from case009 import load_case009, render_case009, C9, SOURCE_COPIES
 from case010 import load_case010, render_case010, home_case010, SOURCE_COPIES as C10_SOURCES, FIGURE_ASSET, FIGURE_SOURCE
 from case011 import load_case011, load_items, render_case011, home_case011, C11, SOURCE_COPIES as C11_SOURCES, FIGURE_ASSETS as C11_FIGURES, figures as case011_figures, SECTIONS as C11_SECTIONS
+from case012_review import review_copy
 from case012_pages import load_case012, annotation_data, render_case012, render_annotation, image_viewer, home_case012, SOURCE_COPIES as C12_SOURCES, C12, SECTIONS as C12_SECTIONS
 from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
@@ -98,7 +99,7 @@ def check(root: Path, site: Path) -> dict:
         expected |= {'sources/'+name for name in C11_SOURCES}
     if data12:
         expected |= {lang+'/'+page+'.html' for lang in ('en','ko') for page in ('case012','case012-annotate','case012-images')}
-        expected |= {'data/case012.json','data/case012-annotation.json','data/case012-annotation.js',
+        expected |= {'data/case012.json','data/case012-annotation.json','data/case012-annotation.js','data/case012-review-copy.json','data/case012-review-copy.js',
                      'assets/case012.css','assets/case012-annotation.js','assets/case012-review.css','assets/case012-images.js'}
         expected |= {'sources/'+name for name in C12_SOURCES} | set(data12['images'])
     require(set(paths)==expected, 'Unexpected/missing deploy artifact member')
@@ -113,6 +114,11 @@ def check(root: Path, site: Path) -> dict:
     if data12:
         require(read(site/'data/case012.json') == data12, 'Case012 numeric/source mismatch')
         human12 = annotation_data(root, data12)
+        copy12=review_copy(root,data12)
+        require(read(site/'data/case012-review-copy.json')==copy12,'Case012 display copy mismatch')
+        copy_wrapper=(site/'data/case012-review-copy.js').read_text(); copy_prefix='window.CASE012_REVIEW_COPY = '
+        require(copy_wrapper.startswith(copy_prefix) and copy_wrapper.endswith(';\n') and '<' not in copy_wrapper,'Case012 safe copy wrapper')
+        require(json.loads(copy_wrapper[len(copy_prefix):-2])==copy12,'Case012 copy JS/JSON mismatch')
         require(read(site/'data/case012-annotation.json') == human12, 'Case012 human input mismatch')
         wrapper = (site/'data/case012-annotation.js').read_text(); prefix = 'window.CASE012_ANNOTATION = '
         require(wrapper.startswith(prefix) and wrapper.endswith(';\n') and '<' not in wrapper, 'Case012 safe offline wrapper')
@@ -124,10 +130,9 @@ def check(root: Path, site: Path) -> dict:
             require((site/asset).read_bytes() == (root/source).read_bytes(), 'Changed Case012 original PNG: '+asset)
         for name, source in C12_SOURCES.items():
             require((site/'sources'/name).read_bytes() == (root/source).read_bytes(), 'Changed Case012 source copy')
-        for name in ('case012.css','case012-annotation.js'):
+        for name in ('case012.css','case012-annotation.js','case012-images.js'):
             require((site/'assets'/name).read_bytes() == (root/'presentation/assets'/name).read_bytes(), 'Changed Case012 runtime asset')
         require((site/'assets/case012-review.css').read_bytes() == (root/C12/'demo/style.css').read_bytes(), 'Changed Case012 viewer CSS')
-        require((site/'assets/case012-images.js').read_bytes() == (root/C12/'publication/assessment_v1/viewer.js').read_bytes(), 'Changed Case012 viewer JS')
         for lang in ('en','ko'):
             html = (site/lang/'case012.html').read_text(); parser = Links(); parser.feed(html)
             require(render_case012(data12,lang) in html and set(C12_SECTIONS) <= parser.ids, 'Case012 rendering/scope mismatch')

@@ -47,3 +47,34 @@ for (const [name, edit, reason] of [
   assert.throws(()=>api.validateFile(file,data),reason); assert.deepEqual(file,before);
 });
 test('Empty evaluator does not export success JSON', () => assert.throws(()=>api.exportFile({},0,' ',data),/anonymous ID/));
+
+const groupedData={rubric_sha256:'rubric',image_set_sha256:'unchanged-cohort',items:[
+ {image_id:'a',image_sha256:'ha',constraints:[{id:'c1'}]},
+ {image_id:'b',image_sha256:'hb',constraints:[{id:'c1'}]},
+ {image_id:'c',image_sha256:'hc',constraints:[{id:'c1'}]}
+]};
+const displayCopy={groups:[{prompt_id:'first'},{prompt_id:'second'}],items:{a:'second',b:'first',c:'second'}};
+test('Grouping changes navigation only; scientific item order and identity are unchanged',()=>{
+ const before=clone(groupedData);
+ assert.deepEqual(api.groupedOrder(groupedData,displayCopy),[1,0,2]);
+ assert.deepEqual(groupedData,before);
+});
+test('An existing partial JSON resumes at the exact same image after grouped navigation',()=>{
+ const file=api.exportFile({a:{c1:'uncertain'}},0,'existing-rater',groupedData);
+ const restored=api.validateFile(file,groupedData),order=api.groupedOrder(groupedData,displayCopy);
+ assert.equal(groupedData.items[restored.cursor].image_id,'a');
+ assert.equal(order[order.indexOf(restored.cursor)+1],2);
+ assert.equal(restored.answers.a.c1,'uncertain');
+});
+test('Next unfinished scans forward instead of repeatedly jumping to the first skipped image',()=>{
+ assert.equal(api.nextUnfinished({},0,groupedData,[1,0,2]),2);
+ assert.equal(api.nextUnfinished({c:{c1:'satisfied'}},0,groupedData,[1,0,2]),1);
+});
+test('Grouping rejects missing and duplicate membership instead of dropping survey rows',()=>{
+ assert.throws(()=>api.groupedOrder(groupedData,{groups:[{prompt_id:'first'}],items:displayCopy.items}),/coverage/);
+ assert.throws(()=>api.groupedOrder(groupedData,{groups:[{prompt_id:'first'},{prompt_id:'first'}],items:displayCopy.items}),/Duplicate/);
+});
+test('Fully answered uncertain images are not revisited as unfinished',()=>{
+ const answers={a:{c1:'uncertain'},b:{c1:'satisfied'},c:{c1:'not_satisfied'}};
+ assert.equal(api.nextUnfinished(answers,0,groupedData,[1,0,2]),-1);
+});

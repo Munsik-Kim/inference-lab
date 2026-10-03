@@ -13,6 +13,7 @@ from case008 import load_case008, render_case008
 from case009 import load_case009, render_case009, C9, SOURCE_COPIES
 from case010 import load_case010, render_case010, C10, SOURCE_COPIES as C10_SOURCES, FIGURE_SOURCE, FIGURE_ASSET
 from case011 import load_case011, load_items, render_case011, C11, SOURCE_COPIES as C11_SOURCES, figures as case011_figures
+from case012_review import review_copy
 from case012_pages import load_case012, render_case012, render_annotation, annotation_data, image_viewer, C12, SOURCE_COPIES as C12_SOURCES
 
 def link(url, text, cls=''):
@@ -81,15 +82,17 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         files.update(case011_figures(root))
     if data12:
         human12 = annotation_data(root, data12)
+        copy12 = review_copy(root,data12)
+        files['data/case012-review-copy.json'] = (json_text(copy12)+'\n').encode()
+        files['data/case012-review-copy.js'] = ('window.CASE012_REVIEW_COPY = '+script_json(copy12)+';\n').encode()
         files['data/case012.json'] = (json_text(data12)+'\n').encode()
         files['data/case012-annotation.json'] = (json_text(human12)+'\n').encode()
         files['data/case012-annotation.js'] = ('window.CASE012_ANNOTATION = '+script_json(human12)+';\n').encode()
         for name,path in C12_SOURCES.items(): files['sources/'+name] = (root/path).read_bytes()
         for asset,path in data12['images'].items(): files[asset] = (root/path).read_bytes()
-        for name in ('case012.css', 'case012-annotation.js'):
+        for name in ('case012.css', 'case012-annotation.js', 'case012-images.js'):
             files['assets/'+name] = (root/'presentation/assets'/name).read_bytes()
         files['assets/case012-review.css'] = (root/C12/'demo/style.css').read_bytes()
-        files['assets/case012-images.js'] = (root/C12/'publication/assessment_v1/viewer.js').read_bytes()
     files['index.html'] = language_index().encode()
     case_paths = sorted(p.parent.relative_to(root).as_posix() for p in (root/'cases').glob('*/README.md'))
     names = {'en':['Execution compatibility','BF16 / FP8 extraction','Softmax approximation','Complete attention cost','Precision–cost settings','Answer decisions and ties','Structured MLP pruning','Model build, reload and MLP reconstruction'],
@@ -121,7 +124,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 body = render_case012(data12, lang)
             elif page == 'case012-annotate':
                 body = render_annotation(lang)
-                scripts = '<script defer src="../data/case012-annotation.js"></script><script defer src="../assets/case012-annotation.js"></script>'
+                scripts = '<script defer src="../data/case012-annotation.js"></script><script defer src="../data/case012-review-copy.js"></script><script defer src="../assets/case012-annotation.js"></script>'
             elif page == 'case011':
                 body = render_case011(data11,lang)
                 scripts = '<script defer src="../data/case011-items.js"></script><script defer src="../assets/case011.js"></script>'

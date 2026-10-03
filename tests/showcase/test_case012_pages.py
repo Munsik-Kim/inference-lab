@@ -116,3 +116,55 @@ class Case012Pages(unittest.TestCase):
         self.assertFalse(any(name.endswith(('.pt','.bin','.zip','.npz')) for name in self.manifest['files']))
         self.assertEqual(self.manifest['case012_units']['images'],192)
         check(ROOT,self.site)
+
+class Case012ReviewUX(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp=tempfile.TemporaryDirectory(); cls.site=Path(cls.tmp.name)/'site'
+        cls.manifest=build(ROOT,cls.site,'/inference-lab/')
+    @classmethod
+    def tearDownClass(cls):cls.tmp.cleanup()
+
+    def test_display_translation_keeps_saved_input_identity(self):
+        # Pin the published v1 cohort: correcting UI language must not discard users' JSON.
+        previous=ROOT/'cases/012-looped-dit-inference-budget/analysis/annotation_items.json'
+        from case012_review import review_copy
+        data=load_case012(ROOT); inputs=annotation_data(ROOT,data); display=review_copy(ROOT,data)
+        self.assertEqual(len(display['groups']),16); self.assertEqual(len(display['items']),192)
+        for g in display['groups']:
+            self.assertEqual(sum(pid==g['prompt_id'] for pid in display['items'].values()),12)
+        self.assertEqual(inputs,json.loads((self.site/'data/case012-annotation.json').read_text()))
+        self.assertEqual(inputs['image_set_sha256'],'d204dd88a27b317e1e94b5f77e840cede78bb4945e59b817d8e4f96ebb2a3e30')
+        self.assertEqual(set(display['items']),{i['image_id'] for i in inputs['items']})
+        # The original awkward strings are retained in the identity-bearing input, not shown as UI copy.
+        self.assertIn('풍선가',previous.read_text())
+        self.assertEqual(display['groups'][2]['ko']['constraints']['c1'],'풍선이 정확히 네 개 보이나요?')
+
+    def test_comparison_is_collapsed_without_omitting_images(self):
+        for lang in ('en','ko'):
+            html=(self.site/lang/'case012-images.html').read_text()
+            self.assertEqual(html.count('class="comparison"'),64)
+            self.assertEqual(html.count('class="pair"'),16)
+            self.assertEqual(html.count('class="card"'),192)
+            self.assertEqual(html.count('<details open class="comparison"'),1)
+            self.assertEqual(html.count('<details open class="pair"'),1)
+            for name in self.manifest['case012_units']['image_assets']:
+                self.assertIn(name,html)
+
+    def test_each_compound_translation_stays_with_its_own_objects(self):
+        html=(self.site/'ko/case012-images.html').read_text()
+        for pid,correct,wrong in [
+            ('main-compound-1','머그잔은 모두 빨간색이고 병은 파란색인가요?','정육면체는 모두 노란색'),
+            ('main-compound-2','정육면체는 모두 노란색이고 구는 초록색인가요?','머그잔은 모두 빨간색'),
+            ('main-compound-4','자동차는 모두 파란색이고 버스는 빨간색인가요?','머그잔은 모두 빨간색')]:
+            import re
+            section=re.search(r'<details class="pair" id="'+pid+r'">(.*?)(?=<details class="pair"|<section id="method")',html,re.S).group(1)
+            self.assertIn(correct,section); self.assertNotIn(wrong,section)
+        self.assertNotIn('풍선가',html); self.assertNotIn('머그잔가',html)
+
+    def test_copy_is_blind_and_has_no_answers_or_setting_identity(self):
+        copy=json.loads((self.site/'data/case012-review-copy.json').read_text())
+        self.assertEqual(copy['schema'],'case012-review-copy-v1')
+        for g in copy['groups']:
+            self.assertFalse({'loops','steps','seed_label','values','time'}&set(g))
+        self.assertTrue(all(isinstance(v,str) for v in copy['items'].values()))
