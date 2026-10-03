@@ -42,18 +42,30 @@ select.addEventListener('change',()=>{
 });
 representative.addEventListener('change',()=>{const url=new URL(location.href);url.searchParams.set('view',representative.checked?'representatives':'all');history.replaceState(null,'',url);representativeMode();filter(select.value);languageLink();});
 for (const section of sections) {
-  section.addEventListener('toggle',()=>{
-    if (!section.open) return;
-    openRequest(section);
+  // Native toggle events also follow programmatic opening during page load.
+  // Only an explicit summary activation should choose an image URL fragment.
+  section.querySelector(':scope > summary').addEventListener('click',()=>{
+    if(section.open)return;
     history.replaceState(null,'','#'+section.id);
     languageLink();
   });
-  for (const pair of section.querySelectorAll('.comparison')) pair.addEventListener('toggle',()=>{
-    if (!pair.open||pair.hidden||!section.open) return;
-    section.querySelectorAll('.comparison').forEach(p=>{if(p!==pair)p.open=false;});
-    history.replaceState(null,'','#'+pair.id);
+  section.addEventListener('toggle',()=>{
+    if (!section.open) return;
+    openRequest(section);
     languageLink();
   });
+  for (const pair of section.querySelectorAll('.comparison')) {
+    pair.querySelector(':scope > summary').addEventListener('click',()=>{
+      if(pair.open||pair.hidden||!section.open)return;
+      history.replaceState(null,'','#'+pair.id);
+      languageLink();
+    });
+    pair.addEventListener('toggle',()=>{
+      if (!pair.open||pair.hidden||!section.open) return;
+      section.querySelectorAll('.comparison').forEach(p=>{if(p!==pair)p.open=false;});
+      languageLink();
+    });
+  }
 }
 function openFragment() {
   const id=decodeURIComponent(location.hash.slice(1));
