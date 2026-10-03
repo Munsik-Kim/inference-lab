@@ -149,11 +149,11 @@ Built a runner to divide image-generation time between successive updates and in
 
 **Identical initial noise · Per-setting time and memory · Blinded annotation**
 
-Generation, measurement and AI assessment are complete for 192 MAIN images. Every listed constraint is met in 51/64 images at Loops 1 and 53/64 each at Loops 2 and 4. Loops 2 / Steps 66 had the shortest median; the Loops 4 vs 1 pass-rate difference was uncertain. Paired gains and losses are both reported. One AI rater; zero human raters.
+The human checklist is complete for 192 MAIN images: 100 directly checked, 92 assigned through explicit visual-group answer reuse. All requested constraints passed in **52/64 at L1, 51/64 at L2 and 53/64 at L4**. L4 gained four passes and lost three against L1, for a net difference of one image. L2 had the shortest recorded median request time. These are descriptive counts with reused judgments; the original AI scores remain separately available.
 
 [Plain-language overview](cases/012-looped-dit-inference-budget/README.md) · [Compare every image](cases/012-looped-dit-inference-budget/publication/IMAGES.md) · [Adapter code](cases/012-looped-dit-inference-budget/source/adapter.py) · [Methods and results](cases/012-looped-dit-inference-budget/REPORT.md)
 
-[Check the images yourself on the site](https://munsik-kim.github.io/inference-lab/en/case012-annotate.html) · [Result page](https://munsik-kim.github.io/inference-lab/en/case012.html). Download JSON at any point and import it later to resume. Browser records are not automatically uploaded; human labels are recalculated separately from AI scores.
+[Completed human review](presentation/evaluations/case012-human-v1/README.md) · [Check the images yourself on the site](https://munsik-kim.github.io/inference-lab/en/case012-annotate.html) · [Result page](https://munsik-kim.github.io/inference-lab/en/case012.html). Download JSON at any point and import it later to resume. Browser records are not automatically uploaded; human labels are recalculated separately from AI scores.
 
 ## Questions and recorded tools
 

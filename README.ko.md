@@ -149,11 +149,11 @@ CKDA 기호 상태추적 · 기존 checkpoint 3개 · 마지막 선형층만 지
 
 **동일 초기 잡음 · 설정별 시간·메모리 · 조건을 가린 평가 화면**
 
-MAIN 192장의 생성·측정과 AI 판독을 마쳤습니다. 모든 평가 조건을 충족한 장수는 Loop1이 51/64장, Loop2와4가 각각 53/64장입니다. Loop2/Step66이 가장 짧은 중앙 시간이었고, Loop4와1의 충족률 차이는 불확실했습니다. 같은 입력에서 얻은 조건과 잃은 조건을 함께 공개합니다. AI 판독자 1개, 인간 평가 0명입니다.
+MAIN 192장의 사람 체크를 마쳤습니다. 직접 체크한 100장의 답을 비슷한 사진 92장에도 적용했습니다. 모든 요청 조건을 맞힌 장수는 **L1 52/64장, L2 51/64장, L4 53/64장**입니다. L4는 L1보다 4개를 얻고 3개를 잃어 순차이는 한 장이었습니다. 요청 시간 중앙값은 L2가 가장 짧았습니다. 묶음 답을 적용한 관측 장수이며, 기존 AI 점수도 별도로 보존했습니다.
 
 [쉽게 살펴보기](cases/012-looped-dit-inference-budget/README.ko.md) · [모든 이미지 비교](cases/012-looped-dit-inference-budget/publication/IMAGES.ko.md) · [실행 코드](cases/012-looped-dit-inference-budget/source/adapter.py) · [설계와 결과](cases/012-looped-dit-inference-budget/REPORT.ko.md)
 
-[사이트에서 직접 정답 체크하기](https://munsik-kim.github.io/inference-lab/ko/case012-annotate.html) · [결과 페이지](https://munsik-kim.github.io/inference-lab/ko/case012.html). 진행 중에도 JSON을 다운로드하고 나중에 가져와 이어서 체크할 수 있습니다. 브라우저 기록은 자동 업로드되지 않으며, 사람의 평가는 AI 점수와 별도로 검산합니다.
+[완료한 사람 평가](presentation/evaluations/case012-human-v1/README.ko.md) · [사이트에서 직접 정답 체크하기](https://munsik-kim.github.io/inference-lab/ko/case012-annotate.html) · [결과 페이지](https://munsik-kim.github.io/inference-lab/ko/case012.html). 진행 중에도 JSON을 다운로드하고 나중에 가져와 이어서 체크할 수 있습니다. 브라우저 기록은 자동 업로드되지 않으며, 사람의 평가는 AI 점수와 별도로 검산합니다.
 
 ## 질문과 구현물
 

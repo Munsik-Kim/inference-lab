@@ -601,7 +601,9 @@ Case010의 저장 구현을 사용하는 후속 질문은 [Case011의 판독층 
 
 **데이터·결과:** 같은 Looped-DiT B/32 저장본과16문장·4초기 잡음으로 MAIN 192장을 생성했습니다. Loop1/Step89, Loop2/Step66, Loop4/Step50의 요청 중앙 시간은4.534/4.385/4.762초였습니다. 시간에는 text encoder와CPU 이미지 변환이 포함됩니다. 정확한 동일 시간 맞추기 목표는 달성하지 못했습니다.
 
-**AI 평가:** MAIN 192장을 같은 checklist로 판독했습니다. L1 51/64장, L2 53/64장, L4 53/64장이 모든 항목을 충족했습니다. L4−L1은 +3.12pp, 95% prompt-cluster bootstrap 구간 [-3.12, +10.94]pp로 0을 포함합니다. 같은 입력에서 L4만 충족 4쌍, L1만 충족 2쌍입니다. AI 판독자 1개·인간 0명이며, 7개 애매한 항목은 기본 점수에서 미충족입니다. 이전 예시 노출과 시간 불일치를 포함한 평가 범위는 별도 [평가 문서](../../cases/012-looped-dit-inference-budget/publication/assessment_v1/README.ko.md)에 있습니다.
+**완료한 사람 체크:** 직접 체크 100장과 비슷한 사진의 답 적용 92장으로 192장에 답이 있습니다. 모든 조건을 맞힌 장수는 L1/L2/L4 순서로 52/64·51/64·53/64장입니다. L4는 L1보다 4개를 얻고 3개를 잃었습니다. 묶음 답을 적용한 관측 장수로, 신뢰구간은 붙이지 않았습니다. [답·출처·CPU 계산 안내](../../presentation/evaluations/case012-human-v1/README.ko.md)에서 확인할 수 있습니다.
+
+**보존된 AI 평가:** MAIN 192장을 같은 checklist로 판독했습니다. L1 51/64장, L2 53/64장, L4 53/64장이 모든 항목을 충족했습니다. L4−L1은 +3.12pp, 95% prompt-cluster bootstrap 구간 [-3.12, +10.94]pp로 0을 포함합니다. 같은 입력에서 L4만 충족 4쌍, L1만 충족 2쌍입니다. AI 판독자 1개·인간 0명이며, 7개 애매한 항목은 기본 점수에서 미충족입니다. 이전 예시 노출과 시간 불일치를 포함한 평가 범위는 별도 [평가 문서](../../cases/012-looped-dit-inference-budget/publication/assessment_v1/README.ko.md)에 있습니다.
 
 [쉬운 소개](../../cases/012-looped-dit-inference-budget/README.ko.md) · [모든 이미지 비교](../../cases/012-looped-dit-inference-budget/publication/IMAGES.ko.md) · [실행 코드](../../cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU 검산](../../cases/012-looped-dit-inference-budget/REPRODUCTION.md) · [정식 보고서](../../cases/012-looped-dit-inference-budget/REPORT.ko.md)
 
