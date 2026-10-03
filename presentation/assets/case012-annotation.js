@@ -5,9 +5,10 @@
   const fail = message => { throw new Error(message); };
   const object = x => x !== null && typeof x === 'object' && !Array.isArray(x);
   const same = (a, b) => JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
+  const groupAPI = typeof module !== 'undefined' && module.exports ? require('./case012-groups.js') : global.Case012Groups;
 
-  function validateFile(file, data) {
-    if (!object(file) || file.schema !== 'case012-annotations-v1' || file.scope !== 'MAIN_ONLY' ||
+  function validateFile(file, data, copy) {
+    if (!object(file) || !['case012-annotations-v1','case012-annotations-v2'].includes(file.schema) || file.scope !== 'MAIN_ONLY' ||
         file.rubric_sha256 !== data.rubric_sha256 || file.image_set_sha256 !== data.image_set_sha256)
       fail('Annotation schema / image set / rubric mismatch');
     if (!object(file.evaluator) || file.evaluator.type !== 'human' || typeof file.evaluator.id !== 'string' || !file.evaluator.id.trim())
@@ -33,10 +34,10 @@
         file.status !== (missing.length ? 'PARTIAL' : 'COMPLETE')) fail('Annotation completeness mismatch');
     if (!Number.isInteger(file.cursor) || file.cursor < 0 || file.cursor >= data.items.length ||
         file.current_image_id !== data.items[file.cursor].image_id) fail('Cursor / image identity mismatch');
-    return {answers, cursor: file.cursor, evaluator: file.evaluator.id};
+    return {answers, cursor: file.cursor, evaluator: file.evaluator.id, ...groupAPI.restore(file,data,copy,answers)};
   }
 
-  function exportFile(answers, cursor, evaluator, data) {
+  function exportFile(answers, cursor, evaluator, data, options) {
     if (typeof evaluator !== 'string' || !evaluator.trim()) fail('Enter a name or anonymous ID');
     const rows = [], draft_rows = [], incomplete_image_ids = [];
     for (const i of data.items) {
@@ -44,11 +45,12 @@
       if (i.constraints.every(c => VALUES.has(values[c.id]))) rows.push(row);
       else { incomplete_image_ids.push(i.image_id); if (Object.keys(values).length) draft_rows.push(row); }
     }
-    const file = {schema: 'case012-annotations-v1', scope: 'MAIN_ONLY', rubric_sha256: data.rubric_sha256,
+    let file = {schema: 'case012-annotations-v1', scope: 'MAIN_ONLY', rubric_sha256: data.rubric_sha256,
       image_set_sha256: data.image_set_sha256, evaluator: {type: 'human', id: evaluator.trim()},
       status: rows.length === data.items.length ? 'COMPLETE' : 'PARTIAL', rows, draft_rows,
       incomplete_image_ids, cursor, current_image_id: data.items[cursor]?.image_id};
-    validateFile(file, data); return file;
+    if(options)file=groupAPI.attach(file,options,data);
+    validateFile(file, data, options?.copy); return file;
   }
 
   function groupedOrder(data, copy) {
@@ -75,7 +77,8 @@
   const data = global.CASE012_ANNOTATION, copy=global.CASE012_REVIEW_COPY, order=groupedOrder(data,copy), ko = document.documentElement.lang === 'ko';
   const el = id => document.getElementById(id), t = (en, korean) => ko ? korean : en;
   const key = 'case012-human-main-v1:' + data.image_set_sha256;
-  let pos = 0, answers = {}, storageProblem = false;
+  let pos = 0, answers = {}, origins={}, separated=[], mode='similarity', storageProblem = false, restoredFromStorage=false;
+  const options=()=>({copy,origins,separated,mode});
   function message(text) { el('message').textContent = text; }
   function readPosition() {
     const id = decodeURIComponent(location.hash.slice(1)), n = data.items.findIndex(i => i.image_id === id);
@@ -84,37 +87,58 @@
   try {
     const saved = localStorage.getItem(key);
     if (saved) {
-      const restored = validateFile(JSON.parse(saved), data);
-      answers = restored.answers; pos = restored.cursor; el('evaluator').value = restored.evaluator;
+      const restored = validateFile(JSON.parse(saved), data, copy);
+      answers = restored.answers; origins=restored.origins;separated=restored.separated;mode=restored.mode;
+      restoredFromStorage=true;
+      pos = restored.cursor; el('evaluator').value = restored.evaluator;
     }
   } catch (error) {
     storageProblem = true;
     message(t('Could not restore browser data. Import your JSON backup; the stored data was not overwritten.', '브라우저 기록을 복원하지 못했습니다. 보관한 JSON을 가져오세요. 기존 저장 기록은 덮어쓰지 않았습니다.') + ' ' + error.message);
   }
   readPosition();
+  if(!restoredFromStorage&&!data.items.some(i=>'#'+i.image_id===location.hash)){
+    const first=groupAPI.units(copy,data,separated)[0];pos=data.items.findIndex(i=>i.image_id===first.representative);
+  }
   function save() {
     if (storageProblem) return;
-    try { localStorage.setItem(key, JSON.stringify(exportFile(answers, pos, el('evaluator').value.trim() || 'anonymous-local-draft', data))); }
+    try { localStorage.setItem(key, JSON.stringify(exportFile(answers, pos, el('evaluator').value.trim() || 'anonymous-local-draft', data,options()))); }
     catch (error) { message(t('Browser save failed. Download your JSON to keep it.', '브라우저 저장에 실패했습니다. JSON을 다운로드해 보관하세요.')); }
+  }
+  const done=id=>data.items.find(i=>i.image_id===id).constraints.every(c=>VALUES.has(answers[id]?.[c.id]));
+  function reviewUnits(){
+    return mode==='similarity'?groupAPI.units(copy,data,separated):order.map(n=>({group_id:'image-'+data.items[n].image_id,prompt_id:copy.items[data.items[n].image_id],members:[data.items[n].image_id],representative:data.items[n].image_id}));
+  }
+  function moveUnit(g){
+    const reviewed=g.members.find(id=>done(id)&&Object.values(origins[id]||{}).every(o=>o.kind==='direct'));
+    move(data.items.findIndex(i=>i.image_id===(reviewed||g.representative)));
+  }
+  function advanceUnfinished(){
+    const all=reviewUnits(),current=all.findIndex(g=>g.members.includes(data.items[pos].image_id));
+    for(let offset=1;offset<=all.length;offset++){const g=all[(current+offset)%all.length];if(g.members.some(id=>!done(id))){moveUnit(g);return;}}
+    message(t('All groups have answers. Export your JSON.', '전체 묶음의 답안이 완료됐습니다. JSON을 내려받아 보관하세요.'));
   }
   function progress() {
     const n = data.items.filter(i => i.constraints.every(c => VALUES.has(answers[i.image_id]?.[c.id]))).length;
-    el('progress').textContent = t(`Complete images ${n}/${data.items.length}. Export JSON to keep a backup.`, `체크 완료 ${n}/${data.items.length}장 · 남은 ${data.items.length-n}장`);
+    const all=reviewUnits(),completed=all.filter(g=>g.members.every(done)).length;
+    const reused=data.items.filter(i=>Object.values(origins[i.image_id]||{}).some(o=>o.kind==='similarity_reuse')).length;
+    el('progress').textContent = mode==='similarity'?t(`Groups completed ${completed}/${all.length} · ${n} images covered (${reused} with reused labels)`, `사진 묶음 ${completed}/${all.length}개 완료 · 답안 적용 ${n}장 (묶음 적용 ${reused}장)`):t(`Complete images ${n}/${data.items.length}.`, `답안 완료 ${n}/${data.items.length}장 · 묶음 적용 ${reused}장`);
     if(copy&&el('request')) for(const option of el('request').options) {
       const index=copy.groups.findIndex(g=>g.prompt_id===option.value), g=copy.groups[index];
-      const members=data.items.filter(i=>copy.items[i.image_id]===g.prompt_id);
-      const complete=members.filter(i=>i.constraints.every(c=>VALUES.has(answers[i.image_id]?.[c.id]))).length;
+      const members=all.filter(u=>u.prompt_id===g.prompt_id);
+      const complete=members.filter(u=>u.members.every(done)).length;
       option.textContent=`${index+1}. ${ko?g.ko.title:g.english.split('. ')[0]} · ${complete}/${members.length}`;
     }
   }
   function render() {
     const item = data.items[pos];
+    const units=reviewUnits(),unit=units.find(g=>g.members.includes(item.image_id));el('review-mode').value=mode;
     const group=copy?.groups.find(g=>g.prompt_id===copy.items[item.image_id]);
     if (el('request') && copy) {
       el('request').replaceChildren();
       for (const [index,g] of copy.groups.entries()) {
-        const members=data.items.filter(i=>copy.items[i.image_id]===g.prompt_id);
-        const complete=members.filter(i=>i.constraints.every(c=>VALUES.has(answers[i.image_id]?.[c.id]))).length;
+        const members=units.filter(u=>u.prompt_id===g.prompt_id);
+        const complete=members.filter(u=>u.members.every(done)).length;
         const option=document.createElement('option'); option.value=g.prompt_id;
         option.textContent=`${index+1}. ${ko?g.ko.title:g.english.split('. ')[0]} · ${complete}/${members.length}`;
         option.selected=g===group; el('request').append(option);
@@ -123,8 +147,14 @@
     el('image').src = item.path; el('original-image').href = item.path;
     el('prompt-text').textContent = ko ? (group?.ko.request || item.korean_display) : item.english;
     el('model-input').textContent = item.english;
-    const members=group?order.filter(n=>copy.items[data.items[n].image_id]===group.prompt_id):order;
-    el('position').textContent=t(`Image ${members.indexOf(pos)+1}/${members.length} in this request`, `이 요청의 ${members.indexOf(pos)+1}/${members.length}번째 이미지`);
+    const members=units.filter(u=>u.prompt_id===group?.prompt_id);
+    el('position').textContent=mode==='similarity'?t(`Group ${members.indexOf(unit)+1}/${members.length} in this request · ${unit.members.length} images`, `이 요청의 ${members.indexOf(unit)+1}/${members.length}번째 묶음 · 사진 ${unit.members.length}장`):t(`Image ${members.indexOf(unit)+1}/${members.length} in this request`, `이 요청의 ${members.indexOf(unit)+1}/${members.length}번째 이미지`);
+    el('similar-members').replaceChildren();el('similar-group').hidden=mode!=='similarity'||unit.members.length<2;
+    for(const id of unit.members){const member=data.items.find(i=>i.image_id===id),button=document.createElement('button'),thumb=document.createElement('img'),caption=document.createElement('span');button.type='button';button.className='similar-member';button.setAttribute('aria-pressed',String(id===item.image_id));thumb.src=member.path;thumb.alt=t('Group member image','묶음에 포함된 사진');thumb.width=100;thumb.height=100;caption.textContent=id===item.image_id?t('Reading this image','현재 체크할 사진'):t('Read this image','이 사진으로 체크');button.append(thumb,caption);button.onclick=()=>move(data.items.findIndex(i=>i.image_id===id));el('similar-members').append(button);}
+    el('separate-image').hidden=mode!=='similarity'||unit.members.length<2;
+    el('apply-group').hidden=mode!=='similarity'||unit.members.length<2;
+    el('apply-group').disabled=!done(item.image_id);
+    el('label-origin').textContent=Object.values(origins[item.image_id]||{}).some(o=>o.kind==='similarity_reuse')?t('This image uses answers copied from a group member. You can check it separately.', '이 사진에는 묶음에서 적용한 답이 있습니다. 따로 체크할 수 있습니다.'):'';
     el('constraints').replaceChildren();
     for (const constraint of item.constraints) {
       const f = document.createElement('fieldset'), g = document.createElement('legend');
@@ -134,34 +164,35 @@
         radio.type = 'radio'; radio.name = constraint.id; radio.value = value;
         radio.checked = answers[item.image_id]?.[constraint.id] === value;
         radio.addEventListener('change', () => {
-          (answers[item.image_id] ??= {})[constraint.id] = value; save(); progress();
+          const changed=groupAPI.edit(answers,origins,item.image_id,constraint.id,value);answers=changed.answers;origins=changed.origins;save();progress();el('apply-group').disabled=!done(item.image_id);
         });
         const text=document.createElement('span'); text.textContent=t(en,korean); label.append(radio,text); f.append(label);
       }
       el('constraints').append(f);
     }
-    el('prev').disabled = order.indexOf(pos) === 0; el('next').disabled = order.indexOf(pos) === order.length-1;
+    el('prev').disabled = units.indexOf(unit) === 0; el('next').disabled = units.indexOf(unit) === units.length-1;
     try { history.replaceState(null, '', '#'+item.image_id); } catch {}
     el('language').href = '../'+(ko ? 'en' : 'ko')+'/case012-annotate.html#'+item.image_id;
     progress();
   }
   function move(n) { pos = n; save(); render(); }
-  el('prev').onclick = () => move(order[order.indexOf(pos)-1]);
-  el('next').onclick = () => move(order[order.indexOf(pos)+1]);
+  el('prev').onclick = () => {const u=reviewUnits(),n=u.findIndex(g=>g.members.includes(data.items[pos].image_id));if(n>0)moveUnit(u[n-1]);};
+  el('next').onclick = () => {const u=reviewUnits(),n=u.findIndex(g=>g.members.includes(data.items[pos].image_id));if(n<u.length-1)moveUnit(u[n+1]);};
+  el('review-mode').onchange=()=>{mode=el('review-mode').value;save();render();};
+  el('apply-group').onclick=()=>{const r=groupAPI.apply(answers,origins,data.items[pos].image_id,data,copy,separated);answers=r.answers;origins=r.origins;save();render();advanceUnfinished();message(t(`Group answers applied; ${r.preserved} prior direct choices kept.`, `같은 답을 묶음에 적용했습니다. 기존에 직접 체크한 ${r.preserved}개 답은 유지했습니다.`));};
+  el('separate-image').onclick=()=>{const r=groupAPI.separate(answers,origins,data.items[pos].image_id,separated);answers=r.answers;origins=r.origins;separated=r.separated;save();render();message(t('Separated. Direct answers kept; borrowed answers cleared.', '이 사진을 묶음에서 분리했습니다. 직접 체크한 답은 유지하고 묶음에서 받은 답은 비웠습니다.'));};
   if(el('request')&&copy) el('request').onchange=()=>{
-    const members=order.filter(n=>copy.items[data.items[n].image_id]===el('request').value);
-    const unfinished=members.find(n=>data.items[n].constraints.some(c=>!VALUES.has(answers[data.items[n].image_id]?.[c.id])));
-    move(unfinished??members[0]);
+    const members=reviewUnits().filter(u=>u.prompt_id===el('request').value);
+    moveUnit(members.find(u=>u.members.some(id=>!done(id)))||members[0]);
   };
   el('unrated').onclick = () => {
-    const n = nextUnfinished(answers,pos,data,order);
-    if (n >= 0) move(n);
+    advanceUnfinished();
   };
   el('evaluator').addEventListener('change', save);
   el('image').onerror = () => message(t('Image could not load; wait or reload before judging.', '이미지를 불러오지 못했습니다. 새로고침 후 이미지를 확인하고 판단하세요.'));
   el('export').onclick = () => {
     try {
-      const file = exportFile(answers, pos, el('evaluator').value, data);
+      const file = exportFile(answers, pos, el('evaluator').value, data,options());
       const url = URL.createObjectURL(new Blob([JSON.stringify(file, null, 2)+'\n'], {type:'application/json'}));
       const link = document.createElement('a'); link.href = url; link.download = 'case012_human_annotations.json';
       document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
@@ -172,8 +203,9 @@
     try {
       const f = el('import').files[0]; if (!f) return;
       if (f.size > 2*1024*1024) fail('JSON file exceeds 2 MiB');
-      const restored = validateFile(JSON.parse(await f.text()), data);
-      answers = restored.answers; pos = restored.cursor; el('evaluator').value = restored.evaluator;
+      const restored = validateFile(JSON.parse(await f.text()), data,copy);
+      answers = restored.answers;origins=restored.origins;separated=restored.separated;mode=restored.mode;
+      pos = restored.cursor; el('evaluator').value = restored.evaluator;
       storageProblem = false; save(); render();
       message(t('Restored your complete and unfinished labels.', '완료·부분 체크 기록을 복원했습니다.'));
     } catch (error) { message(t('Import rejected; existing choices kept: ', '가져오기 거절 · 기존 체크 유지: ')+error.message); }

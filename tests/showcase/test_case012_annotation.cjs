@@ -78,3 +78,69 @@ test('Fully answered uncertain images are not revisited as unfinished',()=>{
  const answers={a:{c1:'uncertain'},b:{c1:'satisfied'},c:{c1:'not_satisfied'}};
  assert.equal(api.nextUnfinished(answers,0,groupedData,[1,0,2]),-1);
 });
+
+const grouping=require('../../presentation/assets/case012-groups.js');
+const similarData={rubric_sha256:'rubric',image_set_sha256:'cohort',items:['a','b','c','d'].map(id=>({image_id:id,image_sha256:'hash-'+id,constraints:[{id:'c1'},{id:'c2'}]}))};
+const similarCopy={groups:[{prompt_id:'p'},{prompt_id:'q'}],items:{a:'p',b:'p',c:'p',d:'q'},visual_group_manifest_sha256:'visual-config',visual_groups:[
+ {group_id:'g1',prompt_id:'p',members:['a','b','c'],representative:'a'},
+ {group_id:'g2',prompt_id:'q',members:['d'],representative:'d'}]};
+function reused(){const a={a:{c1:'satisfied',c2:'uncertain'}},o=grouping.direct(a);return grouping.apply(a,o,'a',similarData,similarCopy);}
+function groupedFile(){const r=reused();return api.exportFile(r.answers,0,'SYNTHETIC_TEST_ONLY',similarData,{copy:similarCopy,origins:r.origins,separated:[],mode:'similarity'});}
+test('Representative answers cover a group with explicit per-constraint provenance',()=>{
+ const file=groupedFile(),r=api.validateFile(JSON.parse(JSON.stringify(file)),similarData,similarCopy);
+ assert.equal(file.schema,'case012-annotations-v2');assert.equal(r.answers.c.c2,'uncertain');
+ assert.deepEqual(r.origins.b.c1,{kind:'similarity_reuse',source_image_id:'a',group_id:'g1'});
+ assert.equal(r.origins.a.c1.kind,'direct');assert.equal(file.rows.length,3);
+ assert.equal(file.status,'PARTIAL');assert.deepEqual(file.incomplete_image_ids,['d']);
+});
+test('Reuse is never applied before all representative questions have answers',()=>{
+ const a={a:{c1:'satisfied'}},before=clone(a);
+ assert.throws(()=>grouping.apply(a,grouping.direct(a),'a',similarData,similarCopy),/every representative/);assert.deepEqual(a,before);
+});
+test('Existing direct answers are preserved even when the representative disagrees',()=>{
+ const a={a:{c1:'satisfied',c2:'uncertain'},b:{c1:'not_satisfied'}},before=clone(a);
+ const r=grouping.apply(a,grouping.direct(a),'a',similarData,similarCopy);
+ assert.equal(r.answers.b.c1,'not_satisfied');assert.equal(r.origins.b.c1.kind,'direct');
+ assert.equal(r.answers.b.c2,'uncertain');assert.equal(r.preserved,1);assert.deepEqual(a,before);
+});
+test('Editing a source clears only its stale borrowed constraint, without changing another direct answer',()=>{
+ const r=reused(),x=grouping.edit(r.answers,r.origins,'a','c1','not_satisfied');
+ assert.equal(x.answers.a.c1,'not_satisfied');assert.equal(x.answers.b.c1,undefined);
+ assert.equal(x.answers.b.c2,'uncertain');assert.equal(x.origins.b.c1,undefined);
+});
+test('A directly overridden group member is retained on a later reuse operation',()=>{
+ const r=reused(),x=grouping.edit(r.answers,r.origins,'b','c1','not_satisfied');
+ const y=grouping.apply(x.answers,x.origins,'a',similarData,similarCopy);
+ assert.equal(y.answers.b.c1,'not_satisfied');assert.equal(y.origins.b.c1.kind,'direct');
+});
+test('Separating an image clears borrowed answers and retains direct judgments',()=>{
+ const r=reused(),x=grouping.edit(r.answers,r.origins,'b','c1','not_satisfied');
+ const y=grouping.separate(x.answers,x.origins,'b',[]);
+ assert.equal(y.answers.b.c1,'not_satisfied');assert.equal(y.answers.b.c2,undefined);
+ assert.deepEqual(y.separated,['b']);assert.equal(grouping.units(similarCopy,similarData,y.separated).length,3);
+});
+test('Separating the source invalidates its dependent reused labels rather than leaving stale completion',()=>{
+ const r=reused(),x=grouping.separate(r.answers,r.origins,'a',[]);
+ assert.deepEqual(x.answers.b,{});assert.deepEqual(x.answers.c,{});assert.equal(x.answers.a.c1,'satisfied');
+});
+test('Reusing an already borrowed member retains the original direct source, without chains',()=>{
+ const r=reused(),x=grouping.apply(r.answers,r.origins,'b',similarData,similarCopy);
+ assert.equal(x.origins.c.c1.source_image_id,'a');assert.equal(x.origins.a.c1.kind,'direct');
+});
+for(const [name,edit,reason] of [
+ ['group config mismatch',f=>f.review.grouping_sha256='changed',/identity/],
+ ['unknown separation',f=>f.review.separated_image_ids=['x'],/separated/],
+ ['missing origins',f=>delete f.rows[0].origins,/coverage/],
+ ['unknown source',f=>f.rows.find(r=>r.image_id==='b').origins.c1.source_image_id='x',/source/],
+ ['self source',f=>f.rows.find(r=>r.image_id==='b').origins.c1.source_image_id='b',/source/],
+ ['reused value mismatch',f=>f.rows.find(r=>r.image_id==='b').values.c1='not_satisfied',/source/],
+ ['cross group',f=>f.rows.find(r=>r.image_id==='b').origins.c1.group_id='g2',/membership/],
+ ['borrowed source chain',f=>f.rows.find(r=>r.image_id==='c').origins.c1.source_image_id='b',/source/]
+])test('Grouped import rejects '+name+' without mutating its input',()=>{
+ const f=groupedFile();edit(f);const before=clone(f);assert.throws(()=>api.validateFile(f,similarData,similarCopy),reason);assert.deepEqual(f,before);
+});
+test('Old JSON preserves cursor and direct labels without auto-applying a similarity group',()=>{
+ const f=api.exportFile({b:{c1:'not_satisfied'}},1,'old-rater',similarData);
+ const r=api.validateFile(f,similarData,similarCopy);assert.equal(r.cursor,1);assert.deepEqual(r.answers,{b:{c1:'not_satisfied'}});
+ assert.equal(r.origins.b.c1.kind,'direct');assert.equal(r.mode,'similarity');
+});

@@ -100,7 +100,7 @@ def check(root: Path, site: Path) -> dict:
     if data12:
         expected |= {lang+'/'+page+'.html' for lang in ('en','ko') for page in ('case012','case012-annotate','case012-images')}
         expected |= {'data/case012.json','data/case012-annotation.json','data/case012-annotation.js','data/case012-review-copy.json','data/case012-review-copy.js',
-                     'assets/case012.css','assets/case012-annotation.js','assets/case012-review.css','assets/case012-images.js'}
+                     'assets/case012.css','assets/case012-annotation.js','assets/case012-review.css','assets/case012-images.js','assets/case012-groups.js'}
         expected |= {'sources/'+name for name in C12_SOURCES} | set(data12['images'])
     require(set(paths)==expected, 'Unexpected/missing deploy artifact member')
     m=read(site/'build_manifest.json')
@@ -130,7 +130,7 @@ def check(root: Path, site: Path) -> dict:
             require((site/asset).read_bytes() == (root/source).read_bytes(), 'Changed Case012 original PNG: '+asset)
         for name, source in C12_SOURCES.items():
             require((site/'sources'/name).read_bytes() == (root/source).read_bytes(), 'Changed Case012 source copy')
-        for name in ('case012.css','case012-annotation.js','case012-images.js'):
+        for name in ('case012.css','case012-annotation.js','case012-images.js','case012-groups.js'):
             require((site/'assets'/name).read_bytes() == (root/'presentation/assets'/name).read_bytes(), 'Changed Case012 runtime asset')
         require((site/'assets/case012-review.css').read_bytes() == (root/C12/'demo/style.css').read_bytes(), 'Changed Case012 viewer CSS')
         for lang in ('en','ko'):
