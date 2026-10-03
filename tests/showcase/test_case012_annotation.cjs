@@ -1,4 +1,5 @@
 'use strict';
+require('./test_case012_image_navigation.cjs');
 const test = require('node:test'), assert = require('node:assert/strict');
 const api = require('../../presentation/assets/case012-annotation.js');
 const data = {rubric_sha256:'rubric', image_set_sha256:'cohort', items:[
