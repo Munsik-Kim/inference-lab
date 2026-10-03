@@ -32,3 +32,12 @@
 .case012-annotation-grid input[type=radio] { width:16px; height:16px; min-height:16px; flex-basis:16px; }
 .case012-annotation-grid label:focus-within { outline:2px solid var(--accent); outline-offset:2px; }
 .case012-study #request { width:100%; max-width:100%; margin-bottom:12px; }
+.case012-study #review-mode { width:100%; max-width:100%; margin-bottom:20px; }
+.similar-group { border:1px solid var(--border); border-radius:8px; padding:16px; margin-top:20px; }
+.similar-members { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:12px; }
+.case012-study .similar-member { display:flex; flex-direction:column; align-items:stretch; gap:8px; min-width:0; max-width:100%; width:100%; white-space:normal; padding:8px; background:var(--white); color:var(--ink); border:1px solid var(--border); border-radius:6px; }
+.similar-member img { display:block; width:100%; height:auto; border-radius:4px; }
+.similar-member span { display:block; line-height:1.5; font-size:.85rem; }
+.case012-study .similar-member[aria-pressed=true] { border:2px solid var(--accent); background:var(--tint); }
+.case012-study #apply-group:disabled { opacity:.55; cursor:default; }
+.case012-study #label-origin { color:var(--accent); }

@@ -1,8 +1,10 @@
 """Display-only Korean corrections and compact browsing of preserved image pairs."""
 import re
+import hashlib
 from html import escape
-from common import read, require
+from common import read, require, sha, script_json
 from case012 import C12
+from case012_similarity import load_groups, PATH as SIMILARITY_PATH
 
 COPY_PATH = 'presentation/content/case012-ko.json'
 
@@ -29,7 +31,9 @@ def review_copy(root, data):
                        'constraints':[{**c, 'ko':text['constraints'][c['id']]} for c in p['constraints']]})
     items = {r['image_id']:r['prompt_id'] for r in data['pairs']}
     require(len(items) == 192 and all(sum(v==g['prompt_id'] for v in items.values())==12 for g in groups), 'Case012 grouped image coverage')
+    similarity=load_groups(root,data)
     return {'schema':'case012-review-copy-v1', 'groups':groups, 'items':items,
+            'visual_groups':similarity['groups'], 'visual_group_manifest_sha256':sha(root/SIMILARITY_PATH),
             'purpose':'Display-only wording and grouping. Original annotation image-set identity/order stays unchanged.'}
 
 
@@ -68,7 +72,7 @@ def polish_viewer(root, data, lang, html):
             '요청 중앙 시간':'요청 시간 중앙값', '모든 항목 충족':'평가 항목 모두 충족',
             '동결 평가 항목':'이 요청의 평가 항목', '저장된 결과 · AI 1개 판독자':'저장된 이미지 · 한 AI의 평가', 'AI 판독 근거':'AI 평가 메모 (영문 원문)',
             '판단 어려움':'판단 불확실',
-            '설정당 64장과 항목별 미충족·판단 어려움을 모두 표시합니다. 썸네일을 누르면 원본 PNG가 열립니다.':'요청 하나를 펼치고 비교 1–4 중 하나를 고르세요. 같은 문장과 초기 잡음으로 만든 세 이미지를 나란히 보여 줍니다. 모든 64개 비교를 확인할 수 있으며, 이미지를 누르면 원본이 열립니다.',
+            '설정당 64장과 항목별 미충족·판단 어려움을 모두 표시합니다. 썸네일을 누르면 원본 PNG가 열립니다.':'대표 모드에서는 비슷한 사진의 대표만 보여 줍니다. 체크 표시를 끄면 같은 초기 잡음의 세 설정을 모두 나란히 비교할 수 있습니다. 이미지를 누르면 원본이 열립니다.',
             'AI가 192장 모두를 판독했습니다.':'AI가 서로 다른 원본 이미지 192장을 평가했습니다.',
             'JavaScript 없이도 아래 전체 결과를 읽을 수 있습니다.':'JavaScript를 꺼도 아래 요청과 비교 항목을 펼쳐 전체 결과를 볼 수 있습니다.'}
         for before,after in sorted(replacements.items(),key=lambda pair:-len(pair[0])):html=html.replace(before,after)
@@ -84,4 +88,12 @@ def polish_viewer(root, data, lang, html):
     html=html.replace('<details class="pair"', '<details open class="pair"',1)
     html=html.replace('<details class="comparison"', '<details open class="comparison"',1)
     style='<style>.pair,.comparison{border:1px solid #d8d3cb;border-radius:8px;padding:16px;margin:14px 0;background:#fff}.pair>summary,.comparison>summary{cursor:pointer;font-weight:600;line-height:1.6}.pair[open]>summary,.comparison[open]>summary{margin-bottom:18px}.pair[hidden]{display:none!important}</style>'
+    control=('<label class="representative-control"><input id="representative-view" type="checkbox" checked> '+
+             ('비슷한 사진은 대표만 보기' if ko else 'Show representatives of visually similar images')+'</label><p id="representative-progress" role="status"></p>')
+    html=html.replace('<section id="images">','<section id="images">'+control)
+    wrapper='window.CASE012_REVIEW_COPY = '+script_json(copy)+';\n'
+    copy_version=hashlib.sha256(wrapper.encode()).hexdigest()[:16]
+    html=html.replace('<script', '<script src="../data/case012-review-copy.js?v='+copy_version+'"></script><script',1)
+    html=html.replace('../assets/case012-images.js','../assets/case012-images.js?v='+sha(root/'presentation/assets/case012-images.js')[:16])
+    style+='<style>.card[hidden],.comparison[hidden]{display:none!important}.representative-control{display:flex;align-items:center;gap:10px;margin:18px 0}.representative-control input{width:18px;height:18px}.visual-group-note{font-size:.9rem;line-height:1.6;color:#5a4c40}</style>'
     return html.replace('</head>',style+'</head>')

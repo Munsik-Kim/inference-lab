@@ -90,9 +90,11 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         files['data/case012-annotation.js'] = ('window.CASE012_ANNOTATION = '+script_json(human12)+';\n').encode()
         for name,path in C12_SOURCES.items(): files['sources/'+name] = (root/path).read_bytes()
         for asset,path in data12['images'].items(): files[asset] = (root/path).read_bytes()
-        for name in ('case012.css', 'case012-annotation.js', 'case012-images.js'):
+        for name in ('case012.css', 'case012-annotation.js', 'case012-images.js', 'case012-groups.js'):
             files['assets/'+name] = (root/'presentation/assets'/name).read_bytes()
         files['assets/case012-review.css'] = (root/C12/'demo/style.css').read_bytes()
+    def versioned_case012(name):
+        return '../'+name+'?v='+hashlib.sha256(files[name]).hexdigest()[:16]
     files['index.html'] = language_index().encode()
     case_paths = sorted(p.parent.relative_to(root).as_posix() for p in (root/'cases').glob('*/README.md'))
     names = {'en':['Execution compatibility','BF16 / FP8 extraction','Softmax approximation','Complete attention cost','Precision–cost settings','Answer decisions and ties','Structured MLP pruning','Model build, reload and MLP reconstruction'],
@@ -124,7 +126,9 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 body = render_case012(data12, lang)
             elif page == 'case012-annotate':
                 body = render_annotation(lang)
-                scripts = '<script defer src="../data/case012-annotation.js"></script><script defer src="../data/case012-review-copy.js"></script><script defer src="../assets/case012-annotation.js"></script>'
+                scripts = '<script defer src="../data/case012-annotation.js"></script><script defer src="../data/case012-review-copy.js"></script><script defer src="../assets/case012-groups.js"></script><script defer src="../assets/case012-annotation.js"></script>'
+                for asset in ('data/case012-annotation.js','data/case012-review-copy.js','assets/case012-groups.js','assets/case012-annotation.js'):
+                    scripts=scripts.replace('../'+asset,versioned_case012(asset))
             elif page == 'case011':
                 body = render_case011(data11,lang)
                 scripts = '<script defer src="../data/case011-items.js"></script><script defer src="../assets/case011.js"></script>'
@@ -161,7 +165,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
             if page.startswith('case012'):
                 title12 = ('Case 012 · 직접 정답 체크하기' if lang=='ko' else 'Case 012 · Human image annotation') if page.endswith('annotate') else ('Case 012 · 이미지 생성 시간 배분' if lang=='ko' else 'Case 012 · Loops vs steps')
                 html = html.replace('<title>'+escape(t['case006'])+' · '+escape(t['brand'])+'</title>', '<title>'+escape(title12)+' · '+escape(t['brand'])+'</title>')
-                html = html.replace('</head>', '<link rel="stylesheet" href="../assets/study.css"><link rel="stylesheet" href="../assets/case012.css"></head>')
+                html = html.replace('</head>', '<link rel="stylesheet" href="../assets/study.css"><link rel="stylesheet" href="'+versioned_case012('assets/case012.css')+'"></head>')
             if page in ('index','case011') and data11:
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/case011.css"></head>')
             if page == 'case008':

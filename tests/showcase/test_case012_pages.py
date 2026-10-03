@@ -112,6 +112,47 @@ class Case012Pages(unittest.TestCase):
             if change=='cursor': x['cursor']=192
             with self.subTest(change=change),self.assertRaises(ValueError): score(ROOT,x)
 
+    def grouped_annotation_fixture(self):
+        from case012_review import review_copy
+        f=self.annotation_fixture(True);f['schema']='case012-annotations-v2'
+        display=review_copy(ROOT,self.data)
+        f['review']={'mode':'similarity','grouping_sha256':display['visual_group_manifest_sha256'],'separated_image_ids':[]}
+        for row in f['rows']:row['origins']={c:{'kind':'direct'} for c in row['values']}
+        group=next(g for g in display['visual_groups'] if len(g['members'])>1)
+        source=group['representative'];target=next(i for i in group['members'] if i!=source)
+        row=next(r for r in f['rows'] if r['image_id']==target);cid=next(iter(row['values']))
+        row['origins'][cid]={'kind':'similarity_reuse','source_image_id':source,'group_id':group['group_id']}
+        return f,target,cid
+
+    def test_grouped_recalculation_is_descriptive_and_discloses_reuse(self):
+        f,_,_=self.grouped_annotation_fixture();result=score(ROOT,f)
+        self.assertEqual(result['evidence_kind'],'USER_GROUPED_HUMAN_REVIEW')
+        self.assertEqual(result['label_provenance']['reused_constraints'],1)
+        self.assertEqual(result['quality']['status'],'GROUPED_REVIEW_DESCRIPTIVE')
+        self.assertEqual(result['quality']['coverage']['annotated'],192)
+        self.assertIsNone(result['quality']['primary']['interval'])
+        self.assertFalse(result['published_AI_scores_modified'])
+
+    def test_independent_CPU_checker_rejects_stale_or_invalid_reuse(self):
+        f,target,cid=self.grouped_annotation_fixture()
+        for error in ('value','source','group','separated','config'):
+            x=copy.deepcopy(f);row=next(r for r in x['rows'] if r['image_id']==target)
+            if error=='value':row['values'][cid]='not_satisfied'
+            if error=='source':row['origins'][cid]['source_image_id']=target
+            if error=='group':row['origins'][cid]['group_id']='unknown'
+            if error=='separated':x['review']['separated_image_ids']=[target]
+            if error=='config':x['review']['grouping_sha256']='changed'
+            with self.subTest(error=error),self.assertRaises(ValueError):score(ROOT,x)
+
+    def test_v2_all_direct_rows_retain_original_arithmetic(self):
+        f,_,_=self.grouped_annotation_fixture()
+        for row in f['rows']:row['origins']={c:{'kind':'direct'} for c in row['values']}
+        result=score(ROOT,f)
+        self.assertEqual(result['evidence_kind'],'USER_HUMAN_ANNOTATIONS')
+        self.assertEqual(result['label_provenance']['reused_constraints'],0)
+        self.assertEqual(result['quality']['primary']['estimate'],0)
+        self.assertIsNotNone(result['quality']['primary']['interval'])
+
     def test_site_has_no_model_weights_or_new_quality_run(self):
         self.assertFalse(any(name.endswith(('.pt','.bin','.zip','.npz')) for name in self.manifest['files']))
         self.assertEqual(self.manifest['case012_units']['images'],192)
@@ -168,3 +209,26 @@ class Case012ReviewUX(unittest.TestCase):
         for g in copy['groups']:
             self.assertFalse({'loops','steps','seed_label','values','time'}&set(g))
         self.assertTrue(all(isinstance(v,str) for v in copy['items'].values()))
+
+    def test_similarity_groups_have_exact_coverage_and_never_mix_requests(self):
+        from case012_similarity import load_groups
+        data=load_case012(ROOT);similar=load_groups(ROOT,data)
+        self.assertEqual(len(similar['groups']),97)
+        self.assertEqual(len([i for g in similar['groups'] for i in g['members']]),192)
+        self.assertFalse(similar['uses_AI_labels']);self.assertEqual(similar['new_model_inference'],0)
+        copy=json.loads((self.site/'data/case012-review-copy.json').read_text())
+        self.assertEqual(copy['visual_groups'],similar['groups'])
+        for g in similar['groups']:
+            self.assertTrue(all(copy['items'][i]==g['prompt_id'] for i in g['members']))
+        for lang in ('en','ko'):
+            form=(self.site/lang/'case012-annotate.html').read_text()
+            for name in ('review-mode','apply-group','similar-members','separate-image'):
+                self.assertIn('id="'+name+'"',form)
+            viewer=(self.site/lang/'case012-images.html').read_text()
+            self.assertIn('id="representative-view"',viewer)
+            self.assertIn('../data/case012-review-copy.js',viewer)
+
+    def test_complete_link_does_not_merge_via_a_middle_image(self):
+        from case012_similarity import complete_link
+        d={frozenset(('a','b')):.2,frozenset(('b','c')):.3,frozenset(('a','c')):1.2}
+        self.assertEqual(complete_link(['a','b','c'],d),[['a','b'],['c']])

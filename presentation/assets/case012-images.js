@@ -2,12 +2,33 @@
 'use strict';
 const select = document.getElementById('prompt-filter');
 const sections = Array.from(document.querySelectorAll('.pair'));
+const copy=window.CASE012_REVIEW_COPY,representative=document.getElementById('representative-view'),ko=document.documentElement.lang==='ko';
+const cards=[...document.querySelectorAll('.pair .card')];
+for(const pair of document.querySelectorAll('.comparison'))pair.querySelector('summary').dataset.original=pair.querySelector('summary').textContent;
+representative.checked=new URLSearchParams(location.search).get('view')!=='all';
+function languageLink(){const link=document.getElementById('language');link.hash=location.hash;link.search='?view='+(representative.checked?'representatives':'all');}
+for(const card of cards){
+  const id=new URL(card.querySelector('img').src).pathname.split('/').pop().replace(/\.png$/,'');
+  const group=copy.visual_groups.find(g=>g.members.includes(id));card.dataset.representative=String(group.representative===id);
+  const note=document.createElement('p');note.className='visual-group-note';note.textContent=ko?`비슷한 사진 ${group.members.length}장 묶음`:`Visual review group: ${group.members.length} image(s)`;
+  const link=document.createElement('a');link.href='case012-annotate.html#'+group.representative;link.textContent=ko?'이 묶음 대표로 체크':'Review this group';note.append(document.createElement('br'),link);card.append(note);
+}
+function representativeMode(){
+  for(const card of cards)card.hidden=representative.checked&&card.dataset.representative!=='true';
+  for(const pair of document.querySelectorAll('.comparison')){
+    const visible=[...pair.querySelectorAll('.card')].filter(c=>!c.hidden),summary=pair.querySelector('summary');
+    pair.hidden=!visible.length;
+    const n=summary.dataset.original.match(/(?:비교|Comparison) (\d)\/4/)?.[1]||'';
+    summary.textContent=representative.checked?(ko?`대표 사진 ${visible.length}장 · 비교 ${n}/4`:`${visible.length} representative image(s) · comparison ${n}/4`):summary.dataset.original;
+  }
+  document.getElementById('representative-progress').textContent=representative.checked?(ko?`원본 192장 중 비슷한 사진 ${copy.visual_groups.length}개 묶음의 대표를 보여 줍니다. 사진을 합친 품질 점수가 아니라 각 대표 사진의 기존 AI 평가입니다.`:`Showing ${copy.visual_groups.length} visual-group representatives of 192 originals. The AI label belongs to the displayed image, not a merged group quality score.`):(ko?'원본 192장을 설정별로 모두 볼 수 있습니다.':'All 192 original images are available by setting.');
+}
 function openRequest(section, comparison) {
   sections.forEach(s => { s.open = s === section; });
   if (!section) return;
-  const pairs = [...section.querySelectorAll('.comparison')];
+  const allPairs=[...section.querySelectorAll('.comparison')],pairs=allPairs.filter(p=>!p.hidden);
   const target = comparison || pairs.find(p=>p.open) || pairs[0];
-  pairs.forEach(p=>p.open=p===target);
+  allPairs.forEach(p=>p.open=p===target);
 }
 function filter(value) {
   sections.forEach(s=>s.hidden=value!=='all'&&s.id!==value);
@@ -17,28 +38,31 @@ function filter(value) {
 select.addEventListener('change',()=>{
   filter(select.value);
   history.replaceState(null,'','#'+(select.value==='all'?'images':select.value));
-  document.getElementById('language').hash=location.hash;
+  languageLink();
 });
+representative.addEventListener('change',()=>{const url=new URL(location.href);url.searchParams.set('view',representative.checked?'representatives':'all');history.replaceState(null,'',url);representativeMode();filter(select.value);languageLink();});
 for (const section of sections) {
   section.addEventListener('toggle',()=>{
     if (!section.open) return;
     openRequest(section);
     history.replaceState(null,'','#'+section.id);
-    document.getElementById('language').hash=location.hash;
+    languageLink();
   });
   for (const pair of section.querySelectorAll('.comparison')) pair.addEventListener('toggle',()=>{
-    if (!pair.open) return;
+    if (!pair.open||pair.hidden||!section.open) return;
     section.querySelectorAll('.comparison').forEach(p=>{if(p!==pair)p.open=false;});
     history.replaceState(null,'','#'+pair.id);
-    document.getElementById('language').hash=location.hash;
+    languageLink();
   });
 }
 function openFragment() {
   const id=decodeURIComponent(location.hash.slice(1));
   const target=document.getElementById(id);
   const section=target?.matches('.pair')?target:target?.closest('.pair');
-  if(section){filter(section.id);openRequest(section,target.matches('.comparison')?target:null);}
-  document.getElementById('language').hash=location.hash;
+  if(section){if(target.matches('.comparison')&&new URLSearchParams(location.search).get('view')!=='representatives'){representative.checked=false;representativeMode();}filter(section.id);openRequest(section,target.matches('.comparison')?target:null);}
+  languageLink();
 }
 window.addEventListener('hashchange',openFragment);
+representativeMode();
+openRequest(sections[0]);
 openFragment();
