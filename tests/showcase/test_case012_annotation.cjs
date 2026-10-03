@@ -144,3 +144,32 @@ test('Old JSON preserves cursor and direct labels without auto-applying a simila
  const r=api.validateFile(f,similarData,similarCopy);assert.equal(r.cursor,1);assert.deepEqual(r.answers,{b:{c1:'not_satisfied'}});
  assert.equal(r.origins.b.c1.kind,'direct');assert.equal(r.mode,'similarity');
 });
+
+test('The last group wraps to an earlier skipped group rather than ending a partial review',()=>{
+ const units=grouping.units(similarCopy,similarData),answers={d:{c1:'satisfied',c2:'satisfied'}},before=clone(answers);
+ const action=api.nextReviewAction(answers,3,similarData,units);
+ assert.equal(action.kind,'remaining');assert.equal(action.unit.group_id,'g1');assert.equal(action.remaining,1);
+ assert.deepEqual(answers,before);
+});
+test('A checked representative with missing group members cannot report completion',()=>{
+ const units=grouping.units(similarCopy,similarData),answers={a:{c1:'satisfied',c2:'uncertain'},d:{c1:'satisfied',c2:'satisfied'}};
+ const action=api.nextReviewAction(answers,3,similarData,units);
+ assert.equal(action.kind,'remaining');assert.equal(action.unit.group_id,'g1');
+});
+test('Completion requires all images and retains explicit uncertain and negative answers',()=>{
+ const r=reused();r.answers.d={c1:'not_satisfied',c2:'uncertain'};
+ assert.deepEqual(api.nextReviewAction(r.answers,3,similarData,grouping.units(similarCopy,similarData)),{kind:'complete',remaining:0});
+});
+test('Only the current unfinished group remains available at the end',()=>{
+ const r=reused(),action=api.nextReviewAction(r.answers,3,similarData,grouping.units(similarCopy,similarData));
+ assert.equal(action.kind,'remaining');assert.equal(action.unit.group_id,'g2');assert.equal(action.remaining,1);
+});
+test('Earlier groups preserve sequential navigation without inventing any answers',()=>{
+ const answers={},before=clone(answers),action=api.nextReviewAction(answers,0,similarData,grouping.units(similarCopy,similarData));
+ assert.equal(action.kind,'next');assert.equal(action.unit.group_id,'g2');assert.equal(action.remaining,2);assert.deepEqual(answers,before);
+});
+test('Separated unfinished images remain in the completion requirement',()=>{
+ const r=reused(),split=grouping.separate(r.answers,r.origins,'b',[]);split.answers.d={c1:'satisfied',c2:'satisfied'};
+ const action=api.nextReviewAction(split.answers,3,similarData,grouping.units(similarCopy,similarData,split.separated));
+ assert.equal(action.kind,'remaining');assert.equal(action.unit.group_id,'separate-b');
+});

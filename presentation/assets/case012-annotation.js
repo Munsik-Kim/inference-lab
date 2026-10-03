@@ -69,7 +69,16 @@
     }
     return -1;
   }
-  const api = {validateFile, exportFile, groupedOrder, nextUnfinished};
+  function nextReviewAction(answers,pos,data,units) {
+    const current=units.findIndex(g=>g.members.includes(data.items[pos]?.image_id));
+    if(current<0)fail('Review cursor / group mismatch');
+    const known=new Map(data.items.map(i=>[i.image_id,i]));
+    const remaining=units.filter(g=>g.members.some(id=>known.get(id).constraints.some(c=>!VALUES.has(answers[id]?.[c.id]))));
+    if(current<units.length-1)return {kind:'next',unit:units[current+1],remaining:remaining.length};
+    if(remaining.length)return {kind:'remaining',unit:remaining[0],remaining:remaining.length};
+    return {kind:'complete',remaining:0};
+  }
+  const api = {validateFile, exportFile, groupedOrder, nextUnfinished, nextReviewAction};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   global.Case012Human = api;
   if (!global.document || !global.CASE012_ANNOTATION) return;
@@ -130,6 +139,13 @@
       option.textContent=`${index+1}. ${ko?g.ko.title:g.english.split('. ')[0]} · ${complete}/${members.length}`;
     }
   }
+  function refreshNext() {
+    const action=nextReviewAction(answers,pos,data,reviewUnits());
+    el('next').disabled=false;
+    el('next').textContent=action.kind==='next'?t('Next','다음'):
+      action.kind==='remaining'?(mode==='similarity'?t('Continue unfinished groups','남은 묶음으로 이동'):t('Continue unfinished images','남은 사진으로 이동')):
+      t('Download completed answers (JSON)','완료된 답안 다운로드 (JSON)');
+  }
   function render() {
     const item = data.items[pos];
     const units=reviewUnits(),unit=units.find(g=>g.members.includes(item.image_id));el('review-mode').value=mode;
@@ -164,20 +180,34 @@
         radio.type = 'radio'; radio.name = constraint.id; radio.value = value;
         radio.checked = answers[item.image_id]?.[constraint.id] === value;
         radio.addEventListener('change', () => {
-          const changed=groupAPI.edit(answers,origins,item.image_id,constraint.id,value);answers=changed.answers;origins=changed.origins;save();progress();el('apply-group').disabled=!done(item.image_id);
+          const changed=groupAPI.edit(answers,origins,item.image_id,constraint.id,value);answers=changed.answers;origins=changed.origins;save();progress();refreshNext();el('apply-group').disabled=!done(item.image_id);
         });
         const text=document.createElement('span'); text.textContent=t(en,korean); label.append(radio,text); f.append(label);
       }
       el('constraints').append(f);
     }
-    el('prev').disabled = units.indexOf(unit) === 0; el('next').disabled = units.indexOf(unit) === units.length-1;
+    el('prev').disabled = units.indexOf(unit) === 0; refreshNext();
     try { history.replaceState(null, '', '#'+item.image_id); } catch {}
     el('language').href = '../'+(ko ? 'en' : 'ko')+'/case012-annotate.html#'+item.image_id;
     progress();
   }
   function move(n) { pos = n; save(); render(); }
   el('prev').onclick = () => {const u=reviewUnits(),n=u.findIndex(g=>g.members.includes(data.items[pos].image_id));if(n>0)moveUnit(u[n-1]);};
-  el('next').onclick = () => {const u=reviewUnits(),n=u.findIndex(g=>g.members.includes(data.items[pos].image_id));if(n<u.length-1)moveUnit(u[n+1]);};
+  el('next').onclick = () => {
+    const action=nextReviewAction(answers,pos,data,reviewUnits());
+    if(action.kind==='complete'){el('export').click();return;}
+    moveUnit(action.unit);
+    if(action.kind==='remaining'){
+      message(t(`${action.remaining} unfinished groups remain. Continue here; completed choices are kept.`, `아직 ${action.remaining}개 묶음의 답안이 남아 있습니다. 여기서 이어서 체크하세요. 완료한 답은 유지했습니다.`));
+      if(done(data.items[pos].image_id)&&!el('apply-group').hidden){
+        message(t('This representative is checked, but its group still has unfinished images. Apply its answers to the group or check the members separately.', '이 대표 사진은 체크됐지만 묶음에 답이 없는 사진이 남아 있습니다. 같은 답을 묶음에 적용하거나 각각 체크하세요.'));
+        el('apply-group').focus();
+      }else{
+        const first=[...el('constraints').querySelectorAll('fieldset')].find(f=>!f.querySelector('input:checked'));
+        first?.querySelector('input')?.focus();
+      }
+    }
+  };
   el('review-mode').onchange=()=>{mode=el('review-mode').value;save();render();};
   el('apply-group').onclick=()=>{const r=groupAPI.apply(answers,origins,data.items[pos].image_id,data,copy,separated);answers=r.answers;origins=r.origins;save();render();advanceUnfinished();message(t(`Group answers applied; ${r.preserved} prior direct choices kept.`, `같은 답을 묶음에 적용했습니다. 기존에 직접 체크한 ${r.preserved}개 답은 유지했습니다.`));};
   el('separate-image').onclick=()=>{const r=groupAPI.separate(answers,origins,data.items[pos].image_id,separated);answers=r.answers;origins=r.origins;separated=r.separated;save();render();message(t('Separated. Direct answers kept; borrowed answers cleared.', '이 사진을 묶음에서 분리했습니다. 직접 체크한 답은 유지하고 묶음에서 받은 답은 비웠습니다.'));};
@@ -196,7 +226,9 @@
       const url = URL.createObjectURL(new Blob([JSON.stringify(file, null, 2)+'\n'], {type:'application/json'}));
       const link = document.createElement('a'); link.href = url; link.download = 'case012_human_annotations.json';
       document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
-      message(t('Downloaded. Keep this JSON file to resume or recalculate later.', '다운로드했습니다. 나중에 이어서 체크하거나 검산할 수 있도록 JSON 파일을 보관하세요.'));
+      message(file.status==='COMPLETE'?
+        t(`All ${data.items.length} images are covered. Downloaded the completed answers; keep this JSON for recalculation.`, `전체 ${data.items.length}장의 답안이 완료됐습니다. 완료본을 다운로드했으니 검산할 수 있도록 보관하세요.`):
+        t(`Partial answers downloaded: ${file.rows.length}/${data.items.length} images covered. Continue the unfinished groups before submitting a complete review.`, `부분 답안을 다운로드했습니다. ${file.rows.length}/${data.items.length}장 기록이며, 남은 묶음을 체크하면 완료본을 받을 수 있습니다.`));
     } catch (error) { message(t('Export failed: ', '내보내기 실패: ')+error.message); }
   };
   el('import').addEventListener('change', async () => {
