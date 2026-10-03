@@ -7,6 +7,8 @@ from urllib.parse import urlsplit
 from common import read, require, sha, json_text
 from case012 import C12, load_case012 as load_recorded
 from case012_review import polish_viewer
+from case012_human import PUBLIC as HUMAN_PUBLIC, load_human
+from case012_human_display import human_results, add_image_judgments
 
 SECTIONS = ('overview', 'loops', 'method', 'results', 'cost', 'reproduce', 'report')
 SETTINGS = ('A_time', 'B_time', 'C_time')
@@ -25,6 +27,12 @@ SOURCE_COPIES = {
     'case012-human-score.py.txt': 'tools/showcase/score_case012.py',
     'case012-similarity.json.txt': 'presentation/content/case012-similarity.json',
     'case012-similarity.py.txt': 'tools/showcase/case012_similarity.py',
+    'case012-human-annotations.json': HUMAN_PUBLIC+'/annotations.json',
+    'case012-human-summary.json': HUMAN_PUBLIC+'/summary.json',
+    'case012-human-manifest.json': HUMAN_PUBLIC+'/manifest.json',
+    'case012-human-readme-en.md.txt': HUMAN_PUBLIC+'/README.md',
+    'case012-human-readme-ko.md.txt': HUMAN_PUBLIC+'/README.ko.md',
+    'case012-human-audit.py.txt': 'tools/showcase/case012_human.py',
 }
 
 
@@ -63,9 +71,10 @@ def load_case012(root):
         path = C12+f'/publication/assessment_v1/viewer.{lang}.html'; sources[path] = sha(root/path)
     for path in ('publication/assessment_v1/viewer.js', 'demo/style.css'):
         sources[C12+'/'+path] = sha(case/path)
+    human = load_human(root)
     return {'schema': 'case012-showcase-v1', 'recorded_quality_status': 'ANNOTATION_PENDING',
             'quality': ai['quality'], 'evaluator': ai['evaluator'], 'limitations': ai['limitations'],
-            'human_evaluation': 'USER_ANNOTATION_AVAILABLE_NOT_YET_COLLECTED',
+            'human_evaluation': 'COMPLETE_WITH_DISCLOSED_VISUAL_GROUP_REUSE', 'human_review': human,
             'timing': ai['timing'], 'units': {'images': 192, 'prompt_noise_pairs': 64,
                 'prompt_clusters': 16, 'seeds_per_prompt': 4, 'checkpoint_count': 1,
                 'timing': 'warmed complete request seconds', 'quality': 'all frozen constraints met'},
@@ -94,12 +103,13 @@ def home_case012(data, lang):
     ko = lang == 'ko'
     text = ('같은 모델에서 내부 반복과 생성 단계에 시간을 나눠 쓰는 도구를 구현했습니다. 같은 초기 잡음의 이미지 192장을 비교하고, 이제 직접 요구 조건을 체크할 수 있습니다.' if ko else
             'Built a runner that allocates time between internal loops and generation steps in one model. Compare 192 images from paired starting noise and check their requested constraints yourself.')
-    q = data['quality']['settings']
-    finding = (f'AI 평가에서는 L1 {q["A_time"]["passed_images"]}/64장, L2·L4 각각 {q["C_time"]["passed_images"]}/64장이 모든 조건을 충족했습니다. 더 깊은 반복의 우위는 불확실했으며, 사람의 평가는 별도로 기록합니다.' if ko else
-               f'One AI rater marked all constraints met in {q["A_time"]["passed_images"]}/64 images at L1 and {q["C_time"]["passed_images"]}/64 at L2 and L4. The deeper-loop advantage was uncertain; human judgments are recorded separately.')
+    q = data['human_review']['settings']
+    counts = ' / '.join(str(q[s]['passed_images'])+'/64' for s in SETTINGS)
+    finding = (f'사용자의 체크에서 모든 조건을 맞힌 이미지는 L1·L2·L4 순서로 {counts}장입니다. L4의 순이득은 L1보다 한 장이었고, 복합 조건은 약 절반만 맞혔습니다.' if ko else
+               f'The user checklist assigned all-constraint passes to {counts} images at L1, L2 and L4. L4 netted one additional pass over L1; combined requests passed in roughly half of their images.')
     return ('<section class="panel" id="image-budget-study"><p class="eyebrow">CASE 012 · IMAGE GENERATION</p><h2>'
             +a('case012.html#overview', '같은 생성 시간, 어디에 계산을 더 쓸까?' if ko else 'Where should an image-generation budget go?')
-            +'</h2><p>'+text+'</p><p>'+finding+'</p><p class="project-scope">Looped-DiT B/32 · RTX 5080 · 512×512 · '+('한 AI의 평가 · 사람 평가 미수집' if ko else 'One AI rater · Human labels not yet collected')+'</p><div class="actions">'
+            +'</h2><p>'+text+'</p><p>'+finding+'</p><p class="project-scope">Looped-DiT B/32 · RTX 5080 · 512×512 · '+('사람 평가 · 직접 100장 + 묶음 답 적용 92장' if ko else 'Human review · 100 direct + 92 assigned by visual-group reuse')+'</p><div class="actions">'
             +a('case012.html#results', '실제 결과' if ko else 'Measured results')
             +a('case012-annotate.html', '직접 정답 체크하기' if ko else 'Check the images yourself')+'</div></section>')
 
@@ -120,7 +130,8 @@ def render_case012(data, lang):
         t,q = data['timing'][setting],data['quality']['settings'][setting]
         rows.append(f'<tr><th scope="row">L{t["loops"]} / S{t["steps"]}</th><td>{t["main_complete_median_seconds"]:.3f} s</td><td>{q["passed_images"]}/64<br>{100*q["all_constraint_pass_rate"]:.2f}%</td></tr>')
     p = data['quality']['primary']; pair = data['quality']['paired']
-    out += section(3, '<p>'+('아래는 한 AI가 192장을 모두 평가한 결과입니다. 사용자가 직접 체크한 답과는 별도로 집계했습니다. 판단이 불확실한 항목은 주 점수에서 미충족으로 계산했습니다.' if ko else 'These scores are from one AI assessor reading every image against the explicit checklist. They are separate from your human labels. Uncertain items count as failures in the primary score.')+'</p><div class="study-table"><table><thead><tr><th>Loop / Step</th><th>'+('요청 시간 중앙값' if ko else 'Median request time')+'</th><th>'+('모든 조건 충족 · AI' if ko else 'All constraints met · AI')+'</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table></div><p>'+('64개 비교 중 L4만 모든 조건을 맞힌 경우는 '+str(pair['C_only'])+'개, L1만 맞힌 경우는 '+str(pair['A_only'])+'개였습니다. 내부 반복을 늘려도 항상 좋아지지는 않았습니다.' if ko else f'L4 gained passes in {pair["C_only"]} pairs and lost them in {pair["A_only"]}. Deeper repetition did not consistently improve requested composition.')+'</p><details><summary>'+('차이와 불확실성 보기' if ko else 'Difference and uncertainty')+f'</summary><p>L4−L1: {100*p["estimate"]:+.3f} pp · 95% [{100*p["interval"][0]:+.3f}, {100*p["interval"][1]:+.4f}] pp.</p><p>'+('같은 요청을 묶어 5,000번 재표집한 구간입니다. 구간에 0이 포함되므로 더 깊은 반복이 낫다고 확정하기 어렵습니다. AI 평가 자체의 오류는 이 구간에 포함되지 않으며, 비슷한 틀로 작성한 네 종류의 요청을 사용한 작은 비교입니다.' if ko else '5,000 paired prompt-cluster bootstrap repetitions. The interval includes zero and excludes AI judgment error. This small sample has four related template families.')+'</p></details>'+a('case012-images.html', '모든 이미지와 항목별 근거' if ko else 'Every image and constraint evidence'))
+    ai_body = '<p>'+('아래는 한 AI가 192장을 모두 평가한 결과입니다. 사용자가 직접 체크한 답과는 별도로 집계했습니다. 판단이 불확실한 항목은 주 점수에서 미충족으로 계산했습니다.' if ko else 'These scores are from one AI assessor reading every image against the explicit checklist. They are separate from your human labels. Uncertain items count as failures in the primary score.')+'</p><div class="study-table"><table><thead><tr><th>Loop / Step</th><th>'+('요청 시간 중앙값' if ko else 'Median request time')+'</th><th>'+('모든 조건 충족 · AI' if ko else 'All constraints met · AI')+'</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table></div><p>'+('64개 비교 중 L4만 모든 조건을 맞힌 경우는 '+str(pair['C_only'])+'개, L1만 맞힌 경우는 '+str(pair['A_only'])+'개였습니다. 내부 반복을 늘려도 항상 좋아지지는 않았습니다.' if ko else f'L4 gained passes in {pair["C_only"]} pairs and lost them in {pair["A_only"]}. Deeper repetition did not consistently improve requested composition.')+'</p><details><summary>'+('차이와 불확실성 보기' if ko else 'Difference and uncertainty')+f'</summary><p>L4−L1: {100*p["estimate"]:+.3f} pp · 95% [{100*p["interval"][0]:+.3f}, {100*p["interval"][1]:+.4f}] pp.</p><p>'+('같은 요청을 묶어 5,000번 재표집한 구간입니다. 구간에 0이 포함되므로 더 깊은 반복이 낫다고 확정하기 어렵습니다. AI 평가 자체의 오류는 이 구간에 포함되지 않으며, 비슷한 틀로 작성한 네 종류의 요청을 사용한 작은 비교입니다.' if ko else '5,000 paired prompt-cluster bootstrap repetitions. The interval includes zero and excludes AI judgment error. This small sample has four related template families.')+'</p></details>'+a('case012-images.html', '모든 이미지와 항목별 근거' if ko else 'Every image and constraint evidence')
+    out += section(3, human_results(data,lang)+'<details><summary>'+('기존 AI 평가와 신뢰구간 보기' if ko else 'Original AI assessment and interval')+'</summary>'+ai_body+'</details>')
     out += section(4, '<p>'+('시간은 문자열 입력부터 T5 인코딩, 이미지 생성, CPU 이미지 변환이 끝날 때까지입니다. 모델 로딩·파일 저장·평가는 제외했습니다. 설정 모두에서 PyTorch allocated peak는 약 1.88 GiB였으며 장치 전체 사용량과는 다릅니다.' if ko else 'Request time runs from a string input through T5 encoding, sampling and completed CPU image conversion. Model loading, disk writes and judging are excluded. PyTorch allocated peak was about 1.88 GiB across settings; it is separate from total device usage.')+'</p><p>'+('CUDA event와 wall clock의 순서가 어긋난 45개 기록도 그대로 남겼습니다. 두 시간을 빼서 순수 오버헤드를 계산하지 않습니다.' if ko else 'The 45 event/wall-clock ordering discrepancies remain in the records. Subtracting the two is not used as a pure overhead measurement.')+'</p>')
     out += section(5, '<p>'+('정답 체크 화면은 192장을 한 장씩 보여줍니다. 설정과 AI 답안은 보이지 않습니다. 충족·미충족·판단 불확실을 선택하고 JSON을 내보내세요. 진행 상태는 이 브라우저에만 저장되며 사이트로 자동 전송되지 않습니다.' if ko else 'The annotation screen shows each of the 192 images without setting labels or AI answers. Choose satisfied, not satisfied or uncertain, then export JSON. Progress stays in this browser and is not automatically sent to the site.')+'</p><div class="actions">'+a('case012-annotate.html', '직접 정답 체크하기' if ko else 'Start annotating')+'</div><details><summary>'+('내 JSON을 모델 없이 검산하기' if ko else 'Recalculate your JSON without models')+'</summary><pre>python -B tools/showcase/score_case012.py --annotations my-labels.json --output ../case012-human-results.json</pre><p>'+('저장소 clone과 CPU 요구 패키지가 필요하며 결과 파일은 저장소 밖의 새 경로여야 합니다. 부분 주석은 대기 상태로 남깁니다.' if ko else 'Requires a repository clone and CPU requirements. Use a new output path outside the repository. Partial annotations stay pending.')+'</p>'+a('../sources/case012-human-score.py.txt', '검산 코드' if ko else 'Scoring code')+'</details>')
     out += section(6, '<div class="actions">'+a('../sources/case012-report-'+lang+'.md.txt', '정식 보고서' if ko else 'Full report')+a('../sources/case012-adapter.py.txt', '실행 adapter 코드' if ko else 'Adapter source')+a('../sources/case012-rubric.json.txt', '고정 평가 규칙' if ko else 'Frozen rubric')+'</div><p>'+('Looped-DiT 모델은 OpenSenseNova의 구현입니다. DIOVA는 실행·시간 예산 선택·평가·탐색 도구를 구현했습니다. OpenAI Codex가 구현·분석·작성을 지원했고, 공개 AI 판독 결과는 사람 평가와 구분합니다.' if ko else 'Looped-DiT is the upstream model by OpenSenseNova. DIOVA implemented the runner, measured-budget selection, assessment and inspection tools. OpenAI Codex assisted implementation, analysis and writing; public AI ratings are distinct from human evaluation.')+'</p>'+a('https://github.com/OpenSenseNova/Looped-DiT', 'Looped-DiT source'))
@@ -157,4 +168,4 @@ def image_viewer(root, data, lang):
         elif str(target) in assets: dest = '../'+assets[str(target)]
         else: raise ValueError('Unmapped Case012 viewer resource: '+url)
         return attr+'="'+escape(dest+('#'+parts.fragment if parts.fragment else ''), quote=True)+'"'
-    return polish_viewer(root,data,lang,re.sub(r'(href|src)="([^"]+)"', replace, source.read_text()))
+    return add_image_judgments(data,lang,polish_viewer(root,data,lang,re.sub(r'(href|src)="([^"]+)"', replace, source.read_text())))
