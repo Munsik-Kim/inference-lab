@@ -1,0 +1,44 @@
+{
+  "label": "PAPER_INT4_REFERENCE_VARIANT",
+  "author_commit": "d84b7e9dff653320e47c06a365eb8295c1825bc3",
+  "weight_shape": "[out,in]",
+  "signed_range": [
+    -8,
+    7
+  ],
+  "group": 64,
+  "output_row_splits": 1,
+  "iterations": 15,
+  "row_init": "max_abs",
+  "column_init": "l1_norm_inverse_forward",
+  "scale_dtype": "float32",
+  "scale_projection": "none",
+  "compute": "FP32, TF32 disabled",
+  "inner": "round/clamp element-only",
+  "final": "per-row/group64 absmax RTN",
+  "epsilon": 1e-12,
+  "zero_rule": "explicit unit scales for structural zero; no clamp/search for nonzero; differs from public clamp(min=1e-8) final cast on tiny groups",
+  "D16_runtime": "BF16 W_tilde, FP32 activation*beta_inverse then BF16 matmul",
+  "D4_runtime": "same artifact; token/group64 dynamic FP32 absmax activation INT4 then BF16 matmul",
+  "D4_label": "W4A4_REFERENCE_VARIANT",
+  "native_packed_kernel": false,
+  "quantized_projections": [
+    "down_proj",
+    "gate_proj",
+    "k_proj",
+    "o_proj",
+    "q_proj",
+    "up_proj",
+    "v_proj"
+  ],
+  "excluded": [
+    "embedding",
+    "lm_head",
+    "norm",
+    "attention",
+    "RoPE",
+    "KV"
+  ],
+  "strict_failures": "nonfinite/nonpositive nonzero scales recorded as failures; no repair",
+  "iteration_selection": "always15, no best-MSE selection"
+}

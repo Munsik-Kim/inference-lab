@@ -15,6 +15,7 @@ from case010 import load_case010, render_case010, C10, SOURCE_COPIES as C10_SOUR
 from case011 import load_case011, load_items, render_case011, C11, SOURCE_COPIES as C11_SOURCES, figures as case011_figures
 from case012_review import review_copy
 from case012_pages import load_case012, render_case012, render_annotation, annotation_data, image_viewer, C12, SOURCE_COPIES as C12_SOURCES
+from case013 import load_case013, render_case013, C13, SOURCE_COPIES as C13_SOURCES, FIGURES as C13_FIGURES
 
 def link(url, text, cls=''):
     return f'<a class="{cls}" href="{escape(url, quote=True)}">{escape(text)}</a>'
@@ -44,6 +45,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     data10 = load_case010(root)
     data11 = load_case011(root)
     data12 = load_case012(root)
+    data13 = load_case013(root)
     manifest = source_manifest(root)
     rev = manifest['evidence_revision']
     languages = {lang:read(root/f'presentation/content/{lang}.json') for lang in ('en','ko')}
@@ -93,6 +95,10 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         for name in ('case012.css', 'case012-annotation.js', 'case012-images.js', 'case012-groups.js'):
             files['assets/'+name] = (root/'presentation/assets'/name).read_bytes()
         files['assets/case012-review.css'] = (root/C12/'demo/style.css').read_bytes()
+    if data13:
+        files['data/case013.json'] = (json_text(data13)+'\n').encode()
+        for name,path in C13_SOURCES.items(): files['sources/'+name] = (root/path).read_bytes()
+        for name,path in C13_FIGURES.items(): files[name] = (root/path).read_bytes()
     def versioned_case012(name):
         return '../'+name+'?v='+hashlib.sha256(files[name]).hexdigest()[:16]
     files['index.html'] = language_index().encode()
@@ -101,7 +107,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
              'ko':['실행 호환성','BF16 / FP8 문서 추출','Softmax 수치 근사','Attention 전체 호출 비용','정밀도와 비용의 절충','답변 선택과 동률','구조화 MLP 압축','모델 제작·재실행과 MLP 출력 복구']}
     # IDs, translated archive labels, and verified projections are explicit.
     ids = [int(Path(path).name.split('-')[0]) for path in case_paths]
-    require(ids == list(range(1, len(ids)+1)) and 8 <= len(ids) <= 12,
+    require(ids == list(range(1, len(ids)+1)) and 8 <= len(ids) <= 13,
             'Unexpected case identity/count; extend the explicit display registry')
     registry = {
         9: (data9, 'Graph serving and official quality evaluation', 'Graph 요청 비용과 공식 품질 평가'),
@@ -109,6 +115,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         11: (data11, 'Same state, different readout', '같은 상태, 다른 판독기'),
         # Current AI assessment and blank human form retain the historical scope.
         12: (data12, 'Image-generation budget: loops vs steps', '이미지 생성 시간: 반복과 단계'),
+        13: (data13, 'Weight error, real answers and tool use', '가중치 오차와 실제 답변·도구 사용'),
     }
     for case_id in ids[8:]:
         data, en, ko = registry[case_id]
@@ -118,10 +125,12 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         t['methodLabels']=method_labels(lang)
         files[f'assets/{lang}.js'] = ('window.TEXT = '+script_json(t)+';\n').encode()
         other = 'ko' if lang == 'en' else 'en'
-        for page in ('index','case008','case007','case006','guide')+(('case009',) if data9 else ())+(('case010',) if data10 else ())+(('case011',) if data11 else ())+(('case012','case012-annotate') if data12 else ()):
+        for page in ('index','case008','case007','case006','guide')+(('case009',) if data9 else ())+(('case010',) if data10 else ())+(('case011',) if data11 else ())+(('case012','case012-annotate') if data12 else ())+(('case013',) if data13 else ()):
             scripts = ''
             if page == 'index':
-                body = home(t, lang, payloads, case_paths, names[lang], rev, data8, data9, data10, data11, data12)
+                body = home(t, lang, payloads, case_paths, names[lang], rev, data8, data9, data10, data11, data12, data13)
+            elif page == 'case013':
+                body = render_case013(data13, lang)
             elif page == 'case012':
                 body = render_case012(data12, lang)
             elif page == 'case012-annotate':
@@ -153,14 +162,14 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 path=C7 if page=='case007' else C6
                 body += '<div class="actions">'+link(source_url(rev,path+'/REPRODUCTION.md'),t['original'])+'</div>'
                 scripts=f'<script defer src="../assets/{lang}.js"></script><script defer src="../data/{page}.js"></script><script defer src="../assets/state.js"></script><script defer src="../assets/app.js"></script>'
-            page_rev = 'Case012 recorded PNGs with separate AI and grouped human assessments (file hashes in JSON)' if page.startswith('case012') else 'Case011 original snapshot and post-hoc file hashes (JSON)' if page=='case011' else 'Case010 v1/v2 recorded snapshots (file hashes in JSON)' if page=='case010' else 'Case009 reviewed snapshot (file hashes in JSON)' if page=='case009' else C8_REVISION if page == 'case008' else rev
+            page_rev = 'Case013 recorded reference variant (file hashes in JSON)' if page=='case013' else 'Case012 recorded PNGs with separate AI and grouped human assessments (file hashes in JSON)' if page.startswith('case012') else 'Case011 original snapshot and post-hoc file hashes (JSON)' if page=='case011' else 'Case010 v1/v2 recorded snapshots (file hashes in JSON)' if page=='case010' else 'Case009 reviewed snapshot (file hashes in JSON)' if page=='case009' else C8_REVISION if page == 'case008' else rev
             body+=f'<details class="provenance"><summary>{t["evidence"]}</summary><p class="small">{t["evidence"]}: <code>{page_rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p></details>'
             navigation = ''.join('<a'+(' aria-current="page"' if page==target else '')+' href="'+target+'.html">'+escape(label)+'</a>' for target,label in [('case008','Case 008'),('case007','Case 007'),('case006','Case 006'),('guide',t['navGuide'])])
             if page == 'index':
                 navigation = ''.join(link('#'+target,t[key]) for target,key in [('capabilities','navCapabilities'),('tech-stack','navStack'),('projects','navProjects')])
-            notice = '../sources/case012-notice.md.txt' if page.startswith('case012') else '../sources/case011-notice.md.txt' if page=='case011' else '../sources/case010-notice.md.txt' if page=='case010' else '../sources/case009-notice.md.txt' if page=='case009' else source_url(C8_REVISION,C8_PATH+'/NOTICE.md') if page=='case008' else source_url(rev,C7+'/NOTICE.md')
-            html=template.substitute(lang=lang,title=escape(('Case 011 · Same state, different readout' if lang=='en' else 'Case 011 · 같은 상태, 다른 판독기') if page=='case011' else ('Case 010 · Recurrent memory' if lang=='en' else 'Case 010 · 반복 상태와 기억 수명') if page=='case010' else 'Case 009 · Serving and quality' if page=='case009' else t['siteTitle'] if page=='index' else t['guide'] if page=='guide' else t['homeTitle8'] if page=='case008' else t['case007' if page=='case007' else 'case006']),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=t['language'],body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=notice,scripts=scripts)
-            if page in ('case006','case007','case010','case011'):
+            notice = '../sources/case013-notice.md.txt' if page=='case013' else '../sources/case012-notice.md.txt' if page.startswith('case012') else '../sources/case011-notice.md.txt' if page=='case011' else '../sources/case010-notice.md.txt' if page=='case010' else '../sources/case009-notice.md.txt' if page=='case009' else source_url(C8_REVISION,C8_PATH+'/NOTICE.md') if page=='case008' else source_url(rev,C7+'/NOTICE.md')
+            html=template.substitute(lang=lang,title=escape(('Case 013 · Weight error and real answers' if lang=='en' else 'Case 013 · 가중치 오차와 실제 답변') if page=='case013' else ('Case 011 · Same state, different readout' if lang=='en' else 'Case 011 · 같은 상태, 다른 판독기') if page=='case011' else ('Case 010 · Recurrent memory' if lang=='en' else 'Case 010 · 반복 상태와 기억 수명') if page=='case010' else 'Case 009 · Serving and quality' if page=='case009' else t['siteTitle'] if page=='index' else t['guide'] if page=='guide' else t['homeTitle8'] if page=='case008' else t['case007' if page=='case007' else 'case006']),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=t['language'],body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=notice,scripts=scripts)
+            if page in ('case006','case007','case010','case011','case013'):
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/study.css"></head>')
             if page.startswith('case012'):
                 title12 = ('Case 012 · 직접 정답 체크하기' if lang=='ko' else 'Case 012 · Human image annotation') if page.endswith('annotate') else ('Case 012 · 이미지 생성 시간 배분' if lang=='ko' else 'Case 012 · Loops vs steps')
@@ -206,6 +215,9 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                                   'human_input_sha256': human12['image_set_sha256'],
                                   'image_assets': {name:data12['sources'][path] for name,path in data12['images'].items()},
                                   'human_evaluation': data12['human_evaluation']}
+    if data13:
+        report['case013_units'] = {**data13['units'], 'source_files': data13['sources'],
+                                  'scope':data13['scope'], 'packed_gate':data13['packed']}
     files['build_manifest.json']=(json_text(report)+'\n').encode()
     output.mkdir(parents=True)
     for name,blob in files.items():

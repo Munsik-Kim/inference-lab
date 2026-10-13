@@ -1,0 +1,13 @@
+# Sources, reuse and contribution
+
+DualQuant is by Mahsa Salmani, Sayeh Sharify and Hesham Mostafa. The paper's scaling method, block-coordinate updates and activation factorization are upstream contributions. DIOVA does not claim a new quantization algorithm or the authors' packed results.
+
+- [DualQuant v1](https://arxiv.org/html/2610.13767v1): Algorithm 1, sections 4.2–4.4, Appendix H/I.
+- [Reviewed public commit](https://github.com/MahsaMoonlike/dualquant/tree/d84b7e9dff653320e47c06a365eb8295c1825bc3): `d84b7e9dff653320e47c06a365eb8295c1825bc3`. The reviewed 101 source files contain no license file. That vendor tree and private block-format library are not redistributed here; [file hashes](provenance/history/dualquant_source_files.json) identify the reviewed source. This is an independently implemented mathematical reference variant, not the original full program.
+- [Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B/tree/c1899de289a04d12100db370d81485cdf75e47ca) and [Qwen3-4B-Instruct-2507](https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/tree/cdbee75f17c01a7cc42f958dc650907174af0554): Qwen provides models/tokenizers, under its Apache-2.0 notices. Neither checkpoint nor derived weight artifacts are included.
+- [WikiText dataset card](https://huggingface.co/datasets/Salesforce/wikitext/blob/b08601e04326c79dfdd32d625aee71d232d685c3/README.md): Stephen Merity and collaborators; Wikipedia-derived text. The card's metadata lists CC BY-SA 3.0/GFDL while its prose links CC BY-SA 4.0. Source text and original token arrays are not redistributed here. Published records contain measurement arrays, predicted IDs and input hashes.
+- [PyTorch](https://github.com/pytorch/pytorch), [Transformers](https://github.com/huggingface/transformers), [NumPy](https://github.com/numpy/numpy), [vLLM/Marlin](https://github.com/vllm-project/vllm/tree/v0.29.0): upstream libraries provide model execution, array operations and the packed kernel. This repository does not claim authorship of those components.
+
+DIOVA by Munsik Kim supplies the reference implementation, packed serialization, scale-preserving adapter, matched evaluation fixtures, local tool harness, failure records, independent scalar audit and bilingual presentation. Development, experiment execution assistance and publication preparation used Codex/ChatGPT. This assistance is not an independent human evaluation or independent laboratory replication.
+
+New project code follows the repository [Apache-2.0 license](../../LICENSE). Third-party models, data and source retain their own licenses; this notice does not relicense them. The public package excludes model weights, INT4 weight payloads, full reference logits, environments and credentials.

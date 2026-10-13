@@ -26,6 +26,7 @@ Built checkpoint checks, weight reconstruction, physical matrix slicing and pair
 | Low-bit state packing, failure persistence and fresh-process restart | NumPy · PyTorch · ComplexKDA recurrence | [implementation](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [synthetic restart tests](cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
 | Same-state final-layer intervention and two-tensor patch reload | ComplexKDA · PyTorch L-BFGS · NumPy | [adapter](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [patch tests](cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
 | Paired-noise loop/step execution, time selection and image annotation | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [adapter](cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU tests](cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
+| Scale-preserving INT4 conversion and recorded quality audits | DualQuant public equations · PyTorch · NumPy | [solver](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU audit](cases/013-dualquant-reference-quality/analysis/audit.py) |
 
 [Related work and implementation boundaries](docs/related-work/README.md) · [CPU comparison package](packages/diova-compare/README.md)
 
@@ -155,6 +156,14 @@ The human checklist is complete for 192 MAIN images: 100 directly checked, 92 as
 
 [Completed human review](presentation/evaluations/case012-human-v1/README.md) · [Check the images yourself on the site](https://munsik-kim.github.io/inference-lab/en/case012-annotate.html) · [Result page](https://munsik-kim.github.io/inference-lab/en/case012.html). Download JSON at any point and import it later to resume. Browser records are not automatically uploaded; human labels are recalculated separately from AI scores.
 
+## Case 013 — Does lower weight error improve real answers?
+
+Built real INT4 packing/reload, a scale-preserving full-model adapter and matched-input language, long-context and local-tool checks. Recorded all four methods on Qwen 0.6B and 4B using an RTX 5080.
+
+D16 reduced weight error in both models. PPL improved in 0.6B but slightly worsened in 4B; the 4B free-tool pilot completed **6/8 versus RTN 8/8** tasks. The full packed-model numeric gate did not pass, so serving acceleration remains unestablished. These are reference-quality and small DEV results.
+
+[Overview](cases/013-dualquant-reference-quality/README.md) · [Solver/adapter](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU readback](cases/013-dualquant-reference-quality/REPRODUCTION.md) · [Full report](cases/013-dualquant-reference-quality/REPORT.md)
+
 ## Questions and recorded tools
 
 
@@ -172,6 +181,7 @@ The human checklist is complete for 192 MAIN images: 100 directly checked, 92 as
 | [010 — Can low-bit state restart consistently after failure?](docs/en/CASEBOOK.md#case-010) | Actual bit packing, failure-aware serialization, first-error survival and byte-budget comparisons. |
 | [011 — What changes when only the readout changes?](docs/en/CASEBOOK.md#case-011) | Two-tensor adaptation and reload; paired gold-score and first-error comparisons on the same state. |
 | [012 — Where should image-generation time go?](docs/en/CASEBOOK.md#case-012) | Paired-noise loop/step runner, timing and image inspection. AI assessment of all 192 images with paired constraint gains and losses. |
+| [013 — Does lower weight error improve real answers?](docs/en/CASEBOOK.md#case-013) | INT4 scale-preserving conversion/reload and matched full-model, long-input and tool-quality records; packed gate remains blocked. |
 
 ## Go deeper
 

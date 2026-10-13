@@ -1,0 +1,200 @@
+{
+  "created_utc": "2026-10-13T03:45:40.818975+00:00",
+  "models": {
+    "06b": {
+      "id": "Qwen/Qwen3-0.6B",
+      "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "path": "LOCAL_EXTERNAL_FILE",
+      "total_corpus_tokens": 298938,
+      "evaluated_window_tokens": 65536,
+      "tokenizer_files": {
+        "tokenizer_config.json": {
+          "bytes": 9732,
+          "sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+        },
+        "generation_config.json": {
+          "bytes": 239,
+          "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2"
+        },
+        "tokenizer.json": {
+          "bytes": 11422654,
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+        },
+        "config.json": {
+          "bytes": 726,
+          "sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd"
+        }
+      }
+    },
+    "4b": {
+      "id": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "path": "LOCAL_EXTERNAL_FILE",
+      "total_corpus_tokens": 298938,
+      "evaluated_window_tokens": 65536,
+      "tokenizer_files": {
+        "tokenizer_config.json": {
+          "bytes": 9377,
+          "sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3"
+        },
+        "generation_config.json": {
+          "bytes": 238,
+          "sha256": "835fffe355c9438e7a25be099b3fccaa98350b83451f9fd2d99512e74f1ade48"
+        },
+        "tokenizer.json": {
+          "bytes": 11422654,
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+        },
+        "config.json": {
+          "bytes": 727,
+          "sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba"
+        }
+      }
+    }
+  },
+  "inputs": {
+    "agent_token_manifest.json": {
+      "bytes": 1282,
+      "sha256": "c85e2a4e918c169f4fd4d525577759cbf56a7177a4055df6ebb8330d8d059876"
+    },
+    "tool_schema.json": {
+      "bytes": 2075,
+      "sha256": "bd7de0dc4b194c09084d2941e81603d58fd065d4f21dbea71f5dfac90feefbd7"
+    },
+    "long_tasks.json": {
+      "bytes": 5474,
+      "sha256": "06ef2ef43df6f894c61bbd5c0a9ae49439101c080ef3efdc71a337796acc4270"
+    },
+    "greedy_prompts.json": {
+      "bytes": 291,
+      "sha256": "a96022b8c1d70f4ba8d2566615ffbf7d771621b925a2e292b8e553ca87866125"
+    },
+    "agent_initial_messages.json": {
+      "bytes": 257190,
+      "sha256": "a058e975c1897a4479f43121060e1317a2912eb70c800be477828a66315e92e6"
+    },
+    "wiki_4b.npy": {
+      "bytes": 262272,
+      "sha256": "f9a5c4c055e01e2e9cb6d7a0df293d577501014e25cc2e026636793bfcaed7e2"
+    },
+    "wiki_06b.npy": {
+      "bytes": 262272,
+      "sha256": "f9a5c4c055e01e2e9cb6d7a0df293d577501014e25cc2e026636793bfcaed7e2"
+    },
+    "long_8192.npy": {
+      "bytes": 393344,
+      "sha256": "b8feab341109907cbbb38196a4eb018d422c9192079255bb901d6b507c0502ce"
+    },
+    "long_32768.npy": {
+      "bytes": 1572992,
+      "sha256": "1e049ef6a235f92454e33399ef04975cbb99f371684aa8fd9874342093ae0817"
+    },
+    "wikitext_source.json": {
+      "bytes": 560,
+      "sha256": "5a4240eeb8e12285c62b2ec23229c5ff78e98801fe72607bc786e0f208f11bc0"
+    },
+    "agent_tasks.json": {
+      "bytes": 5808,
+      "sha256": "b4111931c8a51cd05e8faf6a80e1f95b1f241b4ddfb4d41af2609f665b089788"
+    },
+    "long_16384.npy": {
+      "bytes": 786560,
+      "sha256": "1ab4f3744de473750f33bd677f16004a56d5dcea3cbd7eef1db721b4849b0d34"
+    }
+  },
+  "methods": [
+    "BF16",
+    "RTN",
+    "D16",
+    "D4"
+  ],
+  "role": "REFERENCE_DIAGNOSTIC and DEV, not formal TEST",
+  "wiki": {
+    "windows": 32,
+    "length": 2048,
+    "nonoverlapping": true,
+    "BOS": false,
+    "EOS": false,
+    "stride": 2048,
+    "loss": "shifted tokens1..2047 per window; first token unscored",
+    "kl_positions": [
+      0,
+      66,
+      132,
+      198,
+      264,
+      330,
+      396,
+      462,
+      528,
+      594,
+      660,
+      726,
+      792,
+      858,
+      924,
+      990,
+      1056,
+      1122,
+      1188,
+      1254,
+      1320,
+      1386,
+      1452,
+      1518,
+      1584,
+      1650,
+      1716,
+      1782,
+      1848,
+      1914,
+      1980,
+      2046
+    ],
+    "reference_direction": "KL(BF16||candidate), full vocabulary selected32positions/window",
+    "nll_tokens_per_model_method": 65504
+  },
+  "generation": {
+    "temperature": 0,
+    "greedy": true,
+    "short_max_new_tokens": 64,
+    "long_max_new_tokens": 96,
+    "agent_max_new_tokens": 192,
+    "prefix_cache": false,
+    "within_request_KV": true,
+    "dtype": "BF16",
+    "attention": "sdpa",
+    "agent_calls_max": 8,
+    "agent_tools_max": 6,
+    "agent_deadline_seconds": 900,
+    "context_limit": 24576,
+    "grammar_constraints": false,
+    "silent_truncate": false
+  },
+  "long_dev": {
+    "tasks": 12,
+    "lengths": [
+      8192,
+      16384,
+      32768
+    ],
+    "expansion": "previous length numerically completes;32K only if weights+KV+1GiB+workspace fit current free memory",
+    "paired_cluster": "task id",
+    "minimum_free_bytes": 1073741824
+  },
+  "agent_dev": {
+    "tasks": 8,
+    "shared_replay": true,
+    "free_rollout": true,
+    "initial_targets": [
+      4096,
+      8192
+    ],
+    "optional_16k": false,
+    "tools": "owned fixture only; no shell/network"
+  },
+  "gpu_budget_seconds": 14400,
+  "packed_exploration_seconds": 3600,
+  "formal_test_tasks": 0,
+  "reference_contract_sha256": "b29807d84e6b9b880fd4212d5a13b1eb09e8accf9e4aa9d9e47ac3d54c0c0903"
+}

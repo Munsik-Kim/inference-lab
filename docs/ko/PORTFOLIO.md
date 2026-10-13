@@ -92,3 +92,8 @@ OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지�
 같은 cache를 세 판독기가 읽게 하고, 마지막 두 tensor의 저장·shape·원본 hash를 검사해 새 프로세스에서 다시 적용합니다. [특징 경계](../../cases/011-frozen-state-readout-adaptation/source/adapter.py) → [patch loader](../../cases/011-frozen-state-readout-adaptation/source/head_patch.py) → [계약 테스트](../../cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) → [독립 검산기](../../cases/011-frozen-state-readout-adaptation/analysis/audit.py) 순서로 읽을 수 있습니다.
 
 추가 recurrent-state 저장은 0 B입니다. fitting 범위 밖의 정답 CE는 개선됐지만 INT8의 평균 연속 정답 길이는 세 checkpoint 모두 감소했습니다. [쉬운 화면](https://munsik-kim.github.io/inference-lab/ko/case011.html) · [정확한 결과와 solver 상태](../../cases/011-frozen-state-readout-adaptation/REPORT.ko.md) · [CPU 실행](GETTING_STARTED.md#case011-cpu). PyTorch/NumPy와 ComplexKDA의 역할은 [기여·출처](../../cases/011-frozen-state-readout-adaptation/NOTICE.md)에 있습니다.
+
+
+## Case 013 — INT4 스케일 보존과 품질 검산
+
+[INT4 변환·adapter](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [Packed 저장](../../cases/013-dualquant-reference-quality/source/reference_int4.py) · [저장 scalar 검산](../../cases/013-dualquant-reference-quality/analysis/audit.py)

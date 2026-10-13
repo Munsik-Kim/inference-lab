@@ -1,0 +1,6 @@
+Paper Algorithm1 and sections4.2-4.4: inverse row then inverse column LS, fresh round/clamp between updates. AppendixH weight-only; AppendixI author Llama3.1-8B/RTX4090 packed route.
+Public pin d84b7e9dff653320e47c06a365eb8295c1825bc3 wrapper152-162 element_INT4,194-197 final rtn_INT4,248-297 initialization,300-339 BCD,405-410 reconstruction,530-535 transport vs folded weight.
+Activation wrapper108-130 multiplies beta_inverse in FP32 then casts back.
+Our PAPER_INT4_REFERENCE_VARIANT keeps element-only=true and scale_format=none; public config default false, paper BF16 inverse scale projection is not used. Tiny/zero rules differ explicitly. D4 token/group64 dynamic FP32 scales are W4A4_REFERENCE_VARIANT, not private Format conformance.
+No original vendor modifications or blockfmt import shims. Dequantized BF16 linear only; no native packed-GPU claim.
+Sources: https://arxiv.org/html/2610.13767v1 ; https://github.com/MahsaMoonlike/dualquant/blob/d84b7e9dff653320e47c06a365eb8295c1825bc3/layer_wrapper_dualquant.py

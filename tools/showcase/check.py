@@ -15,6 +15,7 @@ from case010 import load_case010, render_case010, home_case010, SOURCE_COPIES as
 from case011 import load_case011, load_items, render_case011, home_case011, C11, SOURCE_COPIES as C11_SOURCES, FIGURE_ASSETS as C11_FIGURES, figures as case011_figures, SECTIONS as C11_SECTIONS
 from case012_review import review_copy
 from case012_pages import load_case012, annotation_data, render_case012, render_annotation, image_viewer, home_case012, SOURCE_COPIES as C12_SOURCES, C12, SECTIONS as C12_SECTIONS
+from case013 import load_case013, render_case013, home_case013, SOURCE_COPIES as C13_SOURCES, C13, SECTIONS as C13_SECTIONS, FIGURES as C13_FIGURES
 from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
 
@@ -89,6 +90,7 @@ def check(root: Path, site: Path) -> dict:
     data10=load_case010(root)
     data11=load_case011(root)
     data12=load_case012(root)
+    data13=load_case013(root)
     expected=EXPECTED|({'en/case009.html','ko/case009.html','data/case009.json','data/case009.js','assets/case009.js','assets/serving-L128.svg','assets/serving-L1024.svg',
       'sources/diova-compare-core.py.txt','sources/diova-compare-tests.py.txt','sources/diova-compare-edge-tests.py.txt','sources/case009-serving.py.txt','sources/case009-quality.py.txt','sources/case009-report-en.md.txt','sources/case009-report-ko.md.txt','sources/case009-notice.md.txt'} if data9 else set())
     if data10:
@@ -102,6 +104,10 @@ def check(root: Path, site: Path) -> dict:
         expected |= {'data/case012.json','data/case012-annotation.json','data/case012-annotation.js','data/case012-review-copy.json','data/case012-review-copy.js',
                      'assets/case012.css','assets/case012-annotation.js','assets/case012-review.css','assets/case012-images.js','assets/case012-groups.js'}
         expected |= {'sources/'+name for name in C12_SOURCES} | set(data12['images'])
+    if data13:
+        expected |= {'en/case013.html','ko/case013.html','data/case013.json'}
+        expected |= {'sources/'+name for name in C13_SOURCES}
+        expected |= set(C13_FIGURES)
     require(set(paths)==expected, 'Unexpected/missing deploy artifact member')
     m=read(site/'build_manifest.json')
     require(set(m['files'])==expected-{'build_manifest.json'}, 'Manifest coverage')
@@ -111,6 +117,17 @@ def check(root: Path, site: Path) -> dict:
     for name,digest in m['presentation_files'].items():
         path=(root/name).resolve()
         require(path.is_relative_to(root.resolve()) and path.is_file() and sha(path)==digest, 'Stale presentation build')
+    if data13:
+        require(read(site/'data/case013.json')==data13, 'Case013 numeric/source mismatch')
+        require(m['case013_units']['source_files']==data13['sources'], 'Case013 source identity mismatch')
+        for name,path in C13_SOURCES.items():
+            require((site/'sources'/name).read_bytes()==(root/path).read_bytes(), 'Changed Case013 source copy')
+        for name,path in C13_FIGURES.items():
+            require((site/name).read_bytes()==(root/path).read_bytes(), 'Changed Case013 figure')
+        for lang in ('en','ko'):
+            html=(site/lang/'case013.html').read_text(); parser=Links(); parser.feed(html)
+            require(render_case013(data13,lang) in html and set(C13_SECTIONS)<=parser.ids, 'Case013 rendering/anchors')
+            require(home_case013(data13,lang) in (site/lang/'index.html').read_text(), 'Case013 home feature')
     if data12:
         require(read(site/'data/case012.json') == data12, 'Case012 numeric/source mismatch')
         human12 = annotation_data(root, data12)

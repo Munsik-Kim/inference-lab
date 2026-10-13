@@ -92,3 +92,8 @@ Connected actual state packing, residual transport, atomic row updates and failu
 Three readouts share a cache, while two-tensor patches validate shape and base-checkpoint identity before fresh-process application. Read the [feature boundary](../../cases/011-frozen-state-readout-adaptation/source/adapter.py), [patch loader](../../cases/011-frozen-state-readout-adaptation/source/head_patch.py), [contract tests](../../cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) and [independent auditor](../../cases/011-frozen-state-readout-adaptation/analysis/audit.py) in that order.
 
 Additional recurrent-state storage is 0 B. Gold CE improved beyond fitting support, while INT8 mean uninterrupted correct length fell on all three checkpoints. [Walkthrough](https://munsik-kim.github.io/inference-lab/en/case011.html) · [Exact results and solver status](../../cases/011-frozen-state-readout-adaptation/REPORT.md) · [CPU checks](GETTING_STARTED.md#case011-cpu). [Attribution](../../cases/011-frozen-state-readout-adaptation/NOTICE.md) distinguishes PyTorch/NumPy and ComplexKDA from the project integration.
+
+
+## Case 013 — Scale-preserving INT4 and quality readback
+
+[INT4 solver and adapter](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [Packed serialization](../../cases/013-dualquant-reference-quality/source/reference_int4.py) · [Recorded scalar audit](../../cases/013-dualquant-reference-quality/analysis/audit.py)

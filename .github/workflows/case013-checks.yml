@@ -1,0 +1,42 @@
+name: Case013 recorded quality and publication checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: case013-cpu-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+env:
+  CUDA_VISIBLE_DEVICES: ''
+  HF_HUB_OFFLINE: '1'
+  TRANSFORMERS_OFFLINE: '1'
+  PYTHONDONTWRITEBYTECODE: '1'
+jobs:
+  recorded-quality:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # existing verified v6 pin
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # existing verified v6 pin
+        with:
+          python-version: '3.12.14'
+      - run: python -m pip install -r cases/013-dualquant-reference-quality/publication/requirements-cpu.txt
+      - name: Independent per-token, exact-answer, action and pairing audit
+        run: python -B cases/013-dualquant-reference-quality/analysis/audit.py --output "$RUNNER_TEMP/case013/scalars.json"
+      - name: Public file identities, exclusions and display values
+        run: python -B cases/013-dualquant-reference-quality/publication/verify.py --output "$RUNNER_TEMP/case013/publication.json"
+      - name: CPU scalar contracts
+        run: python -B -m unittest discover -s cases/013-dualquant-reference-quality/tests -v 2>&1 | tee "$RUNNER_TEMP/case013/tests.log"
+      - name: Retain scalar receipts and test logs only
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # existing verified v4 pin
+        with:
+          name: case013-cpu-receipts
+          path: ${{ runner.temp }}/case013/
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,0 +1,70 @@
+{
+  "label": "PUBLIC_MARLIN_W4A16_SCALE_BF16_PROBE_VARIANT",
+  "official_DualQuant_packed": "NOT_VERIFIED",
+  "native_INT4_tensor_core_MMA": false,
+  "runtime": "packed INT4 weights; fused unpack into BF16 tensor-core matmul",
+  "beta_preserved": true,
+  "scale_change": "alpha_inv*gamma combined in FP32 then BF16 kernel scales; original FP32 artifact preserved",
+  "thresholds_before_probe": {
+    "gemm_relative_rmse": 0.02,
+    "full_forward_relative_rmse": 0.02
+  },
+  "kernel_exploration_limit_seconds": 3600,
+  "formal_serving_benefit": "NOT_ESTABLISHED",
+  "device": "NVIDIA GeForce RTX 5080",
+  "capability": [
+    12,
+    0
+  ],
+  "gemm": {
+    "status": "PASS",
+    "relative_rmse": 0.0030783622059971094,
+    "max_abs_diff": 0.03125,
+    "gpu_packed_codes_bytes": 1048576,
+    "gpu_scale_bytes": 65536,
+    "beta_bytes": 4096,
+    "operator": "torch.ops._C.marlin_gemm"
+  },
+  "profiler_kernel_names": [
+    "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1})",
+    "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, 4, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >(int, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1>)",
+    "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>)",
+    "void marlin::Marlin<1125899906909960l, 1125899907892224l, 1125899906909960l, 1125899906909960l, 128, 1, 4, 8, false, 4, 4, false>(int4 const*, int4 const*, int4*, int4*, int4 const*, float const*, int4 const*, float const*, int4 const*, int const*, int, int, int, int, int, int*, bool, bool, bool, int)"
+  ],
+  "reference_request_probe": {
+    "input_tokens": 32,
+    "max_new_tokens": 4,
+    "actual_new_tokens": 4,
+    "wall_seconds_repeats": [
+      0.2598361249984009,
+      0.21072162299969932,
+      0.10768033499698504
+    ],
+    "peak_allocated_bytes": 1232505344,
+    "peak_reserved_bytes": 1256194048,
+    "load_and_convert_excluded": true
+  },
+  "one_block": {
+    "status": "PASS",
+    "relative_rmse": 0.005893380381166935
+  },
+  "packed_request_probe": {
+    "input_tokens": 32,
+    "max_new_tokens": 4,
+    "actual_new_tokens": 4,
+    "wall_seconds_repeats": [
+      0.12942328400094993,
+      0.10621355500188656,
+      0.10547512799894321
+    ],
+    "peak_allocated_bytes": 593225728,
+    "peak_reserved_bytes": 624951296,
+    "load_and_convert_excluded": true,
+    "inference_dtype": "BF16 activations, packed INT4 weights, Marlin BF16 MMA"
+  },
+  "status": "BLOCKED",
+  "error_type": "ValueError",
+  "error": "full forward gate 0.02553301863372326",
+  "traceback": "Traceback (most recent call last):\n  File \"LOCAL_RESEARCH/source/probe_public_marlin.py\", line 87, in main\n    if not torch.isfinite(actual).all() or frmse>0.02:raise ValueError(f'full forward gate {frmse}')\n                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: full forward gate 0.02553301863372326\n",
+  "wall_seconds": 8.664414667997335
+}
