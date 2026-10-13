@@ -1,0 +1,10 @@
+{
+  "created_utc": "2026-10-13T04:03:04.049606+00:00",
+  "change": "32K optional memory gate uses observed16K method-specific workspace (2.2x), rather than only0.5GiB placeholder; OOM is retained and stops context expansion while completed short/8K and agent records remain usable",
+  "same_solver_inputs_and_metrics": true,
+  "preexisting_runs_not_rerun_or_overwritten": true,
+  "scope": "new4b candidate workers; 4b BF16 already running original v2",
+  "file_sha256": "ce5025e2a3c97d8fbb170520cad59544270b51437ec76213a6f2e7ee82c59145",
+  "reason": "D16/D4 FP32 activation buffers must count in32K memory policy, not just KV payload",
+  "does_not_select_based_on_quality": true
+}

@@ -1,0 +1,104 @@
+{
+  "budget_seconds": 14400,
+  "conservative_GPU_worker_wall_seconds": 2251.1595824979995,
+  "within_budget": true,
+  "kernel_busy_time_not_measured": true,
+  "model_workers_completed": 8,
+  "additional_commands": [
+    {
+      "script": "paper_linear_diagnostics.py",
+      "command": [
+        "LOCAL_RESEARCH/.venv-reference/bin/python",
+        "LOCAL_RESEARCH/source/paper_linear_diagnostics.py"
+      ],
+      "exit_code": 0,
+      "worker_wall_seconds": 5.081066768998426,
+      "log": "attempts/paper_linear_diagnostics-01.log",
+      "source_sha256": "a8f970b6b3036eb5253c8d90177626636c121f683deebac2f0f0b7df0d645d68"
+    },
+    {
+      "script": "probe_public_marlin.py",
+      "command": [
+        "LOCAL_RESEARCH/.venv-reference/bin/python",
+        "LOCAL_RESEARCH/source/probe_public_marlin.py"
+      ],
+      "exit_code": 0,
+      "worker_wall_seconds": 11.27677159599989,
+      "log": "attempts/probe_public_marlin-01.log",
+      "source_sha256": "746870a1e084351370d49542d5efc247b96e2565be75263c3ab2e9d6e880a505"
+    },
+    {
+      "purpose": "diagnose scale format, preserve failed primary gate, no tolerance change",
+      "command": [
+        "LOCAL_RESEARCH/.venv-reference/bin/python",
+        "LOCAL_RESEARCH/source/probe_public_marlin.py",
+        "--matched-scale-diagnostic",
+        "--output",
+        "LOCAL_RESEARCH/results/paper_int4_reference_r2/diagnostics/packed_format_matched_02.json"
+      ],
+      "exit_code": 0,
+      "worker_wall_seconds": 13.180692779002129,
+      "source_sha256": "a2943f71d78e995e58e37a59f64ef73144e068798852b4e6e928364a1cf4621b"
+    },
+    {
+      "purpose": "align BF16 reduction flag with main quality runner; threshold unchanged; no fitting or artifact changes; final bounded precision-control probe",
+      "command": [
+        "LOCAL_RESEARCH/.venv-reference/bin/python",
+        "LOCAL_RESEARCH/source/probe_public_marlin.py",
+        "--output",
+        "LOCAL_RESEARCH/results/paper_int4_reference_r2/diagnostics/packed_precision_aligned_03.json"
+      ],
+      "exit_code": 1,
+      "worker_wall_seconds": 14.200540457000898,
+      "source_sha256": "6b20ab57999af7701e92e7279ac48be31474a415cc857ff606950417d85fe34b"
+    },
+    {
+      "method": "BF16",
+      "command": [
+        "LOCAL_RESEARCH/.venv-reference/bin/python",
+        "LOCAL_RESEARCH/source/agent16k_extension.py",
+        "--method",
+        "BF16"
+      ],
+      "exit_code": 0,
+      "worker_wall_seconds": 50.885993683998095,
+      "role": "16K extension of same four DEV tasks, not new independent samples"
+    },
+    {
+      "method": "RTN",
+      "command": [
+        "LOCAL_RESEARCH/.venv-reference/bin/python",
+        "LOCAL_RESEARCH/source/agent16k_extension.py",
+        "--method",
+        "RTN"
+      ],
+      "exit_code": 0,
+      "worker_wall_seconds": 122.63660341500145,
+      "role": "16K extension of same four DEV tasks, not new independent samples"
+    },
+    {
+      "method": "D16",
+      "command": [
+        "LOCAL_RESEARCH/.venv-reference/bin/python",
+        "LOCAL_RESEARCH/source/agent16k_extension.py",
+        "--method",
+        "D16"
+      ],
+      "exit_code": 0,
+      "worker_wall_seconds": 123.41076546499971,
+      "role": "16K extension of same four DEV tasks, not new independent samples"
+    },
+    {
+      "method": "D4",
+      "command": [
+        "LOCAL_RESEARCH/.venv-reference/bin/python",
+        "LOCAL_RESEARCH/source/agent16k_extension.py",
+        "--method",
+        "D4"
+      ],
+      "exit_code": 0,
+      "worker_wall_seconds": 154.49009918400043,
+      "role": "16K extension of same four DEV tasks, not new independent samples"
+    }
+  ]
+}

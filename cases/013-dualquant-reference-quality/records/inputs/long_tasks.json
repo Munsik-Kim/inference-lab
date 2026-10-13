@@ -1,0 +1,138 @@
+[
+  {
+    "id": "DEV-F1-0",
+    "family": "retrieval",
+    "records": "[DOC-DEV-F1-0] Current access code for station DEV-F1-0 is GATE-41. Previous code OLD-0 is obsolete.",
+    "question": "What is the current access code for station DEV-F1-0? Return only JSON {\"answer\":\"...\",\"evidence\":[\"DOC-DEV-F1-0\"]}.",
+    "answer": "GATE-41",
+    "evidence": [
+      "DOC-DEV-F1-0"
+    ],
+    "record_placement": "front"
+  },
+  {
+    "id": "DEV-F1-1",
+    "family": "retrieval",
+    "records": "[DOC-DEV-F1-1] Current access code for station DEV-F1-1 is GATE-42. Previous code OLD-1 is obsolete.",
+    "question": "What is the current access code for station DEV-F1-1? Return only JSON {\"answer\":\"...\",\"evidence\":[\"DOC-DEV-F1-1\"]}.",
+    "answer": "GATE-42",
+    "evidence": [
+      "DOC-DEV-F1-1"
+    ],
+    "record_placement": "middle"
+  },
+  {
+    "id": "DEV-F1-2",
+    "family": "retrieval",
+    "records": "[DOC-DEV-F1-2] Current access code for station DEV-F1-2 is GATE-43. Previous code OLD-2 is obsolete.",
+    "question": "What is the current access code for station DEV-F1-2? Return only JSON {\"answer\":\"...\",\"evidence\":[\"DOC-DEV-F1-2\"]}.",
+    "answer": "GATE-43",
+    "evidence": [
+      "DOC-DEV-F1-2"
+    ],
+    "record_placement": "back"
+  },
+  {
+    "id": "DEV-F1-3",
+    "family": "retrieval",
+    "records": "[DOC-DEV-F1-3] Current access code for station DEV-F1-3 is GATE-44. Previous code OLD-3 is obsolete.",
+    "question": "What is the current access code for station DEV-F1-3? Return only JSON {\"answer\":\"...\",\"evidence\":[\"DOC-DEV-F1-3\"]}.",
+    "answer": "GATE-44",
+    "evidence": [
+      "DOC-DEV-F1-3"
+    ],
+    "record_placement": "middle"
+  },
+  {
+    "id": "DEV-F2-0",
+    "family": "join",
+    "records": "[ORDER-DEV-F2-0] Active quantity is 7. Old quantity 99 is obsolete. [PRICE-DEV-F2-0] Unit price is 3. Similar item Z costs 88.",
+    "question": "Calculate quantity times unit price for item DEV-F2-0. Return only JSON {\"answer\":\"...\",\"evidence\":[\"ORDER-DEV-F2-0\",\"PRICE-DEV-F2-0\"]}.",
+    "answer": "21",
+    "evidence": [
+      "ORDER-DEV-F2-0",
+      "PRICE-DEV-F2-0"
+    ],
+    "record_placement": "front"
+  },
+  {
+    "id": "DEV-F2-1",
+    "family": "join",
+    "records": "[ORDER-DEV-F2-1] Active quantity is 8. Old quantity 99 is obsolete. [PRICE-DEV-F2-1] Unit price is 4. Similar item Z costs 88.",
+    "question": "Calculate quantity times unit price for item DEV-F2-1. Return only JSON {\"answer\":\"...\",\"evidence\":[\"ORDER-DEV-F2-1\",\"PRICE-DEV-F2-1\"]}.",
+    "answer": "32",
+    "evidence": [
+      "ORDER-DEV-F2-1",
+      "PRICE-DEV-F2-1"
+    ],
+    "record_placement": "middle"
+  },
+  {
+    "id": "DEV-F2-2",
+    "family": "join",
+    "records": "[ORDER-DEV-F2-2] Active quantity is 9. Old quantity 99 is obsolete. [PRICE-DEV-F2-2] Unit price is 5. Similar item Z costs 88.",
+    "question": "Calculate quantity times unit price for item DEV-F2-2. Return only JSON {\"answer\":\"...\",\"evidence\":[\"ORDER-DEV-F2-2\",\"PRICE-DEV-F2-2\"]}.",
+    "answer": "45",
+    "evidence": [
+      "ORDER-DEV-F2-2",
+      "PRICE-DEV-F2-2"
+    ],
+    "record_placement": "back"
+  },
+  {
+    "id": "DEV-F2-3",
+    "family": "join",
+    "records": "[ORDER-DEV-F2-3] Active quantity is 10. Old quantity 99 is obsolete. [PRICE-DEV-F2-3] Unit price is 6. Similar item Z costs 88.",
+    "question": "Calculate quantity times unit price for item DEV-F2-3. Return only JSON {\"answer\":\"...\",\"evidence\":[\"ORDER-DEV-F2-3\",\"PRICE-DEV-F2-3\"]}.",
+    "answer": "60",
+    "evidence": [
+      "ORDER-DEV-F2-3",
+      "PRICE-DEV-F2-3"
+    ],
+    "record_placement": "middle"
+  },
+  {
+    "id": "DEV-F3-0",
+    "family": "state_update",
+    "records": "[V1-DEV-F3-0] Status is WAIT. [V2-DEV-F3-0] Set status to HOLD. [V3-DEV-F3-0] Latest update sets status to READY-0; all earlier updates are superseded.",
+    "question": "Give latest status for DEV-F3-0. Return only JSON {\"answer\":\"...\",\"evidence\":[\"V3-DEV-F3-0\"]}.",
+    "answer": "READY-0",
+    "evidence": [
+      "V3-DEV-F3-0"
+    ],
+    "record_placement": "front"
+  },
+  {
+    "id": "DEV-F3-1",
+    "family": "state_update",
+    "records": "[V1-DEV-F3-1] Status is WAIT. [V2-DEV-F3-1] Set status to HOLD. [V3-DEV-F3-1] Latest update sets status to READY-1; all earlier updates are superseded.",
+    "question": "Give latest status for DEV-F3-1. Return only JSON {\"answer\":\"...\",\"evidence\":[\"V3-DEV-F3-1\"]}.",
+    "answer": "READY-1",
+    "evidence": [
+      "V3-DEV-F3-1"
+    ],
+    "record_placement": "middle"
+  },
+  {
+    "id": "DEV-F3-2",
+    "family": "state_update",
+    "records": "[V1-DEV-F3-2] Status is WAIT. [V2-DEV-F3-2] Set status to HOLD. [V3-DEV-F3-2] Latest update sets status to READY-2; all earlier updates are superseded.",
+    "question": "Give latest status for DEV-F3-2. Return only JSON {\"answer\":\"...\",\"evidence\":[\"V3-DEV-F3-2\"]}.",
+    "answer": "READY-2",
+    "evidence": [
+      "V3-DEV-F3-2"
+    ],
+    "record_placement": "back"
+  },
+  {
+    "id": "DEV-F3-3",
+    "family": "state_update",
+    "records": "[V1-DEV-F3-3] Status is WAIT. [V2-DEV-F3-3] Set status to HOLD. [V3-DEV-F3-3] Latest update sets status to READY-3; all earlier updates are superseded.",
+    "question": "Give latest status for DEV-F3-3. Return only JSON {\"answer\":\"...\",\"evidence\":[\"V3-DEV-F3-3\"]}.",
+    "answer": "READY-3",
+    "evidence": [
+      "V3-DEV-F3-3"
+    ],
+    "record_placement": "middle"
+  }
+]

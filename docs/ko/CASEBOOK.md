@@ -20,6 +20,7 @@
 - [010 — 저비트 state의 저장·재시작과 기억 수명](#case-010)
 - [011 — 같은 상태에서 판독기만 바꾸면?](#case-011)
 - [012 — 이미지 생성 시간, 어디에 계산을 더 쓸까?](#case-012)
+- [013 — 가중치 오차가 줄면 실제 답변도 좋아질까?](#case-013)
 
 <a id="case-001"></a>
 ## 001 — 커널 선택 조건을 고치면 실행할 수 있는가?
@@ -608,3 +609,14 @@ Case010의 저장 구현을 사용하는 후속 질문은 [Case011의 판독층 
 [쉬운 소개](../../cases/012-looped-dit-inference-budget/README.ko.md) · [모든 이미지 비교](../../cases/012-looped-dit-inference-budget/publication/IMAGES.ko.md) · [실행 코드](../../cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU 검산](../../cases/012-looped-dit-inference-budget/REPRODUCTION.md) · [정식 보고서](../../cases/012-looped-dit-inference-budget/REPORT.ko.md)
 
 [사이트에서 직접 정답 체크하기](https://munsik-kim.github.io/inference-lab/ko/case012-annotate.html) · [실제 결과](https://munsik-kim.github.io/inference-lab/ko/case012.html). 부분 체크도 JSON으로 내려받고 나중에 가져와 이어서 할 수 있습니다. 사람의 기록은 AI 점수와 별도이며 자동 업로드되지 않습니다.
+
+<a id="case-013"></a>
+## 013 — 가중치 오차가 줄면 실제 답변도 좋아질까?
+
+**구현:** signed group64 INT4 변환, 실제 nibble 저장·재로딩, 행·열 스케일을 보존하는 모델 adapter와 동일 입력의 문장/장문/로컬 도구 평가·CPU 검산을 만들었습니다.
+
+**관측:** D16은 RTN보다 두 모델에서 가중치 MSE가 작았습니다. 기록된 WikiText 일부에서 0.6B PPL은 27.576→24.445, 4B는 10.810→10.894였습니다. 4B 자유 도구 DEV 8개에서 BF16/RTN/D16/D4는 8/8·8/8·6/8·0/8을 완료했습니다. 네 문항의 16K 후속은 기존 task를 재사용합니다. Packed 전체 모델 수치 오차는 사전 기준을 넘었고 serving 이득은 아직 확인하지 못했습니다.
+
+**범위:** 공개 수식의 reference variant, 복원 BF16 연산, RTX 5080의 pinned Qwen 두 모델입니다. Formal TEST·동일 조건 GPTQ serving·native packed W4A4는 미완료이며 원시 출력과 실패 probe를 함께 보존합니다.
+
+[쉬운 소개](../../cases/013-dualquant-reference-quality/README.ko.md) · [변환·adapter](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 검산](../../cases/013-dualquant-reference-quality/REPRODUCTION.ko.md) · [보고서](../../cases/013-dualquant-reference-quality/REPORT.ko.md)

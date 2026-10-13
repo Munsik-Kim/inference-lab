@@ -1,0 +1,105 @@
+DualQuant 공개 INT4 참조 — 전체 모델 품질·장문·도구 호출 DEV 결과
+작성: 2026-10-13T05:06:14.048935+00:00
+상태: ALGORITHM_REFERENCE_EXECUTED. 전체 모델 품질 실행 완료; packed 전체 모델 수치 대응 미통과.
+
+1. 무엇을 구현했고 무엇이 확인됐나
+비공개 blockfmt 없이 실행하는 INT4 solver, 실제 nibble artifact 저장·재로딩, 전체 모델 GPU 품질 runner, 장문 DEV scorer와 로컬 도구 harness를 구현했다. Qwen0.6B와4B의 모든 transformer projection에 RTN·D16·D4를 적용하고 BF16과 같은 입력으로 비교했다.
+0.6B에서는 D16의 PPL이 RTN보다 작았다. 4B에서는 weight MSE와 KL이 작아졌어도 PPL과 자유 agent 성공률은 좋아지지 않았다. 저장한 가중치의 오차, 문장 확률 점수, 도구를 올바르게 실행하는 능력은 서로 다른 지표였다.
+
+2. 작업공간·원본·실행 계약
+작업공간: LOCAL_RESEARCH
+결과: LOCAL_RESEARCH/results/paper_int4_reference_r2
+출처 branch/HEAD: practice/case009-serving-engine-smoke / 7b3422aca3abc80c2d0286566ee8d998e7b41752
+현재 연구 디렉터리는 Git 저장소가 아니다. branch 전환·commit·push·PR·Drive 작업0. 기존 P0 report_ko.txt와 decision은 과거 상태로 보존했다.
+공개 source pin: d84b7e9dff653320e47c06a365eb8295c1825bc3. 논문 Algorithm1/§4.2–4.4/AppendixH/I와 공개 wrapper를 읽고 대조했다. element INT4 및 최종 rtn_int4 연산을 독립 모듈로 구현했다. 공식 전체 프로그램이나 비공개 Format을 그대로 재현했다는 뜻은 아니다.
+PAPER_INT4_REFERENCE_VARIANT: signed[-8,7], input group64, output row split1,15iterations, row max_abs/column L1 init, FP32 offline 연산과 scales, scale_format=none, element-only inner. 마지막에는 gamma를 포함하는 group absmax RTN을 수행한다. input groups는 chunk하지만 column update에는 전체 output rows가 참여한다.
+논문의 BF16 scale projection과 공개 설정의 기본 inner=false와 다르다. 구조적으로0인 row/column/group에는 unit scale을 쓰는 예외가 있다. 비유한 값이나 nonzero data의0 scale은 보정하지 않고 거절한다.1e-15 합성 fixture는 RTN에서 유한하게 복원되지만 BCD iteration14에서 zero beta로 거절됐다. 이를 실제 모델 실패 빈도에 합치지 않았다.
+D16: X*beta_inverse를 FP32로 계산한 뒤 BF16으로 변환하고, alpha_inverse*gamma*codes를 복원한 BF16 W_tilde와 곱한다. D4는 같은 weight artifact에 token/group64 동적 FP32 activation INT4를 추가한 W4A4_REFERENCE_VARIANT다. beta를 weight와 activation에 중복 적용하지 않았다.
+변경 범위는 각 transformer block의 q/k/v/o/gate/up/down이다.0.6B196개,4B252개 projection. embedding/lm_head/norm/attention/RoPE/KV 경로와 기존 tie 관계는 유지했다. norm hashes도 확인했다. 모델은 순차 로드했다.
+기존 Torch2.13.0+cu130/Transformers5.17.0/RTX5080 SM120/driver610.88을 사용했다. .venv-reference는 기존 parent packages를 상속한다. 설치·upgrade0. Arrow 추출만 기존 CPU build-env의 pyarrow25.0.1을 읽기 전용으로 사용했다. 정확한 D: 모델 원본 위치는 확인되지 않아 검증된 기존 WSL snapshot을 사용하고 임의 복사·삭제를 하지 않았다.
+06b: Qwen/Qwen3-0.6B @ c1899de289a04d12100db370d81485cdf75e47ca / LOCAL_EXTERNAL_FILE
+4b: Qwen/Qwen3-4B-Instruct-2507 @ cdbee75f17c01a7cc42f958dc650907174af0554 / LOCAL_EXTERNAL_FILE
+
+3. 전체 모델의 문장 확률 품질
+기존 WikiText-2 raw test 캐시에서 비어 있지 않은 행을 두 newline으로 결합했다. BOS/EOS 추가 없음. 첫32개 비중복2048token windows, window당 첫token 제외2047개, 모델/방법당65,504개 유효token이다. REFERENCE_DIAGNOSTIC subset이며 전체 WikiText benchmark나 새 formal TEST가 아니다.
+512token 실제 full forward와 제한 LM-head 대응은 각 조건에서1회 확인했다.2048token에서는 전체 NLL과 window당 고정32위치의 full-vocabulary KL(BF16||candidate)을 계산했다. CPU reference logits와 GPU token chunk reduction으로 큰 FP32 logits 두 벌을 계속 유지하지 않았다.
+PPL=exp(token-weighted NLL), 낮을수록 좋다.512-prefix PPL 열은 저장된2048 기록의 첫511개 loss를 사후 CPU 재계산한 값이며, 별도32개의512forward 결과라고 표시하지 않는다.
+model |method |NLL |PPL |KL(BF16||candidate) |argmax flip |normalized weight MSE |artifact bytes
+06b |BF16 |3.05751673 |21.274661 |0.000000 |0.0000% |0.00000000 |0
+06b |RTN |3.31695136 |27.576153 |0.398976 |28.9326% |0.01228731 |247,730,784
+06b |D16 |3.19642284 |24.444930 |0.261293 |22.0704% |0.01208061 |276,402,784
+06b |D4 |3.54773054 |34.734400 |0.675540 |36.9977% |0.01208061 |276,402,784
+06b: D16은 RTN 대비 weight MSE가 1.6822% 작고, PPL 변화는 -11.3548%다.
+4b |BF16 |2.31582616 |10.133291 |0.000000 |0.0000% |0.00000000 |0
+4b |RTN |2.38047863 |10.810076 |0.213157 |14.3396% |0.01216967 |2,043,746,208
+4b |D16 |2.38824820 |10.894392 |0.195624 |13.5320% |0.01201816 |2,274,662,304
+4b |D4 |2.51272826 |12.338547 |0.389818 |22.5727% |0.01201816 |2,274,662,304
+4b: D16은 RTN 대비 weight MSE가 1.2449% 작고, PPL 변화는 +0.7800%다.
+D4와 D16은 weight artifact가 같다. 추가 activation 양자화로 바뀐 품질을 weight MSE만으로 설명할 수 없다. RTN W4A4 기준선을 새로 평가한 것은 아니다.
+
+4. 장문 DEV: 값의 정확성과 출력 계약
+12개 task는 근거 회수·두 문서 결합·수정 상태 추적 각4개다. 문항/gold/근거ID/token bytes를 결과 전에 고정했다. 같은 task의 길이 변경본을 독립 표본으로 합치지 않는다. batch1,greedy,max96outputtokens,use_cache=True,SDPA,logits_to_keep=1. KV BF16, CPU offload·KV 양자화·자동truncate 없음.
+method |8K exact |16K exact |32K exact
+BF16 |12/12 |12/12 |10/12
+RTN |11/12 |10/12 |NOT_RUN_MEMORY_POLICY
+D16 |10/12 |10/12 |NOT_RUN_MEMORY_POLICY
+D4 |8/12 |7/12 |NOT_RUN_MEMORY_POLICY
+32K는 BF16만 추가 실행했다. 후보의32K는16K에서 관측한 method별 workspace까지 합산한 보수적 메모리 정책으로 미실행했다. 이를 OOM 실패나 INT4 최대 문맥이라고 바꾸지 않는다. 공통 비교 길이는8K/16K다. 운영 updatev3와 원래 결과를 모두 보존했다.
+주 exact 점수는 고정 answer/evidence의 정확한 값이다. parser는 첫 valid JSON object 추출을 허용한다. strict whole-document JSON validity는 별도 사후 열이다.
+POST_HOC_SAME_RECORDS: BF16의32K 두 실패와 RTN의 세 실패는 계산값이 맞아도 "21" 대신 "7 * 3 = 21"을 쓴 출력 계약 차이였다. 주 점수를 바꾸지 않았다. D16의8K READY-0→READY는 실제 값 손실이다. D4에는 key 대소문자,32/60 대신 피연산자8/10 반환,READY 식별자 손실,96token budget에서 JSON에 도달하지 못한 사례가 함께 있었다.
+paired_dev_summary.json은 같은 task ID의 둘 다 성공/기준선만/후보만/둘 다 실패를 보존한다. 이 작은 DEV 결과를 formal 비열등성 판정으로 쓰지 않는다.
+
+5. 다중 턴 도구 호출 DEV
+기본8개 fixture는 family별2개다. 초기 입력은 실제4,085–4,096/8,180–8,191tokens. 공통 정답 tool history replay와 자유 rollout을 모두 실행했다. 입력hash·tool schema·chat template의 조건 간 대응을 확인했다.
+도구는 연구 소유 문서/record/table/계산/임시 JSON patch/validation만 다룬다. 외부 서비스·임의 shell·사용자 실제 파일은 없다. turn 사이 prefix cache는OFF(전체history 재입력), 각request 내부KV는ON. greedy,max192outputtokens,8modelcalls/6toolcalls,deadline900s,contextlimit24576. 기존 serving180s deadline과 다른 REFERENCE_PILOT이다. 모든 실패시간을 포함했다.
+method |replay |free |tool contract errors |parse errors |모델의 동일 tool 재선택
+BF16 |8/8 |8/8 |0 |0 |0
+RTN |8/8 |8/8 |0 |0 |0
+D16 |8/8 |6/8 |8 |0 |4
+D4 |8/8 |0/8 |2 |2 |2
+D16 AGENT-6/7은 apply_fixture_patch/validate_fixture_test를 CamelCase 이름으로 호출해 거절된 뒤 같은 실패를 반복하고 실제 수정 없이 valid:true를 냈다. 후보를 위해 parser나 registry에 alias를 추가하지 않았다.
+D4는 도구를 쓰지 않고 정보가 없다고 답하거나, 배경 문장을 status로 읽고, 잘못된 tool name/유효하지 않은 fixture 상태에서 종료했다. 원로그의 INCORRECT_FINAL은 최종 답뿐 아니라 요구한 실행 조건까지 포함한다.
+replay8/8은 이미 제공된 tool 결과를 읽는 진단이다. 자유 실행 실패를 상태 정보의 완전 소실이나 모든 agent 작업의 불가능성으로 확대하지 않는다. 작은 NLL/weight MSE 변화가 이 DEV의 schema·행동 안정성을 보장하지 않았다는 관측이다.
+16K 추가 DEV는 각 family의 첫 member AGENT-0/2/4/6이다. 기본 결과 뒤의 길이 확장임을 별도 등록에 적고, 추가 GPU 실행 전에 입력hash를 고정했다. 기존8개 task 중4개의 변경본이며 독립 task4개를 새로 얻은 것이 아니다.
+16K BF16: replay 4/4, free 4/4; 완료 records 8/8.
+16K RTN: replay 4/4, free 4/4; 완료 records 8/8.
+16K D16: replay 4/4, free 3/4; 완료 records 8/8.
+16K D4: replay 4/4, free 0/4; 완료 records 8/8.
+
+6. 대수 검산·실제 저장·비용
+q/o/gate/down4행렬, RTN/A_ONLY/D16의1/5/15iteration 진단28행. FP64 transport 최대차이 0, FP32 1.43051e-06. BF16 transport 대 folded 표현의 상대RMSE 최대 0.0040052. FP64 row-only 상쇄 control 최대차이 6.66134e-16.
+inner-code MSE와 최종 native-group MSE를 따로 기록했다. iteration objective 감소를 최종 저장 MSE의 단조감소로 쓰지 않는다. 양의 row 배율은 마지막 group absmax에서 상쇄될 수 있다.15iteration 고정, best-iteration/clip search/activation-aware/Hessian 선택0.
+artifact는 실제 codes/gamma/alpha_inverse/beta_inverse/shape/24Bheader를 저장한다. RTN의 identity alpha/beta는 생략하고 D16의 필요한 scales는 포함했다. 모든 projection에서 정수code bit-exact와 weight/beta 재로딩을 확인했다. basecheckpoint의 embedding/head/norm은 별도로 필요하므로 standalone 전체 모델이 아니다.
+품질 경로의 GPU weights는 복원된 BF16이다. artifact bytes 감소를 이 경로의 VRAM 감소로 쓰지 않는다.
+model/method |NLL loop wall(s) |Torch peak allocated/reserved(B) |convert 또는 reload(s)
+06b/BF16 |2.8858 |1338743808/1400897536 |0.000
+06b/RTN |3.2063 |1339890688/1472200704 |520.493
+06b/D16 |2.9750 |1339890688/1447034880 |48.709
+06b/D4 |4.0918 |1339890688/1501560832 |17.521
+4b/BF16 |7.7518 |8297826304/8380219392 |0.000
+4b/RTN |8.6668 |8381351936/8598323200 |107.126
+4b/D16 |8.7787 |8384497664/8619294720 |185.284
+4b/D4 |10.8704 |8462288896/8732540928 |65.451
+0.6B RTN 변환은 기존 Python byte iteration 저장 경로, 이후 D16/4B는 byte-identical bulk copy 경로다. 이 변환시간 차이를 알고리즘 speedup으로 비교하지 않는다.4B의 두 변환은 같은 개선된 저장 경로다. D4 conversion 열은 동결 D16 artifact의 read/reconstruction이며 solver 재학습이 아니다.
+NLL loop wall은 선택logits/metric CPU 전송과 일부 reference file I/O도 포함한다. serving TTFT/TPOT/steady-state speed가 아니다. load/전체worker wall은 attempts에 따로 있다. 장치 전체 Windows GPU peak/TTFT/TPOT/prefixcachedtokens는 NOT_MEASURED다.
+GPU worker wall 누적 2251.160s /14,400s. loading/CPU serialization/idle도 포함한 보수적 budget 회계이며 GPU kernel busy time은 아니다.
+
+7. 공개 packed probe: 전체 모델 대응 미통과
+기존 vLLM0.29.0의 _C.gptq_marlin_repack/marlin_gemm을 사용하고 SM120의 실제 marlin::Marlin CUDA kernel을 profiler로 기록했다. packed INT4 weights에서 BF16 tensor-core MMA로 fused unpack하는 W4A16이며, native INT4 MMA/W4A4/저자의 Nunchaku 경로는 아니다.
+최종 precision-aligned probe: GEMM 상대RMSE 0.003078, 한 block 0.005673 PASS.32token 전체모델 상대RMSE 0.026054 > 사전 기준0.02로 BLOCKED. greedy4token suffix는 같았지만 forward argmax 차이 0.031250였다.
+초기2.5533%, BF16 scale 대응 dense 진단2.2598%, reduction flag를 본 품질runner에 맞춘 마지막2.6054% 모두 기준 미통과다. scale 반올림과 kernel 산술 차이가 남아 있으며 원인을 하나로 확정하지 않는다. 기준을 넓히지 않고 이전 실패를 보존했다.
+옛 probe01/02는 receipt를 기록한 handler 때문에 exit0였어도 semantic status는 BLOCKED다. 현재 CLI는 BLOCKED에서exit1이며 마지막probe03 실제exit1을 기록했다. exit0을GPU PASS로 세지 않는다.
+32input/4output·3repeat의 실제 wall/allocated/reserved는 각 receipt에 있다. 수치 대응 gate 미통과와 cold/warm 변동 때문에 이를 유효한 serving speedup이나 capacity gain으로 보고하지 않는다.
+
+8. 검증·보존·미완료 범위
+CPU 고유39PASS: 기존29+신규10,skip0. r1의38과r2의39 반복은 새 unique test가 아니다. tiny fixture를 강화한 최종39도 PASS. Case00999개 파일의 경로/bytes/SHA 동일, vendor101개 source hash 동일. 원래 repo tracked diff는 비어 있고 병행 untracked 작업은 보존했다.
+독립 NumPy FP64 selected-vocabulary CE, 저장 loss 집계, 전체token argmax, input pairing, artifact bytes/hash를 CPU로 검산했다. 이를 GPU 재실행이라고 표시하지 않는다.512 제한 LM-head parity와 finite도 확인했다.
+r1은 pyarrow 부족과 Transformers5.17의 return_dict=True 기본값 때문에 입력 준비만 실패했고 GPU0이다. 보존 후 r2에서 기존 data env와 return_dict=False로 해결했다. Python byte iteration을 동일 binary를 만드는 bulk copy로 고쳐 이후 변환 시간을 줄였다. solver·입력·후보 선택은 바꾸지 않았다.
+이번 완료: 독립 INT4 variant, 두 모델 전체 품질,8K/16K DEV,4K/8K 및 작은16K agent DEV, 실제 packed probe와 실패 분석. 남은 일: packed 전체 모델 수치 대응,4B packed 품질, stock GPTQ와 paired serving, 공통 engine/cache/tool parser, formal120task 등록·실행. GO_SPEED/GO_CAPACITY/비열등성 판정은 부여하지 않았다.
+원 checkpoint·환경·Case009는 그대로다. training/calibration search/새 model download/remote publication0. 원 weight 파일 전체를 새로 hash하지 않고, 기존 metadata·대표tensor·새 artifact hash를 구분했다.
+
+9. 파일·직접 검산·출처
+quality_06b.csv/quality_4b.csv는 반올림 전 값, long_context_dev.csv는 exact/strictJSON/사후 구분, agent_dev.jsonl은 원64개와 사후 반복tool 집계, agent16k_extension은 별32개 기록이다. solver_trace/diagnostics는 iteration/guard/scales, artifact_manifest는 실제 payload 식별자다. attempts의 실제 CLI/exit/wall과 verification/decision을 함께 읽는다.
+논문 v1: https://arxiv.org/html/2610.13767v1
+공개 source: https://github.com/MahsaMoonlike/dualquant/tree/d84b7e9dff653320e47c06a365eb8295c1825bc3
+Qwen 저장본과 원형 provenance, 설치된 공개 vLLM Marlin source를 추가 근거로 사용했다. 저자의 방법과 이번 독립 구현·저장·평가·분석을 구분한다. 구현과 실행 정리는 Codex 지원이다. 제3자 source에 새 license를 붙이거나 weights/private artifact를 게시하지 않았다.

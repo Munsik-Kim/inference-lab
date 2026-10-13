@@ -26,6 +26,7 @@
 | 저비트 state packing·실패 보존·새 프로세스 재시작 | NumPy · PyTorch · ComplexKDA recurrence | [구현](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [합성 재시작 테스트](cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
 | 같은 state의 최종 판독층 교체·patch 저장·재적용 | ComplexKDA · PyTorch L-BFGS · NumPy | [adapter](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [patch 검사](cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
 | 같은 잡음의 loop/step 실행·시간 예산 선택·이미지 평가 | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [adapter](cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU 검사](cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
+| INT4 스케일 보존 변환과 저장 품질 검산 | DualQuant 공개 수식 · PyTorch · NumPy | [변환](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 검산](cases/013-dualquant-reference-quality/analysis/audit.py) |
 
 [선행연구와 구현 대응](docs/related-work/README.ko.md) · [CPU 비교 도구](packages/diova-compare/README.ko.md)
 
@@ -155,6 +156,14 @@ MAIN 192장의 사람 체크를 마쳤습니다. 직접 체크한 100장의 답�
 
 [완료한 사람 평가](presentation/evaluations/case012-human-v1/README.ko.md) · [사이트에서 직접 정답 체크하기](https://munsik-kim.github.io/inference-lab/ko/case012-annotate.html) · [결과 페이지](https://munsik-kim.github.io/inference-lab/ko/case012.html). 진행 중에도 JSON을 다운로드하고 나중에 가져와 이어서 체크할 수 있습니다. 브라우저 기록은 자동 업로드되지 않으며, 사람의 평가는 AI 점수와 별도로 검산합니다.
 
+## Case 013 — 가중치 오차가 줄면 실제 답변도 좋아질까?
+
+실제 INT4 packing·재로딩, 스케일을 보존하는 전체 모델 adapter와 동일 입력의 문장 점수·장문 답·로컬 도구 검사를 구현했습니다. RTX 5080에서 Qwen 0.6B와 4B의 네 방법을 모두 기록했습니다.
+
+D16의 가중치 오차는 두 모델에서 줄었습니다. 0.6B의 PPL은 좋아졌지만 4B에서는 조금 나빠졌고, 자유 도구 작업은 **RTN 8/8 대비 D16 6/8**을 완료했습니다. Packed 전체 모델 수치 기준은 미통과여서 serving 가속은 아직 확인하지 못했습니다. Reference 품질과 작은 DEV 실험의 결과입니다.
+
+[쉬운 소개](cases/013-dualquant-reference-quality/README.ko.md) · [변환·adapter](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 재계산](cases/013-dualquant-reference-quality/REPRODUCTION.ko.md) · [정식 보고서](cases/013-dualquant-reference-quality/REPORT.ko.md)
+
 ## 질문과 구현물
 
 
@@ -172,6 +181,7 @@ MAIN 192장의 사람 체크를 마쳤습니다. 직접 체크한 100장의 답�
 | [010 — 저비트 state를 실패 이후에도 재시작할 수 있는가?](docs/ko/CASEBOOK.md#case-010) | 실제 bit packing, 실패 상태 직렬화, 최초 판독 실패와 저장 예산 비교. |
 | [011 — 같은 상태에서 판독기만 바꾸면?](docs/ko/CASEBOOK.md#case-011) | 마지막 층 두 tensor 보정·재적용, 정답 점수와 첫 오류 길이의 비교. |
 | [012 — 이미지 생성 시간을 어디에 더 쓸까?](docs/ko/CASEBOOK.md#case-012) | 같은 잡음의 loop/step 실행·시간 비교·이미지 판독 도구. 전체192장 AI 평가와 조건별 획득·손실. |
+| [013 — 가중치 오차가 줄면 실제 답도 좋아질까?](docs/ko/CASEBOOK.md#case-013) | INT4 스케일 보존·저장·재로딩과 동일 입력 품질 기록. Packed 전체 모델 수치 기준 미통과. |
 
 ## 더 깊게 보기
 

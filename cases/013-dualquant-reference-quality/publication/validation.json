@@ -1,0 +1,85 @@
+{
+  "stage": "PUBLICATION_CPU_ONLY",
+  "date": "2026-10-13",
+  "original_research_cpu_tests": {
+    "unique": 39,
+    "current_publication_execution": false,
+    "evidence": "records/verification.json"
+  },
+  "publication_local_tests": {
+    "Python_unique_run": 175,
+    "new_tests_in_this_publication": 22,
+    "Node_existing_unique_run": 56,
+    "passed": 231,
+    "skipped": 0,
+    "reruns_not_added_to_unique_count": true
+  },
+  "scalar_readback": "PASS",
+  "artifact_metadata_sse_energy_and_bytes": "PASS_NO_WEIGHT_LOADING",
+  "full_logit_KL_recomputed": false,
+  "source_export_inputs_preserved": true,
+  "case009_files_currently_verified": 99,
+  "existing_cases_001_012_changed": false,
+  "gpu_runs": 0,
+  "training": 0,
+  "new_model_downloads": 0,
+  "environment_upgrades": 0,
+  "browser": {
+    "local_file_protocol": "PASS",
+    "languages": [
+      "en",
+      "ko"
+    ],
+    "widths": [
+      390,
+      768,
+      1280
+    ],
+    "assertions": 47,
+    "real_iPad": false,
+    "live_https": false
+  },
+  "public_exclusions": [
+    "weights",
+    "full logits",
+    "WikiText source text/token arrays",
+    "venv/cache",
+    "unlicensed vendor tree"
+  ],
+  "development_attempts": [
+    {
+      "kind": "auditor schema mapping",
+      "failed": 2,
+      "correction": "use kl_sum/kl_positions and input_manifest"
+    },
+    {
+      "kind": "synthetic test invocation",
+      "failed": 1,
+      "correction": "codec expects shape tuple, not element count"
+    },
+    {
+      "kind": "public scanner self literal",
+      "failed": 1,
+      "correction": "compose private-path regex without matching its own literal"
+    },
+    {
+      "kind": "initial publication verification run",
+      "failed": 1,
+      "correction": "use NumPy-capable interpreter; remove only newly created bytecode; freeze publication hashes"
+    },
+    {
+      "kind": "Windows Node --test UNC path",
+      "failed": 1,
+      "correction": "execute existing node:test script directly"
+    },
+    {
+      "kind": "browser observer",
+      "failed": 3,
+      "correction": "wait for current URL, use valid selector expression, respect declared110px scroll margin"
+    }
+  ],
+  "scientific_records_or_gates_changed": false,
+  "GitHub_PR": "RECORDED_EXTERNALLY_AFTER_COMMIT",
+  "main_merge": "NOT_PERFORMED",
+  "Pages_deployment": "NOT_PERFORMED"
+}

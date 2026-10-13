@@ -20,6 +20,7 @@ Each case follows **objective → dataset → assumptions and theory → experim
 - [010 — Low-bit state storage, restart and readout horizon](#case-010)
 - [011 — What changes when only the readout changes?](#case-011)
 - [012 — Where should an image-generation budget go?](#case-012)
+- [013 — Does lower weight error improve real answers?](#case-013)
 
 <a id="case-001"></a>
 ## 001 — Can a kernel-selection change unblock execution?
@@ -610,3 +611,14 @@ The follow-up using Case010 state storage is [Case011 readout adaptation](#case-
 [Plain-language overview](../../cases/012-looped-dit-inference-budget/README.md) · [Compare every image](../../cases/012-looped-dit-inference-budget/publication/IMAGES.md) · [Adapter code](../../cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU audit](../../cases/012-looped-dit-inference-budget/REPRODUCTION.md) · [Full report](../../cases/012-looped-dit-inference-budget/REPORT.md)
 
 [Interactive human checklist](https://munsik-kim.github.io/inference-lab/en/case012-annotate.html) · [Measured results](https://munsik-kim.github.io/inference-lab/en/case012.html). Your partial labels can be downloaded as JSON and restored later; they remain separate from the AI scores and are not automatically uploaded.
+
+<a id="case-013"></a>
+## 013 — Does lower weight error improve real answers?
+
+**Built:** signed group64 INT4 conversion, real nibble storage and reload, a row/column-scale-preserving model adapter, and matched language/long-input/local-tool evaluation with CPU readback.
+
+**Observed:** D16 lowered weight MSE against RTN in both models. On the recorded WikiText subset, 0.6B PPL was 27.576→24.445; 4B PPL was 10.810→10.894. In eight 4B free-tool DEV tasks, BF16/RTN/D16/D4 completed 8/8, 8/8, 6/8, 0/8. The four-task 16K follow-up reuses existing tasks. Full packed-model numeric error exceeded the frozen gate; serving benefits remain unestablished.
+
+**Scope:** public-equation reference variant, reconstructed BF16 execution, two pinned Qwen models on RTX 5080. Formal TEST, matched GPTQ serving and native packed W4A4 were not completed. Original outputs and failure probes are retained.
+
+[Overview](../../cases/013-dualquant-reference-quality/README.md) · [Solver/adapter](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU checks](../../cases/013-dualquant-reference-quality/REPRODUCTION.md) · [Report](../../cases/013-dualquant-reference-quality/REPORT.md)

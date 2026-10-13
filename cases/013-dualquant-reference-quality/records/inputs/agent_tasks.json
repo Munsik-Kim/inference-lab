@@ -1,0 +1,274 @@
+[
+  {
+    "id": "AGENT-0",
+    "family": "document",
+    "task": "Read document and return JSON with site and owner.",
+    "gold": {
+      "site": "Harbor-0",
+      "owner": "Owner-0"
+    },
+    "fixture": {
+      "document": {
+        "site": "Harbor-0",
+        "owner": "Owner-0"
+      },
+      "record": {
+        "quantity": 8,
+        "unit_price": 3
+      },
+      "updates": {
+        "old": "WAIT",
+        "current": "READY-0"
+      },
+      "config": {
+        "enabled": false,
+        "limit": 2
+      },
+      "expected_config": {
+        "enabled": true,
+        "limit": 8
+      }
+    },
+    "replay_tool": "read_document",
+    "replay_args": {},
+    "initial_context_target": 4096
+  },
+  {
+    "id": "AGENT-1",
+    "family": "document",
+    "task": "Read document and return JSON with site and owner.",
+    "gold": {
+      "site": "Harbor-1",
+      "owner": "Owner-1"
+    },
+    "fixture": {
+      "document": {
+        "site": "Harbor-1",
+        "owner": "Owner-1"
+      },
+      "record": {
+        "quantity": 9,
+        "unit_price": 3
+      },
+      "updates": {
+        "old": "WAIT",
+        "current": "READY-1"
+      },
+      "config": {
+        "enabled": false,
+        "limit": 2
+      },
+      "expected_config": {
+        "enabled": true,
+        "limit": 9
+      }
+    },
+    "replay_tool": "read_document",
+    "replay_args": {},
+    "initial_context_target": 8192
+  },
+  {
+    "id": "AGENT-2",
+    "family": "combine",
+    "task": "Read record, multiply quantity by unit_price using calculate and return JSON {\"total\":number}.",
+    "gold": {
+      "total": 30
+    },
+    "fixture": {
+      "document": {
+        "site": "Harbor-2",
+        "owner": "Owner-2"
+      },
+      "record": {
+        "quantity": 10,
+        "unit_price": 3
+      },
+      "updates": {
+        "old": "WAIT",
+        "current": "READY-2"
+      },
+      "config": {
+        "enabled": false,
+        "limit": 2
+      },
+      "expected_config": {
+        "enabled": true,
+        "limit": 10
+      }
+    },
+    "replay_tool": "read_record",
+    "replay_args": {},
+    "initial_context_target": 4096
+  },
+  {
+    "id": "AGENT-3",
+    "family": "combine",
+    "task": "Read record, multiply quantity by unit_price using calculate and return JSON {\"total\":number}.",
+    "gold": {
+      "total": 33
+    },
+    "fixture": {
+      "document": {
+        "site": "Harbor-3",
+        "owner": "Owner-3"
+      },
+      "record": {
+        "quantity": 11,
+        "unit_price": 3
+      },
+      "updates": {
+        "old": "WAIT",
+        "current": "READY-3"
+      },
+      "config": {
+        "enabled": false,
+        "limit": 2
+      },
+      "expected_config": {
+        "enabled": true,
+        "limit": 11
+      }
+    },
+    "replay_tool": "read_record",
+    "replay_args": {},
+    "initial_context_target": 8192
+  },
+  {
+    "id": "AGENT-4",
+    "family": "updates",
+    "task": "Read update table and return latest status as JSON {\"status\":\"...\"}.",
+    "gold": {
+      "status": "READY-4"
+    },
+    "fixture": {
+      "document": {
+        "site": "Harbor-4",
+        "owner": "Owner-4"
+      },
+      "record": {
+        "quantity": 12,
+        "unit_price": 3
+      },
+      "updates": {
+        "old": "WAIT",
+        "current": "READY-4"
+      },
+      "config": {
+        "enabled": false,
+        "limit": 2
+      },
+      "expected_config": {
+        "enabled": true,
+        "limit": 12
+      }
+    },
+    "replay_tool": "query_table",
+    "replay_args": {},
+    "initial_context_target": 4096
+  },
+  {
+    "id": "AGENT-5",
+    "family": "updates",
+    "task": "Read update table and return latest status as JSON {\"status\":\"...\"}.",
+    "gold": {
+      "status": "READY-5"
+    },
+    "fixture": {
+      "document": {
+        "site": "Harbor-5",
+        "owner": "Owner-5"
+      },
+      "record": {
+        "quantity": 13,
+        "unit_price": 3
+      },
+      "updates": {
+        "old": "WAIT",
+        "current": "READY-5"
+      },
+      "config": {
+        "enabled": false,
+        "limit": 2
+      },
+      "expected_config": {
+        "enabled": true,
+        "limit": 13
+      }
+    },
+    "replay_tool": "query_table",
+    "replay_args": {},
+    "initial_context_target": 8192
+  },
+  {
+    "id": "AGENT-6",
+    "family": "fixture_patch",
+    "task": "Update fixture config to enabled=true and limit=14, run validate_fixture_test, then return JSON {\"valid\":true}.",
+    "gold": {
+      "valid": true
+    },
+    "fixture": {
+      "document": {
+        "site": "Harbor-6",
+        "owner": "Owner-6"
+      },
+      "record": {
+        "quantity": 14,
+        "unit_price": 3
+      },
+      "updates": {
+        "old": "WAIT",
+        "current": "READY-6"
+      },
+      "config": {
+        "enabled": false,
+        "limit": 2
+      },
+      "expected_config": {
+        "enabled": true,
+        "limit": 14
+      }
+    },
+    "replay_tool": "apply_fixture_patch",
+    "replay_args": {
+      "enabled": true,
+      "limit": 14
+    },
+    "initial_context_target": 4096
+  },
+  {
+    "id": "AGENT-7",
+    "family": "fixture_patch",
+    "task": "Update fixture config to enabled=true and limit=15, run validate_fixture_test, then return JSON {\"valid\":true}.",
+    "gold": {
+      "valid": true
+    },
+    "fixture": {
+      "document": {
+        "site": "Harbor-7",
+        "owner": "Owner-7"
+      },
+      "record": {
+        "quantity": 15,
+        "unit_price": 3
+      },
+      "updates": {
+        "old": "WAIT",
+        "current": "READY-7"
+      },
+      "config": {
+        "enabled": false,
+        "limit": 2
+      },
+      "expected_config": {
+        "enabled": true,
+        "limit": 15
+      }
+    },
+    "replay_tool": "apply_fixture_patch",
+    "replay_args": {
+      "enabled": true,
+      "limit": 15
+    },
+    "initial_context_target": 8192
+  }
+]

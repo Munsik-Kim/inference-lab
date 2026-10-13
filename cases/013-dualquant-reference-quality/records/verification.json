@@ -1,0 +1,237 @@
+{
+  "created_utc": "2026-10-13T04:32:51.633216+00:00",
+  "cpu_tests": {
+    "unique_total": 39,
+    "existing_unique": 29,
+    "new_unique": 10,
+    "discovered_and_run": 39,
+    "passed": 39,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "ids": [
+      "test_paper_reference.PaperReferenceTests.test_activation_zero_group_outlier_and_rounding",
+      "test_paper_reference.PaperReferenceTests.test_fast_serializer_is_identical_to_original_format",
+      "test_paper_reference.PaperReferenceTests.test_full_beta_transport_and_negative_control",
+      "test_paper_reference.PaperReferenceTests.test_group_chunks_preserve_full_row_reduction",
+      "test_paper_reference.PaperReferenceTests.test_only_allowed_projection_is_replaced",
+      "test_paper_reference.PaperReferenceTests.test_pack_load_all_scales",
+      "test_paper_reference.PaperReferenceTests.test_parser_and_exact_evidence_are_distinct",
+      "test_paper_reference.PaperReferenceTests.test_row_scale_cancellation_fp64",
+      "test_paper_reference.PaperReferenceTests.test_vectorized_axes_match_existing_golden",
+      "test_paper_reference.PaperReferenceTests.test_zero_tiny_and_nonfinite",
+      "test_reference_int4.RoundingAndPackingTests.test_all_codes_have_known_nibble_layout",
+      "test_reference_int4.RoundingAndPackingTests.test_element_quantizer_rejects_nonfinite",
+      "test_reference_int4.RoundingAndPackingTests.test_nextafter_rounding_boundaries",
+      "test_reference_int4.RoundingAndPackingTests.test_nibble_roundtrip_noncontiguous",
+      "test_reference_int4.RoundingAndPackingTests.test_nibble_validation",
+      "test_reference_int4.RoundingAndPackingTests.test_signed_int4_ties_even_and_saturation",
+      "test_reference_int4.RoundingAndPackingTests.test_unsigned_nonnegative_codes_pack_without_wrapped_range_checks",
+      "test_reference_int4.SourceEquationAndOptimizationTests.test_beta_uses_fresh_codes_after_alpha",
+      "test_reference_int4.SourceEquationAndOptimizationTests.test_bounded_default_and_comparison_methods",
+      "test_reference_int4.SourceEquationAndOptimizationTests.test_element_only_alpha_beta_match_extracted_source",
+      "test_reference_int4.SourceEquationAndOptimizationTests.test_final_cast_uses_explicit_standard_inner_gamma",
+      "test_reference_int4.SourceEquationAndOptimizationTests.test_fixed_code_regularized_ls_objective_never_increases",
+      "test_reference_int4.SourceEquationAndOptimizationTests.test_row_only_alpha_matches_extracted_source",
+      "test_reference_int4.SourceEquationAndOptimizationTests.test_toy_exactly_representable_rtn_fixture",
+      "test_reference_int4.TransportAndSerializationTests.test_beta_omission_is_detected_by_negative_control",
+      "test_reference_int4.TransportAndSerializationTests.test_fp64_transport_matches_dense_for_batch_and_bias",
+      "test_reference_int4.TransportAndSerializationTests.test_serialization_exact_roundtrip_all_methods_and_scale_dtypes",
+      "test_reference_int4.TransportAndSerializationTests.test_serialization_rejects_corruption_and_nonfinite_scales",
+      "test_reference_int4.TransportAndSerializationTests.test_storage_budget_counts_alpha_beta_and_inner_scales",
+      "test_reference_int4.TransportAndSerializationTests.test_transport_rejects_bad_shape_dtype_and_nonfinite",
+      "test_reference_int4.ValidationAndZeroTests.test_all_zero_weight_keeps_exact_zeros_and_unit_scales",
+      "test_reference_int4.ValidationAndZeroTests.test_degenerate_nonzero_column_is_not_silently_repaired",
+      "test_reference_int4.ValidationAndZeroTests.test_finite_input_with_nonfinite_intermediate_is_rejected",
+      "test_reference_int4.ValidationAndZeroTests.test_half_inputs_use_finite_fp32_working_scales",
+      "test_reference_int4.ValidationAndZeroTests.test_invalid_configuration_is_rejected",
+      "test_reference_int4.ValidationAndZeroTests.test_invalid_weight_shapes_and_dtypes",
+      "test_reference_int4.ValidationAndZeroTests.test_noncontiguous_inputs_and_no_input_mutation",
+      "test_reference_int4.ValidationAndZeroTests.test_nonfinite_weight_is_strictly_rejected",
+      "test_reference_int4.ValidationAndZeroTests.test_zero_rows_columns_and_group_are_exactly_preserved"
+    ],
+    "final_log": "attempts/cpu-tests-03.log",
+    "revalidations": "r1 38test execution; r2 39test execution before strengthened tiny fixture; r2 final39; repeats are not new unique tests"
+  },
+  "protected_case009": {
+    "original_count": 99,
+    "exact_inventory_and_sha256": "PASS",
+    "mismatch": []
+  },
+  "source_repo_branch": "practice/case009-serving-engine-smoke",
+  "source_repo_HEAD": "7b3422aca3abc80c2d0286566ee8d998e7b41752",
+  "source_repo_status": "?? configs/\n?? labs/\n?? tests/inference_suite/\n?? tools/inference_suite/\n",
+  "tracked_diff": "",
+  "inputs_frozen_identity": "PASS",
+  "model_config_and_tokenizer_sha256": "PASS",
+  "long_actual_input_hash_checks": 108,
+  "agent_same_first_input_across_methods": {
+    "status": "PASS",
+    "records": 64,
+    "FREE_matches_frozen_initial_input": true
+  },
+  "scalar_audit": "scalar_audit.json",
+  "gpu_model_methods_complete": 8,
+  "core_full512_lm_head_parity": [
+    "raw/06b/BF16/forward512.json",
+    "raw/06b/RTN/forward512.json",
+    "raw/06b/D16/forward512.json",
+    "raw/06b/D4/forward512.json",
+    "raw/4b/BF16/forward512.json",
+    "raw/4b/RTN/forward512.json",
+    "raw/4b/D16/forward512.json",
+    "raw/4b/D4/forward512.json"
+  ],
+  "original_vendor_modified": false,
+  "models_weights_rehashed": false,
+  "training_updates": 0,
+  "new_packages_installed": 0,
+  "wall_seconds": 3.3111286550010846,
+  "original_vendor_hash_checks": {
+    "files": 101,
+    "status": "PASS",
+    "modified": []
+  },
+  "original_full_model_weight_files_rehashed": false,
+  "agent16k_extension": {
+    "status": "PASS",
+    "records": 32,
+    "all_method_first_inputs_paired": true,
+    "same_core_artifact_manifest_bytes_after_reload": true,
+    "selected_existing_task_ids": [
+      "AGENT-0",
+      "AGENT-2",
+      "AGENT-4",
+      "AGENT-6"
+    ]
+  },
+  "packed_primary_equivalence_gate": "FAIL_TOLERANCE_NOT_A_KERNEL_ARCHITECTURE_FAILURE",
+  "GPU_WORKER_TOTAL_BUDGET": {
+    "budget_seconds": 14400,
+    "conservative_GPU_worker_wall_seconds": 2251.1595824979995,
+    "within_budget": true,
+    "kernel_busy_time_not_measured": true,
+    "model_workers_completed": 8,
+    "additional_commands": [
+      {
+        "script": "paper_linear_diagnostics.py",
+        "command": [
+          "LOCAL_RESEARCH/.venv-reference/bin/python",
+          "LOCAL_RESEARCH/source/paper_linear_diagnostics.py"
+        ],
+        "exit_code": 0,
+        "worker_wall_seconds": 5.081066768998426,
+        "log": "attempts/paper_linear_diagnostics-01.log",
+        "source_sha256": "a8f970b6b3036eb5253c8d90177626636c121f683deebac2f0f0b7df0d645d68"
+      },
+      {
+        "script": "probe_public_marlin.py",
+        "command": [
+          "LOCAL_RESEARCH/.venv-reference/bin/python",
+          "LOCAL_RESEARCH/source/probe_public_marlin.py"
+        ],
+        "exit_code": 0,
+        "worker_wall_seconds": 11.27677159599989,
+        "log": "attempts/probe_public_marlin-01.log",
+        "source_sha256": "746870a1e084351370d49542d5efc247b96e2565be75263c3ab2e9d6e880a505"
+      },
+      {
+        "purpose": "diagnose scale format, preserve failed primary gate, no tolerance change",
+        "command": [
+          "LOCAL_RESEARCH/.venv-reference/bin/python",
+          "LOCAL_RESEARCH/source/probe_public_marlin.py",
+          "--matched-scale-diagnostic",
+          "--output",
+          "LOCAL_RESEARCH/results/paper_int4_reference_r2/diagnostics/packed_format_matched_02.json"
+        ],
+        "exit_code": 0,
+        "worker_wall_seconds": 13.180692779002129,
+        "source_sha256": "a2943f71d78e995e58e37a59f64ef73144e068798852b4e6e928364a1cf4621b"
+      },
+      {
+        "purpose": "align BF16 reduction flag with main quality runner; threshold unchanged; no fitting or artifact changes; final bounded precision-control probe",
+        "command": [
+          "LOCAL_RESEARCH/.venv-reference/bin/python",
+          "LOCAL_RESEARCH/source/probe_public_marlin.py",
+          "--output",
+          "LOCAL_RESEARCH/results/paper_int4_reference_r2/diagnostics/packed_precision_aligned_03.json"
+        ],
+        "exit_code": 1,
+        "worker_wall_seconds": 14.200540457000898,
+        "source_sha256": "6b20ab57999af7701e92e7279ac48be31474a415cc857ff606950417d85fe34b"
+      },
+      {
+        "method": "BF16",
+        "command": [
+          "LOCAL_RESEARCH/.venv-reference/bin/python",
+          "LOCAL_RESEARCH/source/agent16k_extension.py",
+          "--method",
+          "BF16"
+        ],
+        "exit_code": 0,
+        "worker_wall_seconds": 50.885993683998095,
+        "role": "16K extension of same four DEV tasks, not new independent samples"
+      },
+      {
+        "method": "RTN",
+        "command": [
+          "LOCAL_RESEARCH/.venv-reference/bin/python",
+          "LOCAL_RESEARCH/source/agent16k_extension.py",
+          "--method",
+          "RTN"
+        ],
+        "exit_code": 0,
+        "worker_wall_seconds": 122.63660341500145,
+        "role": "16K extension of same four DEV tasks, not new independent samples"
+      },
+      {
+        "method": "D16",
+        "command": [
+          "LOCAL_RESEARCH/.venv-reference/bin/python",
+          "LOCAL_RESEARCH/source/agent16k_extension.py",
+          "--method",
+          "D16"
+        ],
+        "exit_code": 0,
+        "worker_wall_seconds": 123.41076546499971,
+        "role": "16K extension of same four DEV tasks, not new independent samples"
+      },
+      {
+        "method": "D4",
+        "command": [
+          "LOCAL_RESEARCH/.venv-reference/bin/python",
+          "LOCAL_RESEARCH/source/agent16k_extension.py",
+          "--method",
+          "D4"
+        ],
+        "exit_code": 0,
+        "worker_wall_seconds": 154.49009918400043,
+        "role": "16K extension of same four DEV tasks, not new independent samples"
+      }
+    ]
+  },
+  "independent_exact_long_scorer": {
+    "rows": 108,
+    "status": "PASS",
+    "gold_from_frozen_input_tasks": true,
+    "did_not_change_primary_scores": true
+  },
+  "post_extension_case009_sha256": "PASS99",
+  "new_CPU_files_syntax": {
+    "check_saved_p0.py": "PASS",
+    "m0_native_smoke.py": "PASS",
+    "probe_public_marlin.py": "PASS",
+    "finish_paper_results.py": "PASS",
+    "m0_reference_probe.py": "PASS",
+    "paper_model_runner.py": "PASS",
+    "analyze_paper_results.py": "PASS",
+    "prepare_paper_experiment.py": "PASS",
+    "reference_int4.py": "PASS",
+    "write_paper_report_ko.py": "PASS",
+    "agent16k_extension.py": "PASS",
+    "paper_linear_diagnostics.py": "PASS",
+    "run_paper_suite.py": "PASS",
+    "preflight.py": "PASS",
+    "paper_int4.py": "PASS"
+  }
+}

@@ -550,6 +550,28 @@ def check_case012(root: Path, errors: list[str]) -> set[str]:
         return set()
 
 
+def check_case013(root: Path, errors: list[str]) -> set[str]:
+    """Only a verified Case013 public inventory can extend the protected file set."""
+    case = root/'cases/013-dualquant-reference-quality'
+    if not case.exists():
+        return set()
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('case013_doc_verify', case/'publication/verify.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        module.verify(case)
+        pages=[case/name for name in ('README.md','README.ko.md','REPORT.md','REPORT.ko.md','REPRODUCTION.md','REPRODUCTION.ko.md','NOTICE.md','PORTFOLIO.md','METHOD_CONTRACT.md','EVALUATION_PROTOCOL.md','FAILURE_ANALYSIS.md','PACKED_PROBE.md','ROADMAP.md','figures/README.md')]
+        check_links(root, [p.relative_to(root).as_posix() for p in pages], errors)
+        for lang in ('en','ko'):
+            if (root/f'docs/{lang}/CASEBOOK.md').read_text().count('<a id="case-013"></a>')!=1:
+                errors.append('Case013 must have one Casebook entry: '+lang)
+        return {p.relative_to(root).as_posix() for p in case.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+    except (OSError, ValueError, KeyError, ImportError, AttributeError) as exc:
+        errors.append('Case013 publication verification failed: '+str(exc))
+        return set()
+
+
 def audit(root: Path, inventory: Path | None = None) -> dict:
     root = root.resolve()
     errors: list[str] = []
@@ -565,6 +587,7 @@ def audit(root: Path, inventory: Path | None = None) -> dict:
     additional |= check_unified_case010(root, errors)
     additional |= check_case011(root, errors)
     additional |= check_case012(root, errors)
+    additional |= check_case013(root, errors)
     protected = check_protection(root, mapping.get('protection_revision', mapping['source_revision']), errors, inventory, additional)
     check_copy_hygiene(root, (*PAGES, CONCEPT_FIGURE, 'docs/_meta/claims.json', 'docs/_meta/MAINTENANCE.md'), errors)
     downloads = check_packages(root, mapping, errors)
