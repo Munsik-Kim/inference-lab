@@ -1,0 +1,1091 @@
+{
+  "status": "PASS",
+  "scope": "Saved input bytes, extracted/action correctness, paired counts and logprob reductions; not regeneration of logits/weights",
+  "audit_code_sha256": "e9579a5018f9559541521288ea3e09d8c71cc61818df7454a8664f98f99596cc",
+  "new_GPU_runs_in_audit": 0,
+  "P1": {
+    "BF16": {
+      "reproduction": [
+        {
+          "task_id": "AGENT-6",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "apply_fixture_patch",
+            "validate_fixture_test"
+          ]
+        },
+        {
+          "task_id": "AGENT-7",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "apply_fixture_patch",
+            "validate_fixture_test"
+          ]
+        },
+        {
+          "task_id": "AGENT-2",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "read_record"
+          ]
+        },
+        {
+          "task_id": "AGENT-4",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "query_table"
+          ]
+        }
+      ],
+      "recovery_registered_only": 2,
+      "recovery_repeats_wrong": 0,
+      "recovery_n": 2
+    },
+    "RTN": {
+      "reproduction": [
+        {
+          "task_id": "AGENT-6",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "apply_fixture_patch"
+          ]
+        },
+        {
+          "task_id": "AGENT-7",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "apply_fixture_patch",
+            "validate_fixture_test"
+          ]
+        },
+        {
+          "task_id": "AGENT-2",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "read_record"
+          ]
+        },
+        {
+          "task_id": "AGENT-4",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "query_table"
+          ]
+        }
+      ],
+      "recovery_registered_only": 2,
+      "recovery_repeats_wrong": 0,
+      "recovery_n": 2
+    },
+    "D16": {
+      "reproduction": [
+        {
+          "task_id": "AGENT-6",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "ApplyFixturePatch",
+            "ValidateFixtureTest"
+          ]
+        },
+        {
+          "task_id": "AGENT-7",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "ApplyFixturePatch",
+            "ValidateFixtureTest"
+          ]
+        },
+        {
+          "task_id": "AGENT-2",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "read_record"
+          ]
+        },
+        {
+          "task_id": "AGENT-4",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "query_table"
+          ]
+        }
+      ],
+      "recovery_registered_only": 0,
+      "recovery_repeats_wrong": 2,
+      "recovery_n": 2
+    },
+    "D4": {
+      "reproduction": [
+        {
+          "task_id": "AGENT-6",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "Apply_fixture_patch"
+          ]
+        },
+        {
+          "task_id": "AGENT-7",
+          "output_token_ids_equal_original": true,
+          "tool_names": [
+            "Apply_fixture_patch",
+            "validate_fixture_test"
+          ]
+        },
+        {
+          "task_id": "AGENT-2",
+          "output_token_ids_equal_original": true,
+          "tool_names": []
+        },
+        {
+          "task_id": "AGENT-4",
+          "output_token_ids_equal_original": true,
+          "tool_names": []
+        }
+      ],
+      "recovery_registered_only": 0,
+      "recovery_repeats_wrong": 2,
+      "recovery_n": 2
+    }
+  },
+  "controlled": [
+    {
+      "method": "BF16",
+      "task_id": "AGENT-6",
+      "tool": "apply_fixture_patch",
+      "first_token_correct_minus_wrong_margin_nats": 24.375,
+      "total_name_plus_quote_logprob_correct": -39.7500288484398,
+      "total_name_plus_quote_logprob_wrong": -65.62683117389679,
+      "total_correct_minus_wrong_nats": 25.876802325456993,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -39.75,
+      "quote_boundary_penalty_wrong_nats": -34.5
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-6",
+      "tool": "validate_fixture_test",
+      "first_token_correct_minus_wrong_margin_nats": 24.75,
+      "total_name_plus_quote_logprob_correct": -37.437509179081985,
+      "total_name_plus_quote_logprob_wrong": -57.15138435363724,
+      "total_correct_minus_wrong_nats": 19.713875174555255,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -37.4375,
+      "quote_boundary_penalty_wrong_nats": -27.0
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-7",
+      "tool": "apply_fixture_patch",
+      "first_token_correct_minus_wrong_margin_nats": 24.25,
+      "total_name_plus_quote_logprob_correct": -38.937620276216876,
+      "total_name_plus_quote_logprob_wrong": -64.62914288043976,
+      "total_correct_minus_wrong_nats": 25.691522604222882,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -38.9375,
+      "quote_boundary_penalty_wrong_nats": -34.75
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-7",
+      "tool": "validate_fixture_test",
+      "first_token_correct_minus_wrong_margin_nats": 25.0,
+      "total_name_plus_quote_logprob_correct": -37.12500774857904,
+      "total_name_plus_quote_logprob_wrong": -58.0152086019491,
+      "total_correct_minus_wrong_nats": 20.89020085337006,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -37.125,
+      "quote_boundary_penalty_wrong_nats": -26.75
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-6",
+      "tool": "apply_fixture_patch",
+      "first_token_correct_minus_wrong_margin_nats": 22.625,
+      "total_name_plus_quote_logprob_correct": -35.06254076892401,
+      "total_name_plus_quote_logprob_wrong": -55.924792114645236,
+      "total_correct_minus_wrong_nats": 20.862251345721226,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -35.0625,
+      "quote_boundary_penalty_wrong_nats": -33.25
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-6",
+      "tool": "validate_fixture_test",
+      "first_token_correct_minus_wrong_margin_nats": 22.875,
+      "total_name_plus_quote_logprob_correct": -35.56252408000341,
+      "total_name_plus_quote_logprob_wrong": -53.87309482166893,
+      "total_correct_minus_wrong_nats": 18.310570741665515,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -35.5625,
+      "quote_boundary_penalty_wrong_nats": -24.1875
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-7",
+      "tool": "apply_fixture_patch",
+      "first_token_correct_minus_wrong_margin_nats": 22.625,
+      "total_name_plus_quote_logprob_correct": -33.50003123247461,
+      "total_name_plus_quote_logprob_wrong": -54.78035114705562,
+      "total_correct_minus_wrong_nats": 21.280319914581007,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -33.5,
+      "quote_boundary_penalty_wrong_nats": -32.125
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-7",
+      "tool": "validate_fixture_test",
+      "first_token_correct_minus_wrong_margin_nats": 23.5,
+      "total_name_plus_quote_logprob_correct": -34.25001692759304,
+      "total_name_plus_quote_logprob_wrong": -53.51218110346235,
+      "total_correct_minus_wrong_nats": 19.262164175869316,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -34.25,
+      "quote_boundary_penalty_wrong_nats": -24.1875
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-6",
+      "tool": "apply_fixture_patch",
+      "first_token_correct_minus_wrong_margin_nats": -17.12499976158145,
+      "total_name_plus_quote_logprob_correct": -54.91917331144214,
+      "total_name_plus_quote_logprob_wrong": -34.91990382969376,
+      "total_correct_minus_wrong_nats": -19.999269481748378,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -35.625,
+      "quote_boundary_penalty_wrong_nats": -34.75
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-6",
+      "tool": "validate_fixture_test",
+      "first_token_correct_minus_wrong_margin_nats": 22.25,
+      "total_name_plus_quote_logprob_correct": -29.312812638494734,
+      "total_name_plus_quote_logprob_wrong": -48.22337185125798,
+      "total_correct_minus_wrong_nats": 18.910559212763246,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -29.312501907348633,
+      "quote_boundary_penalty_wrong_nats": -25.875
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-7",
+      "tool": "apply_fixture_patch",
+      "first_token_correct_minus_wrong_margin_nats": -14.50000011920963,
+      "total_name_plus_quote_logprob_correct": -50.687746493611485,
+      "total_name_plus_quote_logprob_wrong": -33.85744194686378,
+      "total_correct_minus_wrong_nats": -16.830304546747705,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -34.25,
+      "quote_boundary_penalty_wrong_nats": -33.6875
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-7",
+      "tool": "validate_fixture_test",
+      "first_token_correct_minus_wrong_margin_nats": 22.375,
+      "total_name_plus_quote_logprob_correct": -28.18756866240369,
+      "total_name_plus_quote_logprob_wrong": -47.5733353048563,
+      "total_correct_minus_wrong_nats": 19.38576664245261,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -28.187501907348633,
+      "quote_boundary_penalty_wrong_nats": -24.25
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-6",
+      "tool": "apply_fixture_patch",
+      "first_token_correct_minus_wrong_margin_nats": -17.124999642372188,
+      "total_name_plus_quote_logprob_correct": -46.14548239065334,
+      "total_name_plus_quote_logprob_wrong": -30.727716565131743,
+      "total_correct_minus_wrong_nats": -15.417765825521599,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -28.875,
+      "quote_boundary_penalty_wrong_nats": -29.125
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-6",
+      "tool": "validate_fixture_test",
+      "first_token_correct_minus_wrong_margin_nats": 20.374999880790718,
+      "total_name_plus_quote_logprob_correct": -28.875012993739453,
+      "total_name_plus_quote_logprob_wrong": -47.30928261112422,
+      "total_correct_minus_wrong_nats": 18.434269617384764,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -28.875,
+      "quote_boundary_penalty_wrong_nats": -22.875
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-7",
+      "tool": "apply_fixture_patch",
+      "first_token_correct_minus_wrong_margin_nats": -12.375000238439497,
+      "total_name_plus_quote_logprob_correct": -39.49681762093678,
+      "total_name_plus_quote_logprob_wrong": -35.33260536191733,
+      "total_correct_minus_wrong_nats": -4.16421225901945,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -27.0625,
+      "quote_boundary_penalty_wrong_nats": -29.0625
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-7",
+      "tool": "validate_fixture_test",
+      "first_token_correct_minus_wrong_margin_nats": 12.999999761586196,
+      "total_name_plus_quote_logprob_correct": -29.125015854788444,
+      "total_name_plus_quote_logprob_wrong": -47.07038230658509,
+      "total_correct_minus_wrong_nats": 17.945366451796644,
+      "correct_length": 4,
+      "wrong_length": 4,
+      "quote_boundary_penalty_correct_nats": -29.125,
+      "quote_boundary_penalty_wrong_nats": -24.6875
+    }
+  ],
+  "common": [
+    {
+      "method": "BF16",
+      "task_id": "AGENT-6",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": 24.375
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-6",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 16.375000225263648
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-6",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": 24.375
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-6",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 16.375000225263648
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-7",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": 24.25
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-7",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": 24.25
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-7",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": 24.25
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-7",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": 24.25
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-2",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 13.249999687890522
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-2",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 13.249999687890522
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-4",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 10.249999731342541
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-4",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 12.124999731342541
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-4",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "common_response_token_count": 3,
+      "baseline_token_minus_candidate_margin": -6.499999888241291
+    },
+    {
+      "method": "BF16",
+      "task_id": "AGENT-4",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 1.875
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-6",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": 22.625
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-6",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 5.999999820254743
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-6",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": 22.625
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-6",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 5.999999820254743
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-7",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": 22.625
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-7",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": 22.625
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-7",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": 22.625
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-7",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": 22.625
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-2",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 1.8750000298023224
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-2",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 1.8750000298023224
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-4",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": -5.499999940395355
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-4",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": -4.75
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-4",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "common_response_token_count": 3,
+      "baseline_token_minus_candidate_margin": 0.9999999701976776
+    },
+    {
+      "method": "RTN",
+      "task_id": "AGENT-4",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 0.7499999403953552
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-6",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": -17.12499976158145
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-6",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 6.500000176485628
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-6",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": -17.12499976158145
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-6",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 6.500000176485628
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-7",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": -14.50000011920963
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-7",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": -14.50000011920963
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-7",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": -14.50000011920963
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-7",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": -14.50000011920963
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-2",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 3.500000014901161
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-2",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 3.500000014901161
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-4",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": -0.8750000596046448
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-4",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 2.125
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-4",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "common_response_token_count": 3,
+      "baseline_token_minus_candidate_margin": -5.125000026077032
+    },
+    {
+      "method": "D16",
+      "task_id": "AGENT-4",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": 3.0000000596046448
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-6",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": -17.124999642372188
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-6",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": -2.75
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-6",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": -17.124999642372188
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-6",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": -2.75
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-7",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": -12.375000238439497
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-7",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": -12.375000238439497
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-7",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": -12.375000238439497
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-7",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 6,
+      "baseline_token_minus_candidate_margin": -12.375000238439497
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-2",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": -2.3749998807907104
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-2",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": -2.3749998807907104
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-4",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": -4.875
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-4",
+      "baseline": "BF16",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": -5.499999940395355
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-4",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "common_response_token_count": 3,
+      "baseline_token_minus_candidate_margin": -0.625
+    },
+    {
+      "method": "D4",
+      "task_id": "AGENT-4",
+      "baseline": "RTN",
+      "candidate": "D4",
+      "common_response_token_count": 0,
+      "baseline_token_minus_candidate_margin": -0.6249999403953552
+    }
+  ],
+  "P2": {
+    "I0": {
+      "n": 8,
+      "successes": 6,
+      "successful_ids": [
+        "AGENT-0",
+        "AGENT-1",
+        "AGENT-2",
+        "AGENT-3",
+        "AGENT-4",
+        "AGENT-5"
+      ],
+      "failed_ids": [
+        "AGENT-6",
+        "AGENT-7"
+      ],
+      "model_requests": 20,
+      "wall_seconds_all_episodes": 34.96873916801269,
+      "module": {
+        "condition": "I0",
+        "changed_modules": [],
+        "whole_nn_Linear_restored": false,
+        "all_other_artifacts_identical": true,
+        "no_beta_on_restored_module": false,
+        "original_weight_tensor_sha256": null
+      }
+    },
+    "I1": {
+      "n": 8,
+      "successes": 6,
+      "successful_ids": [
+        "AGENT-0",
+        "AGENT-1",
+        "AGENT-2",
+        "AGENT-3",
+        "AGENT-4",
+        "AGENT-5"
+      ],
+      "failed_ids": [
+        "AGENT-6",
+        "AGENT-7"
+      ],
+      "model_requests": 20,
+      "wall_seconds_all_episodes": 34.49695030500152,
+      "module": {
+        "condition": "I1",
+        "changed_modules": [
+          "model.layers.2.mlp.down_proj"
+        ],
+        "whole_nn_Linear_restored": true,
+        "all_other_artifacts_identical": true,
+        "no_beta_on_restored_module": true,
+        "original_weight_tensor_sha256": "41a45dcfed24e6695effedd62bc7b4331a9f3ec533002303bbbe38a2177c8d8f"
+      },
+      "paired_vs_I0": {
+        "both_correct": 6,
+        "correct_to_wrong": 0,
+        "wrong_to_correct": 0,
+        "both_wrong": 2
+      }
+    },
+    "I2": {
+      "n": 8,
+      "successes": 4,
+      "successful_ids": [
+        "AGENT-0",
+        "AGENT-1",
+        "AGENT-2",
+        "AGENT-3"
+      ],
+      "failed_ids": [
+        "AGENT-4",
+        "AGENT-5",
+        "AGENT-6",
+        "AGENT-7"
+      ],
+      "model_requests": 18,
+      "wall_seconds_all_episodes": 34.63536668300367,
+      "module": {
+        "condition": "I2",
+        "changed_modules": [
+          "model.layers.35.mlp.down_proj"
+        ],
+        "whole_nn_Linear_restored": true,
+        "all_other_artifacts_identical": true,
+        "no_beta_on_restored_module": true,
+        "original_weight_tensor_sha256": "bcda4864e7cbc1b86ee8e4e66a39dd362210b62c4657b9dddf25930c83d117ff"
+      },
+      "paired_vs_I0": {
+        "both_correct": 4,
+        "correct_to_wrong": 2,
+        "wrong_to_correct": 0,
+        "both_wrong": 2
+      }
+    }
+  },
+  "GPU_workers": 9,
+  "GPU_worker_wall_seconds": 475.752177690003,
+  "GPU_budget_seconds": 7200,
+  "generation_requests": 82,
+  "head_parity_checks": [
+    {
+      "phase": "first",
+      "method": "BF16",
+      "finite": true,
+      "max_abs_difference": 0.0,
+      "argmax_mismatches": 0,
+      "registered_max_abs": 0.25,
+      "status": "PASS"
+    },
+    {
+      "phase": "common",
+      "method": "BF16",
+      "finite": true,
+      "max_abs_difference": 0.0,
+      "argmax_mismatches": 0,
+      "registered_max_abs": 0.25,
+      "status": "PASS"
+    },
+    {
+      "phase": "first",
+      "method": "RTN",
+      "finite": true,
+      "max_abs_difference": 0.0,
+      "argmax_mismatches": 0,
+      "registered_max_abs": 0.25,
+      "status": "PASS"
+    },
+    {
+      "phase": "common",
+      "method": "RTN",
+      "finite": true,
+      "max_abs_difference": 0.0,
+      "argmax_mismatches": 0,
+      "registered_max_abs": 0.25,
+      "status": "PASS"
+    },
+    {
+      "phase": "first",
+      "method": "D16",
+      "finite": true,
+      "max_abs_difference": 0.0,
+      "argmax_mismatches": 0,
+      "registered_max_abs": 0.25,
+      "status": "PASS"
+    },
+    {
+      "phase": "common",
+      "method": "D16",
+      "finite": true,
+      "max_abs_difference": 0.0,
+      "argmax_mismatches": 0,
+      "registered_max_abs": 0.25,
+      "status": "PASS"
+    },
+    {
+      "phase": "first",
+      "method": "D4",
+      "finite": true,
+      "max_abs_difference": 0.0,
+      "argmax_mismatches": 0,
+      "registered_max_abs": 0.25,
+      "status": "PASS"
+    },
+    {
+      "phase": "common",
+      "method": "D4",
+      "finite": true,
+      "max_abs_difference": 0.0,
+      "argmax_mismatches": 0,
+      "registered_max_abs": 0.25,
+      "status": "PASS"
+    }
+  ],
+  "artifact_readbacks": [
+    {
+      "phase": "first",
+      "method": "BF16",
+      "files": 0,
+      "status": "PASS"
+    },
+    {
+      "phase": "common",
+      "method": "BF16",
+      "files": 0,
+      "status": "PASS"
+    },
+    {
+      "phase": "first",
+      "method": "RTN",
+      "files": 252,
+      "status": "PASS"
+    },
+    {
+      "phase": "common",
+      "method": "RTN",
+      "files": 252,
+      "status": "PASS"
+    },
+    {
+      "phase": "first",
+      "method": "D16",
+      "files": 252,
+      "status": "PASS"
+    },
+    {
+      "phase": "common",
+      "method": "D16",
+      "files": 252,
+      "status": "PASS"
+    },
+    {
+      "phase": "first",
+      "method": "D4",
+      "files": 252,
+      "status": "PASS"
+    },
+    {
+      "phase": "common",
+      "method": "D4",
+      "files": 252,
+      "status": "PASS"
+    }
+  ],
+  "peak_allocated_bytes": 10667811328,
+  "peak_reserved_bytes": 13006536704,
+  "P2_selection": {
+    "target": "model.layers.2.mlp.down_proj",
+    "control": "model.layers.35.mlp.down_proj",
+    "mean_relative_output_error": 6.235706026681655,
+    "metric": "mean over AGENT-6/7 of output difference SSE / BF16 output energy",
+    "includes_upstream_input_difference": true,
+    "shape": [
+      2560,
+      9728
+    ],
+    "original_D16_payload_bytes": 15603736,
+    "nominal_BF16_weight_bytes": 49807360,
+    "nominal_storage_increase_bytes": 34203624,
+    "matched_control_candidates": [
+      "model.layers.0.mlp.down_proj",
+      "model.layers.1.mlp.down_proj",
+      "model.layers.10.mlp.down_proj",
+      "model.layers.11.mlp.down_proj",
+      "model.layers.12.mlp.down_proj",
+      "model.layers.13.mlp.down_proj",
+      "model.layers.14.mlp.down_proj",
+      "model.layers.15.mlp.down_proj",
+      "model.layers.16.mlp.down_proj",
+      "model.layers.17.mlp.down_proj",
+      "model.layers.18.mlp.down_proj",
+      "model.layers.19.mlp.down_proj",
+      "model.layers.20.mlp.down_proj",
+      "model.layers.21.mlp.down_proj",
+      "model.layers.22.mlp.down_proj",
+      "model.layers.23.mlp.down_proj",
+      "model.layers.24.mlp.down_proj",
+      "model.layers.25.mlp.down_proj",
+      "model.layers.26.mlp.down_proj",
+      "model.layers.27.mlp.down_proj",
+      "model.layers.28.mlp.down_proj",
+      "model.layers.29.mlp.down_proj",
+      "model.layers.3.mlp.down_proj",
+      "model.layers.30.mlp.down_proj",
+      "model.layers.31.mlp.down_proj",
+      "model.layers.32.mlp.down_proj",
+      "model.layers.33.mlp.down_proj",
+      "model.layers.34.mlp.down_proj",
+      "model.layers.35.mlp.down_proj",
+      "model.layers.4.mlp.down_proj",
+      "model.layers.5.mlp.down_proj",
+      "model.layers.6.mlp.down_proj",
+      "model.layers.7.mlp.down_proj",
+      "model.layers.8.mlp.down_proj",
+      "model.layers.9.mlp.down_proj"
+    ],
+    "control_seed": 610132,
+    "zero_energy_excluded": [],
+    "cost_scope": "nominal projection replacement ledger, not packed artifact or measured VRAM"
+  },
+  "projection_SSE_scope": "Recorded last-position reductions; ordering recomputed, excluded activation arrays not reconstructed by stdlib auditor"
+}

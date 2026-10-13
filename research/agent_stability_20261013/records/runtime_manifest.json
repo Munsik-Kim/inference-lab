@@ -1,0 +1,4588 @@
+{
+  "model": {
+    "id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "path": "LOCAL_MODEL_SNAPSHOT",
+    "total_corpus_tokens": 298938,
+    "evaluated_window_tokens": 65536,
+    "tokenizer_files": {
+      "tokenizer_config.json": {
+        "bytes": 9377,
+        "sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3"
+      },
+      "generation_config.json": {
+        "bytes": 238,
+        "sha256": "835fffe355c9438e7a25be099b3fccaa98350b83451f9fd2d99512e74f1ade48"
+      },
+      "tokenizer.json": {
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      "config.json": {
+        "bytes": 727,
+        "sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba"
+      }
+    }
+  },
+  "research_source": "LOCAL_RESEARCH/source",
+  "original_result_root": "LOCAL_RESEARCH/results/paper_int4_reference_r2",
+  "artifact_root": "LOCAL_RESEARCH/results/paper_int4_reference_r2/artifacts/4b",
+  "source_hashes": {
+    "reference_int4.py": "0ffd714a7e0c22ce8b1d7f7fe941093056bf8612eb804fe5dd14188758688407",
+    "paper_int4.py": "1c06b8b3c097f2a587888f586143fc316e99e488af1e1209f9800d8ea3e70b5f",
+    "paper_model_runner.py": "3ae95547d1c0937ee61d75619622abd9e97f447b412bdabdb7c4ca49bd71b1bd"
+  },
+  "reference_contract_hash": "b29807d84e6b9b880fd4212d5a13b1eb09e8accf9e4aa9d9e47ac3d54c0c0903",
+  "artifacts": {
+    "RTN": {
+      "manifest_sha256": "3291569c5a9b2162094e144650fac26c9386f1422f4f0155b8005a0269c0abc3",
+      "projection_count": 252,
+      "payload_bytes": 2043746208,
+      "per_projection_identity": [
+        {
+          "layer": "model.layers.0.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "366cb1838b6fc96b2fdfe74267f55df97f5c5e16df03dc7ff1c4aa259a174492"
+        },
+        {
+          "layer": "model.layers.0.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "d8cda2433bfdb5cae7892498ac48f0ab5ccc745eb786d00c70af84e9b935836b"
+        },
+        {
+          "layer": "model.layers.0.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "975eb113221b476ab190ef1d55a5da2560b2ca5ac1458c4e07f7cc7c96b33c11"
+        },
+        {
+          "layer": "model.layers.0.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "a50b05ea7f9996f6499a2441d9023d8bf537d3aba74427949d239a883f658e6b"
+        },
+        {
+          "layer": "model.layers.0.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "7e08ba998504b34819e20e462067ca119bef039e23dd95bafb7aa9dab2909b1f"
+        },
+        {
+          "layer": "model.layers.0.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "c4396c144dd8536941859bfcf6cb19a2d9dbe3c075c22a8babdd24e47e00fcb5"
+        },
+        {
+          "layer": "model.layers.0.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "5e79e3d740a6c688994b06ad82d34e8a9fa0be8b36e08ad44bcc2736da12e97c"
+        },
+        {
+          "layer": "model.layers.1.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "4df987a472f3d82e48e6e0ac67f9fe488cd2df5b6b801cd6744e3dbaf5cf69ca"
+        },
+        {
+          "layer": "model.layers.1.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "ad0697d96e357ac1c81d53830cea669ad1178de10983a521fd5230f7acb55ec8"
+        },
+        {
+          "layer": "model.layers.1.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "4768e07ac5c238a41154530aa0fdc007cd44e579a726490d01ff0a50abbf73c7"
+        },
+        {
+          "layer": "model.layers.1.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "e9e2fb968f820857b65db06aa20d47336a42d8789d148c00d14200ee4a3ab7a1"
+        },
+        {
+          "layer": "model.layers.1.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "9bfe0d589c773dc7dbf574789dd307497ab6ae9b2a0bba61d5fdb35239eddce2"
+        },
+        {
+          "layer": "model.layers.1.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "43ea8575b59603a8015e022de50474e3d2292b2e8f1b1887b606d1d74736c2e4"
+        },
+        {
+          "layer": "model.layers.1.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "a075904a55ba296dd216b87cab48ed18fd04568eafe36b265faaf55e43bc41b5"
+        },
+        {
+          "layer": "model.layers.2.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "25aa3daee8d972828181bb2559bfc6512d1cd6bf20157cf1b3ca1571141b8267"
+        },
+        {
+          "layer": "model.layers.2.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "cd49a07079fe48039b7efff0d3308dd092315c8b5c26949813279d61c0a49b17"
+        },
+        {
+          "layer": "model.layers.2.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "422d87585172859a4b89dbf3dbf221c630853e0bb0469ecb51ce257b38ff5fb3"
+        },
+        {
+          "layer": "model.layers.2.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "5cebaee4ee151c140b06e508a273cd5ddca9218d0e4dfcf250356241179d98f1"
+        },
+        {
+          "layer": "model.layers.2.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "d0f7e3fffbb810471c8906f4d1204bba440bfccef3a9b85aacf2b84d29a9a7fd"
+        },
+        {
+          "layer": "model.layers.2.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "dfc46bdab614a38f50b1e32c58617cf6cc70410821bb2e9ed09ff6678576e66f"
+        },
+        {
+          "layer": "model.layers.2.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "04a7ea335108be7be70616266f6394e00a835c293c801c0f416d25534cc0f6e2"
+        },
+        {
+          "layer": "model.layers.3.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "8d76d9a11f47d23e4e495a5d57bc7580dc5633f2e6dde6e717e64538eaefcd6d"
+        },
+        {
+          "layer": "model.layers.3.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "d71cd5222d34f3bd788708441891626729cf3b8152a81987386cdb52c1aee77f"
+        },
+        {
+          "layer": "model.layers.3.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "69029b2020e2bf003ebe64fb5812b2a8187872c8dcd78b94287c2d2eb9f1fa09"
+        },
+        {
+          "layer": "model.layers.3.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "237e327de0d1f8b8b4b5f6d815267dca5a845a69b90c4234d9ab6b6024e67622"
+        },
+        {
+          "layer": "model.layers.3.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "4a4f2cd976f673c740d49ebd845e655adb1634709580fa8388cdf1aa75696952"
+        },
+        {
+          "layer": "model.layers.3.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "5d17619afd8293f49822691a8362b87445454174a73df3fd4a8ecb3ee05ef3b7"
+        },
+        {
+          "layer": "model.layers.3.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "dff4d40965610632089d861f5d88049b902bbec1a1b5e8401cee0ff7784ae2f1"
+        },
+        {
+          "layer": "model.layers.4.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "4e32560252d88ed95bc8752f4c834e692725eee0095adc8219bb94cad16a9e7f"
+        },
+        {
+          "layer": "model.layers.4.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "3c85044e81afca7369a82fc1e89ea4b60991ecf3c8e23a6ed421465658d1868b"
+        },
+        {
+          "layer": "model.layers.4.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "d9d4f79842172503db53c2b6f78b98be610be3defbeefb5d15b1fc94be274881"
+        },
+        {
+          "layer": "model.layers.4.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "8662e8c1e8dbb7df7256b6b2fb9fc233d022c34d5e3d4ba43e4a226f83542492"
+        },
+        {
+          "layer": "model.layers.4.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "e467a022874758b64ddf08bcc4e96d65957d5ae1f1c1aeb4e6d4421d460e96fa"
+        },
+        {
+          "layer": "model.layers.4.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "02e6abd116ac5b402bb178a2d1bbe9ad45a8c07f50f5c5febb425d36da2db0e0"
+        },
+        {
+          "layer": "model.layers.4.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "fa9298060e92254306ac77b4a5fa294a5241d393706e6ae3e8f3a9b9c67e65ad"
+        },
+        {
+          "layer": "model.layers.5.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "47da7aecc9c8419d5b1637d00833f4fa53d84092904307100789b3da9a381c70"
+        },
+        {
+          "layer": "model.layers.5.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "f804180ccd338f1ccd23936eba2f2d5ee1ba7105a473aea9770997e085e17680"
+        },
+        {
+          "layer": "model.layers.5.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "2cbb1a7a89e9cf9a6df70a2864d7ee77152356771fb2cae11193976d6f0ec48d"
+        },
+        {
+          "layer": "model.layers.5.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "e7b7307231694a9b0ad5d4c92d8b194853bca67bbbfa944115c054505bace0ce"
+        },
+        {
+          "layer": "model.layers.5.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "8ae36476a859f8dd8cd3a8c7e9f9f252094dc069cf3afa0afc2a2571c9cb0492"
+        },
+        {
+          "layer": "model.layers.5.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "4b5afad3ffbd7a61125b6754e642b4935d0cc7517ad0918e59f2acc2c4165839"
+        },
+        {
+          "layer": "model.layers.5.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "3055a0b7fdaf9c78634077c1f4b786877edd6c28f74620b2c496663f68343c35"
+        },
+        {
+          "layer": "model.layers.6.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "84f75da0ed3cad9007d2f285afefe8f06ea7697c1efdc27f7c30ca8354413d00"
+        },
+        {
+          "layer": "model.layers.6.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "693be235556e0a10b1931ca222a98dc156c094ec133639518d2255c479265950"
+        },
+        {
+          "layer": "model.layers.6.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "18649cf5a7951049b7d9c4ebc79a8a4700690c074727d4e20490d7f4e8a45140"
+        },
+        {
+          "layer": "model.layers.6.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "037df2ad9098b56ea156c08bf972a50b780df8cf608894e6702872623ba2fd47"
+        },
+        {
+          "layer": "model.layers.6.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "107fe7a08638e8b667330a8773c2cc8e327a3879300b6b2e5d0e3b63f30d6ace"
+        },
+        {
+          "layer": "model.layers.6.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "4b91cfc488ad08c208b85c1d090668a3e87b191d981971c6fc15b4c83bff2439"
+        },
+        {
+          "layer": "model.layers.6.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "6c1a7179022a94157d6e13277d233eec704458ce6397f2f48c4c9fcb1996659f"
+        },
+        {
+          "layer": "model.layers.7.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "e831120b7570bed53d9b79208effaa27ed073ec9d0843effc77e0d66f0f839c6"
+        },
+        {
+          "layer": "model.layers.7.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "d5a9502bb4e6d29c971c5a5109452ecaa67cf2cbdf8b49eec83424c8f30d58d2"
+        },
+        {
+          "layer": "model.layers.7.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "0d20a5cdd67c8868925236f2354e33de6ff27f77b09b3b2510fb6eac98da1fcc"
+        },
+        {
+          "layer": "model.layers.7.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "a20edf6213e6613ffe0d62345d037dcf8679646f5872677b48b8f0204cfc7f2e"
+        },
+        {
+          "layer": "model.layers.7.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "176723d5ecd78ab79a5de61b7a811d6ca27ae2169e78b9423f0dba2826f05cf9"
+        },
+        {
+          "layer": "model.layers.7.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "c5fdd5d92b5fe9a7c5c72aed191f2bb0fadb0eb5ef63804b63470a635c1d3d6c"
+        },
+        {
+          "layer": "model.layers.7.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "12d3566f5b23169d6f8148a7aba4da7ea4c4ee12bdbc9e6f65408d088bd63b3b"
+        },
+        {
+          "layer": "model.layers.8.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "d8b98e87e4954b8b57aa3a680f8b9a84b5c9cb08dcab767691f979285d85a285"
+        },
+        {
+          "layer": "model.layers.8.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "167b0e8fb99902c8627a40a6a56cfb46bdbb33331082d5f0f995fbbce2d1165c"
+        },
+        {
+          "layer": "model.layers.8.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "8b2cd00ffe6d5e7c7dc35a7448733921ebc2aec2a9e9200a154e7d65b220b78e"
+        },
+        {
+          "layer": "model.layers.8.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "1a53b86dcf559e6e86d32423cee37af23e29e2817796b76b71ec6bfa218ac054"
+        },
+        {
+          "layer": "model.layers.8.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "dc29e9c9c9d9afdf0240a7dfba399480a1b3cdb5ba9416aac38ec125854731de"
+        },
+        {
+          "layer": "model.layers.8.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "6f5d900657648f237fc9bdaf257e6988e0cafba7cccc93a8acc99ddc4394ff10"
+        },
+        {
+          "layer": "model.layers.8.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "93713750ce8e3d628c37d70da4a4ed2de4d2ef90f8818b6eb320a081943eeaa2"
+        },
+        {
+          "layer": "model.layers.9.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "68a1c22ce70008e7eb5724170f7ca3cbb2022a948b01a5849e91bf003be3b87f"
+        },
+        {
+          "layer": "model.layers.9.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "a271cd8ca48e8e616d70f35168da8b9c2d3f887991615d7132266dfd8d8247b2"
+        },
+        {
+          "layer": "model.layers.9.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "1a95f2ad82dbb296998fedf315bbb2c8c2452cd01f6a6b7a57b1898863b2ca98"
+        },
+        {
+          "layer": "model.layers.9.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "dbc66d79d9df1c8a1ba8980657b6cda4de1387c5bbc42b3f21ab8d3f1d1dee10"
+        },
+        {
+          "layer": "model.layers.9.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "b0321407a37c1531d8a022b90f24e74faa6f68c1276524d17262bc338b6b9b3f"
+        },
+        {
+          "layer": "model.layers.9.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "a427a726f1f69372181ed06a65010f13a76b904f2ea9aebb0684086769ed57b4"
+        },
+        {
+          "layer": "model.layers.9.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "06c1b95e62ecf27cab71e7cb4d45cf29c2f08c49ee51fd79ab6dbe9b3662ed94"
+        },
+        {
+          "layer": "model.layers.10.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "15288a8aaa278a1dcf33af2f812eaf474574d02db96457d1059ca5ee38f9e1e0"
+        },
+        {
+          "layer": "model.layers.10.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "8837fd681478a0be0bbbaec832484751c908801d0ed65fcb56d1ec3c16e7ca99"
+        },
+        {
+          "layer": "model.layers.10.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "69373dbdbe7e2a45ba733c28b95bd1803eb3a365591407df69da1ee1dede7bff"
+        },
+        {
+          "layer": "model.layers.10.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "96694d2face351c24654a762ecafd5342ba5f49492960f22055a73c5cb92fefc"
+        },
+        {
+          "layer": "model.layers.10.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "25bd0b730fe725d253b217a5fb5f8e5eccf4e4754ef4f563b35c112c5184168d"
+        },
+        {
+          "layer": "model.layers.10.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "44d96fdc672948882a58851a6407f8e7688bf8522b6e7c14d6dd69a66b4194ee"
+        },
+        {
+          "layer": "model.layers.10.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "39fbab194aa6d5ac9a842d865868b69ec4cae4e00427a5076e4d623b91cd3f80"
+        },
+        {
+          "layer": "model.layers.11.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "1a24362e77cb2bdc16e454bd909925b866f0b59c2ea214b63d51290ccc92bc36"
+        },
+        {
+          "layer": "model.layers.11.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "84d8bd86e1becedf325562c4598724d95570afa3e249208c75f7f9c3ed8dd707"
+        },
+        {
+          "layer": "model.layers.11.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "871fcb315b7bb67b972b1203a4f600442c2e4630cfd259bae2ca575c420ddfdb"
+        },
+        {
+          "layer": "model.layers.11.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "3b0fb5964ba27e8be5e09c8334bd6d2ace84cf681fa7f62ad220ef9148217ed6"
+        },
+        {
+          "layer": "model.layers.11.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "1aaa7ced7a8deef426eff89434c989282cb8e855e5c007320ef97b1fdddeb79e"
+        },
+        {
+          "layer": "model.layers.11.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "c070cea4c63bb07b4868ad2cd26d5b49da1568b468a5d6bb87844d1eb0f0626e"
+        },
+        {
+          "layer": "model.layers.11.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "344e710f468d180c957b47ce30c19b9e2912b85fd484521ad8220cb8ac8b2a52"
+        },
+        {
+          "layer": "model.layers.12.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "2916ff3cf3ae559e59d44cefdb672b3468ff099a28205d841f15b310e8824549"
+        },
+        {
+          "layer": "model.layers.12.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "7ecbcf6bcab9744dee9ce11d8eb6dbce9c9fcf9ea8c25d9b014d7bdd5e30c9f1"
+        },
+        {
+          "layer": "model.layers.12.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "1f7795d309f767159fde9bad51eb2e724c65d310258905f79f1872d813275ffa"
+        },
+        {
+          "layer": "model.layers.12.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "b58a4b565523c691d350d004d7e6d2342b6feb875f55504c916e979ac96e70ff"
+        },
+        {
+          "layer": "model.layers.12.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "30502ffe5029ad0ae7395607fde86ce872e6a2f18971cd70335374e64eebc907"
+        },
+        {
+          "layer": "model.layers.12.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "9d081b397d1ff81b15dcf13c25a0bc3023af39f13004e19cfd133b6ce624b8cf"
+        },
+        {
+          "layer": "model.layers.12.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "8c0eb5ab39184ad4054a5d4b2636b229e6521f908d1f09f77640861dd30b99ef"
+        },
+        {
+          "layer": "model.layers.13.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "9927b1f130c44da07ea8263049d294ffea9d99ec859c98e2851da2e41f4edd60"
+        },
+        {
+          "layer": "model.layers.13.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "607c15909f0d1cd0e989f804ebeb528f184439aa29d29cddbc56deb47f2b3260"
+        },
+        {
+          "layer": "model.layers.13.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "b7ab8ca6422b03f1ba464bbd34925fc2e829220728316dbfc8a91ac02c4dd37b"
+        },
+        {
+          "layer": "model.layers.13.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "c36c1cdc8c78898840d3841c25e671c4a46e821dca3c41c7aeebf8d8d1f7ca2a"
+        },
+        {
+          "layer": "model.layers.13.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "3ad46f443e8acf49ec89ce243baad95a407e0b476fee77faedd27cb748096708"
+        },
+        {
+          "layer": "model.layers.13.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "29642f2c4eb76ee7db7fc78ae10fb2ec44051dbcd4ede08bfe1d8ec872899137"
+        },
+        {
+          "layer": "model.layers.13.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "d7f0c61e56dc21ea9ddb89ed08bee035fcae4be0669f63128361321dfcc2812c"
+        },
+        {
+          "layer": "model.layers.14.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "80e2c63e69a8e5997fdf3aabdd8f49a4b72295f6d5b6ffd205ecd2c326c43cd5"
+        },
+        {
+          "layer": "model.layers.14.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "24076f662b91c0b4d426dd9d59118edf051b0671e6bae4f57fa55665b3248eac"
+        },
+        {
+          "layer": "model.layers.14.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "e4206cb164619986cd282703faef7d79a6e96313f7c9020913b6f750d7a4f7b4"
+        },
+        {
+          "layer": "model.layers.14.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "4bfac8cca44be553a1b6471777d17d913a2d815fda7ce8812bdbc1e6f20beb88"
+        },
+        {
+          "layer": "model.layers.14.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "6c66d8377ca05b80b6f5a83008fceda34b0f3e97115860271955e87a5ee4ec3f"
+        },
+        {
+          "layer": "model.layers.14.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "78ff78a64ab8ca76726e6e697c01c37a95b5b217146e88dfb87417686ef31c0d"
+        },
+        {
+          "layer": "model.layers.14.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "7bedb2490f71f3829404692eaa1cf0566afbd93f8a7b005528a7549e6270d5b8"
+        },
+        {
+          "layer": "model.layers.15.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "469c36978cb01222345a5352edf26a90f90e4b224b9ee3746aab73d68a1e0a0d"
+        },
+        {
+          "layer": "model.layers.15.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "c51a93c0688ac82373f658a8b35bc00d5b2d1d635defece287f628c22dadbd31"
+        },
+        {
+          "layer": "model.layers.15.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "27a0aa55482fdd9a05208db6b2c8056519e91b16a576c3904a33e3683c1fb44f"
+        },
+        {
+          "layer": "model.layers.15.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "ca0d8c9e35588cba9796315ae3eb320e90dc7e5746f58b59a88ad0e543992955"
+        },
+        {
+          "layer": "model.layers.15.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "eb98d4597468a4dd077bcc67c9d70e158db86d4791012e4d3b485dd098535dcb"
+        },
+        {
+          "layer": "model.layers.15.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "48a110143941f0aa0454a71522fd7e32879aebe41645430791cfc7e947a666ff"
+        },
+        {
+          "layer": "model.layers.15.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "ac4d916d52466aa0d383ffad44a06cd0e1b58d111dd8e1be99c38f2152d23442"
+        },
+        {
+          "layer": "model.layers.16.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "cc4c7eb4edd7c719c358781f6f125abb01cec0214a46bb1f2c682bffd343b3cb"
+        },
+        {
+          "layer": "model.layers.16.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "a213fe9e177b34688a4097f7bbff094b4b122c4980142107c937a5e8d9a6112e"
+        },
+        {
+          "layer": "model.layers.16.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "fd187e4454886d1b88566decbdb771dbd1a49fedaed54798eefc1cb737c9d057"
+        },
+        {
+          "layer": "model.layers.16.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "eb5eb4b94d83845a809bd2a3a0b6679d7cc879a0e4c2e2ec9c6815fcd7f1200b"
+        },
+        {
+          "layer": "model.layers.16.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "6eece71d48fadc6586d6f6387f38ecee2a1cf76a84c8d8c92afa4509a07d7a59"
+        },
+        {
+          "layer": "model.layers.16.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "dac159bf659e147404c2da035edb7cafa9e0b0563c94d5aee05314cfccd51969"
+        },
+        {
+          "layer": "model.layers.16.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "96e2b2f1606bd2845d288bc0d9644a6b91dfb81073ae28f1884f54f865de6d09"
+        },
+        {
+          "layer": "model.layers.17.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "f417d4cb2b8448cfde31501bb6d27f3df5071ab8cc66abe0db92169f9d530344"
+        },
+        {
+          "layer": "model.layers.17.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "a54e2265cd8e4e9dd05c1c80e2ef1836e4e840e0a394ca280fc255bb44a1bdb0"
+        },
+        {
+          "layer": "model.layers.17.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "8bf3a5060b0da0e80592939c8bee0822145d319d895aebc0407acc74785a8c30"
+        },
+        {
+          "layer": "model.layers.17.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "98c80247bbceb491197e268c8ab6bdc6b93ff3b5ec34c88a7d85d80ec0d7105f"
+        },
+        {
+          "layer": "model.layers.17.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "871bbef2add5ff2707696cd4182f2ade7ba5743f16f4d75c75e4cfc5ee34aa89"
+        },
+        {
+          "layer": "model.layers.17.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "9e15325c26a6c7e5d6b017edbe2f5b63fbff5590d76935d4be16f1407ac141fb"
+        },
+        {
+          "layer": "model.layers.17.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "1c0c4e6e77c0fb99e0763989f4d985ea2835593c77ce0b53d03a2e8633d42665"
+        },
+        {
+          "layer": "model.layers.18.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "225e09621d8c1221ae266f065c6dde10740b9eb447da8f8ff4136f498c52e86b"
+        },
+        {
+          "layer": "model.layers.18.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "8f204a9e46b7a2e3f0acfa94447608b85de60fb80bc6fd0c5337189ea89c223d"
+        },
+        {
+          "layer": "model.layers.18.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "f434f847bf542d0a94c1b8ae551a83a2213356e848d96cf0347ae5c0fbd79d2e"
+        },
+        {
+          "layer": "model.layers.18.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "a0069000e9cb511a4892793f99356c9b9913fca6ed0e04369b59dd8dd44f8a33"
+        },
+        {
+          "layer": "model.layers.18.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "fc267d7d923dc3d08a82b9ad8a81346a96968ec2e66e9e10ecd585cc5fbcbe1c"
+        },
+        {
+          "layer": "model.layers.18.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "3dd25874fb336fc94a9cc32238edaf7e960a8af1072393c8ca313ed520c050eb"
+        },
+        {
+          "layer": "model.layers.18.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "887f38df661f64f8ebb0e51ad57c0d4dd964fa2ce857217d32803e9cab91527d"
+        },
+        {
+          "layer": "model.layers.19.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "132f60ac3485b2de4ac3acd5a4f9e8354229c132d2c5526d816a66724b8bf128"
+        },
+        {
+          "layer": "model.layers.19.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "e4ce59e371383b45ea87012a6f3671748ba401525b9f021e65d9df5cb537f9ef"
+        },
+        {
+          "layer": "model.layers.19.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "3b6caa7e83a36b231ece1c0b2357de5bad56cf34e0163e7094656b4243ec61f1"
+        },
+        {
+          "layer": "model.layers.19.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "71468c16fc918601ba4ffaf7573d78535d15f80842721c7a9bba086e8396db66"
+        },
+        {
+          "layer": "model.layers.19.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "af222e090b463e7a2f2cf9b1505f35daa6a9180cd76cd32fd34d86b02a526705"
+        },
+        {
+          "layer": "model.layers.19.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "06fd2b7cc4aa0be0bf14dae14f676aebec26d551680e4a63b26d7223e868b4b3"
+        },
+        {
+          "layer": "model.layers.19.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "93cbe7d129769323fce450369158e2975ad339f8b950eca64a30e19ca0f8bebb"
+        },
+        {
+          "layer": "model.layers.20.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "54527c49b2a4c643f7da8c6e4844eacacb15618200cc0375b4efe520a18ea6cc"
+        },
+        {
+          "layer": "model.layers.20.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "de087fa9273841b9a69fb7d61741d98a5ee0fbdf2d426ed67046ebdca065fcee"
+        },
+        {
+          "layer": "model.layers.20.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "6b604379a619bc5a4dc788798487f4889a1eee6db53e5ddf301010c38e35da49"
+        },
+        {
+          "layer": "model.layers.20.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "0cc393dc4bef0f97e31ec321c0248c513d72fcdbe9a8926b62bfabd94322c93f"
+        },
+        {
+          "layer": "model.layers.20.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "b953dcf51605dd16b83545e5087e8bf895ad5fe5a1c938020b3176208941a415"
+        },
+        {
+          "layer": "model.layers.20.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "9aaa057f8b2cca3aad0f0a713e6b8c9dea71fb38de1ab1da21b16c57355a292e"
+        },
+        {
+          "layer": "model.layers.20.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "df841e80ec8820b5d6359282f2bd8179b83ca43511aabb9d1374e1cf9a6bbe59"
+        },
+        {
+          "layer": "model.layers.21.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "6c3d2720fb940c6cbb30c30b1dfe63ddcdc6fbf541a2c490a86526fb10164784"
+        },
+        {
+          "layer": "model.layers.21.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "7504ad199185b867ff913e0a0a684a2bcf75aca0af7b583ff8e157a7c35c0f34"
+        },
+        {
+          "layer": "model.layers.21.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "7eebcb682a5b2876235db6546ad488a0abfc4f826a81fdebceae326d56b6913e"
+        },
+        {
+          "layer": "model.layers.21.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "d09442518ea1b8849cf35b511f0331579654456b929ca95b9863b6e04aca2cc3"
+        },
+        {
+          "layer": "model.layers.21.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "22d5a4a8aeb5defcef104e46f4ea852fa4be82d3cbfa87c9da5cd74a83b351be"
+        },
+        {
+          "layer": "model.layers.21.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "d33a05f71831ff9a8109c4fe5c6680c409a1953a698697fd5c3021e797f3baf0"
+        },
+        {
+          "layer": "model.layers.21.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "e90c70834e75ff4026a9c761bc052d5bbfb2f9636614644cd5c5b13f0cc0bcf4"
+        },
+        {
+          "layer": "model.layers.22.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "b3d424a045ecb03a1ea80aa71aa83fed8125abdbd9cf03c3e91710cf9273035b"
+        },
+        {
+          "layer": "model.layers.22.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "424d646fcfc42e746abed80f35d22f7152090bcb0d2439dae8669989a8db19f5"
+        },
+        {
+          "layer": "model.layers.22.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "50ad8d308b08f02f784fa2462238d1bef99e069bd8b43098c2b6e5b53e643b20"
+        },
+        {
+          "layer": "model.layers.22.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "62e229bc0e82bbd43fc80e14ac4364bb9dd771b2d29c62515ad0b84b267f1faa"
+        },
+        {
+          "layer": "model.layers.22.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "cfa878dde6f0c6d93c5a8ef53770a1d7e6b63667dcb679a3373b4c5005c02a41"
+        },
+        {
+          "layer": "model.layers.22.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "c5738ba85951a99d924a3cc1a723329e663474a18a5b1ea3082d39d6991cb587"
+        },
+        {
+          "layer": "model.layers.22.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "426248e809d9cf39c4b0e4cd02f6f699ae3621867055f796241d6cf79e66d749"
+        },
+        {
+          "layer": "model.layers.23.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "8afe7a7eee9e207e141b3cfbbdb4e7c1f468674c2be2cffd9164f25d1079c86e"
+        },
+        {
+          "layer": "model.layers.23.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "fa67851acb07115ce3c50968864b539ab8fbd3f99ffd53c4be5c0d32a3046a3f"
+        },
+        {
+          "layer": "model.layers.23.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "eca3957db8ceae0c4b8e575dacde7a529aa9dfc23b18fb9a85ea4c2b1c2ae141"
+        },
+        {
+          "layer": "model.layers.23.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "8f37b8e0f9a2220f3d7b68a1cd4be0a7196324eb12b1969f94ecf78a64fe9121"
+        },
+        {
+          "layer": "model.layers.23.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "182f724e607ed6fa8527db6a279fee0493799d468e070bd1421b44bddbab6596"
+        },
+        {
+          "layer": "model.layers.23.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "8af4d72af435318a10f058e814a4b6dda601c501eeffbf821fa6d169ff5b4a27"
+        },
+        {
+          "layer": "model.layers.23.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "90bec8e01baa181e1573e5443ecd0b7df829285adb1faad49f0a26f06433287a"
+        },
+        {
+          "layer": "model.layers.24.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "e412334ff79c31ae509b2dc6e4c3f5f78c70601c9e2d20718994bffbaa4cf242"
+        },
+        {
+          "layer": "model.layers.24.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "65feecd8ca1cc3cdad51b385bcc18be84a0f204ec14882408aebaa57575b50ce"
+        },
+        {
+          "layer": "model.layers.24.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "f4c78bb852059d32d7291e7ef8440ce24077b2246f804b0a38b66148d591f727"
+        },
+        {
+          "layer": "model.layers.24.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "12c8bd10e6a5fc93ced7fa7062e1e403d5a2f858a2af548a2abdba91c9e3ee05"
+        },
+        {
+          "layer": "model.layers.24.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "5287aa339ff55b76caf806c184adac327ef232757a86b173afdc7bfcd7bc09f1"
+        },
+        {
+          "layer": "model.layers.24.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "bd57a9cea696d5216266d478b3804be3f72a55d3461a3dc42217b8e131ae60d0"
+        },
+        {
+          "layer": "model.layers.24.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "28ebf249a5c939eac84e101c4b83812401972710862dd06d722b97f0ec3a3e08"
+        },
+        {
+          "layer": "model.layers.25.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "e571fcbd342f94acc086a8a7bc0dc988f20f4027be4114f5247aa985905e097e"
+        },
+        {
+          "layer": "model.layers.25.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "f5dacdfb34b35bf06bb35f6b4126b98b2c66c905a95cbd2e6a7c43ff8159c9a5"
+        },
+        {
+          "layer": "model.layers.25.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "b9b412257214ed7b1b9b3c55d2e28adf3d988eb1664b4e54e6da59f5a866cf2e"
+        },
+        {
+          "layer": "model.layers.25.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "a8e46b346705b4aecd8c220db4825b10353265903f79c2c3d210a2870c7a245a"
+        },
+        {
+          "layer": "model.layers.25.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "6224c661ee53f36f0078248488a44a2096efbde6d1231e764a9ba1f9498fac14"
+        },
+        {
+          "layer": "model.layers.25.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "0f9fd1ce6ab7733b8bf406ddb165f5365785ba24e5e7e57033d507ca756de8d4"
+        },
+        {
+          "layer": "model.layers.25.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "aa6c3880bfde92e427f7432fc159a7c1a38c4267afbef2d8ea3a6d473678087c"
+        },
+        {
+          "layer": "model.layers.26.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "e7499666e371c7b8e493294973e313f491ea8f3d3ba1b101b5eab50717991f02"
+        },
+        {
+          "layer": "model.layers.26.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "c06c403fcc664aaff7fc8f0147557fce2364f641daf1bc7b9e6fc7c9fd92e057"
+        },
+        {
+          "layer": "model.layers.26.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "ec90bf09ac8429058e6847f38a5fda83efa8c5965612d5260a20d97861326f81"
+        },
+        {
+          "layer": "model.layers.26.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "23a6c68d7a3d364b4d3582922b7d667c381f90df6b1748652b52924ed4f2a6e0"
+        },
+        {
+          "layer": "model.layers.26.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "ec7f06e86f55900403ee37844f80a4792090a2ea40515a48aa08691a66f13a77"
+        },
+        {
+          "layer": "model.layers.26.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "845ae73790f61b690830d0af80586fd98d805795746c1ee3bc9e2713fb0bf673"
+        },
+        {
+          "layer": "model.layers.26.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "d306d8376402ae86e1e8ff850f3bd2b507e787cd58b64cc8763bbc9372afea6a"
+        },
+        {
+          "layer": "model.layers.27.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "15535c75672a6f267f47036eec9a1789972439d4008462c5f5aff90f26fc0d79"
+        },
+        {
+          "layer": "model.layers.27.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "09dcfa1af5c89f21baeb5762af9e307fabab2a47abc2cb0208900e2f01df9f58"
+        },
+        {
+          "layer": "model.layers.27.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "4b3b8924c65fa953bfa5f11bdcac61fd06404c139fc58b2159edc2971c9fe79a"
+        },
+        {
+          "layer": "model.layers.27.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "bbd2f4441006f6f59fbccf2343bb5a901bd487757c9a36b7c6934741551fddba"
+        },
+        {
+          "layer": "model.layers.27.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "e18f612af5a2d77b07fe1340667bee20c2590788c2f2e875c47078030105eb07"
+        },
+        {
+          "layer": "model.layers.27.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "580a11da93d1f0890f461b0f6f78c5d99f9ef5f199af932979369f76b6965459"
+        },
+        {
+          "layer": "model.layers.27.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "54bdcbb0dd3d914eaacefd84321433b86c09022de6c6c153c00a4c2d385ebc27"
+        },
+        {
+          "layer": "model.layers.28.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "bea4a6a7730b4e875af6da4fbad7f3cf7503867f1c2584ca896c86575bb9f591"
+        },
+        {
+          "layer": "model.layers.28.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "2ff32ee7849ba0290f9a4e9e1252347d7d29cb4e7d2ca96b7a5674d75f2a816e"
+        },
+        {
+          "layer": "model.layers.28.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "8bd5dc7a97248136d85e77a537a304f4ef36a101224f8c74117c830d9afb7ab7"
+        },
+        {
+          "layer": "model.layers.28.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "f6b4339a6192b53775d9d58ef3a34428720eeedb97f512cdb25374ae553d0947"
+        },
+        {
+          "layer": "model.layers.28.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "696a990a5848d45d697f432fe1173b5d0fe04b59b5c704cb46ca7250614937a9"
+        },
+        {
+          "layer": "model.layers.28.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "f8f6d575995a82bbc6d7a9bd51c53c8228883e0d9d6a223d65f250fd087904eb"
+        },
+        {
+          "layer": "model.layers.28.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "6314a35daef8f510979f7886b77f3cef47eeb267252b512b56e509d357976db6"
+        },
+        {
+          "layer": "model.layers.29.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "88df19005da006147377ea8d284cc62a04539c22293bebfa3782392c15b42119"
+        },
+        {
+          "layer": "model.layers.29.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "c9a91e03a9bb1b1c85d4a326b1b1f25b619a7f71f813981dd4eb523150493861"
+        },
+        {
+          "layer": "model.layers.29.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "a8270ff41a81067e8880d0868f78b285889b352c4d503aeab6d8de86315e4c87"
+        },
+        {
+          "layer": "model.layers.29.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "23e13b4878f2c8b7b763e66ab4704ad9d21bd9026426c668be277d4fc29ebe2d"
+        },
+        {
+          "layer": "model.layers.29.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "6b3ec9bca1f27f9d689fc9aaf1ff8c7ec9745ca98dbc1b7fc8898e0a55e066c2"
+        },
+        {
+          "layer": "model.layers.29.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "1ace47839c36922b746a09a460748fa29b242a0a6b357530a2b8454d82b186e9"
+        },
+        {
+          "layer": "model.layers.29.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "eb1576df56d464a36b1af1a8e13c7ad35340fa5238c21ffb364fa556299019c5"
+        },
+        {
+          "layer": "model.layers.30.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "53d26ee9878fecadc00df3753d4fa6725ac529342573e15f595b347f6923281f"
+        },
+        {
+          "layer": "model.layers.30.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "76895ffa3948bb00773eb2e461cc81b0d93fac75d0dadee506127fec779f7c13"
+        },
+        {
+          "layer": "model.layers.30.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "a808aeff236f1e7e5960cc4a031cb7f4763185bde6fc6fbd89d01426d82d579e"
+        },
+        {
+          "layer": "model.layers.30.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "937ba03927f855c9d0cd9bfff31ad37f504f7db944378811e41eb6469ca09480"
+        },
+        {
+          "layer": "model.layers.30.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "e5078c342aa86d9fd05b2b24eaeae6e06d9d2a56edd412330b0dada913edb5cc"
+        },
+        {
+          "layer": "model.layers.30.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "0e4424a9f54e01277fd02910d0f47e3e9339e5c3fa0f4dbc27b09d5ceb83bdc0"
+        },
+        {
+          "layer": "model.layers.30.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "0193552d424a6b440b82e598f87873dc1efd439a27794478d05600d3b36a8e8e"
+        },
+        {
+          "layer": "model.layers.31.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "f6067811e77ab01dcf0b40435abc37633fa752cbb6c8bfc1b37d27fa2e852ab3"
+        },
+        {
+          "layer": "model.layers.31.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "a5781e51410950d2bd3ba540dbe1697a26f7fec4ec8d9bb45ba5b5bc4e55ee7a"
+        },
+        {
+          "layer": "model.layers.31.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "b3aa74dda1aa2119be74fe5a874cfeef0234cec3137d31c8664d68b28ef51485"
+        },
+        {
+          "layer": "model.layers.31.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "953ebef6993d3007b193407ffba8c74a630eb15609d98386ea4c66fa0bf57b1f"
+        },
+        {
+          "layer": "model.layers.31.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "36e299866167642f7cc71c7f9b657eade9f0812a28ca82ade3244e327358c7e2"
+        },
+        {
+          "layer": "model.layers.31.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "16ad76262eb281d891755adda02bac3e439f9ceb35bda1839fd0770071419df6"
+        },
+        {
+          "layer": "model.layers.31.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "eea8a6f97aa16729b6c46555f0c5be9c8ddaf00fc0a1419118b4c90401d92ef4"
+        },
+        {
+          "layer": "model.layers.32.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "c1c60770f46aefc8efb212b0a1426729e8ed50d0f563ee2124b8c19062d0a552"
+        },
+        {
+          "layer": "model.layers.32.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "689e437df9f1734a6131945df3d98ffa11859611beb1203e09eb62afea9bb87b"
+        },
+        {
+          "layer": "model.layers.32.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "360b5b89d95cc738f63c50d0f458a4f0fb6b76ff24c74c143b7b8378ffee7296"
+        },
+        {
+          "layer": "model.layers.32.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "692e3fb75f7d1c5c7903e7343313170dd9fbedd1b853b0f1acae4fe122a48e53"
+        },
+        {
+          "layer": "model.layers.32.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "4ad4fe7aa8237593eb9508e39e0d9f683380f7497fd8faefd9f74d56a6a9d48a"
+        },
+        {
+          "layer": "model.layers.32.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "59c9b1895779fe83728b184c503054d103b57979c1ec60f8a5f129d1ebb398c3"
+        },
+        {
+          "layer": "model.layers.32.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "096be4c70197cfdf832b0857cda0539d41032f51a630624094511670ddac52f8"
+        },
+        {
+          "layer": "model.layers.33.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "8ec40313d83da50184df9c4d8f21268cef9e1f8118b56e428359286f38464621"
+        },
+        {
+          "layer": "model.layers.33.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "8aae787117ada24e5f54d68f6d16ccdff2fabb9907dd9c26f979c4e9ae19daf8"
+        },
+        {
+          "layer": "model.layers.33.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "19b1791cf66753d838ffecde48dbf5c9a87e466a4a50b78db37de2f8ef2181bf"
+        },
+        {
+          "layer": "model.layers.33.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "9fcdf048450bf87eb1de06f9767768cfecbde83127c54fdbb6810b204a6e555b"
+        },
+        {
+          "layer": "model.layers.33.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "f396e632a9313834567f5cd086acce7b7e0380b3714a38551ee15be471c4500f"
+        },
+        {
+          "layer": "model.layers.33.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "ef18236ce59eb21d7b281b7865b441e558e3660bf6cacc5896e5199de8e45da4"
+        },
+        {
+          "layer": "model.layers.33.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "4391f0e227eaa30035a9ebfb5fb0a04a70880197d28ed1bba3405058f37d5ad4"
+        },
+        {
+          "layer": "model.layers.34.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "a9dd271cc6373dbc768f94d55c8783c52928b99d095afacd0d8ee164c3dee03c"
+        },
+        {
+          "layer": "model.layers.34.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "9b11804c9a190c911aafe51ac737b9d75b29e88306c1b883124978cc2897f610"
+        },
+        {
+          "layer": "model.layers.34.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "abb11c4f681ad47fae699a0d870401640f3fb70fb71fe7a866d6269706fd6de8"
+        },
+        {
+          "layer": "model.layers.34.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "de0d905273901ab29f204f3feddc1da53d97c7f8941a55a2da3f90f60e364cd6"
+        },
+        {
+          "layer": "model.layers.34.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "2b84da6427dff888bb3af87800df5193c7426459c4050a13e8842935f437df2f"
+        },
+        {
+          "layer": "model.layers.34.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "16f428fa57d624eac0bf355b8fb9384277dcb0a1d807e7675400e29753300d6c"
+        },
+        {
+          "layer": "model.layers.34.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "9cb7f172c7c8acf65ec8273cca1414ee7f65fcfa5552c7452de63050c4a1e352"
+        },
+        {
+          "layer": "model.layers.35.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 5898264,
+          "sha256": "582ec158803cb6d4aa903d916c2a7a4acbc237d685e9ebba113b00f70d1f47f2"
+        },
+        {
+          "layer": "model.layers.35.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "133c462ef92c8ecbdc3993f3673e813e0ff3066f2b4ac1cfc4cfc417963edc56"
+        },
+        {
+          "layer": "model.layers.35.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1474584,
+          "sha256": "7b9e15dfea179a6006f685ed49089d74871b683e4c824b512edf01a54b89d038"
+        },
+        {
+          "layer": "model.layers.35.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 5898264,
+          "sha256": "79c909397acce76b7f689565cb9cb480697970df0db4a88f34079078b67f78d6"
+        },
+        {
+          "layer": "model.layers.35.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "4bbf83a0c76742ecca7e733747183ac24357e7149d4d863d8aa073f8ee0424bf"
+        },
+        {
+          "layer": "model.layers.35.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 14008344,
+          "sha256": "9a7abf5a4357ec97b90d95233d4b42e748584228d6f5bf1722c5fc23e74c7e41"
+        },
+        {
+          "layer": "model.layers.35.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 14008344,
+          "sha256": "366bff5aaea6fc7239316f6d6f5a09d94834a01c62b341b3e893efeb9faf9495"
+        }
+      ]
+    },
+    "D16": {
+      "manifest_sha256": "3d31e82c10990d5633950e49e14150568bce7971a1945eba05e21fc400430e36",
+      "projection_count": 252,
+      "payload_bytes": 2274662304,
+      "per_projection_identity": [
+        {
+          "layer": "model.layers.0.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "815f19d45874d09f93c538789c6c2988425a45364f73757fe5704462b9b97bdc"
+        },
+        {
+          "layer": "model.layers.0.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "6e149aaae7547a0de098c186f0f393f628bc6ed52a6d1423f85fb26b8e705021"
+        },
+        {
+          "layer": "model.layers.0.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "1bb3b9e06789b2b104555b68ad5ed70a704dfdc3807e5b27d34a7cdb68a2eb36"
+        },
+        {
+          "layer": "model.layers.0.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "efdb65d6347cd6f23dc334d0813299b6b5a1a7598451d5e211c60321722af3c2"
+        },
+        {
+          "layer": "model.layers.0.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "d5824104d61cc1edaf435166310896f829d5aa86df6334472d3bc3fcb9e93e9e"
+        },
+        {
+          "layer": "model.layers.0.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "7313b79b780d9bcc17ee6087da07cf8492ff83f4184d278cecb12e890f3a1d84"
+        },
+        {
+          "layer": "model.layers.0.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "12abb366f418ac2d08cefe1e3f06cb64156213a248188b7c9ac7c2f6e40fd5f8"
+        },
+        {
+          "layer": "model.layers.1.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "f3e940b0147b0f826f274dfea6a9d47901fe264d8021760814fcabc592e502ec"
+        },
+        {
+          "layer": "model.layers.1.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "cfa975553eb7415b4d977c9396a4aaba34829ea6ab2582492c3ef4ce5a32230c"
+        },
+        {
+          "layer": "model.layers.1.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "30273489ec9f1f0e1a3ca959ed8514e1a40097e28a233de2ea8f8a9b35d8a2c8"
+        },
+        {
+          "layer": "model.layers.1.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "9b8268374ba0bf0ed429a0ddd3aaf58fa2df4f38d5acaaf313b30758ae76aa25"
+        },
+        {
+          "layer": "model.layers.1.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "41b4a6554184fbc43b2aad881d940fe919ad851ee173d28c8bf321ef0b422712"
+        },
+        {
+          "layer": "model.layers.1.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "6949ba2fb28b9414c9d1e3979b032c015f8946796a6a41a9cfd0e62fe75d6663"
+        },
+        {
+          "layer": "model.layers.1.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "3df173dbfbbc2ddda5126a3590ecd2f384cecb66f5685bed7e185ec69f96153e"
+        },
+        {
+          "layer": "model.layers.2.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "1c130de660882bfd2bc580eed9700fd87ae50449741b5ca537d0b5514d39eb81"
+        },
+        {
+          "layer": "model.layers.2.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "dab1ad62f7589f08f258e61090b20d27c375800d545022215df8fcd3897e5164"
+        },
+        {
+          "layer": "model.layers.2.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "27bf34c82209f58aaada063a5370974ec987cb227875855e9ad843b5ad965fc7"
+        },
+        {
+          "layer": "model.layers.2.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "8d80a940e85dca675345c0ec82eb556b02448d1df720758bcbb99666749a5a4d"
+        },
+        {
+          "layer": "model.layers.2.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "f929ee9c29d0ddfcd8c510f1d502d22a10c1c091ebeada252209ed104a10bf73"
+        },
+        {
+          "layer": "model.layers.2.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "45c66b54a28de78a478995bd6eef731e642f81c55d1cdaf21ef1ccde4a02bf00"
+        },
+        {
+          "layer": "model.layers.2.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "54b6fd7662cea055738976809f9567fc761f153d7e913b88974cd0a370c152f9"
+        },
+        {
+          "layer": "model.layers.3.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "8614451412609d83e5380bca19c8107372628c6cb0d6b7d307c98aee57aa677d"
+        },
+        {
+          "layer": "model.layers.3.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "d36f1ba8467ebe9f9f232e192abfe9fcc3affce41f96276dcc82bd8aa7510f86"
+        },
+        {
+          "layer": "model.layers.3.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "677cb71d2341190486b7cc3666c4688471d5595632eeff8a68faaa89e046a231"
+        },
+        {
+          "layer": "model.layers.3.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "0f5b12a5a1d0c9919366dc5305bf4a426e0492fc1d8066d6f7637779c89ca2f6"
+        },
+        {
+          "layer": "model.layers.3.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "3fe87ab7287fbbf695845f7ea43cec05d6ab5a1b5280cb5bebdd2df0e30ac5f8"
+        },
+        {
+          "layer": "model.layers.3.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "8dcdbbb2a1cd8b0d8c12eefdfa60633f011fc9cf62ed9f306eb90ee44dcf80e9"
+        },
+        {
+          "layer": "model.layers.3.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "d3da105cd5d791e09ae92b2bee044cde72dacd3f04e3bdec666e3502344a29a2"
+        },
+        {
+          "layer": "model.layers.4.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "0782336f9a9db4e463f83029506ad34d49a4e753c1ea3fcfe8fe218cc7e60c5d"
+        },
+        {
+          "layer": "model.layers.4.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "57e77fbd26bcd1149d9d80d8b9390374efab2332db01d01fef1a2cbc4e256971"
+        },
+        {
+          "layer": "model.layers.4.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "18ef7c6f19fd71cf83213e96c1e6cb7575230c86441a41853bc6d49f2b155a97"
+        },
+        {
+          "layer": "model.layers.4.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "5354ad3a09874d1ce83f6239d3e5b4af88587a4d1cbbbb61f1e251d9d07fc994"
+        },
+        {
+          "layer": "model.layers.4.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "da7e53f450936c365a67a499da495819af82eaa56b026cd95ad440a1ec4e67c5"
+        },
+        {
+          "layer": "model.layers.4.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "e15a84011e399803a8b3be69c5b53acaac44dec8c68c3ba391d29b1af1afa86d"
+        },
+        {
+          "layer": "model.layers.4.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "430b799e82fb3c0e6653b3aa8bf2ab00647c2962c4f07d1cb19d9997a4a5ed3f"
+        },
+        {
+          "layer": "model.layers.5.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "7b28e0c82a445b9c7f18998c02561b772d006bca1ad940b8e1f75c2fbd9fbff0"
+        },
+        {
+          "layer": "model.layers.5.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "2c659a3d0e9fae16aee09b89859a086a2f714228a7c0dd5274096f23aff67950"
+        },
+        {
+          "layer": "model.layers.5.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "54af8172492ddff6907bbe538333bfc051092df54329f172be97014f8af405bd"
+        },
+        {
+          "layer": "model.layers.5.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "afb4d60e0ae8005b2cbda8cff50d1cfef730a9a53de04082df0a8b17c5356a08"
+        },
+        {
+          "layer": "model.layers.5.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "2b44eec5234e0e62982f4a5080f8015e6871896af33530ef6075d1860e12d1c6"
+        },
+        {
+          "layer": "model.layers.5.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "3f354af17f4ef9f16fdccb71e6dadd9c6ec716b7e61f4e133b8bce3b28da83bc"
+        },
+        {
+          "layer": "model.layers.5.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "c0f35fb239ebfd9e7f375d60f7641337cc934023008ed6329ef28e5537fcf9d1"
+        },
+        {
+          "layer": "model.layers.6.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "f4bb0631e9a8ccb9cefd8ea471c71174568a01f4fa8b3175ff7d8709d6a6b59f"
+        },
+        {
+          "layer": "model.layers.6.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "a23ea64752ff1e4f3252df15ca0d05567d9193445a461022e48a5552de6a6e89"
+        },
+        {
+          "layer": "model.layers.6.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "fd427e396be22ff455b3a0872bf9097142c62190c3a69a38af68ef433ba9c7b9"
+        },
+        {
+          "layer": "model.layers.6.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "fbc04616d219fb53e50f58abdd3006f6a302838ffcb3d7573b1d015d7179d1d9"
+        },
+        {
+          "layer": "model.layers.6.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "af313b837a5fce0d95caf2d00dff831ac5c14dffd20a87f7a4614ca37bc2aa5a"
+        },
+        {
+          "layer": "model.layers.6.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "59dbb321648c510ce38921f1281b720662523757c504c738b6872d70daeac253"
+        },
+        {
+          "layer": "model.layers.6.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "a471ac4e788fd0d26dcd60566641aefa0439a1387c1186834bb9248d6e8b7a3c"
+        },
+        {
+          "layer": "model.layers.7.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "13753899ba8c9b1571195f38ca1f72542cab9ee086aa8960b42296404d08f4e4"
+        },
+        {
+          "layer": "model.layers.7.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "2b695575f836e6edc5a0d588c8c23319f85baa5cfa001dbad17e3e9656abcc3e"
+        },
+        {
+          "layer": "model.layers.7.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "1ba4d786023407e537098bc9db88c0e2e97181b1e3af94c87d58fbebfa2c01cc"
+        },
+        {
+          "layer": "model.layers.7.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "d4e7bf435b71dd1d3e3ccf289b7c37cdae8c2d5352119e8cd5b5182db83ede06"
+        },
+        {
+          "layer": "model.layers.7.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "c422df2526c096f6af26d847d1c3bfbc91b5baae0cbbfea9c6a73be3796af09d"
+        },
+        {
+          "layer": "model.layers.7.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "f72eab309f87640027a266c06ddebd71b1528a4ddff69fb84c53d25a240c6779"
+        },
+        {
+          "layer": "model.layers.7.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "9dda8fff832c58bc407d9e7a9d34f74977f17c90b6a5d159666f0e6c1b107e6d"
+        },
+        {
+          "layer": "model.layers.8.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "ee526c39860b9d2b7568a21060e14f0cba74846dc524a608662ba0450180f693"
+        },
+        {
+          "layer": "model.layers.8.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "a19100a19d0ee2186066782e82382c30c4e8331eea0aed321f007f070cbeaca3"
+        },
+        {
+          "layer": "model.layers.8.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "92085b576dfa67972464bb0bf2d07f34ee293413b5f80e09a9a647d93d867b5d"
+        },
+        {
+          "layer": "model.layers.8.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "95745c677442e1fcff3aaddbc6e5707664e96d19fbb324da3875fc277b42d4be"
+        },
+        {
+          "layer": "model.layers.8.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "6650e48ec7ac5d19b242031020ab441df6ca200357554d5a2337baa3f1995ec7"
+        },
+        {
+          "layer": "model.layers.8.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "2b22b5767c40db8f2033908fcda9b6a9b55dd1473b4145cfa889436daf5a6975"
+        },
+        {
+          "layer": "model.layers.8.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "e3c9867a649298cd1bdd4df129313797fdaf23fe37b3d8c17edd0717dcfd491d"
+        },
+        {
+          "layer": "model.layers.9.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "9d47bc8a949fba696465bb62e020ab31795cace15d5ecd4aefd1f1a97fe6e706"
+        },
+        {
+          "layer": "model.layers.9.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "33843c5f514a64017bad57d3e233e2b53f00a5d623614ab70ca091b42b61e02d"
+        },
+        {
+          "layer": "model.layers.9.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "7cbc413abe4f9a86fffba4b077c0b6a684e4d2e5b3a33ffd9e1d23ba2e1a398f"
+        },
+        {
+          "layer": "model.layers.9.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "2ee0667d6789a382a03e12191c1dad0e70618d3fb14dae1ed483b4b35769819a"
+        },
+        {
+          "layer": "model.layers.9.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "56ddf8dd912f37c0af2c3db101f2980e0a1282b3d8138bb60ee121721dc26935"
+        },
+        {
+          "layer": "model.layers.9.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "a172f587ec63563c0655a4c382c9e8b6c9659854466de00fe18d23c32f6e69d8"
+        },
+        {
+          "layer": "model.layers.9.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "961c8e6269476aa7f0f008c34f1c209c377876023817827c5130862058564423"
+        },
+        {
+          "layer": "model.layers.10.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "4239b239ef86634ee3ad072fa6423eb0ffc5e491d0a0e01baa2cb51bece02e11"
+        },
+        {
+          "layer": "model.layers.10.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "a28ab07dbd54f513033675aa396155895bd7eccf9aaab65fd5d965346c1229de"
+        },
+        {
+          "layer": "model.layers.10.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "6e93d2c8f2a45261b9226ca99563448bb99ea3c63829fc1224235e164832b103"
+        },
+        {
+          "layer": "model.layers.10.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "68a4492d4a519e71f1e9f07ed577e6ee448406551c41d570126dfb7e5b05bedf"
+        },
+        {
+          "layer": "model.layers.10.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "91936e5bbb608374669a79b1fd7aec306887bfba8c774cbafd79dcaf456f8933"
+        },
+        {
+          "layer": "model.layers.10.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "ccc6d90664e30ccc48dbbc727f6c83126f55500e475d1276f337b686a8592d1d"
+        },
+        {
+          "layer": "model.layers.10.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "bd0b96565404fbc9371a30c9b49e3d2de0b03dada1d4759603a0936a0f9dac49"
+        },
+        {
+          "layer": "model.layers.11.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "b45014529836a55649462afb23d8917c659cd28fe01d81ac80b6107ecac2d21d"
+        },
+        {
+          "layer": "model.layers.11.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "0c2bca854e263680bdcdf6c596fe1833f64e44b4d78b892ac8a7020d27006005"
+        },
+        {
+          "layer": "model.layers.11.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "153584c802021145315b882fdb456d253dec8709258a557081aafab368b56629"
+        },
+        {
+          "layer": "model.layers.11.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "b5da1ac3acc7b0e186cf2c9db7c45d83b6f452548af299568962c0e2fa81d1fb"
+        },
+        {
+          "layer": "model.layers.11.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "5fae5f6fd4a95782e71d5ae9ea28ce5391d8f8fd2e34e7db17ecc2e56d2f3ddd"
+        },
+        {
+          "layer": "model.layers.11.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "34fa94b35ec5f633a6bfe3b4cae3df8259d570a07b679f607f876c7d93bf7ac6"
+        },
+        {
+          "layer": "model.layers.11.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "752e938e79cec464cb495d7e0d8479a42405bdc5c1990f19723074d0fae87ab5"
+        },
+        {
+          "layer": "model.layers.12.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "1ec4d8b373a3083ce64e3f9bb725129b0bd11842944a28ebcc06a9cb14ca9771"
+        },
+        {
+          "layer": "model.layers.12.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "6503be1981d671e8b377dc3a5723b1e733e43ecbd39c7ddaa281e723c446a899"
+        },
+        {
+          "layer": "model.layers.12.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "1d10e2beba13e1aef2e60043279d3224ce1cd29c1ac5c6e423207e5e21115e02"
+        },
+        {
+          "layer": "model.layers.12.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "25fcc557fe7d242260f750c64ccc293e6267f3f96f6add310c4c78309aa8607d"
+        },
+        {
+          "layer": "model.layers.12.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "997907c6079c10c4c755db3fa75858f49762b575b28d6b6dedfc4ea53b3088a0"
+        },
+        {
+          "layer": "model.layers.12.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "7dd2957b3f4c44aea4a4189adcdca1545679a152c5e4a464333299f497275cfb"
+        },
+        {
+          "layer": "model.layers.12.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "85a94c711557d4595b9893ec89ac9e53a61cdce1ecff2ea80f5cf73c51ed5d7d"
+        },
+        {
+          "layer": "model.layers.13.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "b19c374caba3a28a1163942e49f98de01fde6b7d8fe101f377b46b094af34376"
+        },
+        {
+          "layer": "model.layers.13.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "c2cc27fb12e40ad84e44cac9ef450cdb550fe366cebfcc92c2cae7328df31935"
+        },
+        {
+          "layer": "model.layers.13.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "fa014e2aeeda5d6e0f2ac943e3f384d8efb01758bc8642db42f787ac1c63cbe7"
+        },
+        {
+          "layer": "model.layers.13.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "486162e25690d5ddcbbd14926927c1a7fca271f4eee2f7a1af20dc175469a915"
+        },
+        {
+          "layer": "model.layers.13.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "e0f0122d48defe697ba41458f1f09f341368e1e6ccbf0405c313a299933c9f77"
+        },
+        {
+          "layer": "model.layers.13.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "4c334186d65680950773e2a0f14a9e365b19c42dccf13781e88f391e51c18c16"
+        },
+        {
+          "layer": "model.layers.13.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "baa0f9d44ff40cab180dd85baa2bd4b53c0f764af644ca94c38db692cdeeb935"
+        },
+        {
+          "layer": "model.layers.14.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "f8318ec1b82ac166944a40efd9a7c07fad12ac070137677b34c695a7e5397945"
+        },
+        {
+          "layer": "model.layers.14.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "bfc7b87d7d926b8b39b8e9be5625965c70da43a4e9f9962910cd0a8f89891609"
+        },
+        {
+          "layer": "model.layers.14.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "67f2afd5cf257e9f48ea30f59e679564b5d127b8c9ed0291e9c477e06f574382"
+        },
+        {
+          "layer": "model.layers.14.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "e0675330bbe8c9a44b16dbb82d5651def2e45970e85d561bc037bf51fd2f5603"
+        },
+        {
+          "layer": "model.layers.14.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "68e915933c48f009930d1411419534244b36c026577bf0e2f356c15e5af63cef"
+        },
+        {
+          "layer": "model.layers.14.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "229474addcbd16338b0808dac68ceee498412f523e5a38928cc30a21ed633e18"
+        },
+        {
+          "layer": "model.layers.14.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "51e747f6a896148116749ca671282c798ad3ecf0017081c97e65992860dd990f"
+        },
+        {
+          "layer": "model.layers.15.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "23ac3f55352421c60d99313c0cc518b326529990f241c41b8c844bc041026d4a"
+        },
+        {
+          "layer": "model.layers.15.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "f878e3e28b8748e9dec5a362e5600febdb9657c23e52f4ba42f5f20d3019f1ec"
+        },
+        {
+          "layer": "model.layers.15.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "d871ebf12aefe99b7768807e32ea0b55cf4a15b838a743d3f3ef04e0332596d2"
+        },
+        {
+          "layer": "model.layers.15.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "caed74502775ed09c69a6cbb01c02daa2be44526d4b64b7eb31b81df228db0f4"
+        },
+        {
+          "layer": "model.layers.15.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "45e2667f6f9b888a2720164c69f0dcc5ee74028a410030fd65326e908856024b"
+        },
+        {
+          "layer": "model.layers.15.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "359e1250e9a070876eae51446009f47f180dc0e5cad4dcbaa116868f29b10239"
+        },
+        {
+          "layer": "model.layers.15.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "0eb0abe42e82b9ac319e24400ae234b3e8df00b45ca1e6021368d3fcc765f538"
+        },
+        {
+          "layer": "model.layers.16.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "b7483407d827bd1eacc3ba18aa30c9765b2d83e992f7fe817579de7b8d11ed83"
+        },
+        {
+          "layer": "model.layers.16.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "ae1e389effc27040c974147c29eaafa0daf453629a6acb75926ff727cead3690"
+        },
+        {
+          "layer": "model.layers.16.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "f1348e06962a56f986ab4a5604c85763b343ac43c4334f815ca654d346e75054"
+        },
+        {
+          "layer": "model.layers.16.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "13f7a1b60cca2a9bcad0097d85451944ede6ddaf1b9ae0b06523b4eabb24eae5"
+        },
+        {
+          "layer": "model.layers.16.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "fb14f0898c82930ed34073975aa65726fb415ed246eea0765f0055ba22b67260"
+        },
+        {
+          "layer": "model.layers.16.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "71aa4967830ce6f744b8ff3a3d748f51474e80052fff6c2c5d2791e020f4dc28"
+        },
+        {
+          "layer": "model.layers.16.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "4a39ba1404dcf175ce276ee0a691b35dc24aa818a1e8ec2ec79aa90ba596fecc"
+        },
+        {
+          "layer": "model.layers.17.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "91326b3fcf4d47f15fdf80885ed08993883094ca07315a63a246cb2b5ad065ad"
+        },
+        {
+          "layer": "model.layers.17.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "7a318ededf575f81efafb6f0b4a1e1a2f0610ff62ea18b1039f7b9f51627998b"
+        },
+        {
+          "layer": "model.layers.17.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "f0d90c4a89dc9e44076987efb2c66a6fc22c36198beb5a97f25f04865bd758bf"
+        },
+        {
+          "layer": "model.layers.17.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "c347b8e264d05ceec81664a201fc8d7554d6404db4a7fbb67a2f2ec5648284e9"
+        },
+        {
+          "layer": "model.layers.17.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "bb436d5fce9fe8edba1c9b5973d6c73a029acb48b09647a904ca1ee93b4611c2"
+        },
+        {
+          "layer": "model.layers.17.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "fa9d76d51cab948ef67cddbfd424e8957b351c7d2ffa78b2d690863780fd0f92"
+        },
+        {
+          "layer": "model.layers.17.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "26931f8098aee9cc854a04c6cf7f3bc82c5d91bfbefc12f136722a4e47de2779"
+        },
+        {
+          "layer": "model.layers.18.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "69603462ed62ed6aff7c455603b0274e98378b757f54a5f9c3a3bc3d89565923"
+        },
+        {
+          "layer": "model.layers.18.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "65cc22e118ea4f5b8feea7a2bcf25125105bdea3d6dd3b2ee7a38ada99e1420d"
+        },
+        {
+          "layer": "model.layers.18.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "c41d5db195b5e605c4ff26a624664074ad0487b9038c517a23249efc354c9b84"
+        },
+        {
+          "layer": "model.layers.18.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "3a2759edb116ad5c432474e44fe65364d539d15b2a518987983d1f4900e646af"
+        },
+        {
+          "layer": "model.layers.18.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "fee624e943b481cbccb06033356298e01bae526b7b06ada6e35543455ebe6a37"
+        },
+        {
+          "layer": "model.layers.18.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "2835783c297e8471fcb3fbc78a6177cc40dbbc47b335f2977a68a145878c5a8d"
+        },
+        {
+          "layer": "model.layers.18.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "82edbf280f63393b391f20c9d9841f175673130f5571732ce5c090de00642a98"
+        },
+        {
+          "layer": "model.layers.19.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "b09cfea62cea60008f074e6563c9c1300b01489f8446b2d0645fecfa8c54fbe5"
+        },
+        {
+          "layer": "model.layers.19.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "83f4916f84d31802e516c049030d623b26f85fbd293de7199f1f467caa41beab"
+        },
+        {
+          "layer": "model.layers.19.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "08cafb5d08c76adc16c3eb5fba53143a464ad0d2ce685ea8b0eee3b33a9e2d44"
+        },
+        {
+          "layer": "model.layers.19.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "ce4dbf2261e849fa432043e015203cd59de19fa80ed2727d8071a8323906a54b"
+        },
+        {
+          "layer": "model.layers.19.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "1c2e7f3b371fb25a3a73fe41c8974e0aacafebfb2b8112cecb2aef7f2d76c90d"
+        },
+        {
+          "layer": "model.layers.19.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "92a4be212e4423cc5cdd506581894ebf2ca54b0d90f0c9c6cd80366cfb8a6267"
+        },
+        {
+          "layer": "model.layers.19.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "3207bbb4f9aea2ef33fa6a686026c7f7515ab944254ed3a8086dcd688a187015"
+        },
+        {
+          "layer": "model.layers.20.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "c630363e39dd6e98c8fe98f2a5e249ee5a776e485efba9978a3ff0928e88ba04"
+        },
+        {
+          "layer": "model.layers.20.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "2347cce79d05f416607c621705650f80d4f9a6dcc716604b380b3febacac5ed2"
+        },
+        {
+          "layer": "model.layers.20.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "4a07634f028661f2ce7420449c7cab9eea4c73ec4c9d2372bf5a71111e9dbfe2"
+        },
+        {
+          "layer": "model.layers.20.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "0ba1fbae9e7e468a6eb7ce528596ee3d317db9bdcd9bcfa6f5cacb5871ce2ecc"
+        },
+        {
+          "layer": "model.layers.20.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "e8009e29c4d5e6821d8e7edfdcd147b1314496cf988db1dbff64f722713a1fae"
+        },
+        {
+          "layer": "model.layers.20.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "24aef4e85584f3689c3fd9f97d9f133864674aeec67ebb7faded2f0ddb689315"
+        },
+        {
+          "layer": "model.layers.20.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "e090f28a14c0c4fdd227d19cef788a58edff31ecf67a80de953d5ff699258803"
+        },
+        {
+          "layer": "model.layers.21.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "4c515a430df7937d7190549ba44bccfd587dd22d513c1d5563f8222aeb93715f"
+        },
+        {
+          "layer": "model.layers.21.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "f58073f6f824d181a999a765875f1523265a4416b851617d504812160a65f916"
+        },
+        {
+          "layer": "model.layers.21.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "2e6b17787d5d773746f6405f745a52e537ea709f8b04aa947e169ae80106fda3"
+        },
+        {
+          "layer": "model.layers.21.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "e64baa53122d39ee47c8fe4854ec7291a8af58b70aff1b058d3f8f003765cc3f"
+        },
+        {
+          "layer": "model.layers.21.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "9fdcd79035d232b20f576c8426ff7bc7aa18ee997a6cdd2000a681644133dccb"
+        },
+        {
+          "layer": "model.layers.21.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "1634522b24789acb381176da286e48221979587f77071e9019c08316e00c65ae"
+        },
+        {
+          "layer": "model.layers.21.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "5c544bac292a07bc649276120dc66efc9a83a7e3eb4b328a34dee05beff18aee"
+        },
+        {
+          "layer": "model.layers.22.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "ba3d02f6fcdfd5de7414625b14d683e7e4b65a6113f9eb5ab167eaaadff0dc8c"
+        },
+        {
+          "layer": "model.layers.22.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "67605271429568e90a9298606108abf4487c0fba9ac5185b2390df07b952f40a"
+        },
+        {
+          "layer": "model.layers.22.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "bc23741fef3e534bfb8efc5a90519978ead822d7eb5db979687cd080cc3ba446"
+        },
+        {
+          "layer": "model.layers.22.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "3cfca2f6b1dfaa3da4a463038177979fd2598d2fd45e3780c829cf22dfde689a"
+        },
+        {
+          "layer": "model.layers.22.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "d57a261ce81800b98c31d389d301046b3b23c661943226fd32ef2d98afef8d1c"
+        },
+        {
+          "layer": "model.layers.22.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "eb536998b1a56639f0468f6ed48617b868e8a93d3d43b395082c11ea690ed92a"
+        },
+        {
+          "layer": "model.layers.22.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "742e3983c3e918f8d2ac9d18143ad0567c41491fee83d14e54468f1b70df547f"
+        },
+        {
+          "layer": "model.layers.23.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "6b8dff63aca919fa162c8421fcdba39183ea68ef5d97d83b70b03d530168325f"
+        },
+        {
+          "layer": "model.layers.23.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "3a3fa143467e959a001d4b792ecc19b92d74ecf1c44c2353c8f0b699dd2202ac"
+        },
+        {
+          "layer": "model.layers.23.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "ca25f2b92d36d22d1d2d368ac2056404aeccc227d6394da9de6ea050c7eec49f"
+        },
+        {
+          "layer": "model.layers.23.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "23a139793f84633affb5ad4ddc87a6e06fe0d8053ef63fc39baebc130b3eba98"
+        },
+        {
+          "layer": "model.layers.23.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "3942dbf2820cd1a68b2f4c31f31ca4d23959d2bf6f57ec8ff376db1ca4d1d18d"
+        },
+        {
+          "layer": "model.layers.23.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "5d32a13b05190d144d07b8a9bcb3af8343fce9ce50d4d579ba09cdb55dcf1f66"
+        },
+        {
+          "layer": "model.layers.23.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "26b384d7bc21cc40637c4c86935a41f442239b7db569a107bfca815a26f4f73a"
+        },
+        {
+          "layer": "model.layers.24.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "e19117240753744f2255c649869882c26cc34571231f810884ec107c710c452f"
+        },
+        {
+          "layer": "model.layers.24.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "188c918f936023830262d501449163a80b617136dbb02499805016b22a1fac7f"
+        },
+        {
+          "layer": "model.layers.24.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "0988ffa9570befcb02e8b64df1ee0c15a0f6395c23da9df7eb57c11e816c227c"
+        },
+        {
+          "layer": "model.layers.24.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "24e81236718669d09feb223f750cc5e76f9fab297fae60af88b535549b0789dc"
+        },
+        {
+          "layer": "model.layers.24.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "2eea9f4ac2a2a1a091133347600d3472cc7113004fdd021d0765f0338f6ad200"
+        },
+        {
+          "layer": "model.layers.24.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "7e28a023af5a99ef1e8c4323edfa2b828d461091dbd24ece0568911753b220b1"
+        },
+        {
+          "layer": "model.layers.24.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "0da1a6a961b7108d78b103dd275abb3e0a7495148083906f2344e4eb6d986bd7"
+        },
+        {
+          "layer": "model.layers.25.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "72374151f20c33032c5d26ffadc89eee38fac874466499a1ee1c7ecc7c79a9a2"
+        },
+        {
+          "layer": "model.layers.25.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "50eece0a065dbf65e4a8de92e6665b931e292d85147dc6480c8a6ceb9d866c58"
+        },
+        {
+          "layer": "model.layers.25.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "58913f4ced33df85937c118963a6263d046771e44fb2662f431bf43cb9393e81"
+        },
+        {
+          "layer": "model.layers.25.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "dc0d632016db67ffe905b4647fcab189ef475f81217e7e0485ccf5d7fb87c486"
+        },
+        {
+          "layer": "model.layers.25.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "5421a3e4175af9531534ab5cb24540f81288669298c69188e2152345af3f0bd6"
+        },
+        {
+          "layer": "model.layers.25.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "d6c24046f6f8304bddd38dc9c3bed09c7b7cfcf4bbdbe322736ec4f3ae7382bd"
+        },
+        {
+          "layer": "model.layers.25.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "4ceea98024935fc5cb45225c9fe26779d857311bee52b631063b1742ed2e97dd"
+        },
+        {
+          "layer": "model.layers.26.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "4097e704ba0d9d9916f95bf8f98449ece805bb66dc48c56e86fbb5a28c4f9cc9"
+        },
+        {
+          "layer": "model.layers.26.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "f6a0a5e8198728ad3fe8a306ddc70c7bca1ee117cea31165eac4e3cab5e190db"
+        },
+        {
+          "layer": "model.layers.26.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "8d85e406ba2dd8a53d6c0bb542d446a6a4ad57ed6eb29135e0f1f0485943000e"
+        },
+        {
+          "layer": "model.layers.26.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "6d3f2e915048248a60fda2b277591f544a2dca4b133f8fadb8a70b8339dae453"
+        },
+        {
+          "layer": "model.layers.26.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "699c66d0165cd63a598e1aef6ef0ef14de78a2c1443f0b053ab22f28e17e9236"
+        },
+        {
+          "layer": "model.layers.26.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "4d291e0fec6cb52136c84eaa9cf7a2d51d5e2aa3567684fb1920945ef5cafc6d"
+        },
+        {
+          "layer": "model.layers.26.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "62b0a46e24ba4ab4fe4bf7da783335cb59b3c6430b3d865cdb07e4bf2dce1ce5"
+        },
+        {
+          "layer": "model.layers.27.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "84f02efac00575790dfd80be3066ac8f67d0b9a98eb4f025aaaf91b41d183d43"
+        },
+        {
+          "layer": "model.layers.27.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "dbbe40de8ea994adff9a018d19ea8f1b3d80e76ac426312c6c5564f12be76202"
+        },
+        {
+          "layer": "model.layers.27.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "9a7a9075b5c2ef4e476ee575bdaa57c3457d2f37a4646c4d30291cdcbcd30690"
+        },
+        {
+          "layer": "model.layers.27.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "b34ece29015d12c2f00bf22d4a56635d2777f24178e0082e1105d2c2bbf2bb3d"
+        },
+        {
+          "layer": "model.layers.27.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "6e17f44b9367d2670c1ddacac58aff9090117e2f270cc86074038f89ea3a3e70"
+        },
+        {
+          "layer": "model.layers.27.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "a6fe0a3228c1fb7df722d4fe4ae3e0e6e5de4140d7611b2991c675e9f0baa346"
+        },
+        {
+          "layer": "model.layers.27.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "42cc09073a90696ca8adfe5ddf9650898be6487f7ab0afe5a0c48f722f739499"
+        },
+        {
+          "layer": "model.layers.28.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "66cff673d36fd929c2a75dd9bacd0d581188d8fe923ccda5846d7d1adb775101"
+        },
+        {
+          "layer": "model.layers.28.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "ce1fcfb4c7d3f85726bbd3e7d67ecd7a4daee1e8c65e0980f6e6c822a7be6bec"
+        },
+        {
+          "layer": "model.layers.28.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "1a47e4fc41619607fe896b86c70cc72e08f155db93d0ab93ecbf9fec39c5a08a"
+        },
+        {
+          "layer": "model.layers.28.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "7cd5d08bb4750098a60e4806ceb9ee257a6f571127aa2a24ba6704f9dda2cf28"
+        },
+        {
+          "layer": "model.layers.28.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "309b8b600849680632e376b1165ac8d9e3f6f7877521df9490c6c05bbef6798c"
+        },
+        {
+          "layer": "model.layers.28.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "e06b310e059739f65ef0707666d343381e2b3000c5c726f1f363026be38b6a68"
+        },
+        {
+          "layer": "model.layers.28.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "911aa5673173dd21498975f1c09982a128510474f2b6d485f2c98adcb26866c3"
+        },
+        {
+          "layer": "model.layers.29.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "4fa154354c505a16f66ed826263027150035a295ac574786bfbb9e27154dab92"
+        },
+        {
+          "layer": "model.layers.29.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "bf36ca53a33fab5713c156a966e623d94827af9fbde877a7d47d62eb7e335a5b"
+        },
+        {
+          "layer": "model.layers.29.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "2f0899237e62354d47ddb0d09a639860c2890ab1254fc5968fb2c23ba9b1c45d"
+        },
+        {
+          "layer": "model.layers.29.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "82f721ce233592ec4d2c9fa79912ea9ce15b33c147d594445a41aef975e140fc"
+        },
+        {
+          "layer": "model.layers.29.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "9cef1a2114723fe9622a3b6fff7e3a6e9a74f10fb498774e3830702daef5edb1"
+        },
+        {
+          "layer": "model.layers.29.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "19b1d9ee7912937ed9972d77b1a7254a3b7917c345a3fe42d507074d7e9cc195"
+        },
+        {
+          "layer": "model.layers.29.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "60fd6f16c23bf8ac61c4e60933ae658a01c0dc856d47a3d368ab74ed18ecb701"
+        },
+        {
+          "layer": "model.layers.30.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "8c200bc0375746f91a131a48048710404ce1e3ed8a1b548362ed533243e4afc0"
+        },
+        {
+          "layer": "model.layers.30.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "2094535c6d0fbeb97561e615ab6782780d83e2829b05a4cd29f012753e15b36d"
+        },
+        {
+          "layer": "model.layers.30.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "1f3df988cf30d1842cd233d41ce63fe8c12302721c389f9e1e307722e6236eb3"
+        },
+        {
+          "layer": "model.layers.30.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "5dd29f1ea0650a205adc7112cd24c7dec9c736c0bb438d8aa76a965b7701dc21"
+        },
+        {
+          "layer": "model.layers.30.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "9cf7ca5bee696f18a7a7c901581d2eb076adfd3a8f5db7666af2c363e479f9e3"
+        },
+        {
+          "layer": "model.layers.30.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "1e035db8763f93ffcb15275d5eae9d529d659df0b12a63446841013df1af626d"
+        },
+        {
+          "layer": "model.layers.30.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "8a7fa13d7452062626a9dc036b4ab1ab7f033ed5f19f7f6065b5934f509bb258"
+        },
+        {
+          "layer": "model.layers.31.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "15390034a5aceaf625d79c124a0cc69abed4626a5222fcc6eaf774ef0638d27e"
+        },
+        {
+          "layer": "model.layers.31.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "63906be50938685e5c9c1135cc16742619957d04cba9fb30fe4cb7e0a712f918"
+        },
+        {
+          "layer": "model.layers.31.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "7bb916e0cd4f374f8965d87e968bba0deae58d3b4d8d53d51a8afaca316beee0"
+        },
+        {
+          "layer": "model.layers.31.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "1d70afe51ec2fa60dabd08d70430ad9f1013f7098a5c74c398869a5c4fc4ac68"
+        },
+        {
+          "layer": "model.layers.31.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "d867aefc5d28ccb2df16bdf22aa79794102bae890385597a0f7b70a28fb95435"
+        },
+        {
+          "layer": "model.layers.31.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "934af4c35fcd6e3444700cefd71439cff80e648f72d5dbdf34b477a091ad44a9"
+        },
+        {
+          "layer": "model.layers.31.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "f8fc68f2ae09a53ce6aa2757f4d388e7f0df5cc4bf1f70a8f2bcf9aad7caa6b0"
+        },
+        {
+          "layer": "model.layers.32.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "de16915889a88a1b4fa56862052cf42e8d2c9e5a5cb56e088bd2fade38369177"
+        },
+        {
+          "layer": "model.layers.32.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "56fa40a98d5ff3552ea4fb7c99709c5a3e334e2335c8d7fc3b52727a3f5efa00"
+        },
+        {
+          "layer": "model.layers.32.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "035cf20d3483cf4ec953f83cdbb0ab60081f3052978d60e4fad89ca83b29e8a9"
+        },
+        {
+          "layer": "model.layers.32.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "482d3fa4177292d5c5cbbce0cc7f8f588847619ca2886f900b42637ec6388fd2"
+        },
+        {
+          "layer": "model.layers.32.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "b73f5602574a7ee3cb6471c76e328e5b0881ad9e083c0c55287f6430b9dcb3b9"
+        },
+        {
+          "layer": "model.layers.32.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "40d445e0e5deb0803acee1fc2ca243a81bd5cc5cf4357a4b60c5ce387a76f2d1"
+        },
+        {
+          "layer": "model.layers.32.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "3d970b54cf797c7a4e43bad0223c4e4f861344d7f884deb0f07b6b24bf1e7d63"
+        },
+        {
+          "layer": "model.layers.33.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "c77129b3ee89f965a27bb308d54edfb13cceda573a4360e7f1544f74c233b2d6"
+        },
+        {
+          "layer": "model.layers.33.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "ca9b775f4fd9ec855f1a405ea7ea7b2bc0a80199c53206dadfc213c851be0fd0"
+        },
+        {
+          "layer": "model.layers.33.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "4053ba19a0cc53b4e4eb5803097eef75f15c590ac2e3c105015f9d4769b744ac"
+        },
+        {
+          "layer": "model.layers.33.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "ed4bdd854590c847dc5b2173d1aa3675a3b7d8c21904cc6e7f6623c175a6ddd1"
+        },
+        {
+          "layer": "model.layers.33.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "1a7f5fbab63e8b104ddb5521df13f8748d9b6e3a0e4e0cc87a755b04cb41d894"
+        },
+        {
+          "layer": "model.layers.33.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "1db3ccaae805c32da8b2bc86d0a8dd516666619f71bf643170e823042889b264"
+        },
+        {
+          "layer": "model.layers.33.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "da5add45c40903e790129a03e4e207c684462df6fb987e8f19e83af78267e891"
+        },
+        {
+          "layer": "model.layers.34.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "24a608287d9f580f05a520eb0f7d5126b2815b04643c38962a3518f807a08c98"
+        },
+        {
+          "layer": "model.layers.34.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "10668e5b2513b8ac834771b563fd1b47bdaa160baa2ab4330767541311e4f81f"
+        },
+        {
+          "layer": "model.layers.34.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "d21deab6505a88d2f3dc2cf640b4442d89db7a367f11c5fa0917c87c8aea66cf"
+        },
+        {
+          "layer": "model.layers.34.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "f5cd0c542538fa69cd56f50d388eb27d2843c8c96bebd21196bbf1b0d69c3637"
+        },
+        {
+          "layer": "model.layers.34.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "fea1365429ae0091be68e3d642c68840cb09a50c9c0732da26d8c6d7e0109ed6"
+        },
+        {
+          "layer": "model.layers.34.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "a932a2ea86514d6e2f883db6e87c362ad5ae72ad7ec79fefa826a197d2625d71"
+        },
+        {
+          "layer": "model.layers.34.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "b03d065102c96a1d08b271c1d0766bcdab235f317e14bf18d1fdb5eafbf2de2e"
+        },
+        {
+          "layer": "model.layers.35.self_attn.q_proj",
+          "shape": [
+            4096,
+            2560
+          ],
+          "bytes": 6563864,
+          "sha256": "b5fedf7f5a5bbc204aed81d93fd646d79b82100509e1c6b80d24bdac403d9616"
+        },
+        {
+          "layer": "model.layers.35.self_attn.k_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "52f132be517bb491516dc67368a5c8d8196733d274eec0b30d50ae98ff082d38"
+        },
+        {
+          "layer": "model.layers.35.self_attn.v_proj",
+          "shape": [
+            1024,
+            2560
+          ],
+          "bytes": 1648664,
+          "sha256": "c5fe95d9e325f84358e5d4b87f023cb36e06dc5f7b49e2a82dcda431bd78df57"
+        },
+        {
+          "layer": "model.layers.35.self_attn.o_proj",
+          "shape": [
+            2560,
+            4096
+          ],
+          "bytes": 6570008,
+          "sha256": "ba22b89ee70d5e81183cec5804b582abf7416523678f1881330d8e17f03d973f"
+        },
+        {
+          "layer": "model.layers.35.mlp.gate_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "3a2e39f68ac02193f44f10669173a5b593ad5eec6ea6bd28d4270a3035f75ac4"
+        },
+        {
+          "layer": "model.layers.35.mlp.up_proj",
+          "shape": [
+            9728,
+            2560
+          ],
+          "bytes": 15575064,
+          "sha256": "4af7667db2d7f18bc01a24ea4841c781f196d88575bd405ed17e8c03a1316518"
+        },
+        {
+          "layer": "model.layers.35.mlp.down_proj",
+          "shape": [
+            2560,
+            9728
+          ],
+          "bytes": 15603736,
+          "sha256": "b88b4f3530d0ee323633df60218b392cf399780e48cc3c28f37d04fda23936e3"
+        }
+      ]
+    }
+  }
+}

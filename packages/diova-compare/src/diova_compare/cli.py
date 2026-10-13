@@ -10,12 +10,21 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest='command', required=True)
     v = sub.add_parser('validate'); v.add_argument('--input', type=Path, required=True)
+    e = sub.add_parser('export-case013', help='Export frozen historical long/agent records; no model or GPU')
+    e.add_argument('--case', type=Path, required=True)
+    e.add_argument('--output', type=Path, required=True)
     c = sub.add_parser('compare')
     c.add_argument('--baseline', type=Path, required=True); c.add_argument('--candidate', type=Path, required=True)
     c.add_argument('--output', type=Path, required=True); c.add_argument('--intersection', action='store_true')
     c.add_argument('--replicates', type=int, default=2000); c.add_argument('--seed', type=int, default=909220)
     a = p.parse_args()
     try:
+        if a.command == 'export-case013':
+            from .case013 import export_case013
+            result = export_case013(a.case, a.output)
+            print(json.dumps({'status': result['status'], 'files': len(result['files']),
+                              'records': sum(x['records'] for x in result['files'].values()),
+                              'output': str(a.output)})); return
         if a.command == 'validate':
             print(json.dumps({'status': 'PASS', 'records': len(load(a.input))})); return
         result = compare(load(a.baseline), load(a.candidate), a.intersection, a.replicates, a.seed)

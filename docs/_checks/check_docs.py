@@ -413,7 +413,12 @@ def check_new_study(root: Path, errors: list[str]) -> set[str]:
             import importlib.util
             spec=importlib.util.spec_from_file_location('case009_publication_docs',publication)
             module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
-            module.verify(root)
+            # Case009 binds its historical package0.1.1 to an exact file set.
+            # Verify that intact snapshot in scratch; the evolving current
+            # package has its own regression/installed-wheel checks.
+            wrapper_spec=importlib.util.spec_from_file_location('case009_frozen_docs',root/'tools/run_case009_frozen_checks.py')
+            wrapper=importlib.util.module_from_spec(wrapper_spec);wrapper_spec.loader.exec_module(wrapper)
+            wrapper.verify_current_case009(root)
             known={p.relative_to(root).as_posix() for p in base.rglob('*') if p.is_file()}
             for stem in ['case009_serving_quality_reviewed_publication_v2','diova_compare-0.1.1']:
                 meta_name=stem+'.json' if stem.startswith('case009') else stem+'.metadata.json'
@@ -494,9 +499,10 @@ def check_case011(root: Path, errors: list[str]) -> set[str]:
         identity=case/'publication/original_identity.json'
         if sha(identity)!='d08cc444193ffa499c3abad20340b2d67991375cc683f0be75ef7cbb653f8aac':
             raise ValueError('Original review identity changed')
-        proc=subprocess.run([sys.executable,'-B',str(case/'publication/verify_publication.py')],
-                            cwd=root,capture_output=True,text=True)
-        if proc.returncode:raise ValueError('Original/publication verification failed')
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('case011_frozen_docs',root/'tools/run_case011_frozen_checks.py')
+        wrapper=importlib.util.module_from_spec(spec);spec.loader.exec_module(wrapper)
+        wrapper.verify_current_case011(root)
         pages=[relative+'/'+name for name in ('README.md','README.ko.md','REPORT.md','REPORT.ko.md',
                                              'REPRODUCTION.md','PORTFOLIO.md','NOTICE.md')]
         check_links(root,pages,errors,allow_disclosures=True);check_copy_hygiene(root,tuple(pages),errors)
