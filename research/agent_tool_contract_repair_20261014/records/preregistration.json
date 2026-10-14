@@ -1,0 +1,62 @@
+{
+  "created_utc": "2026-10-13T23:15:37.714629+00:00",
+  "phase": "MITIGATION_DEV: same eight previously observed DEV tasks, no formal or held-out claims",
+  "methods": {
+    "BF16": [
+      "BASELINE"
+    ],
+    "RTN": [
+      "BASELINE"
+    ],
+    "D16": [
+      "BASELINE",
+      "FEEDBACK",
+      "ENUM",
+      "BOTH"
+    ],
+    "D4": [
+      "BASELINE",
+      "FEEDBACK",
+      "ENUM",
+      "BOTH"
+    ]
+  },
+  "primary": "D16 BOTH minus newly measured D16 BASELINE; paired task success and unregistered name events",
+  "secondary": "D4 and factorial feedback/enum effects; all eight tasks and all conditions retained",
+  "feedback": "separate unknown-name vs invalid-arguments errors, allowed exact names, no automatic aliases",
+  "enum": "only top-level tool-call name values masked to schema enum; arguments/final answers unrestricted; no forced calls",
+  "gold_not_available_to_decoder": true,
+  "generation": {
+    "greedy": true,
+    "max_new_tokens": 192,
+    "max_model_calls": 8,
+    "max_tool_calls": 6,
+    "deadline_seconds": 900,
+    "context_limit": 24576,
+    "seed": 610132,
+    "within_request_KV": true,
+    "prefix_cache_across_turns": false
+  },
+  "arithmetic": "original BF16 reference, TF32 false, BF16 reduced precision reduction false, SDPA",
+  "task_order": "original task order, once per condition; no prompt/rubric/quantizer selection",
+  "conditions_order": [
+    "BASELINE",
+    "FEEDBACK",
+    "ENUM",
+    "BOTH"
+  ],
+  "worker_wall_budget_seconds": 3600,
+  "runtime_sha256": "d290db7ac9b2436298753ae184b7bceba55e334b1906d68fde4ba5169c550fdf",
+  "input_manifest_sha256": "e648790f18cea8086f3678b0ee81815ef2bea6403d1d4b6016d6065b9b9346fa",
+  "code_hashes": {
+    "guard.py": "a1b23d94f9d714099e92efd04260e07dbba6a87c6fd37bb715613cf16808dcc6",
+    "launch.py": "c627c9a49460b330ac76d24662a2f37f820e44dbf93ab85c1012d144ffad308f",
+    "prepare.py": "a158ed5b9e77d1dc43b97e003b3af1f697104bd04418da1a5e4ddd7c9ce2a9a0",
+    "runner.py": "b27cdb733403f23e55896060c45894b0dc713df74b9c7fa34164249d328911b2",
+    "test_guard.py": "ee43aa1930543f665e1a87515a2cf49e955bb720ab53a5d542147aaecda23078"
+  },
+  "new_fitting": 0,
+  "new_downloads": 0,
+  "formal_serving_benefit": "NOT_ESTABLISHED",
+  "completion": "all scheduled episodes, original scorer, CPU event/config/paired audit; report residual failures without retries to improve scores"
+}

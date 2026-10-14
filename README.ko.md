@@ -164,6 +164,12 @@ D16의 가중치 오차는 두 모델에서 줄었습니다. 0.6B의 PPL은 좋�
 
 [쉬운 소개](cases/013-dualquant-reference-quality/README.ko.md) · [변환·adapter](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 재계산](cases/013-dualquant-reference-quality/REPRODUCTION.ko.md) · [정식 보고서](cases/013-dualquant-reference-quality/REPORT.ko.md)
 
+### 후속 구현 — 도구 이름 오류와 실제 작업 성공
+
+기존 결과를 CPU 비교 CLI에 연결하고, 등록된 도구 이름만 생성하는 제약과 정확한 오류 안내를 구현했습니다. 같은 기존 DEV 8개에서 가중치를 유지한 D16은 **6/8→8/8**, D4는 **0/8→2/8**로 바뀌었습니다. 이름 제한 조건의 미등록 호출은 0회였고, D4의 나머지 6개 실패는 남았습니다.
+
+[쉽게 살펴보기](research/agent_tool_contract_repair_20261014/README.ko.md) · [전체 결과·한영 보고서](research/agent_tool_contract_repair_20261014/records/REPORT_KO.md) · [앞선 원인 진단](research/agent_stability_20261013/README.ko.md) · [기록 비교 CLI](packages/diova-compare/README.ko.md#case013-export)
+
 ## 질문과 구현물
 
 

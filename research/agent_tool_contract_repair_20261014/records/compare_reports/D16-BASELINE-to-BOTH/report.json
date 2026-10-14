@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "baseline_artifact": "D16:external-artifact-identity=3d31e82c10990d5633950e49e14150568bce7971a1945eba05e21fc400430e36:decoder=BASELINE",
+  "candidate_artifact": "D16:external-artifact-identity=3d31e82c10990d5633950e49e14150568bce7971a1945eba05e21fc400430e36:decoder=BOTH",
+  "n_pairs": 8,
+  "excluded_baseline": [],
+  "excluded_candidate": [],
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 610142,
+    "unit": "paired item within task; no cross-task aggregate",
+    "interval": "pointwise descriptive percentile"
+  },
+  "tasks": {
+    "case013.tool-contract.original8.FREE@original8-mitigation-dev-v1:e648790f18cea8086f3678b0ee81815ef2bea6403d1d4b6016d6065b9b9346fa": {
+      "n_pairs": 8,
+      "counts": {
+        "baseline_correct": 6,
+        "candidate_correct": 8,
+        "both_correct": 6,
+        "both_wrong": 0,
+        "all_answer_disagreement": 0,
+        "correct_to_wrong": 0,
+        "wrong_to_correct": 2,
+        "wrong_to_wrong": 0,
+        "correctness_flip": 2
+      },
+      "metrics": {
+        "delta_accuracy": {
+          "mean": 0.25,
+          "pointwise_95_interval": [
+            0.0,
+            0.625
+          ],
+          "unit": "fraction"
+        }
+      },
+      "regression_denominator": 6,
+      "gain_denominator": 2,
+      "source_process_exits": {
+        "baseline": [
+          0
+        ],
+        "candidate": [
+          0
+        ],
+        "scope": "Retained scalar calculations; nonzero source exits remain execution failures."
+      }
+    }
+  },
+  "pairs": [
+    {
+      "task": "case013.tool-contract.original8.FREE",
+      "task_version": "original8-mitigation-dev-v1:e648790f18cea8086f3678b0ee81815ef2bea6403d1d4b6016d6065b9b9346fa",
+      "sample_id": "AGENT-0",
+      "baseline_answer": "{\"owner\":\"Owner-0\",\"site\":\"Harbor-0\"}",
+      "candidate_answer": "{\"owner\":\"Owner-0\",\"site\":\"Harbor-0\"}",
+      "baseline_correct": true,
+      "candidate_correct": true,
+      "all_answer_disagreement": false,
+      "correct_to_wrong": false,
+      "wrong_to_correct": false,
+      "both_correct": true,
+      "both_wrong": false,
+      "wrong_to_wrong": false,
+      "correctness_flip": false,
+      "delta_accuracy": 0,
+      "evidence_kind": "measurement",
+      "baseline_process_exit_code": 0,
+      "candidate_process_exit_code": 0
+    },
+    {
+      "task": "case013.tool-contract.original8.FREE",
+      "task_version": "original8-mitigation-dev-v1:e648790f18cea8086f3678b0ee81815ef2bea6403d1d4b6016d6065b9b9346fa",
+      "sample_id": "AGENT-1",
+      "baseline_answer": "{\"owner\":\"Owner-1\",\"site\":\"Harbor-1\"}",
+      "candidate_answer": "{\"owner\":\"Owner-1\",\"site\":\"Harbor-1\"}",
+      "baseline_correct": true,
+      "candidate_correct": true,
+      "all_answer_disagreement": false,
+      "correct_to_wrong": false,
+      "wrong_to_correct": false,
+      "both_correct": true,
+      "both_wrong": false,
+      "wrong_to_wrong": false,
+      "correctness_flip": false,
+      "delta_accuracy": 0,
+      "evidence_kind": "measurement",
+      "baseline_process_exit_code": 0,
+      "candidate_process_exit_code": 0
+    },
+    {
+      "task": "case013.tool-contract.original8.FREE",
+      "task_version": "original8-mitigation-dev-v1:e648790f18cea8086f3678b0ee81815ef2bea6403d1d4b6016d6065b9b9346fa",
+      "sample_id": "AGENT-2",
+      "baseline_answer": "{\"total\":30}",
+      "candidate_answer": "{\"total\":30}",
+      "baseline_correct": true,
+      "candidate_correct": true,
+      "all_answer_disagreement": false,
+      "correct_to_wrong": false,
+      "wrong_to_correct": false,
+      "both_correct": true,
+      "both_wrong": false,
+      "wrong_to_wrong": false,
+      "correctness_flip": false,
+      "delta_accuracy": 0,
+      "evidence_kind": "measurement",
+      "baseline_process_exit_code": 0,
+      "candidate_process_exit_code": 0
+    },
+    {
+      "task": "case013.tool-contract.original8.FREE",
+      "task_version": "original8-mitigation-dev-v1:e648790f18cea8086f3678b0ee81815ef2bea6403d1d4b6016d6065b9b9346fa",
+      "sample_id": "AGENT-3",
+      "baseline_answer": "{\"total\":33}",
+      "candidate_answer": "{\"total\":33}",
+      "baseline_correct": true,
+      "candidate_correct": true,
+      "all_answer_disagreement": false,
+      "correct_to_wrong": false,
+      "wrong_to_correct": false,
+      "both_correct": true,
+      "both_wrong": false,
+      "wrong_to_wrong": false,
+      "correctness_flip": false,
+      "delta_accuracy": 0,
+      "evidence_kind": "measurement",
+      "baseline_process_exit_code": 0,
+      "candidate_process_exit_code": 0
+    },
+    {
+      "task": "case013.tool-contract.original8.FREE",
+      "task_version": "original8-mitigation-dev-v1:e648790f18cea8086f3678b0ee81815ef2bea6403d1d4b6016d6065b9b9346fa",
+      "sample_id": "AGENT-4",
+      "baseline_answer": "{\"status\":\"READY-4\"}",
+      "candidate_answer": "{\"status\":\"READY-4\"}",
+      "baseline_correct": true,
+      "candidate_correct": true,
+      "all_answer_disagreement": false,
+      "correct_to_wrong": false,
+      "wrong_to_correct": false,
+      "both_correct": true,
+      "both_wrong": false,
+      "wrong_to_wrong": false,
+      "correctness_flip": false,
+      "delta_accuracy": 0,
+      "evidence_kind": "measurement",
+      "baseline_process_exit_code": 0,
+      "candidate_process_exit_code": 0
+    },
+    {
+      "task": "case013.tool-contract.original8.FREE",
+      "task_version": "original8-mitigation-dev-v1:e648790f18cea8086f3678b0ee81815ef2bea6403d1d4b6016d6065b9b9346fa",
+      "sample_id": "AGENT-5",
+      "baseline_answer": "{\"status\":\"READY-5\"}",
+      "candidate_answer": "{\"status\":\"READY-5\"}",
+      "baseline_correct": true,
+      "candidate_correct": true,
+      "all_answer_disagreement": false,
+      "correct_to_wrong": false,
+      "wrong_to_correct": false,
+      "both_correct": true,
+      "both_wrong": false,
+      "wrong_to_wrong": false,
+      "correctness_flip": false,
+      "delta_accuracy": 0,
+      "evidence_kind": "measurement",
+      "baseline_process_exit_code": 0,
+      "candidate_process_exit_code": 0
+    },
+    {
+      "task": "case013.tool-contract.original8.FREE",
+      "task_version": "original8-mitigation-dev-v1:e648790f18cea8086f3678b0ee81815ef2bea6403d1d4b6016d6065b9b9346fa",
+      "sample_id": "AGENT-6",
+      "baseline_answer": "{\"valid\":true}",
+      "candidate_answer": "{\"valid\":true}",
+      "baseline_correct": false,
+      "candidate_correct": true,
+      "all_answer_disagreement": false,
+      "correct_to_wrong": false,
+      "wrong_to_correct": true,
+      "both_correct": false,
+      "both_wrong": false,
+      "wrong_to_wrong": false,
+      "correctness_flip": true,
+      "delta_accuracy": 1,
+      "evidence_kind": "measurement",
+      "baseline_process_exit_code": 0,
+      "candidate_process_exit_code": 0
+    },
+    {
+      "task": "case013.tool-contract.original8.FREE",
+      "task_version": "original8-mitigation-dev-v1:e648790f18cea8086f3678b0ee81815ef2bea6403d1d4b6016d6065b9b9346fa",
+      "sample_id": "AGENT-7",
+      "baseline_answer": "{\"valid\":true}",
+      "candidate_answer": "{\"valid\":true}",
+      "baseline_correct": false,
+      "candidate_correct": true,
+      "all_answer_disagreement": false,
+      "correct_to_wrong": false,
+      "wrong_to_correct": true,
+      "both_correct": false,
+      "both_wrong": false,
+      "wrong_to_wrong": false,
+      "correctness_flip": true,
+      "delta_accuracy": 1,
+      "evidence_kind": "measurement",
+      "baseline_process_exit_code": 0,
+      "candidate_process_exit_code": 0
+    }
+  ]
+}
