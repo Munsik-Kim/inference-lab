@@ -1,0 +1,241 @@
+{
+  "totals": {
+    "episodes": 80,
+    "unique_previously_observed_tasks": 8,
+    "logical_conditions": 10,
+    "GPU_workers": 4,
+    "generation_requests": 165,
+    "worker_wall_seconds": 517.6143107319999,
+    "peak_allocated_bytes": 10690878464,
+    "peak_reserved_bytes": 14241759232
+  },
+  "conditions": [
+    {
+      "method": "BF16",
+      "condition": "BASELINE",
+      "successes": 8,
+      "tasks": 8,
+      "unregistered_name_events": 0,
+      "tool_errors": 0,
+      "parse_errors": 0,
+      "model_requests": 18,
+      "forced_enum_changes": 0,
+      "failed_task_ids": [],
+      "original_first_output_matches": 8
+    },
+    {
+      "method": "RTN",
+      "condition": "BASELINE",
+      "successes": 8,
+      "tasks": 8,
+      "unregistered_name_events": 0,
+      "tool_errors": 0,
+      "parse_errors": 0,
+      "model_requests": 19,
+      "forced_enum_changes": 0,
+      "failed_task_ids": [],
+      "original_first_output_matches": 8
+    },
+    {
+      "method": "D16",
+      "condition": "BASELINE",
+      "successes": 6,
+      "tasks": 8,
+      "unregistered_name_events": 8,
+      "tool_errors": 8,
+      "parse_errors": 0,
+      "model_requests": 20,
+      "forced_enum_changes": 0,
+      "failed_task_ids": [
+        "AGENT-6",
+        "AGENT-7"
+      ],
+      "original_first_output_matches": 8
+    },
+    {
+      "method": "D16",
+      "condition": "FEEDBACK",
+      "successes": 8,
+      "tasks": 8,
+      "unregistered_name_events": 4,
+      "tool_errors": 4,
+      "parse_errors": 0,
+      "model_requests": 20,
+      "forced_enum_changes": 0,
+      "failed_task_ids": [],
+      "original_first_output_matches": 8
+    },
+    {
+      "method": "D16",
+      "condition": "ENUM",
+      "successes": 8,
+      "tasks": 8,
+      "unregistered_name_events": 0,
+      "tool_errors": 0,
+      "parse_errors": 0,
+      "model_requests": 18,
+      "forced_enum_changes": 4,
+      "failed_task_ids": [],
+      "original_first_output_matches": 6
+    },
+    {
+      "method": "D16",
+      "condition": "BOTH",
+      "successes": 8,
+      "tasks": 8,
+      "unregistered_name_events": 0,
+      "tool_errors": 0,
+      "parse_errors": 0,
+      "model_requests": 18,
+      "forced_enum_changes": 4,
+      "failed_task_ids": [],
+      "original_first_output_matches": 6
+    },
+    {
+      "method": "D4",
+      "condition": "BASELINE",
+      "successes": 0,
+      "tasks": 8,
+      "unregistered_name_events": 2,
+      "tool_errors": 2,
+      "parse_errors": 2,
+      "model_requests": 13,
+      "forced_enum_changes": 0,
+      "failed_task_ids": [
+        "AGENT-0",
+        "AGENT-1",
+        "AGENT-2",
+        "AGENT-3",
+        "AGENT-4",
+        "AGENT-5",
+        "AGENT-6",
+        "AGENT-7"
+      ],
+      "original_first_output_matches": 8
+    },
+    {
+      "method": "D4",
+      "condition": "FEEDBACK",
+      "successes": 0,
+      "tasks": 8,
+      "unregistered_name_events": 5,
+      "tool_errors": 5,
+      "parse_errors": 2,
+      "model_requests": 15,
+      "forced_enum_changes": 0,
+      "failed_task_ids": [
+        "AGENT-0",
+        "AGENT-1",
+        "AGENT-2",
+        "AGENT-3",
+        "AGENT-4",
+        "AGENT-5",
+        "AGENT-6",
+        "AGENT-7"
+      ],
+      "original_first_output_matches": 8
+    },
+    {
+      "method": "D4",
+      "condition": "ENUM",
+      "successes": 2,
+      "tasks": 8,
+      "unregistered_name_events": 0,
+      "tool_errors": 0,
+      "parse_errors": 2,
+      "model_requests": 12,
+      "forced_enum_changes": 4,
+      "failed_task_ids": [
+        "AGENT-0",
+        "AGENT-1",
+        "AGENT-2",
+        "AGENT-3",
+        "AGENT-4",
+        "AGENT-5"
+      ],
+      "original_first_output_matches": 6
+    },
+    {
+      "method": "D4",
+      "condition": "BOTH",
+      "successes": 2,
+      "tasks": 8,
+      "unregistered_name_events": 0,
+      "tool_errors": 0,
+      "parse_errors": 2,
+      "model_requests": 12,
+      "forced_enum_changes": 4,
+      "failed_task_ids": [
+        "AGENT-0",
+        "AGENT-1",
+        "AGENT-2",
+        "AGENT-3",
+        "AGENT-4",
+        "AGENT-5"
+      ],
+      "original_first_output_matches": 6
+    }
+  ],
+  "paired": [
+    {
+      "method": "D16",
+      "baseline": "BASELINE",
+      "candidate": "FEEDBACK",
+      "n_tasks": 8,
+      "both_success": 6,
+      "baseline_only": 0,
+      "candidate_only": 2,
+      "both_failed": 0
+    },
+    {
+      "method": "D16",
+      "baseline": "BASELINE",
+      "candidate": "ENUM",
+      "n_tasks": 8,
+      "both_success": 6,
+      "baseline_only": 0,
+      "candidate_only": 2,
+      "both_failed": 0
+    },
+    {
+      "method": "D16",
+      "baseline": "BASELINE",
+      "candidate": "BOTH",
+      "n_tasks": 8,
+      "both_success": 6,
+      "baseline_only": 0,
+      "candidate_only": 2,
+      "both_failed": 0
+    },
+    {
+      "method": "D4",
+      "baseline": "BASELINE",
+      "candidate": "FEEDBACK",
+      "n_tasks": 8,
+      "both_success": 0,
+      "baseline_only": 0,
+      "candidate_only": 0,
+      "both_failed": 8
+    },
+    {
+      "method": "D4",
+      "baseline": "BASELINE",
+      "candidate": "ENUM",
+      "n_tasks": 8,
+      "both_success": 0,
+      "baseline_only": 0,
+      "candidate_only": 2,
+      "both_failed": 6
+    },
+    {
+      "method": "D4",
+      "baseline": "BASELINE",
+      "candidate": "BOTH",
+      "n_tasks": 8,
+      "both_success": 0,
+      "baseline_only": 0,
+      "candidate_only": 2,
+      "both_failed": 6
+    }
+  ]
+}

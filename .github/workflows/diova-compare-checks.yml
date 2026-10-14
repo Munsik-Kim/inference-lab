@@ -1,0 +1,45 @@
+name: Current diova-compare CPU contracts
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      HF_HUB_OFFLINE: '1'
+      TRANSFORMERS_OFFLINE: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12.14'
+      - name: Build and install current stdlib-only package
+        run: |
+          mkdir -p "$RUNNER_TEMP/diova-current"
+          python -m pip install setuptools==80.10.2 wheel==0.48.0
+          python -m pip install --no-deps --no-build-isolation ./packages/diova-compare
+      - name: Package regression and Case013 historical exporter
+        run: |
+          python -B -m unittest discover -s packages/diova-compare/tests -v > "$RUNNER_TEMP/diova-current/tests.log" 2>&1
+          diova-compare export-case013 --case cases/013-dualquant-reference-quality --output "$RUNNER_TEMP/diova-current/export"
+          diova-compare validate --input "$RUNNER_TEMP/diova-current/export/agent/base/FREE/RTN.jsonl"
+          diova-compare compare --baseline "$RUNNER_TEMP/diova-current/export/agent/base/FREE/RTN.jsonl" --candidate "$RUNNER_TEMP/diova-current/export/agent/base/FREE/D16.jsonl" --output "$RUNNER_TEMP/diova-current/report"
+      - name: Retain CPU receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: diova-current-cpu
+          path: |
+            ${{ runner.temp }}/diova-current/tests.log
+            ${{ runner.temp }}/diova-current/export/adapter_manifest.json
+            ${{ runner.temp }}/diova-current/report/report.json
+          retention-days: 14

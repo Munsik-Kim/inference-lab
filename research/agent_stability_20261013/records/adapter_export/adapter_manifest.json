@@ -1,0 +1,312 @@
+{
+  "adapter": "case013-r2-v1",
+  "schema_version": 1,
+  "status": "PASS",
+  "evidence_kind": "historical",
+  "model_id": "Qwen/Qwen3-4B-Instruct-2507@cdbee75f17c01a7cc42f958dc650907174af0554",
+  "artifact_ids": {
+    "BF16": "0e5bfa1167ac2e4d3ad6a70c06424dfae4a1711c737885833811d54998b6616c",
+    "RTN": "8a00c7554024a8020397f94b1e908562c9ef6e58738c821ccb0b4833f38ef5ad",
+    "D16": "64a778d13ef3e965fe09009ca2f7f376f76ff3f325672af1660de65d501f35b2",
+    "D4": "f2897ab73b1bffca4e7fb9a052b01b6e5993b894f1e0bcdc118ab08e4a6e381c"
+  },
+  "sources": {
+    "provenance/PUBLIC_MANIFEST.json": {
+      "bytes": 81299,
+      "sha256": "af3d1e488205126e725ee4dc584778a79716f2c31fdcd65edf45119bfeeb52a8"
+    },
+    "records/experiment_manifest.json": {
+      "bytes": 5536,
+      "sha256": "ed86f2310420ec22c2cb547a63a55b50bf2036baca53fc86c7698c3e378fb8bf"
+    },
+    "records/reference_contract.json": {
+      "bytes": 1300,
+      "sha256": "b29807d84e6b9b880fd4212d5a13b1eb09e8accf9e4aa9d9e47ac3d54c0c0903"
+    },
+    "records/artifact_metadata/4b-RTN.json": {
+      "bytes": 193106,
+      "sha256": "3a274c590fda84700c635a479768ac3f3d51dbf41f5f7169cc116ce41fe09acd"
+    },
+    "records/artifact_metadata/4b-D16.json": {
+      "bytes": 195387,
+      "sha256": "61917ca45542652dbc3176492d3901a7dd4e6412d6d884abdc6d7a3a68353b95"
+    },
+    "records/attempts/suite_commands.json": {
+      "bytes": 4739,
+      "sha256": "3a839b611dc473ebee26b90be496d5289d982cd12f5dc861bde50b821c5264c6"
+    },
+    "records/inputs/long_tasks.json": {
+      "bytes": 5474,
+      "sha256": "06ef2ef43df6f894c61bbd5c0a9ae49439101c080ef3efdc71a337796acc4270"
+    },
+    "records/raw/4b/BF16/long_dev.jsonl": {
+      "bytes": 30010,
+      "sha256": "5ca0a25e85da2d0c77f9b991794aedde4b8eee1f7e6def49a4f277ec27849363"
+    },
+    "records/raw/4b/RTN/long_dev.jsonl": {
+      "bytes": 20131,
+      "sha256": "89baa1719a6375c5b15d61195b8a4ed9e9c33390233819cfcee6757a18e61977"
+    },
+    "records/raw/4b/D16/long_dev.jsonl": {
+      "bytes": 20169,
+      "sha256": "c0035f7f8c554f6028678fafe61fe7e4e7f9bc67fb6c585fcc93ca257add50d7"
+    },
+    "records/raw/4b/D4/long_dev.jsonl": {
+      "bytes": 20879,
+      "sha256": "6fc7f462fda05213342afca4a828d43d8d1015a3907bcc2aa4f7efe6cff3f3a0"
+    },
+    "records/inputs/agent_tasks.json": {
+      "bytes": 5808,
+      "sha256": "b4111931c8a51cd05e8faf6a80e1f95b1f241b4ddfb4d41af2609f665b089788"
+    },
+    "records/inputs/tool_schema.json": {
+      "bytes": 2075,
+      "sha256": "bd7de0dc4b194c09084d2941e81603d58fd065d4f21dbea71f5dfac90feefbd7"
+    },
+    "records/inputs/agent_token_manifest.json": {
+      "bytes": 1282,
+      "sha256": "c85e2a4e918c169f4fd4d525577759cbf56a7177a4055df6ebb8330d8d059876"
+    },
+    "records/raw/4b/BF16/agent_dev.jsonl": {
+      "bytes": 22530,
+      "sha256": "cd8d5d94015f45b59ce7edb5601ba8cbb1acdc4190fd9c6319826f64ddf36832"
+    },
+    "records/raw/4b/BF16/AGENT-6-FREE-config.json": {
+      "bytes": 37,
+      "sha256": "b55789d15c7d22e8932cb07b130b783d9fb50c88762fb18b479878a0819b6169"
+    },
+    "records/raw/4b/BF16/AGENT-7-FREE-config.json": {
+      "bytes": 37,
+      "sha256": "320d39f9438f54d1cb98cb2ee6a9c0d5aadb1dc30f5491ceac9f25531d814163"
+    },
+    "records/raw/4b/RTN/agent_dev.jsonl": {
+      "bytes": 25526,
+      "sha256": "bd262b4fe341868a87eaf5b0d5bd6b39f8f76bb9f32c87f35bbfb0210da9f0fe"
+    },
+    "records/raw/4b/RTN/AGENT-6-FREE-config.json": {
+      "bytes": 37,
+      "sha256": "b55789d15c7d22e8932cb07b130b783d9fb50c88762fb18b479878a0819b6169"
+    },
+    "records/raw/4b/RTN/AGENT-7-FREE-config.json": {
+      "bytes": 37,
+      "sha256": "320d39f9438f54d1cb98cb2ee6a9c0d5aadb1dc30f5491ceac9f25531d814163"
+    },
+    "records/raw/4b/D16/agent_dev.jsonl": {
+      "bytes": 27157,
+      "sha256": "953a4d286b7be1f92bdc4f67b70a1c2bd51722b41974ab81d51dc91ce215fb1c"
+    },
+    "records/raw/4b/D16/AGENT-6-FREE-config.json": {
+      "bytes": 37,
+      "sha256": "0a5ad8eb26055ee74091af8e5d370cf0eeb877b01062bb4116a1fc2c0844193e"
+    },
+    "records/raw/4b/D16/AGENT-7-FREE-config.json": {
+      "bytes": 37,
+      "sha256": "0a5ad8eb26055ee74091af8e5d370cf0eeb877b01062bb4116a1fc2c0844193e"
+    },
+    "records/raw/4b/D4/agent_dev.jsonl": {
+      "bytes": 25041,
+      "sha256": "5b9b7db9410adc063897f3f425231e91c29f2880d22b099ff506d1dd317548ce"
+    },
+    "records/raw/4b/D4/AGENT-6-FREE-config.json": {
+      "bytes": 37,
+      "sha256": "0a5ad8eb26055ee74091af8e5d370cf0eeb877b01062bb4116a1fc2c0844193e"
+    },
+    "records/raw/4b/D4/AGENT-7-FREE-config.json": {
+      "bytes": 37,
+      "sha256": "0a5ad8eb26055ee74091af8e5d370cf0eeb877b01062bb4116a1fc2c0844193e"
+    },
+    "records/agent16k_extension/inputs/agent_tasks.json": {
+      "bytes": 2906,
+      "sha256": "6a6211f7f8c8da0dc54e34944bd486a359f634c9856d91525eb5421e9e58fc6d"
+    },
+    "records/agent16k_extension/inputs/tool_schema.json": {
+      "bytes": 2076,
+      "sha256": "1ddff503ccf0995f311b15704a915795b0dbd2d74e1b555b66a43400f274a95e"
+    },
+    "records/agent16k_extension/preregistration.json": {
+      "bytes": 1356,
+      "sha256": "8144763103ce6634761b15f7902f8ee7ebdf637b429f2b8b37c1cbc31faa56d4"
+    },
+    "records/agent16k_extension/commands.json": {
+      "bytes": 1343,
+      "sha256": "1f35209f473336694eae696c434fb3cf4fbde9687580a17ee020f5ee3a68fc5f"
+    },
+    "records/agent16k_extension/raw/BF16/agent_dev.jsonl": {
+      "bytes": 11340,
+      "sha256": "59bc38ac2edf08f05369cef16d6682cd11e00290551be749b134524a973fbb10"
+    },
+    "records/agent16k_extension/raw/BF16/AGENT-6-FREE-config.json": {
+      "bytes": 37,
+      "sha256": "b55789d15c7d22e8932cb07b130b783d9fb50c88762fb18b479878a0819b6169"
+    },
+    "records/agent16k_extension/raw/RTN/agent_dev.jsonl": {
+      "bytes": 13802,
+      "sha256": "dfcca13da56aeada959be281a7dc03da82edc01a5adf8db5b28ce617bd035c8d"
+    },
+    "records/agent16k_extension/raw/RTN/AGENT-6-FREE-config.json": {
+      "bytes": 37,
+      "sha256": "b55789d15c7d22e8932cb07b130b783d9fb50c88762fb18b479878a0819b6169"
+    },
+    "records/agent16k_extension/raw/D16/agent_dev.jsonl": {
+      "bytes": 15258,
+      "sha256": "69d2bfc72347e7f85e45c27325c2b51d20ca4bc8dca6ed3cb765e91cccb0efc5"
+    },
+    "records/agent16k_extension/raw/D16/AGENT-6-FREE-config.json": {
+      "bytes": 37,
+      "sha256": "0a5ad8eb26055ee74091af8e5d370cf0eeb877b01062bb4116a1fc2c0844193e"
+    },
+    "records/agent16k_extension/raw/D4/agent_dev.jsonl": {
+      "bytes": 16018,
+      "sha256": "e58bc3afa0db59d6c3e016d9be3d76b6c2182e707d97f9ebe7200fe50413e9e4"
+    },
+    "records/agent16k_extension/raw/D4/AGENT-6-FREE-config.json": {
+      "bytes": 37,
+      "sha256": "0a5ad8eb26055ee74091af8e5d370cf0eeb877b01062bb4116a1fc2c0844193e"
+    },
+    "records/quality_06b.csv": {
+      "bytes": 1259,
+      "sha256": "02d7b9d75c2078948188abe7252c08f4672bc164f7da44c910921c52b75a3fe3"
+    },
+    "records/quality_4b.csv": {
+      "bytes": 1265,
+      "sha256": "adce489ea2aee5001c33f23cdf873db4fab3df92fa983ca6ec598964ee9bb1db"
+    }
+  },
+  "converter_sha256": "06ea3e0c2f057b40294a03ae251714ca4adc38375639ccc015d2d7c4c80fbb9e",
+  "files": {
+    "long/8192/BF16.jsonl": {
+      "records": 12,
+      "correct": 12
+    },
+    "long/16384/BF16.jsonl": {
+      "records": 12,
+      "correct": 12
+    },
+    "long/32768/BF16.jsonl": {
+      "records": 12,
+      "correct": 10
+    },
+    "long/8192/RTN.jsonl": {
+      "records": 12,
+      "correct": 11
+    },
+    "long/16384/RTN.jsonl": {
+      "records": 12,
+      "correct": 10
+    },
+    "long/8192/D16.jsonl": {
+      "records": 12,
+      "correct": 10
+    },
+    "long/16384/D16.jsonl": {
+      "records": 12,
+      "correct": 10
+    },
+    "long/8192/D4.jsonl": {
+      "records": 12,
+      "correct": 8
+    },
+    "long/16384/D4.jsonl": {
+      "records": 12,
+      "correct": 7
+    },
+    "agent/base/REPLAY/BF16.jsonl": {
+      "records": 8,
+      "correct": 8
+    },
+    "agent/base/FREE/BF16.jsonl": {
+      "records": 8,
+      "correct": 8
+    },
+    "agent/base/REPLAY/RTN.jsonl": {
+      "records": 8,
+      "correct": 8
+    },
+    "agent/base/FREE/RTN.jsonl": {
+      "records": 8,
+      "correct": 8
+    },
+    "agent/base/REPLAY/D16.jsonl": {
+      "records": 8,
+      "correct": 8
+    },
+    "agent/base/FREE/D16.jsonl": {
+      "records": 8,
+      "correct": 6
+    },
+    "agent/base/REPLAY/D4.jsonl": {
+      "records": 8,
+      "correct": 8
+    },
+    "agent/base/FREE/D4.jsonl": {
+      "records": 8,
+      "correct": 0
+    },
+    "agent/extension16k/REPLAY/BF16.jsonl": {
+      "records": 4,
+      "correct": 4
+    },
+    "agent/extension16k/FREE/BF16.jsonl": {
+      "records": 4,
+      "correct": 4
+    },
+    "agent/extension16k/REPLAY/RTN.jsonl": {
+      "records": 4,
+      "correct": 4
+    },
+    "agent/extension16k/FREE/RTN.jsonl": {
+      "records": 4,
+      "correct": 4
+    },
+    "agent/extension16k/REPLAY/D16.jsonl": {
+      "records": 4,
+      "correct": 4
+    },
+    "agent/extension16k/FREE/D16.jsonl": {
+      "records": 4,
+      "correct": 3
+    },
+    "agent/extension16k/REPLAY/D4.jsonl": {
+      "records": 4,
+      "correct": 4
+    },
+    "agent/extension16k/FREE/D4.jsonl": {
+      "records": 4,
+      "correct": 0
+    }
+  },
+  "exclusions": [
+    {
+      "method": "RTN",
+      "length": 32768,
+      "status": "NOT_RUN_MEMORY_POLICY",
+      "reason": "Not executed under original memory policy; neither failure nor zero score",
+      "source": "records/raw/4b/RTN/long_dev.jsonl",
+      "paired_candidate_rows": 0
+    },
+    {
+      "method": "D16",
+      "length": 32768,
+      "status": "NOT_RUN_MEMORY_POLICY",
+      "reason": "Not executed under original memory policy; neither failure nor zero score",
+      "source": "records/raw/4b/D16/long_dev.jsonl",
+      "paired_candidate_rows": 0
+    },
+    {
+      "method": "D4",
+      "length": 32768,
+      "status": "NOT_RUN_MEMORY_POLICY",
+      "reason": "Not executed under original memory policy; neither failure nor zero score",
+      "source": "records/raw/4b/D4/long_dev.jsonl",
+      "paired_candidate_rows": 0
+    }
+  ],
+  "independent_units": {
+    "long_unique_tasks": 12,
+    "agent_unique_base_tasks": 8,
+    "agent_16k_variants_of_existing_tasks": 4
+  },
+  "formal_eligibility": "NOT_ESTABLISHED",
+  "new_gpu_runs": 0,
+  "scope": "One cohort/mode/length per file; never pool variants as independent tasks"
+}

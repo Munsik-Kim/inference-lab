@@ -1,0 +1,93 @@
+{
+  "created_utc": "2026-10-13T08:08:54.107230+00:00",
+  "role": "DIAGNOSTIC_DEV: purposefully selected previously observed DEV; no held-out/formal120 tasks",
+  "methods": [
+    "BF16",
+    "RTN",
+    "D16",
+    "D4"
+  ],
+  "tasks": [
+    "AGENT-6",
+    "AGENT-7",
+    "AGENT-2",
+    "AGENT-4"
+  ],
+  "input_manifest_sha256": "8dce76f9d79c90c359ef0f895fdd1f1bd9972bc177e8a4c0eda9d0f85d1f916e",
+  "runtime_manifest_sha256": "d290db7ac9b2436298753ae184b7bceba55e334b1906d68fde4ba5169c550fdf",
+  "seed": 610132,
+  "generation": {
+    "temperature": 0,
+    "greedy": true,
+    "short_max_new_tokens": 64,
+    "long_max_new_tokens": 96,
+    "agent_max_new_tokens": 192,
+    "prefix_cache": false,
+    "within_request_KV": true,
+    "dtype": "BF16",
+    "attention": "sdpa",
+    "agent_calls_max": 8,
+    "agent_tools_max": 6,
+    "agent_deadline_seconds": 900,
+    "context_limit": 24576,
+    "grammar_constraints": false,
+    "silent_truncate": false
+  },
+  "cache": "OFF across turns; ON within request",
+  "dtype": "BF16 reference weights; D16 input transport FP32; D4 existing activation variant",
+  "reduction": {
+    "TF32": false,
+    "cudnn_TF32": false,
+    "BF16_reduced_precision_reduction": false
+  },
+  "short_diagnostic_head_parity": {
+    "input_tokens": 64,
+    "selected_last_positions": 16,
+    "max_abs_diff_at_most": 0.25,
+    "argmax_mismatches": 0,
+    "same_allowance_as_original_quality_runner": true
+  },
+  "logprob": "FP32 log_softmax over full vocab at requested positions only; no two-name renormalization",
+  "controlled_primary": "total conditional logprob of jointly tokenized name remainder+closing quote; mean/length supplementary",
+  "natural_divergence": "BF16/RTN vs D16/D4, first different response ID; same preceding IDs teacher-forced in all methods; presentation divergence distinguished",
+  "common_prefix_freeze": "deterministic derivation from newly saved natural responses, frozen once before common-prefix score forwards",
+  "P2_gate": [
+    "input/artifact/dtype/head parity verified for all four methods",
+    "all required P1 measurements complete",
+    "AGENT-6 or7 first action: BF16+RTN call registered patch with exact arguments, D16 selects an unregistered first tool name",
+    "I0 original eight FREE tasks reproduce episode failure for the gated task(s)",
+    "worker budget remains"
+  ],
+  "P2_selection": {
+    "contexts": [
+      "AGENT-6",
+      "AGENT-7"
+    ],
+    "position": "last initial input token",
+    "metric": "mean of two output SSE-difference/BF16 energy ratios; includes upstream input changes",
+    "target": "largest metric, lexicographic full module name tie break",
+    "zero_energy": "exclude module if either context energy is zero",
+    "control": "other block, same type/shape/original D16 payload bytes, lexicographic candidate list + Random(610132).choice",
+    "seed": 610132,
+    "rollout_scores_used_for_selection": false
+  },
+  "P2_comparison": "new I0 D16, target I1 and control I2 whole BF16 nn.Linear restored; original8 FREE tasks once each",
+  "budget_worker_wall_seconds": 7200,
+  "priority": [
+    "P0",
+    "P1",
+    "conditional P2"
+  ],
+  "no_solver_or_artifact_writes": true,
+  "new_models_downloaded": 0,
+  "formal_serving_benefit": "NOT_ESTABLISHED",
+  "followup_code_hashes": {
+    "contracts.py": "1eccc0285f5508ea8e0a13653dbffc6939f5c6db69c369709376fed3b507ef5e",
+    "intervention.py": "55a0fce48c2284d2ba8de069b26e50f9ff78cd9603c0b814fecad8efa7066cca",
+    "launch.py": "a90f5153e4b8fe446731e6b514765e8285d1df68a6273066e7de6f404d6532d6",
+    "p1_finish.py": "4cd2889a2f67cae5b582a32430a77f45bcf455fc6cc450310ec5bc268a28a1de",
+    "prepare.py": "94c9b622b6cf70ce7b132a76f4f3239b1434444a674c3cf4b297070bd0dfba35",
+    "test_contracts.py": "cee60bb2080cac813a11d4eee5821455fe5151d384d265dc7f9eb8497145ac9b",
+    "worker.py": "61e37242c6c88faa237f93a8d1b9f3b607ad0fd1453be4bcf0e94539aa6d61d5"
+  }
+}

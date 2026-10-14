@@ -164,6 +164,12 @@ D16 reduced weight error in both models. PPL improved in 0.6B but slightly worse
 
 [Overview](cases/013-dualquant-reference-quality/README.md) · [Solver/adapter](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU readback](cases/013-dualquant-reference-quality/REPRODUCTION.md) · [Full report](cases/013-dualquant-reference-quality/REPORT.md)
 
+### Follow-up — Tool names and verified actions
+
+Connected existing records to the CPU comparison CLI and built registered-name decoding with explicit error feedback. On the same eight existing DEV tasks with unchanged weights, D16 changed from **6/8 to 8/8**, and D4 from **0/8 to 2/8**. Enum conditions had zero unregistered-name calls; six other D4 failures remain.
+
+[Overview](research/agent_tool_contract_repair_20261014/README.md) · [Full results and report](research/agent_tool_contract_repair_20261014/records/REPORT.md) · [Earlier diagnostic](research/agent_stability_20261013/README.md) · [Recorded comparison CLI](packages/diova-compare/README.md)
+
 ## Questions and recorded tools
 
 

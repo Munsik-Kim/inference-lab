@@ -1,0 +1,1195 @@
+{
+  "tasks": [
+    {
+      "id": "AGENT-0",
+      "family": "document",
+      "task": "Read document and return JSON with site and owner.",
+      "gold": {
+        "site": "Harbor-0",
+        "owner": "Owner-0"
+      },
+      "fixture": {
+        "document": {
+          "site": "Harbor-0",
+          "owner": "Owner-0"
+        },
+        "record": {
+          "quantity": 8,
+          "unit_price": 3
+        },
+        "updates": {
+          "old": "WAIT",
+          "current": "READY-0"
+        },
+        "config": {
+          "enabled": false,
+          "limit": 2
+        },
+        "expected_config": {
+          "enabled": true,
+          "limit": 8
+        }
+      },
+      "replay_tool": "read_document",
+      "replay_args": {},
+      "initial_context_target": 4096
+    },
+    {
+      "id": "AGENT-1",
+      "family": "document",
+      "task": "Read document and return JSON with site and owner.",
+      "gold": {
+        "site": "Harbor-1",
+        "owner": "Owner-1"
+      },
+      "fixture": {
+        "document": {
+          "site": "Harbor-1",
+          "owner": "Owner-1"
+        },
+        "record": {
+          "quantity": 9,
+          "unit_price": 3
+        },
+        "updates": {
+          "old": "WAIT",
+          "current": "READY-1"
+        },
+        "config": {
+          "enabled": false,
+          "limit": 2
+        },
+        "expected_config": {
+          "enabled": true,
+          "limit": 9
+        }
+      },
+      "replay_tool": "read_document",
+      "replay_args": {},
+      "initial_context_target": 8192
+    },
+    {
+      "id": "AGENT-2",
+      "family": "combine",
+      "task": "Read record, multiply quantity by unit_price using calculate and return JSON {\"total\":number}.",
+      "gold": {
+        "total": 30
+      },
+      "fixture": {
+        "document": {
+          "site": "Harbor-2",
+          "owner": "Owner-2"
+        },
+        "record": {
+          "quantity": 10,
+          "unit_price": 3
+        },
+        "updates": {
+          "old": "WAIT",
+          "current": "READY-2"
+        },
+        "config": {
+          "enabled": false,
+          "limit": 2
+        },
+        "expected_config": {
+          "enabled": true,
+          "limit": 10
+        }
+      },
+      "replay_tool": "read_record",
+      "replay_args": {},
+      "initial_context_target": 4096
+    },
+    {
+      "id": "AGENT-3",
+      "family": "combine",
+      "task": "Read record, multiply quantity by unit_price using calculate and return JSON {\"total\":number}.",
+      "gold": {
+        "total": 33
+      },
+      "fixture": {
+        "document": {
+          "site": "Harbor-3",
+          "owner": "Owner-3"
+        },
+        "record": {
+          "quantity": 11,
+          "unit_price": 3
+        },
+        "updates": {
+          "old": "WAIT",
+          "current": "READY-3"
+        },
+        "config": {
+          "enabled": false,
+          "limit": 2
+        },
+        "expected_config": {
+          "enabled": true,
+          "limit": 11
+        }
+      },
+      "replay_tool": "read_record",
+      "replay_args": {},
+      "initial_context_target": 8192
+    },
+    {
+      "id": "AGENT-4",
+      "family": "updates",
+      "task": "Read update table and return latest status as JSON {\"status\":\"...\"}.",
+      "gold": {
+        "status": "READY-4"
+      },
+      "fixture": {
+        "document": {
+          "site": "Harbor-4",
+          "owner": "Owner-4"
+        },
+        "record": {
+          "quantity": 12,
+          "unit_price": 3
+        },
+        "updates": {
+          "old": "WAIT",
+          "current": "READY-4"
+        },
+        "config": {
+          "enabled": false,
+          "limit": 2
+        },
+        "expected_config": {
+          "enabled": true,
+          "limit": 12
+        }
+      },
+      "replay_tool": "query_table",
+      "replay_args": {},
+      "initial_context_target": 4096
+    },
+    {
+      "id": "AGENT-5",
+      "family": "updates",
+      "task": "Read update table and return latest status as JSON {\"status\":\"...\"}.",
+      "gold": {
+        "status": "READY-5"
+      },
+      "fixture": {
+        "document": {
+          "site": "Harbor-5",
+          "owner": "Owner-5"
+        },
+        "record": {
+          "quantity": 13,
+          "unit_price": 3
+        },
+        "updates": {
+          "old": "WAIT",
+          "current": "READY-5"
+        },
+        "config": {
+          "enabled": false,
+          "limit": 2
+        },
+        "expected_config": {
+          "enabled": true,
+          "limit": 13
+        }
+      },
+      "replay_tool": "query_table",
+      "replay_args": {},
+      "initial_context_target": 8192
+    },
+    {
+      "id": "AGENT-6",
+      "family": "fixture_patch",
+      "task": "Update fixture config to enabled=true and limit=14, run validate_fixture_test, then return JSON {\"valid\":true}.",
+      "gold": {
+        "valid": true
+      },
+      "fixture": {
+        "document": {
+          "site": "Harbor-6",
+          "owner": "Owner-6"
+        },
+        "record": {
+          "quantity": 14,
+          "unit_price": 3
+        },
+        "updates": {
+          "old": "WAIT",
+          "current": "READY-6"
+        },
+        "config": {
+          "enabled": false,
+          "limit": 2
+        },
+        "expected_config": {
+          "enabled": true,
+          "limit": 14
+        }
+      },
+      "replay_tool": "apply_fixture_patch",
+      "replay_args": {
+        "enabled": true,
+        "limit": 14
+      },
+      "initial_context_target": 4096
+    },
+    {
+      "id": "AGENT-7",
+      "family": "fixture_patch",
+      "task": "Update fixture config to enabled=true and limit=15, run validate_fixture_test, then return JSON {\"valid\":true}.",
+      "gold": {
+        "valid": true
+      },
+      "fixture": {
+        "document": {
+          "site": "Harbor-7",
+          "owner": "Owner-7"
+        },
+        "record": {
+          "quantity": 15,
+          "unit_price": 3
+        },
+        "updates": {
+          "old": "WAIT",
+          "current": "READY-7"
+        },
+        "config": {
+          "enabled": false,
+          "limit": 2
+        },
+        "expected_config": {
+          "enabled": true,
+          "limit": 15
+        }
+      },
+      "replay_tool": "apply_fixture_patch",
+      "replay_args": {
+        "enabled": true,
+        "limit": 15
+      },
+      "initial_context_target": 8192
+    }
+  ],
+  "tokens": [
+    {
+      "id": "AGENT-0",
+      "initial_actual_tokens": 4094,
+      "initial_token_sha256": "a683f3a184da5a1afe3d747f50dd354a5ea619abb7b4b971f76b65252e300f08"
+    },
+    {
+      "id": "AGENT-1",
+      "initial_actual_tokens": 8189,
+      "initial_token_sha256": "deeb93b900b56af6af576120227fffc83b9ad27e89c812a00fcac0cf6bf7a3e3"
+    },
+    {
+      "id": "AGENT-2",
+      "initial_actual_tokens": 4089,
+      "initial_token_sha256": "a3a02c86fa37123a1375143c110d71f368a541b4a34ecad439261d9995e33bac"
+    },
+    {
+      "id": "AGENT-3",
+      "initial_actual_tokens": 8184,
+      "initial_token_sha256": "2056706595e0c87076cddbb9fa448f0166b78c3c8a24e862b1da4c62ad3c705e"
+    },
+    {
+      "id": "AGENT-4",
+      "initial_actual_tokens": 4085,
+      "initial_token_sha256": "cf8cf5b13d0c2107470345738bf87c01b536c5dfae8ddc1516ff8511224eb0ba"
+    },
+    {
+      "id": "AGENT-5",
+      "initial_actual_tokens": 8180,
+      "initial_token_sha256": "43ff94c64e99876d529a0a35a2ee49755ff0847dddf880af7a3496780a8f9fb4"
+    },
+    {
+      "id": "AGENT-6",
+      "initial_actual_tokens": 4096,
+      "initial_token_sha256": "aff1a485dcb2503547bcf7ac9ca1c6f6e8e02df59e913a6a84899ff51885d984"
+    },
+    {
+      "id": "AGENT-7",
+      "initial_actual_tokens": 8191,
+      "initial_token_sha256": "5fbc5f9abf8062c156ed98f87ba04fc533e139317d43f6606c0edf012134a408"
+    }
+  ],
+  "historical_first": {
+    "BF16": {
+      "AGENT-2": {
+        "text": "<tool_call>\n{\"name\": \"read_record\", \"arguments\": {}}\n</tool_call>",
+        "raw_text": "<tool_call>\n{\"name\": \"read_record\", \"arguments\": {}}\n</tool_call><|im_end|>",
+        "output_token_ids": [
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          878,
+          14192,
+          497,
+          330,
+          16370,
+          788,
+          4687,
+          532,
+          151658,
+          151645
+        ],
+        "input_tokens": 4089,
+        "output_tokens": 16,
+        "input_token_sha256": "a3a02c86fa37123a1375143c110d71f368a541b4a34ecad439261d9995e33bac",
+        "seconds": 0.984019839001121,
+        "peak_allocated_bytes": 9062999040,
+        "peak_reserved_bytes": 17792237568,
+        "status": "COMPLETE"
+      },
+      "AGENT-4": {
+        "text": "<tool_call>\n{\"name\": \"query_table\", \"arguments\": {}}\n</tool_call>",
+        "raw_text": "<tool_call>\n{\"name\": \"query_table\", \"arguments\": {}}\n</tool_call><|im_end|>",
+        "output_token_ids": [
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          1631,
+          5237,
+          497,
+          330,
+          16370,
+          788,
+          4687,
+          532,
+          151658,
+          151645
+        ],
+        "input_tokens": 4085,
+        "output_tokens": 16,
+        "input_token_sha256": "cf8cf5b13d0c2107470345738bf87c01b536c5dfae8ddc1516ff8511224eb0ba",
+        "seconds": 1.0141261160024442,
+        "peak_allocated_bytes": 9062177792,
+        "peak_reserved_bytes": 17792237568,
+        "status": "COMPLETE"
+      },
+      "AGENT-6": {
+        "text": "<tool_call>\n{\"name\": \"apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 14}}\n</tool_call>\n<tool_call>\n{\"name\": \"validate_fixture_test\", \"arguments\": {}}\n</tool_call>",
+        "raw_text": "<tool_call>\n{\"name\": \"apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 14}}\n</tool_call>\n<tool_call>\n{\"name\": \"validate_fixture_test\", \"arguments\": {}}\n</tool_call><|im_end|>",
+        "output_token_ids": [
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          10280,
+          74409,
+          39643,
+          497,
+          330,
+          16370,
+          788,
+          5212,
+          15868,
+          788,
+          830,
+          11,
+          330,
+          9506,
+          788,
+          220,
+          16,
+          19,
+          11248,
+          151658,
+          198,
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          7067,
+          74409,
+          4452,
+          497,
+          330,
+          16370,
+          788,
+          4687,
+          532,
+          151658,
+          151645
+        ],
+        "input_tokens": 4096,
+        "output_tokens": 44,
+        "input_token_sha256": "aff1a485dcb2503547bcf7ac9ca1c6f6e8e02df59e913a6a84899ff51885d984",
+        "seconds": 1.5308528620007564,
+        "peak_allocated_bytes": 9064435712,
+        "peak_reserved_bytes": 17792237568,
+        "status": "COMPLETE"
+      },
+      "AGENT-7": {
+        "text": "<tool_call>\n{\"name\": \"apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 15}}\n</tool_call>\n<tool_call>\n{\"name\": \"validate_fixture_test\", \"arguments\": {}}\n</tool_call>",
+        "raw_text": "<tool_call>\n{\"name\": \"apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 15}}\n</tool_call>\n<tool_call>\n{\"name\": \"validate_fixture_test\", \"arguments\": {}}\n</tool_call><|im_end|>",
+        "output_token_ids": [
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          10280,
+          74409,
+          39643,
+          497,
+          330,
+          16370,
+          788,
+          5212,
+          15868,
+          788,
+          830,
+          11,
+          330,
+          9506,
+          788,
+          220,
+          16,
+          20,
+          11248,
+          151658,
+          198,
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          7067,
+          74409,
+          4452,
+          497,
+          330,
+          16370,
+          788,
+          4687,
+          532,
+          151658,
+          151645
+        ],
+        "input_tokens": 8191,
+        "output_tokens": 44,
+        "input_token_sha256": "5fbc5f9abf8062c156ed98f87ba04fc533e139317d43f6606c0edf012134a408",
+        "seconds": 2.527264861997537,
+        "peak_allocated_bytes": 9993406976,
+        "peak_reserved_bytes": 17792237568,
+        "status": "COMPLETE"
+      }
+    },
+    "RTN": {
+      "AGENT-2": {
+        "text": "<tool_call>\n{\"name\": \"read_record\", \"arguments\": {}}\n</tool_call>",
+        "raw_text": "<tool_call>\n{\"name\": \"read_record\", \"arguments\": {}}\n</tool_call><|im_end|>",
+        "output_token_ids": [
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          878,
+          14192,
+          497,
+          330,
+          16370,
+          788,
+          4687,
+          532,
+          151658,
+          151645
+        ],
+        "input_tokens": 4089,
+        "output_tokens": 16,
+        "input_token_sha256": "a3a02c86fa37123a1375143c110d71f368a541b4a34ecad439261d9995e33bac",
+        "seconds": 0.9491874369996367,
+        "peak_allocated_bytes": 9226101760,
+        "peak_reserved_bytes": 10714349568,
+        "status": "COMPLETE"
+      },
+      "AGENT-4": {
+        "text": "I need to determine the latest status from the update table. I will use the `query_table` tool to retrieve the current status.\n\n<tool_call>\n{\"name\": \"query_table\", \"arguments\": {}}\n</tool_call>",
+        "raw_text": "I need to determine the latest status from the update table. I will use the `query_table` tool to retrieve the current status.\n\n<tool_call>\n{\"name\": \"query_table\", \"arguments\": {}}\n</tool_call><|im_end|>",
+        "output_token_ids": [
+          40,
+          1184,
+          311,
+          8253,
+          279,
+          5535,
+          2639,
+          504,
+          279,
+          2647,
+          1965,
+          13,
+          358,
+          686,
+          990,
+          279,
+          1565,
+          1631,
+          5237,
+          63,
+          5392,
+          311,
+          17179,
+          279,
+          1482,
+          2639,
+          382,
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          1631,
+          5237,
+          497,
+          330,
+          16370,
+          788,
+          4687,
+          532,
+          151658,
+          151645
+        ],
+        "input_tokens": 4085,
+        "output_tokens": 43,
+        "input_token_sha256": "cf8cf5b13d0c2107470345738bf87c01b536c5dfae8ddc1516ff8511224eb0ba",
+        "seconds": 1.8643128580006305,
+        "peak_allocated_bytes": 9225214976,
+        "peak_reserved_bytes": 10714349568,
+        "status": "COMPLETE"
+      },
+      "AGENT-6": {
+        "text": "<tool_call>\n{\"name\": \"apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 14}}\n</tool_call>",
+        "raw_text": "<tool_call>\n{\"name\": \"apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 14}}\n</tool_call><|im_end|>",
+        "output_token_ids": [
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          10280,
+          74409,
+          39643,
+          497,
+          330,
+          16370,
+          788,
+          5212,
+          15868,
+          788,
+          830,
+          11,
+          330,
+          9506,
+          788,
+          220,
+          16,
+          19,
+          11248,
+          151658,
+          151645
+        ],
+        "input_tokens": 4096,
+        "output_tokens": 27,
+        "input_token_sha256": "aff1a485dcb2503547bcf7ac9ca1c6f6e8e02df59e913a6a84899ff51885d984",
+        "seconds": 1.3164490730014222,
+        "peak_allocated_bytes": 9227653120,
+        "peak_reserved_bytes": 10714349568,
+        "status": "COMPLETE"
+      },
+      "AGENT-7": {
+        "text": "<tool_call>\n{\"name\": \"apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 15}}\n</tool_call>\n<tool_call>\n{\"name\": \"validate_fixture_test\", \"arguments\": {}}\n</tool_call>",
+        "raw_text": "<tool_call>\n{\"name\": \"apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 15}}\n</tool_call>\n<tool_call>\n{\"name\": \"validate_fixture_test\", \"arguments\": {}}\n</tool_call><|im_end|>",
+        "output_token_ids": [
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          10280,
+          74409,
+          39643,
+          497,
+          330,
+          16370,
+          788,
+          5212,
+          15868,
+          788,
+          830,
+          11,
+          330,
+          9506,
+          788,
+          220,
+          16,
+          20,
+          11248,
+          151658,
+          198,
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          7067,
+          74409,
+          4452,
+          497,
+          330,
+          16370,
+          788,
+          4687,
+          532,
+          151658,
+          151645
+        ],
+        "input_tokens": 8191,
+        "output_tokens": 44,
+        "input_token_sha256": "5fbc5f9abf8062c156ed98f87ba04fc533e139317d43f6606c0edf012134a408",
+        "seconds": 2.5142490890029876,
+        "peak_allocated_bytes": 10315940864,
+        "peak_reserved_bytes": 11364466688,
+        "status": "COMPLETE"
+      }
+    },
+    "D16": {
+      "AGENT-2": {
+        "text": "<tool_call>\n{\"name\": \"read_record\", \"arguments\": {}}\n</tool_call>",
+        "raw_text": "<tool_call>\n{\"name\": \"read_record\", \"arguments\": {}}\n</tool_call><|im_end|>",
+        "output_token_ids": [
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          878,
+          14192,
+          497,
+          330,
+          16370,
+          788,
+          4687,
+          532,
+          151658,
+          151645
+        ],
+        "input_tokens": 4089,
+        "output_tokens": 16,
+        "input_token_sha256": "a3a02c86fa37123a1375143c110d71f368a541b4a34ecad439261d9995e33bac",
+        "seconds": 1.0155945520018577,
+        "peak_allocated_bytes": 9229211648,
+        "peak_reserved_bytes": 10972299264,
+        "status": "COMPLETE"
+      },
+      "AGENT-4": {
+        "text": "I need to read the current status from the table to provide the latest status as JSON. \n\n<tool_call>\n{\"name\": \"query_table\", \"arguments\": {}}\n</tool_call>",
+        "raw_text": "I need to read the current status from the table to provide the latest status as JSON. \n\n<tool_call>\n{\"name\": \"query_table\", \"arguments\": {}}\n</tool_call><|im_end|>",
+        "output_token_ids": [
+          40,
+          1184,
+          311,
+          1349,
+          279,
+          1482,
+          2639,
+          504,
+          279,
+          1965,
+          311,
+          3410,
+          279,
+          5535,
+          2639,
+          438,
+          4718,
+          13,
+          4710,
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          1631,
+          5237,
+          497,
+          330,
+          16370,
+          788,
+          4687,
+          532,
+          151658,
+          151645
+        ],
+        "input_tokens": 4085,
+        "output_tokens": 35,
+        "input_token_sha256": "cf8cf5b13d0c2107470345738bf87c01b536c5dfae8ddc1516ff8511224eb0ba",
+        "seconds": 1.6682567870011553,
+        "peak_allocated_bytes": 9228304384,
+        "peak_reserved_bytes": 10972299264,
+        "status": "COMPLETE"
+      },
+      "AGENT-6": {
+        "text": "<tool_call>\n{\"name\": \"ApplyFixturePatch\", \"arguments\": {\"enabled\": true, \"limit\": 14}}\n\t\n<tool_call>\n{\"name\": \"ValidateFixtureTest\", \"arguments\": {}}\n</tool_call>",
+        "raw_text": "<tool_call>\n{\"name\": \"ApplyFixturePatch\", \"arguments\": {\"enabled\": true, \"limit\": 14}}\n\t\n<tool_call>\n{\"name\": \"ValidateFixtureTest\", \"arguments\": {}}\n</tool_call><|im_end|>",
+        "output_token_ids": [
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          28497,
+          18930,
+          43622,
+          497,
+          330,
+          16370,
+          788,
+          5212,
+          15868,
+          788,
+          830,
+          11,
+          330,
+          9506,
+          788,
+          220,
+          16,
+          19,
+          11248,
+          1572,
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          17926,
+          18930,
+          2271,
+          497,
+          330,
+          16370,
+          788,
+          4687,
+          532,
+          151658,
+          151645
+        ],
+        "input_tokens": 4096,
+        "output_tokens": 43,
+        "input_token_sha256": "aff1a485dcb2503547bcf7ac9ca1c6f6e8e02df59e913a6a84899ff51885d984",
+        "seconds": 2.073897385998862,
+        "peak_allocated_bytes": 9230798848,
+        "peak_reserved_bytes": 10972299264,
+        "status": "COMPLETE"
+      },
+      "AGENT-7": {
+        "text": "<tool_call>\n{\"name\": \"ApplyFixturePatch\", \"arguments\": {\"enabled\": true, \"limit\": 15}}\n</tool_call>\n<tool_call>\n{\"name\": \"ValidateFixtureTest\", \"arguments\": {}}</tool_call>",
+        "raw_text": "<tool_call>\n{\"name\": \"ApplyFixturePatch\", \"arguments\": {\"enabled\": true, \"limit\": 15}}\n</tool_call>\n<tool_call>\n{\"name\": \"ValidateFixtureTest\", \"arguments\": {}}</tool_call><|im_end|>",
+        "output_token_ids": [
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          28497,
+          18930,
+          43622,
+          497,
+          330,
+          16370,
+          788,
+          5212,
+          15868,
+          788,
+          830,
+          11,
+          330,
+          9506,
+          788,
+          220,
+          16,
+          20,
+          11248,
+          151658,
+          198,
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          17926,
+          18930,
+          2271,
+          497,
+          330,
+          16370,
+          788,
+          314,
+          3417,
+          151658,
+          151645
+        ],
+        "input_tokens": 8191,
+        "output_tokens": 44,
+        "input_token_sha256": "5fbc5f9abf8062c156ed98f87ba04fc533e139317d43f6606c0edf012134a408",
+        "seconds": 3.311556165001093,
+        "peak_allocated_bytes": 10321203200,
+        "peak_reserved_bytes": 11622416384,
+        "status": "COMPLETE"
+      }
+    },
+    "D4": {
+      "AGENT-2": {
+        "text": "I need to read a record, multiply the quantity by the unit price, and return the total as a JSON object. Since no specific record or data is provided, I will simulate a basic scenario.\n\nAssuming a simple record with:\n- Quantity = 5\n- Unit price = 10\n\nThen total = 5 * 10 = 50\n\nFinal output:\n{\"total\":50}",
+        "raw_text": "I need to read a record, multiply the quantity by the unit price, and return the total as a JSON object. Since no specific record or data is provided, I will simulate a basic scenario.\n\nAssuming a simple record with:\n- Quantity = 5\n- Unit price = 10\n\nThen total = 5 * 10 = 50\n\nFinal output:\n{\"total\":50}<|im_end|>",
+        "output_token_ids": [
+          40,
+          1184,
+          311,
+          1349,
+          264,
+          3255,
+          11,
+          30270,
+          279,
+          12194,
+          553,
+          279,
+          4982,
+          3349,
+          11,
+          323,
+          470,
+          279,
+          2790,
+          438,
+          264,
+          4718,
+          1633,
+          13,
+          8704,
+          902,
+          3151,
+          3255,
+          476,
+          821,
+          374,
+          3897,
+          11,
+          358,
+          686,
+          37453,
+          264,
+          6770,
+          15048,
+          382,
+          5615,
+          29489,
+          264,
+          4285,
+          3255,
+          448,
+          510,
+          12,
+          33523,
+          284,
+          220,
+          20,
+          198,
+          12,
+          7954,
+          3349,
+          284,
+          220,
+          16,
+          15,
+          271,
+          12209,
+          2790,
+          284,
+          220,
+          20,
+          353,
+          220,
+          16,
+          15,
+          284,
+          220,
+          20,
+          15,
+          271,
+          19357,
+          2550,
+          510,
+          4913,
+          5035,
+          788,
+          20,
+          15,
+          92,
+          151645
+        ],
+        "input_tokens": 4089,
+        "output_tokens": 85,
+        "input_token_sha256": "a3a02c86fa37123a1375143c110d71f368a541b4a34ecad439261d9995e33bac",
+        "seconds": 6.120777559997805,
+        "peak_allocated_bytes": 9387426816,
+        "peak_reserved_bytes": 11322523648,
+        "status": "COMPLETE"
+      },
+      "AGENT-4": {
+        "text": "{\"status\":\"Reference archive: inactive record; use tool results for current facts.\"}\"",
+        "raw_text": "{\"status\":\"Reference archive: inactive record; use tool results for current facts.\"}\"<|im_end|>",
+        "output_token_ids": [
+          4913,
+          2829,
+          3252,
+          8856,
+          18132,
+          25,
+          31799,
+          3255,
+          26,
+          990,
+          5392,
+          3059,
+          369,
+          1482,
+          13064,
+          1189,
+          9863,
+          151645
+        ],
+        "input_tokens": 4085,
+        "output_tokens": 18,
+        "input_token_sha256": "cf8cf5b13d0c2107470345738bf87c01b536c5dfae8ddc1516ff8511224eb0ba",
+        "seconds": 1.8948560779972468,
+        "peak_allocated_bytes": 9386226176,
+        "peak_reserved_bytes": 11322523648,
+        "status": "COMPLETE"
+      },
+      "AGENT-6": {
+        "text": "I need to update the fixture config to enabled=true and limit=14, then validate it, and return the required JSON.\n\nFirst, I'll apply the fixture patch with enabled=true and limit=14.\n\nThen I'll validate the fixture configuration.\n\nFinally, I'll return the JSON with {\"valid\": true} as requested.\n\n<tool_call>\n{\"name\": \"Apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 14}}\n</tool_call>",
+        "raw_text": "I need to update the fixture config to enabled=true and limit=14, then validate it, and return the required JSON.\n\nFirst, I'll apply the fixture patch with enabled=true and limit=14.\n\nThen I'll validate the fixture configuration.\n\nFinally, I'll return the JSON with {\"valid\": true} as requested.\n\n<tool_call>\n{\"name\": \"Apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 14}}\n</tool_call><|im_end|>",
+        "output_token_ids": [
+          40,
+          1184,
+          311,
+          2647,
+          279,
+          12507,
+          2193,
+          311,
+          8970,
+          11265,
+          323,
+          3930,
+          28,
+          16,
+          19,
+          11,
+          1221,
+          9593,
+          432,
+          11,
+          323,
+          470,
+          279,
+          2567,
+          4718,
+          382,
+          5338,
+          11,
+          358,
+          3278,
+          3796,
+          279,
+          12507,
+          10900,
+          448,
+          8970,
+          11265,
+          323,
+          3930,
+          28,
+          16,
+          19,
+          382,
+          12209,
+          358,
+          3278,
+          9593,
+          279,
+          12507,
+          6546,
+          382,
+          23949,
+          11,
+          358,
+          3278,
+          470,
+          279,
+          4718,
+          448,
+          5212,
+          1891,
+          788,
+          830,
+          92,
+          438,
+          11223,
+          382,
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          28497,
+          74409,
+          39643,
+          497,
+          330,
+          16370,
+          788,
+          5212,
+          15868,
+          788,
+          830,
+          11,
+          330,
+          9506,
+          788,
+          220,
+          16,
+          19,
+          11248,
+          151658,
+          151645
+        ],
+        "input_tokens": 4096,
+        "output_tokens": 94,
+        "input_token_sha256": "aff1a485dcb2503547bcf7ac9ca1c6f6e8e02df59e913a6a84899ff51885d984",
+        "seconds": 7.507785877001879,
+        "peak_allocated_bytes": 9389527040,
+        "peak_reserved_bytes": 11322523648,
+        "status": "COMPLETE"
+      },
+      "AGENT-7": {
+        "text": "<tool_call>\n{\"name\": \"Apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 15}}\n</tool_call>\n<tool_call>\n{\"name\": \"validate_fixture_test\", \"arguments\": {}}\n</tool_call>",
+        "raw_text": "<tool_call>\n{\"name\": \"Apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 15}}\n</tool_call>\n<tool_call>\n{\"name\": \"validate_fixture_test\", \"arguments\": {}}\n</tool_call><|im_end|>",
+        "output_token_ids": [
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          28497,
+          74409,
+          39643,
+          497,
+          330,
+          16370,
+          788,
+          5212,
+          15868,
+          788,
+          830,
+          11,
+          330,
+          9506,
+          788,
+          220,
+          16,
+          20,
+          11248,
+          151658,
+          198,
+          151657,
+          198,
+          4913,
+          606,
+          788,
+          330,
+          7067,
+          74409,
+          4452,
+          497,
+          330,
+          16370,
+          788,
+          4687,
+          532,
+          151658,
+          151645
+        ],
+        "input_tokens": 8191,
+        "output_tokens": 44,
+        "input_token_sha256": "5fbc5f9abf8062c156ed98f87ba04fc533e139317d43f6606c0edf012134a408",
+        "seconds": 4.282180777001486,
+        "peak_allocated_bytes": 10639649280,
+        "peak_reserved_bytes": 12297699328,
+        "status": "COMPLETE"
+      }
+    }
+  },
+  "source_identity": {
+    "provenance/PUBLIC_MANIFEST.json": {
+      "bytes": 81299,
+      "sha256": "af3d1e488205126e725ee4dc584778a79716f2c31fdcd65edf45119bfeeb52a8"
+    },
+    "records/inputs/agent_tasks.json": {
+      "bytes": 5808,
+      "sha256": "b4111931c8a51cd05e8faf6a80e1f95b1f241b4ddfb4d41af2609f665b089788"
+    },
+    "records/inputs/agent_token_manifest.json": {
+      "bytes": 1282,
+      "sha256": "c85e2a4e918c169f4fd4d525577759cbf56a7177a4055df6ebb8330d8d059876"
+    },
+    "records/raw/4b/BF16/agent_dev.jsonl": {
+      "bytes": 22530,
+      "sha256": "cd8d5d94015f45b59ce7edb5601ba8cbb1acdc4190fd9c6319826f64ddf36832"
+    },
+    "records/raw/4b/RTN/agent_dev.jsonl": {
+      "bytes": 25526,
+      "sha256": "bd262b4fe341868a87eaf5b0d5bd6b39f8f76bb9f32c87f35bbfb0210da9f0fe"
+    },
+    "records/raw/4b/D16/agent_dev.jsonl": {
+      "bytes": 27157,
+      "sha256": "953a4d286b7be1f92bdc4f67b70a1c2bd51722b41974ab81d51dc91ce215fb1c"
+    },
+    "records/raw/4b/D4/agent_dev.jsonl": {
+      "bytes": 25041,
+      "sha256": "5b9b7db9410adc063897f3f425231e91c29f2880d22b099ff506d1dd317548ce"
+    }
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "status": "PASS",
+  "validated_files": 10,
+  "validated_rows": 80,
+  "paired_comparisons": 2,
+  "scope": "POST_HOC_SAME_RECORDS; descriptive bootstrap only; no formal superiority",
+  "commands": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "diova_compare.cli",
+        "validate",
+        "--input",
+        "LOCAL_RESULT/compare_inputs/BF16-BASELINE.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.026598824000302557,
+      "stdout": "{\"status\": \"PASS\", \"records\": 8}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "diova_compare.cli",
+        "validate",
+        "--input",
+        "LOCAL_RESULT/compare_inputs/D16-BASELINE.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.027151872999638726,
+      "stdout": "{\"status\": \"PASS\", \"records\": 8}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "diova_compare.cli",
+        "validate",
+        "--input",
+        "LOCAL_RESULT/compare_inputs/D16-BOTH.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.027088267000181077,
+      "stdout": "{\"status\": \"PASS\", \"records\": 8}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "diova_compare.cli",
+        "validate",
+        "--input",
+        "LOCAL_RESULT/compare_inputs/D16-ENUM.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.026910857999610016,
+      "stdout": "{\"status\": \"PASS\", \"records\": 8}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "diova_compare.cli",
+        "validate",
+        "--input",
+        "LOCAL_RESULT/compare_inputs/D16-FEEDBACK.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.026680367999688315,
+      "stdout": "{\"status\": \"PASS\", \"records\": 8}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "diova_compare.cli",
+        "validate",
+        "--input",
+        "LOCAL_RESULT/compare_inputs/D4-BASELINE.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.026458937999905174,
+      "stdout": "{\"status\": \"PASS\", \"records\": 8}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "diova_compare.cli",
+        "validate",
+        "--input",
+        "LOCAL_RESULT/compare_inputs/D4-BOTH.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.025946956000097998,
+      "stdout": "{\"status\": \"PASS\", \"records\": 8}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "diova_compare.cli",
+        "validate",
+        "--input",
+        "LOCAL_RESULT/compare_inputs/D4-ENUM.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.024235461999978725,
+      "stdout": "{\"status\": \"PASS\", \"records\": 8}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "diova_compare.cli",
+        "validate",
+        "--input",
+        "LOCAL_RESULT/compare_inputs/D4-FEEDBACK.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.023666155000228173,
+      "stdout": "{\"status\": \"PASS\", \"records\": 8}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "diova_compare.cli",
+        "validate",
+        "--input",
+        "LOCAL_RESULT/compare_inputs/RTN-BASELINE.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.02467510399992534,
+      "stdout": "{\"status\": \"PASS\", \"records\": 8}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "diova_compare.cli",
+        "compare",
+        "--baseline",
+        "LOCAL_RESULT/compare_inputs/D16-BASELINE.jsonl",
+        "--candidate",
+        "LOCAL_RESULT/compare_inputs/D16-BOTH.jsonl",
+        "--output",
+        "LOCAL_RESULT/compare_reports/D16-BASELINE-to-BOTH",
+        "--replicates",
+        "5000",
+        "--seed",
+        "610142"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.037145055000110005,
+      "stdout": "{\"status\": \"PASS\", \"n_pairs\": 8, \"output\": \"LOCAL_RESULT/compare_reports/D16-BASELINE-to-BOTH\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "diova_compare.cli",
+        "compare",
+        "--baseline",
+        "LOCAL_RESULT/compare_inputs/D4-BASELINE.jsonl",
+        "--candidate",
+        "LOCAL_RESULT/compare_inputs/D4-BOTH.jsonl",
+        "--output",
+        "LOCAL_RESULT/compare_reports/D4-BASELINE-to-BOTH",
+        "--replicates",
+        "5000",
+        "--seed",
+        "610142"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.036620231999677344,
+      "stdout": "{\"status\": \"PASS\", \"n_pairs\": 8, \"output\": \"LOCAL_RESULT/compare_reports/D4-BASELINE-to-BOTH\"}\n",
+      "stderr": ""
+    }
+  ]
+}

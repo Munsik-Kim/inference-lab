@@ -622,3 +622,10 @@ The follow-up using Case010 state storage is [Case011 readout adaptation](#case-
 **Scope:** public-equation reference variant, reconstructed BF16 execution, two pinned Qwen models on RTX 5080. Formal TEST, matched GPTQ serving and native packed W4A4 were not completed. Original outputs and failure probes are retained.
 
 [Overview](../../cases/013-dualquant-reference-quality/README.md) · [Solver/adapter](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU checks](../../cases/013-dualquant-reference-quality/REPRODUCTION.md) · [Report](../../cases/013-dualquant-reference-quality/REPORT.md)
+
+
+### Follow-up — Tool-call contracts and recovery
+
+With unchanged quantized weights, registry-aware feedback and name enum decoding were compared separately. On the same eight existing DEV tasks, D16 changed6/8→8/8 and D4 changed0/8→2/8. Enum conditions emitted zero unregistered-name calls; six other D4 tasks failed. Identical final JSON can receive different correctness when actual patch/validation differs. No held-out generalization or packed serving benefit is established.
+
+[Overview and CPU commands](../../research/agent_tool_contract_repair_20261014/README.md) · [Follow-up report](../../research/agent_tool_contract_repair_20261014/records/REPORT.md) · [Earlier diagnostic](../../research/agent_stability_20261013/README.md)

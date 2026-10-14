@@ -413,7 +413,12 @@ def check_new_study(root: Path, errors: list[str]) -> set[str]:
             import importlib.util
             spec=importlib.util.spec_from_file_location('case009_publication_docs',publication)
             module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
-            module.verify(root)
+            # Case009 binds its historical package0.1.1 to an exact file set.
+            # Verify that intact snapshot in scratch; the evolving current
+            # package has its own regression/installed-wheel checks.
+            wrapper_spec=importlib.util.spec_from_file_location('case009_frozen_docs',root/'tools/run_case009_frozen_checks.py')
+            wrapper=importlib.util.module_from_spec(wrapper_spec);wrapper_spec.loader.exec_module(wrapper)
+            wrapper.verify_current_case009(root)
             known={p.relative_to(root).as_posix() for p in base.rglob('*') if p.is_file()}
             for stem in ['case009_serving_quality_reviewed_publication_v2','diova_compare-0.1.1']:
                 meta_name=stem+'.json' if stem.startswith('case009') else stem+'.metadata.json'
@@ -494,9 +499,10 @@ def check_case011(root: Path, errors: list[str]) -> set[str]:
         identity=case/'publication/original_identity.json'
         if sha(identity)!='d08cc444193ffa499c3abad20340b2d67991375cc683f0be75ef7cbb653f8aac':
             raise ValueError('Original review identity changed')
-        proc=subprocess.run([sys.executable,'-B',str(case/'publication/verify_publication.py')],
-                            cwd=root,capture_output=True,text=True)
-        if proc.returncode:raise ValueError('Original/publication verification failed')
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('case011_frozen_docs',root/'tools/run_case011_frozen_checks.py')
+        wrapper=importlib.util.module_from_spec(spec);spec.loader.exec_module(wrapper)
+        wrapper.verify_current_case011(root)
         pages=[relative+'/'+name for name in ('README.md','README.ko.md','REPORT.md','REPORT.ko.md',
                                              'REPRODUCTION.md','PORTFOLIO.md','NOTICE.md')]
         check_links(root,pages,errors,allow_disclosures=True);check_copy_hygiene(root,tuple(pages),errors)
@@ -550,6 +556,28 @@ def check_case012(root: Path, errors: list[str]) -> set[str]:
         return set()
 
 
+def check_agent_tool_repair(root: Path, errors: list[str]) -> set[str]:
+    """Permit only the separately verified follow-up and its one review archive."""
+    relative = 'research/agent_tool_contract_repair_20261014'
+    study = root/relative
+    if not study.exists():
+        return set()
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('agent_tool_repair_publication', study/'verify_public.py')
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+        module.verify(study)
+        archive = json.loads((study/'publication/archive_metadata.json').read_text())
+        expected = 'downloads/case013_tool_contract_repair_review_v1.zip'
+        if archive['repository_path'] != expected:
+            raise ValueError('unexpected follow-up archive path')
+        manifest = json.loads((study/'PUBLIC_MANIFEST.json').read_text())
+        return {relative+'/'+p for p in manifest['files']} | {relative+'/PUBLIC_MANIFEST.json',expected}
+    except Exception as exc:
+        errors.append('Tool-contract publication verification failed: '+str(exc))
+        return set()
+
+
 def check_case013(root: Path, errors: list[str]) -> set[str]:
     """Only a verified Case013 public inventory can extend the protected file set."""
     case = root/'cases/013-dualquant-reference-quality'
@@ -588,6 +616,7 @@ def audit(root: Path, inventory: Path | None = None) -> dict:
     additional |= check_case011(root, errors)
     additional |= check_case012(root, errors)
     additional |= check_case013(root, errors)
+    additional |= check_agent_tool_repair(root, errors)
     protected = check_protection(root, mapping.get('protection_revision', mapping['source_revision']), errors, inventory, additional)
     check_copy_hygiene(root, (*PAGES, CONCEPT_FIGURE, 'docs/_meta/claims.json', 'docs/_meta/MAINTENANCE.md'), errors)
     downloads = check_packages(root, mapping, errors)

@@ -32,7 +32,7 @@ jobs:
           python -m pip install -r tools/showcase/requirements-cpu.txt
           python -m pip install setuptools==80.10.2 wheel==0.48.0
       - name: Reviewed publication, restored originals, regressions and installed wheel
-        run: python -B cases/009-q-serving-quality/publication/run_checks.py --root . --output "$RUNNER_TEMP/feedback-checks/reviewed"
+        run: python -B tools/run_case009_frozen_checks.py --root . --output "$RUNNER_TEMP/feedback-checks/reviewed"
       - name: Case008 publication identity
         run: python -B cases/008-build-reconstruct-reload/publication/verify_publication.py --root . --output "$RUNNER_TEMP/feedback-checks/case008-publication.json"
       - name: Existing evidence preservation, scalars, documentation and site
@@ -47,6 +47,8 @@ jobs:
             ${{ runner.temp }}/feedback-checks/*.json
             ${{ runner.temp }}/feedback-checks/reviewed/*.json
             ${{ runner.temp }}/feedback-checks/reviewed/*.log
+            ${{ runner.temp }}/feedback-checks/reviewed/checks/*.json
+            ${{ runner.temp }}/feedback-checks/reviewed/checks/*.log
             ${{ runner.temp }}/feedback-checks/reviewed/official/audit.json
             cases/009-q-serving-quality/publication/status.json
             ${{ runner.temp }}/feedback-checks/portfolio/*.log

@@ -38,6 +38,25 @@ adapter는 로그의 acc와 exact-match를 지원합니다. acc_norm과 perplexi
 
 선택 필드 `process_exit_code`는 양쪽 모든 기록에 정수로 제공하거나 모두 생략합니다. 입력별 결과와 과제 요약에 그대로 남기므로, 저장된 수치의 검산이 비정상 종료를 정상 실행으로 바꾸지는 않습니다.
 
+<a id="case013-export"></a>
+
+## Case 013: 기존 결과 → export → validate → compare → report
+
+0.1.2의 `export-case013`은 동결된 [Case 013](../../cases/013-dualquant-reference-quality/README.ko.md)의 장문·도구 호출 기록을 변환합니다. Torch·NumPy·모델은 필요하지 않습니다. 저장소 루트에서 설치한 CLI로 실행합니다. 아래 세 출력 경로는 모두 새 경로여야 합니다.
+
+```bash
+diova-compare export-case013 --case cases/013-dualquant-reference-quality --output /tmp/case013-export
+diova-compare validate --input /tmp/case013-export/long/8192/RTN.jsonl
+diova-compare compare --baseline /tmp/case013-export/long/8192/RTN.jsonl --candidate /tmp/case013-export/long/8192/D16.jsonl --output /tmp/case013-long-report
+diova-compare compare --baseline /tmp/case013-export/agent/base/FREE/RTN.jsonl --candidate /tmp/case013-export/agent/base/FREE/D16.jsonl --output /tmp/case013-agent-report
+```
+
+각 비교는 `report.json`, `pairs.csv`, `report.md`를 만듭니다. 장문 8K의 RTN→D16은 둘 다 정답9/기준선만2/후보만1/둘 다 오답0이고, 기본 FREE는8개 중 RTN8개·D16 6개 정답입니다. 최종 `valid:true`가 같아도 실제 파일 수정과 성공한 validation이 없으면 오답입니다. 원문·실행 조건·최종 config는 대응 `.sidecar.jsonl`에 남습니다.
+
+`long/16384`, BF16만의 `long/32768`, `agent/base/{REPLAY,FREE}`, `agent/extension16k/{REPLAY,FREE}`를 별도 비교합니다. 16K 확장은 기존8개 중4개 task의 길이 변경본입니다. 후보32K는 메모리 정책상 미실행이므로 비교 행·0점으로 만들지 않습니다. 서로 다른 mode·길이·입력·정답 계약은 기본 pairing에서 거절합니다. `--intersection`으로 누락을 숨기지 마세요.
+
+`adapter_manifest.json`은 사용한 공개 파일·변환 코드 hash와 제외 사유를, `continuous_summary.json`은 원 NLL/PPL 및 저장 KL 집계를 보존합니다. 새 logits·GPU 추론·비열등성 판정은 생성하지 않습니다. 재사용 흐름은 **양자화 전후 업무 샘플 기록 → 동일 입력·정답 계약 검사 → 정답 손실·새 정답·도구 계약 실패 보고서**입니다. 고객 데이터나 외부 도구 연결은 이 adapter의 범위 밖입니다.
+
 ## 0.1.1 검토 수정판
 
 [CPU wheel 다운로드](../../downloads/diova_compare-0.1.1-py3-none-any.whl) 후 별도 Python 환경에 설치합니다:

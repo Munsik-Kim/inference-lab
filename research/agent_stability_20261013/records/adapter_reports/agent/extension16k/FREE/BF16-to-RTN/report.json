@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "baseline_artifact": "case013:BF16:0e5bfa1167ac2e4d3ad6a70c06424dfae4a1711c737885833811d54998b6616c",
+  "candidate_artifact": "case013:RTN:8a00c7554024a8020397f94b1e908562c9ef6e58738c821ccb0b4833f38ef5ad",
+  "n_pairs": 4,
+  "excluded_baseline": [],
+  "excluded_candidate": [],
+  "bootstrap": {
+    "replicates": 2000,
+    "seed": 909220,
+    "unit": "paired item within task; no cross-task aggregate",
+    "interval": "pointwise descriptive percentile"
+  },
+  "tasks": {
+    "case013.agent.extension16k.FREE@case013-r2-first-json-exact-and-required-fixture-actions-v1": {
+      "n_pairs": 4,
+      "counts": {
+        "baseline_correct": 4,
+        "candidate_correct": 4,
+        "both_correct": 4,
+        "both_wrong": 0,
+        "all_answer_disagreement": 0,
+        "correct_to_wrong": 0,
+        "wrong_to_correct": 0,
+        "wrong_to_wrong": 0,
+        "correctness_flip": 0
+      },
+      "metrics": {
+        "delta_accuracy": {
+          "mean": 0.0,
+          "pointwise_95_interval": [
+            0.0,
+            0.0
+          ],
+          "unit": "fraction"
+        }
+      },
+      "regression_denominator": 4,
+      "gain_denominator": 0,
+      "source_process_exits": {
+        "baseline": [
+          0
+        ],
+        "candidate": [
+          0
+        ],
+        "scope": "Retained scalar calculations; nonzero source exits remain execution failures."
+      }
+    }
+  },
+  "pairs": [
+    {
+      "task": "case013.agent.extension16k.FREE",
+      "task_version": "case013-r2-first-json-exact-and-required-fixture-actions-v1",
+      "sample_id": "AGENT-0",
+      "baseline_answer": "{\"owner\":\"Owner-0\",\"site\":\"Harbor-0\"}",
+      "candidate_answer": "{\"owner\":\"Owner-0\",\"site\":\"Harbor-0\"}",
+      "baseline_correct": true,
+      "candidate_correct": true,
+      "all_answer_disagreement": false,
+      "correct_to_wrong": false,
+      "wrong_to_correct": false,
+      "both_correct": true,
+      "both_wrong": false,
+      "wrong_to_wrong": false,
+      "correctness_flip": false,
+      "delta_accuracy": 0,
+      "evidence_kind": "historical",
+      "baseline_process_exit_code": 0,
+      "candidate_process_exit_code": 0
+    },
+    {
+      "task": "case013.agent.extension16k.FREE",
+      "task_version": "case013-r2-first-json-exact-and-required-fixture-actions-v1",
+      "sample_id": "AGENT-2",
+      "baseline_answer": "{\"total\":30}",
+      "candidate_answer": "{\"total\":30}",
+      "baseline_correct": true,
+      "candidate_correct": true,
+      "all_answer_disagreement": false,
+      "correct_to_wrong": false,
+      "wrong_to_correct": false,
+      "both_correct": true,
+      "both_wrong": false,
+      "wrong_to_wrong": false,
+      "correctness_flip": false,
+      "delta_accuracy": 0,
+      "evidence_kind": "historical",
+      "baseline_process_exit_code": 0,
+      "candidate_process_exit_code": 0
+    },
+    {
+      "task": "case013.agent.extension16k.FREE",
+      "task_version": "case013-r2-first-json-exact-and-required-fixture-actions-v1",
+      "sample_id": "AGENT-4",
+      "baseline_answer": "{\"status\":\"READY-4\"}",
+      "candidate_answer": "{\"status\":\"READY-4\"}",
+      "baseline_correct": true,
+      "candidate_correct": true,
+      "all_answer_disagreement": false,
+      "correct_to_wrong": false,
+      "wrong_to_correct": false,
+      "both_correct": true,
+      "both_wrong": false,
+      "wrong_to_wrong": false,
+      "correctness_flip": false,
+      "delta_accuracy": 0,
+      "evidence_kind": "historical",
+      "baseline_process_exit_code": 0,
+      "candidate_process_exit_code": 0
+    },
+    {
+      "task": "case013.agent.extension16k.FREE",
+      "task_version": "case013-r2-first-json-exact-and-required-fixture-actions-v1",
+      "sample_id": "AGENT-6",
+      "baseline_answer": "{\"valid\":true}",
+      "candidate_answer": "{\"valid\":true}",
+      "baseline_correct": true,
+      "candidate_correct": true,
+      "all_answer_disagreement": false,
+      "correct_to_wrong": false,
+      "wrong_to_correct": false,
+      "both_correct": true,
+      "both_wrong": false,
+      "wrong_to_wrong": false,
+      "correctness_flip": false,
+      "delta_accuracy": 0,
+      "evidence_kind": "historical",
+      "baseline_process_exit_code": 0,
+      "candidate_process_exit_code": 0
+    }
+  ]
+}

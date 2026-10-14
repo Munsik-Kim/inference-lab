@@ -620,3 +620,10 @@ Case010의 저장 구현을 사용하는 후속 질문은 [Case011의 판독층 
 **범위:** 공개 수식의 reference variant, 복원 BF16 연산, RTX 5080의 pinned Qwen 두 모델입니다. Formal TEST·동일 조건 GPTQ serving·native packed W4A4는 미완료이며 원시 출력과 실패 probe를 함께 보존합니다.
 
 [쉬운 소개](../../cases/013-dualquant-reference-quality/README.ko.md) · [변환·adapter](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 검산](../../cases/013-dualquant-reference-quality/REPRODUCTION.ko.md) · [보고서](../../cases/013-dualquant-reference-quality/REPORT.ko.md)
+
+
+### 후속 — 도구 호출 계약과 오류 회복
+
+원형 가중치를 유지하고 오류 안내/이름 제한을 별도로 비교했습니다. 같은 기존 DEV 8개에서 D16은6/8→8/8, D4는0/8→2/8입니다. 이름 제한 조건의 미등록 호출은0회였고 D4의 나머지6개 과제는 실패했습니다. 최종 JSON이 같아도 실제 patch/validation 성공으로 점수가 달라집니다. 새 일반화·packed serving 이득을 판정하지 않습니다.
+
+[쉬운 소개와 CPU 명령](../../research/agent_tool_contract_repair_20261014/README.ko.md) · [후속 보고서](../../research/agent_tool_contract_repair_20261014/records/REPORT_KO.md) · [앞선 원인 진단](../../research/agent_stability_20261013/README.ko.md)
