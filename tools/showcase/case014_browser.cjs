@@ -29,7 +29,7 @@ const {fileURLToPath}=require('url');
      expect(await ev('document.getElementById("overview").innerText.includes("BF16")'),name+' runtime scope next to gain');
     }
     for(const width of [390,768,1280]){
-     await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});await ev('window.scrollTo(0,0)');await wait(80);expect(await ev('document.documentElement.scrollWidth<=innerWidth+2'),name+' no horizontal page overflow '+width);
+     await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});await ev('window.scrollTo(0,0)');await wait(80);expect(await ev('document.documentElement.scrollWidth<=(document.body.dataset.case==="case014"?document.documentElement.clientWidth:innerWidth)+2'),name+' no horizontal page overflow '+width);
      const shot=await send('Page.captureScreenshot',{format:'png'});const file=lang+'-'+page+'-'+width+'.png';fs.writeFileSync(path.join(out,file),Buffer.from(shot.data,'base64'));captures.push(file);
     }
     if(page==='index'){
