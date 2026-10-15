@@ -27,10 +27,23 @@
 | 같은 state의 최종 판독층 교체·patch 저장·재적용 | ComplexKDA · PyTorch L-BFGS · NumPy | [adapter](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [patch 검사](cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
 | 같은 잡음의 loop/step 실행·시간 예산 선택·이미지 평가 | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [adapter](cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU 검사](cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
 | INT4 스케일 보존 변환과 저장 품질 검산 | DualQuant 공개 수식 · PyTorch · NumPy | [변환](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 검산](cases/013-dualquant-reference-quality/analysis/audit.py) |
+| 자체 경로 보정·INT4 저장/재로딩·전층 품질 비교 | Guo compensation · PyTorch · Transformers · NumPy | [code](cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [tests](cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) |
 
 [선행연구와 구현 대응](docs/related-work/README.ko.md) · [CPU 비교 도구](packages/diova-compare/README.ko.md)
 
 [16GB GPU 모델별 실전 안내서](docs/ko/LLM_GUIDE.md) — Qwen3-4B의 실행·품질·실패 기록. [온라인 안내서](https://munsik-kim.github.io/inference-lab/ko/llm-guide.html).
+
+<!-- case014-entry -->
+## 최근 완료 연구 — Case 014
+
+양자화된 실제 입력 경로를 따라 보정하고 같은 INT4 형식으로 저장하는 도구를 구현했습니다.
+
+**PG19 PPL 12.92% 감소 ·64/64 문서 구간 NLL 개선 ·동일 projection 저장량**
+
+Qwen3-0.6B ·196 Transformer projections ·새 PG19 64책의256-token 구간. ArXiv에서는 같은 이득 미확인. BF16 복원 품질 평가이며 속도·VRAM 절감은 미측정입니다.
+
+[결과 비교하기](https://munsik-kim.github.io/inference-lab/ko/case014.html#results) · [구현과 재현](cases/014-quantization-compensation/REPRODUCE.md) · [연구 과정](cases/014-quantization-compensation/STAGE_MAP.md)
+
 
 <a id="capabilities"></a>
 ## 구현 기능
@@ -190,6 +203,7 @@ D16의 가중치 오차는 두 모델에서 줄었습니다. 0.6B의 PPL은 좋�
 | [011 — 같은 상태에서 판독기만 바꾸면?](docs/ko/CASEBOOK.md#case-011) | 마지막 층 두 tensor 보정·재적용, 정답 점수와 첫 오류 길이의 비교. |
 | [012 — 이미지 생성 시간을 어디에 더 쓸까?](docs/ko/CASEBOOK.md#case-012) | 같은 잡음의 loop/step 실행·시간 비교·이미지 판독 도구. 전체192장 AI 평가와 조건별 획득·손실. |
 | [013 — 가중치 오차가 줄면 실제 답도 좋아질까?](docs/ko/CASEBOOK.md#case-013) | INT4 스케일 보존·저장·재로딩과 동일 입력 품질 기록. Packed 전체 모델 수치 기준 미통과. |
+| [014 — 같은 INT4 저장량에서 품질을 개선할 수 있는가?](docs/ko/CASEBOOK.md#case-014) | 자체 경로 보정·INT4 저장/재로딩·전층 품질 비교. PG19 이득과 ArXiv 한계를 함께 기록. |
 
 ## 더 깊게 보기
 

@@ -1,0 +1,23 @@
+/* Case014 additions only. Existing home/guide typography and order are retained. */
+.case014-facts {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;list-style:none;padding:0;margin:24px 0}
+.case014-facts li {border:1px solid var(--border);border-radius:8px;padding:16px;background:var(--tint);font-size:.86rem}
+.case014-facts strong {display:block;font-size:1.3rem;margin-bottom:8px;color:var(--accent-dark);overflow-wrap:anywhere}
+.compensation-latest {margin-top:36px;scroll-margin-top:120px}
+body[data-case="case014"] .study-article {max-width:900px}
+body[data-case="case014"] .scroll {max-width:100%;overflow:auto;margin:22px 0;border:1px solid var(--border);border-radius:8px}
+body[data-case="case014"] table {min-width:620px;font-size:.83rem;margin:0}
+body[data-case="case014"] th,body[data-case="case014"] td {padding:12px;white-space:normal;vertical-align:top}
+body[data-case="case014"] th {background:var(--tint)}
+body[data-case="case014"] figure {margin:24px 0}
+body[data-case="case014"] img {max-width:100%;height:auto}
+body[data-case="case014"] figcaption {font-size:.82rem;color:var(--muted);line-height:1.7}
+body[data-case="case014"] details {margin:20px 0;border:1px solid var(--border);border-radius:8px;padding:16px;min-width:0}
+body[data-case="case014"] summary {font-weight:600;cursor:pointer}
+body[data-case="case014"] pre {max-width:100%;overflow:auto;font-size:.8rem}
+body[data-case="case014"] .case014-terms {display:grid;gap:12px}
+body[data-case="case014"] .case014-terms div {display:grid;grid-template-columns:135px minmax(0,1fr);gap:16px;padding:12px 0;border-bottom:1px solid var(--border);scroll-margin-top:120px}
+body[data-case="case014"] dt {font-weight:650}
+body[data-case="case014"] dd {margin:0}
+body[data-case="case014"] .case014-flow {padding-left:22px;line-height:2}
+body[data-case="case014"] .study-toc a:focus-visible,body[data-case="case014"] summary:focus-visible {outline:3px solid var(--accent);outline-offset:4px}
+@media(max-width:580px){.case014-facts{grid-template-columns:1fr}.case014-facts strong{font-size:1.2rem}.case014-facts li{padding:12px}body[data-case="case014"] .case014-terms div{display:block}body[data-case="case014"] dd{margin-top:8px}}

@@ -1,0 +1,28 @@
+{
+  "historical_test_suites_rerun": {
+    "P0": 15,
+    "P1b": 10,
+    "P2": 9
+  },
+  "new_publication_tests": 6,
+  "docs_tests": 45,
+  "website_tests_including_new_case014_6": 134,
+  "actual_browser_checks": 94,
+  "new_pretrained_model_GPU_forwards": 0,
+  "P0_MC_rerun": false,
+  "additional_failure_attempts": [
+    {
+      "attempt": "system-python-site-bootstrap",
+      "exit_code": 1,
+      "cause": "System Python lacks NumPy, which the existing Case013 site loader needs.",
+      "resolution": "Reused the previously recorded reference Python; no environment installation or change."
+    },
+    {
+      "attempt": "browser-before-build",
+      "exit_code": 1,
+      "cause": "Expected fresh build manifest was absent after the dependency error. Browser was not launched.",
+      "resolution": "Built successfully with the existing reference Python before running Edge."
+    }
+  ],
+  "scope": "Tests and stored scalar recalculation during publication; historical GPU inference/payload decoding receipts are separate."
+}

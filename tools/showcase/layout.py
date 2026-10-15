@@ -4,6 +4,7 @@ from case010 import home_case010
 from case011 import home_case011
 from case012_pages import home_case012
 from case013 import home_case013
+from case014 import home_case014
 
 C8_PATH = 'cases/008-build-reconstruct-reload'
 C8_REVISION = '9bc8b8fced8dfd5147f9bfdc67564eda04670810'
@@ -37,7 +38,8 @@ def related_cases(lang: str, page: str) -> str:
         'case011': [('case010.html', '앞선 상태 저장·재시작 실험', 'Earlier state storage and restart study')],
         'case012': [('case012-annotate.html', '저장된 이미지 직접 확인', 'Check the recorded images')],
         'case012-annotate': [('case012.html#human-results', '사람 평가 결과와 실험 조건', 'Human assessment and study conditions')],
-        'case013': [('qwen3-4b.html#mitigation', '이 reference 변형의 도구 실패 완화', 'Tool-failure mitigation on this reference variant'), ('case009.html#quality', '별도 GPTQ 실행 경로의 품질 기록', 'Quality in the separate GPTQ execution path')],
+        'case013': [('qwen3-4b.html#mitigation', '이 reference 변형의 도구 실패 완화', 'Tool-failure mitigation on this reference variant'), ('case009.html#quality', '별도 GPTQ 실행 경로의 품질 기록', 'Quality in the separate GPTQ execution path'), ('case014.html#overview', '별도0.6B의 전층 보정 연구', 'Separate0.6B whole-model compensation study')],
+        'case014': [('case013.html#overview', '다른 INT4 reference의 품질 진단', 'Quality diagnostics for a different INT4 reference'), ('case008.html#track-r', '한 MLP의 별도 구조 복원', 'Separate one-MLP structure reconstruction')],
     }
     if page not in pairs:
         return ''
@@ -61,7 +63,7 @@ def output_metrics(data8: dict) -> dict[str, str]:
 
 def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
          revision: str, data8: dict | None = None, data9: dict | None = None, data10: dict | None = None, data11: dict | None = None, data12: dict | None = None, data13: dict | None = None,
-         practical_stories: str = '') -> str:
+         practical_stories: str = '', data14: dict | None = None) -> str:
     if len(case_paths) != len(names):
         raise ValueError('Every case needs a translated archive title')
     docs = f'https://github.com/Munsik-Kim/inference-lab/blob/main/docs/{lang}/'
@@ -88,7 +90,7 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     out += '<ol class="work-flow">'+''.join('<li>'+escape(step)+'</li>' for step in steps)+'</ol><div class="actions home-jumps">'
     for url, label in [('llm-guide.html','모델별 실전 안내서 보기' if lang=='ko' else 'Read the model guides'),('#contributions','대표 구현과 검증 근거 보기' if lang=='ko' else 'Inspect implementation and evidence')]:
         out += anchor(url,label,'reading-link')
-    out += '</div></section>'+practical_stories+'<section id="contributions" class="cap-section"><h2>'+text('contributionTitle')+'</h2><div class="contribution-table"><table><thead><tr>'
+    out += '</div></section>'+practical_stories+(home_case014(data14, lang) if data14 else '')+'<section id="contributions" class="cap-section"><h2>'+text('contributionTitle')+'</h2><div class="contribution-table"><table><thead><tr>'
     out += ''.join('<th scope="col">'+escape(x)+'</th>' for x in t['contributionHeaders'])+'</tr></thead><tbody>'
     contribution_sources = [('tools/modelpack/artifact.py','cases/008-build-reconstruct-reload/tests/test_core.py'),('tools/modelpack/quantized.py','cases/008-build-reconstruct-reload/tests/test_boundaries.py'),('tools/modelpack/numerics.py','cases/008-build-reconstruct-reload/tests/test_core.py'),('packages/diova-compare/src/diova_compare/core.py','packages/diova-compare/tests/test_compare.py')]
     for row,(code,test) in zip(t['contributionRows'],contribution_sources):
@@ -96,6 +98,8 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
         code_url='../sources/diova-compare-core.py.txt' if data9 and code.startswith('packages/') else prefix+code
         test_url='../sources/diova-compare-tests.py.txt' if data9 and code.startswith('packages/') else prefix+test
         out += '<tr><td>'+escape(row[0])+'</td><td>'+escape(row[1])+'</td><td>'+anchor(code_url,'Code')+' · '+anchor(test_url,'Tests')+'</td></tr>'
+    if data14:
+        out += '<tr><td>'+('자체 경로 보정·INT4 저장/재로딩·전층 품질 비교' if lang=='ko' else 'Own-path compensation, INT4 storage/reload and whole-model quality')+'</td><td>Guo compensation · PyTorch · Transformers · NumPy</td><td>'+anchor('../sources/case014-runner.py.txt','Code')+' · '+anchor('../sources/case014-tests.py.txt','Tests')+'</td></tr>'
     out += '</tbody></table></div></section><section id="capabilities" class="cap-section"><h2>'+text('capHeading')+'</h2><div class="cap-grid">'
 
     evidence = [

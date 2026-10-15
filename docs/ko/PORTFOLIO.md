@@ -99,3 +99,10 @@ OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지�
 ## Case 013 — INT4 스케일 보존과 품질 검산
 
 [INT4 변환·adapter](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [Packed 저장](../../cases/013-dualquant-reference-quality/source/reference_int4.py) · [저장 scalar 검산](../../cases/013-dualquant-reference-quality/analysis/audit.py)
+
+<!-- case014-entry -->
+## Case014 — 자체 경로 보정과 전층 품질
+
+Capture·FP64 full-input 적합·INT4 codec/독립 재로딩·세 항 분해·문서 paired auditor를 구현했습니다. PG19 품질 이득과 ArXiv 전이 한계를 함께 제공합니다.
+
+[Implementation](../../cases/014-quantization-compensation/PORTFOLIO.md) · [Code](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [Tests](../../cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) · [CPU reproduction](../../cases/014-quantization-compensation/REPRODUCE.md)

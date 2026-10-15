@@ -1,0 +1,153 @@
+--- prepared/run_p1.py
++++ p1_r2/run_p1.py
+@@ -16,9 +16,9 @@
+ def target(l,p):return f'model.layers.{l}.'+('self_attn.' if p=='o_proj' else 'mlp.')+p
+ 
+ def main():
+- ap=argparse.ArgumentParser();ap.add_argument('--model',required=True);ap.add_argument('--private',required=True);ap.add_argument('--output',required=True);ap.add_argument('--smoke-only',action='store_true');args=ap.parse_args()
++ ap=argparse.ArgumentParser();ap.add_argument('--model',required=True);ap.add_argument('--private',required=True);ap.add_argument('--output',required=True);ap.add_argument('--smoke-only',action='store_true');ap.add_argument('--budget-seconds',type=float,default=5400);args=ap.parse_args()
+  case=Path(__file__).resolve().parents[1];private=Path(args.private);out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
+- start=time.monotonic();torch.set_num_threads(4);torch.manual_seed(6101515)
++ start=time.monotonic();run_id=out.name;torch.set_num_threads(4);torch.manual_seed(6101515)
+  torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False
+  torch.backends.cuda.matmul.allow_bf16_reduced_precision_reduction=False
+  torch.backends.cuda.matmul.allow_fp16_reduced_precision_reduction=False
+@@ -28,7 +28,7 @@
+  code={str(p.relative_to(case)):sha(p) for p in sorted((case/'scripts').glob('*.py'))};freeze=digest(json.dumps(code,sort_keys=True).encode())
+  save(out/'code_freeze.json',{'files':code,'code_freeze_sha256':freeze,'base_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True,cwd=case).strip()})
+  def checkbudget():
+-  if time.monotonic()-start>5400:raise TimeoutError('conservative P1 worker wall budget exhausted')
++  if time.monotonic()-start>args.budget_seconds:raise TimeoutError('conservative P1 worker wall budget exhausted')
+  def event(stage,**kw):
+   append(out/'events.jsonl',dict(stage=stage,worker_elapsed=time.monotonic()-start,**kw));print(stage,kw,flush=True)
+  def device():
+@@ -40,11 +40,11 @@
+  originals={n:m.weight.detach().cpu().clone() for n,m in modules.items() if n.startswith('model.layers.')}
+  names=[target(l,p) for l in BLOCKS for p in PROJS]
+  shape={n:list(modules[n].weight.shape) for n in names}
+- env={'python':sys.version,'torch':torch.__version__,'transformers':__import__('transformers').__version__,'numpy':np.__version__,'GPU':torch.cuda.get_device_name(),'capability':torch.cuda.get_device_capability(),'CUDA':torch.version.cuda,'TF32':False,'BF16_reduced_precision_reduction':False,'use_cache':False,'batch':1,'attention':'sdpa','head':'native full256-position LM head, all arms','initial_memory':device(),'model_config':model.config.to_dict(),'target_shapes':shape,'model_weight_whole_file_hash':'NOT_REHASHED; existing blob identity and stat only'}
++ env={'python':sys.version,'torch':torch.__version__,'transformers':__import__('transformers').__version__,'numpy':np.__version__,'GPU':torch.cuda.get_device_name(),'capability':torch.cuda.get_device_capability(),'CUDA':torch.version.cuda,'TF32':False,'BF16_reduced_precision_reduction':False,'use_cache':False,'batch':1,'attention':'sdpa','head':'native full256-position LM head, all arms','initial_memory':device(),'model_config':model.config.to_dict(),'target_shapes':shape,'model_weight_whole_file_hash':'LOCAL_IDENTITY_VERIFIED; full hash in p1_r2 authorization; no independently fetched official digest'}
+  save(private/'runtime.private.json',dict(env,python_path=sys.executable,model_path=args.model));save(out/'runtime_manifest.json',env)
+  ledger={n:{'W_BF16_bytes':np.prod(s)*2,'W_FP64_temporary_bytes':np.prod(s)*8,'CAL_X_Z_FP64_bytes':2*s[1]*8192*8,'Gram_FP64_bytes':s[1]**2*8,'Cholesky_FP64_bytes':s[1]**2*8,'INT4_core_bytes':36+s[0]*((s[1]+63)//64)*4+s[0]*((s[1]+63)//64)*32} for n,s in shape.items()}
+- save(out/'memory_ledger.json',{'per_target':{n:{k:int(v) for k,v in row.items()} for n,row in ledger.items()},'full_logits_BF16_bytes':256*model.config.vocab_size*2,'selected_logits_FP32_bytes':16*model.config.vocab_size*4,'model_parameter_BF16_bytes':sum(p.numel()*p.element_size() for p in model.parameters()),'storage_policy':'read existing cache only if separately authorized; no model staging copy created'})
+- traces=private/'traces';art=private/'artifacts';ref={};prefix_art={};artifact_meta={};fits={};prefix_metrics={}
++ save(out/'memory_ledger.json',{'per_target':{n:{k:int(v) for k,v in row.items()} for n,row in ledger.items()},'full_logits_BF16_bytes':256*model.config.vocab_size*2,'selected_logits_FP32_bytes':16*model.config.vocab_size*4,'model_parameter_BF16_bytes':sum(p.numel()*p.element_size() for p in model.parameters()),'storage_policy':'user-authorized existing WSL snapshot read-only; no D origin prerequisite; no staging copy'})
++ traces=private/'traces';art=private/'artifacts';ref={};prefix_art={};artifact_meta={};fits={};prefix_metrics={};forward_counts={};forward_stage=['SMOKE'];prefix_verified=set()
+  def location(kind,d,n,part):return traces/kind/d['document_id_hash']/(n.replace('.','_')+'_'+part+'.npy')
+  def putarray(p,a):
+   p.parent.mkdir(parents=True,exist_ok=True)
+@@ -68,6 +68,8 @@
+    f=logits[:-1].float();loss=torch.nn.functional.cross_entropy(f,ids[0,1:],reduction='sum');arg=f.argmax(-1).cpu().numpy()
+    sel=logits[torch.tensor(POSITIONS,device='cuda')].float();torch.cuda.synchronize()
+    stats={'NLL_sum':float(loss),'valid_token_count':255,'wall_seconds':time.monotonic()-t,'peak_allocated':torch.cuda.max_memory_allocated(),'peak_reserved':torch.cuda.max_memory_reserved(),**device()}
++   forward_counts[forward_stage[0]]=forward_counts.get(forward_stage[0],0)+1
++   append(out/'forward_calls.jsonl',dict(stage=forward_stage[0],document_id_hash=d['document_id_hash'],split=d['split'],**stats))
+    return stats,arg,sel.cpu().numpy(),buf
+   finally:
+    for h in hooks:h.remove()
+@@ -81,6 +83,12 @@
+      p=art/'prefix'/f'{n}.int4';w,_,_,st=write_reload(p,originals[n].float().numpy());prefix_art[n]=p
+     else:w=decode(prefix_art[n].read_bytes())[0]
+     m.weight.data.copy_(torch.from_numpy(w).to('cuda',torch.bfloat16))
++  if depth not in prefix_verified:
++   unchanged=[n for n in originals if int(n.split('.')[2])>=depth]
++   assert all(torch.equal(modules[n].weight.detach().cpu(),originals[n]) for n in unchanged)
++   assert model.lm_head.weight.data_ptr()==model.model.embed_tokens.weight.data_ptr()
++   event('PREFIX_BOUNDARY_VERIFIED',depth=depth,prefix_projection_count=7*depth,unchanged_projection_count=len(unchanged))
++   prefix_verified.add(depth)
+  def teacher_run(ds):
+   restore_all()
+   for d in ds:
+@@ -114,7 +122,10 @@
+   best=min(sums)[1];event('FIT_TARGET_FROZEN',target=n,selected_alpha=best,lambda_value=lam)
+   return {'target':n,'selected_alpha':best,'alpha_CAL_SSE':{str(a):v for v,a in sums},'selected_artifact_sha256':artifact_meta[(n,best)]['sha256'],'K_sha256':sha(art/f'{n}_K.npy'),'lambda':lam}
+  # Separate smoke, no CAL/DEV/EVAL reads used to set tolerances.
+- teacher_run([smoke]);setprefix(4);stats,_,_,buf=forward(smoke,[target(4,'o_proj')]);sx,sy=np.load(location('teacher',smoke,target(4,'o_proj'),'X')),np.load(location('teacher',smoke,target(4,'o_proj'),'Y'))
++ teacher_run([smoke]);restore_all();tr,ta,ts,tbuf=forward(smoke,names)
++ teacher_reinstall_exact=all(np.array_equal(tbuf[n][0],np.load(location('teacher',smoke,n,'X'))) and np.array_equal(tbuf[n][1],np.load(location('teacher',smoke,n,'Y'))) for n in names) and np.array_equal(ts,np.load(traces/'reference'/smoke['document_id_hash']/'selected.npy')) and np.array_equal(ta,np.load(traces/'reference'/smoke['document_id_hash']/'argmax.npy'))
++ assert teacher_reinstall_exact
++ setprefix(4);stats,_,_,buf=forward(smoke,[target(4,'o_proj')]);sx,sy=np.load(location('teacher',smoke,target(4,'o_proj'),'X')),np.load(location('teacher',smoke,target(4,'o_proj'),'Y'))
+  n=target(4,'o_proj');z,_=buf[n];w=originals[n].float().numpy();k,lam,_=fit_torch(w,sx,z)
+  q0=decode(encode(w)[0])[0];q=decode(encode(w+k)[0])[0];m=measure(w,sx,z,k,q,q0)
+  # Repeat unmodified path for actual runtime parity.
+@@ -123,22 +134,23 @@
+  modules[n].weight.data.copy_(torch.from_numpy(saved_q).to('cuda',torch.bfloat16))
+  cst,_,_,cb=forward(smoke,[n]);assert np.array_equal(z,cb[n][0])
+  smoke_actual=measure(w,sx,z,k,q,q0,sy,cb[n][1],modules[n].weight.detach().float().cpu().numpy());modules[n].weight.data.copy_(originals[n].to('cuda'))
+- tolerance={'identity_relative':1e-10,'sign_relative_to_SSE_scale':1e-9,'runtime_repeat_exact':repeat_equal,'SMOKE_identity_relative_gap':m['identity_relative_gap'],'frozen_before_MAIN':True,'arithmetic_residual':'measured separately; not used as algebra identity gap'}
++ tolerance={'identity_relative':1e-10,'sign_relative_to_SSE_scale':1e-9,'runtime_repeat_exact':repeat_equal,'teacher_reinstall_exact':teacher_reinstall_exact,'SMOKE_identity_relative_gap':m['identity_relative_gap'],'frozen_before_MAIN':True,'arithmetic_residual':'measured separately; not used as algebra identity gap'}
+  assert m['identity_relative_gap']<=tolerance['identity_relative'];save(out/'smoke.json',dict(stats,tolerance=tolerance,model_shapes=shape,actual_candidate=smoke_actual,forward_calls_planned=3865,rough_forward_wall_only_estimate_seconds=3865*stats['wall_seconds'],estimate_excludes_CPU_fit_pack_local_analysis=True));event('SPEC_FROZEN',code_freeze=freeze)
+  if args.smoke_only:return
+  selections=[]
+- teacher_run(cal)
++ forward_stage[0]='CAL_TEACHER';teacher_run(cal)
+  fitorder=list(BLOCKS);np.random.default_rng(6101515).shuffle(fitorder)
+  for l in fitorder:
+-  capture_prefix(l,cal)
++  forward_stage[0]='CAL_PREFIX';capture_prefix(l,cal)
+   for p in PROJS:selections.append(fit_target(target(l,p)))
+  save(out/'fit_frozen.json',{'selected':selections,'code_freeze_sha256':freeze,'input_manifest_sha256':sha(private/'inputs/input_manifest.json'),'selection_data':'CAL-FIT only','frozen_before_non_CAL_forward':True});event('FIT_FROZEN')
+  artifact_rows=[]
+  for (n,a),meta in artifact_meta.items():artifact_rows.append(dict(target=n,alpha=a,sha256=meta['sha256'],**meta['stats']))
+  save(out/'artifact_manifest.json',{'candidates':artifact_rows,'prefix_count':len(prefix_art),'external_private_artifact_not_in_review_zip':True})
+- other=[d for d in main_docs if d['split']!='CAL-FIT'];teacher_run(other)
+- for l in fitorder:capture_prefix(l,other)
+- event('EVAL_RUNNING')
++ other=[d for d in main_docs if d['split']!='CAL-FIT'];forward_stage[0]='HELDOUT_TEACHER';teacher_run(other)
++ for l in fitorder:
++  forward_stage[0]='HELDOUT_PREFIX';capture_prefix(l,other)
++ event('EVAL_RUNNING');forward_stage[0]='GRID'
+  order=[(l,p,a) for l in BLOCKS for p in PROJS for a in ALPHAS];np.random.default_rng(6101515).shuffle(order)
+  completed=[]
+  for l,p,alpha in order:
+@@ -154,7 +166,7 @@
+     assert meas['identity_relative_gap']<=tolerance['identity_relative'],'decomposition failure'
+     rsel=np.load(traces/'reference'/d['document_id_hash']/'selected.npy');lp=torch.log_softmax(torch.from_numpy(sel).cuda(),-1);rlp=torch.log_softmax(torch.from_numpy(rsel).cuda(),-1)
+     kl=float((rlp.exp()*(rlp-lp)).sum());flip=int((arg!=np.load(traces/'reference'/d['document_id_hash']/'argmax.npy')).sum());base=ref[d['document_id_hash']]
+-    row=dict(run_id='local_r1',stage='P1',source_commit=env.get('source_commit',subprocess.check_output(['git','rev-parse','HEAD'],text=True,cwd=case).strip()),code_freeze_sha256=freeze,model_revision='c1899de289a04d12100db370d81485cdf75e47ca',tokenizer_revision='c1899de289a04d12100db370d81485cdf75e47ca',quantizer_variant='RTN_RIDGE_COMPENSATION',bits=4,group_size=64,scale_dtype='FP32',solver_dtype='CPU FP64',rounding='nearest ties-to-even',split=d['split'],document_id_hash=d['document_id_hash'],token_hash=d['token_hash'],offset=d['offset'],calibration_seed=6101515,block=l,projection=p,alpha=alpha,lambda_value=fits[n]['lambda'],input_path='common teacher X and hybrid prefix Z',artifact_sha256=meta['sha256'],input_identical_across_alpha=input_match,**meas,**stats,NLL_teacher_sum=base['NLL_sum'],sampled_full_vocab_KL_sum=kl,KL_position_count=16,flip_count=flip,code_change_rate=code_change,scale_change_mean=float(scale_rel.mean()),scale_change_max=float(scale_rel.max()),**meta['stats'],status='COMPLETE')
++    row=dict(run_id=run_id,stage='P1',source_commit=env.get('source_commit',subprocess.check_output(['git','rev-parse','HEAD'],text=True,cwd=case).strip()),code_freeze_sha256=freeze,model_revision='c1899de289a04d12100db370d81485cdf75e47ca',tokenizer_revision='c1899de289a04d12100db370d81485cdf75e47ca',quantizer_variant='RTN_RIDGE_COMPENSATION',bits=4,group_size=64,scale_dtype='FP32',solver_dtype='CPU FP64',rounding='nearest ties-to-even',split=d['split'],document_id_hash=d['document_id_hash'],token_hash=d['token_hash'],offset=d['offset'],calibration_seed=6101515,block=l,projection=p,alpha=alpha,lambda_value=fits[n]['lambda'],input_path='common teacher X and hybrid prefix Z',artifact_sha256=meta['sha256'],input_identical_across_alpha=input_match,**meas,**stats,NLL_teacher_sum=base['NLL_sum'],sampled_full_vocab_KL_sum=kl,KL_position_count=16,flip_count=flip,code_change_rate=code_change,scale_change_mean=float(scale_rel.mean()),scale_change_max=float(scale_rel.max()),**meta['stats'],status='COMPLETE')
+     append(tmp,row)
+    tmp.rename(cell);completed.append(cell.name);event('CELL_COMPLETE',cell=cell.name,rows=len(main_docs),wall=time.monotonic()-cellstart)
+   finally:modules[n].weight.data.copy_(originals[n].to('cuda'))
+@@ -162,16 +174,17 @@
+  class Continuous(torch.nn.Module):
+   def __init__(self,w,b):super().__init__();self.weight=torch.nn.Parameter(torch.from_numpy(w.astype('f4')).cuda(),requires_grad=False);self.bias=None if b is None else torch.nn.Parameter(b.detach().float(),requires_grad=False)
+   def forward(self,x):return torch.nn.functional.linear(x.float(),self.weight,self.bias).to(x.dtype)
++ forward_stage[0]='CONTINUOUS'
+  for l in BLOCKS:
+   setprefix(l)
+   for p in PROJS:
+-   if time.monotonic()-start>5200:event('CONTINUOUS_NOT_RUN_BUDGET',block=l,projection=p);continue
++   if time.monotonic()-start>args.budget_seconds-200:event('CONTINUOUS_NOT_RUN_BUDGET',block=l,projection=p);continue
+    n=target(l,p);old=model.get_submodule(n);par_name,attr=n.rsplit('.',1);par=model.get_submodule(par_name);w=originals[n].float().numpy().astype('f8');k=np.load(art/f'{n}_K.npy')
+    try:
+     setattr(par,attr,Continuous(w+k,old.bias))
+     for d in main_docs:
+      st,arg,sel,buf=forward(d,[n]);assert np.array_equal(np.load(location('prefix',d,n,'Z')),buf[n][0]);append(out/'continuous.jsonl',dict(block=l,projection=p,alpha=1,split=d['split'],document_id_hash=d['document_id_hash'],runtime='FP32 Wstar and input; output cast BF16; original bias',NLL_teacher_sum=ref[d['document_id_hash']]['NLL_sum'],**st))
+    finally:setattr(par,attr,old)
+- save(out/'p1_completion.json',{'status':'COMPLETED_FULL' if len(completed)==30 else 'PARTIAL','cells':completed,'rows_per_cell':96,'expected_grid_rows':2880,'teacher_documents':97,'worker_wall_seconds':time.monotonic()-start,'full_generation':0,'GPU_busy_time':'NOT_MEASURED','controls':'PREFIX_ONLY shared by targets; no-prefix CAL fit; FP32 continuous alpha1','peak':device(),'code_freeze_sha256':freeze})
++ save(out/'p1_completion.json',{'status':'COMPLETED_FULL' if len(completed)==30 else 'PARTIAL','cells':completed,'rows_per_cell':96,'expected_grid_rows':2880,'teacher_documents':97,'worker_wall_seconds':time.monotonic()-start,'full_generation':0,'forward_counts':forward_counts,'total_full_model_forward_calls':sum(forward_counts.values()),'GPU_busy_time':'NOT_MEASURED','controls':'PREFIX_ONLY shared by targets; no-prefix CAL fit; FP32 continuous alpha1','peak':device(),'code_freeze_sha256':freeze})
+  event('REVIEW_DATA_READY')
+ if __name__=='__main__':main()
+--- prepared/launch.py
++++ p1_r2/launch.py
+@@ -6,12 +6,16 @@
+ out=Path(a.output);out.mkdir(parents=True,exist_ok=True)
+ if any(out.iterdir()):raise SystemExit('output must be a fresh empty P1 attempt directory')
+ cmd=[a.python,str(Path(__file__).with_name('run_p1.py')),'--model',a.model,'--private',a.private,'--output',a.output]
++used=sum(json.loads(q.read_text()).get('wall_seconds',0) for q in (Path(a.private)/'attempts').glob('p1-*.json'))
++remaining=5400-used
++if remaining<=0:raise SystemExit('cumulative P1 budget exhausted')
++cmd+=['--budget-seconds',str(remaining)]
+ start=time.time();env=dict(os.environ,HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',PYTHONDONTWRITEBYTECODE='1',OMP_NUM_THREADS='4',OPENBLAS_NUM_THREADS='4',MKL_NUM_THREADS='4')
+ log=Path(a.private)/'attempts'/('p1-'+out.name+'.log')
+ with log.open('x') as f:
+- try:r=subprocess.run(cmd,env=env,stdout=f,stderr=subprocess.STDOUT,timeout=5450);code=r.returncode
++ try:r=subprocess.run(cmd,env=env,stdout=f,stderr=subprocess.STDOUT,timeout=remaining+5);code=r.returncode
+  except subprocess.TimeoutExpired:code=124
+-receipt={'argv':cmd,'exit_code':code,'wall_seconds':time.time()-start,'log':str(log),'GPU_busy_time':'NOT_MEASURED'}
++receipt={'argv':cmd,'exit_code':code,'wall_seconds':time.time()-start,'log':str(log),'GPU_busy_time':'NOT_MEASURED','cumulative_prior_worker_seconds':used,'budget_remaining_at_start':remaining}
+ save(Path(a.private)/'attempts'/('p1-'+out.name+'.json'),receipt)
+-save(out/'worker_receipt.json',{'argv':['PYTHON','scripts/run_p1.py','--model','MODEL_SNAPSHOT','--private','PRIVATE_RUN_ROOT','--output','FRESH_P1_OUTPUT'],'exit_code':code,'wall_seconds':receipt['wall_seconds'],'GPU_busy_time':'NOT_MEASURED'})
++save(out/'worker_receipt.json',{'argv':['PYTHON','scripts/run_p1.py','--model','MODEL_SNAPSHOT','--private','PRIVATE_RUN_ROOT','--output','FRESH_P1_OUTPUT'],'exit_code':code,'wall_seconds':receipt['wall_seconds'],'GPU_busy_time':'NOT_MEASURED','cumulative_prior_worker_seconds':used,'budget_remaining_at_start':remaining})
+ print(receipt);sys.exit(code)

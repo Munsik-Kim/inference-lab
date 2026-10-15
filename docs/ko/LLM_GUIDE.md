@@ -22,3 +22,8 @@ Case008 R은 다른 모델인 Qwen3-0.6B의 pruning 후 복원 구현입니다. 
 본문은 `presentation/guides/`에서 관리하고, 주요 수치는 원자료를 읽는 빌더에서 넣습니다. 같은 수치를 이 Markdown에 따로 복사하지 않습니다. 출처 commit·파일별 SHA256·필드·정확한 값은 빌드의 `data/practical-guide.json`과 `build_manifest.json`에서 확인할 수 있습니다.
 
 2026-10-15: 기존 공개 기록을 연결한 안내서 추가. 새 GPU 실험·모델 다운로드·양자화·벤치마크 재실행 없음. 실제 독자 평가는 미실행입니다.
+
+<!-- case014-entry -->
+## 별도0.6B 보정 연구
+
+[Case014](../../cases/014-quantization-compensation/README.ko.md) · [Pages](https://munsik-kim.github.io/inference-lab/ko/case014.html#overview). Qwen3-0.6B의 별도 품질 연구이며 위 Qwen3-4B 추천·성능표에 합산하지 않습니다.

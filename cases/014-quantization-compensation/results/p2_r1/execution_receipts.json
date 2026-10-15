@@ -1,0 +1,69 @@
+{
+  "workers": [
+    {
+      "phase": "main",
+      "command": "${REFERENCE_PYTHON} followups/p2_core/source/run_p2.py --case ${CASE} --private ${P2_PRIVATE} --output ${OUTPUT} --prior-worker-seconds ${PRIOR}",
+      "exit_code": 0,
+      "wall_seconds": 1116.051567991999,
+      "timeout": false,
+      "log_sha256": "b35b9eef792ded1daf210740d59de846f4290c79d4b54444ad4688fb4781b79a"
+    },
+    {
+      "phase": "reload",
+      "command": "${REFERENCE_PYTHON} followups/p2_core/source/reload_worker.py --case ${CASE} --private ${P2_PRIVATE} --output ${OUTPUT} --remaining-seconds ${REMAINING}",
+      "exit_code": 0,
+      "wall_seconds": 14.263564974000474,
+      "timeout": false,
+      "log_sha256": "e6b58c9a4694716828df6082a56a4df289d2ccb932997bf165815d9b9d985244"
+    },
+    {
+      "phase": "supplemental_reused_SMOKE_matrix_check",
+      "exit_code": 0,
+      "timeout": false,
+      "wall_seconds": 11.21366696199766,
+      "remaining_budget_before": 9669.683269506,
+      "log_sha256": "99a9e149f950886ef2334913c0b9f352abc610f485a38c444d9d07946d9a8f30",
+      "command": "${REFERENCE_PYTHON} followups/p2_core/source/smoke_matrix_probe.py --case ${CASE} --private ${P2_PRIVATE} --output ${OUTPUT}",
+      "full_model_forwards": 4,
+      "scope": "registered fixed reused-SMOKE only; no new fitting/encoding or fresh evaluation"
+    }
+  ],
+  "pre_GPU_regressions": [
+    {
+      "log": "logs/old15.log",
+      "unique_tests": 15,
+      "kind": "original P0 regression rerun",
+      "status": "PASS",
+      "exit_code": 0,
+      "evidence": "actual pre-GPU execution completed successfully; log count/OK checked again here"
+    },
+    {
+      "log": "logs/p1b10.log",
+      "unique_tests": 10,
+      "kind": "existing P1b regression rerun",
+      "status": "PASS",
+      "exit_code": 0,
+      "evidence": "actual pre-GPU execution completed successfully; log count/OK checked again here"
+    },
+    {
+      "log": "logs/tests-p2-02.log",
+      "unique_tests": 9,
+      "kind": "unique new P2 tests",
+      "status": "PASS",
+      "exit_code": 0,
+      "evidence": "actual pre-GPU execution completed successfully; log count/OK checked again here"
+    }
+  ],
+  "CLI_help": {
+    "command": "${REFERENCE_PYTHON} followups/p2_core/source/run_p2.py --help",
+    "exit_code": 0,
+    "log": "logs/cli-help.log",
+    "model_forwards": 0
+  },
+  "data_prepare": {
+    "command": "${DATA_PYTHON} followups/p2_core/source/prepare_inputs.py --case ${CASE} --private ${P2_PRIVATE} --pg19 ${PG19_TRAIN_SHARD_00000} --pile ${PILE10K_ARROW}",
+    "exit_code": 0,
+    "log": "logs/data-01.log",
+    "new_transfer_bytes": 0
+  }
+}

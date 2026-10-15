@@ -1,0 +1,167 @@
+{
+  "status": "PASS",
+  "stage_views": {
+    "P0": {
+      "stage": "P0",
+      "status": "PASS",
+      "files": 69,
+      "original_manifest": "PUBLIC_MANIFEST.json",
+      "closed_set": true,
+      "large_private_artifacts": "external identities only"
+    },
+    "P1": {
+      "stage": "P1",
+      "status": "PASS",
+      "files": 238,
+      "original_manifest": "P1_PUBLIC_MANIFEST.json",
+      "closed_set": true,
+      "large_private_artifacts": "external identities only"
+    },
+    "P1b": {
+      "stage": "P1b",
+      "status": "PASS",
+      "files": 202,
+      "original_manifest": "REVIEW_MANIFEST.json",
+      "closed_set": true,
+      "large_private_artifacts": "external identities only"
+    },
+    "P2": {
+      "stage": "P2",
+      "status": "PASS",
+      "files": 172,
+      "original_manifest": "REVIEW_MANIFEST.json",
+      "closed_set": true,
+      "large_private_artifacts": "external identities only"
+    }
+  },
+  "steps": [
+    {
+      "name": "P1-raw-and120-CIs",
+      "command": [
+        "${CPU_PYTHON}",
+        "-B",
+        "analysis/p1_r2/audit_public.py",
+        "--case",
+        "${SCRATCH}/view-P1",
+        "--bootstrap",
+        "--output",
+        "${SCRATCH}/p1-audit.json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.39364860400382895,
+      "tests_executed": null,
+      "log_sha256": "4e6adb292c540bf16eb48d5b0cfe528dba68336b39d57a163b5d29fb1a98f86f"
+    },
+    {
+      "name": "P1b-raw-and462-CIs",
+      "command": [
+        "${CPU_PYTHON}",
+        "-B",
+        "followups/p1b_selection/source/audit_saved.py",
+        "--run",
+        "results/p1b_r2",
+        "--output",
+        "${SCRATCH}/p1b-audit.json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.5271441680015414,
+      "tests_executed": null,
+      "log_sha256": "6bd79aaf08b880814c25a578d0bb95d4c11aff1a94e6d40a2de6d07631ca306f"
+    },
+    {
+      "name": "P2-raw-and20-CI-fields",
+      "command": [
+        "${CPU_PYTHON}",
+        "-B",
+        "followups/p2_core/source/audit.py",
+        "--run",
+        "results/p2_r1",
+        "--output",
+        "${SCRATCH}/p2-audit.json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.15594696100015426,
+      "tests_executed": null,
+      "log_sha256": "26b78a65f5bdeb30a0b14fd3b58e6e0df9dd1b5a2292c04b76f5598669d3b1e3"
+    },
+    {
+      "name": "P0-existing15",
+      "command": [
+        "${CPU_PYTHON}",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 2.253451493998,
+      "tests_executed": 15,
+      "log_sha256": "62d695bef61c88f542eb0831353318592c1dcdd6ddbda5e0c023cc5309cca370"
+    },
+    {
+      "name": "P1b-existing10",
+      "command": [
+        "${CPU_PYTHON}",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "followups/p1b_selection/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.09410460400249576,
+      "tests_executed": 10,
+      "log_sha256": "788d0a9d7f19dc2fd7e953d88b4feab3705662f5477f77aa0c00423cb35bf2a9"
+    },
+    {
+      "name": "P2-existing9",
+      "command": [
+        "${CPU_PYTHON}",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "followups/p2_core/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.845863565999025,
+      "tests_executed": 9,
+      "log_sha256": "0fda22f911718e766a1bfb5f20b3c5ec1bf18fce65a3121cc042b92733f021c1"
+    },
+    {
+      "name": "publication-new",
+      "command": [
+        "${CPU_PYTHON}",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "publication/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.4109300880008959,
+      "tests_executed": 6,
+      "log_sha256": "8d4b13565ee6969e82b83bed2bba2c066bda202601cb075fbdb578dfed11c4f1"
+    }
+  ],
+  "record_counts": {
+    "P1": 2880,
+    "P1b": 3360,
+    "P2": 320
+  },
+  "raw_derived_display_matches": true,
+  "P0_MC_rerun": false,
+  "new_model_forwards": 0,
+  "K_refits_or_requantizations": 0,
+  "wall_seconds": 5.028163668001071,
+  "scope": "Historical closed views, stored exact/dither scalars, original paired bootstrap seeds, full raw identities/units/aliases and public display. No private payload decode or GPU reproduction; historical GPU receipts stay separate."
+}

@@ -1,0 +1,12 @@
+Case014 P2 — 약한 양자화 보정은 전체 모델에서도 도움이 될까?
+2026-10-15
+
+P1/P1b를 본 뒤의 별도 후속. BF16/RTN/고정0.25/고정0.5만 비교한다. P2에서만 새 K와 INT4 저장본을 만든다. 기존 P1/P1b는 읽기 전용이다.
+
+원 CAL32를 재사용하고 각 방법의 자체 현재 경로 Z에서 full-input FP64 ridge K를 적합한다. qkv→o→gate/up→down 순서마다 원 CausalLM 전체 forward를 다시 실행한다. qkv/gate-up만 같은 입력의 Gram factor를 공유한다. blockwise shortcut은 사용하지 않는다. 모든 weight는 원 BF16 W에서 보정한다.
+
+새 자료를 열기 전에 spec을 등록했다. 새 PG19 64책/ArXiv16 content group을 기존209개 고유 입력과 분리한다. availability에 따른 사전 축소만 허용하며 모델 품질로 고르지 않는다. seed data6101521/order6101522/bootstrap6101523.
+
+모든196×3 artifact와 source/input/config를 동결한 뒤 fresh 평가를 연다. primary는 PG19 문서평균 NLL의 QUARTER−RTN. bootstrap10000 문서 paired CI로 LOWER/HIGHER/INCONCLUSIVE를 구분한다. HALF/SHIFT는 보조 비교다.
+
+전체 worker10800초에 load/fit/pack/reload/capture/eval/실패를 포함한다. 새 데이터 준비·후처리는 별도. backbone training/model download/install/upgrade/build/새 selector/P3/4B/agent/packed serving/remote publication은 하지 않는다.

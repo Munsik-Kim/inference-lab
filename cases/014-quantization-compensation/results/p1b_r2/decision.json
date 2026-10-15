@@ -1,0 +1,35 @@
+{
+  "status": "COMPLETED_P1B",
+  "run_id": "p1b_r2",
+  "candidate_rows": 3360,
+  "target_alpha_split_cells": 90,
+  "failed_core_cells": 0,
+  "missing_core_cells": 0,
+  "core_targets": 6,
+  "alpha_grid": [
+    0,
+    0.25,
+    0.5,
+    0.75,
+    1
+  ],
+  "selection_frozen_before_EVAL": true,
+  "A_OLD_FIT_LOCAL_TRANSFER": {
+    "verdict": "LOWER_FRESH_ID_LOCAL_SSE",
+    "D_macro": -0.36078005260289553,
+    "CI95": [
+      -0.38558192190215557,
+      -0.33820850836083155
+    ],
+    "unit": "difference / alpha0 SSE; six fixed independent interventions"
+  },
+  "B_ADDITIONAL_VS_SIMPLE_FIXED": "ID local SSE lower than fixed .25/.5; NLL gain over .25 inconclusive, over .5 auxiliary pointwise CI below zero.",
+  "C_SSE_VS_NLL": "Selections differ for 5/6 targets; ID NLL-selector minus SSE-selector NLL CI includes zero; NLL selection can worsen local SSE.",
+  "D_SHIFT_COST_BYTES": "Both selectors worsen SHIFT SSE and NLL vs alpha0; selected core bytes unchanged; SELECT phase shares full forward evaluation cost.",
+  "P2": "NOT_RUN_SCOPE",
+  "P2_RECOMMENDATION": "Do not adopt these six independent alpha choices as a full-model default. Any P2 requires separate approval and own-trajectory/fresh-evaluation registration.",
+  "P3": "NOT_RUN_SCOPE",
+  "FORMAL_SERVING_BENEFIT": "NOT_ESTABLISHED",
+  "REMOTE_PUBLICATION": false,
+  "backbone_training_or_fit_or_requantize": false
+}

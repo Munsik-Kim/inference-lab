@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "started_utc": "2026-10-15T06:30:35.689246+00:00",
+  "ended_utc": "2026-10-15T06:49:26.005977+00:00",
+  "steps": [
+    {
+      "phase": "main",
+      "exit_code": 0,
+      "wall_seconds": 1116.051567991999,
+      "timeout": false,
+      "log_sha256": "b35b9eef792ded1daf210740d59de846f4290c79d4b54444ad4688fb4781b79a"
+    },
+    {
+      "phase": "reload",
+      "exit_code": 0,
+      "wall_seconds": 14.263564974000474,
+      "timeout": false,
+      "log_sha256": "e6b58c9a4694716828df6082a56a4df289d2ccb932997bf165815d9b9d985244"
+    }
+  ],
+  "total_worker_wall_seconds": 1130.3167304939998,
+  "previous_worker_seconds": 0,
+  "cumulative_worker_wall_seconds": 1130.3167304939998,
+  "budget_seconds": 10800.0,
+  "accounting": "subprocess lifetimes include imports/load/CPU fit/packing/native captures/metrics/I/O/failure; not GPU busy time",
+  "commands": [
+    "${REFERENCE_PYTHON} followups/p2_core/source/run_p2.py --case ${CASE} --private ${P2_PRIVATE} --output ${OUTPUT} --prior-worker-seconds ${PRIOR}",
+    "${REFERENCE_PYTHON} followups/p2_core/source/reload_worker.py --case ${CASE} --private ${P2_PRIVATE} --output ${OUTPUT} --remaining-seconds ${REMAINING}"
+  ]
+}

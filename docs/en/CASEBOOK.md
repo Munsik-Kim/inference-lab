@@ -22,6 +22,8 @@ Each case follows **objective → dataset → assumptions and theory → experim
 - [012 — Where should an image-generation budget go?](#case-012)
 - [013 — Does lower weight error improve real answers?](#case-013)
 
+- [014 — Improving quality at the same INT4 storage budget](#case-014)
+
 <a id="case-001"></a>
 ## 001 — Can a kernel-selection change unblock execution?
 
@@ -629,3 +631,13 @@ The follow-up using Case010 state storage is [Case011 readout adaptation](#case-
 With unchanged quantized weights, registry-aware feedback and name enum decoding were compared separately. On the same eight existing DEV tasks, D16 changed6/8→8/8 and D4 changed0/8→2/8. Enum conditions emitted zero unregistered-name calls; six other D4 tasks failed. Identical final JSON can receive different correctness when actual patch/validation differs. No held-out generalization or packed serving benefit is established.
 
 [Overview and CPU commands](../../research/agent_tool_contract_repair_20261014/README.md) · [Follow-up report](../../research/agent_tool_contract_repair_20261014/records/REPORT.md) · [Earlier diagnostic](../../research/agent_stability_20261013/README.md)
+
+<!-- case014-entry -->
+<a id="case-014"></a>
+## 014 — Improving Model Quality at the Same INT4 Storage Budget
+
+The case tests quality transfer at identical storage format: P0 algebra/codec → P1 CAL-selection transfer failure → P1b independent selection → P2 own-trajectory full-model comparison.
+
+Qwen3-0.6B · 196 projections ·PG19 PPL 57.600→50.156 (12.92% lower). 64/64 excerpts have lower NLL. ArXiv QUARTER has a higher point estimate with a CI crossing 0; HALF has higher NLL. This is a BF16 reload reference; packed speed/VRAM gains are unevaluated.
+
+[Pages](https://munsik-kim.github.io/inference-lab/en/case014.html#overview) · [Report](../../cases/014-quantization-compensation/REPORT.md) · [Code](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [CPU](../../cases/014-quantization-compensation/REPRODUCE.md) · [Stage map](../../cases/014-quantization-compensation/STAGE_MAP.md)

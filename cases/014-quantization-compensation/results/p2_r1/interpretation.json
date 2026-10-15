@@ -1,0 +1,33 @@
+{
+  "registered_primary": {
+    "split": "EVAL-ID",
+    "candidate": "COMP_QUARTER",
+    "baseline": "RTN",
+    "documents": 64,
+    "mean_document_delta_NLL": -0.1383737788480871,
+    "CI95": [
+      -0.14941367018456553,
+      -0.12751511274599564
+    ],
+    "PPL_relative_change": -0.12922684567648113,
+    "PPL_relative_change_CI95": [
+      -0.1387872168488266,
+      -0.11971988771604719
+    ],
+    "verdict": "LOWER_NLL",
+    "primary": true,
+    "lower_documents": 64,
+    "higher_documents": 0,
+    "exact_ties": 0,
+    "median": -0.14070901309742645,
+    "project_reference_PPL_1pct_reduction_reached": true,
+    "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+  },
+  "scope": "actual whole-model Qwen3-0.6B; original CAL32; fresh PG19 and separate fresh ArXiv groups",
+  "PG19": "lower NLL at identical core bytes",
+  "ArXiv": "QUARTER higher point estimate with CI crossing zero; HALF higher NLL with auxiliary CI above zero",
+  "serving_benefit": "NOT_ESTABLISHED",
+  "new_selector": false,
+  "primary_changed_to_HALF": false,
+  "P3_or_remote_next_step": "NOT_RUN_SCOPE"
+}

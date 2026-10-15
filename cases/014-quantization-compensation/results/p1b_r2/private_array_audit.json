@@ -1,0 +1,82 @@
+{
+  "status": "PASS",
+  "audited_utc": "2026-10-15T05:11:18.683794+00:00",
+  "full_private_matrix_rows": [
+    {
+      "target": "model.layers.4.self_attn.o_proj",
+      "alpha": 0,
+      "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+      "scalar_fields": 9,
+      "max_scaled_difference": 1.5577349344691094e-16,
+      "status": "PASS"
+    },
+    {
+      "target": "model.layers.4.self_attn.o_proj",
+      "alpha": 0.25,
+      "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+      "scalar_fields": 9,
+      "max_scaled_difference": 1.636245288065449e-16,
+      "status": "PASS"
+    },
+    {
+      "target": "model.layers.4.self_attn.o_proj",
+      "alpha": 1,
+      "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+      "scalar_fields": 9,
+      "max_scaled_difference": 4.474367244238251e-15,
+      "status": "PASS"
+    },
+    {
+      "target": "model.layers.12.mlp.down_proj",
+      "alpha": 0,
+      "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+      "scalar_fields": 9,
+      "max_scaled_difference": 1.7107187354185466e-16,
+      "status": "PASS"
+    },
+    {
+      "target": "model.layers.12.mlp.down_proj",
+      "alpha": 0.25,
+      "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+      "scalar_fields": 9,
+      "max_scaled_difference": 2.7493222569132676e-15,
+      "status": "PASS"
+    },
+    {
+      "target": "model.layers.12.mlp.down_proj",
+      "alpha": 1,
+      "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+      "scalar_fields": 9,
+      "max_scaled_difference": 2.2952171144415427e-16,
+      "status": "PASS"
+    },
+    {
+      "target": "model.layers.20.mlp.down_proj",
+      "alpha": 0,
+      "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+      "scalar_fields": 9,
+      "max_scaled_difference": 2.1061279686187962e-16,
+      "status": "PASS"
+    },
+    {
+      "target": "model.layers.20.mlp.down_proj",
+      "alpha": 0.25,
+      "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+      "scalar_fields": 9,
+      "max_scaled_difference": 3.552713678800501e-14,
+      "status": "PASS"
+    },
+    {
+      "target": "model.layers.20.mlp.down_proj",
+      "alpha": 1,
+      "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+      "scalar_fields": 9,
+      "max_scaled_difference": 1.4210854715202004e-13,
+      "status": "PASS"
+    }
+  ],
+  "cropped_actual_SMOKE_array_identity_scaled_gap": 1.0842021724855044e-19,
+  "cropped_SMOKE_scope": "8×32 weight /32×8 input slices, validates algebra on actual small slices; not full module output",
+  "method": "independent struct/nibble decoder and Torch CPU FP64 direct products; no decompose.py import, no fitting, no model forward",
+  "limits": "Does not re-evaluate GPU NLL/KL/argmax, candidate BF16 output arrays or all 3360 matrix rows. Matrices/model remain external to review ZIP."
+}

@@ -22,6 +22,8 @@
 - [012 — 이미지 생성 시간, 어디에 계산을 더 쓸까?](#case-012)
 - [013 — 가중치 오차가 줄면 실제 답변도 좋아질까?](#case-013)
 
+- [014 — 같은 INT4 저장량으로 모델 품질 개선하기](#case-014)
+
 <a id="case-001"></a>
 ## 001 — 커널 선택 조건을 고치면 실행할 수 있는가?
 
@@ -627,3 +629,13 @@ Case010의 저장 구현을 사용하는 후속 질문은 [Case011의 판독층 
 원형 가중치를 유지하고 오류 안내/이름 제한을 별도로 비교했습니다. 같은 기존 DEV 8개에서 D16은6/8→8/8, D4는0/8→2/8입니다. 이름 제한 조건의 미등록 호출은0회였고 D4의 나머지6개 과제는 실패했습니다. 최종 JSON이 같아도 실제 patch/validation 성공으로 점수가 달라집니다. 새 일반화·packed serving 이득을 판정하지 않습니다.
 
 [쉬운 소개와 CPU 명령](../../research/agent_tool_contract_repair_20261014/README.ko.md) · [후속 보고서](../../research/agent_tool_contract_repair_20261014/records/REPORT_KO.md) · [앞선 원인 진단](../../research/agent_stability_20261013/README.ko.md)
+
+<!-- case014-entry -->
+<a id="case-014"></a>
+## 014 — 같은 INT4 저장량으로 모델 품질 개선하기
+
+목표는 같은 저장 형식에서 보정의 품질 전이를 확인하는 것입니다. P0 대수·codec → P1 강한 CAL 선택의 전이 실패 → P1b 독립 선택 → P2 자체 경로 전층 비교를 한 사례로 연결했습니다.
+
+Qwen3-0.6B ·196 projections ·PG19 PPL57.600→50.156 (12.92% 감소). 64/64 구간 NLL이 낮아졌습니다. ArXiv QUARTER는 악화 점추정·구간0포함, HALF는 악화 구간입니다. BF16 복원 reference이며 packed 속도·VRAM 이득은 미평가입니다.
+
+[Pages](https://munsik-kim.github.io/inference-lab/ko/case014.html#overview) · [Report](../../cases/014-quantization-compensation/REPORT.ko.md) · [Code](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [CPU](../../cases/014-quantization-compensation/REPRODUCE.md) · [Stage map](../../cases/014-quantization-compensation/STAGE_MAP.md)

@@ -195,3 +195,18 @@ python -B cases/011-frozen-state-readout-adaptation/publication/run_checks.py \
 ```
 
 `--synthetic`을 더하면 Torch가 필요한 작은 계약 검사도 실행합니다. 원래 checkpoint의 12개 새 프로세스 재로딩·30개 저장 경계는 과거 receipt이며 위 명령이 모델을 다시 실행하는 것은 아닙니다. 실제 모델과 보정 head weights는 공개 ZIP에 없으며 재실행에는 원래 환경과 별도 파일이 필요합니다.
+
+<!-- case014-entry -->
+<a id="case014-cpu"></a>
+## Case014 — 모델 없이 P0~P2 다시 계산하기
+
+[ZIP](../../downloads/case014_compensation_unified_publication_v1.zip) · [bytes/SHA256](../../downloads/case014_compensation_unified_publication_v1.json) · [Dependencies and scope](../../cases/014-quantization-compensation/REPRODUCE.md)
+
+저장소 root 또는 ZIP 최상위에서 기존 NumPy·CPU Torch Python을 CPU_PY로 지정하고 새 출력 경로를 사용합니다.
+
+```bash
+OUT=$(mktemp -d)
+"$CPU_PY" -B cases/014-quantization-compensation/publication/scripts/run_checks.py --output "$OUT/case014" --tests
+```
+
+원형 closed view·2,880/3,360/320행·선택·구간·표시값·CPU 검사를 재계산합니다. 모델·private payload·원문·새 GPU 추론은 포함하지 않습니다. 전체 사이트 빌드는 ZIP만이 아니라 전체 저장소 clone이 필요합니다.

@@ -1,0 +1,52 @@
+Case014 — 양자화 오차 보정의 상쇄·재양자화·일반화 분석
+실행 명세 v1 / 2026-10-15 KST / 로컬 검토 전용
+
+범위: P0=true, P1=true. P2=false, P3=false, 원격 게시=false.
+이 문서는 사용자 명세를 구현 계약으로 정리한 것이다. 사용자 전체 지시의 보존·금지 범위를 축소하지 않는다.
+
+P0: Fraction 고정 오차 양/음 부호, 독립 4-code fixture, NumPy/Torch FP64 검산,
+versioned group64 INT4 codec 및 새 프로세스 reload, full-input ridge, 누출 경계.
+Dither: d4/X4x16, depth2/8/16, alpha0/.5/1, step.01/.1, 조건마다2000seed.
+무한격자/독립 layer noise/자체 경로 rollout/paired RNG. 유의성은 PASS 기준이 아니다.
+
+P1: 기존 Qwen3-0.6B revision c1899de289a04d12100db370d81485cdf75e47ca.
+블록4/12/20 × o_proj/down_proj × alpha0/.25/.5/.75/1.
+앞 블록의 q/k/v/o/gate/up/down만 RTN, 표적 외 같은 블록과 suffix는 원 BF16.
+BF16 teacher X와 공통 prefix Z를 실제 full model hook으로 캡처, 후보별 Z 동일 확인.
+CAL32/DEV16/EVAL32은 서로 다른 PG19 book URL. SHIFT16은 Pile ArXiv content group.
+문서마다 원문256token/다음255token, chat/BOS/EOS 추가 없음. SMOKE1은 별도.
+
+W[out,in], X/Z[in,tokens]. CAL에서 G=ZZ^T, lambda=.001 trace(G)/din.
+(G+lambda I) K^T = [W(X-Z)Z^T]^T. CPU FP64 Cholesky/triangular solve.
+full Gram, rowchunk128, 명시적 inverse/pinv/lstsq/blockdiagonal 없음.
+Wstar=W+alphaK는 FP32 quantizer 입력으로 변환된다.
+INT4 code[-8,7]/group64/output-row scale FP32 absmax/7/ties-to-even.
+zero group unit scale, nonzero underflow/nonfinite 거절. low-nibble first.
+실제 pack→disk→reload FP32 What→BF16 dense weight로 품질 forward.
+
+A=W(X-Z), C=alpha K Z, B=(What-Wstar)Z, B0=(What0-W)Z.
+R=A-C-B, R0=A-B0, dB=B-B0.
+Delta=SSE_after-SSE_before.
+T_inherited=||C||²-2<A,C>; T_cancellation=2<B0,C>.
+T_cont=||C||²-2<R0,C>; T_requant=||dB||²-2<R0-C,dB>.
+Delta=T_inherited+T_cancellation+T_requant=T_cont+T_requant.
+실제 BF16 출력 차이, weight cast 차이, arithmetic residual을 분리한다.
+고정 B 반사실과 실제 FP32 연속 control을 구분한다.
+
+선택: CAL raw projection SSE 합계 최소, 정확한 동률은 작은 alpha.
+6개 선택과 artifact hash 동결 후 DEV/EVAL/SHIFT forward를 시작한다.
+DEV 재선택 없음. EVAL 최적 alpha는 사후 oracle로만 표시한다.
+문서별 NLL 합계/분모, 고정16위치 full-vocab KL, 255위치 argmax flip.
+bootstrap10000/seed6101516, 문서 pair, 탐색적 pointwise 구간.
+동일 EVAL32문서를 6표적에서 측정해도 독립 문서는32개다.
+
+use_cache=False,batch1,SDPA,TF32=False,BF16 reduced reduction=False。
+원래 전체256위치 LM head를 모든 arm에 공통 적용한다.
+PREFIX_ONLY는3개 depth, no-prefix CAL fit은 K=0.
+alpha1 FP32 연속 weight control은 grid 뒤의 낮은 우선순위 진단이다.
+P1 worker wall 상한5400초, load/fit/IO 포함. GPU busy 시간과 구분한다.
+
+기존 파일·환경은 읽기 전용. 가중치 전체 재hash, 모델 download, install,
+stage/commit/push/PR/merge/Pages/Drive를 하지 않는다.
+D 원본 위치가 불명확하면 WSL cache 사용 여부가 해결될 때까지 모델 실행을 보류한다.
+미실행을 0점, 실패 측정, OOM으로 바꾸지 않는다.

@@ -1,0 +1,36 @@
+Case014 P1b: 보정 강도 선택의 문서 전이 / 2026-10-15
+
+이 계획은 P1 결과를 본 뒤 작성한 후속 DEV 실험이다. 원 P1의 사전계획이 아니다.
+기존 CAL-FIT K 6개, lambda 6개, RTN prefix140개, target INT4 30개와 모델을
+읽기 전용으로 재사용한다. K 재적합, target 재양자화, grid 변경은 하지 않는다.
+
+Q1 SELECT-SSE가 OLD_FIT의 새 문서 과보정을 줄이는가?
+Q2 고정0/.25/.5 대비 선택의 추가 가치는 있는가?
+Q3 국소 SSE와 gold 다음-token NLL로 고른 alpha가 어떻게 다른가?
+
+신규 문서: 기존 PG19 train 첫 cached shard에서 안정적인 canonical ID hash 순서로
+96책을 선택한 뒤 seed6101517로 SELECT32/EVAL64에 배정한다. Pile ArXiv는 기존
+16content group을 제외하고 새16개를 선택한다. 원 P1의97입력과 canonical ID,
+content/token/normalized-window hash와 token5gram 중복을 검사한다. 원문은 private.
+기존 SMOKE1만 REUSED_SMOKE로 재사용한다. 데이터 준비에서 모델 출력은 열지 않는다.
+
+전역 순서: 입력/spec/source 동결 → SMOKE → 모든 SELECT 6×5조건 → 두 selector의
+12개 선택 동결 → 새 EVAL64 → 새 SHIFT16 → 독립 CPU 재계산·한영 보고서·검토 ZIP.
+SELECT_SSE=합산 FP64 projection SSE 최소, SELECT_NLL=token-weighted NLL 최소.
+정확한 동률만 작은 alpha를 택한다. EVAL 값은 선택·보정에 입력하지 않는다.
+BASE_ZERO/OLD_FIT/FIXED_QUARTER/HALF/FULL과 두 selector 7정책은 같은30저장본의
+참조이며 같은 alpha는 새 forward 없이 동일 기록을 가리킨다.
+
+모델/수치/입력 경계는 원 P1 실제 runtime·smoke tolerance를 유지한다. BF16 dense
+reference 전체 hybrid forward, batch1 seq256 SDPA no-cache, full-position head,
+255개 next-token NLL/argmax, 고정16개 full-vocabulary KL을 계산한다.
+저장FP32 What를 FP64로 올린 대수, BF16 cast와 실제 산술 residual을 구분한다.
+
+일차 contrast: 표적별 (S_SELECT_SSE-S_OLD_FIT)/S_alpha0의 여섯 표적 동일가중 평균.
+단위는 baseline SSE 비율이며 여섯을 동시에 보정한 모델의 효과가 아니다.
+문서 paired bootstrap10000회 seed6101519, 모든 표적/정책에 같은 문서 index,
+매 resample 분모 재계산, selector는 동결한 채 유지한다. 다른 구간은 탐색적이다.
+
+worker wall 상한5400초(실패/load/I/O 포함). 준비·분석 CPU 시간은 별도 기록.
+성능에 따라 조건·문서를 바꾸지 않는다. P0 MC/P1 sweep/P2/P3/원격 게시는 실행하지 않는다.
+원형 모든 파일·기록·환경은 보존한다. 이번 새 경로에만 산출물을 쓴다.
