@@ -7,6 +7,12 @@
 사례를 읽고, 기록된 입력을 탐색하거나, 작은 CPU 검사를 실행할 수 있습니다. GPU 재현에는 별도 환경과 명령이 있습니다.
 
 
+## 설치 없이 공개 결과 화면 열기
+
+[한국어 홈](https://munsik-kim.github.io/inference-lab/ko/index.html) · [Case008 Q: 파일 축소·재실행](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) · [Case009: 서빙 비교](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving) · [도구 실패 완화 보고서](../../research/agent_tool_contract_repair_20261014/records/REPORT_KO.md). Pages 화면은 저장된 측정값을 보여주며 설치나 GPU가 필요 없습니다. 오프라인에서 보려면 아래처럼 로컬 빌드를 사용합니다.
+
+모델의 실행 경로·실패·완화는 [모델별 실전 안내](LLM_GUIDE.md), 숫자를 읽는 공통 기준은 안내서의 측정 방법 페이지로 연결합니다. 이 문서는 다운로드·정적 빌드·CPU 검산을 위한 개발자 재현 안내입니다.
+
 <a id="case008-paths"></a>
 ## Case008: 목적에 맞는 실행 경로
 
@@ -49,10 +55,6 @@ python3 -B tools/case008_checks/run.py --mode modelpack --output "$OUT/modelpack
 Wrapper는 해시를 확인한 역사적 트리를 복원한 뒤 exact-inventory 테스트를 실행합니다. 누락·잘못된 artifact 거절도 검사하며, 현재 공개 파일 목록에 맞춰 동결 테스트를 완화하지 않습니다.
 
 
-## 설치 없이 공개 결과 화면 열기
-
-[한국어 홈](https://munsik-kim.github.io/inference-lab/ko/index.html) · [Case007: 구조화 압축](https://munsik-kim.github.io/inference-lab/ko/case007.html) · [Case006: 답변 선택과 동률](https://munsik-kim.github.io/inference-lab/ko/case006.html). Pages 화면은 저장된 측정값을 보여주며 설치나 GPU가 필요 없습니다. 오프라인에서 보려면 아래처럼 로컬 빌드를 사용합니다.
-
 <a id="local-showcase"></a>
 ## 한·영 결과 화면을 로컬에서도 열기
 
@@ -64,9 +66,9 @@ python3 -B tools/showcase/build.py --output "$OUT/site" --base-path /inference-l
 python3 -B tools/showcase/check.py --site "$OUT/site" --output "$OUT/site-check.json"
 ```
 
-브라우저에서 `$OUT/site/index.html`을 열어 한국어 또는 English를 고릅니다. 빌드는 Python 표준 라이브러리를 사용합니다. 스크립트와 표시 데이터가 로컬에 있어 서버 없이 `file://`로 열 수 있습니다. 같은 상대 리소스 경로는 `/inference-lab/` 하위 경로에서도 동작합니다. 공개된 Pages 화면과 로컬 빌드는 같은 정적 화면 코드를 사용합니다.
+브라우저에서 `$OUT/site/index.html`을 열어 한국어 또는 English를 고릅니다. 빌드는 Python 3.12와 NumPy가 있는 호환 CPU 환경을 사용합니다. Case013의 보존 기록 검산에 NumPy가 필요합니다. 스크립트와 표시 데이터가 로컬에 있어 서버 없이 `file://`로 열 수 있습니다. 같은 상대 리소스 경로는 `/inference-lab/` 하위 경로에서도 동작합니다. 공개된 Pages 화면과 로컬 빌드는 같은 정적 화면 코드를 사용합니다.
 
-상세 화면은 **목표 → 데이터셋 → 가정과 이론 → 실험 설계 → 검증 내용 → 결과 → 결과 해석 → 결론** 순서로 읽습니다. 목차에서 필요한 항목으로 이동하거나 **입력별 결과 바로 보기**를 선택할 수 있습니다. 위의 전체 실험 요약과 아래 필터의 현재 부분집합 통계는 별도입니다. [GitHub 사례 안내](CASEBOOK.md)도 여덟 사례를 같은 순서로 설명합니다.
+상세 화면은 **목표 → 데이터셋 → 가정과 이론 → 실험 설계 → 검증 내용 → 결과 → 결과 해석 → 결론** 순서로 읽습니다. 목차에서 필요한 항목으로 이동하거나 **입력별 결과 바로 보기**를 선택할 수 있습니다. 위의 전체 실험 요약과 아래 필터의 현재 부분집합 통계는 별도입니다. [GitHub 사례 안내](CASEBOOK.md)도 각 사례를 같은 순서로 설명합니다.
 
 Case007에서 25% 또는 50% 삭제를 고른 뒤 과제나 입력 ID를 선택합니다. 표는 같은 예산에서 B와 두 선택법을 비교합니다. Case006에서는 표준 또는 선정 스트레스, 원래 계산 또는 표시된 FP32 진단을 선택합니다. 후보는 항상 같은 출력 계산의 B와 대응합니다. 필터와 입력 ID는 URL에 남아 새로고침·언어 전환 후에도 유지됩니다. JSON 다운로드에는 원래 수치 정밀도의 비교값을 넣습니다. 안내 사례는 과제별 첫 고정 ID이며 성공 사례만 고른 것이 아닙니다.
 

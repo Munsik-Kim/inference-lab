@@ -4,6 +4,8 @@
 
 [처음 보는 분](START_HERE.md) · [쉬운 용어집](GLOSSARY.md)
 
+[모델별 실전 안내서](LLM_GUIDE.md)에서 Qwen3-4B의 검증된 실행 경로와 품질·실패·완화 기록을 연결합니다.
+
 ## 30초 소개
 
 <!-- claims: c008-tracks c008-artifact-implementation c007-implementation -->

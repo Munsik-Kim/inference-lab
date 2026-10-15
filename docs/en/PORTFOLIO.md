@@ -4,6 +4,8 @@ English | [한국어](../ko/PORTFOLIO.md) · [Home](../../README.md)
 
 [New here?](START_HERE.md) · [Plain-language glossary](GLOSSARY.md)
 
+[Practical model guides](LLM_GUIDE.md) connect verified Qwen3-4B execution paths with quality, failures and mitigation. English summaries link to the complete Korean detail.
+
 ## A 30-second introduction
 
 <!-- claims: c008-tracks c008-artifact-implementation c007-implementation -->

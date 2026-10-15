@@ -7,7 +7,7 @@ from string import Template
 import hashlib
 from common import ROOT, C6, C7, SUP, json_text, read, new_output, require, sha, script_json, source_manifest
 from data import load, source_url
-from layout import home, language_index, report8_url, C8_PATH, C8_REVISION
+from layout import home, language_index, report8_url, site_navigation, related_cases, C8_PATH, C8_REVISION
 from study import render as study_render, method_labels
 from case008 import load_case008, render_case008
 from case009 import load_case009, render_case009, C9, SOURCE_COPIES
@@ -16,6 +16,7 @@ from case011 import load_case011, load_items, render_case011, C11, SOURCE_COPIES
 from case012_review import review_copy
 from case012_pages import load_case012, render_case012, render_annotation, annotation_data, image_viewer, C12, SOURCE_COPIES as C12_SOURCES
 from case013 import load_case013, render_case013, C13, SOURCE_COPIES as C13_SOURCES, FIGURES as C13_FIGURES
+from practical import load_practical, render as practical_render, PAGES as GUIDE_PAGES, TITLES as GUIDE_TITLES
 
 def link(url, text, cls=''):
     return f'<a class="{cls}" href="{escape(url, quote=True)}">{escape(text)}</a>'
@@ -46,6 +47,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     data11 = load_case011(root)
     data12 = load_case012(root)
     data13 = load_case013(root)
+    practical = load_practical(root, data8, data9, data13)
     manifest = source_manifest(root)
     rev = manifest['evidence_revision']
     languages = {lang:read(root/f'presentation/content/{lang}.json') for lang in ('en','ko')}
@@ -58,6 +60,8 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         files['data/'+case+'.js'] = ('window.EVIDENCE = '+script_json(data)+';\n').encode()
         files['data/'+case+'.json'] = (json_text(data)+'\n').encode()
     files['data/case008.json'] = (json_text(data8)+'\n').encode()
+    files['data/practical-guide.json'] = (json_text(practical)+'\n').encode()
+    files['assets/practical-guide.css'] = (root/'presentation/assets/practical-guide.css').read_bytes()
     if data9:
         files['data/case009.json'] = (json_text(data9)+'\n').encode()
         files['data/case009.js'] = ('window.CASE009_EVIDENCE = '+script_json(data9)+';\n').encode()
@@ -125,10 +129,12 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         t['methodLabels']=method_labels(lang)
         files[f'assets/{lang}.js'] = ('window.TEXT = '+script_json(t)+';\n').encode()
         other = 'ko' if lang == 'en' else 'en'
-        for page in ('index','case008','case007','case006','guide')+(('case009',) if data9 else ())+(('case010',) if data10 else ())+(('case011',) if data11 else ())+(('case012','case012-annotate') if data12 else ())+(('case013',) if data13 else ()):
+        for page in ('index','case008','case007','case006','guide')+GUIDE_PAGES+(('case009',) if data9 else ())+(('case010',) if data10 else ())+(('case011',) if data11 else ())+(('case012','case012-annotate') if data12 else ())+(('case013',) if data13 else ()):
             scripts = ''
             if page == 'index':
-                body = home(t, lang, payloads, case_paths, names[lang], rev, data8, data9, data10, data11, data12, data13)
+                body = home(t, lang, payloads, case_paths, names[lang], rev, data8, data9, data10, data11, data12, data13, practical_render(root, practical, lang, 'featured'))
+            elif page in GUIDE_PAGES:
+                body = practical_render(root, practical, lang, page)
             elif page == 'case013':
                 body = render_case013(data13, lang)
             elif page == 'case012':
@@ -151,8 +157,11 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 body = render_case008(root, data8, lang)
                 scripts = '<script defer src="../assets/case008.js"></script>'
             elif page == 'guide':
-                command='OUT=$(mktemp -d)\npython3 -B tools/showcase/build.py --output "$OUT/site"\npython3 -B tools/showcase/check.py --site "$OUT/site" --output "$OUT/site-check.json"\npython3 -B tools/showcase/replay_selection.py --output "$OUT/selection.json"'
-                body=f'<h1>{t["guide"]}</h1><p>{t["guide_intro"]}</p><pre>{escape(command)}</pre><p>{t["guide_result"]}</p><p>{t["guide_browser"]}</p>'
+                command='OUT=$(mktemp -d)\npython3 -B tools/showcase/build.py --output "$OUT/site" --base-path /inference-lab/\npython3 -B tools/showcase/check.py --site "$OUT/site" --output "$OUT/site-check.json"\npython3 -B tools/showcase/replay_selection.py --output "$OUT/selection.json"'
+                body=f'<h1>{t["guide"]}</h1><p>{t["guide_intro"]}</p>'
+                body+='<div class="guide-role-links">'+link('llm-guide.html',t['navModels'])+' · '+link('measurements.html',t['navMeasurements'])+'</div>'
+                body+='<h2>'+escape(t['guideBuildTitle'])+'</h2><pre>'+escape(command)+'</pre>'
+                body+='<details><summary>'+escape(t['guideSelectorTitle'])+'</summary><p>'+escape(t['guide_result'])+'</p></details><p>'+escape(t['guide_browser'])+'</p>'
                 body+=link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/GETTING_STARTED.md',t['guide'])
                 body+='<div class="actions">'+link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/START_HERE.md',t['beginner'])+' · '+link('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/GLOSSARY.md',t['glossary'])+'</div>'
                 body+='<div class="actions">'+link(source_url(rev,C7+'/src/surgery.py'),t['code'])+' · '+link(source_url(rev,C6+'/src/intervention.py'),t['code'])+'</div>'
@@ -163,17 +172,33 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 body += '<div class="actions">'+link(source_url(rev,path+'/REPRODUCTION.md'),t['original'])+'</div>'
                 scripts=f'<script defer src="../assets/{lang}.js"></script><script defer src="../data/{page}.js"></script><script defer src="../assets/state.js"></script><script defer src="../assets/app.js"></script>'
             page_rev = 'Case013 recorded reference variant (file hashes in JSON)' if page=='case013' else 'Case012 recorded PNGs with separate AI and grouped human assessments (file hashes in JSON)' if page.startswith('case012') else 'Case011 original snapshot and post-hoc file hashes (JSON)' if page=='case011' else 'Case010 v1/v2 recorded snapshots (file hashes in JSON)' if page=='case010' else 'Case009 reviewed snapshot (file hashes in JSON)' if page=='case009' else C8_REVISION if page == 'case008' else rev
+            if page in GUIDE_PAGES:
+                page_rev = 'Recorded public evidence '+practical['evidence_revision']
+            elif page == 'index':
+                page_rev = 'Per-case source hashes in build manifest; practical guide evidence '+practical['evidence_revision']
+            body+=related_cases(lang,page)
             body+=f'<details class="provenance"><summary>{t["evidence"]}</summary><p class="small">{t["evidence"]}: <code>{page_rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p></details>'
-            navigation = ''.join('<a'+(' aria-current="page"' if page==target else '')+' href="'+target+'.html">'+escape(label)+'</a>' for target,label in [('case008','Case 008'),('case007','Case 007'),('case006','Case 006'),('guide',t['navGuide'])])
-            if page == 'index':
-                navigation = ''.join(link('#'+target,t[key]) for target,key in [('capabilities','navCapabilities'),('tech-stack','navStack'),('projects','navProjects')])
+            navigation = site_navigation(lang,page)
             notice = '../sources/case013-notice.md.txt' if page=='case013' else '../sources/case012-notice.md.txt' if page.startswith('case012') else '../sources/case011-notice.md.txt' if page=='case011' else '../sources/case010-notice.md.txt' if page=='case010' else '../sources/case009-notice.md.txt' if page=='case009' else source_url(C8_REVISION,C8_PATH+'/NOTICE.md') if page=='case008' else source_url(rev,C7+'/NOTICE.md')
-            html=template.substitute(lang=lang,title=escape(('Case 013 · Weight error and real answers' if lang=='en' else 'Case 013 · 가중치 오차와 실제 답변') if page=='case013' else ('Case 011 · Same state, different readout' if lang=='en' else 'Case 011 · 같은 상태, 다른 판독기') if page=='case011' else ('Case 010 · Recurrent memory' if lang=='en' else 'Case 010 · 반복 상태와 기억 수명') if page=='case010' else 'Case 009 · Serving and quality' if page=='case009' else t['siteTitle'] if page=='index' else t['guide'] if page=='guide' else t['homeTitle8'] if page=='case008' else t['case007' if page=='case007' else 'case006']),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=t['language'],body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=notice,scripts=scripts)
+            if page in GUIDE_PAGES:
+                notice = 'qwen3-4b.html#implementation'
+            language_label = ('English summary' if lang=='ko' else '한국어 상세') if page in GUIDE_PAGES else t['language']
+            titles = {'index':t['homeHeroTitle'], 'guide':t['guide'], 'case006':t['case006'], 'case007':t['case007'], 'case008':t['homeTitle8'],
+                      'case009':'Case 009 · Serving and quality' if lang=='en' else 'Case 009 · 요청 비용과 품질',
+                      'case010':'Case 010 · Recurrent memory' if lang=='en' else 'Case 010 · 반복 상태와 기억 수명',
+                      'case011':'Case 011 · Same state, different readout' if lang=='en' else 'Case 011 · 같은 상태, 다른 판독기',
+                      'case013':'Case 013 · Weight error and real answers' if lang=='en' else 'Case 013 · 가중치 오차와 실제 답변',
+                      'case012':'Case 012 · Loops vs steps' if lang=='en' else 'Case 012 · 이미지 생성 시간 배분',
+                      'case012-annotate':'Case 012 · Human image annotation' if lang=='en' else 'Case 012 · 직접 정답 체크하기',
+                      **dict(zip(GUIDE_PAGES,GUIDE_TITLES[lang]))}
+            page_title = titles[page]
+            description = t['pageDescriptions'].get(page,t['pageDescriptions']['case'])
+            html=template.substitute(lang=lang,title=escape(page_title),description=escape(description,quote=True),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=language_label,body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=notice,scripts=scripts)
+            if page in ('index', *GUIDE_PAGES):
+                html=html.replace('</head>', '<link rel="stylesheet" href="../assets/practical-guide.css"></head>')
             if page in ('case006','case007','case010','case011','case013'):
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/study.css"></head>')
             if page.startswith('case012'):
-                title12 = ('Case 012 · 직접 정답 체크하기' if lang=='ko' else 'Case 012 · Human image annotation') if page.endswith('annotate') else ('Case 012 · 이미지 생성 시간 배분' if lang=='ko' else 'Case 012 · Loops vs steps')
-                html = html.replace('<title>'+escape(t['case006'])+' · '+escape(t['brand'])+'</title>', '<title>'+escape(title12)+' · '+escape(t['brand'])+'</title>')
                 html = html.replace('</head>', '<link rel="stylesheet" href="../assets/study.css"><link rel="stylesheet" href="'+versioned_case012('assets/case012.css')+'"></head>')
             if page in ('index','case011') and data11:
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/case011.css"></head>')
@@ -194,6 +219,11 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
             'record_counts':{k:len(v['records']) for k,v in payloads.items()},
             'independent_scenarios':{'case007':192,'case006_standard':192,'case006_selected_stress':46,'case008_Q':192,'case008_R':192},
             'files':{name:hashlib.sha256(blob).hexdigest() for name,blob in sorted(files.items())}}
+    report['practical_guide_units'] = {'source_files': practical['sources'], 'field_map': practical['field_map'],
+        'evidence_revision': practical['evidence_revision'], 'evidence_kind': practical['evidence_kind'],
+        'source_manifest_sha256': sha(root/'presentation/practical_sources.json'),
+        'rounding': 'Decimal GB 3 places; file reduction 1 place; ratios and times 3 places; exact values in data/practical-guide.json',
+        'new_gpu_runs': 0, 'english': 'Summary only; complete practical narrative in Korean'}
     if data9:
         report['case009_units'] = {
             'timing': 'three paired server rounds per condition; concurrent requests share a scheduler',

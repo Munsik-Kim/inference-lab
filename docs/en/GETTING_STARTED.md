@@ -7,6 +7,12 @@ English | [한국어](../ko/GETTING_STARTED.md) · [Home](../../README.md)
 Read the studies, explore recorded inputs, or run a small CPU check. GPU reproduction has its own environment and commands.
 
 
+## Open the published result viewer
+
+[English home](https://munsik-kim.github.io/inference-lab/en/index.html) · [Case008 Q: smaller files and reload](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) · [Case009: serving comparison](https://munsik-kim.github.io/inference-lab/en/case009.html#serving) · [tool-failure mitigation report (Korean)](../../research/agent_tool_contract_repair_20261014/records/REPORT_KO.md). These Pages screens use saved measurements and require no installation or GPU. Use the local build below for offline viewing.
+
+Use the [model guide entry](LLM_GUIDE.md) for execution paths, failures and mitigations, then the measurement page for interpreting numbers. This document covers downloads, static builds and CPU checks.
+
 <a id="case008-paths"></a>
 ## Case008: choose what to run
 
@@ -49,10 +55,6 @@ python3 -B tools/case008_checks/run.py --mode modelpack --output "$OUT/modelpack
 The wrapper restores the hash-checked historical tree before its exact-inventory tests. It also checks missing/invalid artifact behavior; it never weakens a frozen inventory test for the current publication tree.
 
 
-## Open the published result viewer
-
-[English home](https://munsik-kim.github.io/inference-lab/en/index.html) · [Case007: structured pruning](https://munsik-kim.github.io/inference-lab/en/case007.html) · [Case006: decisions and ties](https://munsik-kim.github.io/inference-lab/en/case006.html). These Pages screens use saved measurements and require no installation or GPU. Use the local build below for offline viewing.
-
 <a id="local-showcase"></a>
 ## Open the bilingual showcase
 
@@ -64,9 +66,9 @@ python3 -B tools/showcase/build.py --output "$OUT/site" --base-path /inference-l
 python3 -B tools/showcase/check.py --site "$OUT/site" --output "$OUT/site-check.json"
 ```
 
-Open `$OUT/site/index.html` in a browser, then choose English or 한국어. The build uses the Python standard library. All scripts and display data are local; `file://` works without a server. The same relative resource paths also support a site mounted at `/inference-lab/`. The published Pages viewer and a local build use the same static presentation code.
+Open `$OUT/site/index.html` in a browser, then choose English or 한국어. Use a compatible CPU environment with Python 3.12 and NumPy; Case013 retained-record checks require NumPy. All scripts and display data are local; `file://` works without a server. The same relative resource paths also support a site mounted at `/inference-lab/`. The published Pages viewer and a local build use the same static presentation code.
 
-Read each detail page in order: **objective → dataset → assumptions and theory → experiment design → validation → results → interpretation → conclusion**. Use the contents links or **Jump to individual results**. The complete-study tables above are separate from the filtered subset statistics below. The [GitHub casebook](CASEBOOK.md) uses the same structure for all eight cases.
+Read each detail page in order: **objective → dataset → assumptions and theory → experiment design → validation → results → interpretation → conclusion**. Use the contents links or **Jump to individual results**. The complete-study tables above are separate from the filtered subset statistics below. The [GitHub casebook](CASEBOOK.md) uses the same structure for each case.
 
 In Case007, choose 25% or 50% deletion, then a task or input ID. The table compares B with both selectors at the same budget. In Case006, choose standard or selected stress, then native or the labelled FP32 diagnostic; each candidate stays paired with B under that readout. Filters and the chosen ID persist in the URL and across language changes. JSON download includes the displayed comparison at its original numeric precision. Guided examples use the first fixed ID per task, not selected success stories.
 

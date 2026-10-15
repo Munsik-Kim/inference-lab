@@ -18,6 +18,7 @@ from case012_pages import load_case012, annotation_data, render_case012, render_
 from case013 import load_case013, render_case013, home_case013, SOURCE_COPIES as C13_SOURCES, C13, SECTIONS as C13_SECTIONS, FIGURES as C13_FIGURES
 from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
+from practical import load_practical, render as practical_render, PAGES as GUIDE_PAGES
 
 EXPECTED = {'en/case008.html','ko/case008.html','data/case008.json','assets/case008.css','assets/case008.js','index.html','en/index.html','ko/index.html','en/guide.html','ko/guide.html','en/case006.html','ko/case006.html',
             'en/case007.html','ko/case007.html','assets/icon.svg','assets/app.js','assets/state.js','assets/style.css','assets/study.css',
@@ -79,6 +80,7 @@ def check_home_outputs(html: str, data8: dict, lang: str) -> None:
 
 
 def check(root: Path, site: Path) -> dict:
+    site=site.resolve()
     require(site.is_dir(), 'Missing built site')
     paths={}
     for p in site.rglob('*'):
@@ -91,6 +93,7 @@ def check(root: Path, site: Path) -> dict:
     data11=load_case011(root)
     data12=load_case012(root)
     data13=load_case013(root)
+    practical=load_practical(root,load_case008(root),data9,data13)
     expected=EXPECTED|({'en/case009.html','ko/case009.html','data/case009.json','data/case009.js','assets/case009.js','assets/serving-L128.svg','assets/serving-L1024.svg',
       'sources/diova-compare-core.py.txt','sources/diova-compare-tests.py.txt','sources/diova-compare-edge-tests.py.txt','sources/case009-serving.py.txt','sources/case009-quality.py.txt','sources/case009-report-en.md.txt','sources/case009-report-ko.md.txt','sources/case009-notice.md.txt'} if data9 else set())
     if data10:
@@ -108,6 +111,8 @@ def check(root: Path, site: Path) -> dict:
         expected |= {'en/case013.html','ko/case013.html','data/case013.json'}
         expected |= {'sources/'+name for name in C13_SOURCES}
         expected |= set(C13_FIGURES)
+    expected |= {lang+'/'+page+'.html' for lang in ('ko','en') for page in GUIDE_PAGES}
+    expected |= {'data/practical-guide.json','assets/practical-guide.css'}
     require(set(paths)==expected, 'Unexpected/missing deploy artifact member')
     m=read(site/'build_manifest.json')
     require(set(m['files'])==expected-{'build_manifest.json'}, 'Manifest coverage')
@@ -117,6 +122,13 @@ def check(root: Path, site: Path) -> dict:
     for name,digest in m['presentation_files'].items():
         path=(root/name).resolve()
         require(path.is_relative_to(root.resolve()) and path.is_file() and sha(path)==digest, 'Stale presentation build')
+    require(read(site/'data/practical-guide.json')==practical, 'Practical guide numeric/source mismatch')
+    require(m['practical_guide_units']['source_files']==practical['sources'], 'Practical guide source identity mismatch')
+    require(m['practical_guide_units']['source_manifest_sha256']==sha(root/'presentation/practical_sources.json'), 'Wrong practical guide manifest')
+    for lang in ('ko','en'):
+        for page in GUIDE_PAGES:
+            require(practical_render(root,practical,lang,page) in (site/lang/(page+'.html')).read_text(), 'Practical guide rendering mismatch')
+        require(practical_render(root,practical,lang,'featured') in (site/lang/'index.html').read_text(), 'Practical home stories mismatch')
     if data13:
         require(read(site/'data/case013.json')==data13, 'Case013 numeric/source mismatch')
         require(m['case013_units']['source_files']==data13['sources'], 'Case013 source identity mismatch')

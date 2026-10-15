@@ -30,6 +30,8 @@ Built checkpoint checks, weight reconstruction, physical matrix slicing and pair
 
 [Related work and implementation boundaries](docs/related-work/README.md) · [CPU comparison package](packages/diova-compare/README.md)
 
+[Practical model guides for a 16GB GPU](docs/en/LLM_GUIDE.md) — Qwen3-4B key findings and Korean detail. [Read online](https://munsik-kim.github.io/inference-lab/en/llm-guide.html).
+
 <a id="capabilities"></a>
 ## Capabilities
 
