@@ -1,0 +1,52 @@
+{
+  "run_id": "p1_r2",
+  "recorded_utc": "2026-10-15T02:02:22.209847+00:00",
+  "authorization": "사용자는 기존 WSL의 Qwen3-0.6B snapshot을 이번 Case014 P1에서 읽기 전용으로 재사용하는 것과 P1 실제 실행을 승인했다. D 원본 경로 탐색·대조·복사 완료를 실행의 선행 조건으로 요구하지 않는다.",
+  "model_source_policy": {
+    "REUSE_EXISTING_WSL_SNAPSHOT_READ_ONLY": true,
+    "REQUIRE_D_ORIGIN_VERIFICATION": false,
+    "snapshot_copy_or_delete": false,
+    "scope": "this P1 only; global storage policy unchanged"
+  },
+  "previous_status": "BLOCKED_STORAGE_IDENTITY; model forwards0/30 cells",
+  "reused_input_manifest_sha256": "288fd568d0dd821acfcb72560419446c763ddd2033bb85375c10758d926b8e8b",
+  "P0_MC_rerun": false,
+  "P0_C_lambda": 0,
+  "P0_C_evidence": "existing scripts/fixtures.py dither uses direct np.linalg.solve(Gram,...) without ridge; no alpha0 compensation",
+  "preserved_P0_public_manifest_sha256": "6dda4eeb246bd84168209b459d0bddb7e2aba5c6ea5bccfdb6f885c11e8446df",
+  "prior_prepared_code_sha256": "ef322b9f6ee3d094ea9406cacff6d91d32d30f5cfc4e6f5ee815094924f0a2ce",
+  "snapshot_identity": "LOCAL_IDENTITY_VERIFIED; rehashed full local payload matches existing cache blob name; no external official payload attestation fetched",
+  "snapshot_files": {
+    "LICENSE": {
+      "bytes": 11343,
+      "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+      "symlink_target_exists": true
+    },
+    "tokenizer_config.json": {
+      "bytes": 9732,
+      "sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "symlink_target_exists": true
+    },
+    "generation_config.json": {
+      "bytes": 239,
+      "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+      "symlink_target_exists": true
+    },
+    "model.safetensors": {
+      "bytes": 1503300328,
+      "sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+      "symlink_target_exists": true
+    },
+    "tokenizer.json": {
+      "bytes": 11422654,
+      "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "symlink_target_exists": true
+    },
+    "config.json": {
+      "bytes": 726,
+      "sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+      "symlink_target_exists": true
+    }
+  },
+  "no_installs_or_downloads": true
+}

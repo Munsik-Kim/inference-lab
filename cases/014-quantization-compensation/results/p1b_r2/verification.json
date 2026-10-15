@@ -1,0 +1,125 @@
+{
+  "status": "PASS",
+  "existing_unique_tests_rerun": 15,
+  "new_unique_tests": 10,
+  "new_test_runs": "initial false positive on str.encode guard, corrected scope;10 PASS before first worker and10 PASS after runner availability fix; repeated runs are not new unique tests",
+  "original_P1_reaudit": {
+    "status": "PASS",
+    "raw_rows": 2880,
+    "summary_rows": 120,
+    "CAL_selection_checked": 6,
+    "full_model_forward_records": 3845,
+    "NLL_KL_flip_payload_and_classification_aggregates": "PASS",
+    "bootstrap_intervals_recomputed": 0,
+    "CPU_unique_unit_tests": "separate15 historical tests; auditor is not added to that count",
+    "P0_MC_rerun": false,
+    "limits": "No model weights/activation arrays/logits in bundle; no GPU/NLL/logit re-evaluation or external weight hash verification."
+  },
+  "fresh_saved_scalar_audit": {
+    "status": "PASS",
+    "audited_utc": "2026-10-15T05:12:00.035248+00:00",
+    "raw_rows": 3360,
+    "candidate_groups": 90,
+    "policy_alias_rows": 4704,
+    "selectors_independently_recomputed": 12,
+    "summary_rows_recomputed": 216,
+    "bootstrap_intervals_recomputed": 462,
+    "bootstrap_resamples_each": 10000,
+    "source_file_sha256": "e3f714a02b2833e6cfe373d84c50694ce4d565f4525c58118f05428880ac56e2",
+    "full_model_forward_records": 3813,
+    "fit_encode_calls": 0,
+    "input_artifact_policy_pairing": "PASS",
+    "NLL_exp_PPL_KL_flip_SSE_decomposition": "PASS",
+    "wall_seconds": 0.47107398899970576,
+    "limits": "Saved scalar audit does not rerun model weights, full X/Z, GPU NLL or full-vocabulary logits. External artifacts identified, not verified by public bundle. Small private SMOKE arrays are checked separately."
+  },
+  "private_array_audit": {
+    "status": "PASS",
+    "audited_utc": "2026-10-15T05:11:18.683794+00:00",
+    "full_private_matrix_rows": [
+      {
+        "target": "model.layers.4.self_attn.o_proj",
+        "alpha": 0,
+        "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+        "scalar_fields": 9,
+        "max_scaled_difference": 1.5577349344691094e-16,
+        "status": "PASS"
+      },
+      {
+        "target": "model.layers.4.self_attn.o_proj",
+        "alpha": 0.25,
+        "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+        "scalar_fields": 9,
+        "max_scaled_difference": 1.636245288065449e-16,
+        "status": "PASS"
+      },
+      {
+        "target": "model.layers.4.self_attn.o_proj",
+        "alpha": 1,
+        "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+        "scalar_fields": 9,
+        "max_scaled_difference": 4.474367244238251e-15,
+        "status": "PASS"
+      },
+      {
+        "target": "model.layers.12.mlp.down_proj",
+        "alpha": 0,
+        "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+        "scalar_fields": 9,
+        "max_scaled_difference": 1.7107187354185466e-16,
+        "status": "PASS"
+      },
+      {
+        "target": "model.layers.12.mlp.down_proj",
+        "alpha": 0.25,
+        "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+        "scalar_fields": 9,
+        "max_scaled_difference": 2.7493222569132676e-15,
+        "status": "PASS"
+      },
+      {
+        "target": "model.layers.12.mlp.down_proj",
+        "alpha": 1,
+        "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+        "scalar_fields": 9,
+        "max_scaled_difference": 2.2952171144415427e-16,
+        "status": "PASS"
+      },
+      {
+        "target": "model.layers.20.mlp.down_proj",
+        "alpha": 0,
+        "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+        "scalar_fields": 9,
+        "max_scaled_difference": 2.1061279686187962e-16,
+        "status": "PASS"
+      },
+      {
+        "target": "model.layers.20.mlp.down_proj",
+        "alpha": 0.25,
+        "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+        "scalar_fields": 9,
+        "max_scaled_difference": 3.552713678800501e-14,
+        "status": "PASS"
+      },
+      {
+        "target": "model.layers.20.mlp.down_proj",
+        "alpha": 1,
+        "document_id_hash": "0bd1750060e474ea91fd637c91bfe904273df1c5d213eb334409fd988345249e",
+        "scalar_fields": 9,
+        "max_scaled_difference": 1.4210854715202004e-13,
+        "status": "PASS"
+      }
+    ],
+    "cropped_actual_SMOKE_array_identity_scaled_gap": 1.0842021724855044e-19,
+    "cropped_SMOKE_scope": "8×32 weight /32×8 input slices, validates algebra on actual small slices; not full module output",
+    "method": "independent struct/nibble decoder and Torch CPU FP64 direct products; no decompose.py import, no fitting, no model forward",
+    "limits": "Does not re-evaluate GPU NLL/KL/argmax, candidate BF16 output arrays or all 3360 matrix rows. Matrices/model remain external to review ZIP."
+  },
+  "preservation": "PRESERVED",
+  "P0_MC_rerun": false,
+  "original_P1_GPU_sweep_rerun": false,
+  "new_GPU_scope": "P1b only; first failed SMOKE3 + completed3813 forwards",
+  "figure_visual_inspection": "PNG figures1/4 visually checked; no browser UI test claimed",
+  "review_ZIP_validation": "separate final ZIP receipt after extraction; see external review directory",
+  "limits": "CPU saved-scalar recomputation is not GPU/model re-evaluation; private matrix check covers9 rows and cropped SMOKE, not all model computations."
+}

@@ -195,3 +195,18 @@ python -B cases/011-frozen-state-readout-adaptation/publication/run_checks.py \
 ```
 
 Add `--synthetic` for small contract tests requiring Torch. The original 12 fresh-checkpoint reloads and 30 saved-boundary checks are historical receipts; this command does not repeat model inference. The public ZIP excludes original checkpoints and fitted head weights, so model replay requires the recorded environment and separate files.
+
+<!-- case014-entry -->
+<a id="case014-cpu"></a>
+## Case014 — Recalculate P0–P2 without a model
+
+[ZIP](../../downloads/case014_compensation_unified_publication_v1.zip) · [bytes/SHA256](../../downloads/case014_compensation_unified_publication_v1.json) · [Dependencies and scope](../../cases/014-quantization-compensation/REPRODUCE.md)
+
+From repository root or archive top level, select an existing NumPy/CPU Torch interpreter as CPU_PY and use a fresh output path.
+
+```bash
+OUT=$(mktemp -d)
+"$CPU_PY" -B cases/014-quantization-compensation/publication/scripts/run_checks.py --output "$OUT/case014" --tests
+```
+
+Recalculates closed historical views,2880/3360/320 rows, choices, intervals, display data and CPU tests. No model/private payload/text or new GPU inference. Building the whole portfolio needs a full repository clone, not this Case-only ZIP.

@@ -1,0 +1,99 @@
+SPEC_FROZEN {'source_sha256': '19ed11ef4246a36b1d5a68c3f6ba62146c0cea15c556dae8c6879eb1c0bca8eb', 'input_sha256': '1e08e292c742f20df04325739fc71ab2adbb892f347eb318a955987ff4c879e9'}
+
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]
+Loading weights:  40%|████      | 125/311 [00:00<00:00, 1245.10it/s]
+Loading weights:  80%|████████  | 250/311 [00:00<00:00, 1211.04it/s]
+Loading weights: 100%|██████████| 311/311 [00:00<00:00, 1368.46it/s]
+SMOKE_PASS {}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 0.5, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 1, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 0, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 0.5, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 0.5, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 0.25, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 0.75, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 1, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 0.25, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 0.75, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 1, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 0.75, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 1, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 0, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 0.25, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 1, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 0, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 0.5, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 0.75, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 0.5, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 0, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 0, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 0, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 1, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 0.25, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 0.75, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 0.75, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 0.25, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 0.25, 'documents': 32}
+CELL_COMPLETE {'split': 'SELECT-ID', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 0.5, 'documents': 32}
+SELECTION_FROZEN {'sha256': '82bd0827bb05f649d1ea71893449db15f46fb4f7262176fa900a759fa0f3738e', 'choices': [{'target': 'model.layers.4.self_attn.o_proj', 'SSE': 0.5, 'NLL': 1}, {'target': 'model.layers.4.mlp.down_proj', 'SSE': 0.25, 'NLL': 0.25}, {'target': 'model.layers.12.self_attn.o_proj', 'SSE': 0.25, 'NLL': 0.75}, {'target': 'model.layers.12.mlp.down_proj', 'SSE': 0.25, 'NLL': 0}, {'target': 'model.layers.20.self_attn.o_proj', 'SSE': 0.5, 'NLL': 1}, {'target': 'model.layers.20.mlp.down_proj', 'SSE': 0.25, 'NLL': 0.5}]}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 0.5, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 1, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 0, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 0.5, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 0.5, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 0.25, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 0.75, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 1, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 0.25, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 0.75, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 1, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 0.75, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 1, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 0, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 0.25, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 1, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 0, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 0.5, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 0.75, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 0.5, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 0, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 0, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 0, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 1, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 0.25, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 0.75, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 0.75, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 0.25, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 0.25, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-EVAL-ID', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 0.5, 'documents': 64}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 0.5, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 1, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 0, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 0.5, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 0.5, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 0.25, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 0.75, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 1, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 0.25, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 0.75, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 1, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 0.75, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 1, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 0, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 0.25, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 1, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 0, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 0.5, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.12.self_attn.o_proj', 'alpha': 0.75, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 0.5, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 0, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 0, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 0, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 1, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 0.25, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.12.mlp.down_proj', 'alpha': 0.75, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.4.mlp.down_proj', 'alpha': 0.75, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.4.self_attn.o_proj', 'alpha': 0.25, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.20.mlp.down_proj', 'alpha': 0.25, 'documents': 16}
+CELL_COMPLETE {'split': 'FRESH-SHIFT', 'target': 'model.layers.20.self_attn.o_proj', 'alpha': 0.5, 'documents': 16}
+COMPLETED_P1B {'full_forwards': 3813, 'wall_seconds': 508.31456933200025}

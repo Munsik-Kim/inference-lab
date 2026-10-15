@@ -27,10 +27,23 @@ Built checkpoint checks, weight reconstruction, physical matrix slicing and pair
 | Same-state final-layer intervention and two-tensor patch reload | ComplexKDA · PyTorch L-BFGS · NumPy | [adapter](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [patch tests](cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
 | Paired-noise loop/step execution, time selection and image annotation | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [adapter](cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU tests](cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
 | Scale-preserving INT4 conversion and recorded quality audits | DualQuant public equations · PyTorch · NumPy | [solver](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU audit](cases/013-dualquant-reference-quality/analysis/audit.py) |
+| Own-path compensation · INT4 storage/reload · whole-model quality | Guo compensation · PyTorch · Transformers · NumPy | [code](cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [tests](cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) |
 
 [Related work and implementation boundaries](docs/related-work/README.md) · [CPU comparison package](packages/diova-compare/README.md)
 
 [Practical model guides for a 16GB GPU](docs/en/LLM_GUIDE.md) — Qwen3-4B key findings and Korean detail. [Read online](https://munsik-kim.github.io/inference-lab/en/llm-guide.html).
+
+<!-- case014-entry -->
+## Latest completed research — Case 014
+
+Built actual-path compensation, INT4 storage/reload and whole-model quality comparison.
+
+**PG19 PPL 12.92% lower · 64/64 excerpts with lower NLL · unchanged projection bytes**
+
+Qwen3-0.6B · 196 Transformer projections · 256-token excerpts from 64 fresh PG19 books. Gain not established on ArXiv. Quality after BF16 reload; speed/VRAM savings unmeasured.
+
+[Compare results](https://munsik-kim.github.io/inference-lab/en/case014.html#results) · [Implementation and reproduction](cases/014-quantization-compensation/REPRODUCE.md) · [Research journey](cases/014-quantization-compensation/STAGE_MAP.md)
+
 
 <a id="capabilities"></a>
 ## Capabilities
@@ -190,6 +203,7 @@ Connected existing records to the CPU comparison CLI and built registered-name d
 | [011 — What changes when only the readout changes?](docs/en/CASEBOOK.md#case-011) | Two-tensor adaptation and reload; paired gold-score and first-error comparisons on the same state. |
 | [012 — Where should image-generation time go?](docs/en/CASEBOOK.md#case-012) | Paired-noise loop/step runner, timing and image inspection. AI assessment of all 192 images with paired constraint gains and losses. |
 | [013 — Does lower weight error improve real answers?](docs/en/CASEBOOK.md#case-013) | INT4 scale-preserving conversion/reload and matched full-model, long-input and tool-quality records; packed gate remains blocked. |
+| [014 — Can quality improve at the same INT4 storage budget?](docs/en/CASEBOOK.md#case-014) | Own-trajectory compensation/storage/reload/full-model quality, with PG19 gains and ArXiv limits. |
 
 ## Go deeper
 

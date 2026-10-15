@@ -1,0 +1,179 @@
+{
+  "status": "PASS",
+  "recorded_utc": "2026-10-15T07:03:11.272258+00:00",
+  "P2_unique_new_tests": 9,
+  "prior_tests_rerun": {
+    "P0": 15,
+    "P1b": 10
+  },
+  "repeated_execution_is_not_new_unique_tests": true,
+  "CPU_regression_logs": [
+    {
+      "log": "logs/old15.log",
+      "unique_tests": 15,
+      "kind": "original P0 regression rerun",
+      "status": "PASS",
+      "exit_code": 0,
+      "evidence": "actual pre-GPU execution completed successfully; log count/OK checked again here"
+    },
+    {
+      "log": "logs/p1b10.log",
+      "unique_tests": 10,
+      "kind": "existing P1b regression rerun",
+      "status": "PASS",
+      "exit_code": 0,
+      "evidence": "actual pre-GPU execution completed successfully; log count/OK checked again here"
+    },
+    {
+      "log": "logs/tests-p2-02.log",
+      "unique_tests": 9,
+      "kind": "unique new P2 tests",
+      "status": "PASS",
+      "exit_code": 0,
+      "evidence": "actual pre-GPU execution completed successfully; log count/OK checked again here"
+    }
+  ],
+  "independent_scalar_audit": {
+    "status": "PASS",
+    "raw_metrics_checked": 320,
+    "method_summaries_checked": 8,
+    "paired_comparisons_checked": 10,
+    "intervals_checked_including_PPL_transforms": 20,
+    "bootstrap_resamples": 10000,
+    "artifact_metadata_checked": 588,
+    "own_trajectory_groups_checked": 224,
+    "CAL_decompositions_checked": 392,
+    "prefix_checkpoints_checked": 56,
+    "fresh_process_reload_receipt": "PASS",
+    "fixed_SMOKE_matrix_receipt": "PASS",
+    "worker_main_full_model_forward_records": 7527,
+    "wall_seconds": 0.11233110299872351,
+    "audit_source_sha256": "8bc64437c48077961b4d90bb48be0a6698262cab128ef840bb266a32161936a6",
+    "limits": "Independent scalar/provenance recomputation does not rerun private weights/GPU NLL/KL/full logits. Actual fresh GPU reload and independent decoding are separately recorded; external artifact hashes are identities in a public bundle."
+  },
+  "private_array_audit": {
+    "status": "PASS",
+    "recorded_utc": "2026-10-15T06:54:59.737760+00:00",
+    "full_SMOKE_matrix_checks": [
+      {
+        "method": "RTN",
+        "module": "model.layers.0.self_attn.o_proj",
+        "max_scaled_scalar_difference": 8.411301774516658e-17,
+        "fields": 9,
+        "status": "PASS"
+      },
+      {
+        "method": "COMP_QUARTER",
+        "module": "model.layers.0.self_attn.o_proj",
+        "max_scaled_scalar_difference": 8.411301774516658e-17,
+        "fields": 9,
+        "status": "PASS"
+      },
+      {
+        "method": "COMP_HALF",
+        "module": "model.layers.0.self_attn.o_proj",
+        "max_scaled_scalar_difference": 8.411301774516658e-17,
+        "fields": 9,
+        "status": "PASS"
+      }
+    ],
+    "selected_CAL_normal_equation_checks": [
+      {
+        "method": "COMP_QUARTER",
+        "module": "model.layers.0.self_attn.q_proj",
+        "output_rows_checked": 8,
+        "all_input_dimensions": 1024,
+        "CAL_tokens": 8192,
+        "normal_equation_relative_residual": 0.0,
+        "status": "PASS"
+      },
+      {
+        "method": "COMP_QUARTER",
+        "module": "model.layers.0.self_attn.o_proj",
+        "output_rows_checked": 8,
+        "all_input_dimensions": 2048,
+        "CAL_tokens": 8192,
+        "normal_equation_relative_residual": 2.226383295802346e-15,
+        "status": "PASS"
+      },
+      {
+        "method": "COMP_QUARTER",
+        "module": "model.layers.12.mlp.up_proj",
+        "output_rows_checked": 8,
+        "all_input_dimensions": 1024,
+        "CAL_tokens": 8192,
+        "normal_equation_relative_residual": 2.599116963456434e-15,
+        "status": "PASS"
+      },
+      {
+        "method": "COMP_QUARTER",
+        "module": "model.layers.27.mlp.down_proj",
+        "output_rows_checked": 8,
+        "all_input_dimensions": 3072,
+        "CAL_tokens": 8192,
+        "normal_equation_relative_residual": 3.213517510806921e-15,
+        "status": "PASS"
+      },
+      {
+        "method": "COMP_HALF",
+        "module": "model.layers.0.self_attn.q_proj",
+        "output_rows_checked": 8,
+        "all_input_dimensions": 1024,
+        "CAL_tokens": 8192,
+        "normal_equation_relative_residual": 0.0,
+        "status": "PASS"
+      },
+      {
+        "method": "COMP_HALF",
+        "module": "model.layers.0.self_attn.o_proj",
+        "output_rows_checked": 8,
+        "all_input_dimensions": 2048,
+        "CAL_tokens": 8192,
+        "normal_equation_relative_residual": 2.226383295802346e-15,
+        "status": "PASS"
+      },
+      {
+        "method": "COMP_HALF",
+        "module": "model.layers.12.mlp.up_proj",
+        "output_rows_checked": 8,
+        "all_input_dimensions": 1024,
+        "CAL_tokens": 8192,
+        "normal_equation_relative_residual": 2.206667547012295e-15,
+        "status": "PASS"
+      },
+      {
+        "method": "COMP_HALF",
+        "module": "model.layers.27.mlp.down_proj",
+        "output_rows_checked": 8,
+        "all_input_dimensions": 3072,
+        "CAL_tokens": 8192,
+        "normal_equation_relative_residual": 3.531761256025993e-15,
+        "status": "PASS"
+      }
+    ],
+    "wall_seconds": 2.116365561996645,
+    "audit_source_sha256": "6cd6ef03c274d0645e31afedbf37dae0658645311b97330e3102ed89452af036",
+    "scope": "independent Torch CPU FP64 SMOKE products and NumPy normal-equation check on fixed8 output rows with all input dimensions/CAL tokens; no GPU/model forward, refit or new quantization",
+    "limits": "Not all392 K matrices audited row-by-row; GPU NLL/KL/logit evaluation not independently rerun by this CPU check; private arrays excluded from review ZIP."
+  },
+  "fresh_GPU_process_reload": "PASS",
+  "fixed_registered_SMOKE_matrix_check": "PASS",
+  "frozen_source_files_verified_unchanged": 12,
+  "projections_per_quantized_model": 196,
+  "quantized_models": 3,
+  "artifact_files": 588,
+  "expected_metric_rows": 320,
+  "completed_metric_rows": 320,
+  "missing_cells": [],
+  "failed_GPU_workers": 0,
+  "GPU_forward_calls": 7535,
+  "worker_budget_seconds": 10800,
+  "actual_cumulative_worker_wall_seconds": 1141.5303974559974,
+  "preservation": "PRESERVED",
+  "GPU_BUSY_TTFT_TPOT": "NOT_MEASURED",
+  "P0_MC_P1_P1b_GPU_rerun": false,
+  "P3_4B_agent_packed_serving": false,
+  "package_install_upgrade_build": false,
+  "git_stage_commit_remote_publication": false,
+  "archive_extraction_validation": "separate actual receipt next to review ZIP; not preclaimed here"
+}

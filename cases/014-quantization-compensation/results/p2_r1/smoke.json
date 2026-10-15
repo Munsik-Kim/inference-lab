@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "input": "REUSED_ORIGINAL_SMOKE1",
+  "teacher_reinstall_full_logits_exact": true,
+  "all196_input_captures_repeat_exact": true,
+  "qkv_gateup_common_inputs": "PASS all28blocks",
+  "same_block_q_quantization_changes_o_input": true,
+  "future_block_does_not_change_first_q_input": true,
+  "codec_independent_q_scale_weight_exact": true,
+  "restoration_and_protected_parameters": "PASS",
+  "blockwise_replay": "NOT_USED; capture is native whole-model full forward",
+  "full_head_shape": [
+    256,
+    151936
+  ],
+  "smoke_full_model_calls": 4,
+  "tolerance": {
+    "algebra_relative_to_identity_scale": 1e-10,
+    "solve_relative_residual": 1e-10,
+    "FP64_independent_fit": 1e-10,
+    "native_smoke_reinstall_and_same_input": "bit exact",
+    "fresh_process_reload": "full logits BF16 SHA bit exact on reused SMOKE",
+    "small_gap_recovery_undefined_nats": 1e-06
+  },
+  "initial_memory": {
+    "NLL_sum": 882.1908569335938,
+    "valid_token_count": 255,
+    "full_logits_BF16_sha256": "48d6b5aea05111c67eb7be58be2d6aaabf69bfae1453f7acf1efba90d20cbe2d",
+    "wall_seconds": 1.2204356629990798,
+    "peak_allocated": 1613842432,
+    "peak_reserved": 1845493760,
+    "device_free_bytes": 13764657152,
+    "device_total_bytes": 17094475776,
+    "allocated": 1458652160,
+    "reserved": 1845493760
+  },
+  "worker_elapsed_seconds": 5.6970742480007175
+}

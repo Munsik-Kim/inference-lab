@@ -1,0 +1,25 @@
+{
+  "run": false,
+  "status": "NOT_RUN_SCOPE",
+  "requires_separate_authorization": true,
+  "model": "same Qwen3-0.6B",
+  "arms": ["BF16", "BASE alpha0", "HALF alpha0.5", "FULL alpha1"],
+  "start_each_arm": "fresh original snapshot; never build FULL from HALF",
+  "unchanged": ["activation precision", "KV", "norm", "embedding", "lm_head", "tie relationships"],
+  "dependency_order": [
+    "q/k/v inputs captured on own partially quantized path; fit/quantize shared-input projections",
+    "rerun changed q/k/v attention; recapture o input; fit/quantize o",
+    "apply original residual and norm; capture common gate/up input; fit/quantize gate/up",
+    "rerun changed gate/up SiLU/product; recapture down input; fit/quantize down; original residual and next block"
+  ],
+  "teacher": "original BF16 position-specific X",
+  "candidate": "each arm's own current Z; no substitution with teacher trace",
+  "primary": "EVAL-ID document mean NLL HALF minus BASE",
+  "bootstrap": {"resamples": 10000, "unit": "paired original document", "interval": 0.95},
+  "decision": {"upper_lt_zero": "positive signal on this EVAL", "lower_gt_zero": "negative signal", "contains_zero": "inconclusive, not equivalence"},
+  "practical_secondary": "equal payload and at least1% relative PPL decrease reported separately; project proposal, not paper guarantee",
+  "optional_calibration_draws": "three disjoint32-document CAL draws plus common EVAL; report each, never count reused32 EVAL as96 independent documents",
+  "excluded": ["LAYER-FIT/OUTPUT-DEV selector", "alpha/ridge/clipping search", "4B", "agent", "packed serving", "low-rank residual"],
+  "worker_wall_limit_seconds_if_authorized": 10800,
+  "P3": false
+}

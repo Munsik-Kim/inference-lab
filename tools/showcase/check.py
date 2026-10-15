@@ -16,6 +16,7 @@ from case011 import load_case011, load_items, render_case011, home_case011, C11,
 from case012_review import review_copy
 from case012_pages import load_case012, annotation_data, render_case012, render_annotation, image_viewer, home_case012, SOURCE_COPIES as C12_SOURCES, C12, SECTIONS as C12_SECTIONS
 from case013 import load_case013, render_case013, home_case013, SOURCE_COPIES as C13_SOURCES, C13, SECTIONS as C13_SECTIONS, FIGURES as C13_FIGURES
+from case014 import load_case014, render_case014, home_case014, SOURCE_COPIES as C14_SOURCES, C14, SECTIONS as C14_SECTIONS, FIGURES as C14_FIGURES, ARCHIVE as C14_ARCHIVE
 from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
 from practical import load_practical, render as practical_render, PAGES as GUIDE_PAGES
@@ -93,6 +94,7 @@ def check(root: Path, site: Path) -> dict:
     data11=load_case011(root)
     data12=load_case012(root)
     data13=load_case013(root)
+    data14=load_case014(root)
     practical=load_practical(root,load_case008(root),data9,data13)
     expected=EXPECTED|({'en/case009.html','ko/case009.html','data/case009.json','data/case009.js','assets/case009.js','assets/serving-L128.svg','assets/serving-L1024.svg',
       'sources/diova-compare-core.py.txt','sources/diova-compare-tests.py.txt','sources/diova-compare-edge-tests.py.txt','sources/case009-serving.py.txt','sources/case009-quality.py.txt','sources/case009-report-en.md.txt','sources/case009-report-ko.md.txt','sources/case009-notice.md.txt'} if data9 else set())
@@ -111,6 +113,9 @@ def check(root: Path, site: Path) -> dict:
         expected |= {'en/case013.html','ko/case013.html','data/case013.json'}
         expected |= {'sources/'+name for name in C13_SOURCES}
         expected |= set(C13_FIGURES)
+    if data14:
+        expected |= {'en/case014.html','ko/case014.html','data/case014.json','data/case014-download.json','assets/case014.css'}
+        expected |= {'sources/'+name for name in C14_SOURCES} | set(C14_FIGURES)
     expected |= {lang+'/'+page+'.html' for lang in ('ko','en') for page in GUIDE_PAGES}
     expected |= {'data/practical-guide.json','assets/practical-guide.css'}
     require(set(paths)==expected, 'Unexpected/missing deploy artifact member')
@@ -129,6 +134,17 @@ def check(root: Path, site: Path) -> dict:
         for page in GUIDE_PAGES:
             require(practical_render(root,practical,lang,page) in (site/lang/(page+'.html')).read_text(), 'Practical guide rendering mismatch')
         require(practical_render(root,practical,lang,'featured') in (site/lang/'index.html').read_text(), 'Practical home stories mismatch')
+    if data14:
+        require(read(site/'data/case014.json')==data14,'Case014 raw-derived numeric/source mismatch')
+        require(m['case014_units']['source_files']==data14['sources'],'Case014 source identity mismatch')
+        require(m['case014_units']['execution_source_sha256']==data14['execution_source_sha256'],'Case014 execution identity mismatch')
+        for name,path in C14_SOURCES.items():require((site/'sources'/name).read_bytes()==(root/path).read_bytes(),'Changed Case014 source copy')
+        for name,path in C14_FIGURES.items():require((site/name).read_bytes()==(root/path).read_bytes(),'Changed Case014 figure')
+        require(read(site/'data/case014-download.json')==data14['download'],'Case014 download metadata mismatch')
+        for lang in ('ko','en'):
+            html=(site/lang/'case014.html').read_text();parser=Links();parser.feed(html)
+            require(render_case014(data14,lang) in html and set(C14_SECTIONS)<=parser.ids,'Case014 rendering/anchors')
+            require(home_case014(data14,lang) in (site/lang/'index.html').read_text(),'Case014 home feature')
     if data13:
         require(read(site/'data/case013.json')==data13, 'Case013 numeric/source mismatch')
         require(m['case013_units']['source_files']==data13['sources'], 'Case013 source identity mismatch')
@@ -251,7 +267,8 @@ def check(root: Path, site: Path) -> dict:
         for tag,url in parser.links:
             u=urlsplit(url)
             if u.scheme:
-                require(tag=='a' and u.scheme=='https' and u.hostname=='github.com', 'External runtime dependency/unsafe link')
+                citation=name in ('ko/case014.html','en/case014.html') and u.hostname in ('arxiv.org','huggingface.co')
+                require(tag=='a' and u.scheme=='https' and (u.hostname=='github.com' or citation), 'External runtime dependency/unsafe link')
                 continue
             require(not url.startswith(('/', '//')) and '\\' not in url, 'Nonportable local URL')
             dest=(path.parent/unquote(u.path)).resolve() if u.path else path

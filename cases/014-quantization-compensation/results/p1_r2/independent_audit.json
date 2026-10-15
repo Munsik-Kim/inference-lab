@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "core_cells": 30,
+  "core_document_rows": 2880,
+  "unique_documents_excluding_smoke": 96,
+  "forward_stage_counts": {
+    "CAL_TEACHER": 32,
+    "GRID": 2880,
+    "HELDOUT_TEACHER": 64,
+    "CAL_PREFIX": 96,
+    "SMOKE": 5,
+    "HELDOUT_PREFIX": 192,
+    "CONTINUOUS": 576
+  },
+  "total_forward_calls": 3845,
+  "expected_actual_forward_count": 3845,
+  "prepared_rough_forward_estimate": 3865,
+  "count_note": "Prepared smoke metadata used a rough count; enumerated loop cardinality and actual3845 calls agree. No required cell omitted.",
+  "controls": {
+    "teacher_documents_including_smoke": 97,
+    "prefix_only_rows": 288,
+    "continuous_rows": 576
+  },
+  "actual_artifact_files": 30,
+  "artifact_bytes_by_type": {
+    "o_proj": 1179684,
+    "down_proj": 1769508
+  },
+  "max_identity_relative_gap": 4.177826301075218e-16,
+  "max_residual_identity_relative": 2.0368160968887004e-15,
+  "peak_allocated_bytes": 1646827520,
+  "peak_reserved_bytes": 1845493760,
+  "max_device_used_sample_bytes": 3331915776,
+  "device_memory_scope": "post-forward synchronized CUDA free/total samples; not a continuously monitored Windows peak",
+  "limitations": "Raw scalar/identity/pairing/count checks and local artifact hashes do not reproduce the model logits. P0 MC was not rerun."
+}

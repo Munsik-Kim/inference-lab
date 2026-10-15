@@ -1,0 +1,92 @@
+{
+  "status": "COMPLETED_P2_CORE",
+  "primary": {
+    "split": "EVAL-ID",
+    "candidate": "COMP_QUARTER",
+    "baseline": "RTN",
+    "documents": 64,
+    "mean_document_delta_NLL": -0.1383737788480871,
+    "CI95": [
+      -0.14941367018456553,
+      -0.12751511274599564
+    ],
+    "PPL_relative_change": -0.12922684567648113,
+    "PPL_relative_change_CI95": [
+      -0.1387872168488266,
+      -0.11971988771604719
+    ],
+    "verdict": "LOWER_NLL",
+    "primary": true,
+    "lower_documents": 64,
+    "higher_documents": 0,
+    "exact_ties": 0,
+    "median": -0.14070901309742645,
+    "project_reference_PPL_1pct_reduction_reached": true,
+    "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+  },
+  "auxiliary_SHIFT": [
+    {
+      "split": "SHIFT",
+      "candidate": "COMP_QUARTER",
+      "baseline": "RTN",
+      "documents": 16,
+      "mean_document_delta_NLL": 0.01874667896943931,
+      "CI95": [
+        -0.005722614737118095,
+        0.044885381249820465
+      ],
+      "PPL_relative_change": 0.01892350117032085,
+      "PPL_relative_change_CI95": [
+        -0.005706271767104828,
+        0.045907972373572206
+      ],
+      "verdict": "INCONCLUSIVE",
+      "primary": false,
+      "lower_documents": 5,
+      "higher_documents": 11,
+      "exact_ties": 0,
+      "median": 0.011834058574601625,
+      "project_reference_PPL_1pct_reduction_reached": false,
+      "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+    },
+    {
+      "split": "SHIFT",
+      "candidate": "COMP_HALF",
+      "baseline": "RTN",
+      "documents": 16,
+      "mean_document_delta_NLL": 0.1117181815353094,
+      "CI95": [
+        0.07205803758957798,
+        0.15385261554344026
+      ],
+      "PPL_relative_change": 0.1181976874808161,
+      "PPL_relative_change_CI95": [
+        0.0747177162795592,
+        0.16631897682174873
+      ],
+      "verdict": "HIGHER_NLL",
+      "primary": false,
+      "lower_documents": 2,
+      "higher_documents": 14,
+      "exact_ties": 0,
+      "median": 0.09822674919577201,
+      "project_reference_PPL_1pct_reduction_reached": false,
+      "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+    }
+  ],
+  "methods": [
+    "BF16",
+    "RTN",
+    "COMP_QUARTER",
+    "COMP_HALF"
+  ],
+  "core_files_per_quantized_method": 196,
+  "K_fits_per_comp_method": 196,
+  "factorizations_per_comp_method": 112,
+  "same_INT4_core_bytes": true,
+  "new_selector_or_alpha_search": false,
+  "P0_P1_P1b": "PRESERVED",
+  "packed_serving_benefit": "NOT_ESTABLISHED",
+  "P3_4B_agent": "NOT_RUN_SCOPE",
+  "remote_publication": false
+}

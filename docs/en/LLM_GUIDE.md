@@ -20,3 +20,8 @@ Cases008 Q and 009 verified actual GPTQ/vLLM low-bit execution. Case013 and its 
 See the [shared glossary](GLOSSARY.md), [CPU and reproduction instructions](GETTING_STARTED.md) and [original cases](CASEBOOK.md). Narrative is maintained in `presentation/guides/`; the builder inserts measured values from public records into both home stories and guide tables. The generated `data/practical-guide.json` and `build_manifest.json` retain exact values, field paths, the evidence commit and source hashes.
 
 2026-10-15: guide implementation and reanalysis of existing public records. No new GPU experiment, quantization or benchmark run; reader evaluation was not performed.
+
+<!-- case014-entry -->
+## Separate0.6B compensation study
+
+[Case014](../../cases/014-quantization-compensation/README.md) · [Pages](https://munsik-kim.github.io/inference-lab/en/case014.html#overview). This separate Qwen3-0.6B quality study does not change or contribute numbers to the Qwen3-4B recommendations/tables above.

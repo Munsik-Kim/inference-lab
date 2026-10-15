@@ -1,0 +1,57 @@
+{
+  "recorded_utc": "2026-10-15T06:30:40.367350+00:00",
+  "python": "3.12.14",
+  "python_label": "EXISTING_REFERENCE_ENV",
+  "torch": "2.13.0+cu130",
+  "transformers": "5.17.0",
+  "numpy": "2.3.5",
+  "CUDA": "13.0",
+  "GPU": "NVIDIA GeForce RTX 5080",
+  "capability": [
+    12,
+    0
+  ],
+  "driver": "610.88",
+  "runtime": {
+    "weights": "INT4 stored, decoded FP32 then dense BF16 quality reference",
+    "batch": 1,
+    "sequence_length": 256,
+    "attention": "sdpa",
+    "use_cache": false,
+    "TF32": false,
+    "BF16_reduced_precision_reduction": false,
+    "FP16_reduced_precision_reduction": false,
+    "head": "native full256-position LM head for all capture/evaluation calls",
+    "KL_positions": [
+      0,
+      16,
+      33,
+      50,
+      67,
+      84,
+      101,
+      118,
+      135,
+      152,
+      169,
+      186,
+      203,
+      220,
+      237,
+      254
+    ]
+  },
+  "initial_memory": {
+    "device_free_bytes": 14463008768,
+    "device_total_bytes": 17094475776,
+    "allocated": 1192115200,
+    "reserved": 1216348160
+  },
+  "load_seconds": 1.5846669929997006,
+  "native_model_source_sha256": "cbb7f2dc274c2f5592746c0dc6985ca50353efa07376f92cc922b77680a74f69",
+  "strategy": "native entire CausalLM forward; no blockwise replay or truncated suffix",
+  "reference_imports": {
+    "codec": "scripts/codec.py",
+    "decompose": "scripts/decompose.py"
+  }
+}

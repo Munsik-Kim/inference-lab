@@ -1,0 +1,3569 @@
+{
+  "schema_version": 1,
+  "publication_version": "v1",
+  "case": "014",
+  "model_id": "Qwen/Qwen3-0.6B",
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "new_GPU_inference_during_publication": 0,
+  "execution_source_sha256": "0bb627be395672209a1fc7aa5d6c9801a8486b0511bc21545ad252ddedb1eca4",
+  "p0": {
+    "exact": {
+      "fixed_errors": [
+        {
+          "epsilon": "1/1000",
+          "second_error_sign": -1,
+          "BASE": "999999/1000000",
+          "COMP": "998999/1000000",
+          "BASE_abs_error": "1/1000000",
+          "COMP_abs_error": "1001/1000000"
+        },
+        {
+          "epsilon": "1/1000",
+          "second_error_sign": 1,
+          "BASE": "1002001/1000000",
+          "COMP": "1001001/1000000",
+          "BASE_abs_error": "2001/1000000",
+          "COMP_abs_error": "1001/1000000"
+        },
+        {
+          "epsilon": "1/100",
+          "second_error_sign": -1,
+          "BASE": "9999/10000",
+          "COMP": "9899/10000",
+          "BASE_abs_error": "1/10000",
+          "COMP_abs_error": "101/10000"
+        },
+        {
+          "epsilon": "1/100",
+          "second_error_sign": 1,
+          "BASE": "10201/10000",
+          "COMP": "10101/10000",
+          "BASE_abs_error": "201/10000",
+          "COMP_abs_error": "101/10000"
+        },
+        {
+          "epsilon": "1/10",
+          "second_error_sign": -1,
+          "BASE": "99/100",
+          "COMP": "89/100",
+          "BASE_abs_error": "1/100",
+          "COMP_abs_error": "11/100"
+        },
+        {
+          "epsilon": "1/10",
+          "second_error_sign": 1,
+          "BASE": "121/100",
+          "COMP": "111/100",
+          "BASE_abs_error": "21/100",
+          "COMP_abs_error": "11/100"
+        }
+      ],
+      "finite_codebook": {
+        "teacher": "377/125",
+        "BASE_output": "3",
+        "COMP_output": "4",
+        "BASE_abs_error": "2/125",
+        "COMP_abs_error": "123/125",
+        "layers": [
+          {
+            "layer": 0,
+            "teacher_target": "4/5",
+            "BASE_input": "1",
+            "COMP_input": "1",
+            "continuous_COMP_target": "4/5",
+            "COMP_losses": [
+              "16/25",
+              "1/25",
+              "36/25",
+              "121/25"
+            ],
+            "BASE_code": 1,
+            "COMP_code": 1,
+            "unique": true,
+            "overload": false
+          },
+          {
+            "layer": 1,
+            "teacher_target": "58/25",
+            "BASE_input": "1",
+            "COMP_input": "1",
+            "continuous_COMP_target": "58/25",
+            "COMP_losses": [
+              "3364/625",
+              "1089/625",
+              "64/625",
+              "289/625"
+            ],
+            "BASE_code": 3,
+            "COMP_code": 2,
+            "unique": true,
+            "overload": false
+          },
+          {
+            "layer": 2,
+            "teacher_target": "377/125",
+            "BASE_input": "3",
+            "COMP_input": "2",
+            "continuous_COMP_target": "377/250",
+            "COMP_losses": [
+              "142129/15625",
+              "16129/15625",
+              "15129/15625",
+              "139129/15625"
+            ],
+            "BASE_code": 1,
+            "COMP_code": 2,
+            "unique": true,
+            "overload": false
+          }
+        ],
+        "origin": "independent user-supplied 2-bit scalar fixture; not paper Theorem22 numbers"
+      }
+    },
+    "dither": [
+      {
+        "depth": 2,
+        "step": 0.01,
+        "alpha": 0,
+        "n_seeds": 2000,
+        "mean_SSE": 0.004173305937059514,
+        "paired_delta": 0.0,
+        "SE": 0.0,
+        "MC95": [
+          0.0,
+          0.0
+        ],
+        "max_Gram_condition": 4.049730137050427,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 2,
+        "step": 0.01,
+        "alpha": 0.5,
+        "n_seeds": 2000,
+        "mean_SSE": 0.0026607098841704663,
+        "paired_delta": -0.0015125960528890473,
+        "SE": 2.973522196181832e-05,
+        "MC95": [
+          -0.0015708770879342112,
+          -0.0014543150178438834
+        ],
+        "max_Gram_condition": 4.049730137050427,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 2,
+        "step": 0.01,
+        "alpha": 1,
+        "n_seeds": 2000,
+        "mean_SSE": 0.002084308524922983,
+        "paired_delta": -0.0020889974121365306,
+        "SE": 3.204701618706804e-05,
+        "MC95": [
+          -0.0021518095638631838,
+          -0.0020261852604098775
+        ],
+        "max_Gram_condition": 4.049730137050427,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 8,
+        "step": 0.01,
+        "alpha": 0,
+        "n_seeds": 2000,
+        "mean_SSE": 0.017054555432234175,
+        "paired_delta": 0.0,
+        "SE": 0.0,
+        "MC95": [
+          0.0,
+          0.0
+        ],
+        "max_Gram_condition": 4.225725634098702,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 8,
+        "step": 0.01,
+        "alpha": 0.5,
+        "n_seeds": 2000,
+        "mean_SSE": 0.0028151942649542495,
+        "paired_delta": -0.014239361167279925,
+        "SE": 0.00014652328430004444,
+        "MC95": [
+          -0.014526546804508012,
+          -0.013952175530051838
+        ],
+        "max_Gram_condition": 4.078407941836086,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 8,
+        "step": 0.01,
+        "alpha": 1,
+        "n_seeds": 2000,
+        "mean_SSE": 0.002120252151747604,
+        "paired_delta": -0.014934303280486571,
+        "SE": 0.00014595833087267433,
+        "MC95": [
+          -0.015220381608997012,
+          -0.01464822495197613
+        ],
+        "max_Gram_condition": 4.051639158456002,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 16,
+        "step": 0.01,
+        "alpha": 0,
+        "n_seeds": 2000,
+        "mean_SSE": 0.03392605389002836,
+        "paired_delta": 0.0,
+        "SE": 0.0,
+        "MC95": [
+          0.0,
+          0.0
+        ],
+        "max_Gram_condition": 4.444070986667199,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 16,
+        "step": 0.01,
+        "alpha": 0.5,
+        "n_seeds": 2000,
+        "mean_SSE": 0.0028265192230029334,
+        "paired_delta": -0.03109953466702543,
+        "SE": 0.00029548232244764174,
+        "MC95": [
+          -0.031678680019022805,
+          -0.03052038931502805
+        ],
+        "max_Gram_condition": 4.078407941836086,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 16,
+        "step": 0.01,
+        "alpha": 1,
+        "n_seeds": 2000,
+        "mean_SSE": 0.0021048640926208985,
+        "paired_delta": -0.031821189797407466,
+        "SE": 0.00029528239883716345,
+        "MC95": [
+          -0.032399943299128306,
+          -0.031242436295686626
+        ],
+        "max_Gram_condition": 4.051639158456002,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 2,
+        "step": 0.1,
+        "alpha": 0,
+        "n_seeds": 2000,
+        "mean_SSE": 0.418207522210365,
+        "paired_delta": 0.0,
+        "SE": 0.0,
+        "MC95": [
+          0.0,
+          0.0
+        ],
+        "max_Gram_condition": 5.2269205992284995,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 2,
+        "step": 0.1,
+        "alpha": 0.5,
+        "n_seeds": 2000,
+        "mean_SSE": 0.2655738856863612,
+        "paired_delta": -0.15263363652400375,
+        "SE": 0.00301260079128266,
+        "MC95": [
+          -0.15853833407491777,
+          -0.14672893897308972
+        ],
+        "max_Gram_condition": 5.2269205992284995,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 2,
+        "step": 0.1,
+        "alpha": 1,
+        "n_seeds": 2000,
+        "mean_SSE": 0.21140704217674602,
+        "paired_delta": -0.20680048003361898,
+        "SE": 0.0032176921759454005,
+        "MC95": [
+          -0.21310715669847197,
+          -0.200493803368766
+        ],
+        "max_Gram_condition": 5.2269205992284995,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 8,
+        "step": 0.1,
+        "alpha": 0,
+        "n_seeds": 2000,
+        "mean_SSE": 1.7273953777515636,
+        "paired_delta": 0.0,
+        "SE": 0.0,
+        "MC95": [
+          0.0,
+          0.0
+        ],
+        "max_Gram_condition": 8.802970754630925,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 8,
+        "step": 0.1,
+        "alpha": 0.5,
+        "n_seeds": 2000,
+        "mean_SSE": 0.2845653830757502,
+        "paired_delta": -1.4428299946758134,
+        "SE": 0.015438004417591062,
+        "MC95": [
+          -1.4730884833342919,
+          -1.412571506017335
+        ],
+        "max_Gram_condition": 5.577085626565699,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 8,
+        "step": 0.1,
+        "alpha": 1,
+        "n_seeds": 2000,
+        "mean_SSE": 0.21303846712920016,
+        "paired_delta": -1.514356910622363,
+        "SE": 0.015393056779486543,
+        "MC95": [
+          -1.5445273019101566,
+          -1.4841865193345696
+        ],
+        "max_Gram_condition": 5.2269205992284995,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 16,
+        "step": 0.1,
+        "alpha": 0,
+        "n_seeds": 2000,
+        "mean_SSE": 3.4784584961936518,
+        "paired_delta": 0.0,
+        "SE": 0.0,
+        "MC95": [
+          0.0,
+          0.0
+        ],
+        "max_Gram_condition": 13.439276311025358,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 16,
+        "step": 0.1,
+        "alpha": 0.5,
+        "n_seeds": 2000,
+        "mean_SSE": 0.28332275314089456,
+        "paired_delta": -3.1951357430527567,
+        "SE": 0.03255578678364735,
+        "MC95": [
+          -3.2589450851487056,
+          -3.131326400956808
+        ],
+        "max_Gram_condition": 5.678073355381775,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      },
+      {
+        "depth": 16,
+        "step": 0.1,
+        "alpha": 1,
+        "n_seeds": 2000,
+        "mean_SSE": 0.21112724972926503,
+        "paired_delta": -3.267331246464386,
+        "SE": 0.03254834731369702,
+        "MC95": [
+          -3.3311260071992326,
+          -3.20353648572954
+        ],
+        "max_Gram_condition": 5.290693737726788,
+        "failures": [],
+        "status": "VALID",
+        "seeds_start": 61015000,
+        "sampling_unit": "independent dither seed; common random numbers across own trajectories"
+      }
+    ],
+    "dither_contract": "infinite lattice subtractive dither; lambda0/no ridge/clipping;2000 stored seeds per cell, MC not rerun"
+  },
+  "p1": {
+    "raw_rows": 2880,
+    "targets": [
+      {
+        "target": "model.layers.12.mlp.down_proj",
+        "selected_alpha": 1,
+        "EVAL_documents": 32,
+        "selected_SSE_change": 0.36684458185225455,
+        "quarter_SSE_change": -0.07783550268027317,
+        "T_inherited": 115399.10083029619,
+        "T_cancellation": -1250.9099652595294,
+        "T_requant": 9478.80175513792,
+        "baseline_SSE": 337001.00461062544
+      },
+      {
+        "target": "model.layers.12.self_attn.o_proj",
+        "selected_alpha": 1,
+        "EVAL_documents": 32,
+        "selected_SSE_change": 0.43258023926154054,
+        "quarter_SSE_change": -0.06857713118034203,
+        "T_inherited": 71714.46299499029,
+        "T_cancellation": 231.12935144226168,
+        "T_requant": 7792.409960942163,
+        "baseline_SSE": 184331.12535028372
+      },
+      {
+        "target": "model.layers.20.mlp.down_proj",
+        "selected_alpha": 0.75,
+        "EVAL_documents": 32,
+        "selected_SSE_change": 0.14292378632212466,
+        "quarter_SSE_change": -0.06454309338193964,
+        "T_inherited": 408064.94357889704,
+        "T_cancellation": -739.4774692393825,
+        "T_requant": 195748.89532866335,
+        "baseline_SSE": 4219552.091064109
+      },
+      {
+        "target": "model.layers.20.self_attn.o_proj",
+        "selected_alpha": 1,
+        "EVAL_documents": 32,
+        "selected_SSE_change": 0.05106730998793618,
+        "quarter_SSE_change": -0.16069916171080478,
+        "T_inherited": 92871.40264148032,
+        "T_cancellation": -12340.755542590054,
+        "T_requant": 17236.911413828777,
+        "baseline_SSE": 1914484.207917262
+      },
+      {
+        "target": "model.layers.4.mlp.down_proj",
+        "selected_alpha": 1,
+        "EVAL_documents": 32,
+        "selected_SSE_change": 0.45397774418496595,
+        "quarter_SSE_change": -0.05971204149342879,
+        "T_inherited": 29173.196431632325,
+        "T_cancellation": 55.11731368863427,
+        "T_requant": 2945.0058308920893,
+        "baseline_SSE": 70869.81683204397
+      },
+      {
+        "target": "model.layers.4.self_attn.o_proj",
+        "selected_alpha": 1,
+        "EVAL_documents": 32,
+        "selected_SSE_change": 0.1098418020574714,
+        "quarter_SSE_change": -0.10588373624553815,
+        "T_inherited": 2914.331851620549,
+        "T_cancellation": -55.219560471502774,
+        "T_requant": 271.0277495344371,
+        "baseline_SSE": 28496.80160059401
+      }
+    ],
+    "selected_EVAL_SSE_increased": 6,
+    "quarter_EVAL_SSE_decreased": 6,
+    "unit": "six independent hybrid interventions;32 EVAL documents reused across targets",
+    "arithmetic": {
+      "comparisons": 2304,
+      "measured_direction_agrees": 2304,
+      "bound_certified": 2195
+    }
+  },
+  "p1b": {
+    "raw_rows": 3360,
+    "choices": {
+      "model.layers.4.self_attn.o_proj": {
+        "BASE_ZERO": 0,
+        "OLD_FIT": 1,
+        "FIXED_QUARTER": 0.25,
+        "FIXED_HALF": 0.5,
+        "FIXED_FULL": 1,
+        "SELECT_SSE": 0.5,
+        "SELECT_NLL": 1
+      },
+      "model.layers.4.mlp.down_proj": {
+        "BASE_ZERO": 0,
+        "OLD_FIT": 1,
+        "FIXED_QUARTER": 0.25,
+        "FIXED_HALF": 0.5,
+        "FIXED_FULL": 1,
+        "SELECT_SSE": 0.25,
+        "SELECT_NLL": 0.25
+      },
+      "model.layers.12.self_attn.o_proj": {
+        "BASE_ZERO": 0,
+        "OLD_FIT": 1,
+        "FIXED_QUARTER": 0.25,
+        "FIXED_HALF": 0.5,
+        "FIXED_FULL": 1,
+        "SELECT_SSE": 0.25,
+        "SELECT_NLL": 0.75
+      },
+      "model.layers.12.mlp.down_proj": {
+        "BASE_ZERO": 0,
+        "OLD_FIT": 1,
+        "FIXED_QUARTER": 0.25,
+        "FIXED_HALF": 0.5,
+        "FIXED_FULL": 1,
+        "SELECT_SSE": 0.25,
+        "SELECT_NLL": 0
+      },
+      "model.layers.20.self_attn.o_proj": {
+        "BASE_ZERO": 0,
+        "OLD_FIT": 1,
+        "FIXED_QUARTER": 0.25,
+        "FIXED_HALF": 0.5,
+        "FIXED_FULL": 1,
+        "SELECT_SSE": 0.5,
+        "SELECT_NLL": 1
+      },
+      "model.layers.20.mlp.down_proj": {
+        "BASE_ZERO": 0,
+        "OLD_FIT": 0.75,
+        "FIXED_QUARTER": 0.25,
+        "FIXED_HALF": 0.5,
+        "FIXED_FULL": 1,
+        "SELECT_SSE": 0.25,
+        "SELECT_NLL": 0.5
+      }
+    },
+    "macro_contrasts": [
+      {
+        "split": "SELECT-ID",
+        "candidate": "SELECT_SSE",
+        "baseline": "OLD_FIT",
+        "fixed_targets": 6,
+        "documents": 32,
+        "D_macro": -0.3707283200343696,
+        "D_macro_CI95": [
+          -0.4197159043110847,
+          -0.33003740414299265
+        ],
+        "NLL_macro_doc_mean_difference": -0.005255583220837163,
+        "NLL_macro_CI95": [
+          -0.007214523546056795,
+          -0.0034734340742522446
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "SELECT-ID",
+        "candidate": "SELECT_SSE",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 32,
+        "D_macro": -0.0973372129534781,
+        "D_macro_CI95": [
+          -0.10850249274339016,
+          -0.08491392343946122
+        ],
+        "NLL_macro_doc_mean_difference": -0.001282594094868579,
+        "NLL_macro_CI95": [
+          -0.0024342654733096546,
+          -0.00019228428797002093
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "SELECT-ID",
+        "candidate": "SELECT_SSE",
+        "baseline": "FIXED_QUARTER",
+        "fixed_targets": 6,
+        "documents": 32,
+        "D_macro": -0.008061058448417403,
+        "D_macro_CI95": [
+          -0.012698883391656151,
+          -0.002526626373054741
+        ],
+        "NLL_macro_doc_mean_difference": -0.0008962045308032067,
+        "NLL_macro_CI95": [
+          -0.0014413249258901687,
+          -0.00036477802625666666
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "SELECT-ID",
+        "candidate": "SELECT_SSE",
+        "baseline": "FIXED_HALF",
+        "fixed_targets": 6,
+        "documents": 32,
+        "D_macro": -0.030996603814018742,
+        "D_macro_CI95": [
+          -0.03914075425774555,
+          -0.02407939918676229
+        ],
+        "NLL_macro_doc_mean_difference": -0.0009452015745873544,
+        "NLL_macro_CI95": [
+          -0.0017975054379382066,
+          -4.811251085565443e-05
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "SELECT-ID",
+        "candidate": "SELECT_NLL",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 32,
+        "D_macro": 0.04840071848111171,
+        "D_macro_CI95": [
+          0.018097583313881817,
+          0.08395707735467316
+        ],
+        "NLL_macro_doc_mean_difference": -0.0017748327816233915,
+        "NLL_macro_CI95": [
+          -0.0031791107015671713,
+          -0.00038183888578723285
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "SELECT-ID",
+        "candidate": "SELECT_NLL",
+        "baseline": "SELECT_SSE",
+        "fixed_targets": 6,
+        "documents": 32,
+        "D_macro": 0.1457379314345898,
+        "D_macro_CI95": [
+          0.12598772511202547,
+          0.16956113763053918
+        ],
+        "NLL_macro_doc_mean_difference": -0.0004922386867548126,
+        "NLL_macro_CI95": [
+          -0.0014547345840853036,
+          0.0004342669910854578
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "SELECT-ID",
+        "candidate": "SELECT_NLL",
+        "baseline": "FIXED_HALF",
+        "fixed_targets": 6,
+        "documents": 32,
+        "D_macro": 0.11474132762057106,
+        "D_macro_CI95": [
+          0.10110763438161767,
+          0.13161822687282182
+        ],
+        "NLL_macro_doc_mean_difference": -0.0014374402613421672,
+        "NLL_macro_CI95": [
+          -0.002472190451777819,
+          -0.00040914816014903983
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "SELECT-ID",
+        "candidate": "OLD_FIT",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 32,
+        "D_macro": 0.2733911070808915,
+        "D_macro_CI95": [
+          0.22219647574263776,
+          0.3346046152044425
+        ],
+        "NLL_macro_doc_mean_difference": 0.003972989125968584,
+        "NLL_macro_CI95": [
+          0.0017302728478425775,
+          0.00628603943033158
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "SELECT-ID",
+        "candidate": "FIXED_QUARTER",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 32,
+        "D_macro": -0.08927615450506067,
+        "D_macro_CI95": [
+          -0.09600143074673222,
+          -0.08199159832037967
+        ],
+        "NLL_macro_doc_mean_difference": -0.00038638956406537227,
+        "NLL_macro_CI95": [
+          -0.0014658515749413654,
+          0.0006465956120709335
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "SELECT-ID",
+        "candidate": "FIXED_HALF",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 32,
+        "D_macro": -0.06634060913945934,
+        "D_macro_CI95": [
+          -0.08400817360912376,
+          -0.04614512586532925
+        ],
+        "NLL_macro_doc_mean_difference": -0.0003373925202812245,
+        "NLL_macro_CI95": [
+          -0.0018021149417154195,
+          0.001079356156143507
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "SELECT-ID",
+        "candidate": "FIXED_FULL",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 32,
+        "D_macro": 0.3210130826688393,
+        "D_macro_CI95": [
+          0.266161570184204,
+          0.3868660028039334
+        ],
+        "NLL_macro_doc_mean_difference": 0.004208062988480712,
+        "NLL_macro_CI95": [
+          0.00183213221481426,
+          0.0066379036934547395
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-EVAL-ID",
+        "candidate": "SELECT_SSE",
+        "baseline": "OLD_FIT",
+        "fixed_targets": 6,
+        "documents": 64,
+        "D_macro": -0.36078005260289564,
+        "D_macro_CI95": [
+          -0.38558192190215557,
+          -0.33820850836083155
+        ],
+        "NLL_macro_doc_mean_difference": -0.003735026191262638,
+        "NLL_macro_CI95": [
+          -0.00485768167022008,
+          -0.0026050732650008683
+        ],
+        "primary": true,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-EVAL-ID",
+        "candidate": "SELECT_SSE",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 64,
+        "D_macro": -0.10172202530111941,
+        "D_macro_CI95": [
+          -0.10711569381355963,
+          -0.09612644591339757
+        ],
+        "NLL_macro_doc_mean_difference": -0.0010553852405423433,
+        "NLL_macro_CI95": [
+          -0.0017430576623655148,
+          -0.00041630654553181587
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-EVAL-ID",
+        "candidate": "SELECT_SSE",
+        "baseline": "FIXED_QUARTER",
+        "fixed_targets": 6,
+        "documents": 64,
+        "D_macro": -0.011217048223002244,
+        "D_macro_CI95": [
+          -0.013070539523115824,
+          -0.009327096476143458
+        ],
+        "NLL_macro_doc_mean_difference": -0.00027507831847745605,
+        "NLL_macro_CI95": [
+          -0.000628096169116435,
+          7.680793213686971e-05
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-EVAL-ID",
+        "candidate": "SELECT_SSE",
+        "baseline": "FIXED_HALF",
+        "fixed_targets": 6,
+        "documents": 64,
+        "D_macro": -0.03172617260202681,
+        "D_macro_CI95": [
+          -0.03697941649253987,
+          -0.02711146888003858
+        ],
+        "NLL_macro_doc_mean_difference": -0.0006079069150039573,
+        "NLL_macro_CI95": [
+          -0.001157960361904579,
+          -6.855743383272251e-05
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-EVAL-ID",
+        "candidate": "SELECT_NLL",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 64,
+        "D_macro": 0.034035078917969946,
+        "D_macro_CI95": [
+          0.02002436469725067,
+          0.04869232554332752
+        ],
+        "NLL_macro_doc_mean_difference": -0.0015696531806895936,
+        "NLL_macro_CI95": [
+          -0.0026023719357509438,
+          -0.0005336430181865006
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-EVAL-ID",
+        "candidate": "SELECT_NLL",
+        "baseline": "SELECT_SSE",
+        "fixed_targets": 6,
+        "documents": 64,
+        "D_macro": 0.13575710421908935,
+        "D_macro_CI95": [
+          0.1268335981025352,
+          0.14521422547985316
+        ],
+        "NLL_macro_doc_mean_difference": -0.0005142679401472503,
+        "NLL_macro_CI95": [
+          -0.0011736408869425403,
+          0.00012777898825851004
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-EVAL-ID",
+        "candidate": "SELECT_NLL",
+        "baseline": "FIXED_HALF",
+        "fixed_targets": 6,
+        "documents": 64,
+        "D_macro": 0.10403093161706256,
+        "D_macro_CI95": [
+          0.09909846675813302,
+          0.10912920995501464
+        ],
+        "NLL_macro_doc_mean_difference": -0.0011221748551512075,
+        "NLL_macro_CI95": [
+          -0.0019288348372465782,
+          -0.0003583590033786793
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-EVAL-ID",
+        "candidate": "OLD_FIT",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 64,
+        "D_macro": 0.2590580273017762,
+        "D_macro_CI95": [
+          0.23173088852303395,
+          0.2890064030729888
+        ],
+        "NLL_macro_doc_mean_difference": 0.0026796409507202947,
+        "NLL_macro_CI95": [
+          0.0012875317124758999,
+          0.004060561953027237
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-EVAL-ID",
+        "candidate": "FIXED_QUARTER",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 64,
+        "D_macro": -0.09050497707811718,
+        "D_macro_CI95": [
+          -0.0941273508428658,
+          -0.08667650463973911
+        ],
+        "NLL_macro_doc_mean_difference": -0.0007803069220648872,
+        "NLL_macro_CI95": [
+          -0.0014564544858496195,
+          -0.0001441642973158117
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-EVAL-ID",
+        "candidate": "FIXED_HALF",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 64,
+        "D_macro": -0.06999585269909261,
+        "D_macro_CI95": [
+          -0.07965196282166,
+          -0.059618061884384066
+        ],
+        "NLL_macro_doc_mean_difference": -0.00044747832553838603,
+        "NLL_macro_CI95": [
+          -0.001330722219803757,
+          0.00042151585123896714
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-EVAL-ID",
+        "candidate": "FIXED_FULL",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 64,
+        "D_macro": 0.3059421163452944,
+        "D_macro_CI95": [
+          0.27597530997692654,
+          0.33879520764687454
+        ],
+        "NLL_macro_doc_mean_difference": 0.0027605542949601714,
+        "NLL_macro_CI95": [
+          0.0013304497369753694,
+          0.004207515451643164
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-SHIFT",
+        "candidate": "SELECT_SSE",
+        "baseline": "OLD_FIT",
+        "fixed_targets": 6,
+        "documents": 16,
+        "D_macro": -1.5429160037794405,
+        "D_macro_CI95": [
+          -1.7286432947163048,
+          -1.3666223915077127
+        ],
+        "NLL_macro_doc_mean_difference": -0.0216167612013474,
+        "NLL_macro_CI95": [
+          -0.027312866846720348,
+          -0.016272047485401425
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-SHIFT",
+        "candidate": "SELECT_SSE",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 16,
+        "D_macro": 0.11577755767110524,
+        "D_macro_CI95": [
+          0.08692539602644882,
+          0.1454723897647596
+        ],
+        "NLL_macro_doc_mean_difference": 0.005248540990492877,
+        "NLL_macro_CI95": [
+          0.003806110643873017,
+          0.006684207853928118
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-SHIFT",
+        "candidate": "SELECT_SSE",
+        "baseline": "FIXED_QUARTER",
+        "fixed_targets": 6,
+        "documents": 16,
+        "D_macro": 0.05598256675885719,
+        "D_macro_CI95": [
+          0.04691128814166292,
+          0.06508226136136486
+        ],
+        "NLL_macro_doc_mean_difference": 0.0016067380219503165,
+        "NLL_macro_CI95": [
+          0.0008753535015131185,
+          0.0023626383301479366
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-SHIFT",
+        "candidate": "SELECT_SSE",
+        "baseline": "FIXED_HALF",
+        "fixed_targets": 6,
+        "documents": 16,
+        "D_macro": -0.2930199287652988,
+        "D_macro_CI95": [
+          -0.3387723283325624,
+          -0.2507512212141416
+        ],
+        "NLL_macro_doc_mean_difference": -0.004185404808692683,
+        "NLL_macro_CI95": [
+          -0.005875183180266715,
+          -0.0024240820703942826
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-SHIFT",
+        "candidate": "SELECT_NLL",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 16,
+        "D_macro": 0.6459473923643152,
+        "D_macro_CI95": [
+          0.5551405306437814,
+          0.743492434685048
+        ],
+        "NLL_macro_doc_mean_difference": 0.011453981337204476,
+        "NLL_macro_CI95": [
+          0.008136373407700473,
+          0.014989944096484215
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-SHIFT",
+        "candidate": "SELECT_NLL",
+        "baseline": "SELECT_SSE",
+        "fixed_targets": 6,
+        "documents": 16,
+        "D_macro": 0.5301698346932099,
+        "D_macro_CI95": [
+          0.4677199484149754,
+          0.5984726732160324
+        ],
+        "NLL_macro_doc_mean_difference": 0.006205440346711601,
+        "NLL_macro_CI95": [
+          0.0037011074864006957,
+          0.008655781683579005
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-SHIFT",
+        "candidate": "SELECT_NLL",
+        "baseline": "FIXED_HALF",
+        "fixed_targets": 6,
+        "documents": 16,
+        "D_macro": 0.2371499059279111,
+        "D_macro_CI95": [
+          0.21406009436570628,
+          0.2615192623090182
+        ],
+        "NLL_macro_doc_mean_difference": 0.0020200355380189184,
+        "NLL_macro_CI95": [
+          2.1633759043554452e-05,
+          0.004155295565237414
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-SHIFT",
+        "candidate": "OLD_FIT",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 16,
+        "D_macro": 1.6586935614505458,
+        "D_macro_CI95": [
+          1.455061758331338,
+          1.8727947819394797
+        ],
+        "NLL_macro_doc_mean_difference": 0.026865302191840277,
+        "NLL_macro_CI95": [
+          0.020830821585811028,
+          0.033326484954435055
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-SHIFT",
+        "candidate": "FIXED_QUARTER",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 16,
+        "D_macro": 0.05979499091224805,
+        "D_macro_CI95": [
+          0.039650398802690015,
+          0.0808444878020125
+        ],
+        "NLL_macro_doc_mean_difference": 0.0036418029685425604,
+        "NLL_macro_CI95": [
+          0.0026274587905484757,
+          0.0046322776133718106
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-SHIFT",
+        "candidate": "FIXED_HALF",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 16,
+        "D_macro": 0.40879748643640407,
+        "D_macro_CI95": [
+          0.3388447767734863,
+          0.48354282299155177
+        ],
+        "NLL_macro_doc_mean_difference": 0.009433945799185559,
+        "NLL_macro_CI95": [
+          0.006883785490896154,
+          0.012052575560177057
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      },
+      {
+        "split": "FRESH-SHIFT",
+        "candidate": "FIXED_FULL",
+        "baseline": "BASE_ZERO",
+        "fixed_targets": 6,
+        "documents": 16,
+        "D_macro": 1.9765088837550333,
+        "D_macro_CI95": [
+          1.7144111409445548,
+          2.259327693041208
+        ],
+        "NLL_macro_doc_mean_difference": 0.032716693753510516,
+        "NLL_macro_CI95": [
+          0.02549147531098013,
+          0.04036515036439586
+        ],
+        "primary": false,
+        "interpretation": "equal-weight fixed interventions; not a jointly compensated full model"
+      }
+    ],
+    "arithmetic": {
+      "SELECT-ID": {
+        "comparisons": 768,
+        "measured_direction_agrees": 768,
+        "bound_certified": 700,
+        "measured_agreement_but_not_bound_certified": 68
+      },
+      "FRESH-EVAL-ID": {
+        "comparisons": 1536,
+        "measured_direction_agrees": 1535,
+        "bound_certified": 1396,
+        "measured_agreement_but_not_bound_certified": 139
+      },
+      "FRESH-SHIFT": {
+        "comparisons": 384,
+        "measured_direction_agrees": 384,
+        "bound_certified": 351,
+        "measured_agreement_but_not_bound_certified": 33
+      }
+    },
+    "unit": "six independent interventions;SELECT32/FRESH-EVAL64/SHIFT16;7 policy rows can alias the same artifact"
+  },
+  "p2": {
+    "raw_rows": 320,
+    "methods": [
+      {
+        "method": "BF16",
+        "split": "EVAL-ID",
+        "document_count": 64,
+        "valid_token_count": 16320,
+        "NLL_sum": 62271.067443847656,
+        "NLL": 3.8156291325887044,
+        "PPL": 45.405313361278395,
+        "mean_KL": 0.0,
+        "flip_rate": 0.0,
+        "NLL_minus_RTN": -0.2378920723410214,
+        "PPL_relative_change": -0.21171223544417178,
+        "lower_documents": 64,
+        "higher_documents": 0,
+        "tie_documents": 0,
+        "core_bytes": 880803840
+      },
+      {
+        "method": "RTN",
+        "split": "EVAL-ID",
+        "document_count": 64,
+        "valid_token_count": 16320,
+        "NLL_sum": 66153.46606445312,
+        "NLL": 4.053521204929726,
+        "PPL": 57.599921504379374,
+        "mean_KL": 0.4388087736442685,
+        "flip_rate": 0.3174019607843137,
+        "NLL_minus_RTN": 0.0,
+        "PPL_relative_change": 0.0,
+        "lower_documents": 0,
+        "higher_documents": 0,
+        "tie_documents": 64,
+        "core_bytes": 247733136
+      },
+      {
+        "method": "COMP_QUARTER",
+        "split": "EVAL-ID",
+        "document_count": 64,
+        "valid_token_count": 16320,
+        "NLL_sum": 63895.205993652344,
+        "NLL": 3.9151474260816386,
+        "PPL": 50.15646533715552,
+        "mean_KL": 0.29068837920203805,
+        "flip_rate": 0.25447303921568626,
+        "NLL_minus_RTN": -0.1383737788480871,
+        "PPL_relative_change": -0.12922684567648104,
+        "lower_documents": 64,
+        "higher_documents": 0,
+        "tie_documents": 0,
+        "core_bytes": 247733136
+      },
+      {
+        "method": "COMP_HALF",
+        "split": "EVAL-ID",
+        "document_count": 64,
+        "valid_token_count": 16320,
+        "NLL_sum": 63840.43914794922,
+        "NLL": 3.9117916144576728,
+        "PPL": 49.98843178991763,
+        "mean_KL": 0.23666515154764056,
+        "flip_rate": 0.2417892156862745,
+        "NLL_minus_RTN": -0.14172959047205308,
+        "PPL_relative_change": -0.13214409873602062,
+        "lower_documents": 63,
+        "higher_documents": 1,
+        "tie_documents": 0,
+        "core_bytes": 247733136
+      },
+      {
+        "method": "BF16",
+        "split": "SHIFT",
+        "document_count": 16,
+        "valid_token_count": 4080,
+        "NLL_sum": 9582.443481445312,
+        "NLL": 2.3486381081973806,
+        "PPL": 10.471299232912267,
+        "mean_KL": 0.0,
+        "flip_rate": 0.0,
+        "NLL_minus_RTN": -0.1732304292566636,
+        "PPL_relative_change": -0.15905618554122006,
+        "lower_documents": 16,
+        "higher_documents": 0,
+        "tie_documents": 0,
+        "core_bytes": 880803840
+      },
+      {
+        "method": "RTN",
+        "split": "SHIFT",
+        "document_count": 16,
+        "valid_token_count": 4080,
+        "NLL_sum": 10289.2236328125,
+        "NLL": 2.521868537454044,
+        "PPL": 12.451841672266124,
+        "mean_KL": 0.3200925886631012,
+        "flip_rate": 0.22549019607843138,
+        "NLL_minus_RTN": 0.0,
+        "PPL_relative_change": 0.0,
+        "lower_documents": 0,
+        "higher_documents": 0,
+        "tie_documents": 16,
+        "core_bytes": 247733136
+      },
+      {
+        "method": "COMP_QUARTER",
+        "split": "SHIFT",
+        "document_count": 16,
+        "valid_token_count": 4080,
+        "NLL_sum": 10365.710083007812,
+        "NLL": 2.5406152164234834,
+        "PPL": 12.687474112723903,
+        "mean_KL": 0.31065349094569683,
+        "flip_rate": 0.23161764705882354,
+        "NLL_minus_RTN": 0.01874667896943931,
+        "PPL_relative_change": 0.018923501170321034,
+        "lower_documents": 5,
+        "higher_documents": 11,
+        "tie_documents": 0,
+        "core_bytes": 247733136
+      },
+      {
+        "method": "COMP_HALF",
+        "split": "SHIFT",
+        "document_count": 16,
+        "valid_token_count": 4080,
+        "NLL_sum": 10745.033813476562,
+        "NLL": 2.6335867189893536,
+        "PPL": 13.92362056280524,
+        "mean_KL": 0.31801756704226136,
+        "flip_rate": 0.24975490196078431,
+        "NLL_minus_RTN": 0.1117181815353094,
+        "PPL_relative_change": 0.1181976874808164,
+        "lower_documents": 2,
+        "higher_documents": 14,
+        "tie_documents": 0,
+        "core_bytes": 247733136
+      }
+    ],
+    "contrasts": [
+      {
+        "split": "EVAL-ID",
+        "candidate": "COMP_QUARTER",
+        "baseline": "RTN",
+        "documents": 64,
+        "mean_document_delta_NLL": -0.13837377884808708,
+        "CI95": [
+          -0.14941367018456553,
+          -0.12751511274599564
+        ],
+        "PPL_relative_change": -0.12922684567648113,
+        "PPL_relative_change_CI95": [
+          -0.1387872168488266,
+          -0.11971988771604719
+        ],
+        "verdict": "LOWER_NLL",
+        "primary": true,
+        "lower_documents": 64,
+        "higher_documents": 0,
+        "exact_ties": 0,
+        "median": -0.14070901309742645,
+        "project_reference_PPL_1pct_reduction_reached": true,
+        "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+      },
+      {
+        "split": "EVAL-ID",
+        "candidate": "COMP_HALF",
+        "baseline": "RTN",
+        "documents": 64,
+        "mean_document_delta_NLL": -0.14172959047205308,
+        "CI95": [
+          -0.1565372138864854,
+          -0.12615907267028212
+        ],
+        "PPL_relative_change": -0.13214409873602084,
+        "PPL_relative_change_CI95": [
+          -0.14490030447220295,
+          -0.1185253828907721
+        ],
+        "verdict": "LOWER_NLL",
+        "primary": false,
+        "lower_documents": 63,
+        "higher_documents": 1,
+        "exact_ties": 0,
+        "median": -0.1403411266850494,
+        "project_reference_PPL_1pct_reduction_reached": true,
+        "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+      },
+      {
+        "split": "EVAL-ID",
+        "candidate": "RTN",
+        "baseline": "BF16",
+        "documents": 64,
+        "mean_document_delta_NLL": 0.23789207234102136,
+        "CI95": [
+          0.22421525310067572,
+          0.2516161845712101
+        ],
+        "PPL_relative_change": 0.26857227140074186,
+        "PPL_relative_change_CI95": [
+          0.2513403453300376,
+          0.28610231662997415
+        ],
+        "verdict": "HIGHER_NLL",
+        "primary": false,
+        "lower_documents": 0,
+        "higher_documents": 64,
+        "exact_ties": 0,
+        "median": 0.23576325061274495,
+        "project_reference_PPL_1pct_reduction_reached": false,
+        "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+      },
+      {
+        "split": "EVAL-ID",
+        "candidate": "COMP_QUARTER",
+        "baseline": "BF16",
+        "documents": 64,
+        "mean_document_delta_NLL": 0.09951829349293428,
+        "CI95": [
+          0.08856990056879382,
+          0.1106558402379354
+        ],
+        "PPL_relative_change": 0.10463867825497505,
+        "PPL_relative_change_CI95": [
+          0.09261062404533589,
+          0.11701041065703811
+        ],
+        "verdict": "HIGHER_NLL",
+        "primary": false,
+        "lower_documents": 1,
+        "higher_documents": 63,
+        "exact_ties": 0,
+        "median": 0.09939982096354183,
+        "project_reference_PPL_1pct_reduction_reached": false,
+        "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+      },
+      {
+        "split": "EVAL-ID",
+        "candidate": "COMP_HALF",
+        "baseline": "BF16",
+        "documents": 64,
+        "mean_document_delta_NLL": 0.0961624818689683,
+        "CI95": [
+          0.08271403696022782,
+          0.10950834797877886
+        ],
+        "PPL_relative_change": 0.10093793191498396,
+        "PPL_relative_change_CI95": [
+          0.08623114217149383,
+          0.11572938498149976
+        ],
+        "verdict": "HIGHER_NLL",
+        "primary": false,
+        "lower_documents": 2,
+        "higher_documents": 62,
+        "exact_ties": 0,
+        "median": 0.10016204235600457,
+        "project_reference_PPL_1pct_reduction_reached": false,
+        "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+      },
+      {
+        "split": "SHIFT",
+        "candidate": "COMP_QUARTER",
+        "baseline": "RTN",
+        "documents": 16,
+        "mean_document_delta_NLL": 0.018746678969439337,
+        "CI95": [
+          -0.005722614737118095,
+          0.044885381249820465
+        ],
+        "PPL_relative_change": 0.01892350117032085,
+        "PPL_relative_change_CI95": [
+          -0.005706271767104828,
+          0.045907972373572206
+        ],
+        "verdict": "INCONCLUSIVE",
+        "primary": false,
+        "lower_documents": 5,
+        "higher_documents": 11,
+        "exact_ties": 0,
+        "median": 0.011834058574601625,
+        "project_reference_PPL_1pct_reduction_reached": false,
+        "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+      },
+      {
+        "split": "SHIFT",
+        "candidate": "COMP_HALF",
+        "baseline": "RTN",
+        "documents": 16,
+        "mean_document_delta_NLL": 0.11171818153530944,
+        "CI95": [
+          0.07205803758957798,
+          0.15385261554344026
+        ],
+        "PPL_relative_change": 0.1181976874808161,
+        "PPL_relative_change_CI95": [
+          0.0747177162795592,
+          0.16631897682174873
+        ],
+        "verdict": "HIGHER_NLL",
+        "primary": false,
+        "lower_documents": 2,
+        "higher_documents": 14,
+        "exact_ties": 0,
+        "median": 0.09822674919577201,
+        "project_reference_PPL_1pct_reduction_reached": false,
+        "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+      },
+      {
+        "split": "SHIFT",
+        "candidate": "RTN",
+        "baseline": "BF16",
+        "documents": 16,
+        "mean_document_delta_NLL": 0.1732304292566636,
+        "CI95": [
+          0.13656698432623174,
+          0.21427983975877946
+        ],
+        "PPL_relative_change": 0.18914008618231734,
+        "PPL_relative_change_CI95": [
+          0.14633166145806786,
+          0.23896931916136271
+        ],
+        "verdict": "HIGHER_NLL",
+        "primary": false,
+        "lower_documents": 0,
+        "higher_documents": 16,
+        "exact_ties": 0,
+        "median": 0.17419170304840703,
+        "project_reference_PPL_1pct_reduction_reached": false,
+        "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+      },
+      {
+        "split": "SHIFT",
+        "candidate": "COMP_QUARTER",
+        "baseline": "BF16",
+        "documents": 16,
+        "mean_document_delta_NLL": 0.19197710822610295,
+        "CI95": [
+          0.1486972879895977,
+          0.23857918010038484
+        ],
+        "PPL_relative_change": 0.2116427799948639,
+        "PPL_relative_change_CI95": [
+          0.16032169272861693,
+          0.26944421677764674
+        ],
+        "verdict": "HIGHER_NLL",
+        "primary": false,
+        "lower_documents": 0,
+        "higher_documents": 16,
+        "exact_ties": 0,
+        "median": 0.17864990234375,
+        "project_reference_PPL_1pct_reduction_reached": false,
+        "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+      },
+      {
+        "split": "SHIFT",
+        "candidate": "COMP_HALF",
+        "baseline": "BF16",
+        "documents": 16,
+        "mean_document_delta_NLL": 0.28494861079197303,
+        "CI95": [
+          0.2311297932793112,
+          0.34231225144629374
+        ],
+        "PPL_relative_change": 0.3296936944598056,
+        "PPL_relative_change_CI95": [
+          0.2600227713238296,
+          0.40819994133917425
+        ],
+        "verdict": "HIGHER_NLL",
+        "primary": false,
+        "lower_documents": 0,
+        "higher_documents": 16,
+        "exact_ties": 0,
+        "median": 0.2589066449333639,
+        "project_reference_PPL_1pct_reduction_reached": false,
+        "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+      }
+    ],
+    "primary": {
+      "split": "EVAL-ID",
+      "candidate": "COMP_QUARTER",
+      "baseline": "RTN",
+      "documents": 64,
+      "mean_document_delta_NLL": -0.13837377884808708,
+      "CI95": [
+        -0.14941367018456553,
+        -0.12751511274599564
+      ],
+      "PPL_relative_change": -0.12922684567648113,
+      "PPL_relative_change_CI95": [
+        -0.1387872168488266,
+        -0.11971988771604719
+      ],
+      "verdict": "LOWER_NLL",
+      "primary": true,
+      "lower_documents": 64,
+      "higher_documents": 0,
+      "exact_ties": 0,
+      "median": -0.14070901309742645,
+      "project_reference_PPL_1pct_reduction_reached": true,
+      "scope": "paired documents; auxiliary pointwise except registered primary; fixed model/CAL and methods"
+    },
+    "storage": [
+      {
+        "method": "RTN",
+        "files": 196,
+        "artifact_bytes": 247733136,
+        "header_bytes": 7056,
+        "scale_bytes": 27525120,
+        "code_bytes": 220200960
+      },
+      {
+        "method": "COMP_QUARTER",
+        "files": 196,
+        "artifact_bytes": 247733136,
+        "header_bytes": 7056,
+        "scale_bytes": 27525120,
+        "code_bytes": 220200960
+      },
+      {
+        "method": "COMP_HALF",
+        "files": 196,
+        "artifact_bytes": 247733136,
+        "header_bytes": 7056,
+        "scale_bytes": 27525120,
+        "code_bytes": 220200960
+      }
+    ],
+    "resources": {
+      "worker_wall_seconds_base": 1130.3167304939998,
+      "supplemental_smoke_worker_seconds": 11.21366696199766,
+      "all_full_model_forwards": 7535,
+      "main_full_model_forwards": 7527,
+      "fresh_process_reload_forwards": 4,
+      "supplemental_SMOKE_forwards": 4,
+      "stage_seconds_inclusive": {
+        "CAL_teacher_capture": 8.630958647998341,
+        "RTN_build": 9.898104235002393,
+        "COMP_HALF_build": 515.1603859980023,
+        "COMP_QUARTER_build": 546.998983532998,
+        "BF16_EVAL-ID": 2.4262025600000925,
+        "BF16_SHIFT": 0.5254150120017584,
+        "COMP_QUARTER_EVAL-ID": 2.1109858419986267,
+        "COMP_QUARTER_SHIFT": 0.6379325919988332,
+        "COMP_HALF_EVAL-ID": 2.284848293998948,
+        "COMP_HALF_SHIFT": 0.43979690699779894,
+        "RTN_EVAL-ID": 2.49039890000131,
+        "RTN_SHIFT": 0.5327273780021642,
+        "model_load": 1.5846669929997006
+      },
+      "metric_seconds_inside_stages": 504.8504530700411,
+      "fit_factorization_seconds": 108.31388187398625,
+      "fit_projection_solve_seconds": 156.4387800040604,
+      "convert_pack_independent_reload_seconds": 28.175915938980324,
+      "evaluation_reload_seconds": 11.733520397996472,
+      "peak_Torch_allocated_bytes": 1634240512,
+      "peak_Torch_reserved_bytes": 1845493760,
+      "max_observed_post_forward_device_used_bytes": 3331915776,
+      "device_sample_scope": "post-forward samples, not continuous device/Windows peak; background jobs untouched",
+      "projection_core_bytes": {
+        "RTN": 247733136,
+        "COMP_QUARTER": 247733136,
+        "COMP_HALF": 247733136
+      },
+      "BF16_projection_tensor_bytes": 880803840,
+      "common_unchanged_parameter_bytes": 311296000,
+      "GPU_busy_TTFT_TPOT_serving_throughput": "NOT_MEASURED",
+      "runtime": "stored INT4 decoded to dense BF16; offline capture/fit costs are not serving speed",
+      "cumulative_worker_wall_seconds": 1141.5303974559974
+    },
+    "posthoc": [
+      {
+        "comparison": "HALF minus QUARTER",
+        "split": "EVAL-ID",
+        "delta_NLL": -0.003355811623965993,
+        "CI95": null,
+        "CI_reason": "Independent reviewer code/seed unavailable locally; raw point estimate only",
+        "status": "POSTHOC_PUBLICATION_ANALYSIS"
+      },
+      {
+        "comparison": "HALF minus QUARTER",
+        "split": "SHIFT",
+        "delta_NLL": 0.0929715025658701,
+        "CI95": null,
+        "CI_reason": "Independent reviewer code/seed unavailable locally; raw point estimate only",
+        "status": "POSTHOC_PUBLICATION_ANALYSIS"
+      }
+    ],
+    "scope": "four actual whole models; original CAL32; fresh PG19 64 books and ArXiv16 content groups; no packed inference"
+  },
+  "observations": [
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "BF16",
+      "baseline": null,
+      "alpha": null,
+      "metric": "PPL",
+      "unit": "dimensionless",
+      "denominator": "exp(total NLL / valid next tokens)",
+      "value": 45.405313361278395,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/BF16_EVAL-ID.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "eeebfd8134b28ceab1254b22c26d7fbf3993c489f6608c01683ce9bbd4fab256"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "BF16",
+      "baseline": null,
+      "alpha": null,
+      "metric": "NLL",
+      "unit": "nats/token",
+      "denominator": "total valid next tokens",
+      "value": 3.8156291325887044,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/BF16_EVAL-ID.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "eeebfd8134b28ceab1254b22c26d7fbf3993c489f6608c01683ce9bbd4fab256"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "BF16",
+      "baseline": "RTN",
+      "alpha": null,
+      "metric": "PPL_relative_change",
+      "unit": "relative to RTN",
+      "denominator": "RTN PPL on identical documents",
+      "value": -0.21171223544417178,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/BF16_EVAL-ID.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "eeebfd8134b28ceab1254b22c26d7fbf3993c489f6608c01683ce9bbd4fab256"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "RTN",
+      "baseline": null,
+      "alpha": 0,
+      "metric": "PPL",
+      "unit": "dimensionless",
+      "denominator": "exp(total NLL / valid next tokens)",
+      "value": 57.599921504379374,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/RTN_EVAL-ID.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "49329aef11e1215402b37e22e3072cd891fc9aaebabd6e4974662340e6e1ecb3"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "RTN",
+      "baseline": null,
+      "alpha": 0,
+      "metric": "NLL",
+      "unit": "nats/token",
+      "denominator": "total valid next tokens",
+      "value": 4.053521204929726,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/RTN_EVAL-ID.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "49329aef11e1215402b37e22e3072cd891fc9aaebabd6e4974662340e6e1ecb3"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "RTN",
+      "baseline": "RTN",
+      "alpha": 0,
+      "metric": "PPL_relative_change",
+      "unit": "relative to RTN",
+      "denominator": "RTN PPL on identical documents",
+      "value": 0.0,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/RTN_EVAL-ID.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "49329aef11e1215402b37e22e3072cd891fc9aaebabd6e4974662340e6e1ecb3"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "COMP_QUARTER",
+      "baseline": null,
+      "alpha": 0.25,
+      "metric": "PPL",
+      "unit": "dimensionless",
+      "denominator": "exp(total NLL / valid next tokens)",
+      "value": 50.15646533715552,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/COMP_QUARTER_EVAL-ID.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "91daf9ec6b33ec8f08fae2f29f8fbe651c74e57aa693d6f657232c46dc66117a"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "COMP_QUARTER",
+      "baseline": null,
+      "alpha": 0.25,
+      "metric": "NLL",
+      "unit": "nats/token",
+      "denominator": "total valid next tokens",
+      "value": 3.9151474260816386,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/COMP_QUARTER_EVAL-ID.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "91daf9ec6b33ec8f08fae2f29f8fbe651c74e57aa693d6f657232c46dc66117a"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "COMP_QUARTER",
+      "baseline": "RTN",
+      "alpha": 0.25,
+      "metric": "PPL_relative_change",
+      "unit": "relative to RTN",
+      "denominator": "RTN PPL on identical documents",
+      "value": -0.12922684567648104,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/COMP_QUARTER_EVAL-ID.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "91daf9ec6b33ec8f08fae2f29f8fbe651c74e57aa693d6f657232c46dc66117a"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "COMP_HALF",
+      "baseline": null,
+      "alpha": 0.5,
+      "metric": "PPL",
+      "unit": "dimensionless",
+      "denominator": "exp(total NLL / valid next tokens)",
+      "value": 49.98843178991763,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/COMP_HALF_EVAL-ID.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "4f1230c65a8a20fecb55936c89bcf904f8b906886c87ba4cd096394a1d4fd2f3"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "COMP_HALF",
+      "baseline": null,
+      "alpha": 0.5,
+      "metric": "NLL",
+      "unit": "nats/token",
+      "denominator": "total valid next tokens",
+      "value": 3.9117916144576728,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/COMP_HALF_EVAL-ID.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "4f1230c65a8a20fecb55936c89bcf904f8b906886c87ba4cd096394a1d4fd2f3"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "COMP_HALF",
+      "baseline": "RTN",
+      "alpha": 0.5,
+      "metric": "PPL_relative_change",
+      "unit": "relative to RTN",
+      "denominator": "RTN PPL on identical documents",
+      "value": -0.13214409873602062,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/COMP_HALF_EVAL-ID.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "4f1230c65a8a20fecb55936c89bcf904f8b906886c87ba4cd096394a1d4fd2f3"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SHIFT",
+      "document_unit": "content-group excerpt",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "BF16",
+      "baseline": null,
+      "alpha": null,
+      "metric": "PPL",
+      "unit": "dimensionless",
+      "denominator": "exp(total NLL / valid next tokens)",
+      "value": 10.471299232912267,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/BF16_SHIFT.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "bd36e83366ee35536b68fcb4eb7f7d09be91270617dafa6f0f227cb344b5c324"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SHIFT",
+      "document_unit": "content-group excerpt",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "BF16",
+      "baseline": null,
+      "alpha": null,
+      "metric": "NLL",
+      "unit": "nats/token",
+      "denominator": "total valid next tokens",
+      "value": 2.3486381081973806,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/BF16_SHIFT.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "bd36e83366ee35536b68fcb4eb7f7d09be91270617dafa6f0f227cb344b5c324"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SHIFT",
+      "document_unit": "content-group excerpt",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "BF16",
+      "baseline": "RTN",
+      "alpha": null,
+      "metric": "PPL_relative_change",
+      "unit": "relative to RTN",
+      "denominator": "RTN PPL on identical documents",
+      "value": -0.15905618554122006,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/BF16_SHIFT.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "bd36e83366ee35536b68fcb4eb7f7d09be91270617dafa6f0f227cb344b5c324"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SHIFT",
+      "document_unit": "content-group excerpt",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "RTN",
+      "baseline": null,
+      "alpha": 0,
+      "metric": "PPL",
+      "unit": "dimensionless",
+      "denominator": "exp(total NLL / valid next tokens)",
+      "value": 12.451841672266124,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/RTN_SHIFT.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "59c888bcb0d6a1665ced0761dfc35335972ab916e32f023c7d63f7f813cfe7e3"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SHIFT",
+      "document_unit": "content-group excerpt",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "RTN",
+      "baseline": null,
+      "alpha": 0,
+      "metric": "NLL",
+      "unit": "nats/token",
+      "denominator": "total valid next tokens",
+      "value": 2.521868537454044,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/RTN_SHIFT.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "59c888bcb0d6a1665ced0761dfc35335972ab916e32f023c7d63f7f813cfe7e3"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SHIFT",
+      "document_unit": "content-group excerpt",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "RTN",
+      "baseline": "RTN",
+      "alpha": 0,
+      "metric": "PPL_relative_change",
+      "unit": "relative to RTN",
+      "denominator": "RTN PPL on identical documents",
+      "value": 0.0,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/RTN_SHIFT.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "59c888bcb0d6a1665ced0761dfc35335972ab916e32f023c7d63f7f813cfe7e3"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SHIFT",
+      "document_unit": "content-group excerpt",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "COMP_QUARTER",
+      "baseline": null,
+      "alpha": 0.25,
+      "metric": "PPL",
+      "unit": "dimensionless",
+      "denominator": "exp(total NLL / valid next tokens)",
+      "value": 12.687474112723903,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/COMP_QUARTER_SHIFT.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "66ed1d521eab03d10b1f24acb546a65667d386272882b93bcca3f460364a51e6"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SHIFT",
+      "document_unit": "content-group excerpt",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "COMP_QUARTER",
+      "baseline": null,
+      "alpha": 0.25,
+      "metric": "NLL",
+      "unit": "nats/token",
+      "denominator": "total valid next tokens",
+      "value": 2.5406152164234834,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/COMP_QUARTER_SHIFT.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "66ed1d521eab03d10b1f24acb546a65667d386272882b93bcca3f460364a51e6"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SHIFT",
+      "document_unit": "content-group excerpt",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "COMP_QUARTER",
+      "baseline": "RTN",
+      "alpha": 0.25,
+      "metric": "PPL_relative_change",
+      "unit": "relative to RTN",
+      "denominator": "RTN PPL on identical documents",
+      "value": 0.018923501170321034,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/COMP_QUARTER_SHIFT.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "66ed1d521eab03d10b1f24acb546a65667d386272882b93bcca3f460364a51e6"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SHIFT",
+      "document_unit": "content-group excerpt",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "COMP_HALF",
+      "baseline": null,
+      "alpha": 0.5,
+      "metric": "PPL",
+      "unit": "dimensionless",
+      "denominator": "exp(total NLL / valid next tokens)",
+      "value": 13.92362056280524,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/COMP_HALF_SHIFT.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "7a30078400b7ce81028f20e7b5e4402b477f5941f6907e4bbfd265642efb6ea2"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SHIFT",
+      "document_unit": "content-group excerpt",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "COMP_HALF",
+      "baseline": null,
+      "alpha": 0.5,
+      "metric": "NLL",
+      "unit": "nats/token",
+      "denominator": "total valid next tokens",
+      "value": 2.6335867189893536,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/COMP_HALF_SHIFT.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "7a30078400b7ce81028f20e7b5e4402b477f5941f6907e4bbfd265642efb6ea2"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SHIFT",
+      "document_unit": "content-group excerpt",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "valid_targets_per_document": 255,
+      "candidate": "COMP_HALF",
+      "baseline": "RTN",
+      "alpha": 0.5,
+      "metric": "PPL_relative_change",
+      "unit": "relative to RTN",
+      "denominator": "RTN PPL on identical documents",
+      "value": 0.1181976874808164,
+      "CI": null,
+      "primary_or_secondary_or_posthoc": "secondary absolute/relative summary",
+      "execution_boundary": "INT4 storage -> dense BF16 quality reference",
+      "source_file": "results/p2_r1/metrics/COMP_HALF_SHIFT.jsonl",
+      "source_fields": [
+        "NLL_sum",
+        "valid_token_count"
+      ],
+      "source_sha256": "7a30078400b7ce81028f20e7b5e4402b477f5941f6907e4bbfd265642efb6ea2"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "RECORDED_PAIRED_DOCUMENT_BOOTSTRAP_RECOMPUTED_IN_PUBLICATION_CHECK",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "candidate": "COMP_QUARTER",
+      "baseline": "RTN",
+      "alpha": 0.25,
+      "metric": "mean_document_delta_NLL",
+      "unit": "nats/token",
+      "denominator": "64 paired document means of255 next tokens",
+      "value": -0.13837377884808708,
+      "CI": [
+        -0.14941367018456553,
+        -0.12751511274599564
+      ],
+      "CI_type": "paired percentile bootstrap10000 seed6101523, conditional on model/CAL32",
+      "primary_or_secondary_or_posthoc": "registered primary",
+      "execution_boundary": "dense BF16 whole-model reference",
+      "source_file": "results/p2_r1/summary.json",
+      "source_fields": [
+        "paired_comparisons[primary]"
+      ],
+      "source_sha256": "ecdc2f5e1fd586326624ef024e734c1e533c98df5a599a3822be51dbb2e9e815"
+    },
+    {
+      "stage": "P1",
+      "run_id": "p1_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt reused across6 fixed targets",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "model.layers.12.mlp.down_proj",
+      "baseline": "same target alpha0",
+      "alpha": 1,
+      "metric": "selected_SSE_change",
+      "unit": "relative to alpha0 SSE",
+      "denominator": "sum alpha0 local projection SSE on32 excerpts",
+      "value": 0.36684458185225455,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "frozen CAL selection",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1_r2/derived_summary.json",
+      "source_fields": [
+        "rows: target/split/alpha",
+        "SSE_after",
+        "SSE_before"
+      ],
+      "source_sha256": "d69fa3dff90df77e1b6a791966a13fccaf22eee32a1c6a90e26e6279bd827e36"
+    },
+    {
+      "stage": "P1",
+      "run_id": "p1_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt reused across6 fixed targets",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "model.layers.12.mlp.down_proj",
+      "baseline": "same target alpha0",
+      "alpha": 0.25,
+      "metric": "quarter_SSE_change",
+      "unit": "relative to alpha0 SSE",
+      "denominator": "sum alpha0 local projection SSE on32 excerpts",
+      "value": -0.07783550268027317,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "posthoc weak-strength observation",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1_r2/derived_summary.json",
+      "source_fields": [
+        "rows: target/split/alpha",
+        "SSE_after",
+        "SSE_before"
+      ],
+      "source_sha256": "d69fa3dff90df77e1b6a791966a13fccaf22eee32a1c6a90e26e6279bd827e36"
+    },
+    {
+      "stage": "P1",
+      "run_id": "p1_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt reused across6 fixed targets",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "model.layers.12.self_attn.o_proj",
+      "baseline": "same target alpha0",
+      "alpha": 1,
+      "metric": "selected_SSE_change",
+      "unit": "relative to alpha0 SSE",
+      "denominator": "sum alpha0 local projection SSE on32 excerpts",
+      "value": 0.43258023926154054,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "frozen CAL selection",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1_r2/derived_summary.json",
+      "source_fields": [
+        "rows: target/split/alpha",
+        "SSE_after",
+        "SSE_before"
+      ],
+      "source_sha256": "d69fa3dff90df77e1b6a791966a13fccaf22eee32a1c6a90e26e6279bd827e36"
+    },
+    {
+      "stage": "P1",
+      "run_id": "p1_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt reused across6 fixed targets",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "model.layers.12.self_attn.o_proj",
+      "baseline": "same target alpha0",
+      "alpha": 0.25,
+      "metric": "quarter_SSE_change",
+      "unit": "relative to alpha0 SSE",
+      "denominator": "sum alpha0 local projection SSE on32 excerpts",
+      "value": -0.06857713118034203,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "posthoc weak-strength observation",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1_r2/derived_summary.json",
+      "source_fields": [
+        "rows: target/split/alpha",
+        "SSE_after",
+        "SSE_before"
+      ],
+      "source_sha256": "d69fa3dff90df77e1b6a791966a13fccaf22eee32a1c6a90e26e6279bd827e36"
+    },
+    {
+      "stage": "P1",
+      "run_id": "p1_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt reused across6 fixed targets",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "model.layers.20.mlp.down_proj",
+      "baseline": "same target alpha0",
+      "alpha": 0.75,
+      "metric": "selected_SSE_change",
+      "unit": "relative to alpha0 SSE",
+      "denominator": "sum alpha0 local projection SSE on32 excerpts",
+      "value": 0.14292378632212466,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "frozen CAL selection",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1_r2/derived_summary.json",
+      "source_fields": [
+        "rows: target/split/alpha",
+        "SSE_after",
+        "SSE_before"
+      ],
+      "source_sha256": "d69fa3dff90df77e1b6a791966a13fccaf22eee32a1c6a90e26e6279bd827e36"
+    },
+    {
+      "stage": "P1",
+      "run_id": "p1_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt reused across6 fixed targets",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "model.layers.20.mlp.down_proj",
+      "baseline": "same target alpha0",
+      "alpha": 0.25,
+      "metric": "quarter_SSE_change",
+      "unit": "relative to alpha0 SSE",
+      "denominator": "sum alpha0 local projection SSE on32 excerpts",
+      "value": -0.06454309338193964,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "posthoc weak-strength observation",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1_r2/derived_summary.json",
+      "source_fields": [
+        "rows: target/split/alpha",
+        "SSE_after",
+        "SSE_before"
+      ],
+      "source_sha256": "d69fa3dff90df77e1b6a791966a13fccaf22eee32a1c6a90e26e6279bd827e36"
+    },
+    {
+      "stage": "P1",
+      "run_id": "p1_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt reused across6 fixed targets",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "model.layers.20.self_attn.o_proj",
+      "baseline": "same target alpha0",
+      "alpha": 1,
+      "metric": "selected_SSE_change",
+      "unit": "relative to alpha0 SSE",
+      "denominator": "sum alpha0 local projection SSE on32 excerpts",
+      "value": 0.05106730998793618,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "frozen CAL selection",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1_r2/derived_summary.json",
+      "source_fields": [
+        "rows: target/split/alpha",
+        "SSE_after",
+        "SSE_before"
+      ],
+      "source_sha256": "d69fa3dff90df77e1b6a791966a13fccaf22eee32a1c6a90e26e6279bd827e36"
+    },
+    {
+      "stage": "P1",
+      "run_id": "p1_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt reused across6 fixed targets",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "model.layers.20.self_attn.o_proj",
+      "baseline": "same target alpha0",
+      "alpha": 0.25,
+      "metric": "quarter_SSE_change",
+      "unit": "relative to alpha0 SSE",
+      "denominator": "sum alpha0 local projection SSE on32 excerpts",
+      "value": -0.16069916171080478,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "posthoc weak-strength observation",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1_r2/derived_summary.json",
+      "source_fields": [
+        "rows: target/split/alpha",
+        "SSE_after",
+        "SSE_before"
+      ],
+      "source_sha256": "d69fa3dff90df77e1b6a791966a13fccaf22eee32a1c6a90e26e6279bd827e36"
+    },
+    {
+      "stage": "P1",
+      "run_id": "p1_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt reused across6 fixed targets",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "model.layers.4.mlp.down_proj",
+      "baseline": "same target alpha0",
+      "alpha": 1,
+      "metric": "selected_SSE_change",
+      "unit": "relative to alpha0 SSE",
+      "denominator": "sum alpha0 local projection SSE on32 excerpts",
+      "value": 0.45397774418496595,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "frozen CAL selection",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1_r2/derived_summary.json",
+      "source_fields": [
+        "rows: target/split/alpha",
+        "SSE_after",
+        "SSE_before"
+      ],
+      "source_sha256": "d69fa3dff90df77e1b6a791966a13fccaf22eee32a1c6a90e26e6279bd827e36"
+    },
+    {
+      "stage": "P1",
+      "run_id": "p1_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt reused across6 fixed targets",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "model.layers.4.mlp.down_proj",
+      "baseline": "same target alpha0",
+      "alpha": 0.25,
+      "metric": "quarter_SSE_change",
+      "unit": "relative to alpha0 SSE",
+      "denominator": "sum alpha0 local projection SSE on32 excerpts",
+      "value": -0.05971204149342879,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "posthoc weak-strength observation",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1_r2/derived_summary.json",
+      "source_fields": [
+        "rows: target/split/alpha",
+        "SSE_after",
+        "SSE_before"
+      ],
+      "source_sha256": "d69fa3dff90df77e1b6a791966a13fccaf22eee32a1c6a90e26e6279bd827e36"
+    },
+    {
+      "stage": "P1",
+      "run_id": "p1_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt reused across6 fixed targets",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "model.layers.4.self_attn.o_proj",
+      "baseline": "same target alpha0",
+      "alpha": 1,
+      "metric": "selected_SSE_change",
+      "unit": "relative to alpha0 SSE",
+      "denominator": "sum alpha0 local projection SSE on32 excerpts",
+      "value": 0.1098418020574714,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "frozen CAL selection",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1_r2/derived_summary.json",
+      "source_fields": [
+        "rows: target/split/alpha",
+        "SSE_after",
+        "SSE_before"
+      ],
+      "source_sha256": "d69fa3dff90df77e1b6a791966a13fccaf22eee32a1c6a90e26e6279bd827e36"
+    },
+    {
+      "stage": "P1",
+      "run_id": "p1_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "EVAL-ID",
+      "document_unit": "book excerpt reused across6 fixed targets",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "model.layers.4.self_attn.o_proj",
+      "baseline": "same target alpha0",
+      "alpha": 0.25,
+      "metric": "quarter_SSE_change",
+      "unit": "relative to alpha0 SSE",
+      "denominator": "sum alpha0 local projection SSE on32 excerpts",
+      "value": -0.10588373624553815,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "posthoc weak-strength observation",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1_r2/derived_summary.json",
+      "source_fields": [
+        "rows: target/split/alpha",
+        "SSE_after",
+        "SSE_before"
+      ],
+      "source_sha256": "d69fa3dff90df77e1b6a791966a13fccaf22eee32a1c6a90e26e6279bd827e36"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SELECT-ID",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "OLD_FIT",
+      "alpha": null,
+      "metric": "D_macro",
+      "unit": "relative to baseline alpha0 SSE",
+      "denominator": "equal mean of6 fixed target differences; SSE divided by each target alpha0 SSE",
+      "value": -0.3707283200343696,
+      "CI": [
+        -0.4197159043110847,
+        -0.33003740414299265
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "D_macro"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SELECT-ID",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "OLD_FIT",
+      "alpha": null,
+      "metric": "NLL_macro_doc_mean_difference",
+      "unit": "nats/token",
+      "denominator": "mean per-document255-token NLL difference, then mean over6 fixed targets",
+      "value": -0.005255583220837163,
+      "CI": [
+        -0.007214523546056795,
+        -0.0034734340742522446
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "NLL_macro_doc_mean_difference"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SELECT-ID",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "BASE_ZERO",
+      "alpha": null,
+      "metric": "D_macro",
+      "unit": "relative to baseline alpha0 SSE",
+      "denominator": "equal mean of6 fixed target differences; SSE divided by each target alpha0 SSE",
+      "value": -0.0973372129534781,
+      "CI": [
+        -0.10850249274339016,
+        -0.08491392343946122
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "D_macro"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SELECT-ID",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "BASE_ZERO",
+      "alpha": null,
+      "metric": "NLL_macro_doc_mean_difference",
+      "unit": "nats/token",
+      "denominator": "mean per-document255-token NLL difference, then mean over6 fixed targets",
+      "value": -0.001282594094868579,
+      "CI": [
+        -0.0024342654733096546,
+        -0.00019228428797002093
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "NLL_macro_doc_mean_difference"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SELECT-ID",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "FIXED_QUARTER",
+      "alpha": null,
+      "metric": "D_macro",
+      "unit": "relative to baseline alpha0 SSE",
+      "denominator": "equal mean of6 fixed target differences; SSE divided by each target alpha0 SSE",
+      "value": -0.008061058448417403,
+      "CI": [
+        -0.012698883391656151,
+        -0.002526626373054741
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "D_macro"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "SELECT-ID",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 32,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "FIXED_QUARTER",
+      "alpha": null,
+      "metric": "NLL_macro_doc_mean_difference",
+      "unit": "nats/token",
+      "denominator": "mean per-document255-token NLL difference, then mean over6 fixed targets",
+      "value": -0.0008962045308032067,
+      "CI": [
+        -0.0014413249258901687,
+        -0.00036477802625666666
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "NLL_macro_doc_mean_difference"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "FRESH-EVAL-ID",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "OLD_FIT",
+      "alpha": null,
+      "metric": "D_macro",
+      "unit": "relative to baseline alpha0 SSE",
+      "denominator": "equal mean of6 fixed target differences; SSE divided by each target alpha0 SSE",
+      "value": -0.36078005260289564,
+      "CI": [
+        -0.38558192190215557,
+        -0.33820850836083155
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "registered primary",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "D_macro"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "FRESH-EVAL-ID",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "OLD_FIT",
+      "alpha": null,
+      "metric": "NLL_macro_doc_mean_difference",
+      "unit": "nats/token",
+      "denominator": "mean per-document255-token NLL difference, then mean over6 fixed targets",
+      "value": -0.003735026191262638,
+      "CI": [
+        -0.00485768167022008,
+        -0.0026050732650008683
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "NLL_macro_doc_mean_difference"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "FRESH-EVAL-ID",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "BASE_ZERO",
+      "alpha": null,
+      "metric": "D_macro",
+      "unit": "relative to baseline alpha0 SSE",
+      "denominator": "equal mean of6 fixed target differences; SSE divided by each target alpha0 SSE",
+      "value": -0.10172202530111941,
+      "CI": [
+        -0.10711569381355963,
+        -0.09612644591339757
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "D_macro"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "FRESH-EVAL-ID",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "BASE_ZERO",
+      "alpha": null,
+      "metric": "NLL_macro_doc_mean_difference",
+      "unit": "nats/token",
+      "denominator": "mean per-document255-token NLL difference, then mean over6 fixed targets",
+      "value": -0.0010553852405423433,
+      "CI": [
+        -0.0017430576623655148,
+        -0.00041630654553181587
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "NLL_macro_doc_mean_difference"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "FRESH-EVAL-ID",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "FIXED_QUARTER",
+      "alpha": null,
+      "metric": "D_macro",
+      "unit": "relative to baseline alpha0 SSE",
+      "denominator": "equal mean of6 fixed target differences; SSE divided by each target alpha0 SSE",
+      "value": -0.011217048223002244,
+      "CI": [
+        -0.013070539523115824,
+        -0.009327096476143458
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "D_macro"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "FRESH-EVAL-ID",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 64,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "FIXED_QUARTER",
+      "alpha": null,
+      "metric": "NLL_macro_doc_mean_difference",
+      "unit": "nats/token",
+      "denominator": "mean per-document255-token NLL difference, then mean over6 fixed targets",
+      "value": -0.00027507831847745605,
+      "CI": [
+        -0.000628096169116435,
+        7.680793213686971e-05
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "NLL_macro_doc_mean_difference"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "FRESH-SHIFT",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "OLD_FIT",
+      "alpha": null,
+      "metric": "D_macro",
+      "unit": "relative to baseline alpha0 SSE",
+      "denominator": "equal mean of6 fixed target differences; SSE divided by each target alpha0 SSE",
+      "value": -1.5429160037794405,
+      "CI": [
+        -1.7286432947163048,
+        -1.3666223915077127
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "D_macro"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "FRESH-SHIFT",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "OLD_FIT",
+      "alpha": null,
+      "metric": "NLL_macro_doc_mean_difference",
+      "unit": "nats/token",
+      "denominator": "mean per-document255-token NLL difference, then mean over6 fixed targets",
+      "value": -0.0216167612013474,
+      "CI": [
+        -0.027312866846720348,
+        -0.016272047485401425
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "NLL_macro_doc_mean_difference"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "FRESH-SHIFT",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "BASE_ZERO",
+      "alpha": null,
+      "metric": "D_macro",
+      "unit": "relative to baseline alpha0 SSE",
+      "denominator": "equal mean of6 fixed target differences; SSE divided by each target alpha0 SSE",
+      "value": 0.11577755767110524,
+      "CI": [
+        0.08692539602644882,
+        0.1454723897647596
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "D_macro"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "FRESH-SHIFT",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "BASE_ZERO",
+      "alpha": null,
+      "metric": "NLL_macro_doc_mean_difference",
+      "unit": "nats/token",
+      "denominator": "mean per-document255-token NLL difference, then mean over6 fixed targets",
+      "value": 0.005248540990492877,
+      "CI": [
+        0.003806110643873017,
+        0.006684207853928118
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "NLL_macro_doc_mean_difference"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "FRESH-SHIFT",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "FIXED_QUARTER",
+      "alpha": null,
+      "metric": "D_macro",
+      "unit": "relative to baseline alpha0 SSE",
+      "denominator": "equal mean of6 fixed target differences; SSE divided by each target alpha0 SSE",
+      "value": 0.05598256675885719,
+      "CI": [
+        0.04691128814166292,
+        0.06508226136136486
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "D_macro"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P1b",
+      "run_id": "p1b_r2",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "FRESH-SHIFT",
+      "document_unit": "document excerpt reused across6 fixed interventions",
+      "document_count": 16,
+      "tokens_per_document": 256,
+      "candidate": "SELECT_SSE",
+      "baseline": "FIXED_QUARTER",
+      "alpha": null,
+      "metric": "NLL_macro_doc_mean_difference",
+      "unit": "nats/token",
+      "denominator": "mean per-document255-token NLL difference, then mean over6 fixed targets",
+      "value": 0.0016067380219503165,
+      "CI": [
+        0.0008753535015131185,
+        0.0023626383301479366
+      ],
+      "CI_type": "original paired document bootstrap",
+      "primary_or_secondary_or_posthoc": "secondary pointwise",
+      "execution_boundary": "dense BF16 reference; local independent intervention",
+      "source_file": "results/p1b_r2/summary.json",
+      "source_fields": [
+        "macro_contrasts: split/candidate/baseline",
+        "NLL_macro_doc_mean_difference"
+      ],
+      "source_sha256": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400"
+    },
+    {
+      "stage": "P0",
+      "run_id": "local_r1",
+      "model_revision": null,
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "synthetic finite4-code",
+      "document_unit": "not a document",
+      "document_count": null,
+      "tokens_per_document": null,
+      "candidate": "BASE",
+      "baseline": "teacher",
+      "alpha": null,
+      "metric": "absolute_error",
+      "unit": "absolute scalar error",
+      "denominator": "absolute scalar output error;2bit4-code fixture, not an INT4 LLM",
+      "value": 0.016,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "diagnostic",
+      "execution_boundary": "CPU synthetic fixture",
+      "source_file": "results/local_r1/p0_full.json",
+      "source_fields": [
+        "exact.finite_codebook.BASE_abs_error"
+      ],
+      "source_sha256": "aec96afc253e94d442ad3152ee470e24307184bab54b523ddd730e710a1bdabc"
+    },
+    {
+      "stage": "P0",
+      "run_id": "local_r1",
+      "model_revision": null,
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "synthetic finite4-code",
+      "document_unit": "not a document",
+      "document_count": null,
+      "tokens_per_document": null,
+      "candidate": "COMP",
+      "baseline": "teacher",
+      "alpha": null,
+      "metric": "absolute_error",
+      "unit": "absolute scalar error",
+      "denominator": "absolute scalar output error;2bit4-code fixture, not an INT4 LLM",
+      "value": 0.984,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "diagnostic",
+      "execution_boundary": "CPU synthetic fixture",
+      "source_file": "results/local_r1/p0_full.json",
+      "source_fields": [
+        "exact.finite_codebook.COMP_abs_error"
+      ],
+      "source_sha256": "aec96afc253e94d442ad3152ee470e24307184bab54b523ddd730e710a1bdabc"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "storage ledger",
+      "document_unit": "not a document",
+      "document_count": null,
+      "tokens_per_document": null,
+      "candidate": "RTN",
+      "baseline": "same-format RTN",
+      "alpha": 0,
+      "metric": "projection_core_bytes",
+      "unit": "bytes",
+      "denominator": "196 projection files;header+FP32scale+codes including padding",
+      "value": 247733136,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "diagnostic",
+      "execution_boundary": "serialized projection core, not checkpoint/VRAM",
+      "source_file": "results/p2_r1/artifacts.jsonl",
+      "source_fields": [
+        "artifact_bytes",
+        "header_bytes",
+        "scale_bytes",
+        "code_bytes"
+      ],
+      "source_sha256": "858364d33c885d6a702a8e13ee00ed494cb43633799f792f5427a9eb768e3118"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "storage ledger",
+      "document_unit": "not a document",
+      "document_count": null,
+      "tokens_per_document": null,
+      "candidate": "COMP_QUARTER",
+      "baseline": "same-format RTN",
+      "alpha": 0.25,
+      "metric": "projection_core_bytes",
+      "unit": "bytes",
+      "denominator": "196 projection files;header+FP32scale+codes including padding",
+      "value": 247733136,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "diagnostic",
+      "execution_boundary": "serialized projection core, not checkpoint/VRAM",
+      "source_file": "results/p2_r1/artifacts.jsonl",
+      "source_fields": [
+        "artifact_bytes",
+        "header_bytes",
+        "scale_bytes",
+        "code_bytes"
+      ],
+      "source_sha256": "858364d33c885d6a702a8e13ee00ed494cb43633799f792f5427a9eb768e3118"
+    },
+    {
+      "stage": "P2",
+      "run_id": "p2_r1",
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "evidence_kind": "CALCULATED_FROM_RECORDED_SCALARS",
+      "corpus_split": "storage ledger",
+      "document_unit": "not a document",
+      "document_count": null,
+      "tokens_per_document": null,
+      "candidate": "COMP_HALF",
+      "baseline": "same-format RTN",
+      "alpha": 0.5,
+      "metric": "projection_core_bytes",
+      "unit": "bytes",
+      "denominator": "196 projection files;header+FP32scale+codes including padding",
+      "value": 247733136,
+      "CI": null,
+      "CI_type": null,
+      "primary_or_secondary_or_posthoc": "diagnostic",
+      "execution_boundary": "serialized projection core, not checkpoint/VRAM",
+      "source_file": "results/p2_r1/artifacts.jsonl",
+      "source_fields": [
+        "artifact_bytes",
+        "header_bytes",
+        "scale_bytes",
+        "code_bytes"
+      ],
+      "source_sha256": "858364d33c885d6a702a8e13ee00ed494cb43633799f792f5427a9eb768e3118"
+    }
+  ],
+  "source_identity": {
+    "results/local_r1/p0_full.json": "aec96afc253e94d442ad3152ee470e24307184bab54b523ddd730e710a1bdabc",
+    "results/p1_r2/cells/b12_down_proj_a0.25.jsonl": "1024ef35bf38f4a847efefcd158b648bec3cc08c16940b98c986e012a467c1a8",
+    "results/p1_r2/cells/b12_down_proj_a0.5.jsonl": "ea36aa00cb88b8957e400d0e2f76b45459a1594b9d4cf62fd1f3d910e7276ee8",
+    "results/p1_r2/cells/b12_down_proj_a0.75.jsonl": "5fa20953bda83cfae73115eceef4dfff6c50fbf5a305ae82a49a620548d563a1",
+    "results/p1_r2/cells/b12_down_proj_a0.jsonl": "3662fb84e8ef9696d3fb36a50adb33e416384acde8227241682d985f3423ecc2",
+    "results/p1_r2/cells/b12_down_proj_a1.jsonl": "243e2e3830d3532c99d0818a179449f682e3b8b73f2b58fd745fb4935eb3f821",
+    "results/p1_r2/cells/b12_o_proj_a0.25.jsonl": "3c0ac9b6e5703c91b5d80a64f2761ab141a6223652b4cc66edbd9712bc47f116",
+    "results/p1_r2/cells/b12_o_proj_a0.5.jsonl": "a8875ea848bb5475dacf33c0def6eed44809169aeec30af3eec136d9a2a28168",
+    "results/p1_r2/cells/b12_o_proj_a0.75.jsonl": "c3cd472d3f17e9e670952d19ace88b63a8785ca33d457c4f9c1d37179953eaa2",
+    "results/p1_r2/cells/b12_o_proj_a0.jsonl": "c6d0c57f652c5daa95e854b57493abe11415ab478e0783d361b3be93334f13cd",
+    "results/p1_r2/cells/b12_o_proj_a1.jsonl": "0a0a0997ab9743302cb3bf03e9bdb19bba000d61811118bdc3b68a8441729be4",
+    "results/p1_r2/cells/b20_down_proj_a0.25.jsonl": "8ff48163fe0912e9713f04055a5afd63ee1fdd24b663fe750c364063a1e4f8b2",
+    "results/p1_r2/cells/b20_down_proj_a0.5.jsonl": "8cf8676ae6dafefcc9c51a0088ebbe80c24f55029cb6d12acb4d94cfe1970ce7",
+    "results/p1_r2/cells/b20_down_proj_a0.75.jsonl": "12688a66d80e3c8f121c81715f24aaf0d9328e4f9c518cd7fb7717322f01a89f",
+    "results/p1_r2/cells/b20_down_proj_a0.jsonl": "5e69876c49d213d88a80510a84ce916380f028ad8c836bfe953cf86078180326",
+    "results/p1_r2/cells/b20_down_proj_a1.jsonl": "70c4792310ef3679ec0369d562509afdb3e76253fe78e9c4682655e28cd8af40",
+    "results/p1_r2/cells/b20_o_proj_a0.25.jsonl": "002d86822eb3f166a57f04b865758a236e21c2acb1faf5e40b6d692b3e8076ef",
+    "results/p1_r2/cells/b20_o_proj_a0.5.jsonl": "e005c6b7d79a7be88b37e8457f0377aa2f55a7aecd12cbae499bccb31e286d0a",
+    "results/p1_r2/cells/b20_o_proj_a0.75.jsonl": "8f30de15a8988070b89f7c289091dbe3c4244043cf4935afd4bd100f671227b0",
+    "results/p1_r2/cells/b20_o_proj_a0.jsonl": "9f3d252579a26e7090a3c1e3bcede6a68783ff39196ec8379134706cdb8a28a2",
+    "results/p1_r2/cells/b20_o_proj_a1.jsonl": "d54734303d653e5373600baa9fe560c1960fce2d944ef78c65f283952e22b423",
+    "results/p1_r2/cells/b4_down_proj_a0.25.jsonl": "b2413f94eaa2a7d4efd8d8052ae5d3ad49a95ca443f12a447fcfa1a74e28a3f0",
+    "results/p1_r2/cells/b4_down_proj_a0.5.jsonl": "251eaed51bd682e006076ef3915d6601c9742e1d667f414dca2be0290faf1c75",
+    "results/p1_r2/cells/b4_down_proj_a0.75.jsonl": "41236c8df9385743945a565f262fed335374728445e5d37171c5bd06c801a038",
+    "results/p1_r2/cells/b4_down_proj_a0.jsonl": "f5bf47954078fbddb53f1b61792f3428a92bdf4147a3ca3d6e823b7b377bd3bb",
+    "results/p1_r2/cells/b4_down_proj_a1.jsonl": "9e3a6028d0ff2c81c5b4acb8ec95e7516e45aaf17580f16c237f09cf20eb4625",
+    "results/p1_r2/cells/b4_o_proj_a0.25.jsonl": "a331e413665b512ec660b6c964ead8ba1f8133b80180faa5d1515b728cf98213",
+    "results/p1_r2/cells/b4_o_proj_a0.5.jsonl": "59ac322136dccd19c46242bab8fc0fd66b436919e46a48ca082f75ab5f917fdb",
+    "results/p1_r2/cells/b4_o_proj_a0.75.jsonl": "da67e7538bed68a942642aea94e744164cd52a8fa8f18af2a5ca348766362aa2",
+    "results/p1_r2/cells/b4_o_proj_a0.jsonl": "4d8c370b41a18c6ec8ca8647e3732ea63afc0e05549d464d9f31f613fb5c59fa",
+    "results/p1_r2/cells/b4_o_proj_a1.jsonl": "aaeec17394d85ccccb90baa3bead54d59d06dfaf2898f195257aac1e43140c10",
+    "results/p1_r2/fit_frozen.json": "8dadec49ad6fe1834756f52b006d285c96375602e470347e0cb0a3b5b1f28992",
+    "results/p1_r2/arithmetic_sign_robustness.json": "afad4dd1a11d4f133baf2c480be1c2f6ed7d30b19e1f51f9a3b0d4814bcba602",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b12_down_proj_a0.25.jsonl": "1db48c2e8edb7f1483a4c730e05cb9588152b837b9a803abc96f4ff015954595",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b12_down_proj_a0.5.jsonl": "1e017f714da2ac8b7301241b70da90e09cf7b05fa0af01dcd8a9ac9669706c9d",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b12_down_proj_a0.75.jsonl": "e158fb93759e6bf15a9d766887367eaf16358962e36dbd39c9e8e4f3d0252764",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b12_down_proj_a0.jsonl": "87dff1428908d55a3e639fb6337fea9d5801c289c8f6e294daeac0b2de6dcd53",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b12_down_proj_a1.jsonl": "ed99b5fb8eed5cbd52311a42817744e2262d17bd49bee120bf48f4e1a0558699",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b12_o_proj_a0.25.jsonl": "bd6e3203eaaf41ff54162da2f8aa195eac15de04f6cb42c27107680cd07ece29",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b12_o_proj_a0.5.jsonl": "4e96d2702d431df464ffa02399022fab1b75a769ac72ca946163362ebb08da9b",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b12_o_proj_a0.75.jsonl": "6ab5b769d058a0b8ba22e498355c93a850d4a67dd140cc12caa891bf063bef0f",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b12_o_proj_a0.jsonl": "1c48d7963da6fb85e3dd5b210b230e98da5b24809a71089cb467c1a0121a4f03",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b12_o_proj_a1.jsonl": "9ecef0e24c2c90208e1e0b07ff602f27f3e689d30fa3a83170c9d3a9e2cc7b61",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b20_down_proj_a0.25.jsonl": "2428710fd7e725649ea417b28fc8288c38811d19a8c9ca2d67af8e62ea8c30cf",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b20_down_proj_a0.5.jsonl": "f126f72cf4f9d8cd6646163c1b5fa3a52e514e46869acd481836be247973055d",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b20_down_proj_a0.75.jsonl": "b62381c4822c1c8d93504c48237f087c5d1e5066ec232de027fed15416980043",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b20_down_proj_a0.jsonl": "cacb1420e714520056b8e7190c04cc54f7e4781ef090072f6a6f800658d040b2",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b20_down_proj_a1.jsonl": "840ff327b2029bd0497902b46d0b5bb123b6d3dffbbd9fe807240df764db29db",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b20_o_proj_a0.25.jsonl": "a9375c8b812474c76cbbc3cce65409986571679eedceb50c28ccdcfb27c24426",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b20_o_proj_a0.5.jsonl": "71d656a3cf4abeef34f55eb706db239fa9134466806eab0757933e98f5cc37a7",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b20_o_proj_a0.75.jsonl": "c1933fb7a9bdca7c1b946321c4ddb8b97a9cd1c80e63c8149f3619b3136ab051",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b20_o_proj_a0.jsonl": "bd6cf1caa92c01d278a4c5cd6a6c5ffe02d876ef2e78c2925d8eb3489ac7b0cf",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b20_o_proj_a1.jsonl": "5706642deff5eae6921ce5f466c4c44f5bc027aa1afb154dfc013f51762e7515",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b4_down_proj_a0.25.jsonl": "20f9a69fc6dc812840205621328830edbc7aa0eeb64a91bd4e8dc1b2795a4c41",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b4_down_proj_a0.5.jsonl": "a10b8425f0e6bfe11f897ced88de0dc5919e00e73a9f1bedb01da47342a32650",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b4_down_proj_a0.75.jsonl": "eb125c64d08446fd20988e30fa69b788c45e58fe33c84ecbc388269a3f708acc",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b4_down_proj_a0.jsonl": "540c0ae37d52928d4c5b6bee0d8c86696c3a017edbedc53defcbb05d325bc6ec",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b4_down_proj_a1.jsonl": "e18fc9295d0a6989f3aa05fcc6be9a03d07df186406be72277e882fabae205cd",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b4_o_proj_a0.25.jsonl": "a319705d0cc1f01d8c4683f7f690470802b29204fe15a282b8620720d0ccba41",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b4_o_proj_a0.5.jsonl": "e64b5340f7902e0dffc7ded29f170f9b7267e513e431de3791403faa866073bb",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b4_o_proj_a0.75.jsonl": "c98b742237c2299879683da35036404c88b93ace53a71bd15054ceff5486cd76",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b4_o_proj_a0.jsonl": "00b75c1cadbc8e4f2d50e56cf1509aad0eb0d4c8ab1c5be6c14f358ed954ab00",
+    "results/p1b_r2/cells/FRESH-EVAL-ID/b4_o_proj_a1.jsonl": "477c3b4f8ca15090649fdc0d832d8505734eb22be0336884f6415b05f521de9d",
+    "results/p1b_r2/cells/FRESH-SHIFT/b12_down_proj_a0.25.jsonl": "34b6647af2d14c8a78f7eb954fc51ae73499835b4ec4a165e38a5722adbf8b6e",
+    "results/p1b_r2/cells/FRESH-SHIFT/b12_down_proj_a0.5.jsonl": "b0363e6ea4732c6b99f58c9cdf86604f4da373e6099379d40e11ca75c50281c9",
+    "results/p1b_r2/cells/FRESH-SHIFT/b12_down_proj_a0.75.jsonl": "7bceff0e4546bbe8234f2a06f78776ad8857d79146606b409540989700753d83",
+    "results/p1b_r2/cells/FRESH-SHIFT/b12_down_proj_a0.jsonl": "1eb4af8b0bb82829872abed52d8cb378cef1780653936f42179712678ae6ef0a",
+    "results/p1b_r2/cells/FRESH-SHIFT/b12_down_proj_a1.jsonl": "3a88411bbcd6c72fc6c1bfdffc9253d0ad56405405a31d6e43354f94bcf383f4",
+    "results/p1b_r2/cells/FRESH-SHIFT/b12_o_proj_a0.25.jsonl": "7c74e34e577a87e119dbc628125fd854ef5aa302f06795b5083a1be96bab8764",
+    "results/p1b_r2/cells/FRESH-SHIFT/b12_o_proj_a0.5.jsonl": "17ce758607b283ef64c84f6b98e0f79c63f9359f97e56e630f9961eaef136f32",
+    "results/p1b_r2/cells/FRESH-SHIFT/b12_o_proj_a0.75.jsonl": "22494ca91c0837e66d832aac625e8aabdbcbe6647119a90b4e4d0c3e90d9cc0d",
+    "results/p1b_r2/cells/FRESH-SHIFT/b12_o_proj_a0.jsonl": "fcd3a6a559e45ee8b642566c41ed5f9ec1407fa541b0de2cfbb6d869fc09c569",
+    "results/p1b_r2/cells/FRESH-SHIFT/b12_o_proj_a1.jsonl": "b2c13ef07b105df5fa5d8a77cc7772ec61abd5360a935ac72f0de480f9f7eb21",
+    "results/p1b_r2/cells/FRESH-SHIFT/b20_down_proj_a0.25.jsonl": "e04b00020045298b2aad9b7c442a98d9a688b765a135992a3ef1afc6b617abe0",
+    "results/p1b_r2/cells/FRESH-SHIFT/b20_down_proj_a0.5.jsonl": "21deda5fc399e608a9ed56166a59872f6f13ce6788036d3b9cc01c39a79a1f3d",
+    "results/p1b_r2/cells/FRESH-SHIFT/b20_down_proj_a0.75.jsonl": "b49a5c51737c8928d45bee9548e037f7fb0a95166b0166c0632c96442224ff31",
+    "results/p1b_r2/cells/FRESH-SHIFT/b20_down_proj_a0.jsonl": "ffb3ceccd5568fd750f940a26271a3d73a58bc88c5931e5a249b534e26a24a7e",
+    "results/p1b_r2/cells/FRESH-SHIFT/b20_down_proj_a1.jsonl": "560efec5e64376a84e04c7a78aa1d1dbb3a59587a2647b66c7ff3e696c639e8a",
+    "results/p1b_r2/cells/FRESH-SHIFT/b20_o_proj_a0.25.jsonl": "1f0a2bfe1ad51f45232c9362cbd4885561396405234f170ae0f4c551b74096e7",
+    "results/p1b_r2/cells/FRESH-SHIFT/b20_o_proj_a0.5.jsonl": "dee8d382161c30ae9766159699ae999a0014cdec84c3c96613fecc1bfa7587db",
+    "results/p1b_r2/cells/FRESH-SHIFT/b20_o_proj_a0.75.jsonl": "89137a6cef7ce9e469fb50bf289245168642db6a732a130c96972ca88907ac6e",
+    "results/p1b_r2/cells/FRESH-SHIFT/b20_o_proj_a0.jsonl": "0e49c5bc2924f9618ab1de9d58ce5c72d6f002f41b23978db3f40cd24ef9b3d8",
+    "results/p1b_r2/cells/FRESH-SHIFT/b20_o_proj_a1.jsonl": "56031e15ce06e63f3d6496b5228c3a21d5b37a3b81fd69ed5cb420b28b74306c",
+    "results/p1b_r2/cells/FRESH-SHIFT/b4_down_proj_a0.25.jsonl": "e0f9cdcd49f3c18e819a7c0945d28c5fcfcad395160e616c6c232f0915c548aa",
+    "results/p1b_r2/cells/FRESH-SHIFT/b4_down_proj_a0.5.jsonl": "a5a2253d1de6a2140748968ab268efa474f1120d8c73b50824193fb2ebe5bfef",
+    "results/p1b_r2/cells/FRESH-SHIFT/b4_down_proj_a0.75.jsonl": "ab870b74b47c2865cfa7f711b9af47f9420db7f4ffa4842912644e76fb999245",
+    "results/p1b_r2/cells/FRESH-SHIFT/b4_down_proj_a0.jsonl": "8623b6f057a2715aba009cefe5e1a1b4c1aca348a3c84ac43619f680221698d2",
+    "results/p1b_r2/cells/FRESH-SHIFT/b4_down_proj_a1.jsonl": "bc3aa92ca635022d8c3b45f8b363cb00a7f1c9b09ab3225ec3f4639c9620224a",
+    "results/p1b_r2/cells/FRESH-SHIFT/b4_o_proj_a0.25.jsonl": "497a2597cefe401d31732e9867ca59e14134a9e98f65ef8e5f9a4027487419c5",
+    "results/p1b_r2/cells/FRESH-SHIFT/b4_o_proj_a0.5.jsonl": "a43925695a4dce4315e645610263db14b8bae05f1a2a9c27edecc70f0bceb793",
+    "results/p1b_r2/cells/FRESH-SHIFT/b4_o_proj_a0.75.jsonl": "83787193e95f998123541f8c9713e7fa3f1324be03ab12b66b921522b7a4b6c8",
+    "results/p1b_r2/cells/FRESH-SHIFT/b4_o_proj_a0.jsonl": "976838161c38e8dc09bc0b21cf22ae3c653f502662a820bab5047e23ea13dc0c",
+    "results/p1b_r2/cells/FRESH-SHIFT/b4_o_proj_a1.jsonl": "63674704446de449720ad48357fe6f12d2bc27c8d88719706860952f7303458c",
+    "results/p1b_r2/cells/SELECT-ID/b12_down_proj_a0.25.jsonl": "5fbbfe219095022b0d0139e232bc411e299d82e0d7d458c3e75b6684a28cadea",
+    "results/p1b_r2/cells/SELECT-ID/b12_down_proj_a0.5.jsonl": "c46cc0c8e9e6108010129d9f5ffd8f34206d971a7de882c58dbcec40d9ba036f",
+    "results/p1b_r2/cells/SELECT-ID/b12_down_proj_a0.75.jsonl": "0675ec344d090ba43e5b720de2b6f205f4f484280770be253cb0dff90f449dce",
+    "results/p1b_r2/cells/SELECT-ID/b12_down_proj_a0.jsonl": "93186d8bb52b5610b6709b90f7eff6b86da662bad806da3dc94ebd58f62430bb",
+    "results/p1b_r2/cells/SELECT-ID/b12_down_proj_a1.jsonl": "a59a6a7975525b05a3b203f8f31b80888e1796568fb7b3388a9f1252e9ceaeab",
+    "results/p1b_r2/cells/SELECT-ID/b12_o_proj_a0.25.jsonl": "eab80e48d4817db28dfb8e4bef4ee8949ee325bbaa5f284d0e78507b5a086044",
+    "results/p1b_r2/cells/SELECT-ID/b12_o_proj_a0.5.jsonl": "eb2e9782deebe679e511eae7441e974edfe141534f49f0fc3824fa987efd7ae6",
+    "results/p1b_r2/cells/SELECT-ID/b12_o_proj_a0.75.jsonl": "5c3cc5fb7edbe0fddadb952a9ed9f27d41279db0148d80e7e7d0e44664847e80",
+    "results/p1b_r2/cells/SELECT-ID/b12_o_proj_a0.jsonl": "b9c61931f46cbe4abda920261cfad4d242f09226ede37d3029ec99ab7a8f69d4",
+    "results/p1b_r2/cells/SELECT-ID/b12_o_proj_a1.jsonl": "0e7e574318702e218e73826145d031f8fdbbdd8634a2858af687aa6dd1bb48ec",
+    "results/p1b_r2/cells/SELECT-ID/b20_down_proj_a0.25.jsonl": "a532e4cd0fd3e113d29682e85df4bc37ee7791fa682e3ebad23dd67b210aadd8",
+    "results/p1b_r2/cells/SELECT-ID/b20_down_proj_a0.5.jsonl": "da15b83074f1f5ed85d3769776d7765fdbc928e5190b6aeb919487dc52b16511",
+    "results/p1b_r2/cells/SELECT-ID/b20_down_proj_a0.75.jsonl": "9cb47a4a4bb4647b32c85469ecd4a14109313418a921552cad8f22311dbb7919",
+    "results/p1b_r2/cells/SELECT-ID/b20_down_proj_a0.jsonl": "ef5ea66c86d58a7fe44a8b7e66b185b503e89d34b8306c4c1225c672dbed0d30",
+    "results/p1b_r2/cells/SELECT-ID/b20_down_proj_a1.jsonl": "79f36164bde1e4d4702fa661d761ef8757150500424ca18b3889b4ced5a02009",
+    "results/p1b_r2/cells/SELECT-ID/b20_o_proj_a0.25.jsonl": "785b00973a07202f3e94b36a4eeb9cf3454ee09fa566e0ce6da6c8dcdd3b6911",
+    "results/p1b_r2/cells/SELECT-ID/b20_o_proj_a0.5.jsonl": "d113ad0f8f620bfb3fcc9760d1e95fdeddd6c65c17289cfd4d4008f249f6874e",
+    "results/p1b_r2/cells/SELECT-ID/b20_o_proj_a0.75.jsonl": "069a318b1ac9fb3a6abcf8adba33c446e3153ea284373dd809afce1469551ede",
+    "results/p1b_r2/cells/SELECT-ID/b20_o_proj_a0.jsonl": "0035c20be5bcb3c73dcd4b2f25b15fb696347b08cf8ab4c260c24694c1b45e66",
+    "results/p1b_r2/cells/SELECT-ID/b20_o_proj_a1.jsonl": "13f4495d1fb9a69176412cb05c317a82cbe9f3db2cdcbc2f8b0205a8420558aa",
+    "results/p1b_r2/cells/SELECT-ID/b4_down_proj_a0.25.jsonl": "38a6a5655668ec4a0e00f6ff4ddf747564ab0f5f08f145d6dfa32c4876a8b2cd",
+    "results/p1b_r2/cells/SELECT-ID/b4_down_proj_a0.5.jsonl": "62212f98aae7aa6770430d55535b21c25dfc652be9d077115c9a8684ba21b4d4",
+    "results/p1b_r2/cells/SELECT-ID/b4_down_proj_a0.75.jsonl": "01f6e004e9b73a8e1d33beddfdbb379feff71b3e94d8540c5e533cf9c76160b8",
+    "results/p1b_r2/cells/SELECT-ID/b4_down_proj_a0.jsonl": "d8509f3563f6dd8d0648b57e8794b834f777d4cdc35f2976d94987cec3f3058e",
+    "results/p1b_r2/cells/SELECT-ID/b4_down_proj_a1.jsonl": "d813c3df9a83fbcc48da9fd44ded9c9054aa019f186137ea374ee8116d5dd672",
+    "results/p1b_r2/cells/SELECT-ID/b4_o_proj_a0.25.jsonl": "c6b4e13150c6ed01932f546a6dafaecd3a3c9127e055287c064ac73f28de3d3f",
+    "results/p1b_r2/cells/SELECT-ID/b4_o_proj_a0.5.jsonl": "cfa3d717807582d1d8e50f8496da126732974dc1acacb97e6489dad69112cc30",
+    "results/p1b_r2/cells/SELECT-ID/b4_o_proj_a0.75.jsonl": "3ca157443c1125280759c3415f9c66af93bc6326d6e9b3b099605aef49426b16",
+    "results/p1b_r2/cells/SELECT-ID/b4_o_proj_a0.jsonl": "dfc669b5b9a8b81f109ef16cedd31efd852ce53f756413d7237151ceb7289bc4",
+    "results/p1b_r2/cells/SELECT-ID/b4_o_proj_a1.jsonl": "207d66c3b514167711df2a9aaa728cd281893da33708c3093e4ae52ebf9add81",
+    "results/p1b_r2/selection_frozen.json": "82bd0827bb05f649d1ea71893449db15f46fb4f7262176fa900a759fa0f3738e",
+    "results/p1b_r2/summary.json": "cb8d2edec7f845842001bbb40c1b5fe24e29fd2f408b3d510766734f15c54400",
+    "results/p2_r1/metrics/BF16_EVAL-ID.jsonl": "eeebfd8134b28ceab1254b22c26d7fbf3993c489f6608c01683ce9bbd4fab256",
+    "results/p2_r1/metrics/BF16_SHIFT.jsonl": "bd36e83366ee35536b68fcb4eb7f7d09be91270617dafa6f0f227cb344b5c324",
+    "results/p2_r1/metrics/COMP_HALF_EVAL-ID.jsonl": "4f1230c65a8a20fecb55936c89bcf904f8b906886c87ba4cd096394a1d4fd2f3",
+    "results/p2_r1/metrics/COMP_HALF_SHIFT.jsonl": "7a30078400b7ce81028f20e7b5e4402b477f5941f6907e4bbfd265642efb6ea2",
+    "results/p2_r1/metrics/COMP_QUARTER_EVAL-ID.jsonl": "91daf9ec6b33ec8f08fae2f29f8fbe651c74e57aa693d6f657232c46dc66117a",
+    "results/p2_r1/metrics/COMP_QUARTER_SHIFT.jsonl": "66ed1d521eab03d10b1f24acb546a65667d386272882b93bcca3f460364a51e6",
+    "results/p2_r1/metrics/RTN_EVAL-ID.jsonl": "49329aef11e1215402b37e22e3072cd891fc9aaebabd6e4974662340e6e1ecb3",
+    "results/p2_r1/metrics/RTN_SHIFT.jsonl": "59c888bcb0d6a1665ced0761dfc35335972ab916e32f023c7d63f7f813cfe7e3",
+    "results/p2_r1/input_manifest.json": "fec649f980f07b1c77e458162c5e481d22c41f91f437c46ebfcda9dae7ad2b3b",
+    "results/p2_r1/summary.json": "ecdc2f5e1fd586326624ef024e734c1e533c98df5a599a3822be51dbb2e9e815",
+    "results/p2_r1/artifacts.jsonl": "858364d33c885d6a702a8e13ee00ed494cb43633799f792f5427a9eb768e3118",
+    "results/p2_r1/CAL_diagnostics.jsonl": "4193ee37ee57e0679fa7af0d9b0ebf82cd760c482372b3e8f301d32b1d60e0a6",
+    "references/source_audit.json": "1e0b174970e5c8a8f2825110868a730cd9df2ba9eeb7a5ea0b602ff71698f1cd",
+    "results/p2_r1/source_freeze.json": "cec419d01a54a328e5820c2ec708be91c38652e6c551961309ab1f0bff530d3c",
+    "results/p1_r2/derived_summary.json": "d69fa3dff90df77e1b6a791966a13fccaf22eee32a1c6a90e26e6279bd827e36"
+  }
+}

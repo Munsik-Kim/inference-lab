@@ -1,0 +1,47 @@
+{
+  "worker_wall_seconds_success": 512.9489210730026,
+  "failed_worker_wall_seconds": 7.042389902999275,
+  "cumulative_worker_wall_seconds": 519.9913109760018,
+  "successful_full_model_forwards": 3813,
+  "failed_attempt_full_model_forwards": 3,
+  "all_attempt_full_model_forwards": 3816,
+  "candidate_rows": 3360,
+  "policy_alias_rows": 4704,
+  "phase_forward_counts": {
+    "SMOKE": 5,
+    "SELECT-ID_TEACHER": 32,
+    "SELECT-ID_PREFIX": 96,
+    "SELECT-ID_GRID": 960,
+    "FRESH-EVAL-ID_TEACHER": 64,
+    "FRESH-EVAL-ID_PREFIX": 192,
+    "FRESH-EVAL-ID_GRID": 1920,
+    "FRESH-SHIFT_TEACHER": 16,
+    "FRESH-SHIFT_PREFIX": 48,
+    "FRESH-SHIFT_GRID": 480
+  },
+  "data_prepare_seconds": 33.491974058997585,
+  "validation_seconds": 1.9561871360019722,
+  "stages_inclusive_seconds": {
+    "SELECT-ID": 152.32536887899914,
+    "select_compute": 0.004994608003471512,
+    "FRESH-EVAL-ID": 244.33940770199843,
+    "FRESH-SHIFT": 106.5969908219995,
+    "load": 1.611944283999037
+  },
+  "metric_seconds_already_inside_stages": 202.9120712989752,
+  "audit_seconds": 0.47107398899970576,
+  "analysis_seconds": 1.4734035989968106,
+  "peak_Torch_allocated_bytes": 1613842432,
+  "peak_Torch_reserved_bytes": 1845493760,
+  "max_observed_post_forward_device_used_bytes": 3331915776,
+  "device_memory_scope": "post-forward CUDA mem_get_info samples include other GPU use; not a continuous Windows/device peak; device background processes untouched",
+  "GPU_busy_TTFT_TPOT_serving_throughput": "NOT_MEASURED",
+  "new_dataset_transfer_bytes": 0,
+  "selection_cost": "SELECT teacher32 + prefix96 + candidate960 =1088 full-model forwards; SSE and NLL selectors share the recorded full forwards. SSE criterion needs local traces only in principle; NLL requires suffix/head.",
+  "target_artifact_bytes": {
+    "o_proj": 1179684,
+    "down_proj": 1769508,
+    "all_30_existing_target_files": 44237880
+  },
+  "runtime": "saved INT4 decoded BF16 dense quality reference; no packed serving speed/VRAM saving measurement"
+}

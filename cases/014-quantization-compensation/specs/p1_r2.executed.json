@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "run": true,
+  "model_id": "Qwen/Qwen3-0.6B",
+  "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "blocks": [
+    4,
+    12,
+    20
+  ],
+  "projections": [
+    "o_proj",
+    "down_proj"
+  ],
+  "alpha": [
+    0,
+    0.25,
+    0.5,
+    0.75,
+    1
+  ],
+  "split_counts": {
+    "CAL-FIT": 32,
+    "DEV-SELECT": 16,
+    "EVAL-ID": 32,
+    "SHIFT": 16
+  },
+  "sequence_length": 256,
+  "valid_targets": 255,
+  "special_tokens": false,
+  "use_cache": false,
+  "attention": "sdpa",
+  "runtime": "packed INT4 save/reload; dense BF16 quality reference",
+  "quantizer": "signed INT4 group64 row absmax/7 FP32 ties-to-even",
+  "fit": "full-input Gram CPU FP64 Cholesky triangular solve; ridge=1e-3 trace(G)/din",
+  "selector": "CAL raw projection SSE sum; exact tie smaller alpha; freeze before DEV/EVAL",
+  "KL_positions": [
+    0,
+    16,
+    33,
+    50,
+    67,
+    84,
+    101,
+    118,
+    135,
+    152,
+    169,
+    186,
+    203,
+    220,
+    237,
+    254
+  ],
+  "worker_wall_limit_seconds": 5400,
+  "execution_seed": 6101515,
+  "bootstrap_seed": 6101516,
+  "bootstrap_resamples": 10000,
+  "continuous_control": "alpha1 FP32 weight, input FP32/output BF16; lower priority after all grid cells",
+  "no_prefix_control": true,
+  "main_saved_matrix_tolerance": {
+    "identity_relative": 1e-10,
+    "sign_relative_to_SSE_scale": 1e-09,
+    "runtime_repeat_exact": true,
+    "teacher_reinstall_exact": true,
+    "SMOKE_identity_relative_gap": 2.1926918542271682e-16,
+    "frozen_before_MAIN": true,
+    "arithmetic_residual": "measured separately; not used as algebra identity gap"
+  },
+  "normalized_RMS_min": 1e-06,
+  "P2": false,
+  "P3": false,
+  "remote_publication": false,
+  "run_id": "p1_r2",
+  "original_spec_sha256": "9a23b0f690f71e0c4e1fb3cdeb00539a282b62b18b6fadfb70e49e48a6f61b29",
+  "model_source_policy": {
+    "REUSE_EXISTING_WSL_SNAPSHOT_READ_ONLY": true,
+    "REQUIRE_D_ORIGIN_VERIFICATION": false
+  },
+  "execution_source_sha256": "da2a0368bb4a284a0af1a5896121ca0e828a59d9392f49b954092664c1cab960",
+  "recorded_after_execution": "summary of actual unchanged preregistered contract; original spec, smoke freeze and fit freeze are retained; not retroactive preregistration"
+}

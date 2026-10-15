@@ -1,0 +1,9 @@
+{
+  "status": "FAILED_SMOKE_HISTORICAL_ARRAY_MISSING",
+  "exit_code": 1,
+  "full_model_forwards": 3,
+  "SELECT_EVAL_SHIFT_forwards": 0,
+  "worker_wall_seconds": 7.042389902999275,
+  "reason": "P1 SMOKE prefix Z array was not saved; new worker originally assumed its presence. Historical teacher logits matched exactly. No quantizer/model/data changes.",
+  "resolution": "fresh r2 worker keeps teacher historical parity, checks prefix hashes/current repeat/common Z; historical prefix-array comparison is null/NOT_SAVED. Source snapshots and failure preserved."
+}

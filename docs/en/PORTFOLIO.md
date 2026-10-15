@@ -99,3 +99,10 @@ Additional recurrent-state storage is 0 B. Gold CE improved beyond fitting suppo
 ## Case 013 — Scale-preserving INT4 and quality readback
 
 [INT4 solver and adapter](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [Packed serialization](../../cases/013-dualquant-reference-quality/source/reference_int4.py) · [Recorded scalar audit](../../cases/013-dualquant-reference-quality/analysis/audit.py)
+
+<!-- case014-entry -->
+## Case014 — Own-trajectory compensation and full-model quality
+
+Implemented capture, FP64 full-input fit, INT4 codec/independent reload, three-term decomposition and paired document audit, with PG19 quality gains and ArXiv limits.
+
+[Implementation](../../cases/014-quantization-compensation/PORTFOLIO.md) · [Code](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [Tests](../../cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) · [CPU reproduction](../../cases/014-quantization-compensation/REPRODUCE.md)

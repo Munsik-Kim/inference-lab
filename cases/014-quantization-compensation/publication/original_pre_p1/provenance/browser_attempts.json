@@ -1,0 +1,33 @@
+{
+  "failed_attempts": [
+    {
+      "attempt": "browser-r1",
+      "error": "ko all30 pending cells",
+      "checks": [
+        "ko lang"
+      ],
+      "errors": []
+    },
+    {
+      "attempt": "browser-r2",
+      "error": "ko keyboard disclosure",
+      "checks": [
+        "ko lang",
+        "ko all30 pending cells",
+        "ko figures loaded",
+        "ko no page overflow 390",
+        "ko no page overflow 768",
+        "ko no page overflow 1280",
+        "ko anchors exist"
+      ],
+      "errors": []
+    }
+  ],
+  "final_attempt": "browser-r3",
+  "final_status": "PASS",
+  "corrections": [
+    "disambiguate table selector with explicit id",
+    "send Enter character and wait for native disclosure toggle"
+  ],
+  "earlier_private_logs_preserved": true
+}

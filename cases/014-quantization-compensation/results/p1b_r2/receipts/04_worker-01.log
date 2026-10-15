@@ -1,0 +1,16 @@
+SPEC_FROZEN {'source_sha256': 'd722e42779297eda641840ef5bfa798686c98284e66710f351645965cf8fb825', 'input_sha256': '1e08e292c742f20df04325739fc71ab2adbb892f347eb318a955987ff4c879e9'}
+
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]
+Loading weights:  53%|█████▎    | 166/311 [00:00<00:00, 1654.00it/s]
+Loading weights: 100%|██████████| 311/311 [00:00<00:00, 1868.82it/s]
+Traceback (most recent call last):
+  File "${CASE}/followups/p1b_selection/source/run_readonly.py", line 221, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "${CASE}/followups/p1b_selection/source/run_readonly.py", line 137, in main
+    historical_prefix_exact=np.array_equal(z,np.load(old/'traces/prefix'/smoke['document_id_hash']/(n.replace('.','_')+'_Z.npy')));assert historical_prefix_exact
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "${EXISTING_LAB}/.venv-case002/lib/python3.12/site-packages/numpy/lib/_npyio_impl.py", line 454, in load
+    fid = stack.enter_context(open(os.fspath(file), "rb"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '${P1_PRIVATE}/traces/prefix/b8dabf8be1136bed63d7da16572bd5ccb8d8a88e4f4a19d53ac3c232ac78f9a5/model_layers_4_self_attn_o_proj_Z.npy'

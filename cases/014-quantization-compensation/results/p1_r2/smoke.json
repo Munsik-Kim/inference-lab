@@ -1,0 +1,82 @@
+{
+  "NLL_sum": 902.1463012695312,
+  "valid_token_count": 255,
+  "wall_seconds": 0.01561345299887762,
+  "peak_allocated": 1613846528,
+  "peak_reserved": 1845493760,
+  "device_free_bytes": 13764657152,
+  "device_total_bytes": 17094475776,
+  "allocated": 1468474880,
+  "reserved": 1845493760,
+  "tolerance": {
+    "identity_relative": 1e-10,
+    "sign_relative_to_SSE_scale": 1e-09,
+    "runtime_repeat_exact": true,
+    "teacher_reinstall_exact": true,
+    "SMOKE_identity_relative_gap": 2.1926918542271682e-16,
+    "frozen_before_MAIN": true,
+    "arithmetic_residual": "measured separately; not used as algebra identity gap"
+  },
+  "model_shapes": {
+    "model.layers.4.self_attn.o_proj": [
+      1024,
+      2048
+    ],
+    "model.layers.4.mlp.down_proj": [
+      1024,
+      3072
+    ],
+    "model.layers.12.self_attn.o_proj": [
+      1024,
+      2048
+    ],
+    "model.layers.12.mlp.down_proj": [
+      1024,
+      3072
+    ],
+    "model.layers.20.self_attn.o_proj": [
+      1024,
+      2048
+    ],
+    "model.layers.20.mlp.down_proj": [
+      1024,
+      3072
+    ]
+  },
+  "actual_candidate": {
+    "A_norm2": 738.3463951055874,
+    "C_norm2": 737.8193539763067,
+    "B_norm2": 76.96897536786244,
+    "B0_norm2": 77.1026191674269,
+    "deltaB_norm2": 151.4471814857584,
+    "dot_A_B0": -1.3891593222496113,
+    "dot_A_C": 738.082647043857,
+    "dot_B0_C": -1.3890383183519832,
+    "dot_R0_C": 739.471685362209,
+    "dot_R0minusC_deltaB": 75.79047962244594,
+    "SSE_before": 818.2273329175134,
+    "SSE_after": 76.96953841026884,
+    "reference_SSE": 5059.942032079531,
+    "reference_elements": 262144,
+    "fixedB_SSE": 77.10331616940233,
+    "continuous_SSE": 0.0004549941801933492,
+    "T_inherited": -738.3459401114073,
+    "T_cancellation": -2.7780766367039664,
+    "T_cont": -741.1240167481112,
+    "T_requant": -0.1337777591334941,
+    "Delta": -741.2577945072446,
+    "decomposition_gap": 1.794120407794253e-13,
+    "identity_scale": 818.2273329175134,
+    "identity_relative_gap": 2.1926918542271682e-16,
+    "residual_identity_relative": 1.8982611340614583e-15,
+    "normalized_SSE": 0.015211545492475921,
+    "relative_Frobenius": 0.12333509432629433,
+    "cosine_A_B0": -0.005822203924404963,
+    "arithmetic_residual_norm2": 0.045180437547758745,
+    "BF16_output_residual_norm2": 76.95969691558126,
+    "cast_residual_norm2": 0.017476034608484597
+  },
+  "forward_calls_planned": 3865,
+  "rough_forward_wall_only_estimate_seconds": 60.345995840662,
+  "estimate_excludes_CPU_fit_pack_local_analysis": true
+}
