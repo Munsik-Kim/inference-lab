@@ -26,3 +26,9 @@ The browser receipt identifies the built presentation fingerprint. Publication/m
 | Results 1280px | [PNG](ko-case014-results-1280.png) | [PNG](en-case014-results-1280.png) |
 
 The site keeps archives out of Pages deploy members; the ZIP download is linked to a Git blob whose bytes match its published SHA256. No new model inference, K fitting, re-quantization or Monte Carlo run was performed during publication.
+
+## HTTPS load-completion follow-up
+
+The first deployed version (`d058f7b…`) matched all 360 artifact file hashes and 44 selected live HTTP files. A first HTTPS browser attempt reached the Korean figures before one lazy-loaded SVG finished: [original attempt](https-attempt-01.json). The cost SVG became complete with a valid natural width after another 108ms: [Korean image states](ko-https-image-load.json).
+
+The browser utility now polls bounded image completion, retaining the same all-images-loaded predicate. [Source-change identity](https-load-wait-change.json) and [the HTTPS browser receipt](https-browser.json) identify the separate code and tested deployment. Both languages passed all **93 HTTPS checks**; the **94 file-mode checks** include one extra no-network-dependency assertion. The English images were already complete at first inspection ([states](en-https-image-load.json)). This corrects the verification utility’s wait, without revising any experiment or score.
