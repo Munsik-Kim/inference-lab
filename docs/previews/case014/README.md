@@ -19,7 +19,7 @@ The browser receipt identifies the built presentation fingerprint. Publication/m
 | Home 1280px | [PNG](ko-index-1280.png) | [PNG](en-index-1280.png) |
 | Case card 390px | [PNG](ko-case014-home-card-390.png) | [PNG](en-case014-home-card-390.png) |
 | Case card 1280px | [PNG](ko-case014-home-card-1280.png) | [PNG](en-case014-home-card-1280.png) |
-| Detail 390px | [PNG](ko-case014-390.png) | [PNG](en-case014-390.png) |
+| Detail 390px | [PNG](ko-case014-390.png) | [PNG](en-case014-390-wrapped.png) |
 | Detail 768px | [PNG](ko-case014-768.png) | [PNG](en-case014-768.png) |
 | Detail 1280px | [PNG](ko-case014-1280.png) | [PNG](en-case014-1280.png) |
 | Results 390px | [PNG](ko-case014-results-390.png) | [PNG](en-case014-results-390.png) |
@@ -32,3 +32,9 @@ The site keeps archives out of Pages deploy members; the ZIP download is linked 
 The first deployed version (`d058f7b…`) matched all 360 artifact file hashes and 44 selected live HTTP files. A first HTTPS browser attempt reached the Korean figures before one lazy-loaded SVG finished: [original attempt](https-attempt-01.json). The cost SVG became complete with a valid natural width after another 108ms: [Korean image states](ko-https-image-load.json).
 
 The browser utility now polls bounded image completion, retaining the same all-images-loaded predicate. [Source-change identity](https-load-wait-change.json) and [the HTTPS browser receipt](https-browser.json) identify the separate code and tested deployment. Both languages passed all **93 HTTPS checks**; the **94 file-mode checks** include one extra no-network-dependency assertion. The English images were already complete at first inspection ([states](en-https-image-load.json)). This corrects the verification utility’s wait, without revising any experiment or score.
+
+## Narrow-screen text wrapping
+
+An additional text-range check on the HTTPS page found a **6px** English overflow at 390px: a slash-joined runtime-settings token extended to x380.906 while the content viewport ended at x375 ([before](narrow-screen-before.json)). The original width assertion used scrollbar-inclusive `innerWidth`, which missed this small overflow.
+
+Case014 now uses spaced setting separators and scoped `overflow-wrap:anywhere`. Its browser assertion compares against the actual `clientWidth`. All **94 file-mode browser checks** passed with the stronger assertion ([receipt](narrow-screen-browser.json)); [updated 390px view](en-case014-390-wrapped.png). The old [pre-fix view](en-case014-390.png) remains retained. This is a presentation-only change; the scientific source, measurements, Case014 manifest and public ZIP are unchanged.
