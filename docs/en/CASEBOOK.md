@@ -1,4 +1,4 @@
-# Twelve questions about inference and model changes
+# Questions about inference and model changes
 
 English | [한국어](../ko/CASEBOOK.md) · [Home](../../README.md)
 

@@ -30,6 +30,8 @@
 
 [선행연구와 구현 대응](docs/related-work/README.ko.md) · [CPU 비교 도구](packages/diova-compare/README.ko.md)
 
+[16GB GPU 모델별 실전 안내서](docs/ko/LLM_GUIDE.md) — Qwen3-4B의 실행·품질·실패 기록. [온라인 안내서](https://munsik-kim.github.io/inference-lab/ko/llm-guide.html).
+
 <a id="capabilities"></a>
 ## 구현 기능
 

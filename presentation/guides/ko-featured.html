@@ -1,0 +1,42 @@
+<section class="featured-stories" id="featured-stories" aria-labelledby="featured-title">
+  <p class="eyebrow">구현에서 관찰까지</p>
+  <h2 id="featured-title">내 문제와 가까운 사례부터</h2>
+  <div class="story-grid">
+    <article class="story">
+      <p class="story-source">저장과 다시 실행하기 · Case008 Q</p>
+      <h3><a href="qwen3-4b.html#configurations">모델 파일을 줄이고, 다른 프로세스에서도 다시 불러왔습니다.</a></h3>
+      <p><strong>문제</strong> 압축 파일을 만드는 것만으로는 실제 실행까지 보장되지 않습니다.</p>
+      <p><strong>구현</strong> 기존 양자화 방법인 GPTQ 변환에 저장본 검사·복사·새 프로세스 재로딩·저비트 실행 경로 확인을 연결했습니다.</p>
+      <p class="story-metric"><span>Qwen3-4B 가중치 파일 크기</span><strong>{{weight_files}}</strong><span>{{file_reduction}} 감소 · GB는 10⁹ B</span></p>
+      <p><strong>활용과 한계</strong> 저장·재실행 절차를 참고할 수 있습니다. 전체 GPU 메모리 감소율이 아니며, 별도 품질·속도 확인이 필요합니다.</p>
+      <p class="source-note">{{source_storage}} · {{source_bf16_files}}</p>
+      <a href="qwen3-4b.html#implementation">구현 코드·테스트와 원자료 보기</a>
+    </article>
+    <article class="story">
+      <p class="story-source">같은 모델의 실행 조건 비교 · Case009</p>
+      <h3><a href="qwen3-4b.html#speed">INT4의 속도 이득을 실제 요청 조건에 맞춰 비교했습니다.</a></h3>
+      <p><strong>문제</strong> 4비트 정수(INT4)로 바꾼 모델도 짧은 단일 요청과 긴 동시 요청의 처리 비용은 다릅니다.</p>
+      <p><strong>구현</strong> 같은 입력·출력 길이와 서버 실행 방식으로 원래 16비트 가중치(BF16)와 4비트 저장본을 짝지어 비교하는 실행기를 만들었습니다.</p>
+      <p class="story-metric"><span>출력 처리량 W4/BF16 · graph 실행</span><strong>{{speed_small}}배 → {{speed_large}}배</strong><span>입력 128·동시 요청 상한 1 → 입력 1024·상한 32<br>출력 256 token · 서버 3라운드</span></p>
+      <p><strong>활용과 한계</strong> CUDA graph는 반복되는 GPU 작업의 실행 준비 비용을 줄이는 방식입니다. Eager 대조에서는 이득이 작고 불확실했습니다. 품질 평가에는 정답 손실과 프로세스 종료 실패가 남아 있습니다.</p>
+      <p class="source-note">{{source_serving}} · <a href="qwen3-4b.html#quality">과제별 품질과 정상 종료 여부</a></p>
+      <a href="qwen3-4b.html#implementation">측정 코드·원자료 보기</a>
+    </article>
+    <article class="story">
+      <p class="story-source">도구 작업의 실제 완료 확인 · Case013 후속</p>
+      <h3><a href="qwen3-4b.html#mitigation">잘못된 도구 이름 호출을, 재학습 없이 완화했습니다.</a></h3>
+      <p><strong>문제</strong> 모델이 성공했다고 답했지만, 이름을 틀려 수정·검증 도구가 실행되지 않았습니다.</p>
+      <p><strong>구현</strong> 등록된 이름으로 출력을 제한하고 오류 피드백을 분리했습니다. 최종 JSON과 함께 실제 수정·검증 이벤트를 검사했습니다.</p>
+      <p class="story-metric"><span>실제 작업 성공 · 기존 개발용 과제(DEV) {{dev_tasks}}개 재사용</span><strong>{{d16_before}} → {{d16_after}}</strong><span>가중치만 4비트로 바꾼 변형(D16: 이 연구의 내부 설정명)<br>BF16 복원 reference 계산 · 새 입력의 일반화 미확인</span></p>
+      <p><strong>활용과 한계</strong> 활성값도 낮춘 별도 변형(D4)은 {{d4_before}} → {{d4_after}}이며 {{d4_remaining}}개 실패가 남았습니다. 이 reference variant의 시스템 완화로, 보편적 정확도나 packed INT4 가속의 증거는 아닙니다. 이름 제한에 피드백을 더한 추가 이득은 확인하지 못했습니다.</p>
+      <p class="source-note">{{source_repair}}</p>
+      <a href="qwen3-4b.html#mitigation">완화 코드·원자료와 남은 실패 보기</a>
+    </article>
+  </div>
+</section>
+<section class="model-entry home-model-guides" id="model-guides" aria-labelledby="home-model-title">
+  <p class="eyebrow">내 환경에서 무엇을 확인할까?</p>
+  <h2 id="home-model-title">모델별로 실행과 한계를 이어서 읽기</h2>
+  <p>현재 상세 안내는 <strong>Qwen3-4B-Instruct-2507</strong> 한 모델입니다. RTX 5080 16GB에서 확인한 실행 경로, 메모리·속도·품질, 알려진 실패와 재현 전제조건을 모았습니다. 모든 16GB GPU나 업무의 검증으로 넓히지 않습니다.</p>
+  <div class="actions"><a class="reading-link" href="llm-guide.html">모델별 안내서 시작</a><a class="text-link" href="qwen3-4b.html#conclusion">Qwen3-4B 결론부터 보기</a><a class="text-link" href="measurements.html">측정 방법과 결과 읽는 법</a></div>
+</section>

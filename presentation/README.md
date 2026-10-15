@@ -55,4 +55,78 @@ GitHub deployment guidance: [custom Pages workflows](https://docs.github.com/en/
 [Linguist generated files](https://github.com/github-linguist/linguist/blob/main/docs/overrides.md).
 The manual workflow requires main, publish=true and a checked site artifact. Pages
 write/identity permissions belong only to the deploy job; setup leaves enablement false.
-Publication, merge, Pages setup and manual deployment require separate authorization.
+Remote push/PR/merge and the manual Pages run require explicit PUBLISH_APPROVED=true. Pages settings and protection rules remain unchanged.
+
+<a id="practical-guides"></a>
+## Practical model guides
+
+The existing builder also renders `ko/llm-guide.html`, `ko/qwen3-4b.html` and
+`ko/measurements.html`. The matching `en/` pages are explicitly short summaries,
+with links to the complete Korean detail. [Online guide](https://munsik-kim.github.io/inference-lab/ko/llm-guide.html) · [Qwen3-4B](https://munsik-kim.github.io/inference-lab/ko/qwen3-4b.html) · [Measurements](https://munsik-kim.github.io/inference-lab/ko/measurements.html). Existing Case pages stay put.
+
+Use an already compatible CPU interpreter (recorded Python 3.12.14 and NumPy 2.3.5).
+Case013's retained-record audit imports NumPy, so current builds also need it.
+Choose a new output outside this checkout; for a retained review use a persistent
+external directory rather than only a temporary directory:
+
+```bash
+python3 -B tools/showcase/build.py --help
+python3 -B tools/showcase/check.py --help
+python3 -B tools/showcase/build.py --output ../diova-guide-review/inference-lab --base-path /inference-lab/
+python3 -B tools/showcase/check.py --site ../diova-guide-review/inference-lab --output ../diova-guide-review/check.json
+```
+
+Open `../diova-guide-review/inference-lab/ko/index.html` or the language chooser
+`../diova-guide-review/inference-lab/index.html` directly in a browser. This supports
+`file://` without a server. For HTTP preview, serve the site's parent so the
+`/inference-lab/` mount is preserved, or serve `site/` at the root. Use a server's
+actual bound address; these instructions do not start one.
+
+`presentation/guides/` holds narrative templates. `tools/showcase/practical.py`
+extracts scalar values from existing Case008/009/013 projections plus the explicit
+`practical_sources.json` allowlist. The original scientific manifests are unchanged.
+The generated `data/practical-guide.json` records exact values, field paths, source
+hashes and public evidence commit `09194c3f2e2c991feff5b6abab0cf8ab81a07052`.
+New guide assets are an exact extension to the existing deploy allowlist: six HTML
+pages, one stylesheet and one scalar JSON. No recursive source copying is added.
+
+The optional `tools/showcase/guide_browser_check.cjs` uses an already installed
+Edge via CDP, accepts a file or loopback base URL and a **new external report path**,
+and captures 390/768/1280px screenshots. Desktop viewport emulation is not a real
+iPad test or a reader study. See its usage comment for the Edge executable option.
+
+After separate publication approval: review the local diff and evidence-preservation
+report; commit only the documented presentation/docs/tests paths; push the feature
+branch; create a PR; require the existing CPU/site workflows; merge the reviewed
+head only after checks pass. With PUBLISH_APPROVED=true, the scoped push/PR/merge and existing manual Pages run
+are authorized after required checks pass. Keep its main/publish gate, checked
+artifact and scoped permissions; do not change settings or protection rules.
+
+
+## Reader routes and publication gate
+
+The home reads introduction → three featured cases → model guides → implementation
+contributions → capabilities/stack → full case records. Existing section IDs remain.
+The common header uses Home / Model guides / All cases / Reproduce. Individual
+cases keep related-case links; the retained image-review tool keeps its own controls.
+`guide.html` is the developer CPU build/check route. `llm-guide.html` is the model
+entry; `measurements.html` explains how to interpret measurements. These roles do
+not require a new framework or duplicated evidence.
+
+`PUBLISH_APPROVED=false` limits a task to local checks and review files. A later
+explicit publication instruction authorizes the scoped remote workflow below.
+After explicit `PUBLISH_APPROVED=true`, publish the reviewed branch with a scoped PR,
+pass required CI and repository policy, and merge the reviewed head. The existing
+manual workflow is `.github/workflows/portfolio-pages.yml` (name: **Portfolio Pages
+(manual)**). It accepts the boolean **publish** (default **false**) and builds/deploys
+only on **main** with **publish=true**. With the newly reviewed changes merged and
+PUBLISH_APPROVED=true, the exact dispatch is:
+
+```bash
+gh workflow run portfolio-pages.yml --repo Munsik-Kim/inference-lab --ref main -f publish=true
+```
+
+Do not change protection rules or Pages settings. Verify the new run's source SHA,
+checked artifact and deployment status, then open the actual public home, menu and
+Qwen guide. A successful Actions run and a verified public screen are separate
+checks. A local preview does not establish that the public site was updated.

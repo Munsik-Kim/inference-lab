@@ -20,6 +20,33 @@ def anchor(url: str, label: str, cls: str = '') -> str:
     return f'<a class="{cls}" href="{escape(url, quote=True)}">{escape(label)}</a>'
 
 
+def site_navigation(lang: str, page: str) -> str:
+    labels = ('홈', '모델별 안내', '전체 사례', '재현 방법') if lang == 'ko' else ('Home', 'Model guides', 'All cases', 'Reproduce')
+    targets = ('index.html', 'llm-guide.html', 'index.html#cases', 'guide.html')
+    return ''.join('<a'+(' aria-current="page"' if target == page+'.html' else '')
+                   +' href="'+target+'">'+escape(label)+'</a>' for target,label in zip(targets, labels))
+
+
+def related_cases(lang: str, page: str) -> str:
+    pairs = {
+        'case006': [('case007.html', '행렬을 실제로 줄인 비교', 'Physically smaller matrices'), ('case008.html#q-evaluation', '압축 저장본의 답변 비교', 'Answers after checkpoint compression')],
+        'case007': [('case006.html', '같은 질문의 답변 비교', 'Answers on matched questions'), ('case008.html#track-r', 'Qwen3-0.6B의 고정 구조 복원', 'Fixed-structure Qwen3-0.6B reconstruction')],
+        'case008': [('case009.html', 'GPTQ 저장본의 후속 서빙 비교', 'Follow-up serving of the GPTQ artifact'), ('qwen3-4b.html', 'Qwen3-4B 모델별 안내', 'Qwen3-4B model guide')],
+        'case009': [('case008.html#track-q', '비교에 사용한 저장본 제작·재실행', 'Building and reloading the compared artifact'), ('qwen3-4b.html#quality', '과제별 품질과 남은 문제', 'Task quality and remaining problems')],
+        'case010': [('case011.html', '같은 상태에서 판독기만 바꾼 후속', 'Follow-up with a different readout')],
+        'case011': [('case010.html', '앞선 상태 저장·재시작 실험', 'Earlier state storage and restart study')],
+        'case012': [('case012-annotate.html', '저장된 이미지 직접 확인', 'Check the recorded images')],
+        'case012-annotate': [('case012.html#human-results', '사람 평가 결과와 실험 조건', 'Human assessment and study conditions')],
+        'case013': [('qwen3-4b.html#mitigation', '이 reference 변형의 도구 실패 완화', 'Tool-failure mitigation on this reference variant'), ('case009.html#quality', '별도 GPTQ 실행 경로의 품질 기록', 'Quality in the separate GPTQ execution path')],
+    }
+    if page not in pairs:
+        return ''
+    title = '관련 사례와 다음 단계' if lang == 'ko' else 'Related cases and next steps'
+    links = [(url,ko if lang == 'ko' else en) for url,ko,en in pairs[page]]
+    links.append(('index.html#cases', '전체 사례' if lang == 'ko' else 'All cases'))
+    return '<nav class="related-pages" aria-label="'+title+'"><strong>'+title+'</strong>'+''.join(anchor(url,label) for url,label in links)+'</nav>'
+
+
 def output_metrics(data8: dict) -> dict[str, str]:
     """Format the existing source-checked projection; GB here is decimal."""
     q = data8['tracks']['Q']
@@ -33,7 +60,8 @@ def output_metrics(data8: dict) -> dict[str, str]:
 
 
 def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
-         revision: str, data8: dict | None = None, data9: dict | None = None, data10: dict | None = None, data11: dict | None = None, data12: dict | None = None, data13: dict | None = None) -> str:
+         revision: str, data8: dict | None = None, data9: dict | None = None, data10: dict | None = None, data11: dict | None = None, data12: dict | None = None, data13: dict | None = None,
+         practical_stories: str = '') -> str:
     if len(case_paths) != len(names):
         raise ValueError('Every case needs a translated archive title')
     docs = f'https://github.com/Munsik-Kim/inference-lab/blob/main/docs/{lang}/'
@@ -56,10 +84,11 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     out = '<section class="cap-hero"><p class="eyebrow">'+text('homeAuthor')+'</p>'
     out += '<p class="brand-definition" lang="en">Deep-learning Inference Optimization, Validation &amp; Analysis</p>'
     out += '<h1>'+text('homeHeroTitle')+'</h1><p class="hero-subtitle">'+text('homeHeroSubtitle')+'</p><p class="lede">'+text('homeOutcomeIntro')+'</p>'
-    out += '<p class="core-tech">Python · PyTorch · Transformers · LLM Compressor · safetensors · vLLM · NumPy</p><div class="actions home-jumps">'
-    for url, key in [(docs+'PORTFOLIO.md#code-tour','homeBuildAction'),(docs+'GETTING_STARTED.md#tiny-model-demo','homeCPUAction'),('#projects','navProjects')]:
-        out += anchor(url,t[key],'text-link')
-    out += '</div></section><section id="contributions" class="cap-section"><h2>'+text('contributionTitle')+'</h2><div class="contribution-table"><table><thead><tr>'
+    steps = ('원본과 비교한다','문제를 찾는다','해결책을 시험한다','다시 실행할 수 있게 남긴다') if lang=='ko' else ('Compare with the original','Find the failure','Test a remedy','Leave a reproducible path')
+    out += '<ol class="work-flow">'+''.join('<li>'+escape(step)+'</li>' for step in steps)+'</ol><div class="actions home-jumps">'
+    for url, label in [('llm-guide.html','모델별 실전 안내서 보기' if lang=='ko' else 'Read the model guides'),('#contributions','대표 구현과 검증 근거 보기' if lang=='ko' else 'Inspect implementation and evidence')]:
+        out += anchor(url,label,'reading-link')
+    out += '</div></section>'+practical_stories+'<section id="contributions" class="cap-section"><h2>'+text('contributionTitle')+'</h2><div class="contribution-table"><table><thead><tr>'
     out += ''.join('<th scope="col">'+escape(x)+'</th>' for x in t['contributionHeaders'])+'</tr></thead><tbody>'
     contribution_sources = [('tools/modelpack/artifact.py','cases/008-build-reconstruct-reload/tests/test_core.py'),('tools/modelpack/quantized.py','cases/008-build-reconstruct-reload/tests/test_boundaries.py'),('tools/modelpack/numerics.py','cases/008-build-reconstruct-reload/tests/test_core.py'),('packages/diova-compare/src/diova_compare/core.py','packages/diova-compare/tests/test_compare.py')]
     for row,(code,test) in zip(t['contributionRows'],contribution_sources):
@@ -125,14 +154,14 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     if data13:
         out += home_case013(data13, lang)
     reading = '<section class="reading-strip"><div><p class="eyebrow">START HERE</p><h2>'+text('readingTitle')+'</h2><p>'+text('readingIntro')+'</p></div><div class="reading-links">'
-    for url, key in [(docs+'START_HERE.md','beginner'),(docs+'GLOSSARY.md','glossary'),('guide.html','guide')]:
+    for url, key in [('llm-guide.html','navModels'),('measurements.html','navMeasurements'),('guide.html','guide'),(docs+'START_HERE.md','beginner'),(docs+'GLOSSARY.md','glossary')]:
         reading += anchor(url,t[key]+' ↗','reading-link')
     reading += '</div></section>'
-    out += '<section class="archive"><div class="section-heading"><div><p class="eyebrow">CASE ARCHIVE</p><h2>'+text('cases')+'</h2></div>'+anchor(docs+'CASEBOOK.md',t['casebook'],'text-link')+'</div><ol class="case-list">'
+    out += '<section class="archive" id="cases"><div class="section-heading"><div><p class="eyebrow">CASE ARCHIVE</p><h2>'+text('cases')+'</h2></div>'+anchor(docs+'CASEBOOK.md',t['casebook'],'text-link')+'</div><ol class="case-list">'
     out += '</ol><details><summary>'+text('archiveEarlier')+'</summary><ol class="case-list">'
     for i,(path,name) in enumerate(zip(case_paths,names),1):
         if i == 6: out += '</ol></details><ol class="case-list">'
-        url='case013.html' if i==13 and data13 else 'case012.html' if i==12 and data12 else 'case011.html' if i==11 and data11 else 'case010.html' if i==10 and data10 else 'case009.html' if i==9 and data9 else docs+f'CASEBOOK.md#case-{i:03}'
+        url=f'case{i:03}.html' if i>=9 else docs+f'CASEBOOK.md#case-{i:03}'
         out += '<li>'+anchor(url,name,'case-name')+f'<span class="archive-number">{i:03}</span><span class="archive-arrow" aria-hidden="true">↗</span></li>'
     out += '</ol></section>'+reading+'<section class="contact-strip"><h2>'+text('collaboration')+'</h2><p>'+text('collaborationIntro')+'</p><div class="actions">'+anchor(docs+'PORTFOLIO.md',t['code'],'text-link')+anchor('https://github.com/Munsik-Kim/inference-lab/issues',t['contact'],'quiet-link')+'</div></section>'
     return out

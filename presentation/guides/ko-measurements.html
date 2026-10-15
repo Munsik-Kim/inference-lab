@@ -1,0 +1,42 @@
+<article class="practical-guide">
+  <nav class="guide-breadcrumb" aria-label="현재 위치"><a href="index.html">DIOVA 홈</a><span aria-hidden="true"> / </span><a href="llm-guide.html">모델별 실전 안내서</a><span aria-hidden="true"> / </span><span>측정 방법</span></nav>
+  <header class="guide-intro"><p class="eyebrow">숫자를 내 선택에 연결하기</p><h1>측정 방법과 결과 읽는 법</h1><p>파일을 줄인 것, 요청을 빨리 처리한 것, 업무를 정확하게 끝낸 것은 서로 다른 결과입니다. <a href="qwen3-4b.html">모델별 안내서</a>의 각 표는 무엇을 쟀는지와 무엇을 확인하지 못했는지를 함께 표시합니다.</p></header>
+  <section id="resources"><h2>저장 공간과 GPU 메모리</h2>
+    <div class="scroll guide-table" role="region" tabindex="0" aria-label="저장·메모리 지표 구분"><table><thead><tr><th scope="col">지표</th><th scope="col">포함하는 것</th><th scope="col">그 값만으로 알 수 없는 것</th></tr></thead><tbody>
+      <tr><th scope="row">가중치 파일 크기</th><td>디스크에 저장한 safetensors 파일 바이트</td><td>실행 중 전체 VRAM, 긴 대화에서 필요한 캐시·작업 공간</td></tr>
+      <tr><th scope="row">Torch allocator peak</th><td>해당 실행에서 PyTorch allocator가 할당한 메모리의 최고 기록</td><td>다른 프로세스·desktop까지 포함한 GPU 전체 사용량</td></tr>
+      <tr><th scope="row">장치 전체 표본 peak</th><td>정해진 간격으로 읽은 GPU 전체 사용량의 최대 표본</td><td>표본 사이의 짧은 peak, 모델만의 메모리</td></tr>
+    </tbody></table></div>
+    <p>GB = 10⁹ B, GiB = 2³⁰ B, MiB = 2²⁰ B입니다. 같은 단위와 같은 측정 범위끼리 비교합니다. <a href="https://github.com/Munsik-Kim/inference-lab/blob/main/docs/ko/GLOSSARY.md#gpu">용어집: GPU</a></p>
+  </section>
+  <section id="latency"><h2>처음 기다리는 시간과 끝날 때까지의 시간</h2>
+    <dl class="measurement-terms"><div><dt>첫 응답까지의 시간(TTFT)</dt><dd>요청을 보낸 뒤 첫 응답이 도착할 때까지입니다. Case009는 첫 choice SSE를 경계로 씁니다.</dd></div><div><dt>출력 토큰당 시간(TPOT)</dt><dd>첫 응답 이후 출력 토큰 하나당 걸린 시간입니다. Case009는 마지막−첫 SSE 시간을 실제 출력 토큰 수−1로 나눕니다. 낮을수록 빠릅니다.</dd></div><div><dt>출력 처리량(token/s)</dt><dd>측정 구간에서 생성한 출력 토큰의 합을 시간으로 나눕니다. 동시 요청을 포함할 수 있어, 개인 요청 하나의 생성 속도와 다릅니다.</dd></div><div><dt>전체 요청 완료 시간</dt><dd>첫 준비와 대기, 생성, 통신을 포함해 요청이 끝날 때까지입니다. TTFT나 TPOT 하나만으로 대체하지 않습니다.</dd></div></dl>
+    <p>CUDA graph는 반복되는 GPU 작업의 실행 준비 비용을 줄이는 실행 방식입니다. Eager와 graph는 각각 같은 방식의 기준선과 비교합니다. <a href="https://github.com/Munsik-Kim/inference-lab/blob/main/docs/ko/GLOSSARY.md#latency">용어집: 지연 시간과 측정 경계</a></p>
+  </section>
+  <section id="quality"><h2>속도 과제와 품질 과제는 따로 읽습니다</h2>
+    <p><strong>고정 길이 속도 평가:</strong> 같은 입력 길이·출력 길이·동시 요청 상한으로 처리 비용을 비교합니다. 답변의 내용이 업무에 적합한지는 별도 질문입니다.</p>
+    <p><strong>자유 생성 품질 평가:</strong> 정해진 정답·추출 규칙·생성 상한으로 내용을 채점합니다. 출력 길이가 다르면 완료 시간이 짧아도 순수 생성 가속이라고 부르지 않습니다.</p>
+    <p><strong>원본 답변과의 차이:</strong> 기준 모델의 선택이나 확률 분포를 얼마나 보존했는지 봅니다. <strong>정답률:</strong> 별도로 정한 정답과 비교합니다. 원본을 따라 틀릴 수도 있으므로 둘은 다릅니다.</p>
+    <p><strong>실제 도구 작업 완료:</strong> 도구 호출 기록, 변경된 파일·fixture 상태, 성공한 검증 이벤트까지 확인합니다. 최종 JSON에 <code>valid:true</code>가 적혔다고 실제 작업 성공으로 세지 않습니다.</p>
+    <p><a href="https://github.com/Munsik-Kim/inference-lab/blob/main/docs/ko/GLOSSARY.md#accuracy">정답률·gold</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/main/docs/ko/GLOSSARY.md#kl">분포 차이(KL)</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/main/docs/ko/GLOSSARY.md#nll">확률 손실(NLL)</a>은 기존 용어집에서 이어 읽습니다.</p>
+  </section>
+  <section id="evidence-states"><h2>어떤 종류의 근거인가요?</h2>
+    <ul class="evidence-states"><li><strong>직접 측정:</strong> 원 실행이 남긴 요청·자원·답변 기록입니다. 장치와 실험일을 함께 봅니다.</li><li><strong>기존 기록 재분석:</strong> 남은 스칼라나 이벤트를 다시 집계한 것입니다. 이 안내서 작업도 여기에 해당하며 새로운 GPU 실험이 아닙니다.</li><li><strong>계산값:</strong> KV payload 같은 이론 바이트나 단위 변환입니다. 실제 전체 VRAM 측정과 구분합니다.</li><li><strong>미실행:</strong> 정책·예산·의존성 때문에 실행하지 않은 셀입니다. Case013의 <code>NOT_RUN_MEMORY_POLICY</code>는 실제 OOM이 아닙니다.</li><li><strong>실제 메모리 부족(OOM):</strong> 메모리 할당 실패가 실행 기록에 있을 때만 표시합니다. 정책상 미실행을 이 상태로 바꾸지 않습니다.</li><li><strong>프로세스 종료 실패:</strong> 계산·저장 뒤 비정상 종료한 실행도 해당합니다. 수치가 남았어도 정상 완료라고 쓰지 않습니다.</li><li><strong>품질 저하:</strong> 실행이 끝나도 정답이나 실제 작업 성공이 나빠진 상태입니다. 실행 오류와 다른 결과입니다.</li></ul>
+    <p>상태는 색 대신 설명과 문자로 표시합니다. 내부 판정 코드가 있어도 위의 의미와 실행 경계를 먼저 읽습니다.</p>
+  </section>
+  <section id="denominators"><h2>반복 횟수와 서로 다른 입력의 수</h2>
+    <p>같은 8과제를 10조건에서 실행하면 80 episode지만 독립 과제는 8개입니다. 같은 서버의 동시 요청도 scheduler를 공유합니다. Case009의 속도 구간은 요청 각각을 독립 표본으로 세지 않고 짝지은 서버 라운드 3개를 재표집했습니다.</p>
+    <p><strong>DEV:</strong> 개발과 실패 관찰에 사용한 작은 입력 집합입니다. 그 집합에서 수정한 뒤 좋아졌다는 것과, 수정에 쓰지 않은 별도 입력에서도 잘된다는 것은 다른 근거입니다. 이미 본 DEV를 다시 실행해도 새 held-out 평가가 되지 않습니다.</p>
+    <p><a href="https://github.com/Munsik-Kim/inference-lab/blob/main/docs/ko/GLOSSARY.md#held-out">용어집: 선택에 쓰지 않은 평가 입력</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/main/docs/ko/GLOSSARY.md#post-hoc">사후 분석과 진단</a></p>
+  </section>
+  <section id="execution-path"><h2>작은 파일을 만든 것과 저비트로 실행한 것</h2>
+    <p>4비트 code를 파일에 저장해도 실행할 때 BF16으로 되돌려 계산할 수 있습니다. 실제 저비트 커널을 선택했다는 기록과 전체 모델에서 수치가 맞는지 확인한 결과가 필요합니다.</p>
+    <p>Case008 Q·Case009의 GPTQ/vLLM 경로는 실제 저비트 실행을 확인했습니다. Case013의 좋은 reference 품질은 BF16 복원 계산이며, packed 전체 모델 수치 검사는 실패했습니다. 이 품질과 다른 경로의 속도를 결합하지 않습니다.</p>
+    <p><a href="https://github.com/Munsik-Kim/inference-lab/blob/main/docs/ko/GLOSSARY.md#kernel">용어집: 커널과 전체 호출 비용</a> · <a href="qwen3-4b.html#environment">모델별 artifact와 실행 환경</a></p>
+  </section>
+  <section id="read-a-result"><h2>내 업무에 적용하기 전 확인할 순서</h2>
+    <ol><li>모델 ID·revision·artifact와 실행 엔진을 맞춥니다.</li><li>입력·출력 길이, 동시 요청 수, 메모리 예산과 측정 단위를 확인합니다.</li><li>품질 과제의 정답 규칙, 분모, DEV 재사용 여부와 정상 종료 상태를 확인합니다.</li><li>원자료·코드·테스트를 따라가고, 자신의 별도 입력에 필요한 검증을 정합니다.</li></ol>
+    <p><a href="qwen3-4b.html#configurations">Qwen3-4B 실행·재확인 안내로 이동</a></p>
+  </section>
+  <p class="source-note">공통 읽기 안내 · {{updated}} 수정 · 실제 독자 평가는 미실행</p>
+</article>

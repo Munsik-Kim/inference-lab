@@ -101,9 +101,9 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
             fs.writeFileSync(path.join(out,label+'-'+lang+'-'+width+'.png'),Buffer.from(shot.data,'base64'));
           }
           await e('document.querySelector(".home-jumps a").focus()');
-          expect(await e('document.activeElement.href.includes("PORTFOLIO.md#code-tour") && getComputedStyle(document.activeElement).outlineStyle!=="none"'), 'Home first CTA keyboard focus '+lang+width);
+          expect(await e('document.querySelectorAll(".home-jumps a").length===2 && document.activeElement.href.endsWith("llm-guide.html") && getComputedStyle(document.activeElement).outlineStyle!=="none"'), 'Home model-guide CTA keyboard focus '+lang+width);
           await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Tab',code:'Tab',windowsVirtualKeyCode:9});await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Tab',code:'Tab',windowsVirtualKeyCode:9});
-          expect(await e('document.activeElement.href.includes("#tiny-model-demo")'), 'Home CPU CTA keyboard order '+lang+width);
+          expect(await e('document.activeElement.href.endsWith("#contributions")'), 'Home evidence CTA keyboard order '+lang+width);
         }
       }
     }
@@ -111,8 +111,8 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
       await send('Page.navigate',{url:new URL(lang+'/index.html',base).href});await wait(250);
       expect(await e('[...document.querySelectorAll(".study-card .case-number")].map(e=>e.textContent).join(",")')==='008,007,006','Case008 featured first '+lang);
       expect(await e('document.querySelectorAll(".project-output").length===2 && document.querySelectorAll(".study-card .card-limit").length===0'),'Separate deliverables without repeated verdict '+lang);
-      await e('[...document.querySelectorAll(".home-jumps a")].find(a=>a.getAttribute("href")==="#projects").click()');await wait(80);
-      expect(await e('location.hash')==='#projects','Project CTA '+lang);
+      await e('[...document.querySelectorAll(".site-header a")].find(a=>a.getAttribute("href")==="index.html#cases").click()');await wait(80);
+      expect(await e('location.hash')==='#cases','All cases navigation '+lang);
       await e('[...document.querySelectorAll("#output-q a")].find(a=>a.getAttribute("href")==="case008.html#q-evaluation").click()');await wait(250);
       expect(await e('location.hash==="#q-evaluation" && !!document.getElementById("q-evaluation")'),'Q evaluation reached from home '+lang);
       await send('Page.navigate',{url:new URL(lang+'/case008.html',base).href});await wait(250);
