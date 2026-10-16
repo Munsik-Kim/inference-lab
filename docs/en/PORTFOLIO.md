@@ -11,7 +11,7 @@ English | [한국어](../ko/PORTFOLIO.md) · [Home](../../README.md)
 <!-- claims: c008-tracks c008-artifact-implementation c007-implementation -->
 A smaller model can use less storage yet lose correct answers or leave a requested task unfinished. In DIOVA, I built tools to save and restart changed models, compare answers and execution costs on matching questions, and verify actual tool actions. The evidence uses public models and recorded runs on an RTX 5080 16GB.
 
-This work relates to **local AI execution, inference engineering** (running trained models), **model optimization, quality regression testing** (finding lost correct answers), and **tool-automation evaluation**. For hiring or technical collaboration, the code below supports tasks such as diagnosing local execution failures, comparing model settings, building checks for changed answers or missing file actions, and producing traceable measurement reports. Each example states what was built, which existing libraries it uses and what remains unverified.
+The implementations relate to local AI execution, inference optimization and quality checks after model changes. See the [technical collaboration scope](#technical-collaboration) for work you can discuss.
 
 [Featured work and runnable tools](https://munsik-kim.github.io/inference-lab/en/index.html#featured-stories) · [Compare your own records](../../packages/diova-compare/examples/compare/README.md)
 
@@ -19,7 +19,11 @@ This work relates to **local AI execution, inference engineering** (running trai
 
 Connected Case008 Q’s **conversion with an existing compression method (GPTQ) → inspection of converted and saved model files (artifacts) → restart in a new process** to Case009’s **comparison of request time, memory and answer quality**. [Conversion](../../tools/modelpack/quantized.py) · [Artifact checks](../../tools/modelpack/qartifact.py) · [Serving runner](../../cases/009-q-serving-quality/scripts/serving.py).
 
-**8.045 GB → 2.652 GB, about 67.0% smaller** describes Case008 Q's Qwen3-4B weight files. Case009 is a separate serving experiment. [Case008 Q](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) → [Case009](https://munsik-kim.github.io/inference-lab/en/case009.html#serving). Case008 R uses a separate pruned Qwen3-0.6B model.
+Case008 Q reduced weight files from **8.045 GB → 2.652 GB, 67.0% smaller**. Peak PyTorch GPU allocation in that experiment was **10.4868 → 5.3971 GiB, about 48.5% lower**. This eager, single-request run used a 1 GiB cache and includes initialization and execution. [File and allocator records](https://munsik-kim.github.io/inference-lab/en/qwen3-4b.html#storage).
+
+In the separate Case009 experiment, the highest whole-GPU memory samples were **14.08–14.51 → 9.08–9.52 GiB**, saving **4.98–5.06 GiB / 34.4–35.8%** within matching rounds. These are one-second samples from three graph rounds with the same 4 GiB cache, including startup, warmup and desktop use. [VRAM values, calculations and conditions](https://munsik-kim.github.io/inference-lab/en/qwen3-4b.html#device-memory). File size and the two memory measures have different boundaries.
+
+Case008 R is a separate one-block reduction and restoration study on Qwen3-0.6B. [Case008 Q implementation](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) → [Case009 request comparison](https://munsik-kim.github.io/inference-lab/en/case009.html#serving).
 
 **Technical judgment — current design:** a small file can still fail to load or use the intended computation, so the implementation starts a new process to check it. Models with 16-bit weights (BF16) and four-bit weights (W4) are compared under the same execution mode: prepared GPU execution graphs (graph) or operations dispatched as they occur (eager). This keeps execution-mode differences separate from weight changes. Evidence: [boundary tests](../../cases/008-build-reconstruct-reload/tests/test_boundaries.py) and [request protocol](../../cases/009-q-serving-quality/configs/serving_protocol.json). Other-device gains and abnormal Case009 quality-process exits remain unresolved. This explains the current code and records rather than asserting an unrecorded design history.
 
@@ -49,20 +53,29 @@ A final message claiming success could appear even when the AI had not changed t
 
 *Local Edge screenshot: the first fixed CODE input, 25% deletion. [Case006 readout screen](../../presentation/screenshots/case006-readout.png) shows the separately labelled same-input diagnostic. These are selected views for navigation, not aggregate performance summaries.*
 
-Case008 R removes part of one model block, then fits its smaller output matrix (down projection) toward the original output using ridge regression. The loader reads saved layer sizes, builds an empty structure (meta skeleton), checks every saved number array (tensor), restores shared weights and derived working arrays (buffers), and runs in a new process without the original model files (checkpoint). Support covers one Qwen3 feed-forward block (MLP). Squared output error (SSE) and independently correct-answer scores (gold scores) remain in the evaluation section and original reports.
+For restoring a checkpoint with one reduced Qwen3-0.6B MLP, follow the [code tour](#code-tour). Other studies remain in the [Casebook](CASEBOOK.md).
 
-[Contribution table](../../README.md) · [Related work and implementation](../related-work/README.md) · [CPU tool for matching and comparing saved answers](../../packages/diova-compare/README.md) · [Implementation interview notes (Korean)](../interview-notes.ko.md)
-
-Case009 adds same-condition request measurements in graph/eager modes and official quality-task records using the existing Qwen 4B model files. The [complete curves and quality report](../../cases/009-q-serving-quality/REPORT.md) retain runtime-exit failures alongside calculated metrics. The command-line comparison tool (CLI) reads these individual numerical values (scalars) and historical records through a documented, versioned input format.
-
+<a id="implementation-map"></a>
 ## Working capabilities and their evidence
+
+| Project implementation | Upstream components | Code and tests |
+|---|---|---|
+| Check saved model files (artifacts), prevent incomplete saves, and reject incompatible reloads | PyTorch · Transformers · safetensors | [code](../../tools/modelpack/artifact.py) · [tests](../../cases/008-build-reconstruct-reload/tests/test_core.py) |
+| Connect Q model conversion, copying and checks in a newly started inference process | GPTQ · LLM Compressor · compressed-tensors · vLLM/Marlin | [code](../../tools/modelpack/quantized.py) · [tests](../../cases/008-build-reconstruct-reload/tests/test_boundaries.py) |
+| Fit output weights to reduce a smaller block’s error (ridge regression) and save the correction | NumPy · CPU FP64 · ridge regression · Cholesky · channel-reconstruction research | [code](../../tools/modelpack/numerics.py) · [tests](../../cases/008-build-reconstruct-reload/tests/test_core.py) |
+| Measure matching inputs and report their individual before/after changes (paired comparison) | vLLM benchmark · lm-evaluation-harness · comparison metrics | [code](../../packages/diova-compare/src/diova_compare/core.py) · [tests](../../packages/diova-compare/tests/test_compare.py) |
+| Save a model’s changing memory in fewer bits, preserve failures, and resume in a new process | NumPy · PyTorch · ComplexKDA recurrence | [implementation](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [synthetic restart tests](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
+| Change only the answer-reading layer on the same stored state; save/reapply its two arrays | ComplexKDA · PyTorch L-BFGS · NumPy | [adapter](../../cases/011-frozen-state-readout-adaptation/source/adapter.py) · [patch tests](../../cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
+| Generate from the same initial noise; compare steps, internal repeats, time and requested count/color/left-right conditions | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [adapter](../../cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU tests](../../cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
+| Convert weights to four-bit integers (INT4) with their scaling factors; recheck recorded quality results | DualQuant public equations · PyTorch · NumPy | [solver](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU audit](../../cases/013-dualquant-reference-quality/analysis/audit.py) |
+| Collect intermediate values altered by earlier layer compression at the next layer, fit corrections, save/reload INT4 and check whole-model text quality | Guo compensation · PyTorch · Transformers · NumPy | [code](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [tests](../../cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) |
+| API rename, received-result and state regression testing | Qwen · PyTorch · Transformers · Python stdlib | [runner](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py) · [tests](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/tests/test_order_contracts.py) |
+| Measure GPU time and memory on matched inputs | vLLM · CUDA · NVML · PyTorch SDPA · SageAttention | [runner](../../cases/002-bf16-fp8-document-extraction/scripts/run.py) · [timing boundary](../../cases/004-low-precision-attention-break-even/src/timing.py) |
+| Recalculate public records and verify displayed values | Python · NumPy · JavaScript · unittest · GitHub Actions · Pages | [recalculation](../../tools/showcase/replay_selection.py) · [display tests](../../tests/showcase/test_showcase.py) |
 
 - **Runtime diagnosis:** a before/after runner checks an existing library fix for choosing GPU operations on the RTX 5080 architecture (SM120). [Case001 runner](../../cases/001-sm120-int8-fallback/run.py).
 - **Cost measurement:** attention adapters time a whole information-combining operation, including adjusting value ranges (smoothing), reducing precision (quantization) and converting data. [Case004 adapters](../../cases/004-low-precision-attention-break-even/src/backends.py).
 - **Numerical analysis:** separate the EFQ method’s number mapping from the scaling used for comparison, and record when no tested speed/error setting meets the preset criteria. [Case003 analysis](../../cases/003-efq-softmax-numerical-audit/ANALYSIS.md) · [Case005 analysis](../../cases/005-attention-precision-pareto/ANALYSIS.md).
-- **Structural model changes:** remove corresponding rows and columns to make an actually smaller MLP, then check it against the original block with the same channels disabled (masked computation). [Case007 surgery](../../cases/007-interaction-aware-mlp-pruning/src/surgery.py).
-- **Input-level evaluation:** inspect each question’s correctness changes, score changes and equal top scores using an independently established answer key. [Case006 analysis](../../cases/006-attention-decision-stability/ANALYSIS.md) · [readout scalar checker](../../cases/006-attention-decision-stability/supplemental/readout-ties-v1/scripts/verify_scalar.py).
-- **Analysis delivery:** file fingerprints (hashes) connect screen values to preserved source records; a small CPU example repeats how channel groups were selected from the setting data (calibration). [Showcase builder](../../tools/showcase/build.py) · [CPU replay](../../tools/showcase/replay_selection.py).
 
 <a id="code-tour"></a>
 ## Code tour
@@ -85,19 +98,16 @@ Case009 adds same-condition request measurements in graph/eager modes and offici
 
 Historical GPU records are a separate route: [Case008 Q](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) → [Case009 quality](https://munsik-kim.github.io/inference-lab/en/case009.html#quality). The random tiny-model [CPU save/reload demo](GETTING_STARTED.md#tiny-model-demo) remains another implementation example.
 
-## Three introduction lines with source links
-
-<!-- claims: c004-cost c005-stop -->
-- Built a group-selection and matrix-slicing pipeline with masked-versus-sliced and held-out comparisons. [Case007 methods](../../cases/007-interaction-aware-mlp-pruning/METHODS.md).
-- Implemented a single-layer Qwen intervention and paired analysis of answer probabilities, regressions, gains and ties. [Case006 methods](../../cases/006-attention-decision-stability/METHODS.md).
-- Measured complete attention cost and retained **the decision to stop at setting development (`STOP_DEV_SCREEN`)** alongside the observed precision–cost trade-off. [Case004 cost](../../cases/004-low-precision-attention-break-even/README.md) · [Case005 decision](../../cases/005-attention-precision-pareto/README.md).
-
+<a id="three-introduction-lines-with-source-links"></a>
 ## Evaluating the tools
 
 <!-- claims: c007-transfer c007-quality c006-native c006-readout -->
 Case008 R reduced deletion-induced local squared output error by **94.1–95.4%** in one Qwen 0.6B MLP on 192 short synthetic held-out prompts. Gold-score changes differed by probability metric and repaired structure. Its measured request-time ratio intervals included 1, so a faster complete request was not established. Inspect the [Q quality and runtime comparison](https://munsik-kim.github.io/inference-lab/en/case008.html#q-evaluation) and the [R comparison](https://munsik-kim.github.io/inference-lab/en/case008.html#r-evaluation).
 
 At 25% MLP deletion, choosing groups using their joint effects (PAIRWISE) slightly lowered local error and kept more original-model answers. Choosing groups separately (INDEPENDENT) nevertheless gave better correct-answer probability loss (gold NLL; lower is better). At 50%, the selected modules were identical; the original status is **completed without a clear benefit under the preset rule (`COMPLETED_NO_CLEAR_TRANSFER`)**. In Case006, A_PUBLIC changed 5 of 192 standard choices and V4 changed 8 of 192. A same-input readout follow-up examines ties and the final vocabulary projection. These examples make both implementation choices and competing evaluation objectives visible. [Casebook](CASEBOOK.md) · [Open the local screen](GETTING_STARTED.md#local-showcase).
+
+<!-- claims: c004-cost c005-stop -->
+Measured complete attention cost and retained **the decision to stop at setting development (`STOP_DEV_SCREEN`)** alongside the observed precision–cost trade-off. [Case004 cost](../../cases/004-low-precision-attention-break-even/README.md) · [Case005 decision](../../cases/005-attention-precision-pareto/README.md).
 
 <a id="contribution-and-reuse"></a>
 ## Contribution and reuse
@@ -118,7 +128,7 @@ The public implementations demonstrate capabilities for these tasks:
 - Turn measurement, recording and reanalysis into reusable tools.
 
 
-The code supports work on **evaluating model changes**, **diagnosing local model execution**, and **building analysis tools and result screens that can be checked again**. You can start with the practical problem: which model or task is involved, what fails or needs comparing, and what result would count as useful. The detailed measurement boundary and metrics can then be chosen together. [Repository issues](https://github.com/Munsik-Kim/inference-lab/issues) provide a public technical-question channel; keep credentials and private customer data out of public reports.
+You can start with the practical problem: which model or task is involved, what fails or needs comparing, and what result would count as useful. The detailed measurement boundary and metrics can then be chosen together. [Repository issues](https://github.com/Munsik-Kim/inference-lab/issues) provide a public technical-question channel; keep credentials and private customer data out of public reports.
 
 The evidence covers specific models and one device, with synthetic studies and the separate official tasks in Case009. Production deployment is **not assessed (`NOT_ASSESSED`)**. CPU audits recalculate saved numerical values; they do not reconstruct excluded full arrays or independently repeat GPU model execution. The [reproduction guide](GETTING_STARTED.md) explains those separate requirements.
 

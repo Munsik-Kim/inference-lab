@@ -88,44 +88,33 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     out = '<section class="cap-hero"><p class="eyebrow">'+text('homeAuthor')+'</p>'
     out += '<p class="brand-definition" lang="en">Deep-learning Inference Optimization, Validation &amp; Analysis</p>'
     out += '<h1>'+text('homeHeroTitle')+'</h1><p class="hero-subtitle">'+text('homeHeroSubtitle')+'</p><p class="lede">'+text('homeOutcomeIntro')+'</p>'
-    steps = ('원본과 비교한다','문제를 찾는다','해결책을 시험한다','다시 실행할 수 있게 남긴다') if lang=='ko' else ('Compare with the original','Find the failure','Test a remedy','Leave a reproducible path')
-    out += '<ol class="work-flow">'+''.join('<li>'+escape(step)+'</li>' for step in steps)+'</ol><div class="actions home-jumps">'
+    out += '<div class="actions home-jumps">'
     for url, label in [('llm-guide.html','모델별 안내' if lang=='ko' else 'Model guides'),('#featured-stories','대표 구현 · 직접 사용하기' if lang=='ko' else 'Featured work · try it')]:
         out += anchor(url,label,'reading-link')
     out += '</div></section>'+practical_stories
     out += '<section id="collaboration" class="model-entry home-model-guides"><h2>'+text('collaboration')+'</h2><p>'+text('collaborationIntro')+'</p><ul>'
     work = ('내 그래픽카드에서 쓸 모델·실행 설정을 비교하고 느린 구간 찾기', '모델을 바꾼 뒤 전에 되던 답변·도구 작업이 계속 되는지 확인', '흩어진 실행 결과를 같은 질문끼리 비교하는 도구와 재실행 안내로 정리') if lang=='ko' else ('Compare models and execution settings for your graphics card; find slow operations', 'Check whether previously working answers and tool tasks still work after a model change', 'Turn scattered execution results into matched-question comparison tools and rerun instructions')
     out += ''.join('<li>'+escape(item)+'</li>' for item in work)+'</ul>'+anchor('https://github.com/Munsik-Kim/inference-lab/issues',t['contact'])+'</section>'
-    out += '<section id="contributions" class="cap-section"><h2>'+text('contributionTitle')+'</h2><div class="contribution-table" role="region" tabindex="0" aria-label="'+text('contributionTitle')+'"><table><thead><tr>'
+    out += '<section id="contributions" class="cap-section"><h2>'+text('contributionTitle')+'</h2><details class="implementation-details"><summary>'+('구현별 코드·테스트 펼쳐 보기' if lang=='ko' else 'Open implementation code and tests')+'</summary><div id="capabilities"><div id="tech-stack" class="contribution-table" role="region" tabindex="0" aria-label="'+text('contributionTitle')+'"><table><thead><tr>'
     out += ''.join('<th scope="col">'+escape(x)+'</th>' for x in t['contributionHeaders'])+'</tr></thead><tbody>'
     contribution_sources = [('tools/modelpack/artifact.py','cases/008-build-reconstruct-reload/tests/test_core.py'),('tools/modelpack/quantized.py','cases/008-build-reconstruct-reload/tests/test_boundaries.py'),('tools/modelpack/numerics.py','cases/008-build-reconstruct-reload/tests/test_core.py'),('packages/diova-compare/src/diova_compare/core.py','packages/diova-compare/tests/test_compare.py')]
-    for row,(code,test) in zip(t['contributionRows'],contribution_sources):
+    for i,(row,(code,test)) in enumerate(zip(t['contributionRows'],contribution_sources)):
         prefix='https://github.com/Munsik-Kim/inference-lab/blob/'+(C8_REVISION if code.startswith('tools/modelpack/') else 'main')+'/'
         code_url='../sources/diova-compare-core.py.txt' if data9 and code.startswith('packages/') else prefix+code
         test_url='../sources/diova-compare-tests.py.txt' if data9 and code.startswith('packages/') else prefix+test
-        out += '<tr><td>'+escape(row[0])+'</td><td>'+escape(row[1])+'</td><td>'+anchor(code_url,'Code')+' · '+anchor(test_url,'Tests')+'</td></tr>'
+        row_id = ' id="model-structure"' if i == 0 else ''
+        out += '<tr'+row_id+'><td>'+escape(row[0])+'</td><td>'+escape(row[1])+'</td><td>'+anchor(code_url,'Code')+' · '+anchor(test_url,'Tests')+'</td></tr>'
+    for cid, number, impl, test in (
+        ('gpu-comparison', 2, 'cases/002-bf16-fp8-document-extraction/scripts/run.py', 'cases/004-low-precision-attention-break-even/src/timing.py'),
+        ('result-delivery', 3, 'tools/showcase/replay_selection.py', 'tests/showcase/test_showcase.py'),
+    ):
+        prefix = source if number == 2 else 'https://github.com/Munsik-Kim/inference-lab/blob/main/'
+        out += '<tr id="'+cid+'"><td>'+text(f'cap{number}Title')+'</td><td>'+text(f'cap{number}Tech')+'</td><td>'+anchor(prefix+impl,'Code')+' · '+anchor(prefix+test,'Tests')+'</td></tr>'
     if data14:
         out += '<tr><td>'+('앞선 층을 압축하면서 달라진 중간 계산값을 다음 층에서 수집해 가중치 보정·4비트 저장/재로딩·모델 전체 품질 비교' if lang=='ko' else 'Collect intermediate values changed by earlier-layer compression, fit the next layer’s weights, store/reload at 4 bits and compare whole-model quality')+'</td><td>Guo compensation · PyTorch · Transformers · NumPy</td><td>'+anchor('../sources/case014-runner.py.txt','Code')+' · '+anchor('../sources/case014-tests.py.txt','Tests')+'</td></tr>'
     if data15:
         out += '<tr><td>'+('API 이름 변경·실제 상태·생성 전 관측 회귀시험' if lang=='ko' else 'API rename, actual state and pre-generation observation regression')+'</td><td>Qwen · PyTorch · Transformers · Python stdlib</td><td>'+anchor('../sources/case015-a1-runner.py.txt','Code')+' · '+anchor('../sources/case015-a1-tests.py.txt','Tests')+'</td></tr>'
-    out += '</tbody></table></div></section><section id="capabilities" class="cap-section"><h2>'+text('capHeading')+'</h2><div class="cap-grid">'
-
-    evidence = [
-        ('model-structure', 'tools/modelpack/artifact.py', 'cases/008-build-reconstruct-reload/tests/test_core.py'),
-        ('gpu-comparison', 'cases/002-bf16-fp8-document-extraction/scripts/run.py', 'cases/004-low-precision-attention-break-even/src/timing.py'),
-        ('result-delivery', 'tools/showcase/replay_selection.py', 'tests/showcase/test_showcase.py'),
-    ]
-    # Case code is pinned to the unchanged evidence revision. Display code links to
-    # the repository implementation; the build manifest identifies this local edit.
-    for i,(cid,impl,test) in enumerate(evidence,1):
-        prefix = (f'https://github.com/Munsik-Kim/inference-lab/blob/{C8_REVISION}/' if i == 1 else source) if i < 3 else 'https://github.com/Munsik-Kim/inference-lab/blob/main/'
-        out += '<article class="cap-card" id="'+cid+'"><span class="case-number" aria-hidden="true">0'+str(i)+'</span><h3>'+text(f'cap{i}Title')+'</h3>'
-        out += '<p>'+text(f'cap{i}Body')+'</p><p class="cap-tech">'+text(f'cap{i}Tech')+'</p><div class="cap-links">'
-        out += anchor(prefix+impl,t[f'cap{i}Link1'])+anchor(prefix+test,t[f'cap{i}Link2'])+'</div></article>'
-    out += '</div></section><section id="tech-stack" class="stack-section"><h2>'+text('stackHeading')+'</h2><dl class="stack-list">'
-    for i in range(1,6):
-        out += '<div><dt>'+text(f'stack{i}Title')+'</dt><dd><strong>'+text(f'stack{i}Tech')+'</strong><p>'+text(f'stack{i}Body')+'</p></dd></div>'
-    out += '</dl>'+anchor(docs+'PORTFOLIO.md#code-tour',t['stackEvidence'],'text-link')+'</section>'
+    out += '</tbody></table></div></div><p>'+anchor(docs+'PORTFOLIO.md#code-tour',t['stackEvidence'],'text-link')+'</p></details></section>'
     out += home_case015(data15, lang) if data15 else ''
     out += home_case014(data14, lang) if data14 else ''
     out += '<details class="research-records"><summary>'+('다른 구현과 연구 기록 펼쳐 읽기' if lang=='ko' else 'Explore other implementations and research records')+'</summary>'

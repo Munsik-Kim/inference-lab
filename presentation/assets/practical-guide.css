@@ -11,6 +11,7 @@
 .story p { line-height:1.85; }
 .story-metric { border-block:1px solid var(--border); padding:1rem 0; margin:1.2rem 0; }
 .story-metric span { display:block; font-size:.88rem; }
+.story-metric .metric-label { margin-top:1rem; }
 .story-metric strong { display:block; font-size:clamp(1.2rem,1.6vw,1.65rem); font-variant-numeric:tabular-nums; margin:.35rem 0; overflow-wrap:anywhere; }
 .source-note { font-size:.87rem; color:var(--muted); line-height:1.8; overflow-wrap:anywhere; }
 .story .source-note { font-size:.8rem; }
@@ -78,6 +79,12 @@
 .research-records { margin:2rem 0; min-width:0; border-block:1px solid var(--border); padding:1.2rem 0; }
 .research-records > summary { cursor:pointer; font-size:1.15rem; font-weight:650; padding:.5rem 0; }
 .research-records[open] > summary { margin-bottom:1.5rem; }
+.implementation-details { min-width:0; border-block:1px solid var(--border); padding:1rem 0; }
+.implementation-details > summary { cursor:pointer; font-weight:650; padding:.5rem 0; }
+.implementation-details[open] > summary { margin-bottom:1rem; }
+.implementation-details .contribution-table table { min-width:42rem; }
+.implementation-details .contribution-table th,.implementation-details .contribution-table td { font-size:.95rem; }
+.implementation-details tr { scroll-margin-top:8rem; }
 #collaboration li { margin:.6rem 0; }
 .contribution-table { max-width:100%; overflow-x:auto; }
 

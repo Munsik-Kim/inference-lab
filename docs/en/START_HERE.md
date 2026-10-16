@@ -4,9 +4,7 @@ English | [한국어](../ko/START_HERE.md) · [Home](../../README.md)
 
 ## 1. What problem does this address?
 
-A model may take less space yet give worse answers or fail to finish the requested work. DIOVA checks these issues together. I built tools that inspect and restart saved models, compare answers and execution costs on the same questions, and check whether an AI actually made and validated a file change. The records use public Qwen models on an RTX 5080 16GB. You can read them without specialist AI knowledge or a GPU.
-
-For hiring or technical collaboration, this is evidence of work in local AI execution, making trained models run (inference engineering), model optimization, checking for quality losses after changes (regression testing), and evaluating tool automation. Tasks to discuss include diagnosing local execution failures, comparing model settings, building answer/action checks, and reporting measurements with traceable sources. [The portfolio](PORTFOLIO.md) links each capability to code.
+Choose a route for running a model, reviewing the work, comparing your results, or auditing preserved evidence. Reading saved records and using the CPU comparison tool requires no GPU.
 
 ## 2. Read online first
 
@@ -19,18 +17,11 @@ Choose a route by your purpose:
 - **Compare your own saved answers:** run the [diova-compare example with invented answers](../../packages/diova-compare/examples/compare/README.md), then put your records into its documented format. This independent CPU tool does not require a model.
 - **Recheck an experiment:** choose a historical CPU audit in [developer reproduction](GETTING_STARTED.md). This is separate from comparing your own records.
 
-Featured C tests [available tool names, call-error explanations and actual action completion](../../research/agent_tool_contract_repair_20261014/README.md). It reuses eight existing tasks used while adjusting settings (DEV). D16 stores weights as four-bit integers (INT4) with BF16 calculation inputs; D4 uses the same weights and also quantizes inputs to INT4. Quantized values are restored to BF16 for quality checks (reference computation). Results on new tasks and speed from directly operating on packed INT4 remain unverified.
+For featured work C, read the [tool-name constraints and actual-task checks](../../research/agent_tool_contract_repair_20261014/README.md), including the implementation and remaining failures.
 
-## 3. Choose an instruction path
+## 3. Reference guides
 
-| Your question | Entry point |
-|---|---|
-| What ran for this model, and where did it fail? | [Model guides](LLM_GUIDE.md): full Qwen3-4B detail in Korean, short English summaries |
-| How do memory, speed and quality numbers differ? | [How to read the measurements](https://munsik-kim.github.io/inference-lab/en/measurements.html) |
-| How can I check the records and tools locally? | [Developer reproduction](GETTING_STARTED.md); the existing `guide.html` has this role too |
-| What does a term mean? | [Glossary](GLOSSARY.md) |
-
-Fitting in memory, serving faster and doing your task correctly are different decisions. Results from different experiments must not be combined into a single configuration's performance.
+[Read memory, speed and answer metrics](https://munsik-kim.github.io/inference-lab/en/measurements.html) · [Glossary](GLOSSARY.md). File size, runtime memory and answer quality are different measurements.
 
 ## 4. How do the cases connect?
 
@@ -73,3 +64,5 @@ Read online, then choose the [offline explorers](GETTING_STARTED.md#offline-expl
 ## API rename regression testing
 
 [Case015](CASEBOOK.md#case-015) compares an order workflow across renamed APIs using execution, received-result history and final state. BF1615/16→16/16, RTN16/16→16/16, D1612/16→12/16. [Report](../../cases/015-tool-interface-sensitivity/REPORT.md) · [CPU commands](../../cases/015-tool-interface-sensitivity/REPRODUCE.md) · [Code](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)
+
+<a id="3-choose-an-instruction-path"></a>
