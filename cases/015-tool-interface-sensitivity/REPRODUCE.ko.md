@@ -19,7 +19,7 @@ PYTHONPATH="$A1/src" python3 -B -m order_regression.cli validate
 PYTHONPATH="$A1/src" python3 -B -m order_regression.cli oracle-check --output "$OUT/oracle.json"
 PYTHONPATH="$A1/src" python3 -B -m order_regression.cli audit --output "$OUT/audit.json"
 PYTHONPATH="$A1/src" python3 -B -m order_regression.cli analyze --output "$OUT/regression.json"
-PYTHONPATH="$A1/src" python3 -B -m order_regression.cli render --output "$OUT/explorer"
+python3 -B "$A1/postprocess/render_review.py" --output "$OUT/explorer"
 ```
 
 `oracle.json`의34개는17개 fixture×2API의 합성 계약 검사입니다. 실측96개와 합치지 않습니다. `explorer/ko.html`, `en.html`은 file://에서도 열립니다. JSON·모델 출력은 HTML text로 표시합니다.
@@ -38,3 +38,7 @@ python3 -B "$A1/postprocess/collect.py" --private "$A1_PRIVATE"
 같은 완료 run 디렉터리는 거절합니다. source/spec/input/model/artifact identity를 먼저 대조하고 새 결과를 옛 결과 위에 쓰지 않습니다. 모델 loader는 누락 artifact를 생성하지 않습니다. 기존 P1 전체 run_all·solver·encode·ENUM·feedback은 guard로 막습니다.
 
 [Report](REPORT.ko.md) · [Stage map](STAGE_MAP.md) · [Original P1 commands](publication/originals/p1_review/REPRODUCE.ko.md) · [Model identity](provenance/model_identity.json)
+
+## 표시 v2 보완
+
+동결된 원 A1 renderer의 JavaScript 줄바꿈 오류는 그대로 보존합니다. 위 postprocess wrapper는 원자료를 바꾸지 않고 올바른 외부 explorer.js를 생성합니다. 원 render 명령 대신 위 명령을 사용합니다. v1 공개본도 별도 mapping으로 정확히 복원할 수 있으며, 모델 실행과 점수는 동일합니다.

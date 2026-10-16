@@ -29,6 +29,11 @@ jobs:
           python-version: '3.12.14'
       - name: Preserved P1 and new A1 CPU contracts, raw response replay, paired tables
         run: python -B cases/015-tool-interface-sensitivity/publication/scripts/run_checks.py --output "$RUNNER_TEMP/case015/full" --tests
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6; existing repository pin
+        with:
+          node-version: '24.12.0'
+      - name: Parse the exact standalone viewer script emitted by CPU reproduction
+        run: node --check "$RUNNER_TEMP/case015/full/a1-explorer/explorer.js"
       - name: Retain receipts even on failure
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4; repository pin
@@ -39,5 +44,6 @@ jobs:
             ${{ runner.temp }}/case015/full/*.log
             ${{ runner.temp }}/case015/full/*audit.json
             ${{ runner.temp }}/case015/full/a1-summary.json
+            ${{ runner.temp }}/case015/full/a1-explorer/viewer_manifest.json
           if-no-files-found: warn
           retention-days: 14

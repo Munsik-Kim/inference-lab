@@ -638,6 +638,7 @@ def check_case015(root: Path, errors: list[str]) -> set[str]:
             if (root/f'docs/{lang}/CASEBOOK.md').read_text().count('<a id="case-015"></a>')!=1:raise ValueError('Case015 requires exactly one Casebook entry')
         known={str(p.relative_to(root)) for p in case.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
         known|={'downloads/case015_tool_interface_order_workflow_publication_v1.zip','downloads/case015_tool_interface_order_workflow_publication_v1.json'}
+        known|={'downloads/case015_tool_interface_order_workflow_publication_v2.zip','downloads/case015_tool_interface_order_workflow_publication_v2.json'}
         return known
     except (OSError,ValueError,KeyError,ImportError,AttributeError) as exc:
         errors.append('Case015 publication verification failed: '+str(exc));return set()

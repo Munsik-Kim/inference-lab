@@ -93,3 +93,7 @@ The tool now traces and replays rename regressions in one order workflow. V2 cau
 [CPU / GPU commands](REPRODUCE.md) · [A1 raw](followups/order-api-regression-v1/results/a1_r1/episodes.jsonl) · [Independent audit](followups/order-api-regression-v1/results/a1_r1/independent_audit.json) · [Diagnostic annotation](followups/order-api-regression-v1/results/a1_r1/diagnostic_annotations.json) · [Source freeze](followups/order-api-regression-v1/provenance/source_freeze.json) · [Original P1](publication/originals/p1_review/REPORT.md) · [NOTICE](NOTICE.md)
 
 The 27 frozen P1 regression methods and 18 new A1 unique tests are counted separately. CPU audit reconstructs 96 raw episodes, 368 executed calls and 463 requests with state/receipt verdicts; it does not reproduce GPU inference. Codex/ChatGPT assistance and separate CPU calculation review are not human peer review or author endorsement.
+
+## Public display v2
+
+After PR28 merged, a JavaScript syntax check of the standalone CPU viewer exposed an unescaped newline. The frozen experiment renderer and public v1 are preserved; postprocess/render_review.py repairs only presentation. Node syntax and real browser checks cover this boundary. There are zero additional model forwards or score changes.

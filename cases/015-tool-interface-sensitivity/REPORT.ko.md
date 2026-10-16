@@ -93,3 +93,7 @@ P1은 실행 직전 같은 fixture와 생성 전 같은 관측을 별도로 고�
 [CPU / GPU commands](REPRODUCE.ko.md) · [A1 raw](followups/order-api-regression-v1/results/a1_r1/episodes.jsonl) · [Independent audit](followups/order-api-regression-v1/results/a1_r1/independent_audit.json) · [Diagnostic annotation](followups/order-api-regression-v1/results/a1_r1/diagnostic_annotations.json) · [Source freeze](followups/order-api-regression-v1/provenance/source_freeze.json) · [Original P1](publication/originals/p1_review/REPORT.ko.md) · [NOTICE](NOTICE.md)
 
 27개 원 P1 회귀와18개 새 A1 고유 검사를 구분합니다. CPU 감사는 원 응답96개·실제 호출368개·요청463개의 대응과 상태/관측 판정을 재구성했으며 GPU 추론 자체를 재현하지 않습니다. Codex/ChatGPT 보조와 별도 CPU 계산 검토이며 사람의 독립 심사나 저자 승인이 아닙니다.
+
+## 공개 표시 v2
+
+PR28 병합 뒤 독립 CPU 탐색기의 JavaScript 문법 검사에서 줄바꿈 escape 오류를 확인했습니다. 실험 동결 renderer와 v1 공개본은 보존하고, postprocess/render_review.py에서 표시만 보완했습니다. 수정본의 실제 Node 문법·브라우저 검사를 추가합니다. 새 모델 forward·점수 수정은0회입니다.

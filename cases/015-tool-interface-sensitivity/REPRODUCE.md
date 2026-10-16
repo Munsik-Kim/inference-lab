@@ -19,7 +19,7 @@ PYTHONPATH="$A1/src" python3 -B -m order_regression.cli validate
 PYTHONPATH="$A1/src" python3 -B -m order_regression.cli oracle-check --output "$OUT/oracle.json"
 PYTHONPATH="$A1/src" python3 -B -m order_regression.cli audit --output "$OUT/audit.json"
 PYTHONPATH="$A1/src" python3 -B -m order_regression.cli analyze --output "$OUT/regression.json"
-PYTHONPATH="$A1/src" python3 -B -m order_regression.cli render --output "$OUT/explorer"
+python3 -B "$A1/postprocess/render_review.py" --output "$OUT/explorer"
 ```
 
 The 34 oracle episodes are 17 fixtures×2 APIs of synthetic contract tests, separate from 96 measured episodes. Open explorer/ko.html or en.html with file://. JSON and model output are displayed as text.
@@ -38,3 +38,7 @@ python3 -B "$A1/postprocess/collect.py" --private "$A1_PRIVATE"
 Completed run directories are rejected. Check source/spec/input/model/artifact identity first and preserve earlier outputs. The loader never creates missing artifacts. Guards reject the original P1 run_all, solver, encoding, ENUM and enhanced feedback.
 
 [Report](REPORT.md) · [Stage map](STAGE_MAP.md) · [Original P1 commands](publication/originals/p1_review/REPRODUCE.md) · [Model identity](provenance/model_identity.json)
+
+## Display v2 correction
+
+The frozen original A1 renderer is preserved with its JavaScript newline defect. The postprocess wrapper above fixes that display separator and emits external explorer.js without changing raw data. Use this command instead of the frozen render entrypoint. Public v1 can be restored exactly through its separate map; model execution and scores are unchanged.
