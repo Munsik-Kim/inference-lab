@@ -63,6 +63,6 @@ Read online, then choose the [offline explorers](GETTING_STARTED.md#offline-expl
 <a id="case015-cpu"></a>
 ## API rename regression testing
 
-[Case015](CASEBOOK.md#case-015) compares an order workflow across renamed APIs using execution, received-result history and final state. BF1615/16→16/16, RTN16/16→16/16, D1612/16→12/16. [Report](../../cases/015-tool-interface-sensitivity/REPORT.md) · [CPU commands](../../cases/015-tool-interface-sensitivity/REPRODUCE.md) · [Code](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)
+Check whether an AI finishes the same task after a tool rename. The example is **read item count and price per item → calculate the purchase total → save it → validate the record**. Functions and input formats stay fixed; only names change, such as `read_order` to `readOrder`. Across 16 problems, BF16 was **15/16→16/16**, RTN **16/16→16/16**, and D16 **12/16→12/16**. The [task and terminology guide](../../cases/015-tool-interface-sensitivity/README.md) explains orders as purchase records, unit price as price per item, and how to read the results. The 96 runs of the earlier P1 study and the new A1 application are counted separately.
 
 <a id="3-choose-an-instruction-path"></a>

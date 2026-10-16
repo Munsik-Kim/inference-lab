@@ -80,7 +80,7 @@ The [implementation / upstream technology / code / tests table](docs/en/PORTFOLI
 | [012 — Where should image-generation time go?](docs/en/CASEBOOK.md#case-012) | Same-noise generation-step/internal-repeat runner and timing. Assessment of requested count, color and left/right conditions in all 192 images, with paired constraint gains and losses. |
 | [013 — Does lower weight error improve real answers?](docs/en/CASEBOOK.md#case-013) | INT4 scale-preserving conversion/reload and matched full-model, long-input and tool-quality records; packed gate remains blocked. |
 | [014 — Can quality improve at the same 4-bit storage?](docs/en/CASEBOOK.md#case-014) | PG19 text-quality gains and ArXiv limits. Quality was evaluated after BF16 restoration; VRAM savings were not measured. |
-| [015 — Can a renamed tool API still complete an order workflow?](https://munsik-kim.github.io/inference-lab/en/case015.html#overview) | Compare lookup, calculation, update and validation. Across 16 A1 scenarios: BF16 15/16→16/16, RTN 16/16→16/16, D16 12/16→12/16. Original P1 96 and A1 96 keep separate denominators; quality uses INT4 restored to BF16. [Code and CPU example](cases/015-tool-interface-sensitivity/REPRODUCE.md). |
+| [015 — Can an AI finish the same task after a tool rename?](https://munsik-kim.github.io/inference-lab/en/case015.html#overview) | A purchase example: look up item count and price per item, calculate the total, save and validate it. Across 16 problems: BF16 15/16→16/16, RTN 16/16→16/16, D16 12/16→12/16. [Task, terms and CPU example](cases/015-tool-interface-sensitivity/README.md). |
 
 ## Go deeper
 

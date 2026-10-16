@@ -7,7 +7,7 @@ CASE=Path(__file__).resolve().parents[1]
 
 
 def verify(case=CASE):
-    case=Path(case);name='publication/UNIFIED_PUBLIC_MANIFEST_V2.json';manifest=json.loads((case/name).read_text());expected=manifest['files']
+    case=Path(case);name='publication/UNIFIED_PUBLIC_MANIFEST_V3.json';manifest=json.loads((case/name).read_text());expected=manifest['files']
     actual={str(p.relative_to(case)) for p in case.rglob('*') if p.is_file() and '__pycache__' not in p.parts and str(p.relative_to(case))!=name}
     if actual!=set(expected):raise ValueError('unified public file set mismatch')
     for rel,e in expected.items():
@@ -18,11 +18,15 @@ def verify(case=CASE):
     for rel,e in original.items():
         p=case/e['retained_path']
         if p.stat().st_size!=e['bytes'] or hashlib.sha256(p.read_bytes()).hexdigest()!=e['sha256']:raise ValueError('P1 original mismatch: '+rel)
+    previous_v2=json.loads((case/'publication/provenance/unified_v2_map.json').read_text())['files']
     previous=json.loads((case/'publication/provenance/unified_v1_map.json').read_text())['files']
     for rel,e in previous.items():
-        p=case/e['retained_path']
+        retained=e['retained_path'];p=case/previous_v2.get(retained,{'retained_path':retained})['retained_path']
         if p.stat().st_size!=e['bytes'] or hashlib.sha256(p.read_bytes()).hexdigest()!=e['sha256']:raise ValueError('public v1 changed: '+rel)
-    return {'status':'PASS','public_files':len(actual),'original_P1_files_preserved':len(original),'original_public_v1_files_preserved':len(previous),'display_version':2,'tensor_payloads_included':False}
+    for rel,e in previous_v2.items():
+        p=case/e['retained_path']
+        if p.is_symlink() or p.stat().st_size!=e['bytes'] or hashlib.sha256(p.read_bytes()).hexdigest()!=e['sha256']:raise ValueError('public v2 changed: '+rel)
+    return {'status':'PASS','public_files':len(actual),'original_P1_files_preserved':len(original),'original_public_v1_files_preserved':len(previous),'original_public_v2_files_preserved':len(previous_v2),'display_version':3,'tensor_payloads_included':False}
 
 
 if __name__=='__main__':

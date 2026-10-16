@@ -81,7 +81,7 @@ Case009는 시작·준비 실행·바탕화면 사용량을 포함한 표본입�
 | [012 — 이미지 생성 시간을 어디에 더 쓸까?](docs/ko/CASEBOOK.md#case-012) | 같은 초기 잡음에서 생성 단계·내부 반복·시간을 비교하는 도구. 전체 192장의 개수·색·좌우 요청 조건 충족 여부와 조건별 획득·손실 평가. |
 | [013 — 가중치 오차가 줄면 실제 답도 좋아질까?](docs/ko/CASEBOOK.md#case-013) | INT4 스케일 보존·저장·재로딩과 동일 입력 품질 기록. Packed 전체 모델 수치 기준 미통과. |
 | [014 — 같은 4비트 저장량에서 품질을 개선할 수 있는가?](docs/ko/CASEBOOK.md#case-014) | PG19 텍스트 예측 품질 개선과 ArXiv 한계. BF16으로 복원한 품질 평가이며 VRAM 절감은 측정하지 않았습니다. |
-| [015 — 도구 이름이 달라져도 주문 업무를 끝내는가?](https://munsik-kim.github.io/inference-lab/ko/case015.html#overview) | 조회·계산·수정·검증 비교. A1 16개에서 BF16 15/16→16/16, RTN 16/16→16/16, D16 12/16→12/16. 원 P1 96개와 A1 96개는 별도 분모이며 INT4를 BF16으로 복원한 품질 평가입니다. [코드·CPU 예제](cases/015-tool-interface-sensitivity/REPRODUCE.ko.md). |
+| [015 — 도구 이름만 바뀌어도 AI가 같은 일을 끝낼까?](https://munsik-kim.github.io/inference-lab/ko/case015.html#overview) | 구매한 개수와 개당 가격을 조회해 총금액을 계산·저장·확인하는 예제로 비교합니다. 16개 문제에서 BF16 15/16→16/16, RTN 16/16→16/16, D16 12/16→12/16. [작업 설명·용어·CPU 예제](cases/015-tool-interface-sensitivity/README.ko.md). |
 
 ## 더 깊게 보기
 

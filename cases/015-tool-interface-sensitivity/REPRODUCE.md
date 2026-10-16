@@ -1,5 +1,7 @@
 # Recompute the API regression without a model
 
+These commands replay the recorded **read purchase details → calculate → save → validate** sequence instead of rerunning an AI model. They recount successes and failures for two naming versions of the same tools. Start with the [task and terminology guide](README.md).
+
 Uses only the Python3.10+ standard library. Execute saved responses and verify original files, scores and tables without a GPU, model or new installation. Run from the repository root; outputs go to a fresh external directory.
 
 ```bash
@@ -42,3 +44,6 @@ Completed run directories are rejected. Check source/spec/input/model/artifact i
 ## Display v2 correction
 
 The frozen original A1 renderer is preserved with its JavaScript newline defect. The postprocess wrapper above fixes that display separator and emits external explorer.js without changing raw data. Use this command instead of the frozen render entrypoint. Public v1 can be restored exactly through its separate map; model execution and scores are unchanged.
+
+
+This explanation revision runs no new model inference. The 443 public-v2 files are preserved; original bytes of changed guide documents are recoverable with `publication/provenance/unified_v2_map.json`.
