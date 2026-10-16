@@ -658,6 +658,6 @@ Qwen3-0.6B · 196 learned matrix transformations (projections) · PG19 PPL 57.60
 <a id="case-015"></a>
 ## 015 — Same Tools, Different Interfaces
 
-Compare order lookup, multiplication, update and validation across an API rename. On the new synthetic A1 workflow, BF16 changed **15/16→16/16**, RTN **16/16→16/16** and D16 **12/16→12/16**. Audit actual state separately from information received before generation. The original96 P1 episodes and96 A1 episodes keep separate denominators.
+Check whether an AI finishes the same task after a tool rename. The example is **read item count and price per item → calculate the purchase total → save it → validate the record**. Functions and input formats stay fixed; only names change, such as `read_order` to `readOrder`. Across 16 problems, BF16 was **15/16→16/16**, RTN **16/16→16/16**, and D16 **12/16→12/16**. The [task and terminology guide](../../cases/015-tool-interface-sensitivity/README.md) explains orders as purchase records, unit price as price per item, and how to read the results. The 96 runs of the earlier P1 study and the new A1 application are counted separately.
 
 [Pages](https://munsik-kim.github.io/inference-lab/en/case015.html#overview) · [Report](../../cases/015-tool-interface-sensitivity/REPORT.md) · [CPU example](../../cases/015-tool-interface-sensitivity/REPRODUCE.md) · [Runner](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)

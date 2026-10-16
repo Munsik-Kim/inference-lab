@@ -41,7 +41,7 @@ def run(case,output,tests=False):
         if json.loads((output/'a1-summary.json').read_text())!=json.loads((a1/'results/a1_r1/summary.json').read_text()):raise ValueError('A1 summary mismatch')
         (output/'project.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
     value={'status':'PASS' if ok else 'FAIL','checks':receipts,'original':preservation,'P1_primary_episodes':96,'A1_primary_episodes':96,
-        'test_scope':'27 frozen P1 regression tests;18 A1 and5 publication methods (3 original+2 display-v2), counted separately; reruns are not additional unique tests' if tests else 'record audits only; use --tests for CPU regression suites',
+        'test_scope':'27 frozen P1 regression tests;18 A1 and6 publication methods (5 existing+1 public-v2 preservation), counted separately; reruns are not additional unique tests' if tests else 'record audits only; use --tests for CPU regression suites',
         'scope':'raw response reparse, actual fixture replay, generation result receipt, state version, independent endpoint, paired tables and display identities',
         'new_model_forwards':0,'not_reproduced':['GPU model inference','full logits','private quantized payload decode']}
     (output/'verification.json').write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')

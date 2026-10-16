@@ -47,5 +47,15 @@ class Publication(unittest.TestCase):
         self.assertIn(".join('\\n\\n')",script);self.assertIn('src="explorer.js"',result);self.assertIn('{"raw":"unchanged"}',result)
         with self.assertRaises(ValueError):m.repair_html('<script>unexpected</script>')
 
+    def test_closed_public_v2_restores_before_explanation_revision(self):
+        from restore_unified_v2 import restore as restore_v2
+        with tempfile.TemporaryDirectory() as tmp:
+            view=Path(tmp)/'v2'
+            self.assertEqual(restore_v2(CASE,view)['original_v2_files'],443)
+            spec=importlib.util.spec_from_file_location('preserved_v2_verify',view/'publication/verify.py')
+            module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+            result=module.verify(view)
+            self.assertEqual(result['status'],'PASS');self.assertEqual(result['display_version'],2)
+
 
 if __name__=='__main__':unittest.main()

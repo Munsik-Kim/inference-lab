@@ -139,7 +139,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         12: (data12, 'Image-generation budget: loops vs steps', '이미지 생성 시간: 반복과 단계'),
         13: (data13, 'Compare compressed model values, real answers and tool actions', '모델 압축 오차와 실제 답변·도구 작업 비교'),
         14: (data14, 'Test quality correction at the same 4-bit weight-storage budget', '같은 4비트 가중치 저장량에서 품질 보정 시험'),
-        15: (data15, 'Same tools, different interfaces: order workflow regression', '같은 도구, 다른 이름: 주문 업무 회귀시험'),
+        15: (data15, 'Same tools, different interfaces: can an AI finish after a rename?', '같은 도구, 다른 이름: 이름이 바뀌어도 AI가 일을 끝낼까?'),
     }
     for case_id in ids[8:]:
         data, en, ko = registry[case_id]
