@@ -13,3 +13,5 @@
 A1 observation receipt is a stricter new contract. P1 execution-state equality does not establish equal information at generation time; the display labels this distinction without retroactive rescoring. A1 diagnostic annotations correct eight early-stop terminal labels and one omitted value-error label, without altering the frozen raw or primary verdicts.
 
 [Original P1 report](publication/originals/p1_review/REPORT.md) · [A1 report](followups/order-api-regression-v1/REPORT.md) · [CPU commands](REPRODUCE.md)
+
+Public display v2 repairs the standalone viewer through an added postprocess wrapper. [Public v1 map](publication/provenance/unified_v1_map.json) restores all423 old public files and their unchanged closed manifest. A1 source freeze and all measured records remain byte-identical.

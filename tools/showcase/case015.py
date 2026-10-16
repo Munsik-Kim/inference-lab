@@ -10,7 +10,7 @@ C15='cases/015-tool-interface-sensitivity'
 A1=C15+'/followups/order-api-regression-v1'
 SECTIONS=('overview','workflow','interfaces','results','episodes','reproduce','technical','references')
 TITLES={'ko':'같은 도구, 다른 이름','en':'Same Tools, Different Interfaces'}
-ARCHIVE='case015_tool_interface_order_workflow_publication_v1.zip'
+ARCHIVE='case015_tool_interface_order_workflow_publication_v2.zip'
 SOURCE_COPIES={
     'case015-report-ko.md.txt':C15+'/REPORT.ko.md','case015-report-en.md.txt':C15+'/REPORT.md',
     'case015-reproduce-ko.md.txt':C15+'/REPRODUCE.ko.md','case015-reproduce-en.md.txt':C15+'/REPRODUCE.md',
@@ -30,7 +30,7 @@ def load_case015(root):
     if not (case/'README.md').exists():return None
     spec=importlib.util.spec_from_file_location('case015_raw_display',case/'publication/scripts/derive.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
     value=m.derive(case);require(value==read(case/'publication/summary/project.json'),'Case015 display differs from raw')
-    manifest=read(case/'publication/UNIFIED_PUBLIC_MANIFEST.json')
+    manifest=read(case/'publication/UNIFIED_PUBLIC_MANIFEST_V2.json')
     for name,e in manifest['files'].items():require(sha(case/name)==e['sha256'],'Case015 source changed: '+name)
     download=read(root/'downloads'/ARCHIVE.replace('.zip','.json'))
     require(download['filename']==ARCHIVE and download['bytes']==(root/'downloads'/ARCHIVE).stat().st_size and download['sha256']==sha(root/'downloads'/ARCHIVE),'Case015 archive mismatch')
@@ -43,7 +43,7 @@ def load_case015(root):
         'P1_episodes':rows(case/'results/p1_r1/episodes.jsonl'),'scenarios':read(root/A1/'data/scenarios.json'),
         'mappings':read(root/A1/'data/api_mappings.json'),'download':download,
         'download_url':'https://github.com/Munsik-Kim/inference-lab/raw/'+ref+'/downloads/'+ARCHIVE,
-        'download_git_revision':pinned,'sources':{p:sha(root/p) for p in set(SOURCE_COPIES.values())|{C15+'/publication/summary/project.json',C15+'/publication/UNIFIED_PUBLIC_MANIFEST.json'}}}
+        'download_git_revision':pinned,'sources':{p:sha(root/p) for p in set(SOURCE_COPIES.values())|{C15+'/publication/summary/project.json',C15+'/publication/UNIFIED_PUBLIC_MANIFEST_V2.json'}}}
 
 
 def a(url,label):return '<a href="'+escape(url,quote=True)+'">'+escape(label)+'</a>'

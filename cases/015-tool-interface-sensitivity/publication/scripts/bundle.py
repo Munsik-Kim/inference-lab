@@ -28,7 +28,7 @@ def create(case,output):
     with zipfile.ZipFile(output,'x',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as z:
         for name,p in files.items():z.write(p,'case015/'+name)
         z.writestr('ARCHIVE_CONTENTS.json',json.dumps(identity,ensure_ascii=False,indent=2)+'\n')
-    return {'filename':output.name,'bytes':output.stat().st_size,'sha256':hashlib.sha256(output.read_bytes()).hexdigest(),'case_files':len(files),'version':'unified-publication-v1','model_payload_included':False}
+    return {'filename':output.name,'bytes':output.stat().st_size,'sha256':hashlib.sha256(output.read_bytes()).hexdigest(),'case_files':len(files),'version':'unified-publication-v2','model_payload_included':False}
 
 
 def extract(archive,output):

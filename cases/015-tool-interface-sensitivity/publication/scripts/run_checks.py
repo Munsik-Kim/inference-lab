@@ -23,6 +23,7 @@ def run(case,output,tests=False):
         ('a1-oracle',a1,['-m','order_regression.cli','oracle-check','--output',str(output/'a1-oracle.json')],a1/'src'),
         ('a1-audit',a1,['-m','order_regression.cli','audit','--output',str(output/'a1-audit.json')],a1/'src'),
         ('a1-analysis',a1,['-m','order_regression.cli','analyze','--output',str(output/'a1-summary.json')],a1/'src'),
+        ('a1-review-render',a1,['postprocess/render_review.py','--output',str(output/'a1-explorer')],a1/'src'),
         ('unified-manifest',case,['publication/verify.py','--output',str(output/'public-identity.json')],a1/'src'),
     ])
     for name,cwd,args,source in commands:
@@ -40,7 +41,7 @@ def run(case,output,tests=False):
         if json.loads((output/'a1-summary.json').read_text())!=json.loads((a1/'results/a1_r1/summary.json').read_text()):raise ValueError('A1 summary mismatch')
         (output/'project.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
     value={'status':'PASS' if ok else 'FAIL','checks':receipts,'original':preservation,'P1_primary_episodes':96,'A1_primary_episodes':96,
-        'test_scope':'27 frozen P1 regression tests;18 new A1 and3 publication test methods, counted separately; reruns are not additional unique tests' if tests else 'record audits only; use --tests for CPU regression suites',
+        'test_scope':'27 frozen P1 regression tests;18 A1 and5 publication methods (3 original+2 display-v2), counted separately; reruns are not additional unique tests' if tests else 'record audits only; use --tests for CPU regression suites',
         'scope':'raw response reparse, actual fixture replay, generation result receipt, state version, independent endpoint, paired tables and display identities',
         'new_model_forwards':0,'not_reproduced':['GPU model inference','full logits','private quantized payload decode']}
     (output/'verification.json').write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
