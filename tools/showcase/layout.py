@@ -5,6 +5,7 @@ from case011 import home_case011
 from case012_pages import home_case012
 from case013 import home_case013
 from case014 import home_case014
+from case015 import home_case015
 
 C8_PATH = 'cases/008-build-reconstruct-reload'
 C8_REVISION = '9bc8b8fced8dfd5147f9bfdc67564eda04670810'
@@ -40,6 +41,7 @@ def related_cases(lang: str, page: str) -> str:
         'case012-annotate': [('case012.html#human-results', '사람 평가 결과와 실험 조건', 'Human assessment and study conditions')],
         'case013': [('qwen3-4b.html#mitigation', '이 품질 확인용 구현의 도구 작업 실패를 줄인 후속', 'Follow-up reducing tool failures in this quality-check implementation'), ('case009.html#quality', '별도 GPTQ 실행 경로의 품질 기록', 'Quality in the separate GPTQ execution path'), ('case014.html#overview', '별도 0.6B 모델 전체의 가중치 보정 연구', 'Separate 0.6B whole-model weight-compensation study')],
         'case014': [('case013.html#overview', '다른 4비트 품질 확인용 구현의 답변 진단', 'Answer diagnostics for a different 4-bit quality-check implementation'), ('case008.html#track-r', '한 MLP의 별도 구조 복원', 'Separate one-MLP structure reconstruction')],
+        'case015': [('case013.html#overview', '앞선 INT4 도구 품질 진단', 'Earlier INT4 tool quality diagnostics'), ('qwen3-4b.html#mitigation', '별도 도구 계약 완화 연구', 'Separate tool-contract mitigation study')],
     }
     if page not in pairs:
         return ''
@@ -63,7 +65,7 @@ def output_metrics(data8: dict) -> dict[str, str]:
 
 def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
          revision: str, data8: dict | None = None, data9: dict | None = None, data10: dict | None = None, data11: dict | None = None, data12: dict | None = None, data13: dict | None = None,
-         practical_stories: str = '', data14: dict | None = None) -> str:
+         practical_stories: str = '', data14: dict | None = None, data15: dict | None = None) -> str:
     if len(case_paths) != len(names):
         raise ValueError('Every case needs a translated archive title')
     docs = f'https://github.com/Munsik-Kim/inference-lab/blob/main/docs/{lang}/'
@@ -104,6 +106,8 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
         out += '<tr><td>'+escape(row[0])+'</td><td>'+escape(row[1])+'</td><td>'+anchor(code_url,'Code')+' · '+anchor(test_url,'Tests')+'</td></tr>'
     if data14:
         out += '<tr><td>'+('앞선 층을 압축하면서 달라진 중간 계산값을 다음 층에서 수집해 가중치 보정·4비트 저장/재로딩·모델 전체 품질 비교' if lang=='ko' else 'Collect intermediate values changed by earlier-layer compression, fit the next layer’s weights, store/reload at 4 bits and compare whole-model quality')+'</td><td>Guo compensation · PyTorch · Transformers · NumPy</td><td>'+anchor('../sources/case014-runner.py.txt','Code')+' · '+anchor('../sources/case014-tests.py.txt','Tests')+'</td></tr>'
+    if data15:
+        out += '<tr><td>'+('API 이름 변경·실제 상태·생성 전 관측 회귀시험' if lang=='ko' else 'API rename, actual state and pre-generation observation regression')+'</td><td>Qwen · PyTorch · Transformers · Python stdlib</td><td>'+anchor('../sources/case015-a1-runner.py.txt','Code')+' · '+anchor('../sources/case015-a1-tests.py.txt','Tests')+'</td></tr>'
     out += '</tbody></table></div></section><section id="capabilities" class="cap-section"><h2>'+text('capHeading')+'</h2><div class="cap-grid">'
 
     evidence = [
@@ -122,6 +126,7 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     for i in range(1,6):
         out += '<div><dt>'+text(f'stack{i}Title')+'</dt><dd><strong>'+text(f'stack{i}Tech')+'</strong><p>'+text(f'stack{i}Body')+'</p></dd></div>'
     out += '</dl>'+anchor(docs+'PORTFOLIO.md#code-tour',t['stackEvidence'],'text-link')+'</section>'
+    out += home_case015(data15, lang) if data15 else ''
     out += home_case014(data14, lang) if data14 else ''
     out += '<details class="research-records"><summary>'+('다른 구현과 연구 기록 펼쳐 읽기' if lang=='ko' else 'Explore other implementations and research records')+'</summary>'
     out += '<span id="studies" class="home-anchor" aria-hidden="true"></span><section id="projects" class="studies"><div class="section-heading"><div><p class="eyebrow">IMPLEMENTATION & RESEARCH RECORDS</p><h2>'+text('navProjects')+'</h2></div><p>'+text('studiesIntro')+'</p></div><div class="cards">'

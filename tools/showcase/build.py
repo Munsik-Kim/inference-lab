@@ -18,6 +18,7 @@ from case012_review import review_copy
 from case012_pages import load_case012, render_case012, render_annotation, annotation_data, image_viewer, C12, SOURCE_COPIES as C12_SOURCES
 from case013 import load_case013, render_case013, C13, SOURCE_COPIES as C13_SOURCES, FIGURES as C13_FIGURES
 from case014 import load_case014, render_case014, C14, SOURCE_COPIES as C14_SOURCES, FIGURES as C14_FIGURES, ARCHIVE as C14_ARCHIVE, TITLES as C14_TITLES
+from case015 import load_case015, render_case015, C15, SOURCE_COPIES as C15_SOURCES, ARCHIVE as C15_ARCHIVE, TITLES as C15_TITLES
 from practical import load_practical, render as practical_render, PAGES as GUIDE_PAGES, TITLES as GUIDE_TITLES, COMPARE_EXAMPLES
 
 def link(url, text, cls=''):
@@ -50,6 +51,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     data12 = load_case012(root)
     data13 = load_case013(root)
     data14 = load_case014(root)
+    data15 = load_case015(root)
     practical = load_practical(root, data8, data9, data13)
     manifest = source_manifest(root)
     rev = manifest['evidence_revision']
@@ -114,6 +116,11 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         files['assets/case014.css'] = (root/'presentation/assets/case014.css').read_bytes()
         for name,path in C14_SOURCES.items(): files['sources/'+name] = (root/path).read_bytes()
         for name,path in C14_FIGURES.items(): files[name] = (root/path).read_bytes()
+    if data15:
+        files['data/case015.json'] = (json_text(data15)+'\n').encode()
+        files['data/case015-download.json'] = (root/'downloads'/C15_ARCHIVE.replace('.zip','.json')).read_bytes()
+        for name in ('case015.css','case015.js'): files['assets/'+name] = (root/'presentation/assets'/name).read_bytes()
+        for name,path in C15_SOURCES.items(): files['sources/'+name] = (root/path).read_bytes()
     def versioned_case012(name):
         return '../'+name+'?v='+hashlib.sha256(files[name]).hexdigest()[:16]
     files['index.html'] = language_index().encode()
@@ -122,7 +129,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
              'ko':['목표 환경에서 모델이 실행되는지 확인','숫자 정밀도를 바꾼 뒤 문서 추출 비교','확률 계산을 간단히 했을 때의 오차 확인','입력 간 연결 계산 전체의 처리 비용 측정','계산 정밀도·속도·메모리 사용량 비교','바뀐 답변과 최고점이 같은 답 추적','내부 계산 채널을 골라 모델 블록 축소','모델 저장·재실행과 별도 소형 모델의 출력 복구']}
     # IDs, translated archive labels, and verified projections are explicit.
     ids = [int(Path(path).name.split('-')[0]) for path in case_paths]
-    require(ids == list(range(1, len(ids)+1)) and 8 <= len(ids) <= 14,
+    require(ids == list(range(1, len(ids)+1)) and 8 <= len(ids) <= 15,
             'Unexpected case identity/count; extend the explicit display registry')
     registry = {
         9: (data9, 'Process real requests and compare answer quality', '실제 요청 처리 비용과 답변 품질 비교'),
@@ -132,6 +139,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         12: (data12, 'Image-generation budget: loops vs steps', '이미지 생성 시간: 반복과 단계'),
         13: (data13, 'Compare compressed model values, real answers and tool actions', '모델 압축 오차와 실제 답변·도구 작업 비교'),
         14: (data14, 'Test quality correction at the same 4-bit weight-storage budget', '같은 4비트 가중치 저장량에서 품질 보정 시험'),
+        15: (data15, 'Same tools, different interfaces: order workflow regression', '같은 도구, 다른 이름: 주문 업무 회귀시험'),
     }
     for case_id in ids[8:]:
         data, en, ko = registry[case_id]
@@ -141,12 +149,15 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         t['methodLabels']=method_labels(lang)
         files[f'assets/{lang}.js'] = ('window.TEXT = '+script_json(t)+';\n').encode()
         other = 'ko' if lang == 'en' else 'en'
-        for page in ('index','case008','case007','case006','guide')+GUIDE_PAGES+(('case009',) if data9 else ())+(('case010',) if data10 else ())+(('case011',) if data11 else ())+(('case012','case012-annotate') if data12 else ())+(('case013',) if data13 else ())+(('case014',) if data14 else ()):
+        for page in ('index','case008','case007','case006','guide')+GUIDE_PAGES+(('case009',) if data9 else ())+(('case010',) if data10 else ())+(('case011',) if data11 else ())+(('case012','case012-annotate') if data12 else ())+(('case013',) if data13 else ())+(('case014',) if data14 else ())+(('case015',) if data15 else ()):
             scripts = ''
             if page == 'index':
-                body = home(t, lang, payloads, case_paths, names[lang], rev, data8, data9, data10, data11, data12, data13, practical_render(root, practical, lang, 'featured'), data14=data14)
+                body = home(t, lang, payloads, case_paths, names[lang], rev, data8, data9, data10, data11, data12, data13, practical_render(root, practical, lang, 'featured'), data14=data14, data15=data15)
             elif page in GUIDE_PAGES:
                 body = practical_render(root, practical, lang, page)
+            elif page == 'case015':
+                body = render_case015(data15, lang)
+                scripts = '<script defer src="../assets/case015.js"></script>'
             elif page == 'case014':
                 body = render_case014(data14, lang)
             elif page == 'case013':
@@ -195,6 +206,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
             note_key = 'case012' if page.startswith('case012') else page
             page_rev = source_notes[note_key][lang=='ko'] if note_key in source_notes else C8_REVISION if page == 'case008' else rev
             if page=='case014':page_rev='Saved numbers from Case014 stages P0/P1/P1b/P2; experiment code and page-build versions are separate' if lang=='en' else 'Case014의 P0·P1·P1b·P2 단계에 저장된 수치. 실험 코드 버전과 이 화면을 만든 버전은 구분'
+            if page=='case015':page_rev='Case015 original P1 plus measured A1; raw scalar/fixture replay and distinct execution source hashes'
             if page in GUIDE_PAGES:
                 page_rev = ('Recorded public evidence ' if lang=='en' else '공개된 실험 기록의 버전 ')+practical['evidence_revision']
             if page == 'compare':
@@ -206,6 +218,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
             body+=f'<details class="provenance"><summary>{t["evidence"]}</summary><p class="small">{source_help}</p><p class="small">{t["evidence"]}: <code>{page_rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p></details>'
             navigation = site_navigation(lang,page)
             notice = '../sources/case013-notice.md.txt' if page=='case013' else '../sources/case012-notice.md.txt' if page.startswith('case012') else '../sources/case011-notice.md.txt' if page=='case011' else '../sources/case010-notice.md.txt' if page=='case010' else '../sources/case009-notice.md.txt' if page=='case009' else source_url(C8_REVISION,C8_PATH+'/NOTICE.md') if page=='case008' else source_url(rev,C7+'/NOTICE.md')
+            if page=='case015':notice='../sources/case015-notice.md.txt'
             if page=='case014':notice='../sources/case014-notice.md.txt'
             if page in GUIDE_PAGES:
                 notice = 'qwen3-4b.html#implementation'
@@ -218,6 +231,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                       'case011':'Case 011 · Turn saved model memory into answers' if lang=='en' else 'Case 011 · 저장된 기억을 답으로 바꾸기',
                       'case013':'Case 013 · Weight error and real answers' if lang=='en' else 'Case 013 · 가중치 오차와 실제 답변',
                       'case014':'Case 014 · '+C14_TITLES[lang],
+                      'case015':'Case 015 · '+C15_TITLES[lang],
                       'case012':'Case 012 · Loops vs steps' if lang=='en' else 'Case 012 · 이미지 생성 시간 배분',
                       'case012-annotate':'Case 012 · Human image annotation' if lang=='en' else 'Case 012 · 직접 정답 체크하기',
                       **dict(zip(GUIDE_PAGES,GUIDE_TITLES[lang]))}
@@ -226,10 +240,12 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
             html=template.substitute(lang=lang,title=escape(page_title),description=escape(description,quote=True),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=language_label,body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),license_label='Code license (Apache-2.0)' if lang=='en' else '코드 이용 조건 (Apache-2.0)',notice=notice,notice_label='Sources and terms (NOTICE)' if lang=='en' else '출처·이용 조건 (NOTICE)',scripts=scripts)
             if page in ('index', *GUIDE_PAGES):
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/practical-guide.css"></head>')
-            if page in ('case006','case007','case010','case011','case013','case014'):
+            if page in ('case006','case007','case010','case011','case013','case014','case015'):
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/study.css"></head>')
             if page in ('index','case014') and data14:
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/case014.css"></head>')
+            if page in ('index','case015') and data15:
+                html=html.replace('</head>', '<link rel="stylesheet" href="../assets/case015.css"></head>')
             if page.startswith('case012'):
                 html = html.replace('</head>', '<link rel="stylesheet" href="../assets/study.css"><link rel="stylesheet" href="'+versioned_case012('assets/case012.css')+'"></head>')
             if page in ('index','case011') and data11:
@@ -284,6 +300,11 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         report['case014_units'] = {'source_files':data14['sources'],'model_revision':data14['model_revision'],
              'stages':['P0','P1','P1b','P2'],'P2_documents':{'PG19':64,'ArXiv_content_groups':16},'primary':data14['p2']['primary'],
              'execution_source_sha256':data14['execution_source_sha256'],'new_publication_GPU_runs':0,'scope':data14['p2']['scope'],'download':data14['download']}
+    if data15:
+        report['case015_units'] = {'source_files':data15['sources'],'model_revision':data15['model_revision'],
+            'stages':['P0','P1','A1'],'P1_episodes':96,'A1_episodes':96,'A1_endpoint':data15['A1']['endpoint'],
+            'execution_source_sha256':data15['execution_source_sha256'],'publication_additional_model_forwards':0,
+            'scope':data15['execution_boundary'],'download':data15['download']}
     git_head=subprocess.run(['git','rev-parse','HEAD'],cwd=root,text=True,capture_output=True)
     git_dirty=subprocess.run(['git','status','--porcelain'],cwd=root,text=True,capture_output=True)
     report['repository_build_revision']=git_head.stdout.strip() if git_head.returncode==0 else None

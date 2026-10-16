@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "new_case_unique_CPU_tests": 27,
+  "new_case_test_runs": [
+    {
+      "attempt": 1,
+      "passed": 26,
+      "failed": 1,
+      "reason": "binary exact-equality assertion on thirds; corrected test before source freeze"
+    },
+    {
+      "attempt": 2,
+      "passed": 27,
+      "failed": 0
+    },
+    {
+      "attempt": "post_GPU",
+      "passed": 27,
+      "failed": 0
+    }
+  ],
+  "existing_package_unique_tests_reexecuted": 46,
+  "package_attempt01": {
+    "passed": 43,
+    "failed": 3,
+    "reason": "relative PYTHONPATH broken in subprocess temporary cwd"
+  },
+  "package_attempt02": {
+    "passed": 46,
+    "failed": 0,
+    "resolution": "absolute PYTHONPATH, no source/package/environment edits"
+  },
+  "CPU_oracle_episodes": 32,
+  "CPU_oracle_steps": 48,
+  "raw_episode_replay": 96,
+  "raw_model_responses": 228,
+  "fixture_action_reexecution": 160,
+  "same_interface_validates": 12,
+  "same_interface_compares": 12,
+  "cross_interface_rejection": true,
+  "browser_checks": 35,
+  "GPU_worker_processes": 3,
+  "GPU_worker_exits": [
+    0,
+    0,
+    0
+  ],
+  "P1_full_model_generation_requests": 228,
+  "separate_smoke_requests": 4,
+  "source_freeze": "provenance/source_freeze.json",
+  "independent_audit": "independent_audit.json",
+  "private_weights_or_logits_in_CPU_audit": false,
+  "prior_Case013_CPU39_or_prior_research_tests_not_added_to_current_count": true,
+  "browser_display_revision": "demo/display_manifest.json"
+}

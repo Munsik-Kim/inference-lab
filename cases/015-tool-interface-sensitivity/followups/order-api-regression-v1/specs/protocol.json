@@ -1,0 +1,74 @@
+{
+  "version": "case015-a1-v1",
+  "scorer_version": "case015-a1-verified-workflow-v1",
+  "created_utc": "2026-10-16T05:34:11.495305+00:00",
+  "design": "post-P1 new synthetic application; not P2 diagnostics or cross-business confirmation",
+  "methods": [
+    "BF16",
+    "D16",
+    "RTN"
+  ],
+  "apis": [
+    "API_V1",
+    "API_V2"
+  ],
+  "scenario_count": 16,
+  "template_count": 4,
+  "scenario_per_template": 4,
+  "expected_primary_episodes": 96,
+  "smoke_episodes": 2,
+  "fixture_seed": 6101621,
+  "execution_order_seed": 6101622,
+  "analysis_seed": 6101623,
+  "bootstrap_replicates": 10000,
+  "bootstrap_unit": "whole template group, exploratory; no deployment/equivalence claim",
+  "model_load_order": [
+    "BF16",
+    "D16",
+    "RTN"
+  ],
+  "within_method_order": "same seed6101622 shuffle of32scenario/APIcells, no performance-dependent change",
+  "generation": {
+    "greedy": true,
+    "enable_thinking": false,
+    "max_new_tokens": 192,
+    "max_model_calls": 8,
+    "max_tool_calls": 6,
+    "deadline_seconds": 900,
+    "context_limit": 24576,
+    "batch_size": 1,
+    "seed": 610132,
+    "KV": "BF16 within request ON; across-turn prefix cache OFF",
+    "logits_to_keep": 1,
+    "stop_policy": "unchanged saved model generation_config/eos_token_id",
+    "automatic_truncate": false
+  },
+  "worker_wall_budget_seconds": 7200,
+  "primary_endpoint": "VERIFIED_WORKFLOW_SUCCESS: actual ordered chain, read and multiply results observed in later generations, unchanged other orders/immutable fields throughout, current validation observed, strict final JSON",
+  "observation_contract": {
+    "multiply": "target read result available before generation",
+    "write": "correct multiply on observed target read available before generation",
+    "write_then_validate_same_response": "allowed if execution order and current validation match",
+    "final": "matching current-state validation available before final generation"
+  },
+  "schema_policy": "exact keys; int excludes bool; schema-valid wrong values executed without oracle correction",
+  "error_feedback": "same generic unknown tool or invalid arguments across all versions/methods",
+  "parser": "P1 first valid JSON object within tool markers/final; no grammar repair; malformed marker attempts consume tool budget",
+  "final_schema": {
+    "order_id": "strict string, target",
+    "total_minor": "strict integer, oracle product",
+    "validated": "strict bool true"
+  },
+  "mitigations": {
+    "ENUM": false,
+    "enhanced_feedback": false,
+    "aliases": false
+  },
+  "P1_GPU_rerun": false,
+  "new_quantization": false,
+  "training": false,
+  "remote_publication_authorized": true,
+  "input_manifest_sha256": "60aaf8c23fd1e988b54778db62335d9787da4682308f035513657f932514215a",
+  "planned_cells_sha256": "6a907c96c4494369f29c7380ebd61b48c321b667f3cd4d7603e304b7930f83af",
+  "private_runtime_sha256": "d290db7ac9b2436298753ae184b7bceba55e334b1906d68fde4ba5169c550fdf"
+}

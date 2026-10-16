@@ -1,0 +1,370 @@
+{
+  "episode_id": "D16__I2_STYLE_RENAME__AGENT-7",
+  "task_id": "AGENT-7",
+  "family_id": "fixture_patch",
+  "historical_role": "previously_observed_DEV",
+  "evidence_kind": "measurement",
+  "interface_id": "I2_STYLE_RENAME",
+  "canonical_task_hash": "9c9d0c6aaaf16cdeb389c5dc97a24ef5fabe36b9ed206e10a5381eb3077bb199",
+  "rendered_prompt_hash": "8b59ad46d8ba6b96742b029790b3e2c1114883e442e55ba2f77bbd925e9b9bba",
+  "input_token_hash": "c991051102104300184445bbc5564f437933594e0cda09286bd8b13a0bd7817f",
+  "harness_version": "case015-strict-functional-v1",
+  "method": "D16",
+  "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "artifact_hash": "3d31e82c10990d5633950e49e14150568bce7971a1945eba05e21fc400430e36",
+  "generation_config_hash": "110819ce346343d4b0e262a9f26619d0ae96026ec8555d24c647f620a83cfce5",
+  "execution_source_sha256": "5a2c18000b4623c8c011390f71c8f3eb5fc91cf231d9905320e546a0dcc85a2b",
+  "functional_success": false,
+  "legacy_success": false,
+  "final_answer_correct": false,
+  "state_correct": false,
+  "missing_actions": [
+    "fixture.patch",
+    "fixture.validate"
+  ],
+  "required_actions": [
+    "fixture.patch",
+    "fixture.validate"
+  ],
+  "final_failure_labels": [
+    "MISSING_ACTION"
+  ],
+  "scorer_version": "functional-v1-required-original-actions;legacy-case013-v1",
+  "observation_status": "OBSERVED",
+  "first_error_type": "UNKNOWN_TOOL",
+  "first_error_turn": 0,
+  "errors": [
+    {
+      "label": "UNKNOWN_TOOL",
+      "turn": 0,
+      "event_id": "t0-c0"
+    },
+    {
+      "label": "WRONG_TOOL",
+      "turn": 0,
+      "event_id": "t0-c1"
+    },
+    {
+      "label": "REPEATED_FAILED_CALL",
+      "turn": 1,
+      "event_id": "t1-c0"
+    },
+    {
+      "label": "WRONG_TOOL",
+      "turn": 1,
+      "event_id": "t1-c0"
+    }
+  ],
+  "episode_error_labels": [
+    "REPEATED_FAILED_CALL",
+    "UNKNOWN_TOOL",
+    "WRONG_TOOL"
+  ],
+  "model_calls": 3,
+  "tool_attempts": 3,
+  "generated_tokens": 86,
+  "input_tokens_total": 24759,
+  "wall_seconds": 6.3677999489991635,
+  "peak_allocated_bytes": 10345175040,
+  "peak_reserved_bytes": 12769558528,
+  "terminal_reason": "FINAL_ANSWER",
+  "final_answer": {
+    "valid": false
+  },
+  "final_fixture": {
+    "enabled": false,
+    "limit": 2
+  },
+  "responses": [
+    {
+      "text": "<tool_call>\n{\"name\": \"ApplyFixturePatch\", \"arguments\": {\"enabled\": true, \"limit\": 15}}\n</tool_call>\n<tool_call>\n{\"name\": \"validateFixtureTest\", \"arguments\": {}}</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"ApplyFixturePatch\", \"arguments\": {\"enabled\": true, \"limit\": 15}}\n</tool_call>\n<tool_call>\n{\"name\": \"validateFixtureTest\", \"arguments\": {}}</tool_call><|im_end|>",
+      "raw_utf8_sha256": "00e888f3bd1abaf34bc9bd905d81bf62fbbf45fad312020bc5cae59e686f373e",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        28497,
+        18930,
+        43622,
+        497,
+        330,
+        16370,
+        788,
+        5212,
+        15868,
+        788,
+        830,
+        11,
+        330,
+        9506,
+        788,
+        220,
+        16,
+        20,
+        11248,
+        151658,
+        198,
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        7067,
+        18930,
+        2271,
+        497,
+        330,
+        16370,
+        788,
+        314,
+        3417,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "c991051102104300184445bbc5564f437933594e0cda09286bd8b13a0bd7817f",
+      "input_tokens": 8191,
+      "output_tokens": 44,
+      "messages_tools_hash": "8b59ad46d8ba6b96742b029790b3e2c1114883e442e55ba2f77bbd925e9b9bba",
+      "seconds": 2.6131301559998974,
+      "peak_allocated_bytes": 10316072960,
+      "peak_reserved_bytes": 12769558528,
+      "device_free_total_after_request": [
+        2339024896,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 0
+    },
+    {
+      "text": "I need to correct the issue with the tool call. Let me retry the validation step properly.\n\n<tool_call>\n{\"name\": \"validateFixtureTest\", \"arguments\": {}}\n</tool_call>",
+      "raw_text": "I need to correct the issue with the tool call. Let me retry the validation step properly.\n\n<tool_call>\n{\"name\": \"validateFixtureTest\", \"arguments\": {}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "2e46ba36325ee99921b7b50c5573a3c5ab1900296e0ce95024abd783ff9ac913",
+      "output_token_ids": [
+        40,
+        1184,
+        311,
+        4396,
+        279,
+        4265,
+        448,
+        279,
+        5392,
+        1618,
+        13,
+        6771,
+        752,
+        22683,
+        279,
+        10519,
+        3019,
+        10277,
+        382,
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        7067,
+        18930,
+        2271,
+        497,
+        330,
+        16370,
+        788,
+        4687,
+        532,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "b8604d308451c7f528313bf41b401c069172f040863e7349032cba65309a9e15",
+      "input_tokens": 8267,
+      "output_tokens": 36,
+      "messages_tools_hash": "64968bf15795e7d3a8ea1f1d8bf10bdd8b6182f5acb42d0139dee156f935b17e",
+      "seconds": 2.3970102540006337,
+      "peak_allocated_bytes": 10336140288,
+      "peak_reserved_bytes": 12769558528,
+      "device_free_total_after_request": [
+        2338959360,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 1
+    },
+    {
+      "text": "{\"valid\": false}",
+      "raw_text": "{\"valid\": false}<|im_end|>",
+      "raw_utf8_sha256": "79947c6a827d732ca8b8de1a9ecbe8a8fc74587391f2f1b3f6a69b8a89289948",
+      "output_token_ids": [
+        4913,
+        1891,
+        788,
+        895,
+        92,
+        151645
+      ],
+      "input_token_sha256": "697f897dc8d7b6859439218d0cfcee3dc1c78461eb2157405969912b6647b96b",
+      "input_tokens": 8301,
+      "output_tokens": 6,
+      "messages_tools_hash": "cec227db2350b12f2762d698c360ba8885a36034cbd66e842beed9616b4bfe28",
+      "seconds": 1.334773671000221,
+      "peak_allocated_bytes": 10345175040,
+      "peak_reserved_bytes": 12769558528,
+      "device_free_total_after_request": [
+        2328473600,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 2
+    }
+  ],
+  "tool_events": [
+    {
+      "event_id": "t0-c0",
+      "model_turn": 0,
+      "call_index": 0,
+      "call_id": "t0-c0",
+      "call_id_model_visible": false,
+      "raw_name": "ApplyFixturePatch",
+      "declared_names_hash": "19653249c6f91bba6b54d000e4393ad6f1bf79acee2f24319faaead758ade464",
+      "semantic_tool_id": null,
+      "raw_arguments": {
+        "enabled": true,
+        "limit": 15
+      },
+      "schema_result": "NOT_EVALUABLE",
+      "argument_value_correct": null,
+      "allowed_action_set": [
+        "fixture.patch"
+      ],
+      "semantic_choice_correct": null,
+      "state_before": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_after": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_before_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "state_after_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "tool_result": {
+        "error": "unknown tool/incorrect argument keys"
+      },
+      "execution_status": "ERROR",
+      "error_labels": [
+        "UNKNOWN_TOOL"
+      ],
+      "signature": "4aa60bd206c745a0dc25661d39b887077d3b92f48d9b2fbc3c90ed889c0cac73",
+      "recovery_of_event_id": null,
+      "fixture_changes": null,
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    },
+    {
+      "event_id": "t0-c1",
+      "model_turn": 0,
+      "call_index": 1,
+      "call_id": "t0-c1",
+      "call_id_model_visible": false,
+      "raw_name": "validateFixtureTest",
+      "declared_names_hash": "19653249c6f91bba6b54d000e4393ad6f1bf79acee2f24319faaead758ade464",
+      "semantic_tool_id": "fixture.validate",
+      "raw_arguments": {},
+      "schema_result": "VALID",
+      "argument_value_correct": true,
+      "allowed_action_set": [
+        "fixture.patch"
+      ],
+      "semantic_choice_correct": false,
+      "state_before": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_after": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_before_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "state_after_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "tool_result": {
+        "valid": false
+      },
+      "execution_status": "SUCCESS",
+      "error_labels": [
+        "WRONG_TOOL"
+      ],
+      "signature": "9154cc427003e828fa7839a2e871dbb9e554ed9354c1ee79cecba2a846f67d7c",
+      "recovery_of_event_id": "t0-c0",
+      "fixture_changes": null,
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    },
+    {
+      "event_id": "t1-c0",
+      "model_turn": 1,
+      "call_index": 0,
+      "call_id": "t1-c0",
+      "call_id_model_visible": false,
+      "raw_name": "validateFixtureTest",
+      "declared_names_hash": "19653249c6f91bba6b54d000e4393ad6f1bf79acee2f24319faaead758ade464",
+      "semantic_tool_id": "fixture.validate",
+      "raw_arguments": {},
+      "schema_result": "VALID",
+      "argument_value_correct": true,
+      "allowed_action_set": [
+        "fixture.patch"
+      ],
+      "semantic_choice_correct": false,
+      "state_before": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_after": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_before_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "state_after_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "tool_result": {
+        "valid": false
+      },
+      "execution_status": "SUCCESS",
+      "error_labels": [
+        "REPEATED_FAILED_CALL",
+        "WRONG_TOOL"
+      ],
+      "signature": "9154cc427003e828fa7839a2e871dbb9e554ed9354c1ee79cecba2a846f67d7c",
+      "recovery_of_event_id": "t0-c1",
+      "fixture_changes": null,
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    }
+  ],
+  "recovery": [
+    {
+      "event_id": "t0-c0",
+      "subsequent_action_observed": true,
+      "registered_valid_later_action": false
+    },
+    {
+      "event_id": "t0-c1",
+      "subsequent_action_observed": true,
+      "registered_valid_later_action": false
+    },
+    {
+      "event_id": "t1-c0",
+      "subsequent_action_observed": false,
+      "registered_valid_later_action": false
+    }
+  ],
+  "enum_enabled": false,
+  "enhanced_feedback_enabled": false,
+  "aliases_enabled": false
+}

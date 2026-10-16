@@ -224,3 +224,14 @@ OUT=$(mktemp -d)
 ```
 
 Restores the preserved file layouts for the P0/P1/P1b/P2 research stages, then checks 2880/3360/320 raw rows, the original setting choices, uncertainty intervals, display data and CPU tests. It uses saved records, without a model, excluded private arrays/source text or new GPU inference. Building the whole portfolio needs a full repository copy (clone), not this case-only ZIP.
+
+<!-- case015-entry -->
+<a id="case015-cpu"></a>
+## API rename regression testing
+
+[Case015](CASEBOOK.md#case-015) compares an order workflow across renamed APIs using execution, received-result history and final state. BF1615/16→16/16, RTN16/16→16/16, D1612/16→12/16. [Report](../../cases/015-tool-interface-sensitivity/REPORT.md) · [CPU commands](../../cases/015-tool-interface-sensitivity/REPRODUCE.md) · [Code](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)
+
+```bash
+OUT=$(mktemp -d)
+python3 -B cases/015-tool-interface-sensitivity/publication/scripts/run_checks.py --output "$OUT/case015" --tests
+```

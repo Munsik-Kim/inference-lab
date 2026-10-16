@@ -101,7 +101,9 @@ def check_links(root: Path, pages: list[str], errors: list[str], allow_disclosur
                         parsed.append(child.attrGet('href'))
                     elif child.type == 'image':
                         parsed.append(child.attrGet('src'))
-            if parsed != targets:
+            # Both local path and fragment checks below decode percent-encoded
+            # UTF-8. MarkdownIt encodes Korean anchors; compare those same URLs.
+            if [unquote(x) for x in parsed] != [unquote(x) for x in targets]:
                 errors.append('Inline syntax differs from installed Markdown parser: ' + name)
             targets = parsed
         for target in targets:
@@ -621,6 +623,26 @@ def check_case014(root: Path, errors: list[str]) -> set[str]:
         errors.append('Case014 publication verification failed: '+str(exc));return set()
 
 
+
+def check_case015(root: Path, errors: list[str]) -> set[str]:
+    """Only the separately versioned verified Case015 bundle extends inventory."""
+    case=root/'cases/015-tool-interface-sensitivity'
+    if not case.exists():return set()
+    try:
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('case015_docs_verify',case/'publication/verify.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        module.verify(case)
+        pages=[str((case/name).relative_to(root)) for name in ['README.md','README.ko.md','REPORT.md','REPORT.ko.md','REPRODUCE.md','REPRODUCE.ko.md','NOTICE.md','STAGE_MAP.md']]
+        check_links(root,pages,errors,allow_disclosures=True)
+        for lang in ['en','ko']:
+            if (root/f'docs/{lang}/CASEBOOK.md').read_text().count('<a id="case-015"></a>')!=1:raise ValueError('Case015 requires exactly one Casebook entry')
+        known={str(p.relative_to(root)) for p in case.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+        known|={'downloads/case015_tool_interface_order_workflow_publication_v1.zip','downloads/case015_tool_interface_order_workflow_publication_v1.json'}
+        return known
+    except (OSError,ValueError,KeyError,ImportError,AttributeError) as exc:
+        errors.append('Case015 publication verification failed: '+str(exc));return set()
+
+
 def audit(root: Path, inventory: Path | None = None) -> dict:
     root = root.resolve()
     errors: list[str] = []
@@ -638,6 +660,7 @@ def audit(root: Path, inventory: Path | None = None) -> dict:
     additional |= check_case012(root, errors)
     additional |= check_case013(root, errors)
     additional |= check_case014(root, errors)
+    additional |= check_case015(root, errors)
     additional |= check_agent_tool_repair(root, errors)
     protected = check_protection(root, mapping.get('protection_revision', mapping['source_revision']), errors, inventory, additional)
     check_copy_hygiene(root, (*PAGES, CONCEPT_FIGURE, 'docs/_meta/claims.json', 'docs/_meta/MAINTENANCE.md'), errors)

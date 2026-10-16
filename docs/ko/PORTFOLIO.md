@@ -144,3 +144,9 @@ OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지�
 앞선 층을 압축하면서 달라진 중간 계산값을 다음 층에서 수집하고, 64비트 계산(FP64)으로 오차 보정값을 맞춘 뒤 INT4 저장·독립 재로딩을 구현했습니다. 오차 원인을 세 항으로 나누고 같은 문서 구간의 전후 결과를 검산합니다. PG19의 텍스트 품질 이득과 ArXiv에서 확인된 한계를 함께 남겼습니다.
 
 [구현 설명](../../cases/014-quantization-compensation/PORTFOLIO.md) · [코드](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [테스트](../../cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) · [모델 없는 CPU 검산](../../cases/014-quantization-compensation/REPRODUCE.md)
+
+<!-- case015-entry -->
+<a id="case015-cpu"></a>
+## API 이름 변경 회귀시험
+
+[Case015](CASEBOOK.md#case-015)은 같은 주문 업무의 이름 변경을 실행·관측 이력·최종 상태로 비교합니다. BF16 15/16→16/16, RTN16/16→16/16, D1612/16→12/16. [Report](../../cases/015-tool-interface-sensitivity/REPORT.ko.md) · [CPU commands](../../cases/015-tool-interface-sensitivity/REPRODUCE.ko.md) · [Code](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)

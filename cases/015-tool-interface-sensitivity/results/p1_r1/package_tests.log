@@ -1,0 +1,79 @@
+test_agent_modes_and_extension_denominators (test_case013.Case013Export.test_agent_modes_and_extension_denominators) ... ok
+test_corrupt_saved_score_or_fixture_is_not_repaired (test_case013.Case013Export.test_corrupt_saved_score_or_fixture_is_not_repaired) ... ok
+test_historical_raw_pair_counts (test_case013.Case013Export.test_historical_raw_pair_counts) ... ok
+test_memory_policy_is_not_zero_score (test_case013.Case013Export.test_memory_policy_is_not_zero_score) ... ok
+test_missing_and_duplicate_row_rejected (test_case013.Case013Export.test_missing_and_duplicate_row_rejected) ... ok
+test_mode_length_gold_and_prompt_mismatch_rejected (test_case013.Case013Export.test_mode_length_gold_and_prompt_mismatch_rejected) ... ok
+test_public_source_changes_are_rejected (test_case013.Case013Export.test_public_source_changes_are_rejected) ... ok
+test_same_final_json_without_execution_remains_wrong (test_case013.Case013Export.test_same_final_json_without_execution_remains_wrong) ... ok
+test_stdlib_cli_help_and_fresh_output (test_case013.Case013Export.test_stdlib_cli_help_and_fresh_output) ... ok
+test_duplicate (test_compare.Contract.test_duplicate) ... ok
+test_duplicate_json_field (test_compare.Contract.test_duplicate_json_field) ... ok
+test_free_generation (test_compare.Contract.test_free_generation) ... ok
+test_full_kl_named_separately (test_compare.Contract.test_full_kl_named_separately) ... ok
+test_full_requires_complete (test_compare.Contract.test_full_requires_complete) ... ok
+test_history_retained (test_compare.Contract.test_history_retained) ... ok
+test_infinite_kl_visible (test_compare.Contract.test_infinite_kl_visible) ... ok
+test_intersection_explicit (test_compare.Contract.test_intersection_explicit) ... ok
+test_invalid_or_missing_process_status (test_compare.Contract.test_invalid_or_missing_process_status) ... ok
+test_invalid_sum (test_compare.Contract.test_invalid_sum) ... ok
+test_json_duplicate_load (test_compare.Contract.test_json_duplicate_load) ... ok
+test_mismatches (test_compare.Contract.test_mismatches) ... ok
+test_missing (test_compare.Contract.test_missing) ... ok
+test_missing_distribution (test_compare.Contract.test_missing_distribution) ... ok
+test_nonfinite (test_compare.Contract.test_nonfinite) ... ok
+test_not_four_labels (test_compare.Contract.test_not_four_labels) ... ok
+test_official_adapter (test_compare.Contract.test_official_adapter) ... ok
+test_reorder_not_silently_repaired (test_compare.Contract.test_reorder_not_silently_repaired) ... ok
+test_schema_version_is_integer (test_compare.Contract.test_schema_version_is_integer) ... ok
+test_seed_reproducibility (test_compare.Contract.test_seed_reproducibility) ... ok
+test_source_process_failure_retained (test_compare.Contract.test_source_process_failure_retained) ... ok
+test_transitions (test_compare.Contract.test_transitions) ... ok
+test_wrong_length (test_compare.Contract.test_wrong_length) ... ok
+test_zero_conditional_denominator (test_compare.Contract.test_zero_conditional_denominator) ... ok
+test_distinct_tasks_and_versions_allow_contracts (test_review_edges.ReviewEdges.test_distinct_tasks_and_versions_allow_contracts) ... ok
+test_distribution_kind_coverage (test_review_edges.ReviewEdges.test_distribution_kind_coverage) ... ok
+test_distribution_pair_metadata_mismatch (test_review_edges.ReviewEdges.test_distribution_pair_metadata_mismatch) ... ok
+test_effective_distribution_and_explicit_scores (test_review_edges.ReviewEdges.test_effective_distribution_and_explicit_scores) ... ok
+test_exact_zero_mass_cli_contract (test_review_edges.ReviewEdges.test_exact_zero_mass_cli_contract) ... FAIL
+test_intersection_does_not_hide_bad_contract (test_review_edges.ReviewEdges.test_intersection_does_not_hide_bad_contract) ... ok
+test_metric_coverage_all_id_and_row_orders (test_review_edges.ReviewEdges.test_metric_coverage_all_id_and_row_orders) ... ok
+test_prefix_varies_per_item (test_review_edges.ReviewEdges.test_prefix_varies_per_item) ... ok
+test_rejected_cli_has_no_report_directory (test_review_edges.ReviewEdges.test_rejected_cli_has_no_report_directory) ... FAIL
+test_same_scores_and_key_order_preserved (test_review_edges.ReviewEdges.test_same_scores_and_key_order_preserved) ... ok
+test_subnormal_finite_choice_and_full_cli (test_review_edges.ReviewEdges.test_subnormal_finite_choice_and_full_cli) ... FAIL
+test_validate_rejects_coverage (test_review_edges.ReviewEdges.test_validate_rejects_coverage) ... ok
+test_zeros_and_identity (test_review_edges.ReviewEdges.test_zeros_and_identity) ... ok
+
+======================================================================
+FAIL: test_exact_zero_mass_cli_contract (test_review_edges.ReviewEdges.test_exact_zero_mass_cli_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPOSITORY_ROOT>/packages/diova-compare/tests/test_review_edges.py", line 79, in test_exact_zero_mass_cli_contract
+    self.assertEqual(result.returncode,0,result.stderr)
+AssertionError: 1 != 0 : /usr/bin/python3: Error while finding module specification for 'diova_compare.cli' (ModuleNotFoundError: No module named 'diova_compare')
+
+
+======================================================================
+FAIL: test_rejected_cli_has_no_report_directory (test_review_edges.ReviewEdges.test_rejected_cli_has_no_report_directory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPOSITORY_ROOT>/packages/diova-compare/tests/test_review_edges.py", line 61, in test_rejected_cli_has_no_report_directory
+    self.assertEqual(result.returncode,2);self.assertIn('task metric mismatch',result.stderr)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 2
+
+======================================================================
+FAIL: test_subnormal_finite_choice_and_full_cli (test_review_edges.ReviewEdges.test_subnormal_finite_choice_and_full_cli)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPOSITORY_ROOT>/packages/diova-compare/tests/test_review_edges.py", line 70, in test_subnormal_finite_choice_and_full_cli
+    result,out=self.run_cli([b],[c],Path(d)/'run');self.assertEqual(result.returncode,0,result.stderr)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : /usr/bin/python3: Error while finding module specification for 'diova_compare.cli' (ModuleNotFoundError: No module named 'diova_compare')
+
+
+----------------------------------------------------------------------
+Ran 46 tests in 0.106s
+
+FAILED (failures=3)

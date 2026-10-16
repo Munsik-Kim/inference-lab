@@ -224,3 +224,14 @@ OUT=$(mktemp -d)
 ```
 
 P0·P1·P1b·P2 연구 단계의 보존된 파일 구성을 복원하고, 원시 기록 2,880/3,360/320행·원래 설정 선택·불확실성 구간·표시값·CPU 검사를 다시 확인합니다. 저장된 기록을 쓰며 모델·제외된 비공개 배열·원문·새 GPU 추론은 포함하지 않습니다. 전체 사이트를 만들려면 사례 전용 ZIP이 아니라 저장소 전체 복사본(clone)이 필요합니다.
+
+<!-- case015-entry -->
+<a id="case015-cpu"></a>
+## API 이름 변경 회귀시험
+
+[Case015](CASEBOOK.md#case-015)은 같은 주문 업무의 이름 변경을 실행·관측 이력·최종 상태로 비교합니다. BF16 15/16→16/16, RTN16/16→16/16, D1612/16→12/16. [Report](../../cases/015-tool-interface-sensitivity/REPORT.ko.md) · [CPU commands](../../cases/015-tool-interface-sensitivity/REPRODUCE.ko.md) · [Code](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)
+
+```bash
+OUT=$(mktemp -d)
+python3 -B cases/015-tool-interface-sensitivity/publication/scripts/run_checks.py --output "$OUT/case015" --tests
+```

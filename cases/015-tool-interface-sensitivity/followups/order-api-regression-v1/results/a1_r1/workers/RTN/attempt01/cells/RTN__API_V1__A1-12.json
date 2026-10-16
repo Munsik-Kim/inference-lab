@@ -1,0 +1,623 @@
+{
+  "episode_id": "RTN__API_V1__A1-12",
+  "scenario_id": "A1-12",
+  "template_id": "T4",
+  "method": "RTN",
+  "api_version": "API_V1",
+  "canonical_task_hash": "d21e74cb4ca044cac89de799dbfb88459df5a01a2ad4b537e5f0b8e8902892b8",
+  "surface_prompt_hash": "351a1c267cf33378d91fcd0133249d146631a1a4e0b5b8a912cfbdd36c45be35",
+  "input_token_hash": "fc7ed54d499e8a21b06efac4801d0a2ace3158590099618dfee844180c05d708",
+  "evidence_kind": "measurement",
+  "phase": "A1_POST_P1_APPLICATION",
+  "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "artifact_hash": "3291569c5a9b2162094e144650fac26c9386f1422f4f0155b8005a0269c0abc3",
+  "generation_config_hash": "110819ce346343d4b0e262a9f26619d0ae96026ec8555d24c647f620a83cfce5",
+  "execution_source_sha256": "d12566e3ef75a149f829a1b0edd50adbf0c6bddba5b1d319dd74beaf43dbc42b",
+  "VERIFIED_WORKFLOW_SUCCESS": true,
+  "STATE_ONLY_SUCCESS": true,
+  "FINAL_ANSWER_CORRECT": true,
+  "REQUIRED_ACTIONS_DONE": true,
+  "OBSERVATION_ORDER_VALID": true,
+  "CALL_NAME_VALID": true,
+  "UNKNOWN_TOOL": false,
+  "ARGUMENT_VALUE_WRONG": false,
+  "UNSUPPORTED_SUCCESS_CLAIM": false,
+  "integrity_valid_throughout": true,
+  "executed_chain": [
+    "g0-c0",
+    "g1-c0",
+    "g2-c0",
+    "g3-c0"
+  ],
+  "verified_chain": [
+    "g0-c0",
+    "g1-c0",
+    "g2-c0",
+    "g3-c0"
+  ],
+  "observation_violations": [],
+  "wrong_value_events": [],
+  "diagnostic_labels": [],
+  "scorer_version": "case015-a1-verified-workflow-v1",
+  "observation_status": "OBSERVED",
+  "terminal_reason": "FINAL_ANSWER",
+  "errors": [],
+  "responses": [
+    {
+      "text": "<tool_call>\n{\"name\": \"read_order\", \"arguments\": {\"order_id\": \"ORD-D50F677B6DD4\"}}\n</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"read_order\", \"arguments\": {\"order_id\": \"ORD-D50F677B6DD4\"}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "2fff337a88efb1236611ba742718abf91db3c2c0cb552fb6bfba0dca2eddcda7",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        878,
+        7869,
+        497,
+        330,
+        16370,
+        788,
+        5212,
+        1358,
+        842,
+        788,
+        330,
+        4276,
+        9420,
+        20,
+        15,
+        37,
+        21,
+        22,
+        22,
+        33,
+        21,
+        4103,
+        19,
+        95642,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "fc7ed54d499e8a21b06efac4801d0a2ace3158590099618dfee844180c05d708",
+      "input_tokens": 507,
+      "output_tokens": 32,
+      "messages_tools_hash": "351a1c267cf33378d91fcd0133249d146631a1a4e0b5b8a912cfbdd36c45be35",
+      "seconds": 1.1583720950002316,
+      "peak_allocated_bytes": 8274045952,
+      "peak_reserved_bytes": 8610906112,
+      "device_free_total_after_request": [
+        6997147648,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "generated_in_turn": 0,
+      "available_result_event_ids": [],
+      "pre_generation_state_digest": "9e6c68ca5b9b7875f4c40351ecb2eacdcb054e604f50760d2f912df0195a4f13",
+      "pre_generation_history_hash": "4254eff7d4a41310c959989f23d14b91bba1d02dabc6994ea5298aaaabd86385",
+      "pre_generation_state_version": 0,
+      "canonical_observation_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "text": "<tool_call>\n{\"name\": \"multiply_amount\", \"arguments\": {\"a\": 5, \"b\": 7390}}\n</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"multiply_amount\", \"arguments\": {\"a\": 5, \"b\": 7390}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "2bad425e18434c517201f4a6eb5d122ca5ed3688a2fa31cd01dab03e6706f27f",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        64648,
+        13471,
+        497,
+        330,
+        16370,
+        788,
+        5212,
+        64,
+        788,
+        220,
+        20,
+        11,
+        330,
+        65,
+        788,
+        220,
+        22,
+        18,
+        24,
+        15,
+        11248,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "60319ddb17f5fd07e4cf242540079d48fc5d6f08cf9681d3f33c2c8ee502d69f",
+      "input_tokens": 593,
+      "output_tokens": 29,
+      "messages_tools_hash": "6c171a3774b888b10d760a33dd8da1790c2ab2d9fbc96739fd6382477f8aa0c7",
+      "seconds": 1.0722232709995296,
+      "peak_allocated_bytes": 8311954432,
+      "peak_reserved_bytes": 8610906112,
+      "device_free_total_after_request": [
+        6997147648,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "generated_in_turn": 1,
+      "available_result_event_ids": [
+        "g0-c0"
+      ],
+      "pre_generation_state_digest": "9e6c68ca5b9b7875f4c40351ecb2eacdcb054e604f50760d2f912df0195a4f13",
+      "pre_generation_history_hash": "eb87eabbcc9a1ea3ee292d89f9952621b8fa1698536323699893e828884ac87f",
+      "pre_generation_state_version": 0,
+      "canonical_observation_hash": "42748949ab263ad4c560597d8097849374f2280039b9bdb134812a3629a974d8"
+    },
+    {
+      "text": "<tool_call>\n{\"name\": \"write_order_total\", \"arguments\": {\"order_id\": \"ORD-D50F677B6DD4\", \"total_minor\": 36950}}\n</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"write_order_total\", \"arguments\": {\"order_id\": \"ORD-D50F677B6DD4\", \"total_minor\": 36950}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "018674c885d0c9e15f16dd914f7a913babb0428e90bcbcb8546899da8f011158",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        4934,
+        7869,
+        10784,
+        497,
+        330,
+        16370,
+        788,
+        5212,
+        1358,
+        842,
+        788,
+        330,
+        4276,
+        9420,
+        20,
+        15,
+        37,
+        21,
+        22,
+        22,
+        33,
+        21,
+        4103,
+        19,
+        497,
+        330,
+        5035,
+        70861,
+        788,
+        220,
+        18,
+        21,
+        24,
+        20,
+        15,
+        11248,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "1da9d74bd994983f17df838b0dfb551102b5e211e25780c31a1740c8533688b3",
+      "input_tokens": 644,
+      "output_tokens": 44,
+      "messages_tools_hash": "4fa8b4a6b1c1b7f070039729384368df7b78bba2f80902f4272d994cb29893c6",
+      "seconds": 1.5984963129994867,
+      "peak_allocated_bytes": 8327720960,
+      "peak_reserved_bytes": 8610906112,
+      "device_free_total_after_request": [
+        6997147648,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "generated_in_turn": 2,
+      "available_result_event_ids": [
+        "g0-c0",
+        "g1-c0"
+      ],
+      "pre_generation_state_digest": "9e6c68ca5b9b7875f4c40351ecb2eacdcb054e604f50760d2f912df0195a4f13",
+      "pre_generation_history_hash": "60e0ce541e0bf1414266a5baea301ce4a83bd7efe09dea1c783d7b333657b877",
+      "pre_generation_state_version": 0,
+      "canonical_observation_hash": "25e579400079c87af0b4d7fe9c9508cd8a0251d9f86169356ad77030524edcb6"
+    },
+    {
+      "text": "<tool_call>\n{\"name\": \"validate_order\", \"arguments\": {\"order_id\": \"ORD-D50F677B6DD4\"}}\n</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"validate_order\", \"arguments\": {\"order_id\": \"ORD-D50F677B6DD4\"}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "f96c31ed1a90bcbc28c87b7a0a4d2decb88029967af1cde69c56bfc6769896ed",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        7067,
+        7869,
+        497,
+        330,
+        16370,
+        788,
+        5212,
+        1358,
+        842,
+        788,
+        330,
+        4276,
+        9420,
+        20,
+        15,
+        37,
+        21,
+        22,
+        22,
+        33,
+        21,
+        4103,
+        19,
+        95642,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "f53c4fe82baec04afa47ced94f9eafb1a5d2805abd56f2ebcb37589ad0e45128",
+      "input_tokens": 734,
+      "output_tokens": 32,
+      "messages_tools_hash": "74e2f2f2db778a036596ac105e89ae856bbfe755b2c9b65896af46118f717167",
+      "seconds": 1.1260740849975264,
+      "peak_allocated_bytes": 8351013888,
+      "peak_reserved_bytes": 8610906112,
+      "device_free_total_after_request": [
+        6997147648,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "generated_in_turn": 3,
+      "available_result_event_ids": [
+        "g0-c0",
+        "g1-c0",
+        "g2-c0"
+      ],
+      "pre_generation_state_digest": "4dbe15c445ec26b8dff797e14939b464a01253ec19c428160142f7f1355a4235",
+      "pre_generation_history_hash": "bf17790f9708ba9c10e38b71ab19a2c4b6a33c69bdea167702ae13431b191ce7",
+      "pre_generation_state_version": 1,
+      "canonical_observation_hash": "6bf099f8051f3fe22ed79f44a2994b17ffad7d5a1f4385637cfe10067c5301ed"
+    },
+    {
+      "text": "{\n  \"order_id\": \"ORD-D50F677B6DD4\",\n  \"total_minor\": 36950,\n  \"validated\": true\n}",
+      "raw_text": "{\n  \"order_id\": \"ORD-D50F677B6DD4\",\n  \"total_minor\": 36950,\n  \"validated\": true\n}<|im_end|>",
+      "raw_utf8_sha256": "901f57ab308beefbd81adf820c74f05e7c45c1ff78be944a94912357a6cebfe2",
+      "output_token_ids": [
+        515,
+        220,
+        330,
+        1358,
+        842,
+        788,
+        330,
+        4276,
+        9420,
+        20,
+        15,
+        37,
+        21,
+        22,
+        22,
+        33,
+        21,
+        4103,
+        19,
+        756,
+        220,
+        330,
+        5035,
+        70861,
+        788,
+        220,
+        18,
+        21,
+        24,
+        20,
+        15,
+        345,
+        220,
+        330,
+        59590,
+        788,
+        830,
+        198,
+        92,
+        151645
+      ],
+      "input_token_sha256": "42dd3f2033abf1653d97141bbd058999e8b0668ed0c8ccaba0712c53558433b7",
+      "input_tokens": 801,
+      "output_tokens": 40,
+      "messages_tools_hash": "ab0f2574a89aedf106f59f44a9527a630683cea18bc06f63cbb647d54a1baf07",
+      "seconds": 1.6075680889989599,
+      "peak_allocated_bytes": 8369964032,
+      "peak_reserved_bytes": 8610906112,
+      "device_free_total_after_request": [
+        6997147648,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "generated_in_turn": 4,
+      "available_result_event_ids": [
+        "g0-c0",
+        "g1-c0",
+        "g2-c0",
+        "g3-c0"
+      ],
+      "pre_generation_state_digest": "4dbe15c445ec26b8dff797e14939b464a01253ec19c428160142f7f1355a4235",
+      "pre_generation_history_hash": "1c0af7f2d55abc32ec013f92cb33d719c21a2f1e5a106f621cef55d9daf75d41",
+      "pre_generation_state_version": 1,
+      "canonical_observation_hash": "5f89ea5c5cf4281d736d3ac75cd560c1889c3c4140ac98bb7da773375da751cf"
+    }
+  ],
+  "tool_events": [
+    {
+      "event_id": "g0-c0",
+      "generated_in_turn": 0,
+      "call_index": 0,
+      "generated_after_event_ids": [],
+      "raw_name": "read_order",
+      "semantic_tool_id": "order.read",
+      "raw_arguments": {
+        "order_id": "ORD-D50F677B6DD4"
+      },
+      "declared_names_hash": "c1f255e5cc8da7c56788798bce9e120b1e476363cce3ff3906db2eb9d0dbe9ce",
+      "schema_result": "VALID",
+      "execution_status": "SUCCESS",
+      "tool_result": {
+        "order_id": "ORD-D50F677B6DD4",
+        "quantity": 5,
+        "unit_price_minor": 7390,
+        "current_total_minor": null
+      },
+      "diagnostic_labels": [],
+      "state_before_execution": {
+        "ORD-4B1E74E8D069": {
+          "order_id": "ORD-4B1E74E8D069",
+          "quantity": 26,
+          "unit_price_minor": 16388,
+          "total_minor": -1
+        },
+        "ORD-D50F677B6DD4": {
+          "order_id": "ORD-D50F677B6DD4",
+          "quantity": 5,
+          "unit_price_minor": 7390,
+          "total_minor": null
+        }
+      },
+      "state_after_execution": {
+        "ORD-4B1E74E8D069": {
+          "order_id": "ORD-4B1E74E8D069",
+          "quantity": 26,
+          "unit_price_minor": 16388,
+          "total_minor": -1
+        },
+        "ORD-D50F677B6DD4": {
+          "order_id": "ORD-D50F677B6DD4",
+          "quantity": 5,
+          "unit_price_minor": 7390,
+          "total_minor": null
+        }
+      },
+      "state_before_execution_digest": "9e6c68ca5b9b7875f4c40351ecb2eacdcb054e604f50760d2f912df0195a4f13",
+      "state_after_execution_digest": "9e6c68ca5b9b7875f4c40351ecb2eacdcb054e604f50760d2f912df0195a4f13",
+      "state_version_before": 0,
+      "state_version_after": 0,
+      "integrity_violation_so_far": false
+    },
+    {
+      "event_id": "g1-c0",
+      "generated_in_turn": 1,
+      "call_index": 0,
+      "generated_after_event_ids": [
+        "g0-c0"
+      ],
+      "raw_name": "multiply_amount",
+      "semantic_tool_id": "amount.multiply",
+      "raw_arguments": {
+        "a": 5,
+        "b": 7390
+      },
+      "declared_names_hash": "c1f255e5cc8da7c56788798bce9e120b1e476363cce3ff3906db2eb9d0dbe9ce",
+      "schema_result": "VALID",
+      "execution_status": "SUCCESS",
+      "tool_result": {
+        "product": 36950
+      },
+      "diagnostic_labels": [],
+      "state_before_execution": {
+        "ORD-4B1E74E8D069": {
+          "order_id": "ORD-4B1E74E8D069",
+          "quantity": 26,
+          "unit_price_minor": 16388,
+          "total_minor": -1
+        },
+        "ORD-D50F677B6DD4": {
+          "order_id": "ORD-D50F677B6DD4",
+          "quantity": 5,
+          "unit_price_minor": 7390,
+          "total_minor": null
+        }
+      },
+      "state_after_execution": {
+        "ORD-4B1E74E8D069": {
+          "order_id": "ORD-4B1E74E8D069",
+          "quantity": 26,
+          "unit_price_minor": 16388,
+          "total_minor": -1
+        },
+        "ORD-D50F677B6DD4": {
+          "order_id": "ORD-D50F677B6DD4",
+          "quantity": 5,
+          "unit_price_minor": 7390,
+          "total_minor": null
+        }
+      },
+      "state_before_execution_digest": "9e6c68ca5b9b7875f4c40351ecb2eacdcb054e604f50760d2f912df0195a4f13",
+      "state_after_execution_digest": "9e6c68ca5b9b7875f4c40351ecb2eacdcb054e604f50760d2f912df0195a4f13",
+      "state_version_before": 0,
+      "state_version_after": 0,
+      "integrity_violation_so_far": false
+    },
+    {
+      "event_id": "g2-c0",
+      "generated_in_turn": 2,
+      "call_index": 0,
+      "generated_after_event_ids": [
+        "g0-c0",
+        "g1-c0"
+      ],
+      "raw_name": "write_order_total",
+      "semantic_tool_id": "order.write",
+      "raw_arguments": {
+        "order_id": "ORD-D50F677B6DD4",
+        "total_minor": 36950
+      },
+      "declared_names_hash": "c1f255e5cc8da7c56788798bce9e120b1e476363cce3ff3906db2eb9d0dbe9ce",
+      "schema_result": "VALID",
+      "execution_status": "SUCCESS",
+      "tool_result": {
+        "updated": true,
+        "order_id": "ORD-D50F677B6DD4",
+        "total_minor": 36950
+      },
+      "diagnostic_labels": [],
+      "state_before_execution": {
+        "ORD-4B1E74E8D069": {
+          "order_id": "ORD-4B1E74E8D069",
+          "quantity": 26,
+          "unit_price_minor": 16388,
+          "total_minor": -1
+        },
+        "ORD-D50F677B6DD4": {
+          "order_id": "ORD-D50F677B6DD4",
+          "quantity": 5,
+          "unit_price_minor": 7390,
+          "total_minor": null
+        }
+      },
+      "state_after_execution": {
+        "ORD-4B1E74E8D069": {
+          "order_id": "ORD-4B1E74E8D069",
+          "quantity": 26,
+          "unit_price_minor": 16388,
+          "total_minor": -1
+        },
+        "ORD-D50F677B6DD4": {
+          "order_id": "ORD-D50F677B6DD4",
+          "quantity": 5,
+          "unit_price_minor": 7390,
+          "total_minor": 36950
+        }
+      },
+      "state_before_execution_digest": "9e6c68ca5b9b7875f4c40351ecb2eacdcb054e604f50760d2f912df0195a4f13",
+      "state_after_execution_digest": "4dbe15c445ec26b8dff797e14939b464a01253ec19c428160142f7f1355a4235",
+      "state_version_before": 0,
+      "state_version_after": 1,
+      "integrity_violation_so_far": false
+    },
+    {
+      "event_id": "g3-c0",
+      "generated_in_turn": 3,
+      "call_index": 0,
+      "generated_after_event_ids": [
+        "g0-c0",
+        "g1-c0",
+        "g2-c0"
+      ],
+      "raw_name": "validate_order",
+      "semantic_tool_id": "order.validate",
+      "raw_arguments": {
+        "order_id": "ORD-D50F677B6DD4"
+      },
+      "declared_names_hash": "c1f255e5cc8da7c56788798bce9e120b1e476363cce3ff3906db2eb9d0dbe9ce",
+      "schema_result": "VALID",
+      "execution_status": "SUCCESS",
+      "tool_result": {
+        "valid": true,
+        "order_id": "ORD-D50F677B6DD4"
+      },
+      "diagnostic_labels": [],
+      "state_before_execution": {
+        "ORD-4B1E74E8D069": {
+          "order_id": "ORD-4B1E74E8D069",
+          "quantity": 26,
+          "unit_price_minor": 16388,
+          "total_minor": -1
+        },
+        "ORD-D50F677B6DD4": {
+          "order_id": "ORD-D50F677B6DD4",
+          "quantity": 5,
+          "unit_price_minor": 7390,
+          "total_minor": 36950
+        }
+      },
+      "state_after_execution": {
+        "ORD-4B1E74E8D069": {
+          "order_id": "ORD-4B1E74E8D069",
+          "quantity": 26,
+          "unit_price_minor": 16388,
+          "total_minor": -1
+        },
+        "ORD-D50F677B6DD4": {
+          "order_id": "ORD-D50F677B6DD4",
+          "quantity": 5,
+          "unit_price_minor": 7390,
+          "total_minor": 36950
+        }
+      },
+      "state_before_execution_digest": "4dbe15c445ec26b8dff797e14939b464a01253ec19c428160142f7f1355a4235",
+      "state_after_execution_digest": "4dbe15c445ec26b8dff797e14939b464a01253ec19c428160142f7f1355a4235",
+      "state_version_before": 1,
+      "state_version_after": 1,
+      "integrity_violation_so_far": false
+    }
+  ],
+  "final_answer": {
+    "order_id": "ORD-D50F677B6DD4",
+    "total_minor": 36950,
+    "validated": true
+  },
+  "final_fixture": {
+    "ORD-4B1E74E8D069": {
+      "order_id": "ORD-4B1E74E8D069",
+      "quantity": 26,
+      "unit_price_minor": 16388,
+      "total_minor": -1
+    },
+    "ORD-D50F677B6DD4": {
+      "order_id": "ORD-D50F677B6DD4",
+      "quantity": 5,
+      "unit_price_minor": 7390,
+      "total_minor": 36950
+    }
+  },
+  "final_state_version": 1,
+  "model_calls": 5,
+  "attempted_tool_calls": 4,
+  "executed_tool_calls": 4,
+  "generated_tokens": 177,
+  "input_tokens_total": 3279,
+  "wall_seconds": 6.571829476997664,
+  "peak_allocated_bytes": 8369964032,
+  "peak_reserved_bytes": 8610906112,
+  "enum_enabled": false,
+  "enhanced_feedback": false,
+  "aliases_enabled": false
+}

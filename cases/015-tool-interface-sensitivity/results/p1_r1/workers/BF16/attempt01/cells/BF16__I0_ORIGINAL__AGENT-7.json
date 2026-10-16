@@ -1,0 +1,234 @@
+{
+  "episode_id": "BF16__I0_ORIGINAL__AGENT-7",
+  "task_id": "AGENT-7",
+  "family_id": "fixture_patch",
+  "historical_role": "previously_observed_DEV",
+  "evidence_kind": "measurement",
+  "interface_id": "I0_ORIGINAL",
+  "canonical_task_hash": "9c9d0c6aaaf16cdeb389c5dc97a24ef5fabe36b9ed206e10a5381eb3077bb199",
+  "rendered_prompt_hash": "564fa5e520856213bb1a0e34f1d3bddacc20ac0e36aa42a6210165450381ac3d",
+  "input_token_hash": "5fbc5f9abf8062c156ed98f87ba04fc533e139317d43f6606c0edf012134a408",
+  "harness_version": "case015-strict-functional-v1",
+  "method": "BF16",
+  "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "artifact_hash": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "generation_config_hash": "110819ce346343d4b0e262a9f26619d0ae96026ec8555d24c647f620a83cfce5",
+  "execution_source_sha256": "5a2c18000b4623c8c011390f71c8f3eb5fc91cf231d9905320e546a0dcc85a2b",
+  "functional_success": true,
+  "legacy_success": true,
+  "final_answer_correct": true,
+  "state_correct": true,
+  "missing_actions": [],
+  "required_actions": [
+    "fixture.patch",
+    "fixture.validate"
+  ],
+  "final_failure_labels": [],
+  "scorer_version": "functional-v1-required-original-actions;legacy-case013-v1",
+  "observation_status": "OBSERVED",
+  "first_error_type": null,
+  "first_error_turn": null,
+  "errors": [],
+  "episode_error_labels": [],
+  "model_calls": 2,
+  "tool_attempts": 2,
+  "generated_tokens": 50,
+  "input_tokens_total": 16468,
+  "wall_seconds": 3.526727669999673,
+  "peak_allocated_bytes": 10014219264,
+  "peak_reserved_bytes": 10921967616,
+  "terminal_reason": "FINAL_ANSWER",
+  "final_answer": {
+    "valid": true
+  },
+  "final_fixture": {
+    "enabled": true,
+    "limit": 15
+  },
+  "responses": [
+    {
+      "text": "<tool_call>\n{\"name\": \"apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 15}}\n</tool_call>\n<tool_call>\n{\"name\": \"validate_fixture_test\", \"arguments\": {}}\n</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"apply_fixture_patch\", \"arguments\": {\"enabled\": true, \"limit\": 15}}\n</tool_call>\n<tool_call>\n{\"name\": \"validate_fixture_test\", \"arguments\": {}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "847c574afc99fc8a09d8d70a51de98d7d838618aec959d4b5999be74ca233d45",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        10280,
+        74409,
+        39643,
+        497,
+        330,
+        16370,
+        788,
+        5212,
+        15868,
+        788,
+        830,
+        11,
+        330,
+        9506,
+        788,
+        220,
+        16,
+        20,
+        11248,
+        151658,
+        198,
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        7067,
+        74409,
+        4452,
+        497,
+        330,
+        16370,
+        788,
+        4687,
+        532,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "5fbc5f9abf8062c156ed98f87ba04fc533e139317d43f6606c0edf012134a408",
+      "input_tokens": 8191,
+      "output_tokens": 44,
+      "messages_tools_hash": "564fa5e520856213bb1a0e34f1d3bddacc20ac0e36aa42a6210165450381ac3d",
+      "seconds": 2.335015147999002,
+      "peak_allocated_bytes": 9993489408,
+      "peak_reserved_bytes": 10921967616,
+      "device_free_total_after_request": [
+        4686086144,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 0
+    },
+    {
+      "text": "{\"valid\": true}",
+      "raw_text": "{\"valid\": true}<|im_end|>",
+      "raw_utf8_sha256": "68b1bd0354fbcab3efae59ed29ed0a38f96ee5e65f50f848cbd7bac3eb6ac6cf",
+      "output_token_ids": [
+        4913,
+        1891,
+        788,
+        830,
+        92,
+        151645
+      ],
+      "input_token_sha256": "e3636164c39dab5b769e5a86c826f82f939b5690441adb03449d14f8124c11e1",
+      "input_tokens": 8277,
+      "output_tokens": 6,
+      "messages_tools_hash": "fa37fd1c9425370277332c1762f88c01e73779b203fd9515e2187ecfc7059d50",
+      "seconds": 1.1668501390013262,
+      "peak_allocated_bytes": 10014219264,
+      "peak_reserved_bytes": 10921967616,
+      "device_free_total_after_request": [
+        4686086144,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 1
+    }
+  ],
+  "tool_events": [
+    {
+      "event_id": "t0-c0",
+      "model_turn": 0,
+      "call_index": 0,
+      "call_id": "t0-c0",
+      "call_id_model_visible": false,
+      "raw_name": "apply_fixture_patch",
+      "declared_names_hash": "65509958f9936933648701ce6e50fda9da017a6626c6c5844702113807ed6924",
+      "semantic_tool_id": "fixture.patch",
+      "raw_arguments": {
+        "enabled": true,
+        "limit": 15
+      },
+      "schema_result": "VALID",
+      "argument_value_correct": true,
+      "allowed_action_set": [
+        "fixture.patch"
+      ],
+      "semantic_choice_correct": true,
+      "state_before": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_after": {
+        "enabled": true,
+        "limit": 15
+      },
+      "state_before_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "state_after_digest": "65d77a584c7181072bcc7007d3af92cbee1fd10befacbeb651fa0c31a7abd274",
+      "tool_result": {
+        "applied": true,
+        "config": {
+          "enabled": true,
+          "limit": 15
+        }
+      },
+      "execution_status": "SUCCESS",
+      "error_labels": [],
+      "signature": "c198ab27c294bed29e194480830acda1fe6747378b652a51b3ec25c5d80aeb1f",
+      "recovery_of_event_id": null,
+      "fixture_changes": {
+        "config": {
+          "enabled": true,
+          "limit": 15
+        }
+      },
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    },
+    {
+      "event_id": "t0-c1",
+      "model_turn": 0,
+      "call_index": 1,
+      "call_id": "t0-c1",
+      "call_id_model_visible": false,
+      "raw_name": "validate_fixture_test",
+      "declared_names_hash": "65509958f9936933648701ce6e50fda9da017a6626c6c5844702113807ed6924",
+      "semantic_tool_id": "fixture.validate",
+      "raw_arguments": {},
+      "schema_result": "VALID",
+      "argument_value_correct": true,
+      "allowed_action_set": [
+        "fixture.patch",
+        "fixture.validate"
+      ],
+      "semantic_choice_correct": true,
+      "state_before": {
+        "enabled": true,
+        "limit": 15
+      },
+      "state_after": {
+        "enabled": true,
+        "limit": 15
+      },
+      "state_before_digest": "65d77a584c7181072bcc7007d3af92cbee1fd10befacbeb651fa0c31a7abd274",
+      "state_after_digest": "65d77a584c7181072bcc7007d3af92cbee1fd10befacbeb651fa0c31a7abd274",
+      "tool_result": {
+        "valid": true
+      },
+      "execution_status": "SUCCESS",
+      "error_labels": [],
+      "signature": "efcfdd409207f54a4322eef715622c6a2c6f08e6ae5ad7d09a22005575be4d58",
+      "recovery_of_event_id": null,
+      "fixture_changes": null,
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    }
+  ],
+  "recovery": [],
+  "enum_enabled": false,
+  "enhanced_feedback_enabled": false,
+  "aliases_enabled": false
+}

@@ -28,6 +28,8 @@
 
 - [014 — 같은 INT4 저장량으로 모델 품질 개선하기](#case-014)
 
+- [015 — 같은 도구, 다른 이름](#case-015)
+
 <a id="case-001"></a>
 ## 001 — 커널 선택 조건을 고치면 실행할 수 있는가?
 
@@ -647,3 +649,11 @@ Case010의 저장 구현을 사용하는 후속 질문은 [Case011의 판독층 
 Qwen3-0.6B · 학습된 행렬 변환(projection) 196개 · PG19 PPL 57.600→50.156 (12.92% 감소). 64/64 구간의 정답 토큰 확률 손실(NLL)이 낮아졌습니다. ArXiv의 QUARTER 설정은 악화 방향의 추정값이지만 불확실성 구간에 0이 포함됐고, HALF는 NLL이 높아졌습니다. BF16으로 복원한 품질 평가이며 압축 상태 실행 속도·GPU 메모리(VRAM) 이득은 미평가입니다. 행렬 바이트가 같아도 전체 모델 파일 크기가 같다고 볼 수는 없습니다.
 
 [온라인 결과](https://munsik-kim.github.io/inference-lab/ko/case014.html#overview) · [보고서](../../cases/014-quantization-compensation/REPORT.ko.md) · [코드](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [CPU](../../cases/014-quantization-compensation/REPRODUCE.md) · [연구 단계별 안내](../../cases/014-quantization-compensation/STAGE_MAP.md)
+
+<!-- case015-entry -->
+<a id="case-015"></a>
+## 015 — 같은 도구, 다른 이름
+
+API 이름 변경 전후의 주문 조회·계산·저장·검증을 자동 비교합니다. 새 합성 업무 A1에서 BF16은 **15/16→16/16**, RTN은 **16/16→16/16**, D16은 **12/16→12/16**이었습니다. 실제 상태와 생성 전에 받은 정보를 따로 감사합니다. 기존 P1의96개와 A1의96개는 별도 분모입니다.
+
+[Pages](https://munsik-kim.github.io/inference-lab/ko/case015.html#overview) · [Report](../../cases/015-tool-interface-sensitivity/REPORT.ko.md) · [CPU example](../../cases/015-tool-interface-sensitivity/REPRODUCE.ko.md) · [Runner](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)
