@@ -142,3 +142,9 @@ OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지�
 Capture·FP64 full-input 적합·INT4 codec/독립 재로딩·세 항 분해·문서 paired auditor를 구현했습니다. PG19 품질 이득과 ArXiv 전이 한계를 함께 제공합니다.
 
 [Implementation](../../cases/014-quantization-compensation/PORTFOLIO.md) · [Code](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [Tests](../../cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) · [CPU reproduction](../../cases/014-quantization-compensation/REPRODUCE.md)
+
+<!-- case015-entry -->
+<a id="case015-cpu"></a>
+## API 이름 변경 회귀시험
+
+[Case015](CASEBOOK.md#case-015)은 같은 주문 업무의 이름 변경을 실행·관측 이력·최종 상태로 비교합니다. BF16 15/16→16/16, RTN16/16→16/16, D1612/16→12/16. [Report](../../cases/015-tool-interface-sensitivity/REPORT.ko.md) · [CPU commands](../../cases/015-tool-interface-sensitivity/REPRODUCE.ko.md) · [Code](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)

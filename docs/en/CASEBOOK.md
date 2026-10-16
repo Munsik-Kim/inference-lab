@@ -24,6 +24,8 @@ Each case follows **objective → dataset → assumptions and theory → experim
 
 - [014 — Improving quality at the same INT4 storage budget](#case-014)
 
+- [015 — Same Tools, Different Interfaces](#case-015)
+
 <a id="case-001"></a>
 ## 001 — Can a kernel-selection change unblock execution?
 
@@ -641,3 +643,11 @@ The case tests quality transfer at identical storage format: P0 algebra/codec �
 Qwen3-0.6B · 196 projections ·PG19 PPL 57.600→50.156 (12.92% lower). 64/64 excerpts have lower NLL. ArXiv QUARTER has a higher point estimate with a CI crossing 0; HALF has higher NLL. This is a BF16 reload reference; packed speed/VRAM gains are unevaluated.
 
 [Pages](https://munsik-kim.github.io/inference-lab/en/case014.html#overview) · [Report](../../cases/014-quantization-compensation/REPORT.md) · [Code](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [CPU](../../cases/014-quantization-compensation/REPRODUCE.md) · [Stage map](../../cases/014-quantization-compensation/STAGE_MAP.md)
+
+<!-- case015-entry -->
+<a id="case-015"></a>
+## 015 — Same Tools, Different Interfaces
+
+Compare order lookup, multiplication, update and validation across an API rename. On the new synthetic A1 workflow, BF16 changed **15/16→16/16**, RTN **16/16→16/16** and D16 **12/16→12/16**. Audit actual state separately from information received before generation. The original96 P1 episodes and96 A1 episodes keep separate denominators.
+
+[Pages](https://munsik-kim.github.io/inference-lab/en/case015.html#overview) · [Report](../../cases/015-tool-interface-sensitivity/REPORT.md) · [CPU example](../../cases/015-tool-interface-sensitivity/REPRODUCE.md) · [Runner](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)

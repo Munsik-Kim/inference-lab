@@ -65,3 +65,9 @@ Read online, then choose the [offline explorers](GETTING_STARTED.md#offline-expl
 ## Deeper research: quality compensation at identical INT4 storage
 
 [Case014](CASEBOOK.md#case-014) · [Online](https://munsik-kim.github.io/inference-lab/en/case014.html#overview) · [CPU checks](GETTING_STARTED.md#case014-cpu). A fresh-document0.6B whole-model quality study, distinct from the Qwen3-4B practical guide.
+
+<!-- case015-entry -->
+<a id="case015-cpu"></a>
+## API rename regression testing
+
+[Case015](CASEBOOK.md#case-015) compares an order workflow across renamed APIs using execution, received-result history and final state. BF1615/16→16/16, RTN16/16→16/16, D1612/16→12/16. [Report](../../cases/015-tool-interface-sensitivity/REPORT.md) · [CPU commands](../../cases/015-tool-interface-sensitivity/REPRODUCE.md) · [Code](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)

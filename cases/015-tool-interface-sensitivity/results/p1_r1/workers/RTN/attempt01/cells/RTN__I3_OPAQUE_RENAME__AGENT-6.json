@@ -1,0 +1,257 @@
+{
+  "episode_id": "RTN__I3_OPAQUE_RENAME__AGENT-6",
+  "task_id": "AGENT-6",
+  "family_id": "fixture_patch",
+  "historical_role": "previously_observed_DEV",
+  "evidence_kind": "measurement",
+  "interface_id": "I3_OPAQUE_RENAME",
+  "canonical_task_hash": "cacd27e1f30ce8f016ff5102cca28b689447ea85d3e642eecb05c082760d4024",
+  "rendered_prompt_hash": "b6b218dee84c94d890c6625fb47c1f70ff36231ea9f38a26bf08b633207f23ea",
+  "input_token_hash": "9e20c6533eb20e2972648cac2c128499e019539fd9ef2d61eaf18e7506d178a3",
+  "harness_version": "case015-strict-functional-v1",
+  "method": "RTN",
+  "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "artifact_hash": "3291569c5a9b2162094e144650fac26c9386f1422f4f0155b8005a0269c0abc3",
+  "generation_config_hash": "110819ce346343d4b0e262a9f26619d0ae96026ec8555d24c647f620a83cfce5",
+  "execution_source_sha256": "5a2c18000b4623c8c011390f71c8f3eb5fc91cf231d9905320e546a0dcc85a2b",
+  "functional_success": true,
+  "legacy_success": true,
+  "final_answer_correct": true,
+  "state_correct": true,
+  "missing_actions": [],
+  "required_actions": [
+    "fixture.patch",
+    "fixture.validate"
+  ],
+  "final_failure_labels": [],
+  "scorer_version": "functional-v1-required-original-actions;legacy-case013-v1",
+  "observation_status": "OBSERVED",
+  "first_error_type": null,
+  "first_error_turn": null,
+  "errors": [],
+  "episode_error_labels": [],
+  "model_calls": 3,
+  "tool_attempts": 2,
+  "generated_tokens": 52,
+  "input_tokens_total": 12481,
+  "wall_seconds": 3.533006285000738,
+  "peak_allocated_bytes": 9256458240,
+  "peak_reserved_bytes": 12765364224,
+  "terminal_reason": "FINAL_ANSWER",
+  "final_answer": {
+    "valid": true
+  },
+  "final_fixture": {
+    "enabled": true,
+    "limit": 14
+  },
+  "responses": [
+    {
+      "text": "<tool_call>\n{\"name\": \"tool_56\", \"arguments\": {\"enabled\": true, \"limit\": 14}}\n</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"tool_56\", \"arguments\": {\"enabled\": true, \"limit\": 14}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "96175f92b23fa7738dcd36d7584404026e17488754d6005e59d4f1a0b32f50f3",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        14172,
+        62,
+        20,
+        21,
+        497,
+        330,
+        16370,
+        788,
+        5212,
+        15868,
+        788,
+        830,
+        11,
+        330,
+        9506,
+        788,
+        220,
+        16,
+        19,
+        11248,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "9e20c6533eb20e2972648cac2c128499e019539fd9ef2d61eaf18e7506d178a3",
+      "input_tokens": 4108,
+      "output_tokens": 28,
+      "messages_tools_hash": "b6b218dee84c94d890c6625fb47c1f70ff36231ea9f38a26bf08b633207f23ea",
+      "seconds": 1.7201344479999534,
+      "peak_allocated_bytes": 9230843904,
+      "peak_reserved_bytes": 12765364224,
+      "device_free_total_after_request": [
+        2326310912,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 0
+    },
+    {
+      "text": "<tool_call>\n{\"name\": \"tool_89\", \"arguments\": {}}\n</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"tool_89\", \"arguments\": {}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "7df4febee77ab241ac1c056aaed7364cbe80c230450fd9980245a8cb6bf2b395",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        14172,
+        62,
+        23,
+        24,
+        497,
+        330,
+        16370,
+        788,
+        4687,
+        532,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "f3e89bf11fe9d459a4727f6e57e96b6d8399303d1f89a8cfe0f74caad5f35f8e",
+      "input_tokens": 4169,
+      "output_tokens": 18,
+      "messages_tools_hash": "d6d43f26e4c7e2ee1ca770a6d06a1ab278842406e1d94572652e6ccbdfaed3c1",
+      "seconds": 1.136087712000517,
+      "peak_allocated_bytes": 9247055872,
+      "peak_reserved_bytes": 12765364224,
+      "device_free_total_after_request": [
+        2403807232,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 1
+    },
+    {
+      "text": "{\"valid\": true}",
+      "raw_text": "{\"valid\": true}<|im_end|>",
+      "raw_utf8_sha256": "68b1bd0354fbcab3efae59ed29ed0a38f96ee5e65f50f848cbd7bac3eb6ac6cf",
+      "output_token_ids": [
+        4913,
+        1891,
+        788,
+        830,
+        92,
+        151645
+      ],
+      "input_token_sha256": "61ffbef746904462dfe1e162ba5e6a685977e8bec43b9f2ac5237d1db06b8fc1",
+      "input_tokens": 4204,
+      "output_tokens": 6,
+      "messages_tools_hash": "56a956754b11008d18e8b138b5507956891f1a211c4382ef5534d08e0ba511ac",
+      "seconds": 0.6636099690003903,
+      "peak_allocated_bytes": 9256458240,
+      "peak_reserved_bytes": 12765364224,
+      "device_free_total_after_request": [
+        2326179840,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 2
+    }
+  ],
+  "tool_events": [
+    {
+      "event_id": "t0-c0",
+      "model_turn": 0,
+      "call_index": 0,
+      "call_id": "t0-c0",
+      "call_id_model_visible": false,
+      "raw_name": "tool_56",
+      "declared_names_hash": "7cb87c4d154c2de1f6ef9618371a1127aeba80f6157a5e5e70cb830779fd58b2",
+      "semantic_tool_id": "fixture.patch",
+      "raw_arguments": {
+        "enabled": true,
+        "limit": 14
+      },
+      "schema_result": "VALID",
+      "argument_value_correct": true,
+      "allowed_action_set": [
+        "fixture.patch"
+      ],
+      "semantic_choice_correct": true,
+      "state_before": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_after": {
+        "enabled": true,
+        "limit": 14
+      },
+      "state_before_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "state_after_digest": "7cbe9cadef814f8124dbf8a89a0d3e8ca5df06ed8fd924c1679d3bd39fae7cac",
+      "tool_result": {
+        "applied": true,
+        "config": {
+          "enabled": true,
+          "limit": 14
+        }
+      },
+      "execution_status": "SUCCESS",
+      "error_labels": [],
+      "signature": "df3347b10673ed525c454fdd5a6c0bac30bd2b4b435f47dbfd6f30b5e5978738",
+      "recovery_of_event_id": null,
+      "fixture_changes": {
+        "config": {
+          "enabled": true,
+          "limit": 14
+        }
+      },
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    },
+    {
+      "event_id": "t1-c0",
+      "model_turn": 1,
+      "call_index": 0,
+      "call_id": "t1-c0",
+      "call_id_model_visible": false,
+      "raw_name": "tool_89",
+      "declared_names_hash": "7cb87c4d154c2de1f6ef9618371a1127aeba80f6157a5e5e70cb830779fd58b2",
+      "semantic_tool_id": "fixture.validate",
+      "raw_arguments": {},
+      "schema_result": "VALID",
+      "argument_value_correct": true,
+      "allowed_action_set": [
+        "fixture.patch",
+        "fixture.validate"
+      ],
+      "semantic_choice_correct": true,
+      "state_before": {
+        "enabled": true,
+        "limit": 14
+      },
+      "state_after": {
+        "enabled": true,
+        "limit": 14
+      },
+      "state_before_digest": "7cbe9cadef814f8124dbf8a89a0d3e8ca5df06ed8fd924c1679d3bd39fae7cac",
+      "state_after_digest": "7cbe9cadef814f8124dbf8a89a0d3e8ca5df06ed8fd924c1679d3bd39fae7cac",
+      "tool_result": {
+        "valid": true
+      },
+      "execution_status": "SUCCESS",
+      "error_labels": [],
+      "signature": "7611c0d8556c8cdfa294620ed86a8bda8240cc2068d6e39c99debf388d9be2f4",
+      "recovery_of_event_id": null,
+      "fixture_changes": null,
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    }
+  ],
+  "recovery": [],
+  "enum_enabled": false,
+  "enhanced_feedback_enabled": false,
+  "aliases_enabled": false
+}

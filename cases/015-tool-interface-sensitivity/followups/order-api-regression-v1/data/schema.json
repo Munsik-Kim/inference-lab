@@ -1,0 +1,174 @@
+{
+  "API_V1": [
+    {
+      "type": "function",
+      "function": {
+        "name": "read_order",
+        "description": "Read the requested order quantity, unit price in integer minor units, and current total.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "multiply_amount",
+        "description": "Multiply two integers and return their integer product.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "a": {
+              "type": "integer"
+            },
+            "b": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "a",
+            "b"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "write_order_total",
+        "description": "Store the provided integer total in minor units for the requested order, preserving all other fields.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string"
+            },
+            "total_minor": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "order_id",
+            "total_minor"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "validate_order",
+        "description": "Check the current stored order and return whether it is valid.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ],
+  "API_V2": [
+    {
+      "type": "function",
+      "function": {
+        "name": "readOrder",
+        "description": "Read the requested order quantity, unit price in integer minor units, and current total.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "multiplyAmount",
+        "description": "Multiply two integers and return their integer product.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "a": {
+              "type": "integer"
+            },
+            "b": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "a",
+            "b"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "writeOrderTotal",
+        "description": "Store the provided integer total in minor units for the requested order, preserving all other fields.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string"
+            },
+            "total_minor": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "order_id",
+            "total_minor"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "validateOrder",
+        "description": "Check the current stored order and return whether it is valid.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

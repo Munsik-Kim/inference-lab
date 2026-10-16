@@ -1,0 +1,170 @@
+{
+  "episode_id": "D16__I0_ORIGINAL__AGENT-0",
+  "task_id": "AGENT-0",
+  "family_id": "document",
+  "historical_role": "previously_observed_DEV",
+  "evidence_kind": "measurement",
+  "interface_id": "I0_ORIGINAL",
+  "canonical_task_hash": "1c8001493af32266d45d63ba60e6e1942a71a675f26b6c7e2efaf7904ccb3cb7",
+  "rendered_prompt_hash": "3a2850df8482e1f1dca4273608944d3790c4feb5416fefe23eafa4cc73017dcf",
+  "input_token_hash": "a683f3a184da5a1afe3d747f50dd354a5ea619abb7b4b971f76b65252e300f08",
+  "harness_version": "case015-strict-functional-v1",
+  "method": "D16",
+  "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "artifact_hash": "3d31e82c10990d5633950e49e14150568bce7971a1945eba05e21fc400430e36",
+  "generation_config_hash": "110819ce346343d4b0e262a9f26619d0ae96026ec8555d24c647f620a83cfce5",
+  "execution_source_sha256": "5a2c18000b4623c8c011390f71c8f3eb5fc91cf231d9905320e546a0dcc85a2b",
+  "functional_success": true,
+  "legacy_success": true,
+  "final_answer_correct": true,
+  "state_correct": true,
+  "missing_actions": [],
+  "required_actions": [
+    "document.read"
+  ],
+  "final_failure_labels": [],
+  "scorer_version": "functional-v1-required-original-actions;legacy-case013-v1",
+  "observation_status": "OBSERVED",
+  "first_error_type": null,
+  "first_error_turn": null,
+  "errors": [],
+  "episode_error_labels": [],
+  "model_calls": 2,
+  "tool_attempts": 1,
+  "generated_tokens": 34,
+  "input_tokens_total": 8233,
+  "wall_seconds": 2.9580221330015775,
+  "peak_allocated_bytes": 9239929856,
+  "peak_reserved_bytes": 9871294464,
+  "terminal_reason": "FINAL_ANSWER",
+  "final_answer": {
+    "site": "Harbor-0",
+    "owner": "Owner-0"
+  },
+  "final_fixture": {
+    "enabled": false,
+    "limit": 2
+  },
+  "responses": [
+    {
+      "text": "<tool_call>\n{\"name\": \"read_document\", \"arguments\": {}}\n</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"read_document\", \"arguments\": {}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "535bbb7eaacf3bebaa82a2970830c9e49348dadc24e69e668f8b525d62d2f3d6",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        878,
+        26231,
+        497,
+        330,
+        16370,
+        788,
+        4687,
+        532,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "a683f3a184da5a1afe3d747f50dd354a5ea619abb7b4b971f76b65252e300f08",
+      "input_tokens": 4094,
+      "output_tokens": 16,
+      "messages_tools_hash": "3a2850df8482e1f1dca4273608944d3790c4feb5416fefe23eafa4cc73017dcf",
+      "seconds": 1.6871206479991088,
+      "peak_allocated_bytes": 9227523072,
+      "peak_reserved_bytes": 9548333056,
+      "device_free_total_after_request": [
+        6059720704,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 0
+    },
+    {
+      "text": "{\"site\": \"Harbor-0\", \"owner\": \"Owner-0\"}",
+      "raw_text": "{\"site\": \"Harbor-0\", \"owner\": \"Owner-0\"}<|im_end|>",
+      "raw_utf8_sha256": "46b6f14be86e6f760a347b5fa9bc4d419285a7cde1b5080a14353b1de2762908",
+      "output_token_ids": [
+        4913,
+        9513,
+        788,
+        330,
+        26490,
+        9368,
+        12,
+        15,
+        497,
+        330,
+        8118,
+        788,
+        330,
+        13801,
+        12,
+        15,
+        9207,
+        151645
+      ],
+      "input_token_sha256": "dadb4185ebaa3b3cc70c810c04f71a75be60aea033ff522d5099826a9150c9bf",
+      "input_tokens": 4139,
+      "output_tokens": 18,
+      "messages_tools_hash": "26b6208e2ac4325307dde92566c76cfb30989a44a33a0852eefdbb5e80199b27",
+      "seconds": 1.2557354809996468,
+      "peak_allocated_bytes": 9239929856,
+      "peak_reserved_bytes": 9871294464,
+      "device_free_total_after_request": [
+        5736759296,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 1
+    }
+  ],
+  "tool_events": [
+    {
+      "event_id": "t0-c0",
+      "model_turn": 0,
+      "call_index": 0,
+      "call_id": "t0-c0",
+      "call_id_model_visible": false,
+      "raw_name": "read_document",
+      "declared_names_hash": "65509958f9936933648701ce6e50fda9da017a6626c6c5844702113807ed6924",
+      "semantic_tool_id": "document.read",
+      "raw_arguments": {},
+      "schema_result": "VALID",
+      "argument_value_correct": true,
+      "allowed_action_set": [
+        "document.read"
+      ],
+      "semantic_choice_correct": true,
+      "state_before": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_after": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_before_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "state_after_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "tool_result": {
+        "site": "Harbor-0",
+        "owner": "Owner-0"
+      },
+      "execution_status": "SUCCESS",
+      "error_labels": [],
+      "signature": "6b4fe3cdf9ce7aced5c7f98fee1ffe38e4c116f1ab63e5feeedc7519b72f32da",
+      "recovery_of_event_id": null,
+      "fixture_changes": null,
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    }
+  ],
+  "recovery": [],
+  "enum_enabled": false,
+  "enhanced_feedback_enabled": false,
+  "aliases_enabled": false
+}

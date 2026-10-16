@@ -1,0 +1,74 @@
+[
+  {
+    "method": "BF16",
+    "attempt": 1,
+    "command": [
+      "${GPU_ENV}/bin/python",
+      "-B",
+      "-m",
+      "order_regression.cli",
+      "--root",
+      "${A1}",
+      "worker",
+      "--private",
+      "${A1_PRIVATE}",
+      "--method",
+      "BF16",
+      "--budget",
+      "7192.510361309"
+    ],
+    "started_utc": "2026-10-16T05:35:11.841259+00:00",
+    "exit_code": 0,
+    "wall_seconds": 204.8429890860025,
+    "remaining_at_launch_seconds": 7192.510361309,
+    "log": "BF16-attempt01.log"
+  },
+  {
+    "method": "D16",
+    "attempt": 1,
+    "command": [
+      "${GPU_ENV}/bin/python",
+      "-B",
+      "-m",
+      "order_regression.cli",
+      "--root",
+      "${A1}",
+      "worker",
+      "--private",
+      "${A1_PRIVATE}",
+      "--method",
+      "D16",
+      "--budget",
+      "6987.667038871998"
+    ],
+    "started_utc": "2026-10-16T05:38:36.684580+00:00",
+    "exit_code": 0,
+    "wall_seconds": 228.1206530390009,
+    "remaining_at_launch_seconds": 6987.667038871998,
+    "log": "D16-attempt01.log"
+  },
+  {
+    "method": "RTN",
+    "attempt": 1,
+    "command": [
+      "${GPU_ENV}/bin/python",
+      "-B",
+      "-m",
+      "order_regression.cli",
+      "--root",
+      "${A1}",
+      "worker",
+      "--private",
+      "${A1_PRIVATE}",
+      "--method",
+      "RTN",
+      "--budget",
+      "6759.545531496999"
+    ],
+    "started_utc": "2026-10-16T05:42:24.806141+00:00",
+    "exit_code": 0,
+    "wall_seconds": 246.99705096600155,
+    "remaining_at_launch_seconds": 6759.545531496999,
+    "log": "RTN-attempt01.log"
+  }
+]

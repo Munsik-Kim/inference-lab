@@ -33,10 +33,17 @@ DIOVA는 공개 AI 모델의 변환·실행·평가를 연결하는 추론 엔�
 | 같은 잡음의 loop/step 실행·시간 예산 선택·이미지 평가 | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [adapter](cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU 검사](cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
 | INT4 스케일 보존 변환과 저장 품질 검산 | DualQuant 공개 수식 · PyTorch · NumPy | [변환](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 검산](cases/013-dualquant-reference-quality/analysis/audit.py) |
 | 자체 경로 보정·INT4 저장/재로딩·전층 품질 비교 | Guo compensation · PyTorch · Transformers · NumPy | [code](cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [tests](cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) |
+| API 이름 변경·관측 이력·상태 회귀시험 | Qwen · PyTorch · Transformers · Python stdlib | [runner](cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py) · [tests](cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/tests/test_order_contracts.py) |
 
 [선행연구와 구현 대응](docs/related-work/README.ko.md) · [CPU 비교 도구](packages/diova-compare/README.ko.md)
 
 [16GB GPU 모델별 실전 안내서](docs/ko/LLM_GUIDE.md) — Qwen3-4B의 실행·품질·실패 기록. [온라인 안내서](https://munsik-kim.github.io/inference-lab/ko/llm-guide.html).
+
+## Case015 — 같은 도구, 다른 이름
+
+API 이름 변경 전후의 주문 조회·계산·저장·검증을 자동 비교합니다. 새 합성 업무 A1에서 BF16은 **15/16→16/16**, RTN은 **16/16→16/16**, D16은 **12/16→12/16**이었습니다. 실제 상태와 생성 전에 받은 정보를 따로 감사합니다. 기존 P1의96개와 A1의96개는 별도 분모입니다.
+
+[Pages](https://munsik-kim.github.io/inference-lab/ko/case015.html#overview) · [Report](cases/015-tool-interface-sensitivity/REPORT.ko.md) · [CPU example](cases/015-tool-interface-sensitivity/REPRODUCE.ko.md) · [Runner](cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)
 
 <a id="capabilities"></a>
 ## 구현 기능

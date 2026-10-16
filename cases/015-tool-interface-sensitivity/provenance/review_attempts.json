@@ -1,0 +1,55 @@
+{
+  "GPU_attempts": [
+    {
+      "method": "BF16",
+      "attempt": 1,
+      "exit_code": 0
+    },
+    {
+      "method": "D16",
+      "attempt": 1,
+      "exit_code": 0
+    },
+    {
+      "method": "RTN",
+      "attempt": 1,
+      "exit_code": 0
+    }
+  ],
+  "P0_test_attempts": "results/p1_r1/p0_verification.json",
+  "package_test_attempts": "results/p1_r1/verification.json",
+  "static_review_attempts": [
+    {
+      "attempt": 1,
+      "exit_code": 1,
+      "reason": "privacy regex matched its own literal pattern in new checker source; no actual credential/path found"
+    },
+    {
+      "attempt": 2,
+      "exit_code": 0,
+      "resolution": "assemble regex without literal self-match; same privacy policy retained"
+    }
+  ],
+  "browser_attempts": [
+    {
+      "attempt": 1,
+      "checks": 29,
+      "exit_code": 0,
+      "display": "initial static viewer"
+    },
+    {
+      "attempt": 2,
+      "checks": 35,
+      "exit_code": 0,
+      "display": "added common-state panels and matrix links"
+    },
+    {
+      "attempt": 3,
+      "checks": 35,
+      "exit_code": 0,
+      "display": "formatted pp and readable paired table"
+    }
+  ],
+  "research_source_or_score_changes_after_GPU": 0,
+  "all_primary_success_and_failure_cells_retained": true
+}

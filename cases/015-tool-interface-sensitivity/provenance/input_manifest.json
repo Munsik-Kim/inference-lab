@@ -1,0 +1,1971 @@
+{
+  "inputs": {
+    "agent_initial_messages.json": {
+      "sha256": "a058e975c1897a4479f43121060e1317a2912eb70c800be477828a66315e92e6",
+      "bytes": 257190
+    },
+    "agent_tasks.json": {
+      "sha256": "b4111931c8a51cd05e8faf6a80e1f95b1f241b4ddfb4d41af2609f665b089788",
+      "bytes": 5808
+    },
+    "agent_token_manifest.json": {
+      "sha256": "c85e2a4e918c169f4fd4d525577759cbf56a7177a4055df6ebb8330d8d059876",
+      "bytes": 1282
+    },
+    "historical_free.jsonl": {
+      "sha256": "2fd198dfb34e0206cd47117192916f8941a84fd1439e7c0a83d11f3c19cdeb0b",
+      "bytes": 58049
+    },
+    "tool_schema.json": {
+      "sha256": "bd7de0dc4b194c09084d2941e81603d58fd065d4f21dbea71f5dfac90feefbd7",
+      "bytes": 2075
+    }
+  },
+  "rendered_inputs": [
+    {
+      "task_id": "AGENT-0",
+      "family_id": "document",
+      "interface_id": "I0_ORIGINAL",
+      "canonical_task_hash": "1c8001493af32266d45d63ba60e6e1942a71a675f26b6c7e2efaf7904ccb3cb7",
+      "rendered_prompt_hash": "3a2850df8482e1f1dca4273608944d3790c4feb5416fefe23eafa4cc73017dcf",
+      "input_token_sha256": "a683f3a184da5a1afe3d747f50dd354a5ea619abb7b4b971f76b65252e300f08",
+      "input_tokens": 4094,
+      "historical_I0_matched": true,
+      "names_tokenization": [
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20095
+    },
+    {
+      "task_id": "AGENT-0",
+      "family_id": "document",
+      "interface_id": "I1_ORDER_ONLY",
+      "canonical_task_hash": "1c8001493af32266d45d63ba60e6e1942a71a675f26b6c7e2efaf7904ccb3cb7",
+      "rendered_prompt_hash": "519691a3675919851978977d2795ad3a4b56738c31d2b839f9fce76cb791d197",
+      "input_token_sha256": "efbdc62a06514529cae57157a4156188066fc493a6efdf113511d4f427976a77",
+      "input_tokens": 4094,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20095
+    },
+    {
+      "task_id": "AGENT-0",
+      "family_id": "document",
+      "interface_id": "I2_STYLE_RENAME",
+      "canonical_task_hash": "1c8001493af32266d45d63ba60e6e1942a71a675f26b6c7e2efaf7904ccb3cb7",
+      "rendered_prompt_hash": "d0fdb05c43bf259acdbf74eb4193f20bdfec550693c890ca93e9dc7673102818",
+      "input_token_sha256": "a19b39082fca2aced5eb80b76aa6bde83ee1a29c02dd96d65e3406fdc41dc86a",
+      "input_tokens": 4094,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "readDocument",
+          "standalone_token_ids": [
+            878,
+            7524
+          ]
+        },
+        {
+          "name": "readRecord",
+          "standalone_token_ids": [
+            878,
+            6471
+          ]
+        },
+        {
+          "name": "queryTable",
+          "standalone_token_ids": [
+            1631,
+            2556
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "applyFixturePatch",
+          "standalone_token_ids": [
+            10280,
+            18930,
+            43622
+          ]
+        },
+        {
+          "name": "validateFixtureTest",
+          "standalone_token_ids": [
+            7067,
+            18930,
+            2271
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20095
+    },
+    {
+      "task_id": "AGENT-0",
+      "family_id": "document",
+      "interface_id": "I3_OPAQUE_RENAME",
+      "canonical_task_hash": "1c8001493af32266d45d63ba60e6e1942a71a675f26b6c7e2efaf7904ccb3cb7",
+      "rendered_prompt_hash": "5d26a074cfceb140673a0242eb86186e767ab1136c5cb496718207e189504e38",
+      "input_token_sha256": "efb91dab55edeb72999c9a62de9b352f84fc60c0639566350bb3e09b4acac47a",
+      "input_tokens": 4105,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "tool_28",
+          "standalone_token_ids": [
+            14172,
+            62,
+            17,
+            23
+          ]
+        },
+        {
+          "name": "tool_14",
+          "standalone_token_ids": [
+            14172,
+            62,
+            16,
+            19
+          ]
+        },
+        {
+          "name": "tool_31",
+          "standalone_token_ids": [
+            14172,
+            62,
+            18,
+            16
+          ]
+        },
+        {
+          "name": "tool_69",
+          "standalone_token_ids": [
+            14172,
+            62,
+            21,
+            24
+          ]
+        },
+        {
+          "name": "tool_80",
+          "standalone_token_ids": [
+            14172,
+            62,
+            23,
+            15
+          ]
+        },
+        {
+          "name": "tool_12",
+          "standalone_token_ids": [
+            14172,
+            62,
+            16,
+            17
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20095
+    },
+    {
+      "task_id": "AGENT-1",
+      "family_id": "document",
+      "interface_id": "I0_ORIGINAL",
+      "canonical_task_hash": "4c18652fe1697de6417f9c4d1f5ba65a40e116614f66be99609ea16a6c56fe16",
+      "rendered_prompt_hash": "c2b4c27af1e7589bf19c9fda8922379caf26e575c980d82b4740dc8a8b6485d0",
+      "input_token_sha256": "deeb93b900b56af6af576120227fffc83b9ad27e89c812a00fcac0cf6bf7a3e3",
+      "input_tokens": 8189,
+      "historical_I0_matched": true,
+      "names_tokenization": [
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42775
+    },
+    {
+      "task_id": "AGENT-1",
+      "family_id": "document",
+      "interface_id": "I1_ORDER_ONLY",
+      "canonical_task_hash": "4c18652fe1697de6417f9c4d1f5ba65a40e116614f66be99609ea16a6c56fe16",
+      "rendered_prompt_hash": "156055d6e18c168c56c4ca4675e50c1fea68ca5dc053cd11332f483f0709b923",
+      "input_token_sha256": "5a83ef760857d18056f818f156e639bef920274a99ee6cfc7e131f725ebceebc",
+      "input_tokens": 8189,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42775
+    },
+    {
+      "task_id": "AGENT-1",
+      "family_id": "document",
+      "interface_id": "I2_STYLE_RENAME",
+      "canonical_task_hash": "4c18652fe1697de6417f9c4d1f5ba65a40e116614f66be99609ea16a6c56fe16",
+      "rendered_prompt_hash": "dfd6d9c7f8738b2f569b1edb555c5f088c0c15441d735b1f7a85865ad6f090c1",
+      "input_token_sha256": "f5051f8eedca5f85e0f6b9c93b923b104f9f055433f8a26134a6316fd3eadf07",
+      "input_tokens": 8189,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "readDocument",
+          "standalone_token_ids": [
+            878,
+            7524
+          ]
+        },
+        {
+          "name": "readRecord",
+          "standalone_token_ids": [
+            878,
+            6471
+          ]
+        },
+        {
+          "name": "queryTable",
+          "standalone_token_ids": [
+            1631,
+            2556
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "applyFixturePatch",
+          "standalone_token_ids": [
+            10280,
+            18930,
+            43622
+          ]
+        },
+        {
+          "name": "validateFixtureTest",
+          "standalone_token_ids": [
+            7067,
+            18930,
+            2271
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42775
+    },
+    {
+      "task_id": "AGENT-1",
+      "family_id": "document",
+      "interface_id": "I3_OPAQUE_RENAME",
+      "canonical_task_hash": "4c18652fe1697de6417f9c4d1f5ba65a40e116614f66be99609ea16a6c56fe16",
+      "rendered_prompt_hash": "28e786d37767e1fe87240a3c99b266d1d227e86c6665b8521fd3c7d4350fab57",
+      "input_token_sha256": "a5ab856d4ece5863befde104dc24c08aac8f99b7323eb06d6f92294226eb590e",
+      "input_tokens": 8200,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "tool_32",
+          "standalone_token_ids": [
+            14172,
+            62,
+            18,
+            17
+          ]
+        },
+        {
+          "name": "tool_14",
+          "standalone_token_ids": [
+            14172,
+            62,
+            16,
+            19
+          ]
+        },
+        {
+          "name": "tool_42",
+          "standalone_token_ids": [
+            14172,
+            62,
+            19,
+            17
+          ]
+        },
+        {
+          "name": "tool_35",
+          "standalone_token_ids": [
+            14172,
+            62,
+            18,
+            20
+          ]
+        },
+        {
+          "name": "tool_96",
+          "standalone_token_ids": [
+            14172,
+            62,
+            24,
+            21
+          ]
+        },
+        {
+          "name": "tool_66",
+          "standalone_token_ids": [
+            14172,
+            62,
+            21,
+            21
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42775
+    },
+    {
+      "task_id": "AGENT-2",
+      "family_id": "combine",
+      "interface_id": "I0_ORIGINAL",
+      "canonical_task_hash": "742224aa54f357493e9d704eaad2c76fd50fb344962edc3b5b8d3ea53d04bf06",
+      "rendered_prompt_hash": "c80fe690beb1675fb28198e5575b32d73d22ffe67449d3730b954b1d88d943b6",
+      "input_token_sha256": "a3a02c86fa37123a1375143c110d71f368a541b4a34ecad439261d9995e33bac",
+      "input_tokens": 4089,
+      "historical_I0_matched": true,
+      "names_tokenization": [
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20023
+    },
+    {
+      "task_id": "AGENT-2",
+      "family_id": "combine",
+      "interface_id": "I1_ORDER_ONLY",
+      "canonical_task_hash": "742224aa54f357493e9d704eaad2c76fd50fb344962edc3b5b8d3ea53d04bf06",
+      "rendered_prompt_hash": "a4649a2699f812f563291b678152e428759c134f17d3735222d77dcd1267e6a6",
+      "input_token_sha256": "d4665048ae34b1f1a173ff34bb15f855ca091f4abc17b442cfbfe06d5780fe9b",
+      "input_tokens": 4089,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20023
+    },
+    {
+      "task_id": "AGENT-2",
+      "family_id": "combine",
+      "interface_id": "I2_STYLE_RENAME",
+      "canonical_task_hash": "742224aa54f357493e9d704eaad2c76fd50fb344962edc3b5b8d3ea53d04bf06",
+      "rendered_prompt_hash": "3e1307bce3d5adb4822d5db62ef5a44cfb74178aa607f2efe8322506b8afd2ac",
+      "input_token_sha256": "37fb341535213abd918b9e7c3f7a2aa5e5ef64d48fb08ffffccefc7467ea4849",
+      "input_tokens": 4089,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "readDocument",
+          "standalone_token_ids": [
+            878,
+            7524
+          ]
+        },
+        {
+          "name": "readRecord",
+          "standalone_token_ids": [
+            878,
+            6471
+          ]
+        },
+        {
+          "name": "queryTable",
+          "standalone_token_ids": [
+            1631,
+            2556
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "applyFixturePatch",
+          "standalone_token_ids": [
+            10280,
+            18930,
+            43622
+          ]
+        },
+        {
+          "name": "validateFixtureTest",
+          "standalone_token_ids": [
+            7067,
+            18930,
+            2271
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20023
+    },
+    {
+      "task_id": "AGENT-2",
+      "family_id": "combine",
+      "interface_id": "I3_OPAQUE_RENAME",
+      "canonical_task_hash": "742224aa54f357493e9d704eaad2c76fd50fb344962edc3b5b8d3ea53d04bf06",
+      "rendered_prompt_hash": "11af5fbb0e67de56af4c06b920d860ee4c651982f07fcedd3e025d5544d03fa1",
+      "input_token_sha256": "c8c622cd771139d44e06cf12aee64fbfc339a2bb05cec9e94e9625cf56da8a7a",
+      "input_tokens": 4103,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "tool_36",
+          "standalone_token_ids": [
+            14172,
+            62,
+            18,
+            21
+          ]
+        },
+        {
+          "name": "tool_30",
+          "standalone_token_ids": [
+            14172,
+            62,
+            18,
+            15
+          ]
+        },
+        {
+          "name": "tool_90",
+          "standalone_token_ids": [
+            14172,
+            62,
+            24,
+            15
+          ]
+        },
+        {
+          "name": "tool_18",
+          "standalone_token_ids": [
+            14172,
+            62,
+            16,
+            23
+          ]
+        },
+        {
+          "name": "tool_19",
+          "standalone_token_ids": [
+            14172,
+            62,
+            16,
+            24
+          ]
+        },
+        {
+          "name": "tool_65",
+          "standalone_token_ids": [
+            14172,
+            62,
+            21,
+            20
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20023
+    },
+    {
+      "task_id": "AGENT-3",
+      "family_id": "combine",
+      "interface_id": "I0_ORIGINAL",
+      "canonical_task_hash": "8cb9d7954aec8e0b273a99b463819e14d578b190b31522a41741537245d9d556",
+      "rendered_prompt_hash": "c839ef9639d92579b95e4ef0527f99795ab847170ebb55dae6630641ac38747f",
+      "input_token_sha256": "2056706595e0c87076cddbb9fa448f0166b78c3c8a24e862b1da4c62ad3c705e",
+      "input_tokens": 8184,
+      "historical_I0_matched": true,
+      "names_tokenization": [
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42703
+    },
+    {
+      "task_id": "AGENT-3",
+      "family_id": "combine",
+      "interface_id": "I1_ORDER_ONLY",
+      "canonical_task_hash": "8cb9d7954aec8e0b273a99b463819e14d578b190b31522a41741537245d9d556",
+      "rendered_prompt_hash": "0dc42873ad4f8eb2b66ba86a1d93a7d3973d2833f8fcb0e3fe5799821b9c5cb3",
+      "input_token_sha256": "afa7e6dec65157fdd7fcd541599659b8f20ea19d3a836652967246e042851dd8",
+      "input_tokens": 8184,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42703
+    },
+    {
+      "task_id": "AGENT-3",
+      "family_id": "combine",
+      "interface_id": "I2_STYLE_RENAME",
+      "canonical_task_hash": "8cb9d7954aec8e0b273a99b463819e14d578b190b31522a41741537245d9d556",
+      "rendered_prompt_hash": "5fb756fab103dc67d25038765faf981947f48137a444260150dc155909129c56",
+      "input_token_sha256": "04ae7759224631148f2c612abf82186c89077f35a1bff0936d8c027d78108302",
+      "input_tokens": 8184,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "readDocument",
+          "standalone_token_ids": [
+            878,
+            7524
+          ]
+        },
+        {
+          "name": "readRecord",
+          "standalone_token_ids": [
+            878,
+            6471
+          ]
+        },
+        {
+          "name": "queryTable",
+          "standalone_token_ids": [
+            1631,
+            2556
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "applyFixturePatch",
+          "standalone_token_ids": [
+            10280,
+            18930,
+            43622
+          ]
+        },
+        {
+          "name": "validateFixtureTest",
+          "standalone_token_ids": [
+            7067,
+            18930,
+            2271
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42703
+    },
+    {
+      "task_id": "AGENT-3",
+      "family_id": "combine",
+      "interface_id": "I3_OPAQUE_RENAME",
+      "canonical_task_hash": "8cb9d7954aec8e0b273a99b463819e14d578b190b31522a41741537245d9d556",
+      "rendered_prompt_hash": "a0ce673c4c1eaf5c26eb28aea9b892661f8590577134a528167614fa4eb65bbb",
+      "input_token_sha256": "934b9b2d1f8f3da71ea28f129701088b4a8fab5c00cba67dec334b8e870a40db",
+      "input_tokens": 8198,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "tool_47",
+          "standalone_token_ids": [
+            14172,
+            62,
+            19,
+            22
+          ]
+        },
+        {
+          "name": "tool_57",
+          "standalone_token_ids": [
+            14172,
+            62,
+            20,
+            22
+          ]
+        },
+        {
+          "name": "tool_53",
+          "standalone_token_ids": [
+            14172,
+            62,
+            20,
+            18
+          ]
+        },
+        {
+          "name": "tool_43",
+          "standalone_token_ids": [
+            14172,
+            62,
+            19,
+            18
+          ]
+        },
+        {
+          "name": "tool_75",
+          "standalone_token_ids": [
+            14172,
+            62,
+            22,
+            20
+          ]
+        },
+        {
+          "name": "tool_42",
+          "standalone_token_ids": [
+            14172,
+            62,
+            19,
+            17
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42703
+    },
+    {
+      "task_id": "AGENT-4",
+      "family_id": "updates",
+      "interface_id": "I0_ORIGINAL",
+      "canonical_task_hash": "aaa01ed9ae72080c05bac303cbd704d281e0871695eb723fd6f4ba64d2c77597",
+      "rendered_prompt_hash": "4ba11d93e20e20289181edfeebf87b6613b62579a3889f6713cab65ead20a1b2",
+      "input_token_sha256": "cf8cf5b13d0c2107470345738bf87c01b536c5dfae8ddc1516ff8511224eb0ba",
+      "input_tokens": 4085,
+      "historical_I0_matched": true,
+      "names_tokenization": [
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20023
+    },
+    {
+      "task_id": "AGENT-4",
+      "family_id": "updates",
+      "interface_id": "I1_ORDER_ONLY",
+      "canonical_task_hash": "aaa01ed9ae72080c05bac303cbd704d281e0871695eb723fd6f4ba64d2c77597",
+      "rendered_prompt_hash": "3d41af6b83a513687878d0658f5038d367dea553dc10d42395e158a80f4459f3",
+      "input_token_sha256": "d948d46cd54cfe403e1eeb07c722c505eb246fbecb113863840bf4ee90d40660",
+      "input_tokens": 4085,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        },
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20023
+    },
+    {
+      "task_id": "AGENT-4",
+      "family_id": "updates",
+      "interface_id": "I2_STYLE_RENAME",
+      "canonical_task_hash": "aaa01ed9ae72080c05bac303cbd704d281e0871695eb723fd6f4ba64d2c77597",
+      "rendered_prompt_hash": "c67c558793aebf7a04367630851d927f25cbec42b20c419aab7af13678288a13",
+      "input_token_sha256": "ada33c00de0016c6b15d2cb49ec7942db7b371c434e58a0319dae26284e352cf",
+      "input_tokens": 4085,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "readDocument",
+          "standalone_token_ids": [
+            878,
+            7524
+          ]
+        },
+        {
+          "name": "readRecord",
+          "standalone_token_ids": [
+            878,
+            6471
+          ]
+        },
+        {
+          "name": "queryTable",
+          "standalone_token_ids": [
+            1631,
+            2556
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "applyFixturePatch",
+          "standalone_token_ids": [
+            10280,
+            18930,
+            43622
+          ]
+        },
+        {
+          "name": "validateFixtureTest",
+          "standalone_token_ids": [
+            7067,
+            18930,
+            2271
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20023
+    },
+    {
+      "task_id": "AGENT-4",
+      "family_id": "updates",
+      "interface_id": "I3_OPAQUE_RENAME",
+      "canonical_task_hash": "aaa01ed9ae72080c05bac303cbd704d281e0871695eb723fd6f4ba64d2c77597",
+      "rendered_prompt_hash": "6e855dda39ae750619e68c3c56c9bbb2ba1fcae0c65219dc87708f45d451728c",
+      "input_token_sha256": "0b3b04bc6395cc91fc6a18fbf2cc364a05de4041d2455f3519910d593b986820",
+      "input_tokens": 4096,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "tool_86",
+          "standalone_token_ids": [
+            14172,
+            62,
+            23,
+            21
+          ]
+        },
+        {
+          "name": "tool_72",
+          "standalone_token_ids": [
+            14172,
+            62,
+            22,
+            17
+          ]
+        },
+        {
+          "name": "tool_88",
+          "standalone_token_ids": [
+            14172,
+            62,
+            23,
+            23
+          ]
+        },
+        {
+          "name": "tool_26",
+          "standalone_token_ids": [
+            14172,
+            62,
+            17,
+            21
+          ]
+        },
+        {
+          "name": "tool_32",
+          "standalone_token_ids": [
+            14172,
+            62,
+            18,
+            17
+          ]
+        },
+        {
+          "name": "tool_20",
+          "standalone_token_ids": [
+            14172,
+            62,
+            17,
+            15
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20023
+    },
+    {
+      "task_id": "AGENT-5",
+      "family_id": "updates",
+      "interface_id": "I0_ORIGINAL",
+      "canonical_task_hash": "b1870822d7155e523d06efbc82eef614c458113f250ee80d1aa3a2822c3bdd3f",
+      "rendered_prompt_hash": "9e35a31d3f77ca7f6ee5a6b865314dfd06879587992d166da853201d96f8228d",
+      "input_token_sha256": "43ff94c64e99876d529a0a35a2ee49755ff0847dddf880af7a3496780a8f9fb4",
+      "input_tokens": 8180,
+      "historical_I0_matched": true,
+      "names_tokenization": [
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42703
+    },
+    {
+      "task_id": "AGENT-5",
+      "family_id": "updates",
+      "interface_id": "I1_ORDER_ONLY",
+      "canonical_task_hash": "b1870822d7155e523d06efbc82eef614c458113f250ee80d1aa3a2822c3bdd3f",
+      "rendered_prompt_hash": "89e9691aee4ae1e220f559484b0e01f5051e715cafb03d8bba19f2e1074f29ee",
+      "input_token_sha256": "05110be4553a567da30181a8fd481bf9174a93dca1c2a3886cf0cc2167dfa99d",
+      "input_tokens": 8180,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        },
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42703
+    },
+    {
+      "task_id": "AGENT-5",
+      "family_id": "updates",
+      "interface_id": "I2_STYLE_RENAME",
+      "canonical_task_hash": "b1870822d7155e523d06efbc82eef614c458113f250ee80d1aa3a2822c3bdd3f",
+      "rendered_prompt_hash": "7232c71f8258820fd04e9ab485e76a8ea94aab4f13b95b38f22c2b005acd35f6",
+      "input_token_sha256": "de6dddfa2d81268c0fd4b0c2297785173770887ae1214729b3bf5612b81a7a9d",
+      "input_tokens": 8180,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "readDocument",
+          "standalone_token_ids": [
+            878,
+            7524
+          ]
+        },
+        {
+          "name": "readRecord",
+          "standalone_token_ids": [
+            878,
+            6471
+          ]
+        },
+        {
+          "name": "queryTable",
+          "standalone_token_ids": [
+            1631,
+            2556
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "applyFixturePatch",
+          "standalone_token_ids": [
+            10280,
+            18930,
+            43622
+          ]
+        },
+        {
+          "name": "validateFixtureTest",
+          "standalone_token_ids": [
+            7067,
+            18930,
+            2271
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42703
+    },
+    {
+      "task_id": "AGENT-5",
+      "family_id": "updates",
+      "interface_id": "I3_OPAQUE_RENAME",
+      "canonical_task_hash": "b1870822d7155e523d06efbc82eef614c458113f250ee80d1aa3a2822c3bdd3f",
+      "rendered_prompt_hash": "f6660c8dd6f877a4bafe6c9b1cf8c5763f698fc6f315e257f4a947e3fd2d62db",
+      "input_token_sha256": "34109096c72ad23404e4c15128bf6356fe0206bf4bbbec92d871df878483b512",
+      "input_tokens": 8191,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "tool_89",
+          "standalone_token_ids": [
+            14172,
+            62,
+            23,
+            24
+          ]
+        },
+        {
+          "name": "tool_59",
+          "standalone_token_ids": [
+            14172,
+            62,
+            20,
+            24
+          ]
+        },
+        {
+          "name": "tool_75",
+          "standalone_token_ids": [
+            14172,
+            62,
+            22,
+            20
+          ]
+        },
+        {
+          "name": "tool_68",
+          "standalone_token_ids": [
+            14172,
+            62,
+            21,
+            23
+          ]
+        },
+        {
+          "name": "tool_34",
+          "standalone_token_ids": [
+            14172,
+            62,
+            18,
+            19
+          ]
+        },
+        {
+          "name": "tool_82",
+          "standalone_token_ids": [
+            14172,
+            62,
+            23,
+            17
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42703
+    },
+    {
+      "task_id": "AGENT-6",
+      "family_id": "fixture_patch",
+      "interface_id": "I0_ORIGINAL",
+      "canonical_task_hash": "cacd27e1f30ce8f016ff5102cca28b689447ea85d3e642eecb05c082760d4024",
+      "rendered_prompt_hash": "8e60bfba8f6bdb3c32219eb4c147931386565f20f5610d7034bb7e0bc23c46cd",
+      "input_token_sha256": "aff1a485dcb2503547bcf7ac9ca1c6f6e8e02df59e913a6a84899ff51885d984",
+      "input_tokens": 4096,
+      "historical_I0_matched": true,
+      "names_tokenization": [
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20023
+    },
+    {
+      "task_id": "AGENT-6",
+      "family_id": "fixture_patch",
+      "interface_id": "I1_ORDER_ONLY",
+      "canonical_task_hash": "cacd27e1f30ce8f016ff5102cca28b689447ea85d3e642eecb05c082760d4024",
+      "rendered_prompt_hash": "ffa45994517271296ff871c3a2593cfd21d2fb7bbaef9dc9235754c0d5c5a0f2",
+      "input_token_sha256": "e011b60cb57b000be0cc9100a4f0108153cce1e358ca21fa03a62a9a1df4acbd",
+      "input_tokens": 4096,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20023
+    },
+    {
+      "task_id": "AGENT-6",
+      "family_id": "fixture_patch",
+      "interface_id": "I2_STYLE_RENAME",
+      "canonical_task_hash": "cacd27e1f30ce8f016ff5102cca28b689447ea85d3e642eecb05c082760d4024",
+      "rendered_prompt_hash": "0a7d8a82e646a9bd1d31aaaaf25a3cb24bfae8fead01da0d0effe47055141ba1",
+      "input_token_sha256": "bfb5eceb467a9a86d0ea377b48ebdaf9359d641f858590b12643c2cb9762b3cd",
+      "input_tokens": 4096,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "readDocument",
+          "standalone_token_ids": [
+            878,
+            7524
+          ]
+        },
+        {
+          "name": "readRecord",
+          "standalone_token_ids": [
+            878,
+            6471
+          ]
+        },
+        {
+          "name": "queryTable",
+          "standalone_token_ids": [
+            1631,
+            2556
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "applyFixturePatch",
+          "standalone_token_ids": [
+            10280,
+            18930,
+            43622
+          ]
+        },
+        {
+          "name": "validateFixtureTest",
+          "standalone_token_ids": [
+            7067,
+            18930,
+            2271
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20023
+    },
+    {
+      "task_id": "AGENT-6",
+      "family_id": "fixture_patch",
+      "interface_id": "I3_OPAQUE_RENAME",
+      "canonical_task_hash": "cacd27e1f30ce8f016ff5102cca28b689447ea85d3e642eecb05c082760d4024",
+      "rendered_prompt_hash": "b6b218dee84c94d890c6625fb47c1f70ff36231ea9f38a26bf08b633207f23ea",
+      "input_token_sha256": "9e20c6533eb20e2972648cac2c128499e019539fd9ef2d61eaf18e7506d178a3",
+      "input_tokens": 4108,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "tool_50",
+          "standalone_token_ids": [
+            14172,
+            62,
+            20,
+            15
+          ]
+        },
+        {
+          "name": "tool_51",
+          "standalone_token_ids": [
+            14172,
+            62,
+            20,
+            16
+          ]
+        },
+        {
+          "name": "tool_72",
+          "standalone_token_ids": [
+            14172,
+            62,
+            22,
+            17
+          ]
+        },
+        {
+          "name": "tool_32",
+          "standalone_token_ids": [
+            14172,
+            62,
+            18,
+            17
+          ]
+        },
+        {
+          "name": "tool_56",
+          "standalone_token_ids": [
+            14172,
+            62,
+            20,
+            21
+          ]
+        },
+        {
+          "name": "tool_89",
+          "standalone_token_ids": [
+            14172,
+            62,
+            23,
+            24
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 4096,
+      "task_text_character_start": 20023
+    },
+    {
+      "task_id": "AGENT-7",
+      "family_id": "fixture_patch",
+      "interface_id": "I0_ORIGINAL",
+      "canonical_task_hash": "9c9d0c6aaaf16cdeb389c5dc97a24ef5fabe36b9ed206e10a5381eb3077bb199",
+      "rendered_prompt_hash": "564fa5e520856213bb1a0e34f1d3bddacc20ac0e36aa42a6210165450381ac3d",
+      "input_token_sha256": "5fbc5f9abf8062c156ed98f87ba04fc533e139317d43f6606c0edf012134a408",
+      "input_tokens": 8191,
+      "historical_I0_matched": true,
+      "names_tokenization": [
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        },
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42703
+    },
+    {
+      "task_id": "AGENT-7",
+      "family_id": "fixture_patch",
+      "interface_id": "I1_ORDER_ONLY",
+      "canonical_task_hash": "9c9d0c6aaaf16cdeb389c5dc97a24ef5fabe36b9ed206e10a5381eb3077bb199",
+      "rendered_prompt_hash": "e795d018233684edc26a087d81c3482ebf22d9c3156e45a218f9f835d436b497",
+      "input_token_sha256": "cf470053ef10acbe2ac5efa786004c1d454e43500716fe77394f63df148a928c",
+      "input_tokens": 8191,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "read_record",
+          "standalone_token_ids": [
+            878,
+            14192
+          ]
+        },
+        {
+          "name": "apply_fixture_patch",
+          "standalone_token_ids": [
+            10280,
+            74409,
+            39643
+          ]
+        },
+        {
+          "name": "validate_fixture_test",
+          "standalone_token_ids": [
+            7067,
+            74409,
+            4452
+          ]
+        },
+        {
+          "name": "query_table",
+          "standalone_token_ids": [
+            1631,
+            5237
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "read_document",
+          "standalone_token_ids": [
+            878,
+            26231
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42703
+    },
+    {
+      "task_id": "AGENT-7",
+      "family_id": "fixture_patch",
+      "interface_id": "I2_STYLE_RENAME",
+      "canonical_task_hash": "9c9d0c6aaaf16cdeb389c5dc97a24ef5fabe36b9ed206e10a5381eb3077bb199",
+      "rendered_prompt_hash": "8b59ad46d8ba6b96742b029790b3e2c1114883e442e55ba2f77bbd925e9b9bba",
+      "input_token_sha256": "c991051102104300184445bbc5564f437933594e0cda09286bd8b13a0bd7817f",
+      "input_tokens": 8191,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "readDocument",
+          "standalone_token_ids": [
+            878,
+            7524
+          ]
+        },
+        {
+          "name": "readRecord",
+          "standalone_token_ids": [
+            878,
+            6471
+          ]
+        },
+        {
+          "name": "queryTable",
+          "standalone_token_ids": [
+            1631,
+            2556
+          ]
+        },
+        {
+          "name": "calculate",
+          "standalone_token_ids": [
+            35597
+          ]
+        },
+        {
+          "name": "applyFixturePatch",
+          "standalone_token_ids": [
+            10280,
+            18930,
+            43622
+          ]
+        },
+        {
+          "name": "validateFixtureTest",
+          "standalone_token_ids": [
+            7067,
+            18930,
+            2271
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42703
+    },
+    {
+      "task_id": "AGENT-7",
+      "family_id": "fixture_patch",
+      "interface_id": "I3_OPAQUE_RENAME",
+      "canonical_task_hash": "9c9d0c6aaaf16cdeb389c5dc97a24ef5fabe36b9ed206e10a5381eb3077bb199",
+      "rendered_prompt_hash": "06f55b9d0716061aa2bf36871dbf82007d62ff8e41b08cb17b42560697c861a8",
+      "input_token_sha256": "758b5ae957ee164e4d0e88074f088a29479af1b21aaff4c8b3af409360f16a62",
+      "input_tokens": 8203,
+      "historical_I0_matched": false,
+      "names_tokenization": [
+        {
+          "name": "tool_76",
+          "standalone_token_ids": [
+            14172,
+            62,
+            22,
+            21
+          ]
+        },
+        {
+          "name": "tool_32",
+          "standalone_token_ids": [
+            14172,
+            62,
+            18,
+            17
+          ]
+        },
+        {
+          "name": "tool_33",
+          "standalone_token_ids": [
+            14172,
+            62,
+            18,
+            18
+          ]
+        },
+        {
+          "name": "tool_35",
+          "standalone_token_ids": [
+            14172,
+            62,
+            18,
+            20
+          ]
+        },
+        {
+          "name": "tool_48",
+          "standalone_token_ids": [
+            14172,
+            62,
+            19,
+            23
+          ]
+        },
+        {
+          "name": "tool_68",
+          "standalone_token_ids": [
+            14172,
+            62,
+            21,
+            23
+          ]
+        }
+      ],
+      "name_tokenization_scope": "standalone auxiliary; actual model input hash from full apply_chat_template",
+      "requested_context_target": 8192,
+      "task_text_character_start": 42703
+    }
+  ],
+  "fixtures": "owned synthetic Case013 fixtures, no new tasks/lengths"
+}

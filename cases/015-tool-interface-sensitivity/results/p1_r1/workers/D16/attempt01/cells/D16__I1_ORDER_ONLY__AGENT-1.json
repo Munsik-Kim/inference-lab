@@ -1,0 +1,170 @@
+{
+  "episode_id": "D16__I1_ORDER_ONLY__AGENT-1",
+  "task_id": "AGENT-1",
+  "family_id": "document",
+  "historical_role": "previously_observed_DEV",
+  "evidence_kind": "measurement",
+  "interface_id": "I1_ORDER_ONLY",
+  "canonical_task_hash": "4c18652fe1697de6417f9c4d1f5ba65a40e116614f66be99609ea16a6c56fe16",
+  "rendered_prompt_hash": "156055d6e18c168c56c4ca4675e50c1fea68ca5dc053cd11332f483f0709b923",
+  "input_token_hash": "5a83ef760857d18056f818f156e639bef920274a99ee6cfc7e131f725ebceebc",
+  "harness_version": "case015-strict-functional-v1",
+  "method": "D16",
+  "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "artifact_hash": "3d31e82c10990d5633950e49e14150568bce7971a1945eba05e21fc400430e36",
+  "generation_config_hash": "110819ce346343d4b0e262a9f26619d0ae96026ec8555d24c647f620a83cfce5",
+  "execution_source_sha256": "5a2c18000b4623c8c011390f71c8f3eb5fc91cf231d9905320e546a0dcc85a2b",
+  "functional_success": true,
+  "legacy_success": true,
+  "final_answer_correct": true,
+  "state_correct": true,
+  "missing_actions": [],
+  "required_actions": [
+    "document.read"
+  ],
+  "final_failure_labels": [],
+  "scorer_version": "functional-v1-required-original-actions;legacy-case013-v1",
+  "observation_status": "OBSERVED",
+  "first_error_type": null,
+  "first_error_turn": null,
+  "errors": [],
+  "episode_error_labels": [],
+  "model_calls": 2,
+  "tool_attempts": 1,
+  "generated_tokens": 34,
+  "input_tokens_total": 16423,
+  "wall_seconds": 3.4657987090013194,
+  "peak_allocated_bytes": 10328294400,
+  "peak_reserved_bytes": 12769558528,
+  "terminal_reason": "FINAL_ANSWER",
+  "final_answer": {
+    "site": "Harbor-1",
+    "owner": "Owner-1"
+  },
+  "final_fixture": {
+    "enabled": false,
+    "limit": 2
+  },
+  "responses": [
+    {
+      "text": "<tool_call>\n{\"name\": \"read_document\", \"arguments\": {}}\n</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"read_document\", \"arguments\": {}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "535bbb7eaacf3bebaa82a2970830c9e49348dadc24e69e668f8b525d62d2f3d6",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        878,
+        26231,
+        497,
+        330,
+        16370,
+        788,
+        4687,
+        532,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "5a83ef760857d18056f818f156e639bef920274a99ee6cfc7e131f725ebceebc",
+      "input_tokens": 8189,
+      "output_tokens": 16,
+      "messages_tools_hash": "156055d6e18c168c56c4ca4675e50c1fea68ca5dc053cd11332f483f0709b923",
+      "seconds": 1.6885857439992833,
+      "peak_allocated_bytes": 10315806720,
+      "peak_reserved_bytes": 12769558528,
+      "device_free_total_after_request": [
+        2323623936,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 0
+    },
+    {
+      "text": "{\"site\": \"Harbor-1\", \"owner\": \"Owner-1\"}",
+      "raw_text": "{\"site\": \"Harbor-1\", \"owner\": \"Owner-1\"}<|im_end|>",
+      "raw_utf8_sha256": "65628b0b80dc8aa3449706e98925b926abe5d8f35bb75831dc4d0efcfd233c65",
+      "output_token_ids": [
+        4913,
+        9513,
+        788,
+        330,
+        26490,
+        9368,
+        12,
+        16,
+        497,
+        330,
+        8118,
+        788,
+        330,
+        13801,
+        12,
+        16,
+        9207,
+        151645
+      ],
+      "input_token_sha256": "6ba3675e17594bcba8a9330248eee2d5c47b08e3276b4fd17c209a10440784ff",
+      "input_tokens": 8234,
+      "output_tokens": 18,
+      "messages_tools_hash": "0876a80321dd32f26d8368ed6d174e0d157698fa8fdadd943e674f8cefb99943",
+      "seconds": 1.762667233000684,
+      "peak_allocated_bytes": 10328294400,
+      "peak_reserved_bytes": 12769558528,
+      "device_free_total_after_request": [
+        2399612928,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 1
+    }
+  ],
+  "tool_events": [
+    {
+      "event_id": "t0-c0",
+      "model_turn": 0,
+      "call_index": 0,
+      "call_id": "t0-c0",
+      "call_id_model_visible": false,
+      "raw_name": "read_document",
+      "declared_names_hash": "65509958f9936933648701ce6e50fda9da017a6626c6c5844702113807ed6924",
+      "semantic_tool_id": "document.read",
+      "raw_arguments": {},
+      "schema_result": "VALID",
+      "argument_value_correct": true,
+      "allowed_action_set": [
+        "document.read"
+      ],
+      "semantic_choice_correct": true,
+      "state_before": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_after": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_before_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "state_after_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "tool_result": {
+        "site": "Harbor-1",
+        "owner": "Owner-1"
+      },
+      "execution_status": "SUCCESS",
+      "error_labels": [],
+      "signature": "6b4fe3cdf9ce7aced5c7f98fee1ffe38e4c116f1ab63e5feeedc7519b72f32da",
+      "recovery_of_event_id": null,
+      "fixture_changes": null,
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    }
+  ],
+  "recovery": [],
+  "enum_enabled": false,
+  "enhanced_feedback_enabled": false,
+  "aliases_enabled": false
+}

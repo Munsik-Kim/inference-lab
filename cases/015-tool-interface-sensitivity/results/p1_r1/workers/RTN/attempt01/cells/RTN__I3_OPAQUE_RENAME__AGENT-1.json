@@ -1,0 +1,382 @@
+{
+  "episode_id": "RTN__I3_OPAQUE_RENAME__AGENT-1",
+  "task_id": "AGENT-1",
+  "family_id": "document",
+  "historical_role": "previously_observed_DEV",
+  "evidence_kind": "measurement",
+  "interface_id": "I3_OPAQUE_RENAME",
+  "canonical_task_hash": "4c18652fe1697de6417f9c4d1f5ba65a40e116614f66be99609ea16a6c56fe16",
+  "rendered_prompt_hash": "28e786d37767e1fe87240a3c99b266d1d227e86c6665b8521fd3c7d4350fab57",
+  "input_token_hash": "a5ab856d4ece5863befde104dc24c08aac8f99b7323eb06d6f92294226eb590e",
+  "harness_version": "case015-strict-functional-v1",
+  "method": "RTN",
+  "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "artifact_hash": "3291569c5a9b2162094e144650fac26c9386f1422f4f0155b8005a0269c0abc3",
+  "generation_config_hash": "110819ce346343d4b0e262a9f26619d0ae96026ec8555d24c647f620a83cfce5",
+  "execution_source_sha256": "5a2c18000b4623c8c011390f71c8f3eb5fc91cf231d9905320e546a0dcc85a2b",
+  "functional_success": true,
+  "legacy_success": true,
+  "final_answer_correct": true,
+  "state_correct": true,
+  "missing_actions": [],
+  "required_actions": [
+    "document.read"
+  ],
+  "final_failure_labels": [],
+  "scorer_version": "functional-v1-required-original-actions;legacy-case013-v1",
+  "observation_status": "OBSERVED",
+  "first_error_type": "WRONG_TOOL",
+  "first_error_turn": 1,
+  "errors": [
+    {
+      "label": "WRONG_TOOL",
+      "turn": 1,
+      "event_id": "t1-c0"
+    },
+    {
+      "label": "WRONG_TOOL",
+      "turn": 2,
+      "event_id": "t2-c0"
+    }
+  ],
+  "episode_error_labels": [
+    "WRONG_TOOL"
+  ],
+  "model_calls": 4,
+  "tool_attempts": 3,
+  "generated_tokens": 102,
+  "input_tokens_total": 33071,
+  "wall_seconds": 8.279383208999207,
+  "peak_allocated_bytes": 10355477504,
+  "peak_reserved_bytes": 12765364224,
+  "terminal_reason": "FINAL_ANSWER",
+  "final_answer": {
+    "site": "Harbor-1",
+    "owner": "Owner-1"
+  },
+  "final_fixture": {
+    "enabled": false,
+    "limit": 2
+  },
+  "responses": [
+    {
+      "text": "I need to read a document to extract the site and owner information. I will use the appropriate tool to read the fixture document.\n\n<tool_call>\n{\"name\": \"tool_32\", \"arguments\": {}}\n</tool_call>",
+      "raw_text": "I need to read a document to extract the site and owner information. I will use the appropriate tool to read the fixture document.\n\n<tool_call>\n{\"name\": \"tool_32\", \"arguments\": {}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "964fdd5991587180d34783f2486aac246096ba5d515e2b821e7622d274ab7cbd",
+      "output_token_ids": [
+        40,
+        1184,
+        311,
+        1349,
+        264,
+        2197,
+        311,
+        8649,
+        279,
+        2747,
+        323,
+        6372,
+        1995,
+        13,
+        358,
+        686,
+        990,
+        279,
+        8311,
+        5392,
+        311,
+        1349,
+        279,
+        12507,
+        2197,
+        382,
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        14172,
+        62,
+        18,
+        17,
+        497,
+        330,
+        16370,
+        788,
+        4687,
+        532,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "a5ab856d4ece5863befde104dc24c08aac8f99b7323eb06d6f92294226eb590e",
+      "input_tokens": 8200,
+      "output_tokens": 44,
+      "messages_tools_hash": "28e786d37767e1fe87240a3c99b266d1d227e86c6665b8521fd3c7d4350fab57",
+      "seconds": 2.6909554089997982,
+      "peak_allocated_bytes": 10318333952,
+      "peak_reserved_bytes": 12115247104,
+      "device_free_total_after_request": [
+        2976296960,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 0
+    },
+    {
+      "text": "<tool_call>\n{\"name\": \"tool_14\", \"arguments\": {}}\n</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"tool_14\", \"arguments\": {}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "3377123849702573be5a1f7ec6bc5cc1085431dfdfc46def1b97face42f77cde",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        14172,
+        62,
+        16,
+        19,
+        497,
+        330,
+        16370,
+        788,
+        4687,
+        532,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "bfb44a33941f74f046d15d7660587c678ca1eb45e442e8aafb5e636e81330853",
+      "input_tokens": 8247,
+      "output_tokens": 18,
+      "messages_tools_hash": "65ed97303b716f54af754f02efa7576e05e81f062c5cb56db69a950ae7bc2075",
+      "seconds": 1.7701150460015924,
+      "peak_allocated_bytes": 10330823680,
+      "peak_reserved_bytes": 12115247104,
+      "device_free_total_after_request": [
+        2996809728,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 1
+    },
+    {
+      "text": "<tool_call>\n{\"name\": \"tool_42\", \"arguments\": {}}\n</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"tool_42\", \"arguments\": {}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "c65fa78191b97ae17812e7e76aa0f016fd2056c4222032eb0790e56833891cdd",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        14172,
+        62,
+        19,
+        17,
+        497,
+        330,
+        16370,
+        788,
+        4687,
+        532,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "632f6adc1aca1e092b5ca464c3a17d356d98a20c22020ecd0909b096a2e57936",
+      "input_tokens": 8290,
+      "output_tokens": 18,
+      "messages_tools_hash": "6473b0918ad2d84951f113048d7d787996e7fcd979385cad5485ad342274db59",
+      "seconds": 1.919163667000248,
+      "peak_allocated_bytes": 10343013376,
+      "peak_reserved_bytes": 12115247104,
+      "device_free_total_after_request": [
+        2991697920,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 2
+    },
+    {
+      "text": "```json\n{\"site\": \"Harbor-1\", \"owner\": \"Owner-1\"}\n```",
+      "raw_text": "```json\n{\"site\": \"Harbor-1\", \"owner\": \"Owner-1\"}\n```<|im_end|>",
+      "raw_utf8_sha256": "7c59e020f4b46a8b0e9f7245c030b6b5eef0f89d11d7dc9ef4477e7e862a6eac",
+      "output_token_ids": [
+        73594,
+        2236,
+        198,
+        4913,
+        9513,
+        788,
+        330,
+        26490,
+        9368,
+        12,
+        16,
+        497,
+        330,
+        8118,
+        788,
+        330,
+        13801,
+        12,
+        16,
+        16707,
+        73594,
+        151645
+      ],
+      "input_token_sha256": "ea1da2d9410c7a938675337d1badbd626daffaf72e5198cd8dfb056d29e06107",
+      "input_tokens": 8334,
+      "output_tokens": 22,
+      "messages_tools_hash": "ba68f252cf65388696d2c149f806d1568942989a91ca1ba8b079d1653a7dcaae",
+      "seconds": 1.8696617280002101,
+      "peak_allocated_bytes": 10355477504,
+      "peak_reserved_bytes": 12765364224,
+      "device_free_total_after_request": [
+        2341646336,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 3
+    }
+  ],
+  "tool_events": [
+    {
+      "event_id": "t0-c0",
+      "model_turn": 0,
+      "call_index": 0,
+      "call_id": "t0-c0",
+      "call_id_model_visible": false,
+      "raw_name": "tool_32",
+      "declared_names_hash": "63131b70b0fd6b1be40c1cdb3827011a6bf5f1d1b4671ecb261765dae0cfd719",
+      "semantic_tool_id": "document.read",
+      "raw_arguments": {},
+      "schema_result": "VALID",
+      "argument_value_correct": true,
+      "allowed_action_set": [
+        "document.read"
+      ],
+      "semantic_choice_correct": true,
+      "state_before": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_after": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_before_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "state_after_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "tool_result": {
+        "site": "Harbor-1",
+        "owner": "Owner-1"
+      },
+      "execution_status": "SUCCESS",
+      "error_labels": [],
+      "signature": "4400626e751316ce0cff4528e984c5d52d06c691247ee2acd8fce653f1e832e7",
+      "recovery_of_event_id": null,
+      "fixture_changes": null,
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    },
+    {
+      "event_id": "t1-c0",
+      "model_turn": 1,
+      "call_index": 0,
+      "call_id": "t1-c0",
+      "call_id_model_visible": false,
+      "raw_name": "tool_14",
+      "declared_names_hash": "63131b70b0fd6b1be40c1cdb3827011a6bf5f1d1b4671ecb261765dae0cfd719",
+      "semantic_tool_id": "record.read",
+      "raw_arguments": {},
+      "schema_result": "VALID",
+      "argument_value_correct": true,
+      "allowed_action_set": [
+        "document.read"
+      ],
+      "semantic_choice_correct": false,
+      "state_before": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_after": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_before_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "state_after_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "tool_result": {
+        "quantity": 9,
+        "unit_price": 3
+      },
+      "execution_status": "SUCCESS",
+      "error_labels": [
+        "WRONG_TOOL"
+      ],
+      "signature": "32227172d8fb3ff86319c20c6c9f29565d548a043097f5d821dac0b0aba0d7a9",
+      "recovery_of_event_id": null,
+      "fixture_changes": null,
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    },
+    {
+      "event_id": "t2-c0",
+      "model_turn": 2,
+      "call_index": 0,
+      "call_id": "t2-c0",
+      "call_id_model_visible": false,
+      "raw_name": "tool_42",
+      "declared_names_hash": "63131b70b0fd6b1be40c1cdb3827011a6bf5f1d1b4671ecb261765dae0cfd719",
+      "semantic_tool_id": "updates.read",
+      "raw_arguments": {},
+      "schema_result": "VALID",
+      "argument_value_correct": true,
+      "allowed_action_set": [
+        "document.read"
+      ],
+      "semantic_choice_correct": false,
+      "state_before": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_after": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_before_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "state_after_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "tool_result": {
+        "old": "WAIT",
+        "current": "READY-1"
+      },
+      "execution_status": "SUCCESS",
+      "error_labels": [
+        "WRONG_TOOL"
+      ],
+      "signature": "d4e65af47fbba80ca9d14e9099998a41ede91e424a0af3209b86daf78a54adc5",
+      "recovery_of_event_id": "t1-c0",
+      "fixture_changes": null,
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    }
+  ],
+  "recovery": [
+    {
+      "event_id": "t1-c0",
+      "subsequent_action_observed": true,
+      "registered_valid_later_action": false
+    },
+    {
+      "event_id": "t2-c0",
+      "subsequent_action_observed": false,
+      "registered_valid_later_action": false
+    }
+  ],
+  "enum_enabled": false,
+  "enhanced_feedback_enabled": false,
+  "aliases_enabled": false
+}

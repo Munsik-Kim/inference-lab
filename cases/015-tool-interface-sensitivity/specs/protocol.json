@@ -1,0 +1,87 @@
+{
+  "version": "case015-v1",
+  "created_utc": "2026-10-16T02:01:32.919356+00:00",
+  "harness_version": "case015-strict-functional-v1",
+  "role": "EXPLORATORY_PREVIOUSLY_OBSERVED_8TASK_DEV",
+  "methods": [
+    "BF16",
+    "RTN",
+    "D16"
+  ],
+  "interfaces": [
+    "I0_ORIGINAL",
+    "I1_ORDER_ONLY",
+    "I2_STYLE_RENAME",
+    "I3_OPAQUE_RENAME"
+  ],
+  "expected_primary_episodes": 96,
+  "generation": {
+    "greedy": true,
+    "enable_thinking": false,
+    "max_new_tokens": 192,
+    "max_model_calls": 8,
+    "max_tool_calls": 6,
+    "deadline_seconds": 900,
+    "context_limit": 24576,
+    "batch_size": 1,
+    "seed": 610132,
+    "KV": "BF16 within request ON; across-turn prefix cache OFF",
+    "logits_to_keep": 1,
+    "stop_policy": "unchanged saved model generation_config/eos_token_id",
+    "automatic_truncate": false
+  },
+  "interface_seed": 6101601,
+  "execution_order_seed": 6101602,
+  "bootstrap_seed": 6101603,
+  "bootstrap_replicates": 10000,
+  "worker_wall_budget_seconds": 7200,
+  "model_load_order": [
+    "BF16",
+    "D16",
+    "RTN"
+  ],
+  "within_method": "all 8 I0 first in original task order; remaining 24 cells shuffled with seed6101602 per method",
+  "primary": "mean_task[(mean_I1_I2_I3 D16-I0 D16)-(mean_I1_I2_I3 BF16-I0 BF16)]",
+  "functional_success": "final gold + required ordered original actions + actual final state; fixture.validate true after correct patch",
+  "legacy_success": "pinned Case013 gold subset equality; fixture_patch additionally actual config and valid validation event",
+  "required_actions": {
+    "document": [
+      "document.read"
+    ],
+    "combine": [
+      "record.read",
+      "math.multiply(quantity,unit_price), either operand order"
+    ],
+    "updates": [
+      "updates.read"
+    ],
+    "fixture_patch": [
+      "fixture.patch(expected_config)",
+      "fixture.validate(valid=true on final state)"
+    ]
+  },
+  "semantic_allowed_sets": "required family actions, with record before multiply and correct patch before validation; sidecar only, recoverable errors do not force final failure",
+  "strict_argument_schema": "original keys/types; correct required action values checked independently without hints to model",
+  "mitigations": {
+    "ENUM": false,
+    "enhanced_feedback": false,
+    "aliases": false
+  },
+  "smoke": {
+    "method": "BF16",
+    "interface": "I0_ORIGINAL",
+    "tasks": [
+      "AGENT-6",
+      "AGENT-7"
+    ],
+    "counted_in_primary": false
+  },
+  "P2": "NOT_RUN_SCOPE",
+  "P3": "NOT_RUN_SCOPE",
+  "D4": "NOT_RUN_SCOPE",
+  "training": "NOT_RUN_SCOPE",
+  "publication": "NOT_AUTHORIZED",
+  "code_changes_after_freeze": "preserve failed attempts, amendment and new source identity; no tolerance/score tuning",
+  "input_manifest_sha256": "cfc3a557f940b2b846b53e222377b3fdcbbe77d907401b7ebf39e38e796a7464",
+  "planned_cells_sha256": "fd11737fe3062f8aaf5c879c66b73c52508d4e10b197c9ab2c674e1e663ad2cd"
+}

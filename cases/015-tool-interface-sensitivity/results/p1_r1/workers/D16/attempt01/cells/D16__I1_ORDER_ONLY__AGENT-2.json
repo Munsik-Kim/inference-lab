@@ -1,0 +1,247 @@
+{
+  "episode_id": "D16__I1_ORDER_ONLY__AGENT-2",
+  "task_id": "AGENT-2",
+  "family_id": "combine",
+  "historical_role": "previously_observed_DEV",
+  "evidence_kind": "measurement",
+  "interface_id": "I1_ORDER_ONLY",
+  "canonical_task_hash": "742224aa54f357493e9d704eaad2c76fd50fb344962edc3b5b8d3ea53d04bf06",
+  "rendered_prompt_hash": "a4649a2699f812f563291b678152e428759c134f17d3735222d77dcd1267e6a6",
+  "input_token_hash": "d4665048ae34b1f1a173ff34bb15f855ca091f4abc17b442cfbfe06d5780fe9b",
+  "harness_version": "case015-strict-functional-v1",
+  "method": "D16",
+  "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "artifact_hash": "3d31e82c10990d5633950e49e14150568bce7971a1945eba05e21fc400430e36",
+  "generation_config_hash": "110819ce346343d4b0e262a9f26619d0ae96026ec8555d24c647f620a83cfce5",
+  "execution_source_sha256": "5a2c18000b4623c8c011390f71c8f3eb5fc91cf231d9905320e546a0dcc85a2b",
+  "functional_success": true,
+  "legacy_success": true,
+  "final_answer_correct": true,
+  "state_correct": true,
+  "missing_actions": [],
+  "required_actions": [
+    "record.read",
+    "math.multiply"
+  ],
+  "final_failure_labels": [],
+  "scorer_version": "functional-v1-required-original-actions;legacy-case013-v1",
+  "observation_status": "OBSERVED",
+  "first_error_type": null,
+  "first_error_turn": null,
+  "errors": [],
+  "episode_error_labels": [],
+  "model_calls": 3,
+  "tool_attempts": 2,
+  "generated_tokens": 50,
+  "input_tokens_total": 12396,
+  "wall_seconds": 3.2954861120015266,
+  "peak_allocated_bytes": 9248915456,
+  "peak_reserved_bytes": 12769558528,
+  "terminal_reason": "FINAL_ANSWER",
+  "final_answer": {
+    "total": 30
+  },
+  "final_fixture": {
+    "enabled": false,
+    "limit": 2
+  },
+  "responses": [
+    {
+      "text": "<tool_call>\n{\"name\": \"read_record\", \"arguments\": {}}\n</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"read_record\", \"arguments\": {}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "15121ab3ad657056c1b809958b2bd1c3c4368d7f811af840ef8ee71fc4719b58",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        878,
+        14192,
+        497,
+        330,
+        16370,
+        788,
+        4687,
+        532,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "d4665048ae34b1f1a173ff34bb15f855ca091f4abc17b442cfbfe06d5780fe9b",
+      "input_tokens": 4089,
+      "output_tokens": 16,
+      "messages_tools_hash": "a4649a2699f812f563291b678152e428759c134f17d3735222d77dcd1267e6a6",
+      "seconds": 1.0000047509984142,
+      "peak_allocated_bytes": 9227198464,
+      "peak_reserved_bytes": 12769558528,
+      "device_free_total_after_request": [
+        2337452032,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 0
+    },
+    {
+      "text": "<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"a\": 10, \"b\": 3}}\n</tool_call>",
+      "raw_text": "<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"a\": 10, \"b\": 3}}\n</tool_call><|im_end|>",
+      "raw_utf8_sha256": "57d9f09b9bfcc1d2c8521de96e349b3965866a461016f075bf59adddd4b066b7",
+      "output_token_ids": [
+        151657,
+        198,
+        4913,
+        606,
+        788,
+        330,
+        35597,
+        497,
+        330,
+        16370,
+        788,
+        5212,
+        64,
+        788,
+        220,
+        16,
+        15,
+        11,
+        330,
+        65,
+        788,
+        220,
+        18,
+        11248,
+        151658,
+        151645
+      ],
+      "input_token_sha256": "c4948deb3958c64c5ae1fbd752689eab1e9a9e9d1cce448373443957a223eb7b",
+      "input_tokens": 4131,
+      "output_tokens": 26,
+      "messages_tools_hash": "7eab52e66d0467ee6b708dc0d7c23ad8204b9a513640a2b826734c636fb82888",
+      "seconds": 1.506522321000375,
+      "peak_allocated_bytes": 9238426624,
+      "peak_reserved_bytes": 12769558528,
+      "device_free_total_after_request": [
+        2337452032,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 1
+    },
+    {
+      "text": "{\"total\": 30}",
+      "raw_text": "{\"total\": 30}<|im_end|>",
+      "raw_utf8_sha256": "34ff7ee2afa0066f7e1d5abac05914eb95ac19b881737244f2889cebdef4da76",
+      "output_token_ids": [
+        4913,
+        5035,
+        788,
+        220,
+        18,
+        15,
+        92,
+        151645
+      ],
+      "input_token_sha256": "840e90ad4fda5cb61d05f675d58d5938d893a96c5df3c7edd45f22c32bf74193",
+      "input_tokens": 4176,
+      "output_tokens": 8,
+      "messages_tools_hash": "d35be10dc28fb8778b8bf64fbba8f4ad90cf626f5405d4c428c98f2afbffe963",
+      "seconds": 0.7759143240000412,
+      "peak_allocated_bytes": 9248915456,
+      "peak_reserved_bytes": 12769558528,
+      "device_free_total_after_request": [
+        2284384256,
+        17094475776
+      ],
+      "enum_applied": false,
+      "finite_unmasked_logits": true,
+      "model_turn": 2
+    }
+  ],
+  "tool_events": [
+    {
+      "event_id": "t0-c0",
+      "model_turn": 0,
+      "call_index": 0,
+      "call_id": "t0-c0",
+      "call_id_model_visible": false,
+      "raw_name": "read_record",
+      "declared_names_hash": "65509958f9936933648701ce6e50fda9da017a6626c6c5844702113807ed6924",
+      "semantic_tool_id": "record.read",
+      "raw_arguments": {},
+      "schema_result": "VALID",
+      "argument_value_correct": true,
+      "allowed_action_set": [
+        "record.read"
+      ],
+      "semantic_choice_correct": true,
+      "state_before": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_after": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_before_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "state_after_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "tool_result": {
+        "quantity": 10,
+        "unit_price": 3
+      },
+      "execution_status": "SUCCESS",
+      "error_labels": [],
+      "signature": "30bb1fe63128e3222231799f4e9a674ba49be74536a0a0d989a217f91d8fe8eb",
+      "recovery_of_event_id": null,
+      "fixture_changes": null,
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    },
+    {
+      "event_id": "t1-c0",
+      "model_turn": 1,
+      "call_index": 0,
+      "call_id": "t1-c0",
+      "call_id_model_visible": false,
+      "raw_name": "calculate",
+      "declared_names_hash": "65509958f9936933648701ce6e50fda9da017a6626c6c5844702113807ed6924",
+      "semantic_tool_id": "math.multiply",
+      "raw_arguments": {
+        "a": 10,
+        "b": 3
+      },
+      "schema_result": "VALID",
+      "argument_value_correct": true,
+      "allowed_action_set": [
+        "record.read",
+        "math.multiply"
+      ],
+      "semantic_choice_correct": true,
+      "state_before": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_after": {
+        "enabled": false,
+        "limit": 2
+      },
+      "state_before_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "state_after_digest": "84b1e6cbbbd1642d3b59a3d07b74d66dabaa8ef7babb12d3f4ca175f301fcff7",
+      "tool_result": {
+        "product": 30
+      },
+      "execution_status": "SUCCESS",
+      "error_labels": [],
+      "signature": "9ede445cc26a74d6749af57312854a6ac6578d1708d6ac79269444f716209013",
+      "recovery_of_event_id": null,
+      "fixture_changes": null,
+      "model_feedback_policy": "original_case013_error_strings; no hints, aliases or enum"
+    }
+  ],
+  "recovery": [],
+  "enum_enabled": false,
+  "enhanced_feedback_enabled": false,
+  "aliases_enabled": false
+}

@@ -215,3 +215,14 @@ OUT=$(mktemp -d)
 ```
 
 원형 closed view·2,880/3,360/320행·선택·구간·표시값·CPU 검사를 재계산합니다. 모델·private payload·원문·새 GPU 추론은 포함하지 않습니다. 전체 사이트 빌드는 ZIP만이 아니라 전체 저장소 clone이 필요합니다.
+
+<!-- case015-entry -->
+<a id="case015-cpu"></a>
+## API 이름 변경 회귀시험
+
+[Case015](CASEBOOK.md#case-015)은 같은 주문 업무의 이름 변경을 실행·관측 이력·최종 상태로 비교합니다. BF16 15/16→16/16, RTN16/16→16/16, D1612/16→12/16. [Report](../../cases/015-tool-interface-sensitivity/REPORT.ko.md) · [CPU commands](../../cases/015-tool-interface-sensitivity/REPRODUCE.ko.md) · [Code](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)
+
+```bash
+OUT=$(mktemp -d)
+python3 -B cases/015-tool-interface-sensitivity/publication/scripts/run_checks.py --output "$OUT/case015" --tests
+```

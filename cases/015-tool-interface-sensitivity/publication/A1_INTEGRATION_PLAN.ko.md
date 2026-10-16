@@ -1,0 +1,1 @@
+Case015 하나로 P0/P1과 주문 응용 A1을 연결합니다. 최신 main의 PR26 포트폴리오·실행형 비교 안내·Case014를 유지합니다. tools/showcase의 명시 registry·한영 제목·data loader·정적 source allowlist·manifest·CPU 검사·Casebook/홈을 함께 추가합니다. 정상 feature PR·필수 CI·main 병합 뒤 기존 수동 Pages workflow publish=true로 배포합니다. 승인된 A1 이외의 모델 실험은 실행하지 않습니다.

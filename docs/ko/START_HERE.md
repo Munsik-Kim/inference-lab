@@ -65,3 +65,9 @@ Case008 R은 Qwen3-0.6B의 pruning 후 복원이며 Qwen3-4B 양자화 보정과
 ## 심화 연구: 같은 INT4 저장량의 품질 보정
 
 [Case014](CASEBOOK.md#case-014) · [Online](https://munsik-kim.github.io/inference-lab/ko/case014.html#overview) · [CPU checks](GETTING_STARTED.md#case014-cpu). 0.6B 전층 품질을 새 문서에서 비교한 연구이며, 기존 Qwen3-4B 실전 안내와 모델·측정 범위가 다릅니다.
+
+<!-- case015-entry -->
+<a id="case015-cpu"></a>
+## API 이름 변경 회귀시험
+
+[Case015](CASEBOOK.md#case-015)은 같은 주문 업무의 이름 변경을 실행·관측 이력·최종 상태로 비교합니다. BF16 15/16→16/16, RTN16/16→16/16, D1612/16→12/16. [Report](../../cases/015-tool-interface-sensitivity/REPORT.ko.md) · [CPU commands](../../cases/015-tool-interface-sensitivity/REPRODUCE.ko.md) · [Code](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)

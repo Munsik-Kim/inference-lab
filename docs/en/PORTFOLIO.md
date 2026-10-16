@@ -142,3 +142,9 @@ Additional recurrent-state storage is 0 B. Gold CE improved beyond fitting suppo
 Implemented capture, FP64 full-input fit, INT4 codec/independent reload, three-term decomposition and paired document audit, with PG19 quality gains and ArXiv limits.
 
 [Implementation](../../cases/014-quantization-compensation/PORTFOLIO.md) · [Code](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [Tests](../../cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) · [CPU reproduction](../../cases/014-quantization-compensation/REPRODUCE.md)
+
+<!-- case015-entry -->
+<a id="case015-cpu"></a>
+## API rename regression testing
+
+[Case015](CASEBOOK.md#case-015) compares an order workflow across renamed APIs using execution, received-result history and final state. BF1615/16→16/16, RTN16/16→16/16, D1612/16→12/16. [Report](../../cases/015-tool-interface-sensitivity/REPORT.md) · [CPU commands](../../cases/015-tool-interface-sensitivity/REPRODUCE.md) · [Code](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)

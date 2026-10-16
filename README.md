@@ -33,10 +33,17 @@ The current model guide covers public Qwen3-4B-Instruct-2507 records on an RTX 5
 | Paired-noise loop/step execution, time selection and image annotation | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [adapter](cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU tests](cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
 | Scale-preserving INT4 conversion and recorded quality audits | DualQuant public equations · PyTorch · NumPy | [solver](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU audit](cases/013-dualquant-reference-quality/analysis/audit.py) |
 | Own-path compensation · INT4 storage/reload · whole-model quality | Guo compensation · PyTorch · Transformers · NumPy | [code](cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [tests](cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) |
+| API rename, received-result and state regression testing | Qwen · PyTorch · Transformers · Python stdlib | [runner](cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py) · [tests](cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/tests/test_order_contracts.py) |
 
 [Related work and implementation boundaries](docs/related-work/README.md) · [CPU comparison package](packages/diova-compare/README.md)
 
 [Practical model guides for a 16GB GPU](docs/en/LLM_GUIDE.md) — Qwen3-4B key findings and Korean detail. [Read online](https://munsik-kim.github.io/inference-lab/en/llm-guide.html).
+
+## Case015 — Same Tools, Different Interfaces
+
+Compare order lookup, multiplication, update and validation across an API rename. On the new synthetic A1 workflow, BF16 changed **15/16→16/16**, RTN **16/16→16/16** and D16 **12/16→12/16**. Audit actual state separately from information received before generation. The original96 P1 episodes and96 A1 episodes keep separate denominators.
+
+[Pages](https://munsik-kim.github.io/inference-lab/en/case015.html#overview) · [Report](cases/015-tool-interface-sensitivity/REPORT.md) · [CPU example](cases/015-tool-interface-sensitivity/REPRODUCE.md) · [Runner](cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)
 
 <a id="capabilities"></a>
 ## Capabilities

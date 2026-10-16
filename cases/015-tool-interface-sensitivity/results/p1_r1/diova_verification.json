@@ -1,0 +1,170 @@
+{
+  "status": "PASS",
+  "validations": 12,
+  "same_interface_compares": 12,
+  "cross_interface_rejected": true,
+  "receipts": [
+    {
+      "kind": "validate",
+      "interface": "I0_ORIGINAL",
+      "method": "BF16",
+      "exit_code": 0
+    },
+    {
+      "kind": "validate",
+      "interface": "I0_ORIGINAL",
+      "method": "RTN",
+      "exit_code": 0
+    },
+    {
+      "kind": "validate",
+      "interface": "I0_ORIGINAL",
+      "method": "D16",
+      "exit_code": 0
+    },
+    {
+      "kind": "compare",
+      "interface": "I0_ORIGINAL",
+      "baseline": "BF16",
+      "candidate": "RTN",
+      "exit_code": 0
+    },
+    {
+      "kind": "compare",
+      "interface": "I0_ORIGINAL",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "exit_code": 0
+    },
+    {
+      "kind": "compare",
+      "interface": "I0_ORIGINAL",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "exit_code": 0
+    },
+    {
+      "kind": "validate",
+      "interface": "I1_ORDER_ONLY",
+      "method": "BF16",
+      "exit_code": 0
+    },
+    {
+      "kind": "validate",
+      "interface": "I1_ORDER_ONLY",
+      "method": "RTN",
+      "exit_code": 0
+    },
+    {
+      "kind": "validate",
+      "interface": "I1_ORDER_ONLY",
+      "method": "D16",
+      "exit_code": 0
+    },
+    {
+      "kind": "compare",
+      "interface": "I1_ORDER_ONLY",
+      "baseline": "BF16",
+      "candidate": "RTN",
+      "exit_code": 0
+    },
+    {
+      "kind": "compare",
+      "interface": "I1_ORDER_ONLY",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "exit_code": 0
+    },
+    {
+      "kind": "compare",
+      "interface": "I1_ORDER_ONLY",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "exit_code": 0
+    },
+    {
+      "kind": "validate",
+      "interface": "I2_STYLE_RENAME",
+      "method": "BF16",
+      "exit_code": 0
+    },
+    {
+      "kind": "validate",
+      "interface": "I2_STYLE_RENAME",
+      "method": "RTN",
+      "exit_code": 0
+    },
+    {
+      "kind": "validate",
+      "interface": "I2_STYLE_RENAME",
+      "method": "D16",
+      "exit_code": 0
+    },
+    {
+      "kind": "compare",
+      "interface": "I2_STYLE_RENAME",
+      "baseline": "BF16",
+      "candidate": "RTN",
+      "exit_code": 0
+    },
+    {
+      "kind": "compare",
+      "interface": "I2_STYLE_RENAME",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "exit_code": 0
+    },
+    {
+      "kind": "compare",
+      "interface": "I2_STYLE_RENAME",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "exit_code": 0
+    },
+    {
+      "kind": "validate",
+      "interface": "I3_OPAQUE_RENAME",
+      "method": "BF16",
+      "exit_code": 0
+    },
+    {
+      "kind": "validate",
+      "interface": "I3_OPAQUE_RENAME",
+      "method": "RTN",
+      "exit_code": 0
+    },
+    {
+      "kind": "validate",
+      "interface": "I3_OPAQUE_RENAME",
+      "method": "D16",
+      "exit_code": 0
+    },
+    {
+      "kind": "compare",
+      "interface": "I3_OPAQUE_RENAME",
+      "baseline": "BF16",
+      "candidate": "RTN",
+      "exit_code": 0
+    },
+    {
+      "kind": "compare",
+      "interface": "I3_OPAQUE_RENAME",
+      "baseline": "BF16",
+      "candidate": "D16",
+      "exit_code": 0
+    },
+    {
+      "kind": "compare",
+      "interface": "I3_OPAQUE_RENAME",
+      "baseline": "RTN",
+      "candidate": "D16",
+      "exit_code": 0
+    },
+    {
+      "kind": "negative_cross_interface",
+      "exit_code": 2,
+      "rejected": true,
+      "message": "diova-compare: missing pair members (intersection is opt-in)\n"
+    }
+  ]
+}

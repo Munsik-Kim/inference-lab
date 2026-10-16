@@ -52,6 +52,19 @@ class DocumentChecks(unittest.TestCase):
             check_links(self.root,list(PAGES),errors)
         self.assertEqual(errors,[])
 
+    def test_percent_encoded_korean_parser_anchor_keeps_same_destination(self):
+        from types import SimpleNamespace
+        page=self.root/'README.md';page.write_text('# 입력과 지표\n\n[링크](#입력과-지표)\n')
+        class Child:
+            type='link_open'
+            def __init__(self,href):self.href=href
+            def attrGet(self,key):return self.href
+        for href,valid in [('#%EC%9E%85%EB%A0%A5%EA%B3%BC-%EC%A7%80%ED%91%9C',True),('#different',False)]:
+            parser=SimpleNamespace(parse=lambda text:[SimpleNamespace(children=[Child(href)])])
+            errors=[]
+            with patch('check_docs.MarkdownIt',return_value=parser):check_links(self.root,['README.md'],errors)
+            self.assertEqual(not errors,valid)
+
     def test_addition_in_protected_tree_is_rejected(self):
         folder=self.root/'cases/unchanged';folder.mkdir(parents=True)
         (folder/'extra.md').write_text('Unapproved fixture addition')

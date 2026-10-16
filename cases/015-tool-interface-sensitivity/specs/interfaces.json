@@ -1,0 +1,1524 @@
+[
+  {
+    "task_id": "AGENT-0",
+    "interface_id": "I0_ORIGINAL",
+    "canonical_task_hash": "1c8001493af32266d45d63ba60e6e1942a71a675f26b6c7e2efaf7904ccb3cb7",
+    "rendered_prompt_hash": "3a2850df8482e1f1dca4273608944d3790c4feb5416fefe23eafa4cc73017dcf",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-0",
+    "interface_id": "I1_ORDER_ONLY",
+    "canonical_task_hash": "1c8001493af32266d45d63ba60e6e1942a71a675f26b6c7e2efaf7904ccb3cb7",
+    "rendered_prompt_hash": "519691a3675919851978977d2795ad3a4b56738c31d2b839f9fce76cb791d197",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      0,
+      3,
+      4,
+      5,
+      2,
+      1
+    ],
+    "changes": [
+      {
+        "field": "tools.order",
+        "before": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "after": [
+          0,
+          3,
+          4,
+          5,
+          2,
+          1
+        ],
+        "reason": "seed-only nonidentity permutation"
+      }
+    ],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-0",
+    "interface_id": "I2_STYLE_RENAME",
+    "canonical_task_hash": "1c8001493af32266d45d63ba60e6e1942a71a675f26b6c7e2efaf7904ccb3cb7",
+    "rendered_prompt_hash": "d0fdb05c43bf259acdbf74eb4193f20bdfec550693c890ca93e9dc7673102818",
+    "mapping": {
+      "document.read": "readDocument",
+      "record.read": "readRecord",
+      "updates.read": "queryTable",
+      "math.multiply": "calculate",
+      "fixture.patch": "applyFixturePatch",
+      "fixture.validate": "validateFixtureTest"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "readDocument",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "readRecord",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "queryTable",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "applyFixturePatch",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "validateFixtureTest",
+        "reason": "typed API declaration"
+      }
+    ],
+    "mapping_sha256": "498c534f5858c6bc254e36c0214a3d5af05ca25ca1166202a5baa55645f7f214"
+  },
+  {
+    "task_id": "AGENT-0",
+    "interface_id": "I3_OPAQUE_RENAME",
+    "canonical_task_hash": "1c8001493af32266d45d63ba60e6e1942a71a675f26b6c7e2efaf7904ccb3cb7",
+    "rendered_prompt_hash": "5d26a074cfceb140673a0242eb86186e767ab1136c5cb496718207e189504e38",
+    "mapping": {
+      "fixture.patch": "tool_80",
+      "record.read": "tool_14",
+      "updates.read": "tool_31",
+      "math.multiply": "tool_69",
+      "fixture.validate": "tool_12",
+      "document.read": "tool_28"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "tool_28",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "tool_14",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "tool_31",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[3].function.name",
+        "before": "calculate",
+        "after": "tool_69",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "tool_80",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "tool_12",
+        "reason": "typed API declaration"
+      }
+    ],
+    "mapping_sha256": "19e51e6273adc5908f93fde0664e1f048ac03231c10552a71fff5c2448e5f4de"
+  },
+  {
+    "task_id": "AGENT-1",
+    "interface_id": "I0_ORIGINAL",
+    "canonical_task_hash": "4c18652fe1697de6417f9c4d1f5ba65a40e116614f66be99609ea16a6c56fe16",
+    "rendered_prompt_hash": "c2b4c27af1e7589bf19c9fda8922379caf26e575c980d82b4740dc8a8b6485d0",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-1",
+    "interface_id": "I1_ORDER_ONLY",
+    "canonical_task_hash": "4c18652fe1697de6417f9c4d1f5ba65a40e116614f66be99609ea16a6c56fe16",
+    "rendered_prompt_hash": "156055d6e18c168c56c4ca4675e50c1fea68ca5dc053cd11332f483f0709b923",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      3,
+      5,
+      1,
+      4,
+      0,
+      2
+    ],
+    "changes": [
+      {
+        "field": "tools.order",
+        "before": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "after": [
+          3,
+          5,
+          1,
+          4,
+          0,
+          2
+        ],
+        "reason": "seed-only nonidentity permutation"
+      }
+    ],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-1",
+    "interface_id": "I2_STYLE_RENAME",
+    "canonical_task_hash": "4c18652fe1697de6417f9c4d1f5ba65a40e116614f66be99609ea16a6c56fe16",
+    "rendered_prompt_hash": "dfd6d9c7f8738b2f569b1edb555c5f088c0c15441d735b1f7a85865ad6f090c1",
+    "mapping": {
+      "document.read": "readDocument",
+      "record.read": "readRecord",
+      "updates.read": "queryTable",
+      "math.multiply": "calculate",
+      "fixture.patch": "applyFixturePatch",
+      "fixture.validate": "validateFixtureTest"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "readDocument",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "readRecord",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "queryTable",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "applyFixturePatch",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "validateFixtureTest",
+        "reason": "typed API declaration"
+      }
+    ],
+    "mapping_sha256": "498c534f5858c6bc254e36c0214a3d5af05ca25ca1166202a5baa55645f7f214"
+  },
+  {
+    "task_id": "AGENT-1",
+    "interface_id": "I3_OPAQUE_RENAME",
+    "canonical_task_hash": "4c18652fe1697de6417f9c4d1f5ba65a40e116614f66be99609ea16a6c56fe16",
+    "rendered_prompt_hash": "28e786d37767e1fe87240a3c99b266d1d227e86c6665b8521fd3c7d4350fab57",
+    "mapping": {
+      "fixture.patch": "tool_96",
+      "document.read": "tool_32",
+      "record.read": "tool_14",
+      "updates.read": "tool_42",
+      "math.multiply": "tool_35",
+      "fixture.validate": "tool_66"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "tool_32",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "tool_14",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "tool_42",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[3].function.name",
+        "before": "calculate",
+        "after": "tool_35",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "tool_96",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "tool_66",
+        "reason": "typed API declaration"
+      }
+    ],
+    "mapping_sha256": "d289e86ff4005e85d7cf8fad5f750f30c305fe47c54d8458ec5b47d01f389947"
+  },
+  {
+    "task_id": "AGENT-2",
+    "interface_id": "I0_ORIGINAL",
+    "canonical_task_hash": "742224aa54f357493e9d704eaad2c76fd50fb344962edc3b5b8d3ea53d04bf06",
+    "rendered_prompt_hash": "c80fe690beb1675fb28198e5575b32d73d22ffe67449d3730b954b1d88d943b6",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-2",
+    "interface_id": "I1_ORDER_ONLY",
+    "canonical_task_hash": "742224aa54f357493e9d704eaad2c76fd50fb344962edc3b5b8d3ea53d04bf06",
+    "rendered_prompt_hash": "a4649a2699f812f563291b678152e428759c134f17d3735222d77dcd1267e6a6",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      2,
+      5,
+      4,
+      1,
+      3,
+      0
+    ],
+    "changes": [
+      {
+        "field": "tools.order",
+        "before": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "after": [
+          2,
+          5,
+          4,
+          1,
+          3,
+          0
+        ],
+        "reason": "seed-only nonidentity permutation"
+      }
+    ],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-2",
+    "interface_id": "I2_STYLE_RENAME",
+    "canonical_task_hash": "742224aa54f357493e9d704eaad2c76fd50fb344962edc3b5b8d3ea53d04bf06",
+    "rendered_prompt_hash": "3e1307bce3d5adb4822d5db62ef5a44cfb74178aa607f2efe8322506b8afd2ac",
+    "mapping": {
+      "document.read": "readDocument",
+      "record.read": "readRecord",
+      "updates.read": "queryTable",
+      "math.multiply": "calculate",
+      "fixture.patch": "applyFixturePatch",
+      "fixture.validate": "validateFixtureTest"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "readDocument",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "readRecord",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "queryTable",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "applyFixturePatch",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "validateFixtureTest",
+        "reason": "typed API declaration"
+      }
+    ],
+    "mapping_sha256": "498c534f5858c6bc254e36c0214a3d5af05ca25ca1166202a5baa55645f7f214"
+  },
+  {
+    "task_id": "AGENT-2",
+    "interface_id": "I3_OPAQUE_RENAME",
+    "canonical_task_hash": "742224aa54f357493e9d704eaad2c76fd50fb344962edc3b5b8d3ea53d04bf06",
+    "rendered_prompt_hash": "11af5fbb0e67de56af4c06b920d860ee4c651982f07fcedd3e025d5544d03fa1",
+    "mapping": {
+      "fixture.patch": "tool_19",
+      "updates.read": "tool_90",
+      "document.read": "tool_36",
+      "math.multiply": "tool_18",
+      "fixture.validate": "tool_65",
+      "record.read": "tool_30"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "tool_36",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "tool_30",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "tool_90",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[3].function.name",
+        "before": "calculate",
+        "after": "tool_18",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "tool_19",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "tool_65",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "messages[1].content",
+        "start": 20074,
+        "before": "calculate",
+        "after": "tool_18",
+        "reason": "verified task API reference"
+      }
+    ],
+    "mapping_sha256": "e2f397a51e76f5beae9b67f8cd2be29120f939822995bf84f2bd4a0c037c7f7b"
+  },
+  {
+    "task_id": "AGENT-3",
+    "interface_id": "I0_ORIGINAL",
+    "canonical_task_hash": "8cb9d7954aec8e0b273a99b463819e14d578b190b31522a41741537245d9d556",
+    "rendered_prompt_hash": "c839ef9639d92579b95e4ef0527f99795ab847170ebb55dae6630641ac38747f",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-3",
+    "interface_id": "I1_ORDER_ONLY",
+    "canonical_task_hash": "8cb9d7954aec8e0b273a99b463819e14d578b190b31522a41741537245d9d556",
+    "rendered_prompt_hash": "0dc42873ad4f8eb2b66ba86a1d93a7d3973d2833f8fcb0e3fe5799821b9c5cb3",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      2,
+      0,
+      1,
+      4,
+      5,
+      3
+    ],
+    "changes": [
+      {
+        "field": "tools.order",
+        "before": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "after": [
+          2,
+          0,
+          1,
+          4,
+          5,
+          3
+        ],
+        "reason": "seed-only nonidentity permutation"
+      }
+    ],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-3",
+    "interface_id": "I2_STYLE_RENAME",
+    "canonical_task_hash": "8cb9d7954aec8e0b273a99b463819e14d578b190b31522a41741537245d9d556",
+    "rendered_prompt_hash": "5fb756fab103dc67d25038765faf981947f48137a444260150dc155909129c56",
+    "mapping": {
+      "document.read": "readDocument",
+      "record.read": "readRecord",
+      "updates.read": "queryTable",
+      "math.multiply": "calculate",
+      "fixture.patch": "applyFixturePatch",
+      "fixture.validate": "validateFixtureTest"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "readDocument",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "readRecord",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "queryTable",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "applyFixturePatch",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "validateFixtureTest",
+        "reason": "typed API declaration"
+      }
+    ],
+    "mapping_sha256": "498c534f5858c6bc254e36c0214a3d5af05ca25ca1166202a5baa55645f7f214"
+  },
+  {
+    "task_id": "AGENT-3",
+    "interface_id": "I3_OPAQUE_RENAME",
+    "canonical_task_hash": "8cb9d7954aec8e0b273a99b463819e14d578b190b31522a41741537245d9d556",
+    "rendered_prompt_hash": "a0ce673c4c1eaf5c26eb28aea9b892661f8590577134a528167614fa4eb65bbb",
+    "mapping": {
+      "fixture.patch": "tool_75",
+      "record.read": "tool_57",
+      "fixture.validate": "tool_42",
+      "updates.read": "tool_53",
+      "document.read": "tool_47",
+      "math.multiply": "tool_43"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "tool_47",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "tool_57",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "tool_53",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[3].function.name",
+        "before": "calculate",
+        "after": "tool_43",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "tool_75",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "tool_42",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "messages[1].content",
+        "start": 42754,
+        "before": "calculate",
+        "after": "tool_43",
+        "reason": "verified task API reference"
+      }
+    ],
+    "mapping_sha256": "9e7b8f0d3fd0e5019b119bc6c4c5fe43639c49338bab77d2b11833f556db75e2"
+  },
+  {
+    "task_id": "AGENT-4",
+    "interface_id": "I0_ORIGINAL",
+    "canonical_task_hash": "aaa01ed9ae72080c05bac303cbd704d281e0871695eb723fd6f4ba64d2c77597",
+    "rendered_prompt_hash": "4ba11d93e20e20289181edfeebf87b6613b62579a3889f6713cab65ead20a1b2",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-4",
+    "interface_id": "I1_ORDER_ONLY",
+    "canonical_task_hash": "aaa01ed9ae72080c05bac303cbd704d281e0871695eb723fd6f4ba64d2c77597",
+    "rendered_prompt_hash": "3d41af6b83a513687878d0658f5038d367dea553dc10d42395e158a80f4459f3",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      5,
+      0,
+      4,
+      2,
+      1,
+      3
+    ],
+    "changes": [
+      {
+        "field": "tools.order",
+        "before": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "after": [
+          5,
+          0,
+          4,
+          2,
+          1,
+          3
+        ],
+        "reason": "seed-only nonidentity permutation"
+      }
+    ],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-4",
+    "interface_id": "I2_STYLE_RENAME",
+    "canonical_task_hash": "aaa01ed9ae72080c05bac303cbd704d281e0871695eb723fd6f4ba64d2c77597",
+    "rendered_prompt_hash": "c67c558793aebf7a04367630851d927f25cbec42b20c419aab7af13678288a13",
+    "mapping": {
+      "document.read": "readDocument",
+      "record.read": "readRecord",
+      "updates.read": "queryTable",
+      "math.multiply": "calculate",
+      "fixture.patch": "applyFixturePatch",
+      "fixture.validate": "validateFixtureTest"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "readDocument",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "readRecord",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "queryTable",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "applyFixturePatch",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "validateFixtureTest",
+        "reason": "typed API declaration"
+      }
+    ],
+    "mapping_sha256": "498c534f5858c6bc254e36c0214a3d5af05ca25ca1166202a5baa55645f7f214"
+  },
+  {
+    "task_id": "AGENT-4",
+    "interface_id": "I3_OPAQUE_RENAME",
+    "canonical_task_hash": "aaa01ed9ae72080c05bac303cbd704d281e0871695eb723fd6f4ba64d2c77597",
+    "rendered_prompt_hash": "6e855dda39ae750619e68c3c56c9bbb2ba1fcae0c65219dc87708f45d451728c",
+    "mapping": {
+      "document.read": "tool_86",
+      "record.read": "tool_72",
+      "math.multiply": "tool_26",
+      "fixture.patch": "tool_32",
+      "updates.read": "tool_88",
+      "fixture.validate": "tool_20"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "tool_86",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "tool_72",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "tool_88",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[3].function.name",
+        "before": "calculate",
+        "after": "tool_26",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "tool_32",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "tool_20",
+        "reason": "typed API declaration"
+      }
+    ],
+    "mapping_sha256": "e2cc0634ff51425f42fc6c671f766193f528176a5c8ac080608af49c79f21243"
+  },
+  {
+    "task_id": "AGENT-5",
+    "interface_id": "I0_ORIGINAL",
+    "canonical_task_hash": "b1870822d7155e523d06efbc82eef614c458113f250ee80d1aa3a2822c3bdd3f",
+    "rendered_prompt_hash": "9e35a31d3f77ca7f6ee5a6b865314dfd06879587992d166da853201d96f8228d",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-5",
+    "interface_id": "I1_ORDER_ONLY",
+    "canonical_task_hash": "b1870822d7155e523d06efbc82eef614c458113f250ee80d1aa3a2822c3bdd3f",
+    "rendered_prompt_hash": "89e9691aee4ae1e220f559484b0e01f5051e715cafb03d8bba19f2e1074f29ee",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      4,
+      2,
+      5,
+      0,
+      1,
+      3
+    ],
+    "changes": [
+      {
+        "field": "tools.order",
+        "before": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "after": [
+          4,
+          2,
+          5,
+          0,
+          1,
+          3
+        ],
+        "reason": "seed-only nonidentity permutation"
+      }
+    ],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-5",
+    "interface_id": "I2_STYLE_RENAME",
+    "canonical_task_hash": "b1870822d7155e523d06efbc82eef614c458113f250ee80d1aa3a2822c3bdd3f",
+    "rendered_prompt_hash": "7232c71f8258820fd04e9ab485e76a8ea94aab4f13b95b38f22c2b005acd35f6",
+    "mapping": {
+      "document.read": "readDocument",
+      "record.read": "readRecord",
+      "updates.read": "queryTable",
+      "math.multiply": "calculate",
+      "fixture.patch": "applyFixturePatch",
+      "fixture.validate": "validateFixtureTest"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "readDocument",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "readRecord",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "queryTable",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "applyFixturePatch",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "validateFixtureTest",
+        "reason": "typed API declaration"
+      }
+    ],
+    "mapping_sha256": "498c534f5858c6bc254e36c0214a3d5af05ca25ca1166202a5baa55645f7f214"
+  },
+  {
+    "task_id": "AGENT-5",
+    "interface_id": "I3_OPAQUE_RENAME",
+    "canonical_task_hash": "b1870822d7155e523d06efbc82eef614c458113f250ee80d1aa3a2822c3bdd3f",
+    "rendered_prompt_hash": "f6660c8dd6f877a4bafe6c9b1cf8c5763f698fc6f315e257f4a947e3fd2d62db",
+    "mapping": {
+      "fixture.validate": "tool_82",
+      "updates.read": "tool_75",
+      "record.read": "tool_59",
+      "math.multiply": "tool_68",
+      "fixture.patch": "tool_34",
+      "document.read": "tool_89"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "tool_89",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "tool_59",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "tool_75",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[3].function.name",
+        "before": "calculate",
+        "after": "tool_68",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "tool_34",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "tool_82",
+        "reason": "typed API declaration"
+      }
+    ],
+    "mapping_sha256": "54fdc3e4f41c167d5857ed16c0b19f5036ef2f43abaa19b850b283c63f15edcd"
+  },
+  {
+    "task_id": "AGENT-6",
+    "interface_id": "I0_ORIGINAL",
+    "canonical_task_hash": "cacd27e1f30ce8f016ff5102cca28b689447ea85d3e642eecb05c082760d4024",
+    "rendered_prompt_hash": "8e60bfba8f6bdb3c32219eb4c147931386565f20f5610d7034bb7e0bc23c46cd",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-6",
+    "interface_id": "I1_ORDER_ONLY",
+    "canonical_task_hash": "cacd27e1f30ce8f016ff5102cca28b689447ea85d3e642eecb05c082760d4024",
+    "rendered_prompt_hash": "ffa45994517271296ff871c3a2593cfd21d2fb7bbaef9dc9235754c0d5c5a0f2",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      3,
+      4,
+      1,
+      0,
+      5,
+      2
+    ],
+    "changes": [
+      {
+        "field": "tools.order",
+        "before": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "after": [
+          3,
+          4,
+          1,
+          0,
+          5,
+          2
+        ],
+        "reason": "seed-only nonidentity permutation"
+      }
+    ],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-6",
+    "interface_id": "I2_STYLE_RENAME",
+    "canonical_task_hash": "cacd27e1f30ce8f016ff5102cca28b689447ea85d3e642eecb05c082760d4024",
+    "rendered_prompt_hash": "0a7d8a82e646a9bd1d31aaaaf25a3cb24bfae8fead01da0d0effe47055141ba1",
+    "mapping": {
+      "document.read": "readDocument",
+      "record.read": "readRecord",
+      "updates.read": "queryTable",
+      "math.multiply": "calculate",
+      "fixture.patch": "applyFixturePatch",
+      "fixture.validate": "validateFixtureTest"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "readDocument",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "readRecord",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "queryTable",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "applyFixturePatch",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "validateFixtureTest",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "messages[1].content",
+        "start": 20079,
+        "before": "validate_fixture_test",
+        "after": "validateFixtureTest",
+        "reason": "verified task API reference"
+      }
+    ],
+    "mapping_sha256": "498c534f5858c6bc254e36c0214a3d5af05ca25ca1166202a5baa55645f7f214"
+  },
+  {
+    "task_id": "AGENT-6",
+    "interface_id": "I3_OPAQUE_RENAME",
+    "canonical_task_hash": "cacd27e1f30ce8f016ff5102cca28b689447ea85d3e642eecb05c082760d4024",
+    "rendered_prompt_hash": "b6b218dee84c94d890c6625fb47c1f70ff36231ea9f38a26bf08b633207f23ea",
+    "mapping": {
+      "math.multiply": "tool_32",
+      "document.read": "tool_50",
+      "fixture.patch": "tool_56",
+      "record.read": "tool_51",
+      "fixture.validate": "tool_89",
+      "updates.read": "tool_72"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "tool_50",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "tool_51",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "tool_72",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[3].function.name",
+        "before": "calculate",
+        "after": "tool_32",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "tool_56",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "tool_89",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "messages[1].content",
+        "start": 20079,
+        "before": "validate_fixture_test",
+        "after": "tool_89",
+        "reason": "verified task API reference"
+      }
+    ],
+    "mapping_sha256": "3ffc3b9674659a5aa225df9995081ff5e28e41e8a7ca0f1704fd05f8be05738f"
+  },
+  {
+    "task_id": "AGENT-7",
+    "interface_id": "I0_ORIGINAL",
+    "canonical_task_hash": "9c9d0c6aaaf16cdeb389c5dc97a24ef5fabe36b9ed206e10a5381eb3077bb199",
+    "rendered_prompt_hash": "564fa5e520856213bb1a0e34f1d3bddacc20ac0e36aa42a6210165450381ac3d",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-7",
+    "interface_id": "I1_ORDER_ONLY",
+    "canonical_task_hash": "9c9d0c6aaaf16cdeb389c5dc97a24ef5fabe36b9ed206e10a5381eb3077bb199",
+    "rendered_prompt_hash": "e795d018233684edc26a087d81c3482ebf22d9c3156e45a218f9f835d436b497",
+    "mapping": {
+      "document.read": "read_document",
+      "record.read": "read_record",
+      "updates.read": "query_table",
+      "math.multiply": "calculate",
+      "fixture.patch": "apply_fixture_patch",
+      "fixture.validate": "validate_fixture_test"
+    },
+    "permutation": [
+      1,
+      4,
+      5,
+      2,
+      3,
+      0
+    ],
+    "changes": [
+      {
+        "field": "tools.order",
+        "before": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "after": [
+          1,
+          4,
+          5,
+          2,
+          3,
+          0
+        ],
+        "reason": "seed-only nonidentity permutation"
+      }
+    ],
+    "mapping_sha256": "806e6839356002b685044a399bde8641c8154eea79c718ff0f56dba0a819b305"
+  },
+  {
+    "task_id": "AGENT-7",
+    "interface_id": "I2_STYLE_RENAME",
+    "canonical_task_hash": "9c9d0c6aaaf16cdeb389c5dc97a24ef5fabe36b9ed206e10a5381eb3077bb199",
+    "rendered_prompt_hash": "8b59ad46d8ba6b96742b029790b3e2c1114883e442e55ba2f77bbd925e9b9bba",
+    "mapping": {
+      "document.read": "readDocument",
+      "record.read": "readRecord",
+      "updates.read": "queryTable",
+      "math.multiply": "calculate",
+      "fixture.patch": "applyFixturePatch",
+      "fixture.validate": "validateFixtureTest"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "readDocument",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "readRecord",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "queryTable",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "applyFixturePatch",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "validateFixtureTest",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "messages[1].content",
+        "start": 42759,
+        "before": "validate_fixture_test",
+        "after": "validateFixtureTest",
+        "reason": "verified task API reference"
+      }
+    ],
+    "mapping_sha256": "498c534f5858c6bc254e36c0214a3d5af05ca25ca1166202a5baa55645f7f214"
+  },
+  {
+    "task_id": "AGENT-7",
+    "interface_id": "I3_OPAQUE_RENAME",
+    "canonical_task_hash": "9c9d0c6aaaf16cdeb389c5dc97a24ef5fabe36b9ed206e10a5381eb3077bb199",
+    "rendered_prompt_hash": "06f55b9d0716061aa2bf36871dbf82007d62ff8e41b08cb17b42560697c861a8",
+    "mapping": {
+      "math.multiply": "tool_35",
+      "fixture.validate": "tool_68",
+      "updates.read": "tool_33",
+      "fixture.patch": "tool_48",
+      "record.read": "tool_32",
+      "document.read": "tool_76"
+    },
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "changes": [
+      {
+        "field": "tools[0].function.name",
+        "before": "read_document",
+        "after": "tool_76",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[1].function.name",
+        "before": "read_record",
+        "after": "tool_32",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[2].function.name",
+        "before": "query_table",
+        "after": "tool_33",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[3].function.name",
+        "before": "calculate",
+        "after": "tool_35",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[4].function.name",
+        "before": "apply_fixture_patch",
+        "after": "tool_48",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "tools[5].function.name",
+        "before": "validate_fixture_test",
+        "after": "tool_68",
+        "reason": "typed API declaration"
+      },
+      {
+        "field": "messages[1].content",
+        "start": 42759,
+        "before": "validate_fixture_test",
+        "after": "tool_68",
+        "reason": "verified task API reference"
+      }
+    ],
+    "mapping_sha256": "bb0088426d81285612770ee6ae65568f4b59588eed4864a52933f6fc840cdcb5"
+  }
+]
