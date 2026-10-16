@@ -47,7 +47,7 @@ The current model guide covers Qwen3-4B-Instruct-2507 on an RTX 5080 16GB; full 
 
 ### Compress, save and reload models
 
-Build saved model files (checkpoints) using the existing GPTQ compression method and connect them to software that runs model requests (an inference engine). Save and restore changed sizes of the model’s feed-forward blocks (MLPs), and fit a smaller block’s output weights to reduce its error.
+Build saved model files (checkpoints) using the existing GPTQ compression method and connect them to software that runs model requests (an inference engine). Save and restore a Qwen3 model with one reduced feed-forward block (MLP), and fit that smaller block’s output weights to reduce its error.
 
 LLM Compressor · PyTorch · Transformers · safetensors. [Checkpoint loader](tools/modelpack/artifact.py) · [Save–reload tests](cases/008-build-reconstruct-reload/tests/test_core.py)
 
