@@ -25,8 +25,8 @@ COMPARE_EXAMPLES = {
     'examples/compare/candidate.jsonl': 'packages/diova-compare/examples/compare/candidate.jsonl',
 }
 TITLES = {
-    'ko': ('16GB GPU에서 LLM 사용하기', 'Qwen3-4B-Instruct-2507 실전 안내', '측정 방법과 결과 읽는 법', '내 답변 기록 비교하기 · diova-compare'),
-    'en': ('Using an LLM on a 16GB GPU', 'Qwen3-4B practical guide — English summary', 'How to read the measurements', 'Compare your saved answers · diova-compare'),
+    'ko': ('16GB GPU에서 AI 모델 실행·검사하기', 'Qwen3-4B: 실행한 작업과 확인된 한계', '속도·메모리·정답 결과 읽는 법', '저장된 답변의 변화 찾기 · diova-compare'),
+    'en': ('Run and check an AI model on a 16GB GPU', 'Qwen3-4B: work completed and known limits', 'Read speed, memory and answer results', 'Find changes in saved answers · diova-compare'),
 }
 # Only these previously published files can supply additional guide evidence.
 # Existing Case008/009/013 extractors keep their original source checks as well.
@@ -188,14 +188,14 @@ def values(data: dict, lang: str) -> dict[str, str]:
     }
     v['storage_table'] = table(
         ['지표·단위' if ko else 'Metric / unit', 'BF16', 'GPTQ W4A16'],
-        [[('가중치 파일 크기 · B' if ko else 'Weight file bytes · B'), *[f'{n:,}' for n in storage['weight_bytes'].values()]],
-         [('Torch allocator peak · GiB'), *[f'{n/2**30:.4f}' for n in storage['allocator_peak_bytes'].values()]]],
+        [[('학습된 숫자(가중치)의 저장 파일 · B' if ko else 'Saved learned numbers (weight files) · B'), *[f'{n:,}' for n in storage['weight_bytes'].values()]],
+         [('PyTorch 계산용 메모리 최고값(Torch allocator peak) · GiB' if ko else 'Peak PyTorch calculation memory (Torch allocator peak) · GiB'), *[f'{n/2**30:.4f}' for n in storage['allocator_peak_bytes'].values()]]],
         'Case008 Q · 서로 다른 자원 지표' if ko else 'Case008 Q · separate resource measurements')
     v['speed_table'] = table(
-        ['실행 / 입력 token / 동시 요청 상한' if ko else 'Execution / input tokens / concurrency limit',
-         '출력 처리량 W4/BF16 · 배 [95% 구간]' if ko else 'Output throughput W4/BF16 · ratio [95% interval]'],
+        ['실행 방식 / 입력 조각(token) 수 / 동시 요청 상한' if ko else 'Execution method / input tokens / simultaneous request limit',
+         '같은 시간에 생성한 출력량 W4/BF16 · 배 [95% 구간]' if ko else 'Output produced per second W4/BF16 · ratio [95% interval]'],
         [[f"{r['execution']} / {r['input_tokens']} / {r['client_concurrency']}", fmt_ratio(r['throughput_ratio'])] for r in s['contrasts']],
-        'Case009 · 출력 256 token, 짝지은 서버 3라운드' if ko else 'Case009 · 256 output tokens, three paired server rounds')
+        'Case009 · 출력 256 token, 같은 조건의 원본·압축 서버를 묶은 3라운드(paired)' if ko else 'Case009 · 256 output tokens, three rounds pairing original and compressed servers')
     # Absolute request metrics at one stated condition; means of round medians.
     cells = {arm: [r for r in s['cells'] if r['arm'] == arm and r['execution'] == 'graph'
                    and r['input_tokens'] == 128 and r['client_concurrency'] == 1] for arm in ('BF16','W4')}
@@ -219,7 +219,7 @@ def values(data: dict, lang: str) -> dict[str, str]:
     v['memory_table'] = table(['측정 대상' if ko else 'Measurement', 'BF16', 'GPTQ W4A16'],
         [[('장치 전체 최고 표본값의 범위' if ko else 'Range of whole-device sampled peaks'),
           v['memory_bf16_gib'], v['memory_w4_gib']]],
-        'Case009 · graph 서버별 1 Hz 표본, 시작·warmup·desktop 포함' if ko else 'Case009 · 1 Hz per graph server, includes startup, warmup and desktop')
+        'Case009 · graph 서버별 1초 간격(1 Hz) 측정, 시작·준비 실행(warmup)·바탕화면 포함' if ko else 'Case009 · samples once per second (1 Hz) per graph server, includes startup, warmup and desktop')
     v['memory_pairs_table'] = table(
         ['라운드' if ko else 'Round', 'BF16 · MiB', 'GPTQ W4A16 · MiB',
          '차이 · GiB' if ko else 'Difference · GiB', '감소율 · %' if ko else 'Reduction · %'],
@@ -240,14 +240,14 @@ def values(data: dict, lang: str) -> dict[str, str]:
             rows.append([task['task']+' · '+name, *[f"{group[k]}/{group['n']} ({100*group[k]/group['n']:.2f}%)" for k in ('baseline_correct','candidate_correct')], state])
             if 'acc_norm' in group:
                 r = group['acc_norm']; rows.append(['ARC · acc_norm', *[f"{r[k]}/{r['n']} ({100*r[k]/r['n']:.2f}%)" for k in ('baseline_correct','candidate_correct')],state])
-    v['quality_table'] = table(['과제·지표' if ko else 'Task / metric', 'BF16', 'W4', '프로세스 종료 BF16 / W4' if ko else 'Process exit BF16 / W4'], rows,
-        'Case009 · 과제별 독립 품질 평가, COMPLETE=정상 종료 / FAILED=계산 후 비정상 종료' if ko else 'Case009 · separate quality runs; FAILED means abnormal exit after calculation')
-    v['reference_table'] = table(['조건' if ko else 'Condition', 'PPL ↓', 'KL(BF16 ∥ 후보) ↓', '정규화 가중치 MSE ↓' if ko else 'Normalized weight MSE ↓'],
+    v['quality_table'] = table(['과제·지표' if ko else 'Task / metric', 'BF16', 'W4', '프로그램 정상 종료 여부 BF16 / W4' if ko else 'Program exit state BF16 / W4'], rows,
+        'Case009 · 과제별 답변 평가, COMPLETE=정상 종료 / FAILED=계산 후 비정상 종료' if ko else 'Case009 · separate answer checks; COMPLETE=normal exit / FAILED=abnormal exit after calculation')
+    v['reference_table'] = table(['조건' if ko else 'Condition', '다음 글 예측 점수(PPL) ↓' if ko else 'Next-text prediction score (PPL) ↓', '원본 확률과의 차이 KL(BF16 ∥ 후보) ↓' if ko else 'Difference from original probabilities KL(BF16 ∥ candidate) ↓', '원본 제곱합으로 나눈 가중치 제곱 오차(MSE) ↓' if ko else 'Weight squared error / original squared sum (MSE) ↓'],
         [[r['method'], f"{r['ppl']:.6f}", f"{r['forward_KL_BF16_to_candidate']:.6f}", f"{r['weight_normalized_mse']:.8f}"] for r in data['reference']['quality']],
-        'Case013 · 4B reference 진단, 같은 32개 2,048-token 구간' if ko else 'Case013 · 4B reference diagnostic, same 32 windows of 2,048 tokens')
-    v['repair_table'] = table(['변형' if ko else 'Variant', '원래 실행' if ko else 'Baseline', '오류 안내' if ko else 'Feedback', '이름 제한' if ko else 'Name enum', '결합' if ko else 'Both'],
+        'Case013 · 4B 숫자를 BF16으로 복원한 품질 확인(reference), 같은 32개 2,048-token 구간' if ko else 'Case013 · 4B quality checks after BF16 restoration (reference), same 32 windows of 2,048 tokens')
+    v['repair_table'] = table(['숫자 처리 조건' if ko else 'Number format condition', '원래 실행(BASELINE)' if ko else 'Original run (BASELINE)', '오류 안내(FEEDBACK)' if ko else 'Error guidance (FEEDBACK)', '등록 이름 제한(ENUM)' if ko else 'Registered names only (ENUM)', '두 방법 결합(BOTH)' if ko else 'Combined methods (BOTH)'],
         [[method,*[tally(method,variant) for variant in ('BASELINE','FEEDBACK','ENUM','BOTH')]] for method in ('D16','D4')],
-        'Case013 후속 · 기존에 관찰한 DEV 8과제의 실제 작업 성공' if ko else 'Case013 follow-up · actual task success on eight previously observed DEV tasks')
+        'Case013 후속 · 개발에 썼던 8개 문제(DEV)를 다시 실행한 실제 작업 성공' if ko else 'Case013 follow-up · actual task success on eight reused development tasks (DEV)')
     refs = {
         'source_storage': (C8+'/results/raw/Q/build.json','safetensors_bytes'),
         'source_bf16_files': (C8+'/provenance/models.json','Q.files.*.bytes'),

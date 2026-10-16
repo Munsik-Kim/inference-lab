@@ -4,7 +4,9 @@ English | [한국어](../ko/START_HERE.md) · [Home](../../README.md)
 
 ## 1. What problem does this address?
 
-Running a lighter model on your GPU requires checking storage, request cost and answers separately. DIOVA builds artifact inspection and reload tools, matched answer/cost runners and checks of actual tool-task completion, using recorded open-weight model runs on an RTX 5080 16GB. Reading the results requires neither an AI degree nor a GPU.
+A model may take less space yet give worse answers or fail to finish the requested work. DIOVA checks these issues together. I built tools that inspect and restart saved models, compare answers and execution costs on the same questions, and check whether an AI actually made and validated a file change. The records use public Qwen models on an RTX 5080 16GB. You can read them without specialist AI knowledge or a GPU.
+
+For hiring or technical collaboration, this is evidence of work in local AI execution, making trained models run (inference engineering), model optimization, checking for quality losses after changes (regression testing), and evaluating tool automation. Tasks to discuss include diagnosing local execution failures, comparing model settings, building answer/action checks, and reporting measurements with traceable sources. [The portfolio](PORTFOLIO.md) links each capability to code.
 
 ## 2. Read online first
 
@@ -12,12 +14,12 @@ Open the [public English home](https://munsik-kim.github.io/inference-lab/en/ind
 
 Choose a route by your purpose:
 
-- **Use a model:** start with [model guides](LLM_GUIDE.md) for execution paths and prerequisites.
-- **Inspect technical capability:** read [featured A/B/C and code evidence](PORTFOLIO.md). A connects [Case008 Q storage/reload](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) → [Case009 actual requests](https://munsik-kim.github.io/inference-lab/en/case009.html#serving).
-- **Compare results yourself:** run the [diova-compare synthetic example](../../packages/diova-compare/examples/compare/README.md), then map your saved records to the same fields.
+- **Run a local model:** start with [model guides](LLM_GUIDE.md) to see what ran, what you need and what failed.
+- **Assess fit for a role or technical task:** read [featured A/B/C and code evidence](PORTFOLIO.md). A connects [Case008 Q storage/reload](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) → [Case009 actual requests](https://munsik-kim.github.io/inference-lab/en/case009.html#serving).
+- **Compare your own saved answers:** run the [diova-compare example with invented answers](../../packages/diova-compare/examples/compare/README.md), then put your records into its documented format. This independent CPU tool does not require a model.
 - **Recheck an experiment:** choose a historical CPU audit in [developer reproduction](GETTING_STARTED.md). This is separate from comparing your own records.
 
-Featured C tests [registered tool names, error feedback and actual action completion](../../research/agent_tool_contract_repair_20261014/README.md). It reuses eight previously observed DEV tasks with dequantized BF16 reference computation, without establishing new-input generalization or packed INT4 speed.
+Featured C tests [available tool names, call-error explanations and actual action completion](../../research/agent_tool_contract_repair_20261014/README.md). It reuses eight existing tasks used while adjusting settings (DEV). D16 stores weights as four-bit integers (INT4) with BF16 calculation inputs; D4 uses the same weights and also quantizes inputs to INT4. Quantized values are restored to BF16 for quality checks (reference computation). Results on new tasks and speed from directly operating on packed INT4 remain unverified.
 
 ## 3. Choose an instruction path
 
@@ -48,7 +50,7 @@ Each case has its own model, inputs and conditions; you do not need to read all 
 - [012 Image-generation budget allocation](CASEBOOK.md#case-012)
 - [013 Weight error, answers and tool use](CASEBOOK.md#case-013)
 
-Case008 R is separate Qwen3-0.6B pruning/reconstruction, not Qwen3-4B quantization repair. Use the [Casebook](CASEBOOK.md) for exact results and the [portfolio](PORTFOLIO.md) for implementation and external attribution.
+Case008 R removes part of one block in the smaller Qwen3-0.6B model (pruning), then fits its remaining output weights. It is separate from the Qwen3-4B compression path. Use the [Casebook](CASEBOOK.md) for exact results and the [portfolio](PORTFOLIO.md) for implementation and external attribution.
 
 ## 5. Download or check records when needed
 
@@ -64,7 +66,7 @@ Read online, then choose the [offline explorers](GETTING_STARTED.md#offline-expl
 <!-- case014-entry -->
 ## Deeper research: quality compensation at identical INT4 storage
 
-[Case014](CASEBOOK.md#case-014) · [Online](https://munsik-kim.github.io/inference-lab/en/case014.html#overview) · [CPU checks](GETTING_STARTED.md#case014-cpu). A fresh-document0.6B whole-model quality study, distinct from the Qwen3-4B practical guide.
+[Case014](CASEBOOK.md#case-014) · [Online](https://munsik-kim.github.io/inference-lab/en/case014.html#overview) · [CPU checks](GETTING_STARTED.md#case014-cpu). This separate Qwen3-0.6B study tests whether correcting compression error improves whole-model text prediction on fresh documents while keeping the converted matrices’ storage unchanged. PG19 gains and ArXiv limits are reported separately from the Qwen3-4B practical guide.
 
 <!-- case015-entry -->
 <a id="case015-cpu"></a>

@@ -4,7 +4,11 @@
 
 # 모델을 작게 저장하고, 실행하고, 달라진 답변까지 확인합니다.
 
-DIOVA는 공개 AI 모델의 변환·실행·평가를 연결하는 추론 엔지니어링 프로젝트입니다. RTX 5080 16GB와 Qwen 계열을 중심으로 속도·메모리와 답변·실제 도구 작업 결과를 함께 비교합니다.
+AI 모델을 작게 만들면 내 컴퓨터에 올라가더라도 답변이 달라지거나 요청한 작업을 끝내지 못할 수 있습니다. 저는 DIOVA에서 **모델을 작게 저장해 다시 실행하는 도구**, **같은 질문의 답변 변화를 찾는 비교 도구**, **AI가 실제로 파일을 고치고 검사했는지 확인하는 평가 도구**를 만들었습니다. 공개 Qwen 모델과 RTX 5080 16GB에서 실행한 기록을 함께 제공합니다.
+
+이 작업은 **로컬 AI 실행**, 학습된 모델이 잘 작동하도록 만드는 **추론 엔지니어링**, **모델 최적화**, 변경 뒤에 원래 맞히던 답을 잃는지 확인하는 **품질 회귀 검사**, **도구 자동화 평가**와 관련됩니다. 직접 만든 코드와 측정 결과에서 구현 범위와 확인한 조건을 볼 수 있습니다.
+
+기술 협업으로 논의할 수 있는 일은 로컬 모델의 실행 실패 원인 찾기, 설정별 메모리·시간·답변 비교, 잘못 바뀐 답변이나 빠진 도구 작업을 찾는 검사 만들기, 저장된 결과를 재사용할 수 있는 보고서로 정리하기입니다. [역량과 코드 근거](docs/ko/PORTFOLIO.md)에서 각 작업의 구현을 확인할 수 있습니다. 실제 서비스 배포 적합성은 평가하지 않았습니다.
 
 [포트폴리오·모델별 안내 (Pages)](https://munsik-kim.github.io/inference-lab/ko/index.html) · [직접 사용: 내 결과 비교 예제](packages/diova-compare/examples/compare/README.ko.md)
 
@@ -12,27 +16,27 @@ DIOVA는 공개 AI 모델의 변환·실행·평가를 연결하는 추론 엔�
 
 | 문제 | 직접 구현 | 근거·사용 경로 |
 |---|---|---|
-| A. 모델을 작게 저장하고 실제 요청까지 실행하기 | 기존 GPTQ 변환·저장본 검사·새 프로세스 재로딩·같은 조건의 요청 비교 | [Case008 Q](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) → [Case009](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving) |
-| B. 바꾼 모델의 답변을 같은 질문 기준으로 비교하기 | diova-compare: 입력·정답 계약 검사, 정답 손실·회복·불일치, 원 실행 실패 보존 | [CPU 실행 예제](packages/diova-compare/examples/compare/README.ko.md) · [코드·테스트](packages/diova-compare/README.ko.md#구현) |
-| C. 답변이 아니라 실제 도구 작업의 완료를 확인하기 | 등록 도구 이름 제한·오류 피드백·수정/검증 이벤트 평가 | [Case013 후속 구현·보고서](research/agent_tool_contract_repair_20261014/README.ko.md) |
+| A. 모델을 작게 저장하고 실제 요청까지 실행하기 | 기존 압축 방법(GPTQ)을 연결하고, 저장 파일 검사·새로 시작한 프로그램에서 재실행·동일 조건의 요청 비교 구현 | [Case008 Q](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) → [Case009](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving) |
+| B. 바꾼 모델의 답변을 같은 질문 기준으로 비교하기 | 독립 CPU 도구 diova-compare 제작: 질문·정답 기준이 같은지 검사하고, 잃은 정답·새 정답·그 밖의 변경과 원 실행 실패 표시 | [CPU 실행 예제](packages/diova-compare/examples/compare/README.ko.md) · [코드·테스트](packages/diova-compare/README.ko.md#구현) |
+| C. 답변이 아니라 실제 도구 작업의 완료를 확인하기 | 사용 가능한 도구 이름으로 호출을 제한하고 오류를 안내하며, 실제 파일 수정·검사 실행 기록을 확인 | [Case013 후속 구현·보고서](research/agent_tool_contract_repair_20261014/README.ko.md) |
 
-현재 모델별 상세 안내는 Qwen3-4B-Instruct-2507과 RTX 5080 16GB의 공개 기록을 다룹니다. 0.6B 구조 복원·INT4 보정 연구는 별도 경로입니다. 비교 CLI는 Python 3.10+의 CPU 도구이며, 자유 생성 정오는 사용자가 제공한 채점 결과를 사용합니다.
+현재 모델별 상세 안내는 Qwen3-4B-Instruct-2507과 RTX 5080 16GB의 기록을 다룹니다. 더 작은 Qwen3-0.6B의 구조 변경·압축 오차 보정 연구는 별도로 읽습니다. 명령어로 실행하는 비교 도구(CLI)는 Python 3.10+와 CPU로 작동합니다. 자유롭게 생성한 답변의 정오 판정은 사용자가 제공하며, 모델 실행이나 자동 채점 기능은 아닙니다.
 
 [설치·내 기록 넣기](packages/diova-compare/examples/compare/README.ko.md) · [모델별 실전 안내](docs/ko/LLM_GUIDE.md) · [기술 역량·코드](docs/ko/PORTFOLIO.md) · [재현 안내](docs/ko/GETTING_STARTED.md)
 
 ## 직접 구현한 부분과 재사용한 기술
 
-| 프로젝트 구현 | upstream 제공 | 코드·테스트 |
+| 프로젝트 구현 | 기존 연구·라이브러리에서 제공 | 코드·테스트 |
 |---|---|---|
-| 저장본 검사·부분 저장 방지·strict reload | PyTorch · Transformers · safetensors | [code](tools/modelpack/artifact.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
-| Q 변환·저장·복사·새 runtime 검사 | GPTQ · LLM Compressor · compressed-tensors · vLLM/Marlin | [code](tools/modelpack/quantized.py) · [tests](cases/008-build-reconstruct-reload/tests/test_boundaries.py) |
-| 고정 구조 ridge 적합·작은 가중치에 보정 저장 | NumPy 선형대수 · 채널 재구성 선행연구 | [code](tools/modelpack/numerics.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
-| 동일 입력 측정·paired 결과 리포트 | vLLM benchmark · lm-evaluation-harness · 비교 지표 선행연구 | [code](packages/diova-compare/src/diova_compare/core.py) · [tests](packages/diova-compare/tests/test_compare.py) |
-| 저비트 state packing·실패 보존·새 프로세스 재시작 | NumPy · PyTorch · ComplexKDA recurrence | [구현](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [합성 재시작 테스트](cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
-| 같은 state의 최종 판독층 교체·patch 저장·재적용 | ComplexKDA · PyTorch L-BFGS · NumPy | [adapter](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [patch 검사](cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
-| 같은 잡음의 loop/step 실행·시간 예산 선택·이미지 평가 | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [adapter](cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU 검사](cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
-| INT4 스케일 보존 변환과 저장 품질 검산 | DualQuant 공개 수식 · PyTorch · NumPy | [변환](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 검산](cases/013-dualquant-reference-quality/analysis/audit.py) |
-| 자체 경로 보정·INT4 저장/재로딩·전층 품질 비교 | Guo compensation · PyTorch · Transformers · NumPy | [code](cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [tests](cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) |
+| 변환해 저장한 모델 파일 검사·불완전한 저장 방지·구조가 맞지 않는 재로딩 거절 | PyTorch · Transformers · safetensors | [코드](tools/modelpack/artifact.py) · [테스트](cases/008-build-reconstruct-reload/tests/test_core.py) |
+| Q 모델의 변환·저장·복사·새로 시작한 추론 프로그램에서 실행 검사 | GPTQ · LLM Compressor · compressed-tensors · vLLM/Marlin | [코드](tools/modelpack/quantized.py) · [테스트](cases/008-build-reconstruct-reload/tests/test_boundaries.py) |
+| 작은 계산 블록의 출력 오차를 줄이는 가중치 적합(ridge 회귀)·보정 저장 | NumPy 선형대수 · 채널 재구성 선행연구 | [코드](tools/modelpack/numerics.py) · [테스트](cases/008-build-reconstruct-reload/tests/test_core.py) |
+| 같은 질문을 짝지어 측정하고 개별 변화를 보여주는 비교 보고서 | vLLM benchmark · lm-evaluation-harness · 비교 지표 선행연구 | [코드](packages/diova-compare/src/diova_compare/core.py) · [테스트](packages/diova-compare/tests/test_compare.py) |
+| 모델의 변화하는 기억을 적은 비트로 저장·실패 상태 보존·새 프로그램에서 이어 실행 | NumPy · PyTorch · ComplexKDA recurrence | [구현](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [합성 재시작 테스트](cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
+| 같은 기억에서 답을 읽는 마지막 층만 교체·변경한 두 배열 저장·재적용 | ComplexKDA · PyTorch L-BFGS · NumPy | [모델 연결 코드](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [변경 가중치 저장·재적용 검사](cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
+| 같은 초기 잡음에서 생성 단계·내부 반복·시간·요청한 개수·색·좌우 조건 충족 여부 비교 | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [모델 연결 코드](cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU 검사](cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
+| 배율을 유지하는 4비트 정수(INT4) 변환·저장된 품질 결과 재검산 | DualQuant 공개 수식 · PyTorch · NumPy | [변환](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 검산](cases/013-dualquant-reference-quality/analysis/audit.py) |
+| 앞선 층 압축으로 달라진 중간 계산값을 다음 층에서 수집해 보정·INT4 저장/재로딩·모델 전체 문장 품질 비교 | Guo compensation · PyTorch · Transformers · NumPy | [코드](cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [테스트](cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) |
 | API 이름 변경·관측 이력·상태 회귀시험 | Qwen · PyTorch · Transformers · Python stdlib | [runner](cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py) · [tests](cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/tests/test_order_contracts.py) |
 
 [선행연구와 구현 대응](docs/related-work/README.ko.md) · [CPU 비교 도구](packages/diova-compare/README.ko.md)
@@ -50,19 +54,19 @@ API 이름 변경 전후의 주문 조회·계산·저장·검증을 자동 비�
 
 ### 모델을 압축하고, 저장하고, 다시 실행합니다
 
-GPTQ 저장본 제작과 추론 엔진 연결, 층별 MLP 크기가 달라진 모델의 저장·로딩, 작은 모듈의 출력 가중치 보정을 구현했습니다.
+기존 압축 방법인 GPTQ로 모델 파일을 만들고, 요청을 받아 모델을 실행하는 소프트웨어(추론 엔진)에 연결했습니다. Qwen3 모델에서 순방향 계산 블록(MLP) 한 층의 크기를 줄인 모델을 저장·복원하고, 그 작은 블록의 출력 오차를 줄이도록 가중치를 보정하는 도구를 구현했습니다.
 
 LLM Compressor · PyTorch · Transformers · safetensors. [저장본 로더](tools/modelpack/artifact.py) · [저장·재로딩 테스트](cases/008-build-reconstruct-reload/tests/test_core.py)
 
 ### GPU 추론 성능과 답변 비교
 
-같은 입력에서 지연시간·GPU 메모리·정답 점수를 비교합니다. 부분 연산과 모델 전체의 실행 비용을 나누어 측정합니다.
+같은 입력에서 걸린 시간(지연시간)·GPU 메모리·정답 점수를 비교합니다. 한 연산과 모델 전체의 실행 비용을 따로 재서, 일부 계산이 빨라진 것을 답변 전체가 빨라진 것으로 읽지 않게 합니다.
 
 vLLM · CUDA 실행 환경 · NVML · NumPy. [요청·메모리 측정 코드](cases/002-bf16-fp8-document-extraction/scripts/run.py) · [시간 측정 경계](cases/004-low-precision-attention-break-even/src/timing.py)
 
 ### 재계산 도구와 결과 탐색기
 
-공개 기록을 재계산하는 Python 도구와 입력별 결과를 보는 웹 화면을 만듭니다. 자동 검사로 표시 데이터와 원자료의 연결을 확인합니다.
+저장된 측정값을 다시 계산하는 Python 도구와 질문별로 무엇이 달라졌는지 보여주는 웹 화면을 만듭니다. 화면에 표시한 값이 원자료와 맞는지 자동으로 검사합니다.
 
 Python · JavaScript · GitHub Actions · GitHub Pages. [CPU 선택기 재계산](tools/showcase/replay_selection.py) · [표시 계층 검사와 테스트](tests/showcase/test_showcase.py)
 
@@ -71,11 +75,11 @@ Python · JavaScript · GitHub Actions · GitHub Pages. [CPU 선택기 재계산
 
 | 작업 | 기술과 구현 |
 |---|---|
-| 양자화·압축 저장 | **LLM Compressor / GPTQ / compressed-tensors** — Linear 가중치를 변환하고 packed tensor와 변환 recipe를 검사합니다. |
-| 모델 구조·저장·로딩 | **PyTorch / Transformers / safetensors** — 행렬을 자르고 층별 폭을 저장한 뒤 tensor shape와 공유 가중치를 복원합니다. |
-| 수치 보정·그룹 선택 | **NumPy / CPU FP64 / ridge regression / Cholesky** — 작은 MLP의 출력 가중치를 보정하고 그룹 선택과 쌍별 점수를 비교합니다. |
+| 양자화·압축 저장 | **LLM Compressor / GPTQ / compressed-tensors** — 행렬 변환(Linear)의 가중치를 압축하고, 묶어 저장한 배열(packed tensor)과 변환 설정(recipe)을 검사합니다. |
+| 모델 구조·저장·로딩 | **PyTorch / Transformers / safetensors** — 행렬을 자르고 층별 크기를 저장한 뒤 배열 크기(tensor shape)와 공유 가중치를 복원합니다. |
+| 수치 보정·그룹 선택 | **NumPy / CPU FP64 / ridge regression / Cholesky** — 64비트 수치 풀이로 작은 MLP의 출력 가중치를 보정하고, 제거할 그룹과 질문별 점수를 비교합니다. |
 | GPU 실행·검사 | **vLLM / Marlin / PyTorch SDPA / SageAttention / CUDA runtime / NVML** — 실제 실행 경로를 확인하고 같은 입력의 메모리·전체 호출 비용을 측정합니다. |
-| 재계산·결과 화면 | **Python / unittest / GitHub Actions / HTML / CSS / JavaScript** — 스칼라·저장본 검사, 작은 CPU 예제, 한·영 결과 화면을 제공합니다. |
+| 재계산·결과 화면 | **Python / unittest / GitHub Actions / HTML / CSS / JavaScript** — 개별 수치·모델 파일 검사, 작은 CPU 예제, 한·영 결과 화면을 제공합니다. |
 
 [구현 코드·관련 테스트 읽기](docs/ko/PORTFOLIO.md#code-tour). CUDA는 GPU 실행·측정에, 공개 커널은 연산 교체에 사용했습니다.
 
@@ -99,13 +103,13 @@ Qwen3-4B-Instruct-2507 · GPTQ W4A16. **LLM Compressor · compressed-tensors · 
 
 #### R · 구조가 달라진 모델의 저장·재로딩과 가중치 보정
 
-고정된 작은 down projection에 ridge 보정값을 저장합니다. 층별 크기 metadata와 meta skeleton으로 구조를 구성하고, strict 할당·공유 가중치·파생 buffer를 복원해 원래 checkpoint 없이 새 프로세스에서 실행합니다.
+작은 블록의 출력 행렬(down projection)을 원래 출력에 가까워지도록 맞추는 ridge 회귀를 적용했습니다. 저장 파일에는 층별 크기 정보(metadata)를 남깁니다. 로더는 가중치 없는 빈 구조(meta skeleton)를 만든 뒤 저장된 숫자 배열(tensor)을 빠짐없이 대입하고, 공유 가중치와 계산용 보조 배열(buffer)을 복원해 원래 모델 파일(checkpoint) 없이 새 프로그램에서 실행합니다.
 
 Qwen3-0.6B · 한 층 MLP · BF16 · 재구성 평가는 짧은 합성 평가 입력 192개 · **PyTorch · NumPy · safetensors**.
 
 [구조 복원 코드](tools/modelpack/artifact.py) · [보정 방법](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-r) · [품질·속도 평가](https://munsik-kim.github.io/inference-lab/ko/case008.html#r-evaluation)
 
-[설계와 실험 결과](cases/008-build-reconstruct-reload/REPORT.ko.md) · [CPU 데모 실행](docs/ko/GETTING_STARTED.md#tiny-model-demo) · [코드·recipe·측정 자료 ZIP](downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)
+[설계와 실험 결과](cases/008-build-reconstruct-reload/REPORT.ko.md) · [CPU 데모 실행](docs/ko/GETTING_STARTED.md#tiny-model-demo) · [코드·변환 설정·측정 자료 ZIP](downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)
 
 ### Case 007 — 채널 선택부터 실제 행렬 축소까지
 
@@ -132,26 +136,26 @@ Qwen3-0.6B · 한 층 attention · 고정 합성 질문. **PyTorch · Transforme
 
 ## 새 측정 — 긴 decode와 동시 요청
 
-Case009는 기존 Qwen3-4B BF16/W4 저장본을 출력 256토큰·동시 요청 상한 1/4/16/32에서 비교합니다. 전체 graph grid와 같은 조건의 eager 비교에 서버 3라운드를 모두 남겼습니다. 공식 품질 계산은 별도이며 native 프로세스 종료 실패도 표시합니다.
+Case009는 기존 Qwen3-4B의 16비트 가중치 모델(BF16)과 4비트 가중치 모델(W4)을 비교합니다. 요청마다 텍스트 처리 단위인 토큰 256개를 생성하고, 최대 1/4/16/32개 요청을 동시에 보냈습니다. GPU 실행 순서를 미리 준비하는 graph와 매번 연산을 호출하는 eager 방식에서 서버 3라운드의 기록을 모두 남겼습니다. 공식 품질 과제는 별도 실행이며, 점수가 계산됐어도 프로그램이 비정상 종료한 경우를 함께 표시합니다.
 
 ![RTX 5080에서 입력 128·출력 256의 TPOT와 처리량 전체 곡선](cases/009-q-serving-quality/figures/serving-L128.png)
 
-영어 축 라벨입니다. [두 입력 길이와 품질표](cases/009-q-serving-quality/REPORT.ko.md) · [CPU 재계산·영어](cases/009-q-serving-quality/REPRODUCTION.md) · [설치형 paired CLI](packages/diova-compare/README.ko.md)
+영어 축 라벨입니다. [두 입력 길이와 품질표](cases/009-q-serving-quality/REPORT.ko.md) · [CPU 재계산·영어](cases/009-q-serving-quality/REPRODUCTION.md) · [설치해서 쓰는 질문별 비교 도구](packages/diova-compare/README.ko.md)
 
 ## Case 010 — 저정밀 state의 저장·재시작과 기억 수명
 
 <!-- claims: c010-state-bytes -->
-반복해서 갱신하는 recurrent state를 실제 저비트로 저장하고, 수치 실패 상태와 난수를 보존해 새 프로세스에서 이어 실행하는 도구를 구현했습니다. 같은 저장 한도에서 첫 오답까지의 길이와 계산 비용을 비교합니다.
+모델이 입력마다 갱신하는 기억(recurrent state)을 적은 비트로 저장하고, 수치 실패와 난수 생성 상태도 보존해 새로 시작한 프로그램에서 이어 실행하는 도구를 구현했습니다. 같은 저장 한도에서 첫 오답까지의 길이와 계산 비용을 비교합니다.
 
-**stream별 직렬화 state 12,305 → 3,137 bytes, 약 74.5% 감소** · Native FP32 → INT8. 같은 세 학습 CKDA의 새 입력에서 평균 연속 정답 길이 점추정 차이는 각각 1token 미만이었습니다. 전체 RAM·VRAM이나 품질 동등성을 나타내는 수치는 아닙니다.
+**입력 흐름(stream) 하나의 상태 저장량 12,305 → 3,137 bytes, 약 74.5% 감소** · 원래 32비트 형식(Native FP32) → 8비트 정수(INT8). 상태 추적용 CKDA 모델 세 개의 새 입력에서, 처음부터 연속해서 맞힌 평균 길이의 추정 차이는 각각 1토큰 미만이었습니다. 전체 RAM·VRAM이나 품질 동등성을 나타내는 수치는 아닙니다.
 
 [실패를 보존하는 구현](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [CPU 검산](cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.ko.md) · [두 단계의 방법과 결과](cases/010-ckda-finite-precision-memory-horizon/REPORT.ko.md)
 
 ## Case 011 — 같은 상태, 다른 판독기
 
-모델이 저장한 상태는 유지하고, 답을 읽는 마지막 층만 교체하는 도구를 만들었습니다. 보정한 두 tensor를 patch로 저장하고 새 프로세스에서 다시 적용해 결과를 비교합니다.
+모델이 저장한 상태는 유지하고, 답을 읽는 마지막 층만 교체하는 도구를 만들었습니다. 보정한 두 숫자 배열(tensor)을 변경 가중치 파일(patch)로 저장하고 새 프로그램에서 다시 적용해 비교합니다.
 
-**마지막 층 1,158개 값 · 추가 recurrent-state 저장 0 B · 새 프로세스 재적용**
+**마지막 층 1,158개 값 · 변화하는 모델 기억의 추가 저장 0 B · 새 프로그램에서 재적용**
 
 정답 확률 점수는 개선됐지만, 처음부터 연속해서 맞히는 평균 길이는 짧아졌습니다. 같은 상태에서도 정답에 높은 점수를 주는 것과 첫 오류를 늦추는 것은 달랐습니다.
 
@@ -165,6 +169,8 @@ CKDA 기호 상태추적 · 기존 checkpoint 3개 · 마지막 선형층만 지
 
 **동일 초기 잡음 · 설정별 시간·메모리 · 조건을 가린 평가 화면**
 
+L1·L2·L4는 한 생성 단계 안에서 핵심 계산을 각각 1·2·4번 반복한 설정입니다.
+
 MAIN 192장의 사람 체크를 마쳤습니다. 직접 체크한 100장의 답을 비슷한 사진 92장에도 적용했습니다. 모든 요청 조건을 맞힌 장수는 **L1 52/64장, L2 51/64장, L4 53/64장**입니다. L4는 L1보다 4개를 얻고 3개를 잃어 순차이는 한 장이었습니다. 요청 시간 중앙값은 L2가 가장 짧았습니다. 묶음 답을 적용한 관측 장수이며, 기존 AI 점수도 별도로 보존했습니다.
 
 [쉽게 살펴보기](cases/012-looped-dit-inference-budget/README.ko.md) · [모든 이미지 비교](cases/012-looped-dit-inference-budget/publication/IMAGES.ko.md) · [실행 코드](cases/012-looped-dit-inference-budget/source/adapter.py) · [설계와 결과](cases/012-looped-dit-inference-budget/REPORT.ko.md)
@@ -173,26 +179,26 @@ MAIN 192장의 사람 체크를 마쳤습니다. 직접 체크한 100장의 답�
 
 ## Case 013 — 가중치 오차가 줄면 실제 답변도 좋아질까?
 
-실제 INT4 packing·재로딩, 스케일을 보존하는 전체 모델 adapter와 동일 입력의 문장 점수·장문 답·로컬 도구 검사를 구현했습니다. RTX 5080에서 Qwen 0.6B와 4B의 네 방법을 모두 기록했습니다.
+가중치를 4비트 정수(INT4)로 묶어 저장하고 다시 읽는 도구, 배율을 보존해 모델에 적용하는 연결 코드(adapter), 같은 입력의 문장 점수·장문 답·로컬 도구 검사를 구현했습니다. RTX 5080에서 Qwen 0.6B와 4B의 네 방법을 모두 기록했습니다. D16은 가중치를 INT4로 저장하고 계산 입력은 BF16으로 유지합니다. D4는 같은 가중치에 계산 입력까지 INT4로 바꿉니다. 두 품질 경로 모두 압축 값을 BF16으로 복원해 계산하는 참조 계산(reference)이며, 두 이름은 가중치 압축 강도를 뜻하지 않습니다.
 
-D16의 가중치 오차는 두 모델에서 줄었습니다. 0.6B의 PPL은 좋아졌지만 4B에서는 조금 나빠졌고, 자유 도구 작업은 **RTN 8/8 대비 D16 6/8**을 완료했습니다. Packed 전체 모델 수치 기준은 미통과여서 serving 가속은 아직 확인하지 못했습니다. Reference 품질과 작은 DEV 실험의 결과입니다.
+D16의 가중치 오차는 두 모델에서 줄었습니다. 다음 토큰을 예측하는 점수인 PPL(낮을수록 좋음)은 0.6B에서 좋아졌지만 4B에서는 조금 나빠졌습니다. 자유 도구 작업은 **RTN 8/8 대비 D16 6/8**을 완료했습니다. RTN은 가까운 허용값으로 단순 반올림하는 비교 방법입니다. 압축된 값을 직접 처리하는 GPU 연산을 쓴 전체 모델은 사전 수치 기준을 통과하지 못해 요청 처리 가속은 확인되지 않았습니다. 설정 조정에 쓰던 기존 문제(DEV)를 활용한 작은 품질 실험입니다.
 
-[쉬운 소개](cases/013-dualquant-reference-quality/README.ko.md) · [변환·adapter](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 재계산](cases/013-dualquant-reference-quality/REPRODUCTION.ko.md) · [정식 보고서](cases/013-dualquant-reference-quality/REPORT.ko.md)
+[쉬운 소개](cases/013-dualquant-reference-quality/README.ko.md) · [변환·모델 연결 코드](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 재계산](cases/013-dualquant-reference-quality/REPRODUCTION.ko.md) · [정식 보고서](cases/013-dualquant-reference-quality/REPORT.ko.md)
 
 ### 후속 구현 — 도구 이름 오류와 실제 작업 성공
 
-기존 결과를 CPU 비교 CLI에 연결하고, 등록된 도구 이름만 생성하는 제약과 정확한 오류 안내를 구현했습니다. 같은 기존 DEV 8개에서 가중치를 유지한 D16은 **6/8→8/8**, D4는 **0/8→2/8**로 바뀌었습니다. 이름 제한 조건의 미등록 호출은 0회였고, D4의 나머지 6개 실패는 남았습니다.
+기존 결과를 CPU 비교 도구에 연결하고, 사용 가능한 이름만 도구 호출에 넣는 제한(enum decoding)과 오류 안내를 구현했습니다. 같은 기존 DEV 8개에서 가중치를 유지한 D16은 **6/8→8/8**, D4는 **0/8→2/8**로 바뀌었습니다. 이름 제한 조건의 미등록 호출은 0회였고, D4의 나머지 6개 실패는 남았습니다. 성공 판정에는 완료했다는 최종 답변뿐 아니라 실제 수정·검사 기록이 필요했습니다. 새 문제에서도 같은 효과가 있는지는 확인하지 않았습니다.
 
 [쉽게 살펴보기](research/agent_tool_contract_repair_20261014/README.ko.md) · [전체 결과·한영 보고서](research/agent_tool_contract_repair_20261014/records/REPORT_KO.md) · [앞선 원인 진단](research/agent_stability_20261013/README.ko.md) · [기록 비교 CLI](packages/diova-compare/README.ko.md#case013-export)
 
 <!-- case014-entry -->
 ## 연구·수치 엔지니어링 — Case014
 
-양자화된 실제 입력 경로를 따라 보정하고 같은 INT4 형식으로 저장하는 도구를 구현했습니다.
+앞선 층을 압축하면서 달라진 중간 계산값을 다음 층에서 수집해 오차를 보정하는 별도 연구 도구를 만들었습니다. 보정한 가중치를 INT4로 저장·재로딩하고, 모델 전체의 텍스트 예측 품질을 비교했습니다.
 
-**PG19 PPL 12.92% 감소 ·64/64 문서 구간 NLL 개선 ·동일 projection bytes**
+**PG19 텍스트 예측 점수(PPL) 12.92% 감소 · 64/64 문서 구간의 정답 토큰 손실(NLL) 개선 · 변환한 행렬의 저장 바이트 동일**
 
-Qwen3-0.6B ·196 Transformer projections ·새 PG19 64책의256-token 구간. ArXiv에서는 같은 이득 미확인. BF16 복원 품질 평가이며 속도·VRAM 절감은 미측정입니다.
+Qwen3-0.6B · 학습된 행렬 변환(Transformer projection) 196개 · 새 PG19 64책의 256토큰 구간. ArXiv 글에서는 같은 이득이 확인되지 않았습니다. BF16으로 복원한 품질 평가이며 속도·GPU 메모리(VRAM) 절감은 측정하지 않았습니다. 행렬 저장량이 같다는 결과를 전체 모델 파일 크기가 같다는 뜻으로 넓히지 않습니다.
 
 [결과 비교하기](https://munsik-kim.github.io/inference-lab/ko/case014.html#results) · [구현과 재현](cases/014-quantization-compensation/REPRODUCE.md) · [연구 과정](cases/014-quantization-compensation/STAGE_MAP.md)
 
@@ -214,7 +220,7 @@ Qwen3-0.6B ·196 Transformer projections ·새 PG19 64책의256-token 구간. Ar
 | [009 — 긴 decode와 동시 요청에서 비용은 어떻게 바뀔까?](cases/009-q-serving-quality/README.ko.md) | 같은 조건의 graph/eager 요청 비용과 공식 품질 계산. 비정상 프로세스 종료 기록도 함께 표시. |
 | [010 — 저비트 state를 실패 이후에도 재시작할 수 있는가?](docs/ko/CASEBOOK.md#case-010) | 실제 bit packing, 실패 상태 직렬화, 최초 판독 실패와 저장 예산 비교. |
 | [011 — 같은 상태에서 판독기만 바꾸면?](docs/ko/CASEBOOK.md#case-011) | 마지막 층 두 tensor 보정·재적용, 정답 점수와 첫 오류 길이의 비교. |
-| [012 — 이미지 생성 시간을 어디에 더 쓸까?](docs/ko/CASEBOOK.md#case-012) | 같은 잡음의 loop/step 실행·시간 비교·이미지 판독 도구. 전체192장 AI 평가와 조건별 획득·손실. |
+| [012 — 이미지 생성 시간을 어디에 더 쓸까?](docs/ko/CASEBOOK.md#case-012) | 같은 초기 잡음에서 생성 단계·내부 반복·시간을 비교하는 도구. 전체 192장의 개수·색·좌우 요청 조건 충족 여부와 조건별 획득·손실 평가. |
 | [013 — 가중치 오차가 줄면 실제 답도 좋아질까?](docs/ko/CASEBOOK.md#case-013) | INT4 스케일 보존·저장·재로딩과 동일 입력 품질 기록. Packed 전체 모델 수치 기준 미통과. |
 | [014 — 같은 INT4 저장량에서 품질을 개선할 수 있는가?](docs/ko/CASEBOOK.md#case-014) | 자체 경로 보정·INT4 저장/재로딩·전층 품질 비교. PG19 이득과 ArXiv 한계를 함께 기록. |
 

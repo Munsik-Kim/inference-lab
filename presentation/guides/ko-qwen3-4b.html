@@ -2,19 +2,19 @@
   <nav class="guide-breadcrumb" aria-label="현재 위치"><a href="index.html">DIOVA 홈</a><span aria-hidden="true"> / </span><a href="llm-guide.html">모델별 실전 안내서</a><span aria-hidden="true"> / </span><span>Qwen3-4B</span></nav>
   <header class="guide-intro">
     <p class="eyebrow">한 모델의 실행·품질·실패 기록</p>
-    <h1>Qwen3-4B-Instruct-2507 실전 안내</h1>
+    <h1>Qwen3-4B-Instruct-2507: 실행한 작업과 확인된 한계</h1>
     <p class="guide-subtitle">작게 저장한 모델이 다시 실행되는지, 빨라지는지, 업무까지 수행하는지 따로 확인했습니다.</p>
-    <p>아래는 RTX 5080 16GB의 기존 기록을 연결한 안내입니다. BF16은 원래 16비트 가중치를 쓰는 비교 기준선이며, W4A16은 가중치 4비트·활성값 16비트를 뜻합니다. 활성값은 실행 중 계산되는 숫자입니다.</p>
+    <p>제가 구현한 작업은 모델 파일을 줄여 다시 실행하는 절차, 응답 시간과 답변의 비교, AI 도구 사용 실패의 검사와 완화입니다. 아래는 RTX 5080 16GB에서 남긴 기존 기록입니다. BF16은 원래 16비트 숫자를 쓰는 비교 기준입니다. W4A16은 학습된 숫자(가중치)는 4비트, 각 계산 단계에 들어가는 값(활성값)은 16비트로 다룬다는 뜻입니다.</p>
   </header>
   <nav class="guide-toc" aria-label="모델 안내 목차"><a href="#conclusion">한눈에 보는 결론</a><a href="#decisions">판단 범위</a><a href="#environment">모델·환경</a><a href="#configurations">실행·재확인</a><a href="#results">결과</a><a href="#mitigation">문제·완화</a><a href="#implementation">구현·출처</a><a href="#sources">원자료·이력</a></nav>
   <section id="conclusion">
     <h2>1. 한눈에 보는 결론</h2>
     <ul class="conclusion-list">
-      <li><strong>실제 저비트 실행 확인 — GPTQ W4A16.</strong> Case008 Q에서 압축 저장본을 검사·복사하고 새 vLLM 프로세스의 Marlin 실행 경로를 확인했습니다. 가중치 파일 크기는 {{weight_files}}로 {{file_reduction}} 감소했습니다. 전체 그래픽카드 전용 메모리(VRAM)의 감소율은 아닙니다.</li>
-      <li><strong>조건별 서빙 이득 확인 — Case009.</strong> 같은 GPTQ 저장본도 요청 조건에 따라 이득이 달랐습니다. Graph 실행의 출력 처리량비는 입력 128·동시 요청 상한 1에서 {{speed_small}}배, 입력 1024·상한 32에서 {{speed_large}}배입니다. 출력은 256 token으로 고정했습니다. <a href="#quality">품질 저하와 종료 실패</a>도 함께 확인해야 합니다.</li>
+      <li><strong>실제 저비트 실행 확인 — GPTQ W4A16.</strong> Case008 Q에서 압축한 모델 파일을 검사·복사하고, 모델 실행 프로그램(vLLM)을 새로 시작해 압축 가중치를 처리하는 GPU 코드(Marlin)가 선택된 기록을 확인했습니다. 가중치 파일 크기는 {{weight_files}}로 {{file_reduction}} 감소했습니다. 전체 그래픽카드 전용 메모리(VRAM)의 감소율은 아닙니다.</li>
+      <li><strong>요청 처리 이득을 조건별로 확인 — Case009.</strong> 같은 GPTQ 저장본도 요청 조건에 따라 이득이 달랐습니다. 미리 준비한 GPU 작업 묶음을 재사용하는 graph 실행의 출력 처리량비는 입력 128·동시 요청 상한 1에서 {{speed_small}}배, 입력 1024·상한 32에서 {{speed_large}}배입니다. 출력은 256 token으로 고정했습니다. <a href="#quality">품질 저하와 종료 실패</a>도 함께 확인해야 합니다.</li>
       <li><strong>실행 중 VRAM 표본도 감소 — Case009.</strong> 같은 라운드끼리 비교한 GPU 전체 메모리의 최고 표본값은 {{memory_saved_percent}} 낮았습니다. {{memory_rounds}}라운드의 1초 간격 표본이며, 파일 크기 감소율과 다른 지표입니다. <a href="#device-memory">실행 중 메모리 수치와 측정 조건</a></li>
-      <li><strong>품질 진단 경로 — Case013과 후속.</strong> 프로젝트의 4비트 정수(INT4) reference variant를 BF16으로 복원해 계산했습니다. 가중치만 낮춘 D16과 활성값까지 낮춘 D4의 진단이며, packed INT4로 더 빨라졌다는 결과가 아닙니다.</li>
-      <li><strong>남은 문제.</strong> Case013 packed 전체 모델 수치 검사는 상대 오차 {{packed_error}}로 기준 {{packed_threshold}}를 넘었습니다. 일부 Case009 품질 프로세스는 계산 후 정상 종료하지 못했습니다. 별도 입력의 도구 작업 일반화와 장기 운영 안정성은 확인하지 않았습니다.</li>
+      <li><strong>품질 진단 경로 — Case013과 후속.</strong> 프로젝트에서 공개 수식을 바탕으로 구현한 비교용 변형(reference variant)의 숫자를 4비트 정수(INT4)로 줄인 뒤 16비트 형식(BF16)으로 복원해 계산했습니다. D16은 INT4 가중치와 BF16 입력값을, D4는 같은 가중치에 입력값도 INT4로 줄였다가 BF16으로 복원한 값을 씁니다. 모델 크기가 다른 두 모델이 아니며, 압축 표현을 직접 쓰는 실행(packed INT4)의 가속 결과도 아닙니다.</li>
+      <li><strong>남은 문제.</strong> Case013의 압축 실행(packed) 전체 모델 계산값 검사는 상대 오차 {{packed_error}}로 기준 {{packed_threshold}}를 넘었습니다. 일부 Case009 품질 프로세스는 계산 후 정상 종료하지 못했습니다. 별도 입력의 도구 작업 일반화와 장기 운영 안정성은 확인하지 않았습니다.</li>
     </ul>
     <p class="source-note">{{source_storage}} · {{source_serving}} · {{source_reference}}</p>
     <p class="guide-callout">저장·재실행 절차를 찾는다면 GPTQ 경로부터 읽을 수 있습니다. 업무 자동화용 설정으로 바로 추천할 근거는 부족합니다. 먼저 자신의 입력과 정답 조건으로 품질을 확인하세요.</p>
@@ -27,26 +27,26 @@
     <div class="scroll guide-table" role="region" tabindex="0" aria-label="설정별 용도와 제한"><table><caption>공통 과제·실행 환경을 확인한 뒤 선택합니다</caption><thead><tr><th scope="col">설정</th><th scope="col">참고할 수 있는 것</th><th scope="col">선택 전에 남은 확인</th></tr></thead><tbody>
       <tr><th scope="row">공식 BF16 / FP8 · Case002</th><td>공식 배포본의 문서 추출 실패와 실행 조건</td><td>형식이 맞아도 내용이 틀릴 수 있습니다. 두 배포본의 변환 이력까지 통제하지 않았으므로 순수한 비트 수 효과로 해석하지 않습니다.</td></tr>
       <tr><th scope="row">GPTQ W4A16 · Case008 Q / Case009</th><td>작은 가중치 파일의 재실행, 실제 저비트 커널, 조건별 요청 비용과 GPU 메모리 표본</td><td>과제별 품질 저하와 일부 품질 프로세스의 종료 문제가 남았습니다. 자신의 입력과 정답 규칙으로 다시 확인해야 합니다.</td></tr>
-      <tr><th scope="row">프로젝트 reference 변형 · Case013 / 후속</th><td>가중치·답변 차이 진단, 도구 이름 제약에 의한 실패 완화</td><td>BF16 복원 계산이며 packed 전체 모델 수치 검사는 실패했습니다. 저비트 서빙 설정으로 추천하는 결과가 아닙니다.</td></tr>
+      <tr><th scope="row">비교용 계산(reference) 변형 · Case013 / 후속</th><td>저장 숫자와 답변이 어떻게 달라지는지 확인, 도구 이름 제약에 의한 실패 완화</td><td>숫자를 BF16으로 복원한 계산이며 압축 실행(packed)의 전체 모델 계산값 검사는 실패했습니다. 4비트로 더 빠르게 서비스를 운영할 수 있다는 결과는 아닙니다.</td></tr>
     </tbody></table></div>
     <p>Case008 Q와 Case009는 같은 GPTQ 저장본을 연결하지만 요청 길이·실행 방식·캐시 예산이 다릅니다. Case013은 보정 입력·양자화 방법·계산 경로도 다른 별도 실험입니다. 이들 결과를 하나의 품질·속도 점수로 합치지 않습니다.</p>
-    <p>Case008 R은 <strong>Qwen3-0.6B를 pruning한 뒤 한 층 MLP를 복원</strong>한 별도 실험입니다. 이 4B 양자화 경로의 보정 단계로 합치지 않습니다. <a href="case008.html#track-r">관련 구현: 0.6B 구조 복원</a></p>
+    <p>Case008 R은 <strong>Qwen3-0.6B의 일부 연결을 제거(pruning)한 뒤 한 층의 계산 블록(MLP)을 복원</strong>한 별도 실험입니다. 이 4B 양자화 경로의 보정 단계로 합치지 않습니다. <a href="case008.html#track-r">관련 구현: 0.6B 구조 복원</a></p>
   </section>
   <section id="environment">
     <h2>3. 모델과 실행 환경</h2>
-    <dl class="model-facts"><div><dt>기준 모델 ID</dt><dd><code>{{model_id}}</code></dd></div><div><dt>고정 revision</dt><dd><code>{{model_revision}}</code></dd></div><div><dt>장치</dt><dd>RTX 5080 16GB · SM120 · WSL2. 모든 16GB GPU의 지원 범위로 확대하지 않습니다.</dd></div></dl>
-    <div class="scroll guide-table" role="region" tabindex="0" aria-label="경로별 artifact와 환경"><table><caption>실험마다 보존한 환경을 따로 사용합니다</caption><thead><tr><th scope="col">경로</th><th scope="col">Artifact·계산</th><th scope="col">엔진·버전과 날짜 근거</th></tr></thead><tbody>
+    <dl class="model-facts"><div><dt>기준 모델 ID</dt><dd><code>{{model_id}}</code></dd></div><div><dt>실험에 고정한 모델 버전(revision)</dt><dd><code>{{model_revision}}</code></dd></div><div><dt>장치</dt><dd>RTX 5080 16GB · SM120 · WSL2. 모든 16GB GPU의 지원 범위로 확대하지 않습니다.</dd></div></dl>
+    <div class="scroll guide-table" role="region" tabindex="0" aria-label="실험별 저장 모델 파일과 실행 환경"><table><caption>실험마다 보존한 환경을 따로 사용합니다</caption><thead><tr><th scope="col">경로</th><th scope="col">저장 모델 파일(artifact)·계산 방법</th><th scope="col">엔진·버전과 날짜 근거</th></tr></thead><tbody>
       <tr><th scope="row">Case002 공식 FP8 대조</th><td><code>{{fp8_id}}</code><br>revision <code>{{fp8_revision}}</code><br>공식 BF16·FP8 배포본 비교</td><td>vLLM 0.29.0 · Torch 2.13.0+cu130<br>2026-09-10 실행 ID · <a href="{{report002}}">설정·날짜 기록</a></td></tr>
-      <tr><th scope="row">Case008 Q → Case009</th><td>GPTQ W4A16 · group128 · symmetric · compressed-tensors<br>lm_head 제외. W4도 KV cache는 BF16.</td><td>변환: LLM Compressor 0.13.0 / Transformers 5.14.1 / compressed-tensors 0.18.0<br>실행: vLLM 0.29.0 / Transformers 5.17.0 / compressed-tensors 0.17.0<br>Case008: 2026-09-19 UTC · Case009: {{serving_date}} 설계 동결→완료 상태 기록 (개별 요청의 UTC 시각은 공개 스칼라에 없음)</td></tr>
-      <tr><th scope="row">Case013 reference / 후속</th><td>프로젝트의 group64 reference variant. D16·D4는 같은 가중치 artifact이며 D4만 활성값 INT4 추가.<br>BF16 복원 matmul · SDPA · KV BF16</td><td>Torch 2.13.0+cu130 / Transformers 5.17.0<br>원형 4B worker 실행 {{reference_worker_date}}<br>환경 관측 {{reference_date}}<br>후속 첫 worker 시작 {{followup_date}} (한국시간 다음 날)</td></tr>
+      <tr><th scope="row">Case008 Q → Case009</th><td>GPTQ W4A16 · 128개씩 묶는 대칭 양자화(group128 · symmetric) · compressed-tensors 저장 형식<br>마지막 출력층(lm_head)은 제외. W4도 이전 문장의 계산을 보관하는 KV 캐시는 BF16.</td><td>변환: LLM Compressor 0.13.0 / Transformers 5.14.1 / compressed-tensors 0.18.0<br>실행: vLLM 0.29.0 / Transformers 5.17.0 / compressed-tensors 0.17.0<br>Case008: 2026-09-19 UTC · Case009: {{serving_date}} 설계 동결→완료 상태 기록 (개별 요청의 UTC 시각은 공개된 수치 기록에 없음)</td></tr>
+      <tr><th scope="row">Case013 비교용 계산(reference) / 후속</th><td>프로젝트의 64개 묶음 비교용 변형(group64 reference variant). D16·D4는 같은 INT4 가중치 파일이며 D4만 입력값 INT4 변환·복원을 추가.<br>BF16으로 복원한 행렬곱(matmul) · SDPA 어텐션 함수 · KV 캐시는 BF16</td><td>Torch 2.13.0+cu130 / Transformers 5.17.0<br>원래 4B 모델 작업 프로그램(worker) 실행 {{reference_worker_date}}<br>환경 관측 {{reference_date}}<br>후속 첫 작업 프로그램(worker) 시작 {{followup_date}} (한국시간 다음 날)</td></tr>
     </tbody></table></div>
     <p><a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/cases/009-q-serving-quality/provenance/artifacts.json">동일 저장본의 파일별 SHA256</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/cases/009-q-serving-quality/provenance/package_versions.json">서빙·품질 환경별 버전</a></p>
     <p class="source-note">{{source_environment8}} · {{source_environment9}} · {{source_date9}} · {{source_datefollow}} · {{source_datereference}}</p>
-    <p>Case009 품질 환경의 NumPy는 2.5.3, 서빙 환경은 2.3.5로 다릅니다. 환경을 하나로 합치거나 기존 설치를 업그레이드하는 지침이 아닙니다. 큰 GPTQ/reference 모델 payload는 공개 빌드에 들어 있지 않습니다.</p>
+    <p>Case009 품질 환경의 NumPy는 2.5.3, 서빙 환경은 2.3.5로 다릅니다. 환경을 하나로 합치거나 기존 설치를 업그레이드하는 지침이 아닙니다. 큰 GPTQ 모델과 비교용 모델의 실제 가중치 데이터(payload)는 공개 사이트 파일에 들어 있지 않습니다.</p>
   </section>
   <section id="configurations">
     <h2>4. 검증한 설정과 실행·재확인 방법</h2>
-    <p><strong>GPU가 없어도 할 수 있는 일:</strong> 공개 기록의 무결성과 집계를 CPU로 재확인합니다. 아래 명령은 모델을 다운로드하거나 실행하지 않습니다. 저장소 루트와 새 외부 출력 경로를 사용합니다.</p>
+    <p><strong>GPU가 없어도 할 수 있는 일:</strong> 공개 파일이 기록된 해시와 같은지, 저장된 수치의 집계가 맞는지 CPU로 재확인합니다. 아래 명령은 모델을 다운로드하거나 실행하지 않습니다. 저장소 루트와 새 외부 출력 경로를 사용합니다.</p>
     <details><summary>공개 도구 작업 기록을 CPU로 다시 확인하기</summary>
       <pre><code>OUT=$(mktemp -d)
 STUDY=research/agent_tool_contract_repair_20261014
@@ -54,46 +54,46 @@ python3 -B "$STUDY/verify_public.py" --study "$STUDY" --output "$OUT/public.json
 python3 -B "$STUDY/analyze.py" --result "$STUDY/records" \
   --inputs "$STUDY/records/inputs" --output "$OUT/audit" \
   --skip-external-preservation</code></pre>
-      <p>새 출력의 <code>summary.json</code>과 검산 결과를 원자료와 비교합니다. 마지막 옵션은 공개본에 없는 외부 모델·기존 연구 원본을 이번 CPU 검사에서 확인하지 않았다는 뜻입니다. 원 실행의 보존 receipt와 구분합니다.</p>
+      <p>새 출력의 <code>summary.json</code>과 검산 결과를 원자료와 비교합니다. 마지막 옵션은 공개본에 없는 외부 모델·기존 연구 원본을 이번 CPU 검사에서 확인하지 않았다는 뜻입니다. 원 실행 당시 외부 파일 보존을 확인한 기록(receipt)과는 별개입니다.</p>
     </details>
-    <details><summary>GPTQ 저장본과 원래 스칼라 검사를 재확인하기</summary>
-      <p>기록된 Python 3.12.14·NumPy 2.3.5 환경이 있다면 다음 CPU 근거 검사를 사용할 수 있습니다. 이는 가중치 파일·전체 logits나 GPU 실행을 재현하지 않습니다.</p>
+    <details><summary>GPTQ 저장본과 원래 저장 수치 검사를 재확인하기</summary>
+      <p>기록된 Python 3.12.14·NumPy 2.3.5 환경이 있다면 다음 CPU 근거 검사를 사용할 수 있습니다. 이는 가중치 파일, 모델이 모든 단어 후보에 준 원점수(logits), GPU 실행을 재현하지 않습니다.</p>
       <pre><code>OUT=$(mktemp -d)
 python3 -B tools/case008_checks/run.py --mode evidence --output "$OUT/evidence"</code></pre>
       <p><a href="https://github.com/Munsik-Kim/inference-lab/blob/main/docs/ko/GETTING_STARTED.md#tiny-model-demo">무작위 작은 모델의 CPU 저장·재로딩 예제</a>도 있습니다. 학습된 Qwen3-4B 품질 결과와는 다른 기능 검사입니다.</p>
     </details>
     <h3>기존 모델과 실행 환경이 있다면</h3>
-    <ol class="artifact-flow"><li>모델 revision과 artifact checksum 확인</li><li>저장 형식·tensor·shape 검사</li><li>별도 디렉터리로 복사</li><li>새 프로세스에서 smoke 실행</li><li>저비트 경로 확인 후 자신의 업무 품질 비교</li></ol>
-    <p><a href="{{reproduce008}}">Case008 Q: build → finalize → copy → inspect → fresh-process smoke 전체 절차</a>를 따릅니다. <code>finalize</code>는 Python 함수이며 별도 CLI 명령으로 만들지 않았습니다. Q에는 <code>evaluate --track Q --split smoke</code>를 사용하고, dense 전용 <code>reload-test</code>와 구분합니다.</p>
-    <p><a href="{{reproduce009}}">Case009: 같은 저장본으로 서빙·공식 품질 재현하기</a>에는 원 환경과 private-config 항목이 있습니다. W4 artifact가 없으면 중단하는 절차입니다. 공개 ZIP을 받는 것만으로 GPU 재현에 필요한 모델 payload가 준비되지는 않습니다.</p>
-    <p>Reference 품질 진단은 <a href="{{reproduce013}}">Case013 재현 안내</a>, 출력 제약은 <a href="{{reproduce_repair}}">후속 실행 안내와 범위</a>로 연결합니다. 이번 안내서 구현에서는 이 GPU 명령들을 실행하지 않았습니다.</p>
+    <ol class="artifact-flow"><li>모델 버전(revision)과 저장 파일의 해시(checksum) 확인</li><li>저장 형식·숫자 배열(tensor)·배열 크기(shape) 검사</li><li>별도 디렉터리로 복사</li><li>프로그램을 새로 시작해 짧은 동작 확인(smoke) 실행</li><li>압축 가중치를 쓰는 실행 코드 확인 후 자신의 업무 정답 비교</li></ol>
+    <p><a href="{{reproduce008}}">Case008 Q: 변환 → 저장본 작성 마무리 → 복사 → 검사 → 새 프로그램에서 짧은 실행 확인</a>를 따릅니다. <code>finalize</code>는 Python 함수이며 별도 CLI 명령으로 만들지 않았습니다. Q에는 <code>evaluate --track Q --split smoke</code>를 사용하고, 일반 숫자 배열(dense) 저장본에만 쓰는 <code>reload-test</code>와 구분합니다.</p>
+    <p><a href="{{reproduce009}}">Case009: 같은 모델 파일로 요청 처리와 정답 평가 다시 확인하기</a>에는 원래 실행 환경과 비공개 설정(private-config) 항목이 있습니다. 4비트 가중치 파일(W4 artifact)이 없으면 중단하는 절차입니다. 공개 ZIP에는 GPU 재현에 필요한 실제 모델 데이터(payload)가 모두 들어 있지 않습니다.</p>
+    <p>숫자를 복원한 비교용 계산(reference)의 품질 진단은 <a href="{{reproduce013}}">Case013 재현 안내</a>, 출력 제약은 <a href="{{reproduce_repair}}">후속 실행 안내와 범위</a>로 연결합니다. 이번 안내서 구현에서는 이 GPU 명령들을 실행하지 않았습니다.</p>
   </section>
   <section id="results">
     <h2>5. 품질·속도·메모리 결과</h2>
     <p><a href="measurements.html">측정 방법과 결과 읽는 법</a>을 공통 기준으로 사용합니다. 아래 표끼리는 서로 다른 실험 조건이므로 하나의 성능 점수로 합산하지 않습니다.</p>
     <section id="storage"><h3>가중치 파일과 실행 중 메모리 — Case008 Q</h3>
       {{storage_table}}
-      <p>GB는 10⁹ B, GiB는 2³⁰ B입니다. 가중치 파일은 {{file_reduction}} 감소했습니다. Torch allocator peak는 초기화·캐시·실행을 포함한 별도 측정이며 장치 전체 사용량은 아닙니다. 저장·새 프로세스 실행은 확인했지만 짧은 eager 요청의 속도 우위는 확인하지 못했습니다.</p>
+      <p>GB는 10⁹ B, GiB는 2³⁰ B입니다. 가중치 파일은 {{file_reduction}} 감소했습니다. PyTorch 계산용 메모리의 최고값(Torch allocator peak)은 초기화·캐시·실행을 포함한 별도 측정이며 GPU 전체 사용량은 아닙니다. 저장하고 프로그램을 새로 시작해 실행하는 과정은 확인했지만, GPU 작업을 그때그때 지시하는 eager 방식의 짧은 요청에서는 속도 우위를 확인하지 못했습니다.</p>
       <p class="source-note">{{source_bf16_files}} · {{source_storage}} · <a href="case008.html#q-evaluation">원래 192개 합성 평가 입력의 품질·8토큰 시간 결과</a></p>
     </section>
     <section id="speed"><h3>조건별 출력 처리량 — Case009</h3>
       <p>CUDA graph는 반복되는 GPU 작업의 실행 준비 비용을 줄이는 방식입니다. Eager는 작업을 그때그때 실행하는 대조 조건입니다. 각 방식 안에서 BF16과 W4를 비교하며, graph W4를 eager BF16과 섞어 양자화 효과라고 부르지 않습니다.</p>
       {{speed_table}}
-      <p>짝지은 독립 서버 3라운드의 기술통계 구간입니다. Eager의 처리량 구간은 1을 포함하므로 일관된 가속으로 단정하지 않습니다. KV 예산은 두 설정 모두 4 GiB입니다. 긴 입력·동시 요청 상한 32에서 preemption이 발생했으며, 상한이 항상 활성 sequence 32개를 뜻하지는 않습니다.</p>
+      <p>같은 조건의 원본·압축 모델 서버를 한 묶음(paired)으로 실행한 3라운드의 통계 구간입니다. Eager의 처리량 구간은 1을 포함하므로 일관된 가속으로 단정하지 않습니다. 이전 문장의 계산을 보관하는 KV 캐시 예산은 두 설정 모두 4 GiB입니다. 긴 입력·동시 요청 상한 32에서는 진행 중인 요청을 잠시 중단하는 일(preemption)이 있었으며, 32개가 늘 동시에 계산된다는 뜻은 아닙니다.</p>
       {{latency_table}}
-      <p>이 표의 시간은 라운드별 중앙값(p50)의 평균이며 전체 요청을 합친 중앙값이 아닙니다. 포화 부하의 출력 처리량과 개인 요청의 지연 시간은 다르게 읽습니다. 측정 요청은 완료했지만 아래 별도 품질 실행의 종료 실패를 해소한 것은 아닙니다.</p>
+      <p>이 표의 시간은 라운드별 중앙값(p50)의 평균이며 전체 요청을 합친 중앙값이 아닙니다. 요청을 계속 채워 넣는 포화 부하의 출력 처리량과 개인 요청의 지연 시간은 다르게 읽습니다. 측정 요청은 완료했지만 아래 별도 품질 실행의 종료 실패를 해소한 것은 아닙니다.</p>
       <figure><img class="guide-figure" loading="lazy" src="../assets/serving-L128.svg" alt="입력 128·출력 256 token에서 동시 요청 상한별 BF16과 W4의 토큰당 시간 및 출력 처리량"><figcaption>기존 Case009 공개 차트 재사용. 영어 축 · 3라운드 평균, 막대는 최솟값–최댓값으로 신뢰구간과 다릅니다. <a href="case009.html#serving">긴 입력을 포함한 전체 곡선</a></figcaption></figure>
       <p class="source-note">{{source_serving}}</p>
     </section>
     <section id="quality"><h3>정답과 정상 종료 여부 — Case009</h3>
-      <p>ARC-Challenge는 예시 없이(0-shot), MMLU·GSM8K는 예시 5개(5-shot)를 사용했습니다. GSM8K는 greedy 생성·최대 1,024 token, WikiText-2는 rolling likelihood입니다. 품질 context는 8,192이며 위 고정 길이 속도 조건과 다릅니다.</p>
+      <p>ARC-Challenge는 예시 없이(0-shot), MMLU·GSM8K는 예시 5개(5-shot)를 사용했습니다. GSM8K는 매번 가장 높은 확률의 다음 조각을 고르는 생성(greedy)·최대 1,024 token, WikiText-2는 긴 글을 나누어 다음 글자·단어 조각에 준 확률을 계산하는 방식(rolling likelihood)입니다. 품질 평가의 최대 입력·출력 범위(context)는 8,192이며 위 고정 길이 속도 조건과 다릅니다.</p>
       {{quality_table}}
       <p><strong>품질 저하가 남았습니다.</strong> 과제별로 방향이 다르고, MMLU·GSM8K에는 정답 손실이 있습니다. GSM8K의 두 행은 같은 출력의 다른 추출 규칙으로 독립 표본이 아닙니다. 출력 길이와 추출 규칙도 결과에 영향을 줍니다.</p>
-      <p><strong>FAILED는 계산·파일 저장 뒤 비정상 종료입니다.</strong> W4의 ARC·MMLU, 두 설정의 WikiText가 해당합니다. 보존된 전체 문항의 계산값을 검산했지만 정상 완료로 바꾸지 않았습니다. 원래 실패 split은 재실행하지 않았고 원인은 미확정입니다.</p>
+      <p><strong>FAILED는 계산·파일 저장 뒤 비정상 종료입니다.</strong> W4의 ARC·MMLU, 두 설정의 WikiText가 해당합니다. 보존된 전체 문항의 계산값을 검산했지만 정상 완료로 바꾸지 않았습니다. 원래 실패한 평가 묶음(split)은 재실행하지 않았고 원인은 미확정입니다.</p>
       <p class="source-note">{{source_quality}} · <a href="case009.html#quality">문항별 전환·생성 상한·원래 구간</a></p>
     </section>
     <section id="device-memory"><h3>실행 중 VRAM도 줄었는가? — Case009</h3>
-      <p>RTX 5080 16GB에서 같은 모델의 BF16과 GPTQ W4A16을 비교했습니다. vLLM 0.29.0의 graph 실행, BF16 KV cache 예산 4 GiB를 두 설정에 공통으로 사용했습니다. 아래는 개별 요청이 아닌 서버 프로세스 전체 구간의 기록입니다.</p>
+      <p>RTX 5080 16GB에서 같은 모델의 BF16과 GPTQ W4A16을 비교했습니다. vLLM 0.29.0의 graph 실행, BF16 대화 계산 보관 공간(KV 캐시) 예산 4 GiB를 두 설정에 공통으로 사용했습니다. 아래는 개별 요청이 아닌 서버 프로세스 전체 구간의 기록입니다.</p>
       <div class="guide-callout memory-summary">
         <p>GPU 전체 메모리의 최고 표본값 · {{memory_rounds}}라운드 범위</p>
         <dl class="memory-comparison"><div><dt>원본 BF16</dt><dd>{{memory_bf16_gib}}</dd></div><div><dt>GPTQ W4A16</dt><dd>{{memory_w4_gib}}</dd></div></dl>
@@ -103,57 +103,57 @@ python3 -B tools/case008_checks/run.py --mode evidence --output "$OUT/evidence"<
       <p>각 수치는 소수 둘째 자리(GiB), 감소율은 소수 첫째 자리로 반올림했습니다. 요청 길이·동시성별 메모리 곡선과 최대 수용량은 측정하지 않았으므로, 다른 요청 조건에서도 같은 감소율을 보장하지 않습니다. <a href="measurements.html#resources">파일 크기와 GPU 메모리를 구분하는 법</a></p>
       <details><summary>라운드별 원기록과 감소율 계산</summary>
         {{memory_pairs_table}}
-        <p>같은 라운드의 BF16에서 W4를 뺀 뒤 BF16으로 나눠 감소율을 계산했습니다. 서로 다른 라운드의 최솟값·최댓값을 빼서 만든 감소율이나 통계적 신뢰구간이 아닙니다. MiB는 2²⁰ B, GiB는 2³⁰ B이며 1,024 MiB = 1 GiB입니다. 정확한 입력값과 계산값은 아래 공개 스칼라 JSON의 <code>device_memory</code>에 있습니다.</p>
+        <p>같은 라운드의 BF16에서 W4를 뺀 뒤 BF16으로 나눠 감소율을 계산했습니다. 서로 다른 라운드의 최솟값·최댓값을 빼서 만든 감소율이나 통계적 신뢰구간이 아닙니다. MiB는 2²⁰ B, GiB는 2³⁰ B이며 1,024 MiB = 1 GiB입니다. 정확한 입력값과 계산값은 아래 공개 수치 기록 JSON의 <code>device_memory</code>에 있습니다.</p>
       </details>
       <p class="source-note">{{source_serving}}</p>
     </section>
     <section id="reference-quality"><h3>수치가 가까워져도 답변이 좋아지는가? — Case013</h3>
       {{reference_table}}
-      <p>문장에 준 확률 점수(PPL)와 원본 분포와의 차이(KL), 가중치 평균제곱오차(MSE)는 서로 다른 진단입니다. 4B에서 D16은 RTN보다 가중치 MSE·KL이 작아도 PPL은 높았습니다. 같은 32구간을 재사용한 진단이며 전체 benchmark 점수가 아닙니다. Case009의 단어 분모 PPL과는 입력·분모가 달라 값을 직접 비교하지 않습니다.</p>
-      <p>전체 품질 경로는 BF16으로 복원해 행렬곱을 했습니다. Packed 전체 모델의 수치 검사 실패(상대 오차 {{packed_error}} &gt; {{packed_threshold}})는 그대로 남습니다. 이 품질과 다른 경로의 kernel 속도를 합쳐 하나의 성능으로 표시하지 않습니다.</p>
-      <p class="source-note">{{source_reference}} · <a href="case013.html#cost">packed 검사와 비용 범위</a></p>
+      <p>실제 글의 다음 조각을 얼마나 예상했는지 나타내는 점수(PPL), 원본 모델의 단어별 확률과의 차이(KL), 저장 숫자의 제곱 오차를 원본 숫자의 제곱합으로 나눈 값(정규화 가중치 MSE)은 서로 다른 진단입니다. 이 표는 모두 낮을수록 좋습니다. 4B에서 D16은 RTN보다 가중치 MSE·KL이 작아도 PPL은 높았습니다. 같은 32구간을 재사용한 진단이며 다양한 과제를 묶은 전체 평가(benchmark) 점수가 아닙니다. Case009에서 단어 수를 기준으로 계산한 PPL과는 입력·계산 기준이 달라 값을 직접 비교하지 않습니다.</p>
+      <p>전체 품질 확인은 숫자를 BF16으로 복원해 행렬곱을 했습니다. 압축 실행(Packed)의 전체 모델 계산값 검사 실패(상대 오차 {{packed_error}} &gt; {{packed_threshold}})는 그대로 남습니다. 이 품질과 다른 실행 방법의 GPU 계산 코드(kernel) 속도를 합쳐 하나의 성능으로 표시하지 않습니다.</p>
+      <p class="source-note">{{source_reference}} · <a href="case013.html#cost">압축 상태 계산(packed) 검사와 비용 측정 범위</a></p>
     </section>
   </section>
   <section id="mitigation">
     <h2>6. 알려진 문제와 실제로 시험한 완화책</h2>
     <h3>문서 형식이 맞아도 내용을 틀릴 수 있습니다 — Case002</h3>
-    <p>공식 BF16·FP8 모델의 한국어 합성 문서 추출에서 문서 전체 정답은 각각 {{doc_bf16}}, {{doc_fp8}}였습니다. 두 설정 모두 JSON 형식은 지켰지만 다른 요청의 필드를 섞거나 누락값을 잘못 채웠습니다. 사람이 확인하지 않는 추출 업무를 권할 근거는 부족했습니다. 이 과제는 Case009의 공식 benchmark와 별개입니다.</p>
+    <p>공식 BF16·FP8 모델의 한국어 합성 문서 추출에서 문서 전체 정답은 각각 {{doc_bf16}}, {{doc_fp8}}였습니다. 두 설정 모두 JSON 형식은 지켰지만 다른 요청의 필드를 섞거나 누락값을 잘못 채웠습니다. 사람이 확인하지 않는 추출 업무를 권할 근거는 부족했습니다. 이 과제는 Case009의 공식 평가 과제(benchmark)와 별개입니다.</p>
     <p class="source-note">{{source_document}} · <a href="{{report002}}">실패 문서·답변과 실제로 적용한 실행 조정</a></p>
     <h3>등록되지 않은 이름을 호출해 작업이 실행되지 않았습니다 — Case013 후속</h3>
-    <p>가중치만 4비트로 바꾼 실험 변형 <strong>D16</strong>은 <code>apply_fixture_patch</code> 대신 대소문자가 다른 이름을 호출했습니다. 인자가 맞아도 도구는 실행되지 않았습니다. 성공이라는 최종 JSON만 보면 놓치는 문제였습니다.</p>
-    <p>직접 구현한 완화책은 등록된 이름만 생성하게 하는 <strong>출력 제약(ENUM)</strong>과, 이름 오류에 실제 등록명을 알려주는 <strong>오류 피드백(FEEDBACK)</strong>입니다. 호출 여부·인자·최종 답을 정답으로 덮어쓰지 않았습니다. 실제 fixture 수정과 성공한 validation 이벤트를 채점했습니다.</p>
-    <p>이름 제약은 ASCII 등록명·batch 1을 지원합니다. 이름/key의 escape 표기와 미지원 tokenizer 구성은 거절합니다. 생성 시간에는 CPU 제약 비용도 포함되며 서빙 TTFT나 packed kernel 속도가 아닙니다.</p>
+    <p>가중치를 INT4로 저장하고 BF16으로 복원하며 입력값은 BF16으로 쓰는 변형 <strong>D16</strong>은 <code>apply_fixture_patch</code> 대신 대소문자가 다른 이름을 호출했습니다. 인자가 맞아도 도구는 실행되지 않았습니다. 성공이라는 최종 JSON만 보면 놓치는 문제였습니다.</p>
+    <p>직접 구현한 완화책은 등록된 이름만 생성하게 하는 <strong>출력 제약(ENUM)</strong>과, 이름 오류에 실제 등록명을 알려주는 <strong>오류 피드백(FEEDBACK)</strong>입니다. 호출 여부·인자·최종 답을 정답으로 덮어쓰지 않았습니다. 실제 예제 파일(fixture)의 수정과 성공한 검사(validation) 기록을 채점했습니다.</p>
+    <p>이름 제약은 영문 문자 중심(ASCII)의 등록명·한 번에 입력 하나(batch 1)을 지원합니다. 이름과 필드명(key)의 이스케이프 표기와 지원하지 않는 문장 분할기(tokenizer) 구성은 거절합니다. 생성 시간에는 CPU에서 이름을 제한하는 비용도 포함됩니다. 서비스의 첫 응답 시간(TTFT)이나 압축 가중치 계산 코드(packed kernel)의 속도를 측정한 값은 아닙니다.</p>
     {{repair_table}}
-    <p><strong>이미 관찰한 DEV {{dev_tasks}}과제를 재사용했습니다.</strong> {{episodes}} episode는 같은 과제의 {{logical_conditions}}개 조건이며 {{episodes}}개의 독립 과제가 아닙니다. D4는 활성값까지 낮춘 별도 변형이고 결합 조건에서도 {{d4_remaining}}개 실패가 남았습니다.</p>
-    <p>ENUM과 BOTH(이름 제한+피드백)의 결과는 같았습니다. 따라서 이름 제한에 피드백을 더한 추가 효과는 입증하지 못했습니다. 이 결과는 프로젝트의 reference variant와 기존 DEV에 한정한 시스템 완화입니다. 양자화 수치오차의 복구, 모든 DualQuant·INT4의 품질, 별도 입력의 일반화나 packed 가속의 증거는 아닙니다.</p>
-    <p class="source-note">{{source_repair}} · <a href="{{report_repair}}">회복 이벤트·남은 실패·모든 조건</a></p>
+    <p><strong>개발·실패 분석에 이미 썼던 문제(DEV) {{dev_tasks}}개를 재사용했습니다.</strong> {{episodes}}개의 실행 기록(episode)은 같은 문제의 {{logical_conditions}}개 조건이며 서로 다른 문제가 {{episodes}}개라는 뜻은 아닙니다. D4는 D16과 같은 INT4 가중치에 입력값도 INT4로 줄였다 복원하며, 결합 조건에서도 {{d4_remaining}}개 실패가 남았습니다.</p>
+    <p>ENUM과 BOTH(이름 제한+피드백)의 결과는 같았습니다. 따라서 이름 제한에 피드백을 더한 추가 효과는 입증하지 못했습니다. 이 결과는 이 프로젝트의 비교용 변형(reference variant)과 기존 개발 문제(DEV)에 한정한 실행 오류 완화입니다. 양자화 수치오차의 복구, 모든 DualQuant·INT4의 품질, 별도 입력의 일반화나 packed 가속의 증거는 아닙니다.</p>
+    <p class="source-note">{{source_repair}} · <a href="{{report_repair}}">성공으로 바뀐 실행 기록·남은 실패·모든 조건</a></p>
     <h3>작은 종료 진단의 성공이 원래 실패를 지우지는 않습니다</h3>
-    <p>Case009는 원래 shutdown 흐름(D0)과 객체 삭제·gc 시점을 추가한 흐름(D1)을 짧은 synthetic probe로 비교했습니다. 그 진단에서는 과거 종료 실패가 재현되지 않았습니다. 전체 품질 실행의 문제를 해결했다고 판정하지 않았습니다. <a href="case009.html#lifecycle">실제로 시험한 종료 진단과 미실행 셀</a></p>
+    <p>Case009는 원래 종료 순서(D0)와 객체 삭제·메모리 정리(gc) 시점을 추가한 순서(D1)를 짧은 인공 입력 검사(synthetic probe)로 비교했습니다. 그 진단에서는 과거 종료 실패가 재현되지 않았습니다. 전체 품질 실행의 문제를 해결했다고 판정하지 않았습니다. <a href="case009.html#lifecycle">실제로 시험한 종료 진단과 실행하지 않은 조건</a></p>
     <p>Case013 후보의 32K 장문은 <strong>메모리 정책상 미실행</strong>입니다. 실제 메모리 부족(OOM)이나 최대 안정 문맥의 측정으로 읽지 않습니다. <a href="measurements.html#evidence-states">실행 상태를 구분하는 법</a></p>
-  <h3 id="tool-judgment">기술적 판단 — 현재 설계의 해석</h3>
-    <ul><li><strong>선택:</strong> 이름 제약·피드백·결합을 나누고 최종 JSON과 실제 수정·검증 결과를 함께 봅니다.</li><li><strong>대안:</strong> 최종 JSON만 판정하면 도구가 실행되지 않은 성공 주장을 놓칩니다.</li><li><strong>근거:</strong> 위 조건별 결과와 연결된 guard·이벤트 분석·테스트입니다. ENUM과 BOTH가 같아 피드백의 추가 이득은 확인하지 못했습니다.</li><li><strong>한계·다음 기준:</strong> 기존 DEV 재사용과 남은 D4 실패를 유지합니다. 새 과제·다른 등록명 계약에서의 확인은 별도 판단입니다.</li></ul>
+  <h3 id="tool-judgment">이렇게 만들었고, 여기까지 확인합니다</h3>
+    <ul><li><strong>선택:</strong> 이름 제약·피드백·결합을 나누고 최종 JSON과 실제 수정·검증 결과를 함께 봅니다.</li><li><strong>대안:</strong> 최종 JSON만 판정하면 도구가 실행되지 않은 성공 주장을 놓칩니다.</li><li><strong>근거:</strong> 위 조건별 결과와 연결된 이름 제한 코드(guard)·실행 기록 분석·테스트입니다. ENUM과 BOTH가 같아 피드백의 추가 이득은 확인하지 못했습니다.</li><li><strong>한계·다음 기준:</strong> 기존 개발 문제(DEV)의 재사용과 남은 D4 실패를 함께 봐야 합니다. 새 과제·다른 도구 등록 규칙에서는 별도 확인이 필요합니다.</li></ul>
   </section>
   <section id="implementation">
     <h2>7. 직접 구현한 부분과 외부 기술</h2>
-    <p>DIOVA의 작업은 변환·저장·다시 실행하기를 연결하고, 같은 입력의 수치·답변·도구 행동을 비교하는 코드입니다. GPTQ, 원형 모델, 서빙 엔진과 저비트 kernel 자체의 기여는 외부 저자에게 있습니다.</p>
+    <p>DIOVA의 작업은 숫자 변환·저장·다시 실행하기를 연결하고, 같은 입력의 수치·답변·도구 행동을 비교하는 코드입니다. GPTQ, 원형 모델, 모델 요청 처리 프로그램(서빙 엔진)과 압축 가중치용 GPU 계산 코드(저비트 kernel) 자체의 기여는 외부 저자에게 있습니다.</p>
     <ul class="implementation-list">
-      <li><strong>변환과 저장 경계:</strong> <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/tools/modelpack/quantized.py">GPTQ 변환 연결</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/tools/modelpack/qartifact.py">저장본 finalize·검사</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/cases/008-build-reconstruct-reload/tests/test_boundaries.py">경계 테스트</a></li>
-      <li><strong>요청과 품질 비교:</strong> <a href="../sources/case009-serving.py.txt">서빙 실행기</a> · <a href="../sources/case009-quality.py.txt">공식 품질 평가 연결</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/cases/009-q-serving-quality/tests/test_contracts.py">계약 테스트</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/packages/diova-compare/README.ko.md">CPU 비교 CLI와 기록 계약</a></li>
-      <li><strong>Reference 변환·계산·검산:</strong> <a href="../sources/case013-solver.py.txt">INT4 solver·adapter</a> · <a href="../sources/case013-codec.py.txt">packed 저장</a> · <a href="../sources/case013-audit.py.txt">기록 감사</a> · <a href="../sources/case013-tests.py.txt">기록 테스트</a></li>
-      <li><strong>도구 이름 제약과 오류 피드백:</strong> <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/research/agent_tool_contract_repair_20261014/guard.py">guard 구현</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/research/agent_tool_contract_repair_20261014/test_guard.py">기능 테스트</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/research/agent_tool_contract_repair_20261014/analyze.py">실제 이벤트·정답 조건 검산</a></li>
+      <li><strong>숫자 변환과 저장 파일 검사:</strong> <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/tools/modelpack/quantized.py">GPTQ 변환 연결</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/tools/modelpack/qartifact.py">저장 파일 마무리(finalize)·검사</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/cases/008-build-reconstruct-reload/tests/test_boundaries.py">저장·재실행 오류를 검사하는 테스트</a></li>
+      <li><strong>요청과 품질 비교:</strong> <a href="../sources/case009-serving.py.txt">모델 요청 실행기</a> · <a href="../sources/case009-quality.py.txt">기존 정답 평가 프로그램 연결</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/cases/009-q-serving-quality/tests/test_contracts.py">입력·실행 규칙 테스트</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/packages/diova-compare/README.ko.md">CPU 답변 비교 도구와 입력 형식</a></li>
+      <li><strong>비교용(reference) 숫자 변환·계산·검산:</strong> <a href="../sources/case013-solver.py.txt">4비트 보정값 계산·모델 연결(INT4 solver·adapter)</a> · <a href="../sources/case013-codec.py.txt">4비트 숫자를 묶어 저장(packed)</a> · <a href="../sources/case013-audit.py.txt">저장 수치·출처 검산</a> · <a href="../sources/case013-tests.py.txt">기록 일치·오류 검사 테스트</a></li>
+      <li><strong>도구 이름 제약과 오류 피드백:</strong> <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/research/agent_tool_contract_repair_20261014/guard.py">등록된 도구 이름만 허용하는 코드(guard)</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/research/agent_tool_contract_repair_20261014/test_guard.py">기능 테스트</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/09194c3f2e2c991feff5b6abab0cf8ab81a07052/research/agent_tool_contract_repair_20261014/analyze.py">실제 실행 기록·정답 조건 검산</a></li>
     </ul>
-    <details><summary>모델·논문·라이브러리·커널 출처와 reference 변형의 차이</summary>
-      <p>Qwen 팀이 모델·tokenizer·config를 제공합니다. GPTQ는 Frantar와 공동저자의 기존 양자화 방법입니다. LLM Compressor와 compressed-tensors가 변환·저장 형식을, safetensors가 파일 형식을, PyTorch·Transformers·vLLM이 계산과 서빙을 제공합니다. Marlin 저비트 커널도 upstream 기술입니다.</p>
-      <p>Case013은 DualQuant 공개 수식과 코드에 대응한 <code>PAPER_INT4_REFERENCE_VARIANT</code>입니다. FP32 offline scales, scale projection 생략 등 원 논문·기본 코드와의 차이를 유지합니다. <a href="../sources/case013-method-contract.md.txt">수식·구현 대응 계약</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/main/docs/related-work/README.ko.md">원문·공식 구현 출처 목록</a> · <a href="../sources/case013-notice.md.txt">Case013 출처</a></p>
-      <p>OpenAI Codex가 구현·실행·검산·문서 작성을 지원했습니다. 모델과 upstream의 이용 조건은 프로젝트 코드의 Apache-2.0 라이선스와 별도입니다.</p>
+    <details><summary>모델·논문·라이브러리·커널 출처와 비교용(reference) 변형의 차이</summary>
+      <p>Qwen 팀이 모델·문장 분할기(tokenizer)·설정(config)을 제공합니다. GPTQ는 Frantar와 공동저자의 기존 양자화 방법입니다. LLM Compressor와 compressed-tensors가 변환·저장 형식을, safetensors가 파일 형식을, PyTorch·Transformers·vLLM이 계산과 서빙을 제공합니다. 압축 가중치를 처리하는 Marlin GPU 코드(저비트 커널)도 외부 개발자의 기술입니다.</p>
+      <p>Case013은 DualQuant 공개 수식과 코드에 대응한 <code>PAPER_INT4_REFERENCE_VARIANT</code>입니다. 사전에 계산하는 보정 배율을 FP32로 저장하고(offline scales), 배율을 BF16에서 표현 가능한 값으로 맞추는 단계(scale projection)를 생략하는 등 원 논문·기본 코드와의 차이가 있습니다. <a href="../sources/case013-method-contract.md.txt">원 수식과 구현의 대응·차이 설명</a> · <a href="https://github.com/Munsik-Kim/inference-lab/blob/main/docs/related-work/README.ko.md">원문·공식 구현 출처 목록</a> · <a href="../sources/case013-notice.md.txt">Case013 출처</a></p>
+      <p>OpenAI Codex가 구현·실행·검산·문서 작성을 지원했습니다. 모델과 외부 기술의 이용 조건은 프로젝트 코드의 Apache-2.0 라이선스와 별도입니다.</p>
     </details>
   </section>
   <section id="sources">
     <h2>8. 원보고서·원자료·제한사항·변경 이력</h2>
-    <p><a href="{{report002}}">Case002 문서 추출</a> · <a href="{{report008}}">Case008 Q/R 보고서</a> · <a href="{{report009}}">Case009 서빙·품질</a> · <a href="{{report013}}">Case013 reference 품질</a> · <a href="{{report_repair}}">Case013 후속 보고서</a></p>
-    <p><a href="../data/practical-guide.json" download="practical-guide.json">표에 사용한 공개 스칼라·필드·출처 hash JSON</a> · <a href="../build_manifest.json">이 빌드의 파일·출처 manifest</a></p>
-    <p>위 보고서 링크는 공개 근거 commit <code>{{source_revision}}</code>에 고정했습니다. 새 안내서를 위해 과거 보고서·원자료·판정을 수정하지 않았습니다. 표의 반올림은 화면용이며 정확한 값과 필드는 JSON에 남습니다.</p>
-    <details><summary>원자료 허용 목록과 SHA256 확인</summary>{{source_index}}</details>
+    <p><a href="{{report002}}">Case002 문서 추출</a> · <a href="{{report008}}">Case008 Q/R 보고서</a> · <a href="{{report009}}">Case009 요청 처리·답변 평가</a> · <a href="{{report013}}">Case013 비교용 계산(reference)의 품질</a> · <a href="{{report_repair}}">Case013 후속 보고서</a></p>
+    <p><a href="../data/practical-guide.json" download="practical-guide.json">표의 원수치·필드명·출처 파일 해시를 담은 JSON</a> · <a href="../build_manifest.json">이 사이트의 파일·출처 목록(manifest)</a></p>
+    <p>위 보고서 링크는 공개 근거 버전(commit) <code>{{source_revision}}</code>에 고정했습니다. 새 안내서를 위해 과거 보고서·원자료·판정을 수정하지 않았습니다. 표의 반올림은 화면용이며 정확한 값과 필드는 JSON에 남습니다.</p>
+    <details><summary>사용한 원자료 목록과 파일 확인용 SHA256 해시</summary>{{source_index}}</details>
     <p><strong>2026-10-15 자료 재분석·페이지 수정:</strong> 기존 공개 기록의 결론, 조건, 실행 경로를 연결하고 Case009 GPU 메모리 표본의 라운드별 차이와 감소율을 추가했습니다. 새 모델 실행·GPU 실험·양자화·벤치마크는 하지 않았습니다. 실제 독자 평가와 독립 GPU 재현은 미실행입니다. 이 변경일은 위 표의 실험일과 다릅니다.</p>
     <p><a href="llm-guide.html">모델별 실전 안내서로 돌아가기</a> · <a href="measurements.html">측정 방법 다시 확인하기</a> · <a href="../en/qwen3-4b.html" lang="en">English summary (full guide in Korean)</a></p>
   </section>

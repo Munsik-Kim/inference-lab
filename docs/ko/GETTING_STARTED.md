@@ -4,13 +4,22 @@
 
 [처음 보는 분](START_HERE.md) · [쉬운 용어집](GLOSSARY.md)
 
-사례를 읽고, 기록된 입력을 탐색하거나, 작은 CPU 검사를 실행할 수 있습니다. GPU 재현에는 별도 환경과 명령이 있습니다.
+명령어를 고르기 전에 원하는 일을 고르면 됩니다.
+
+| 목적 | 시작할 곳 | 얻는 것 |
+|---|---|---|
+| 어떤 일을 했고 채용·협업할 일과 맞는지 보기 | [포트폴리오](PORTFOLIO.md) 또는 [공개 화면](https://munsik-kim.github.io/inference-lab/ko/index.html) | 문제·직접 만든 도구·관련 분야·코드 근거. 설치 불필요 |
+| 저장한 답변 중 무엇이 바뀌었는지 찾기 | [내 결과 비교](#compare-your-results) | 두 결과 파일을 비교하는 재사용 가능한 CPU 도구 |
+| 이 프로젝트의 과거 숫자를 다시 확인하기 | 아래 사례별 CPU 안내 | 모델 없이 저장된 기록을 재계산 |
+| 실제 모델 실행을 반복하기 | 각 사례에 연결된 재현 문서 | 별도 모델 파일·정해진 소프트웨어 버전·호환 장치가 필요한 절차 |
+
+아래는 직접 만든 도구를 써 보는 기술 안내입니다. 기록 검사를 통과했다는 것은 명시한 파일·계산이 일치한다는 뜻이며, 원래 GPU 실험을 반복했다는 뜻은 아닙니다. 모델 artifact는 변환해 저장한 모델 파일, 스칼라는 개별 수치, hash·manifest는 보존 여부를 확인하는 파일 지문·목록입니다. 다른 말은 필요할 때 [용어집](GLOSSARY.md)에서 찾을 수 있습니다.
 
 
 <a id="compare-your-results"></a>
 ## 먼저 내 결과를 비교하려면
 
-[diova-compare 사용자 예제](../../packages/diova-compare/examples/compare/README.ko.md)는 Python 3.10+의 별도 venv에서 공개 합성 두 파일 → validate → compare → 보고서 읽기를 실행합니다. 전체 어휘 확률이나 모델 다운로드 없이 시작할 수 있습니다. 아래 절차들은 기존 실험의 기록 검산·재현이며 자기 JSONL 비교와 구분합니다.
+[diova-compare 사용자 예제](../../packages/diova-compare/examples/compare/README.ko.md)는 가상 답변을 담은 작은 파일 두 개로 시작합니다. 입력 형식 검사(`validate`) → 같은 질문끼리 비교(`compare`) → 보고서 읽기 순서입니다. CPU와 별도 Python 3.10+ 환경에서 독립적으로 작동합니다. 같은 문서 형식인 JSONL(한 줄에 JSON 기록 하나)에 자기 답변과 정오 판정을 넣으면 됩니다. 모델 원시 점수나 모델 다운로드는 필요 없습니다. 아래 명령은 이 프로젝트의 과거 실험을 검산하는 경로입니다.
 
 ## 설치 없이 공개 결과 화면 열기
 
@@ -35,7 +44,7 @@ OUT=$(mktemp -d)
 python3 -B tools/case008_checks/run.py --mode evidence --output "$OUT/evidence"
 ```
 
-공개본 테스트, 원래 분석, 스칼라·시간 감사, 같은 기록의 NLL·복구율 진단을 실행합니다. 재생성한 summary, 추가·국소 결과표, 사후 JSON을 보존된 파일과 바이트 단위로 비교합니다. 모델 추론이나 제외된 전체 벡터를 다시 계산하지 않습니다. `Case 008 CPU contracts` workflow는 이 검사와 modelpack 테스트를 별도 job으로 실행합니다. Portfolio CPU checks는 문서·사이트 검사로 유지합니다.
+공개본 테스트, 원래 분석, 개별 수치·시간 검산, 같은 기록의 정답 확률 손실(NLL)·출력 복구율 진단을 실행합니다. 재생성한 summary, 추가·국소 결과표, 사후 JSON을 보존된 파일과 바이트 단위로 비교합니다. 모델 추론이나 제외된 전체 벡터를 다시 계산하지 않습니다. `Case 008 CPU contracts` workflow는 이 검사와 modelpack 테스트를 별도 job으로 실행합니다. Portfolio CPU checks는 문서·사이트 검사로 유지합니다.
 
 <a id="tiny-model-demo"></a>
 ## 작은 모델의 저장·재로딩 기능 실행하기
@@ -48,16 +57,16 @@ python3 -B tools/modelpack_demo/roundtrip.py --output "$OUT/tiny-roundtrip"
 python3 -B -m unittest discover -s tests/modelpack_demo -v
 ```
 
-CPU에서 무작위 초기화한 2층 Qwen 모델을 만들고, 1번 층의 중간 폭을 64에서 48로 줄여 저장한 뒤 제작 프로세스를 종료합니다. 다른 디렉터리의 복사본을 두 번째 프로세스에서 읽으며, 원래 제작 디렉터리는 접근을 차단합니다. 전체 출력의 유효성과 일치, 행렬 shape, embedding과 head의 가중치 공유를 확인합니다. 고정된 Case008 로더를 재사용하며 연구 코드를 바꾸지 않습니다.
+CPU에서 무작위 값으로 시작하는 작은 2층 Qwen 시험 모델(fixture)을 만들고, 1번 층의 중간 크기를 64에서 48로 줄여 저장한 뒤 제작 프로그램을 종료합니다. 두 번째 프로그램은 원래 디렉터리에 접근하지 못하는 상태에서 다른 디렉터리의 복사본을 읽습니다. 전체 출력값, 숫자 배열의 크기(tensor shape), 입력·출력 층이 같은 가중치를 공유하는지(tied embedding/head)를 확인합니다. 보존된 Case008 로더를 호출하며 연구 코드를 바꾸지 않습니다.
 
-검사 결과에는 `TINY_RANDOM_CPU_FIXTURE`, 폭 `[64,48]`, gate/up `[48,32]`, down `[32,48]`, 같은 logits와 공유 가중치가 남습니다. 작은 모델 파일과 프로세스 로그는 외부 출력 디렉터리에 저장됩니다. 직렬화 기능을 검사하는 예제이며 학습된 모델의 품질·속도 결과는 아닙니다. 원래 modelpack 테스트까지 함께 실행하려면 다음을 사용합니다.
+검사 결과에는 `TINY_RANDOM_CPU_FIXTURE`, 폭 `[64,48]`, gate/up `[48,32]`, down `[32,48]`, 같은 원시 출력 점수(logits)와 공유 가중치가 남습니다. 작은 모델 파일과 프로세스 로그는 외부 출력 디렉터리에 저장됩니다. 데이터 저장·복원(직렬화)을 검사하는 예제이며 학습된 모델의 품질·속도 결과는 아닙니다. 원래 modelpack 테스트까지 함께 실행하려면 다음을 사용합니다.
 
 ```bash
 OUT=$(mktemp -d)
 python3 -B tools/case008_checks/run.py --mode modelpack --output "$OUT/modelpack"
 ```
 
-Wrapper는 해시를 확인한 역사적 트리를 복원한 뒤 exact-inventory 테스트를 실행합니다. 누락·잘못된 artifact 거절도 검사하며, 현재 공개 파일 목록에 맞춰 동결 테스트를 완화하지 않습니다.
+보조 프로그램(wrapper)은 파일 지문을 확인한 과거 파일 구성을 복원한 뒤 원래의 정확한 파일 목록을 요구하는 테스트를 실행합니다. 모델 파일이 없거나 잘못됐을 때 거절하는지도 검사하며, 원래 테스트의 기대값을 바꾸지 않습니다.
 
 
 <a id="local-showcase"></a>
@@ -93,14 +102,14 @@ OUT=$(mktemp -d)
 "$CPU_PY" -B -m unittest discover -s tests/showcase -v
 ```
 
-Wrapper는 원래 선택기를 고유한 모듈 이름으로 불러와 보정 행렬 Q에서 실행합니다. Source hash, 유한하고 대칭인 16×16 Q, 연속 그룹 대응, 고정 예산, 원래 사전식 동점 규칙을 검사합니다. 선택에 미관측 입력의 통계를 사용하지 않습니다.
+보조 프로그램은 원래 그룹 선택 코드를 불러와 설정용 자료의 그룹 기여 표인 보정 행렬 Q(16×16)로 결정을 반복합니다. 원본 파일 지문, 유효한 유한·대칭 값, 그룹 대응, 삭제 개수, 동률이면 그룹 번호 순서로 고르는 원래 규칙(사전식 동점 규칙)을 검사합니다. 평가용으로 남긴 입력(held-out)은 그룹을 고르는 데 사용하지 않습니다.
 
 | 삭제 예산 | 다시 계산한 그룹과 저장 결과 일치 여부 |
 |---|---|
 | 4/16 | INDEPENDENT `[8,12,13,14]`, PAIRWISE `[8,13,14,15]` — 모두 일치 |
 | 8/16 | 두 방법 모두 `[7,8,9,11,12,13,14,15]` — 모두 일치 |
 
-방법별로 1,820개 또는 12,870개의 작은 CPU 목적값을 계산합니다. **모델 forward는 0회**입니다. JSON에는 목적값과 정의를 담습니다. 독립 선택은 선택된 대각 원소 합, 상호작용 선택은 선택된 부분행렬 전체 합을 사용하므로 목적함수가 다릅니다. 이 예제는 저장된 선택 로직을 확인하며 GPU 품질·시간은 원실험의 결과입니다.
+방법별로 후보의 점수 1,820개 또는 12,870개를 CPU에서 계산합니다. **모델 forward는 0회**로, 모델 자체는 실행하지 않습니다. JSON에는 목적값과 정의를 담습니다. 독립 선택은 선택된 대각 원소 합, 상호작용 선택은 선택된 부분행렬 전체 합을 사용하므로 목적함수가 다릅니다. 이 예제는 저장된 선택 로직을 확인하며 GPU 품질·시간은 원실험의 결과입니다.
 
 
 ## 1. 근거 읽기
@@ -132,7 +141,7 @@ B는 BF16 기준선이며, A_PUBLIC과 V4는 가중치가 BF16인 같은 모델 
 ### Case007: 압축과 절충 관계 확인하기
 
 <!-- claims: c007-package -->
-[검토된 Case007 ZIP](../../downloads/case007_mlp_pruning_reviewed_publication_v1.zip)을 받고 [크기·해시 metadata](../../downloads/case007_mlp_pruning_reviewed_publication_v1.json)를 확인합니다. 압축을 풀고 `007-interaction-aware-mlp-pruning/demo/index.html`을 로컬에서 엽니다. 기존 UI는 영어이며 저장된 측정만 사용합니다. 방법과 삭제 예산을 선택하고 입력 ID와 제거 그룹을 살펴본 뒤, 국소 재구성 오차와 정답 전환을 구분합니다. 첫 화면의 **COMPLETED_NO_CLEAR_TRANSFER**는 원래 동결 판정으로 배포 승인이 아닙니다. [결과 해석](CASEBOOK.md#case-007).
+[검토된 Case007 ZIP](../../downloads/case007_mlp_pruning_reviewed_publication_v1.zip)을 받고 [크기·해시 metadata](../../downloads/case007_mlp_pruning_reviewed_publication_v1.json)를 확인합니다. 압축을 풀고 `007-interaction-aware-mlp-pruning/demo/index.html`을 로컬에서 엽니다. 기존 UI는 영어이며 저장된 측정만 사용합니다. 방법과 삭제 예산을 선택하고 입력 ID와 제거 그룹을 살펴본 뒤, 국소 재구성 오차와 정답 전환을 구분합니다. 첫 화면의 원래 판정 **COMPLETED_NO_CLEAR_TRANSFER**는 실험은 끝났지만 정해 둔 비교 규칙에서 뚜렷한 이득을 확인하지 못했다는 뜻입니다. 배포 적합성은 평가하지 않았습니다. [결과 해석](CASEBOOK.md#case-007).
 
 원래 manifest와 현재 공개본 manifest는 검사 범위가 다릅니다. 기존 Case007 패키지 검사기는 Python 표준 라이브러리를 사용합니다. 저장소 루트에서 다음 명령을 실행하고 새 외부 출력 파일을 지정합니다. ZIP을 풀었다면 case 디렉터리에서 `cd`를 제외하고 실행합니다.
 
@@ -199,7 +208,7 @@ python -B cases/011-frozen-state-readout-adaptation/publication/run_checks.py \
   --output /tmp/diova-case011-publication-check-new
 ```
 
-`--synthetic`을 더하면 Torch가 필요한 작은 계약 검사도 실행합니다. 원래 checkpoint의 12개 새 프로세스 재로딩·30개 저장 경계는 과거 receipt이며 위 명령이 모델을 다시 실행하는 것은 아닙니다. 실제 모델과 보정 head weights는 공개 ZIP에 없으며 재실행에는 원래 환경과 별도 파일이 필요합니다.
+`--synthetic`을 더하면 가상 자료로 입력·저장 규칙을 확인하는 작은 테스트도 실행하며 Torch가 필요합니다. 원래 모델 저장본의 새 프로세스 재로딩 12개·저장 경계 검사 30개는 과거 검사 기록입니다. 위 명령이 모델을 다시 실행하는 것은 아닙니다. 실제 모델과 보정 head weights는 공개 ZIP에 없으며 재실행에는 원래 환경과 별도 파일이 필요합니다.
 
 <!-- case014-entry -->
 <a id="case014-cpu"></a>
@@ -214,7 +223,7 @@ OUT=$(mktemp -d)
 "$CPU_PY" -B cases/014-quantization-compensation/publication/scripts/run_checks.py --output "$OUT/case014" --tests
 ```
 
-원형 closed view·2,880/3,360/320행·선택·구간·표시값·CPU 검사를 재계산합니다. 모델·private payload·원문·새 GPU 추론은 포함하지 않습니다. 전체 사이트 빌드는 ZIP만이 아니라 전체 저장소 clone이 필요합니다.
+P0·P1·P1b·P2 연구 단계의 보존된 파일 구성을 복원하고, 원시 기록 2,880/3,360/320행·원래 설정 선택·불확실성 구간·표시값·CPU 검사를 다시 확인합니다. 저장된 기록을 쓰며 모델·제외된 비공개 배열·원문·새 GPU 추론은 포함하지 않습니다. 전체 사이트를 만들려면 사례 전용 ZIP이 아니라 저장소 전체 복사본(clone)이 필요합니다.
 
 <!-- case015-entry -->
 <a id="case015-cpu"></a>

@@ -1,7 +1,7 @@
 {
   "case007": {
-    "title": "Case 007 · Which channels should a smaller MLP remove?",
-    "intro": "An MLP transforms the numbers representing each token. This study divided its 3,072 intermediate channels into 16 groups of 192 channels. It compared ways to select which groups to remove while keeping the removal count fixed.",
+    "title": "Case 007 · Choose channels to remove and build a smaller model block",
+    "intro": "Which parts can be removed from a model’s MLP calculation block with less output change? I implemented channel-group selectors and code that physically slices the weight matrices. The experiment uses one layer with 3,072 channels grouped into 16 sets of 192. It relates to model-structure compression and quality checks after changes.",
     "see": "Follow the selection rule, the physically smaller matrices, held-out reconstruction and answer changes, and measured call times. Then inspect individual inputs.",
     "sections": [
       {
@@ -193,8 +193,8 @@
     ]
   },
   "case006": {
-    "title": "Case 006 · Where do answers change when attention arithmetic changes?",
-    "intro": "The same questions ran with native BF16 arithmetic and two low-precision attention settings. Attention determines which information to combine from preceding tokens. This study changed number formats at one attention operation and compared answer probabilities and choices.",
+    "title": "Case 006 · Find which questions change after a calculation changes",
+    "intro": "Aggregate accuracy can hide changed answers. I replaced one attention operation, which selects and mixes input information, and implemented tools that compare correct-answer probabilities, choices and ties on matched questions. This work relates to quality checks after model changes and numerical diagnostics.",
     "see": "Inspect answer transitions on the standard and separately selected stress sets. A post-hoc diagnostic then examines ties and decisions when the same internal states pass through a different final vocabulary projection, or readout.",
     "sections": [
       {
