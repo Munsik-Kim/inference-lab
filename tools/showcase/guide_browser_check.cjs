@@ -10,13 +10,11 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
   if(!base||!out||fs.existsSync(out))throw Error('Supply a base URL and a new external report directory');
   const u=new URL(base);
   if(u.protocol!=='file:'&&!(u.protocol==='http:'&&['localhost','127.0.0.1'].includes(u.hostname)))throw Error('Only file or loopback previews');
-  const endpoint='http://127.0.0.1:9239';
-  try{await fetch(endpoint+'/json/version',{signal:AbortSignal.timeout(500)});throw Error('CDP port already occupied');}
-  catch(e){if(e.message==='CDP port already occupied')throw e;}
   fs.mkdirSync(out,{recursive:true});
   const profile=fs.mkdtempSync(path.join(os.tmpdir(),'diova-guide-'));
+  let endpoint;
   const child=cp.spawn(edge,['--headless=new','--disable-gpu','--disable-background-networking','--no-first-run',
-    '--remote-debugging-port=9239','--remote-debugging-address=127.0.0.1','--user-data-dir='+profile,'about:blank'],{stdio:'ignore'});
+    '--remote-debugging-port=0','--remote-debugging-address=127.0.0.1','--user-data-dir='+profile,'about:blank'],{stdio:'ignore'});
   let spawnError;child.on('error',e=>spawnError=e);
   const checks=[],errors=[],requests=[],responseErrors=[];let send,ws,version;
   const wait=ms=>new Promise(r=>setTimeout(r,ms));
@@ -25,7 +23,10 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
     let targets;
     for(let i=0;i<80;i++){
       if(spawnError)throw spawnError;
-      try{version=await(await fetch(endpoint+'/json/version',{signal:AbortSignal.timeout(500)})).json();
+      try{const active=fs.readFileSync(path.join(profile,'DevToolsActivePort'),'utf8').trim().split(/\r?\n/);
+        endpoint='http://127.0.0.1:'+Number(active[0]);
+        version=await(await fetch(endpoint+'/json/version',{signal:AbortSignal.timeout(500)})).json();
+        if(new URL(version.webSocketDebuggerUrl).pathname!==active[1])throw Error('Owned browser identity mismatch');
         targets=await(await fetch(endpoint+'/json/list')).json();if(targets.some(t=>t.type==='page'))break;
       }catch{} await wait(150);
     }
@@ -56,7 +57,7 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
       }throw Error('Navigation incomplete: '+url);
     };
     const shot=async name=>{const r=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});fs.writeFileSync(path.join(out,name+'.png'),Buffer.from(r.data,'base64'));};
-    for(const lang of ['ko','en'])for(const page of ['index','llm-guide','qwen3-4b','measurements','guide'])for(const width of [390,768,1280]){
+    for(const lang of ['ko','en'])for(const page of ['index','llm-guide','qwen3-4b','measurements','compare','guide'])for(const width of [390,768,1280]){
       await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});
       await navigate(new URL(lang+'/'+page+'.html',base).href);await wait(120);
       const label=lang+'/'+page+' '+width;
@@ -79,6 +80,18 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
       if(page==='index'){
         expect(await ev('(()=>{const nodes=["featured-stories","model-guides","contributions","capabilities","tech-stack","cases"].map(id=>document.getElementById(id));return nodes.every((node,i)=>node&&(!i||nodes[i-1].compareDocumentPosition(node)&Node.DOCUMENT_POSITION_FOLLOWING))})()'),label+' reader order');
         if(lang==='ko')for(const id of ['featured-stories','model-guides']){await ev('document.getElementById('+JSON.stringify(id)+').scrollIntoView()');await shot(id+'-'+width);}
+        expect(await ev('document.querySelectorAll("#featured-stories .story").length===3&&!!document.querySelector("#featured-stories a[href=\\"compare.html\\"]")'),label+' comparison tool is a featured work');
+        await ev('document.querySelector(".research-records > summary").focus()');
+        expect(await ev('document.activeElement===document.querySelector(".research-records > summary")'),label+' research summary receives keyboard focus');
+        await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13,text:'\r',unmodifiedText:'\r'});
+        await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+        await wait(80);
+        expect(await ev('document.querySelector(".research-records").open'),label+' research records open by keyboard');
+        expect(await ev('document.documentElement.scrollWidth<=innerWidth+1'),label+' expanded research has no page overflow');
+        if(lang==='ko'){await ev('document.querySelector(".research-records").scrollIntoView()');await shot('research-records-'+width);}
+      }
+      if(page==='compare'&&lang==='ko')for(const id of ['run','reading','own-records']){
+        await ev('document.getElementById('+JSON.stringify(id)+').scrollIntoView()');await shot('compare-'+id+'-'+width);
       }
       if(page==='qwen3-4b'&&lang==='ko'){
         await ev('document.querySelector("#configurations details summary").focus()');
@@ -99,7 +112,7 @@ const fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_p
     expect(responseErrors.length===0,'No HTTP response errors');
     expect(requests.every(r=>r.startsWith(base)||r==='about:blank'||r.startsWith('data:')),'Only local runtime resources requested');
     fs.writeFileSync(path.join(out,'browser-report.json'),JSON.stringify({status:'PASS',browser:version.Browser,base,
-      viewport_widths:[390,768,1280],checks,errors,responseErrors,requests:[...new Set(requests)],
+      viewport_widths:[390,768,1280],owned_browser_pid:child.pid,debug_endpoint:endpoint,temporary_profile:profile,checks,errors,responseErrors,requests:[...new Set(requests)],
       mode:'desktop viewport emulation',real_iPad:'NOT_TESTED',reader_study:'NOT_RUN',visual_review:'SEPARATE_MANUAL_REVIEW'},null,2)+'\n');
     console.log(JSON.stringify({status:'PASS',checks:checks.length,screenshots:fs.readdirSync(out).filter(x=>x.endsWith('.png')).length,browser:version.Browser}));
   }catch(e){fs.writeFileSync(path.join(out,'browser-report.json'),JSON.stringify({status:'FAIL',error:String(e),checks,errors,responseErrors},null,2)+'\n');throw e;}

@@ -2,18 +2,23 @@
 
 [English](README.md) | 한국어
 
-**D**eep-learning **I**nference **O**ptimization, **V**alidation & **A**nalysis
+# 모델을 작게 저장하고, 실행하고, 달라진 답변까지 확인합니다.
 
-# 모델 압축부터 저장·실행까지 구현합니다.
+DIOVA는 공개 AI 모델의 변환·실행·평가를 연결하는 추론 엔지니어링 프로젝트입니다. RTX 5080 16GB와 Qwen 계열을 중심으로 속도·메모리와 답변·실제 도구 작업 결과를 함께 비교합니다.
 
-모델 변환·구조 복원 로더와 GPU 성능·출력 비교 도구를 개발합니다.
+[포트폴리오·모델별 안내 (Pages)](https://munsik-kim.github.io/inference-lab/ko/index.html) · [직접 사용: 내 결과 비교 예제](packages/diova-compare/examples/compare/README.ko.md)
 
-공개 Qwen 모델에 저장본 검사, 가중치 보정, 실제 행렬 축소와 입력별 평가를 연결했습니다. 코드와 실행 예제로 구현을, 프로젝트별 결과로 관측을 확인할 수 있습니다.
+## 대표작 A · B · C
 
-**PyTorch · Transformers · LLM Compressor · safetensors · vLLM · NumPy**
+| 문제 | 직접 구현 | 근거·사용 경로 |
+|---|---|---|
+| A. 모델을 작게 저장하고 실제 요청까지 실행하기 | 기존 GPTQ 변환·저장본 검사·새 프로세스 재로딩·같은 조건의 요청 비교 | [Case008 Q](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) → [Case009](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving) |
+| B. 바꾼 모델의 답변을 같은 질문 기준으로 비교하기 | diova-compare: 입력·정답 계약 검사, 정답 손실·회복·불일치, 원 실행 실패 보존 | [CPU 실행 예제](packages/diova-compare/examples/compare/README.ko.md) · [코드·테스트](packages/diova-compare/README.ko.md#구현) |
+| C. 답변이 아니라 실제 도구 작업의 완료를 확인하기 | 등록 도구 이름 제한·오류 피드백·수정/검증 이벤트 평가 | [Case013 후속 구현·보고서](research/agent_tool_contract_repair_20261014/README.ko.md) |
 
-[모델 제작 도구](docs/ko/PORTFOLIO.md#code-tour) · [CPU 데모 실행](docs/ko/GETTING_STARTED.md#tiny-model-demo) · [프로젝트 보기](#projects)
+현재 모델별 상세 안내는 Qwen3-4B-Instruct-2507과 RTX 5080 16GB의 공개 기록을 다룹니다. 0.6B 구조 복원·INT4 보정 연구는 별도 경로입니다. 비교 CLI는 Python 3.10+의 CPU 도구이며, 자유 생성 정오는 사용자가 제공한 채점 결과를 사용합니다.
 
+[설치·내 기록 넣기](packages/diova-compare/examples/compare/README.ko.md) · [모델별 실전 안내](docs/ko/LLM_GUIDE.md) · [기술 역량·코드](docs/ko/PORTFOLIO.md) · [재현 안내](docs/ko/GETTING_STARTED.md)
 
 ## 직접 구현한 부분과 재사용한 기술
 
@@ -32,18 +37,6 @@
 [선행연구와 구현 대응](docs/related-work/README.ko.md) · [CPU 비교 도구](packages/diova-compare/README.ko.md)
 
 [16GB GPU 모델별 실전 안내서](docs/ko/LLM_GUIDE.md) — Qwen3-4B의 실행·품질·실패 기록. [온라인 안내서](https://munsik-kim.github.io/inference-lab/ko/llm-guide.html).
-
-<!-- case014-entry -->
-## 최근 완료 연구 — Case 014
-
-양자화된 실제 입력 경로를 따라 보정하고 같은 INT4 형식으로 저장하는 도구를 구현했습니다.
-
-**PG19 PPL 12.92% 감소 ·64/64 문서 구간 NLL 개선 ·동일 projection 저장량**
-
-Qwen3-0.6B ·196 Transformer projections ·새 PG19 64책의256-token 구간. ArXiv에서는 같은 이득 미확인. BF16 복원 품질 평가이며 속도·VRAM 절감은 미측정입니다.
-
-[결과 비교하기](https://munsik-kim.github.io/inference-lab/ko/case014.html#results) · [구현과 재현](cases/014-quantization-compensation/REPRODUCE.md) · [연구 과정](cases/014-quantization-compensation/STAGE_MAP.md)
-
 
 <a id="capabilities"></a>
 ## 구현 기능
@@ -80,7 +73,7 @@ Python · JavaScript · GitHub Actions · GitHub Pages. [CPU 선택기 재계산
 [구현 코드·관련 테스트 읽기](docs/ko/PORTFOLIO.md#code-tour). CUDA는 GPU 실행·측정에, 공개 커널은 연산 교체에 사용했습니다.
 
 <a id="projects"></a>
-## 대표 프로젝트
+## 구현 상세와 연구 기록
 
 ### Case 008 — 모델을 변환하고, 복구하고, 다시 실행하기
 
@@ -184,6 +177,19 @@ D16의 가중치 오차는 두 모델에서 줄었습니다. 0.6B의 PPL은 좋�
 기존 결과를 CPU 비교 CLI에 연결하고, 등록된 도구 이름만 생성하는 제약과 정확한 오류 안내를 구현했습니다. 같은 기존 DEV 8개에서 가중치를 유지한 D16은 **6/8→8/8**, D4는 **0/8→2/8**로 바뀌었습니다. 이름 제한 조건의 미등록 호출은 0회였고, D4의 나머지 6개 실패는 남았습니다.
 
 [쉽게 살펴보기](research/agent_tool_contract_repair_20261014/README.ko.md) · [전체 결과·한영 보고서](research/agent_tool_contract_repair_20261014/records/REPORT_KO.md) · [앞선 원인 진단](research/agent_stability_20261013/README.ko.md) · [기록 비교 CLI](packages/diova-compare/README.ko.md#case013-export)
+
+<!-- case014-entry -->
+## 연구·수치 엔지니어링 — Case014
+
+양자화된 실제 입력 경로를 따라 보정하고 같은 INT4 형식으로 저장하는 도구를 구현했습니다.
+
+**PG19 PPL 12.92% 감소 ·64/64 문서 구간 NLL 개선 ·동일 projection bytes**
+
+Qwen3-0.6B ·196 Transformer projections ·새 PG19 64책의256-token 구간. ArXiv에서는 같은 이득 미확인. BF16 복원 품질 평가이며 속도·VRAM 절감은 미측정입니다.
+
+[결과 비교하기](https://munsik-kim.github.io/inference-lab/ko/case014.html#results) · [구현과 재현](cases/014-quantization-compensation/REPRODUCE.md) · [연구 과정](cases/014-quantization-compensation/STAGE_MAP.md)
+
+
 
 ## 질문과 구현물
 

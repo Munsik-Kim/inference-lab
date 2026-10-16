@@ -1,18 +1,15 @@
 # diova-compare
 
-Version 0.1.2 adds a stdlib-only historical Case 013 exporter. From the repository root, after installing this package:
-
-```bash
-diova-compare export-case013 --case cases/013-dualquant-reference-quality --output /tmp/case013-export
-diova-compare validate --input /tmp/case013-export/agent/base/FREE/RTN.jsonl
-diova-compare compare --baseline /tmp/case013-export/agent/base/FREE/RTN.jsonl --candidate /tmp/case013-export/agent/base/FREE/D16.jsonl --output /tmp/case013-agent-report
-```
-
-All output directories must be fresh. The exporter verifies consumed public files, recomputes the historical extraction/action contract, and retains raw text, tool evidence and actual fixture state in sidecars. A matching final JSON can still be incorrect when the required edit/validation was not executed. Modes, cohorts and lengths stay separate; candidate32K exclusions are not zero scores. NLL/PPL and saved KL aggregates remain a separate continuous summary. No model, Torch, NumPy or new GPU measurements are needed. See the [Korean workflow](README.ko.md#case013-export).
-
 [한국어](README.ko.md) · [Project](../../README.md)
 
 A small CPU CLI for comparing identified outputs from two model artifacts. It validates paired inputs, reports correctness transitions and answer disagreement, and computes probability diagnostics when a compatible distribution is provided. Python 3.10+; no runtime dependencies, model downloads, Torch or CUDA.
+
+<a id="compare-your-results"></a>
+## Start with your own results
+
+[Run the four-pair synthetic example](examples/compare/README.md): prepare saved results → map the shared input/gold rule → validate → compare → read report.md / report.json / pairs.csv. The guide covers caller-supplied free-form correctness, a minimal record without distributions, field mapping and an intentional pairing rejection.
+
+Historical experiment reanalysis is a [separate path](#case013-export).
 
 ## Install and run
 
@@ -57,3 +54,16 @@ python -m pip install --no-index --no-deps /path/to/diova_compare-0.1.1-py3-none
 ```
 
 No PyPI upload. Within a task/version, effective NLL/Brier and KL coverage must match across all items. Different tasks may have different metrics. Tiny positive probabilities are retained; exact missing mass uses null plus an infinity flag. [Changelog](CHANGELOG.md).
+
+<a id="case013-export"></a>
+## Historical Case013 export
+
+Version 0.1.2 adds a stdlib-only historical Case 013 exporter. From the repository root, after installing this package:
+
+```bash
+diova-compare export-case013 --case cases/013-dualquant-reference-quality --output /tmp/case013-export
+diova-compare validate --input /tmp/case013-export/agent/base/FREE/RTN.jsonl
+diova-compare compare --baseline /tmp/case013-export/agent/base/FREE/RTN.jsonl --candidate /tmp/case013-export/agent/base/FREE/D16.jsonl --output /tmp/case013-agent-report
+```
+
+All output directories must be fresh. The exporter verifies consumed public files, recomputes the historical extraction/action contract, and retains raw text, tool evidence and actual fixture state in sidecars. A matching final JSON can still be incorrect when the required edit/validation was not executed. Modes, cohorts and lengths stay separate; candidate32K exclusions are not zero scores. NLL/PPL and saved KL aggregates remain a separate continuous summary. No model, Torch, NumPy or new GPU measurements are needed. See the [Korean workflow](README.ko.md#case013-export).

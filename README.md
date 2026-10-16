@@ -2,18 +2,23 @@
 
 English | [한국어](README.ko.md)
 
-**D**eep-learning **I**nference **O**ptimization, **V**alidation & **A**nalysis
+# Store smaller models, run them, and check the answers that changed.
 
-# From model compression to working checkpoints.
+DIOVA is an inference engineering project connecting conversion, execution and evaluation of public AI models. Using Qwen models and an RTX 5080 16GB, it compares speed and memory alongside answers and actual tool-task outcomes.
 
-Model conversion, structure-aware checkpoint loaders, and GPU performance and output comparison tools.
+[Portfolio and model guides (Pages)](https://munsik-kim.github.io/inference-lab/en/index.html) · [Try it: compare your saved results](packages/diova-compare/examples/compare/README.md)
 
-Built checkpoint checks, weight reconstruction, physical matrix slicing and paired evaluation around public Qwen models. Follow the code and runnable examples, then inspect the measured results.
+## Featured work A · B · C
 
-**PyTorch · Transformers · LLM Compressor · safetensors · vLLM · NumPy**
+| Problem | Built here | Evidence / try it |
+|---|---|---|
+| A. Store a smaller model and run actual requests | Connected existing GPTQ conversion, artifact checks, fresh-process reload and matched request comparison | [Case008 Q](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) → [Case009](https://munsik-kim.github.io/inference-lab/en/case009.html#serving) |
+| B. Compare changed answers on the same questions | diova-compare: input/gold contract checks, losses/gains/disagreement and retained source failure status | [CPU example](packages/diova-compare/examples/compare/README.md) · [Code and tests](packages/diova-compare/README.md#implementation-and-checks) |
+| C. Verify actual tool-task completion | Registered-name constraints, error feedback and patch/validation-event checks | [Case013 follow-up implementation and report](research/agent_tool_contract_repair_20261014/README.md) |
 
-[Model build tools](docs/en/PORTFOLIO.md#code-tour) · [Run the CPU demo](docs/en/GETTING_STARTED.md#tiny-model-demo) · [Explore projects](#projects)
+The current model guide covers public Qwen3-4B-Instruct-2507 records on an RTX 5080 16GB; full detail is Korean with English summaries. Separate 0.6B studies cover structural reconstruction and INT4 compensation. The comparison CLI uses Python 3.10+ on CPU and consumes caller-supplied free-form correctness.
 
+[Install and map your records](packages/diova-compare/examples/compare/README.md) · [Model guides](docs/en/LLM_GUIDE.md) · [Capabilities and code](docs/en/PORTFOLIO.md) · [Reproduction](docs/en/GETTING_STARTED.md)
 
 ## Project implementation and upstream components
 
@@ -32,18 +37,6 @@ Built checkpoint checks, weight reconstruction, physical matrix slicing and pair
 [Related work and implementation boundaries](docs/related-work/README.md) · [CPU comparison package](packages/diova-compare/README.md)
 
 [Practical model guides for a 16GB GPU](docs/en/LLM_GUIDE.md) — Qwen3-4B key findings and Korean detail. [Read online](https://munsik-kim.github.io/inference-lab/en/llm-guide.html).
-
-<!-- case014-entry -->
-## Latest completed research — Case 014
-
-Built actual-path compensation, INT4 storage/reload and whole-model quality comparison.
-
-**PG19 PPL 12.92% lower · 64/64 excerpts with lower NLL · unchanged projection bytes**
-
-Qwen3-0.6B · 196 Transformer projections · 256-token excerpts from 64 fresh PG19 books. Gain not established on ArXiv. Quality after BF16 reload; speed/VRAM savings unmeasured.
-
-[Compare results](https://munsik-kim.github.io/inference-lab/en/case014.html#results) · [Implementation and reproduction](cases/014-quantization-compensation/REPRODUCE.md) · [Research journey](cases/014-quantization-compensation/STAGE_MAP.md)
-
 
 <a id="capabilities"></a>
 ## Capabilities
@@ -80,7 +73,7 @@ Python · JavaScript · GitHub Actions · GitHub Pages. [CPU selector replay](to
 [Read the implementation and related tests](docs/en/PORTFOLIO.md#code-tour). CUDA supports execution and measurement; public kernels supply the replaced operations.
 
 <a id="projects"></a>
-## Selected projects
+## Implementation details and research records
 
 ### Case 008 — Build, reconstruct, reload
 
@@ -184,6 +177,19 @@ D16 reduced weight error in both models. PPL improved in 0.6B but slightly worse
 Connected existing records to the CPU comparison CLI and built registered-name decoding with explicit error feedback. On the same eight existing DEV tasks with unchanged weights, D16 changed from **6/8 to 8/8**, and D4 from **0/8 to 2/8**. Enum conditions had zero unregistered-name calls; six other D4 failures remain.
 
 [Overview](research/agent_tool_contract_repair_20261014/README.md) · [Full results and report](research/agent_tool_contract_repair_20261014/records/REPORT.md) · [Earlier diagnostic](research/agent_stability_20261013/README.md) · [Recorded comparison CLI](packages/diova-compare/README.md)
+
+<!-- case014-entry -->
+## Research and numerical engineering — Case014
+
+Built actual-path compensation, INT4 storage/reload and whole-model quality comparison.
+
+**PG19 PPL 12.92% lower · 64/64 excerpts with lower NLL · unchanged projection bytes**
+
+Qwen3-0.6B · 196 Transformer projections · 256-token excerpts from 64 fresh PG19 books. Gain not established on ArXiv. Quality after BF16 reload; speed/VRAM savings unmeasured.
+
+[Compare results](https://munsik-kim.github.io/inference-lab/en/case014.html#results) · [Implementation and reproduction](cases/014-quantization-compensation/REPRODUCE.md) · [Research journey](cases/014-quantization-compensation/STAGE_MAP.md)
+
+
 
 ## Questions and recorded tools
 

@@ -18,7 +18,7 @@ from case012_review import review_copy
 from case012_pages import load_case012, render_case012, render_annotation, annotation_data, image_viewer, C12, SOURCE_COPIES as C12_SOURCES
 from case013 import load_case013, render_case013, C13, SOURCE_COPIES as C13_SOURCES, FIGURES as C13_FIGURES
 from case014 import load_case014, render_case014, C14, SOURCE_COPIES as C14_SOURCES, FIGURES as C14_FIGURES, ARCHIVE as C14_ARCHIVE, TITLES as C14_TITLES
-from practical import load_practical, render as practical_render, PAGES as GUIDE_PAGES, TITLES as GUIDE_TITLES
+from practical import load_practical, render as practical_render, PAGES as GUIDE_PAGES, TITLES as GUIDE_TITLES, COMPARE_EXAMPLES
 
 def link(url, text, cls=''):
     return f'<a class="{cls}" href="{escape(url, quote=True)}">{escape(text)}</a>'
@@ -65,6 +65,8 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     files['data/case008.json'] = (json_text(data8)+'\n').encode()
     files['data/practical-guide.json'] = (json_text(practical)+'\n').encode()
     files['assets/practical-guide.css'] = (root/'presentation/assets/practical-guide.css').read_bytes()
+    for name, path in COMPARE_EXAMPLES.items():
+        files[name] = (root/path).read_bytes()
     if data9:
         files['data/case009.json'] = (json_text(data9)+'\n').encode()
         files['data/case009.js'] = ('window.CASE009_EVIDENCE = '+script_json(data9)+';\n').encode()
@@ -187,6 +189,8 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
             if page=='case014':page_rev='Case014 P0/P1/P1b/P2 recorded scalar sources; execution and build revisions are separate'
             if page in GUIDE_PAGES:
                 page_rev = 'Recorded public evidence '+practical['evidence_revision']
+            if page == 'compare':
+                page_rev = 'Synthetic CPU example; no model execution or historical GPU measurement'
             elif page == 'index':
                 page_rev = 'Per-case source hashes in build manifest; practical guide evidence '+practical['evidence_revision']
             body+=related_cases(lang,page)
@@ -196,7 +200,9 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
             if page=='case014':notice='../sources/case014-notice.md.txt'
             if page in GUIDE_PAGES:
                 notice = 'qwen3-4b.html#implementation'
-            language_label = ('English summary' if lang=='ko' else '한국어 상세') if page in GUIDE_PAGES else t['language']
+            if page == 'compare':
+                notice = 'https://github.com/Munsik-Kim/inference-lab/blob/main/packages/diova-compare/README'+('.ko' if lang=='ko' else '')+'.md'
+            language_label = ('English summary' if lang=='ko' else '한국어 상세') if page in GUIDE_PAGES and page != 'compare' else t['language']
             titles = {'index':t['homeHeroTitle'], 'guide':t['guide'], 'case006':t['case006'], 'case007':t['case007'], 'case008':t['homeTitle8'],
                       'case009':'Case 009 · Serving and quality' if lang=='en' else 'Case 009 · 요청 비용과 품질',
                       'case010':'Case 010 · Recurrent memory' if lang=='en' else 'Case 010 · 반복 상태와 기억 수명',

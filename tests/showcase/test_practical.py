@@ -71,7 +71,7 @@ class PracticalGuide(unittest.TestCase):
             self.assertEqual(hero.count('class="reading-link"'),2)
             self.assertNotIn('core-tech',hero)
             self.assertIn('href="llm-guide.html"',hero)
-            self.assertIn('href="#contributions"',hero)
+            self.assertIn('href="#featured-stories"',hero)
             stories=home[home.index('id="featured-stories"'):home.index('id="contributions"')]
             self.assertEqual(stories.count('<article class="story">'),3)
             for page in PAGES:
@@ -81,7 +81,11 @@ class PracticalGuide(unittest.TestCase):
                 self.assertIn('../'+('ko' if lang=='en' else 'en')+'/'+page+'.html',p.links)
                 self.assertNotIn('<script',html)
                 self.assertNotIn('{{',html)
-                self.assertIn('Recorded public evidence '+REVISION,html)
+                if page == 'compare':
+                    self.assertIn('Synthetic CPU example',html)
+                    self.assertNotIn('Recorded public evidence '+REVISION,html)
+                else:
+                    self.assertIn('Recorded public evidence '+REVISION,html)
 
     def test_memory_reductions_pair_rounds_and_exclude_eager(self):
         processes=self.data['serving']['processes']
@@ -120,7 +124,7 @@ class PracticalGuide(unittest.TestCase):
     def test_reader_order_common_routes_and_page_metadata(self):
         for lang in ('ko','en'):
             html=(self.site/lang/'index.html').read_text()
-            positions=[html.index('id="'+name+'"') for name in ('featured-stories','model-guides','contributions','capabilities','tech-stack','projects','cases')]
+            positions=[html.index('id="'+name+'"') for name in ('featured-stories','model-guides','collaboration','contributions','capabilities','tech-stack','compensation-study','projects','cases')]
             self.assertEqual(positions,sorted(positions))
             for page in self.site.joinpath(lang).glob('*.html'):
                 text=page.read_text()

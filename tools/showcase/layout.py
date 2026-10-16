@@ -88,9 +88,13 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     out += '<h1>'+text('homeHeroTitle')+'</h1><p class="hero-subtitle">'+text('homeHeroSubtitle')+'</p><p class="lede">'+text('homeOutcomeIntro')+'</p>'
     steps = ('원본과 비교한다','문제를 찾는다','해결책을 시험한다','다시 실행할 수 있게 남긴다') if lang=='ko' else ('Compare with the original','Find the failure','Test a remedy','Leave a reproducible path')
     out += '<ol class="work-flow">'+''.join('<li>'+escape(step)+'</li>' for step in steps)+'</ol><div class="actions home-jumps">'
-    for url, label in [('llm-guide.html','모델별 실전 안내서 보기' if lang=='ko' else 'Read the model guides'),('#contributions','대표 구현과 검증 근거 보기' if lang=='ko' else 'Inspect implementation and evidence')]:
+    for url, label in [('llm-guide.html','모델별 안내' if lang=='ko' else 'Model guides'),('#featured-stories','대표 구현 · 직접 사용하기' if lang=='ko' else 'Featured work · try it')]:
         out += anchor(url,label,'reading-link')
-    out += '</div></section>'+practical_stories+(home_case014(data14, lang) if data14 else '')+'<section id="contributions" class="cap-section"><h2>'+text('contributionTitle')+'</h2><div class="contribution-table"><table><thead><tr>'
+    out += '</div></section>'+practical_stories
+    out += '<section id="collaboration" class="model-entry home-model-guides"><h2>'+text('collaboration')+'</h2><p>'+text('collaborationIntro')+'</p><ul>'
+    work = ('로컬 모델의 양자화·실행 설정 비교와 병목 진단', '모델 변경 전후의 답변·도구 실행 회귀 평가', '측정·기록·검산 과정을 재사용 가능한 도구로 정리') if lang=='ko' else ('Compare local quantization and execution settings; diagnose bottlenecks', 'Evaluate answer and tool-action regressions after model changes', 'Turn measurement, recording and reanalysis into reusable tools')
+    out += ''.join('<li>'+escape(item)+'</li>' for item in work)+'</ul>'+anchor('https://github.com/Munsik-Kim/inference-lab/issues',t['contact'])+'</section>'
+    out += '<section id="contributions" class="cap-section"><h2>'+text('contributionTitle')+'</h2><div class="contribution-table" role="region" tabindex="0" aria-label="'+text('contributionTitle')+'"><table><thead><tr>'
     out += ''.join('<th scope="col">'+escape(x)+'</th>' for x in t['contributionHeaders'])+'</tr></thead><tbody>'
     contribution_sources = [('tools/modelpack/artifact.py','cases/008-build-reconstruct-reload/tests/test_core.py'),('tools/modelpack/quantized.py','cases/008-build-reconstruct-reload/tests/test_boundaries.py'),('tools/modelpack/numerics.py','cases/008-build-reconstruct-reload/tests/test_core.py'),('packages/diova-compare/src/diova_compare/core.py','packages/diova-compare/tests/test_compare.py')]
     for row,(code,test) in zip(t['contributionRows'],contribution_sources):
@@ -118,7 +122,9 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     for i in range(1,6):
         out += '<div><dt>'+text(f'stack{i}Title')+'</dt><dd><strong>'+text(f'stack{i}Tech')+'</strong><p>'+text(f'stack{i}Body')+'</p></dd></div>'
     out += '</dl>'+anchor(docs+'PORTFOLIO.md#code-tour',t['stackEvidence'],'text-link')+'</section>'
-    out += '<span id="studies" class="home-anchor" aria-hidden="true"></span><section id="projects" class="studies"><div class="section-heading"><div><p class="eyebrow">SELECTED PROJECTS</p><h2>'+text('navProjects')+'</h2></div><p>'+text('studiesIntro')+'</p></div><div class="cards">'
+    out += home_case014(data14, lang) if data14 else ''
+    out += '<details class="research-records"><summary>'+('다른 구현과 연구 기록 펼쳐 읽기' if lang=='ko' else 'Explore other implementations and research records')+'</summary>'
+    out += '<span id="studies" class="home-anchor" aria-hidden="true"></span><section id="projects" class="studies"><div class="section-heading"><div><p class="eyebrow">IMPLEMENTATION & RESEARCH RECORDS</p><h2>'+text('navProjects')+'</h2></div><p>'+text('studiesIntro')+'</p></div><div class="cards">'
     if data8 is None:
         raise ValueError('Missing Case008 display data')
     metrics = output_metrics(data8)
@@ -157,6 +163,7 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
         out += home_case012(data12, lang)
     if data13:
         out += home_case013(data13, lang)
+    out += '</details>'
     reading = '<section class="reading-strip"><div><p class="eyebrow">START HERE</p><h2>'+text('readingTitle')+'</h2><p>'+text('readingIntro')+'</p></div><div class="reading-links">'
     for url, key in [('llm-guide.html','navModels'),('measurements.html','navMeasurements'),('guide.html','guide'),(docs+'START_HERE.md','beginner'),(docs+'GLOSSARY.md','glossary')]:
         reading += anchor(url,t[key]+' ↗','reading-link')
@@ -167,7 +174,7 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
         if i == 6: out += '</ol></details><ol class="case-list">'
         url=f'case{i:03}.html' if i>=9 else docs+f'CASEBOOK.md#case-{i:03}'
         out += '<li>'+anchor(url,name,'case-name')+f'<span class="archive-number">{i:03}</span><span class="archive-arrow" aria-hidden="true">↗</span></li>'
-    out += '</ol></section>'+reading+'<section class="contact-strip"><h2>'+text('collaboration')+'</h2><p>'+text('collaborationIntro')+'</p><div class="actions">'+anchor(docs+'PORTFOLIO.md',t['code'],'text-link')+anchor('https://github.com/Munsik-Kim/inference-lab/issues',t['contact'],'quiet-link')+'</div></section>'
+    out += '</ol></section>'+reading
     return out
 
 

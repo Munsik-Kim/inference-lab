@@ -7,6 +7,11 @@ English | [한국어](../ko/GETTING_STARTED.md) · [Home](../../README.md)
 Read the studies, explore recorded inputs, or run a small CPU check. GPU reproduction has its own environment and commands.
 
 
+<a id="compare-your-results"></a>
+## Compare your own saved answers first
+
+The [diova-compare user example](../../packages/diova-compare/examples/compare/README.md) uses a dedicated Python 3.10+ environment: two synthetic files → validate → compare → read reports. It needs neither full-vocabulary probabilities nor model downloads. The following paths recheck historical experiments and are separate from comparing your own JSONL.
+
 ## Open the published result viewer
 
 [English home](https://munsik-kim.github.io/inference-lab/en/index.html) · [Case008 Q: smaller files and reload](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) · [Case009: serving comparison](https://munsik-kim.github.io/inference-lab/en/case009.html#serving) · [tool-failure mitigation report (Korean)](../../research/agent_tool_contract_repair_20261014/records/REPORT_KO.md). These Pages screens use saved measurements and require no installation or GPU. Use the local build below for offline viewing.

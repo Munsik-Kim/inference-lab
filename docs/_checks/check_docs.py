@@ -34,6 +34,8 @@ FEEDBACK_DOCS = (
     'docs/feedback_actions.md', 'docs/interview-notes.ko.md', 'docs/phase2a-design.md',
     'docs/related-work/README.md', 'docs/related-work/README.ko.md',
     'packages/diova-compare/README.md', 'packages/diova-compare/README.ko.md',
+    'packages/diova-compare/examples/compare/README.md',
+    'packages/diova-compare/examples/compare/README.ko.md',
     *(f'cases/009-q-serving-quality/{name}' for name in
       ('README.md','README.ko.md','REPORT.md','REPORT.ko.md','METHODS.md','NOTICE.md','REPRODUCTION.md')),
 )

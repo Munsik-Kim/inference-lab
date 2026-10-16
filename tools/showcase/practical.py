@@ -19,10 +19,14 @@ C9 = 'cases/009-q-serving-quality'
 C13 = 'cases/013-dualquant-reference-quality'
 FOLLOW = 'research/agent_tool_contract_repair_20261014'
 REVISION = '09194c3f2e2c991feff5b6abab0cf8ab81a07052'
-PAGES = ('llm-guide', 'qwen3-4b', 'measurements')
+PAGES = ('llm-guide', 'qwen3-4b', 'measurements', 'compare')
+COMPARE_EXAMPLES = {
+    'examples/compare/baseline.jsonl': 'packages/diova-compare/examples/compare/baseline.jsonl',
+    'examples/compare/candidate.jsonl': 'packages/diova-compare/examples/compare/candidate.jsonl',
+}
 TITLES = {
-    'ko': ('16GB GPU에서 LLM 사용하기', 'Qwen3-4B-Instruct-2507 실전 안내', '측정 방법과 결과 읽는 법'),
-    'en': ('Using an LLM on a 16GB GPU', 'Qwen3-4B practical guide — English summary', 'How to read the measurements'),
+    'ko': ('16GB GPU에서 LLM 사용하기', 'Qwen3-4B-Instruct-2507 실전 안내', '측정 방법과 결과 읽는 법', '내 답변 기록 비교하기 · diova-compare'),
+    'en': ('Using an LLM on a 16GB GPU', 'Qwen3-4B practical guide — English summary', 'How to read the measurements', 'Compare your saved answers · diova-compare'),
 }
 # Only these previously published files can supply additional guide evidence.
 # Existing Case008/009/013 extractors keep their original source checks as well.

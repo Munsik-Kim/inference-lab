@@ -130,6 +130,8 @@ python3 -B tools/case008_checks/run.py --mode evidence --output "$OUT/evidence"<
     <h3>작은 종료 진단의 성공이 원래 실패를 지우지는 않습니다</h3>
     <p>Case009는 원래 shutdown 흐름(D0)과 객체 삭제·gc 시점을 추가한 흐름(D1)을 짧은 synthetic probe로 비교했습니다. 그 진단에서는 과거 종료 실패가 재현되지 않았습니다. 전체 품질 실행의 문제를 해결했다고 판정하지 않았습니다. <a href="case009.html#lifecycle">실제로 시험한 종료 진단과 미실행 셀</a></p>
     <p>Case013 후보의 32K 장문은 <strong>메모리 정책상 미실행</strong>입니다. 실제 메모리 부족(OOM)이나 최대 안정 문맥의 측정으로 읽지 않습니다. <a href="measurements.html#evidence-states">실행 상태를 구분하는 법</a></p>
+  <h3 id="tool-judgment">기술적 판단 — 현재 설계의 해석</h3>
+    <ul><li><strong>선택:</strong> 이름 제약·피드백·결합을 나누고 최종 JSON과 실제 수정·검증 결과를 함께 봅니다.</li><li><strong>대안:</strong> 최종 JSON만 판정하면 도구가 실행되지 않은 성공 주장을 놓칩니다.</li><li><strong>근거:</strong> 위 조건별 결과와 연결된 guard·이벤트 분석·테스트입니다. ENUM과 BOTH가 같아 피드백의 추가 이득은 확인하지 못했습니다.</li><li><strong>한계·다음 기준:</strong> 기존 DEV 재사용과 남은 D4 실패를 유지합니다. 새 과제·다른 등록명 계약에서의 확인은 별도 판단입니다.</li></ul>
   </section>
   <section id="implementation">
     <h2>7. 직접 구현한 부분과 외부 기술</h2>
