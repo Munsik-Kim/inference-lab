@@ -2,49 +2,49 @@
   <header class="guide-intro">
     <p class="eyebrow">대표작 B · DIOVA-COMPARE · CPU 합성 예제</p>
     <h1>같은 질문에서 달라진 답변 확인하기</h1>
-    <p class="guide-subtitle">모델 두 개의 저장된 답변을 검사하고, 정답 손실·회복·불일치를 보고서로 읽습니다.</p>
-    <p>모델을 실행하고 정오를 정하는 단계는 먼저 마칩니다. 아래 공개 합성 예제는 <code>synthetic_test</code>이며 GPU 실측이나 실제 모델 우열의 근거가 아닙니다.</p>
+    <p class="guide-subtitle">제가 만든 비교 도구에 저장된 답변 파일 두 개를 넣으면, 어떤 질문을 새롭게 틀렸고 맞혔는지 보고서로 볼 수 있습니다.</p>
+    <p>모델 교체나 압축 전후의 결과 검토에 사용할 수 있습니다. 사용자가 모델 실행과 답변 채점을 먼저 마친 뒤 사용합니다. AI 모델 실행, 자유 서술 답변의 범용 자동 채점, 원자료 진위 인증은 이 도구의 역할이 아닙니다. 아래 공개 합성 예제는 <code>synthetic_test</code>이며 GPU 실측이나 실제 모델 우열의 근거가 아닙니다.</p>
   </header>
   <nav class="guide-toc" aria-label="이 페이지 목차"><a href="#run">실행</a><a href="#reading">보고서</a><a href="#own-records">내 기록</a><a href="#rejection">거절 예</a><a href="#judgment">기술적 판단</a><a href="#demo">짧은 시연</a></nav>
   <section id="run">
-    <h2>1. 두 파일 → validate → compare</h2>
-    <p><a href="../examples/compare/baseline.jsonl" download>기준선 JSONL 받기</a> · <a href="../examples/compare/candidate.jsonl" download>후보 JSONL 받기</a>. 각 파일은 한 줄에 질문 하나의 결과를 담습니다. 전체 저장소를 받은 뒤 루트에서 Python 3.10 이상으로 실행하세요. 매번 새 전용 환경과 출력 경로를 사용합니다.</p>
+    <h2>1. 두 파일 준비 → 형식 검사(validate) → 비교(compare)</h2>
+    <p><a href="../examples/compare/baseline.jsonl" download>변경 전 결과(baseline) JSONL 받기</a> · <a href="../examples/compare/candidate.jsonl" download>변경 후 결과(candidate) JSONL 받기</a>. JSONL은 한 줄에 질문 하나의 결과를 담는 텍스트 파일입니다. 전체 저장소를 받은 뒤 루트에서 Python 3.10 이상으로 실행하세요. 매번 새 전용 환경과 출력 경로를 사용합니다.</p>
     <pre><code>EXAMPLE_ROOT=$(mktemp -d)
 python3 -m venv "$EXAMPLE_ROOT/venv"
 "$EXAMPLE_ROOT/venv/bin/python" -m pip install --no-deps ./packages/diova-compare
 "$EXAMPLE_ROOT/venv/bin/diova-compare" validate --input packages/diova-compare/examples/compare/baseline.jsonl
 "$EXAMPLE_ROOT/venv/bin/diova-compare" validate --input packages/diova-compare/examples/compare/candidate.jsonl
 "$EXAMPLE_ROOT/venv/bin/diova-compare" compare --baseline packages/diova-compare/examples/compare/baseline.jsonl --candidate packages/diova-compare/examples/compare/candidate.jsonl --output "$EXAMPLE_ROOT/report"</code></pre>
-    <p>예상 결과는 각 validate의 <code>status: PASS, records: 4</code>와 compare의 <code>status: PASS, n_pairs: 4</code>, 종료 코드 0입니다. 세 보고서 파일을 생성합니다. 모델·Torch·CUDA·NumPy는 필요하지 않습니다. 설치 과정에서 Python 빌드 도구를 가져올 수 있습니다.</p>
+    <p>예상 결과는 각 validate의 <code>status: PASS, records: 4</code>와 compare의 <code>status: PASS, n_pairs: 4</code>, 종료 코드 0입니다. PASS는 입력 형식 검사와 비교가 끝났다는 뜻이며, 모델 답변이 모두 정답이라는 뜻은 아닙니다. 세 보고서 파일을 생성합니다. 모델·Torch·CUDA·NumPy는 필요하지 않습니다. 설치 과정에서 Python 빌드 도구를 가져올 수 있습니다.</p>
     <p>명령은 Linux/macOS 기준입니다. Windows에서는 별도 Python 환경에서 같은 CLI 인자를 사용합니다. <a href="https://github.com/Munsik-Kim/inference-lab/blob/main/packages/diova-compare/examples/compare/README.ko.md">전체 명령·입력 문장·정답 규칙</a></p>
   </section>
   <section id="reading">
     <h2>2. 정답률이 같아도 잃은 답을 찾습니다</h2>
     <p>정답은 기준선 답변을 복사하지 않고 두 정수의 합으로 정했습니다. 답은 공백을 제거한 십진 정수 문자열입니다.</p>
-    <div class="scroll guide-table" role="region" tabindex="0" aria-label="합성 예제의 입력별 정답 전환"><table><caption>공개 합성 네 쌍 · 실제 모델 측정과 별도</caption><thead><tr><th scope="col">ID · 질문</th><th scope="col">정답</th><th scope="col">기준선 → 후보</th><th scope="col">읽는 법</th></tr></thead><tbody>
+    <div class="scroll guide-table" role="region" tabindex="0" aria-label="인공 예제에서 각 질문의 맞음·틀림 변화"><table><caption>공개 합성 네 쌍 · 실제 모델 측정과 별도</caption><thead><tr><th scope="col">ID · 질문</th><th scope="col">정답</th><th scope="col">기준선 → 후보</th><th scope="col">읽는 법</th></tr></thead><tbody>
       <tr><th scope="row">sum-01 · 2 + 2</th><td>4</td><td>4 → 5</td><td>정답 손실</td></tr>
       <tr><th scope="row">sum-02 · 3 + 5</th><td>8</td><td>7 → 8</td><td>새 정답</td></tr>
       <tr><th scope="row">sum-03 · 6 + 1</th><td>7</td><td>6 → 9</td><td>다른 오답</td></tr>
       <tr><th scope="row">sum-04 · 4 + 5</th><td>9</td><td>9 → 9</td><td>둘 다 정답</td></tr>
     </tbody></table></div>
-    <p>양쪽 정답은 2/4입니다. <code>correct_to_wrong=1</code>, <code>wrong_to_correct=1</code>, <code>wrong_to_wrong=1</code>, <code>all_answer_disagreement=3</code>으로 같은 평균 아래의 변화를 나눕니다.</p>
+    <p>양쪽 정답은 2/4입니다. 이전에 맞혔다가 틀린 답 <code>correct_to_wrong=1</code>, 새로 맞힌 답 <code>wrong_to_correct=1</code>, 다른 오답으로 바뀐 답 <code>wrong_to_wrong=1</code>, 전체 답변 변경 <code>all_answer_disagreement=3</code>으로 같은 평균 속의 변화를 나눕니다.</p>
     <ul><li><code>report.md</code>: 과제별 요약부터 읽기.</li><li><code>report.json</code>: 실행 설정, 집계와 모든 입력 쌍 확인.</li><li><code>pairs.csv</code>: 어떤 질문에서 잃거나 회복했는지 행별 확인.</li></ul>
-    <p>네 개의 합성 입력에 붙는 구간은 예제의 기술적 요약이며, 모델 우열이나 실제 업무의 일반화 근거가 아닙니다.</p>
+    <p>네 개의 합성 입력으로 계산한 통계 구간은 이 예제의 요약이며, 모델 우열이나 실제 업무의 일반화 근거가 아닙니다.</p>
   </section>
   <section id="own-records">
     <h2>3. 자신의 저장된 결과로 바꾸기</h2>
-    <p>같은 평가셋으로 두 모델을 실행하고, 같은 추출·채점 규칙으로 아래 필드를 채웁니다. JSONL을 각각 validate한 다음 compare의 파일 경로만 바꾸세요.</p>
-    <div class="scroll guide-table" role="region" tabindex="0" aria-label="사용자 기록과 schema 필드 대응"><table><caption>내 기록 → 현재 schema version 1</caption><thead><tr><th scope="col">내 기록</th><th scope="col">필드</th><th scope="col">계약</th></tr></thead><tbody>
+    <p>모델을 두 설정으로 실행한 기록, 각 질문의 허용 정답, 답을 추출하고 채점한 규칙을 준비합니다. 자유 서술형 답변의 맞음·틀림은 사용자가 제공해야 합니다. 아래 필드를 채운 JSONL 두 개를 각각 validate한 다음 compare에 파일 경로를 넣으세요.</p>
+    <div class="scroll guide-table" role="region" tabindex="0" aria-label="사용자 기록을 입력 파일의 필드로 옮기는 법"><table><caption>내 기록 → 현재 입력 형식(schema version 1)</caption><thead><tr><th scope="col">내 기록</th><th scope="col">필드</th><th scope="col">같게 맞추거나 제공할 내용</th></tr></thead><tbody>
       <tr><th scope="row">평가셋·질문 ID</th><td><code>task, task_version, sample_id</code></td><td>양쪽 같은 입력을 식별</td></tr>
-      <tr><th scope="row">실제 입력</th><td><code>prompt_hash</code></td><td>같은 템플릿·시스템 지시 포함 규칙으로 만든 UTF-8 SHA256</td></tr>
+      <tr><th scope="row">실제 입력</th><td><code>prompt_hash</code></td><td>시스템 지시·질문 틀까지 같은 방식으로 담은 입력의 확인용 문자열(UTF-8 SHA256)</td></tr>
       <tr><th scope="row">독립 정답·채점 규칙</th><td><code>gold, gold_definition</code></td><td>허용 답 목록·추출·정규화 정의가 같아야 함</td></tr>
       <tr><th scope="row">모델·저장본</th><td><code>model_id, artifact_id</code></td><td>각 파일 안에서 하나의 모델/저장본 조합</td></tr>
-      <tr><th scope="row">추출 답·정오</th><td><code>output_type, answer, correct</code></td><td>자유 생성은 extracted_answer; boolean 정오는 사용자가 제공</td></tr>
-      <tr><th scope="row">자료 종류·형식</th><td><code>evidence_kind, schema_version</code></td><td>measurement / historical / synthetic_test; 정수 1</td></tr>
+      <tr><th scope="row">추출 답·정오</th><td><code>output_type, answer, correct</code></td><td>자유 서술은 extracted_answer; correct의 true/false 판정은 사용자가 제공</td></tr>
+      <tr><th scope="row">자료 종류·형식</th><td><code>evidence_kind, schema_version</code></td><td>실측 measurement / 과거 기록 historical / 합성 예제 synthetic_test; 형식 버전은 정수 1</td></tr>
       <tr><th scope="row">선택: 원 실행 종료 코드</th><td><code>process_exit_code</code></td><td>양쪽 모든 행에 정수로 제공하거나 모두 생략</td></tr>
     </tbody></table></div>
-    <p>hash 계산은 <code>hashlib.sha256(prompt.encode("utf-8")).hexdigest()</code>입니다. CLI는 식별자의 일치를 검사하며 실제 입력 원문·artifact 바이트의 진위를 인증하지 않습니다. 자유 생성의 정오도 입력받으므로 범용 자동 채점기가 아닙니다.</p>
-    <p>답변 비교만 할 때 <code>distribution</code>과 <code>scores</code>는 생략할 수 있습니다. 전체 어휘 확률이나 logits는 필요하지 않습니다. 호환되는 선택지 분포를 추가할 때 NLL·Brier를, 호환되는 분포가 있을 때 KL을 계산합니다. 원 실행 종료 코드는 보고서에 보존됩니다.</p>
+    <p>hash 계산은 <code>hashlib.sha256(prompt.encode("utf-8")).hexdigest()</code>입니다. CLI는 식별자의 일치를 검사하며 실제 입력 원문이나 저장 모델 파일(artifact)의 내용이 진짜인지 인증하지 않습니다. 자유 생성의 정오도 입력받으므로 범용 자동 채점기가 아닙니다.</p>
+    <p>답변 비교만 할 때 <code>distribution</code>과 <code>scores</code>는 생략할 수 있습니다. 전체 단어 후보의 확률이나 모델 원점수(logits)는 필요하지 않습니다. 선택지별 확률을 추가하면 정답에 준 확률의 손실(NLL)과 확률 예측 오차(Brier)를, 서로 맞는 확률 분포가 있으면 원본과의 차이(KL)를 계산합니다. 원 실행 종료 코드는 보고서에 보존됩니다.</p>
     <p>공개 가능한 입력만 공유 예제·보고서에 넣으세요. 파일은 로컬 CLI에서 읽고 브라우저나 원격 서비스에 업로드하는 단계는 없습니다.</p>
   </section>
   <section id="rejection">
@@ -58,13 +58,13 @@ rows[0]["prompt_hash"] = "0" * 64
 Path(sys.argv[1]).write_text("".join(json.dumps(row) + "\n" for row in rows))
 PY
 "$EXAMPLE_ROOT/venv/bin/diova-compare" compare --baseline packages/diova-compare/examples/compare/baseline.jsonl --candidate "$EXAMPLE_ROOT/mismatch.jsonl" --output "$EXAMPLE_ROOT/rejected-report"</code></pre></details>
-    <p><code>--intersection</code>은 공통 ID만 비교하는 명시적 옵션이며 달라진 질문·정답 계약을 고치는 수단이 아닙니다.</p>
+    <p><code>--intersection</code>은 공통 ID만 비교하는 명시적 옵션이며 달라진 질문·채점 규칙을 일치시키는 수단이 아닙니다.</p>
   </section>
-  <section id="judgment"><h2>5. 기술적 판단 — 현재 설계의 해석</h2>
-    <ul><li><strong>선택:</strong> 평균과 함께 입력별 정답 손실·회복을 나누고 원 실행 실패 상태를 남깁니다.</li><li><strong>대안:</strong> 평균 정답률만 비교하면 이 예제의 회귀가 가려집니다.</li><li><strong>근거:</strong> <a href="../sources/diova-compare-core.py.txt">실제 집계 코드</a>와 <a href="../sources/diova-compare-tests.py.txt">전환·pairing·실패 보존 테스트</a>에서 계약을 확인할 수 있습니다.</li><li><strong>한계·다음 기준:</strong> 새 업무에 적용하려면 호출자가 정한 채점·입력 식별 규칙부터 확인해야 합니다. 현재 설계 설명이며 당시 대안 실험을 추가로 주장하지 않습니다.</li></ul>
+  <section id="judgment"><h2>5. 이렇게 만들었고, 여기까지 확인합니다</h2>
+    <ul><li><strong>선택:</strong> 평균과 함께 입력별 정답 손실·회복을 나누고 원 실행 실패 상태를 남깁니다.</li><li><strong>대안:</strong> 평균 정답률만 비교하면 이 예제처럼 이전에 맞혔던 문제를 틀리게 된 변화가 가려집니다.</li><li><strong>근거:</strong> <a href="../sources/diova-compare-core.py.txt">실제 집계 코드</a>와 <a href="../sources/diova-compare-tests.py.txt">정답 변화·입력 짝 검사(pairing)·실패 보존 테스트</a>에서 어떤 입력을 받고 어떻게 집계하는지 확인할 수 있습니다.</li><li><strong>한계·다음 기준:</strong> 새 업무에 적용하려면 사용자가 제공한 채점 기준과 같은 질문을 식별하는 규칙부터 확인해야 합니다. 현재 설계 설명이며 당시 대안 실험을 추가로 주장하지 않습니다.</li></ul>
   </section>
   <section id="demo"><h2>6. 60–90초 시연 동선</h2>
     <ol><li>같은 정답률도 개별 손실을 숨긴다는 문제를 소개합니다.</li><li>위 두 파일의 validate와 compare를 실제로 실행합니다. CPU 합성 예제라고 밝힙니다.</li><li>생성된 report.md와 pairs.csv에서 sum-01의 손실, sum-02의 회복을 확인합니다.</li><li>연결된 코드와 테스트에서 입력 거절·실패 보존의 근거를 엽니다.</li></ol>
-    <p>영상 플레이어가 아니라 실행 가능한 시연 안내입니다. 과거 GPU 기록 조회는 <a href="case009.html#quality">Case009 품질 기록</a>과 <a href="qwen3-4b.html#mitigation">Case013 후속</a>으로 별도 구분합니다.</p>
+    <p>영상 플레이어가 아니라 실행 가능한 시연 안내입니다. 기존 GPU 실험 기록을 읽으려면 <a href="case009.html#quality">Case009 품질 기록</a>과 <a href="qwen3-4b.html#mitigation">Case013 후속</a>으로 별도 구분합니다.</p>
   </section>
 </article>

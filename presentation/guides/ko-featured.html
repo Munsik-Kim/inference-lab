@@ -1,36 +1,36 @@
 <section class="featured-stories" id="featured-stories" aria-labelledby="featured-title">
   <p class="eyebrow">대표작 A · B · C</p>
-  <h2 id="featured-title">맡길 수 있는 작업을 구현으로 확인하기</h2>
+  <h2 id="featured-title">제가 구현한 세 가지 작업과 확인된 결과</h2>
   <div class="story-grid">
     <article class="story">
       <p class="story-source">A · 모델 변환에서 실제 요청까지 · Case008 Q + Case009</p>
       <h3><a href="case008.html#track-q">모델을 작게 저장하고 실제 요청까지 실행하기</a></h3>
-      <p>기존 GPTQ 변환과 실행 엔진을 연결하고, 저장본의 누락·형상·수치를 검사한 뒤 새 프로세스에서 다시 실행합니다.</p>
-      <p class="story-metric"><span>Case008 Q · Qwen3-4B 가중치 파일</span><strong>{{weight_files}}</strong><span>{{file_reduction}} 감소 · 전체 VRAM 감소율과 별도</span></p>
-      <p>후속 Case009에서 요청 비용·품질을 별도로 비교했습니다. 정답 손실과 품질 실행의 비정상 종료도 보존합니다.</p>
-      <div class="actions"><a href="case008.html#track-q">변환·저장·재로딩</a><a href="case009.html#serving">실제 요청 비교</a></div>
+      <p>기존 압축 기술(GPTQ)과 모델 실행 프로그램을 연결했습니다. 모델 파일을 작게 만든 뒤, 빠진 데이터와 배열 크기·계산 결과를 검사하고 프로그램을 새로 시작해 다시 실행했습니다.</p>
+      <p class="story-metric"><span>Case008 Q · Qwen3-4B의 학습된 숫자(가중치) 파일</span><strong>{{weight_files}}</strong><span>{{file_reduction}} 감소 · 그래픽카드 전체 메모리(VRAM) 감소율과 별도</span></p>
+      <p>모델을 작게 만들어 다시 실행하는 절차와 검사 코드가 결과물입니다. 후속 Case009에서는 응답 시간·메모리·정답을 비교했고, 더 틀린 문제와 비정상 종료 기록도 남겼습니다.</p>
+      <div class="actions"><a href="case008.html#track-q">압축·저장·다시 불러오기</a><a href="case009.html#serving">실제 요청 비교</a></div>
     </article>
     <article class="story">
-      <p class="story-source">B · 독립 CPU 도구 · diova-compare</p>
+      <p class="story-source">B · 저장된 답변 비교 도구 · diova-compare</p>
       <h3><a href="compare.html">바꾼 모델의 답변을 같은 질문 기준으로 비교하기</a></h3>
-      <p>입력·정답 정의·저장본 식별 계약을 검사하고, 새롭게 틀린 답·새롭게 맞힌 답·다른 답변을 나누어 보고합니다.</p>
+      <p>이미 저장한 두 답변 파일에서 같은 질문과 같은 채점 기준을 썼는지 검사하는 도구를 만들었습니다. 이전에 맞혔다가 틀린 답, 새롭게 맞힌 답, 다른 오답으로 바뀐 답을 보고서로 나눠 보여줍니다.</p>
       <p class="story-metric"><span>내 기록으로 직접 사용</span><strong>validate → compare</strong><span>report.md · report.json · pairs.csv</span></p>
-      <p>저장된 결과를 CPU에서 재계산하고 원 실행의 종료 코드를 보존합니다. 자유 생성 정오는 사용자가 제공하며 모델 실행과 채점은 먼저 마칩니다.</p>
-      <div class="actions"><a href="compare.html#run">합성 예제로 실행하기</a><a href="compare.html#own-records">내 기록 필드 대응</a></div>
+      <p>모델 교체 전후의 결과 검토에 사용할 수 있습니다. 모델 실행과 자유 서술 답변의 채점은 사용자가 먼저 마치며, 이 도구는 그래픽카드 없이 저장된 결과를 집계합니다. 원래 프로그램이 정상 종료했는지를 나타내는 기록(종료 코드)도 남깁니다.</p>
+      <div class="actions"><a href="compare.html#run">합성 예제로 실행하기</a><a href="compare.html#own-records">내 결과 파일의 필드 채우기</a></div>
     </article>
     <article class="story">
       <p class="story-source">C · 실제 도구 작업 완료 확인 · Case013 후속</p>
       <h3><a href="qwen3-4b.html#mitigation">성공했다는 답변과 실제 실행을 함께 확인하기</a></h3>
-      <p>등록 도구 이름 제한과 오류 피드백을 시험하고, 최종 JSON과 실제 수정·검증 이벤트를 함께 평가했습니다.</p>
-      <p class="story-metric"><span>D16 실제 작업 성공 · 기존 DEV {{dev_tasks}}개 재사용</span><strong>{{d16_before}} → {{d16_after}}</strong><span>작은 표본 · BF16 복원 reference 계산<br>새 입력 일반화·저비트 실행 가속 근거와 별도</span></p>
-      <p>D4는 {{d4_before}} → {{d4_after}}이며 {{d4_remaining}}개 실패가 남았습니다. 이름 제한에 피드백을 더한 추가 이득은 확인하지 못했습니다.</p>
-      <a href="qwen3-4b.html#mitigation">완화 구현·실행 근거·남은 실패</a>
+      <p>AI가 존재하지 않는 도구 이름을 부르면 작업이 실행되지 않는 문제를 조사했습니다. 등록된 이름만 쓰게 하는 코드와 오류 안내를 만들고, 성공했다는 답변뿐 아니라 실제 파일 수정과 검사 완료 기록을 확인했습니다.</p>
+      <p class="story-metric"><span>도구 호출 규칙 수정 전후(D16) · 개발에 썼던 {{dev_tasks}}개 문제(DEV) 재사용</span><strong>{{d16_before}} → {{d16_after}}</strong><span>작은 표본 · 4비트 가중치를 일반 16비트 형식(BF16)으로 복원해 품질 확인<br>처음 보는 문제의 성공·4비트 실행 가속은 미확인</span></p>
+      <p>D16과 D4는 같은 4비트 가중치를 씁니다. D4는 계산에 들어가는 값도 4비트로 줄였다가 복원하는 조건으로, {{d4_before}} → {{d4_after}}이며 {{d4_remaining}}개 실패가 남았습니다. 이름 제한에 오류 안내를 더한 추가 이득은 확인하지 못했습니다.</p>
+      <a href="qwen3-4b.html#mitigation">오류를 줄이는 코드·실행 기록·남은 실패</a>
     </article>
   </div>
 </section>
 <section class="model-entry home-model-guides" id="model-guides" aria-labelledby="home-model-title">
   <p class="eyebrow">내 환경에서 무엇을 확인할까?</p>
   <h2 id="home-model-title">모델별로 실행과 한계를 이어서 읽기</h2>
-  <p>현재 상세 안내는 <strong>Qwen3-4B-Instruct-2507</strong> 한 모델입니다. RTX 5080 16GB에서 확인한 실행 경로, 메모리·속도·품질, 알려진 실패와 재현 전제조건을 모았습니다. 모든 16GB GPU나 업무의 검증으로 넓히지 않습니다.</p>
+  <p>현재 상세 안내는 <strong>Qwen3-4B-Instruct-2507</strong> 한 모델입니다. RTX 5080 16GB에서 확인한 실행 방법, 메모리·속도·정답 결과, 남은 실패와 다시 확인하는 데 필요한 조건을 모았습니다. 모든 16GB GPU나 업무의 검증으로 넓히지 않습니다.</p>
   <div class="actions"><a class="reading-link" href="llm-guide.html">모델별 안내서 시작</a><a class="text-link" href="qwen3-4b.html#conclusion">Qwen3-4B 결론부터 보기</a><a class="text-link" href="measurements.html">측정 방법과 결과 읽는 법</a></div>
 </section>

@@ -4,7 +4,11 @@ English | [한국어](../ko/CASEBOOK.md) · [Home](../../README.md)
 
 [New here?](START_HERE.md) · [Plain-language glossary](GLOSSARY.md)
 
-The cases build tools for execution diagnosis, cost measurement, numerical checks and model-change evaluation. Start with [Case007](#case-007) for matrix slicing or [Case006](#case-006) for answer comparisons, then follow the earlier investigations. Each uses its own model, inputs and protocol.
+These cases explain a practical problem, what I built to investigate it, and what the results do and do not show. They provide code evidence for local AI execution, model optimization, quality regression testing and tool-automation evaluation.
+
+Start with **A: [save/restart a smaller model](#case-008) → [measure actual requests](#case-009)**, **B: [compare your saved answers with diova-compare](../../packages/diova-compare/examples/compare/README.md)**, or **C: [verify actual tool actions](#follow-up--tool-call-contracts-and-recovery)**. B is an independent comparison tool, not a model experiment. [Case014](#case-014) is separate numerical research; [Case007](#case-007) and [Case006](#case-006) show earlier model-slicing and answer-comparison work. Each experiment has its own model, inputs and conditions.
+
+For reading measurements: BF16 is a 16-bit number format; INT4 uses four-bit integers. Learned model values are weights; inputs to a calculation are activations. Saved model files are checkpoints/artifacts. DEV means existing inputs used while developing settings, and held-out means inputs reserved from those decisions. A local error compares one calculation, while accuracy counts correct task answers. [The glossary](GLOSSARY.md) explains the remaining terms.
 
 Each case follows **objective → dataset → assumptions and theory → experiment design → validation → results → interpretation → conclusion**. Choose a case, then follow its original evidence links.
 
@@ -34,12 +38,12 @@ Each case follows **objective → dataset → assumptions and theory → experim
 <a id="case-001-objective"></a>
 ### 1. Objective
 
-Find why INT8 model execution fails on RTX 5080 and whether an existing upstream selection guard unblocks it. The question is execution compatibility, before speed or quality.
+Built a before/after runner to find why an eight-bit integer (INT8) model fails on RTX 5080 and check an existing library fix. A selection guard is a condition that chooses which GPU operation to use. The question is whether execution works, before measuring speed or quality.
 
 <a id="case-001-data"></a>
 ### 2. Dataset
 
-The same RedHatAI Qwen2.5-0.5B W8A8 checkpoint receives a short question about France’s capital. This is an initialization and generation check, not a large quality dataset.
+The same RedHatAI Qwen2.5-0.5B saved model (checkpoint), with eight-bit weights and calculation inputs (W8A8), receives a short question about France’s capital. This is an initialization and generation check, not a large quality dataset.
 
 <a id="case-001-theory"></a>
 ### 3. Assumptions and theory
@@ -83,7 +87,7 @@ The existing guard resolved this compatibility path in the recorded environment.
 <a id="case-002-objective"></a>
 ### 1. Objective
 
-Compare Korean document extraction, memory and request time when replacing an official BF16 checkpoint with its FP8 counterpart.
+Built a request-and-scoring runner to compare extracting information from Korean documents, GPU memory and answer time. It compares the official model stored in 16-bit BF16 with its eight-bit floating-point (FP8) counterpart.
 
 <a id="case-002-data"></a>
 ### 2. Dataset
@@ -98,7 +102,7 @@ Valid JSON and four correct fields are different requirements. Resource savings 
 <a id="case-002-design"></a>
 ### 4. Experiment design
 
-The official Qwen3-4B-Instruct-2507 BF16 and FP8 checkpoints ran on the same tasks with a fixed 1 GiB BF16 KV-cache budget. A streaming client recorded requests.
+The official Qwen3-4B-Instruct-2507 BF16 and FP8 checkpoints ran on the same tasks. Both reserved 1 GiB in BF16 for previously calculated key/value information (KV cache). A client recorded answers as they arrived (streaming).
 
 <a id="case-002-validation"></a>
 ### 5. Validation
@@ -125,6 +129,8 @@ The paired study records resource use and extraction behavior of these official 
 <a id="case-003"></a>
 ## 003 — How does the reference change a numerical conclusion?
 
+**What I built:** an independent numerical implementation and comparison tools that separate the published method from choices in its comparison reference.
+
 <!-- claims: c003-reference -->
 
 [Objective](#case-003-objective) · [Dataset](#case-003-data) · [Assumptions and theory](#case-003-theory) · [Experiment design](#case-003-design) · [Validation](#case-003-validation) · [Results](#case-003-results) · [Interpretation](#case-003-interpretation) · [Conclusion](#case-003-conclusion)
@@ -147,7 +153,7 @@ An approximation may stay close to a same-scale baseline while another scale rul
 <a id="case-003-design"></a>
 ### 4. Experiment design
 
-The paper’s equations were implemented with common Q/K/V, masks and FP32 conditions. Separate comparisons covered DEV-selected EFQ, nearest rounding at EFQ scale, and nearest rounding at a headroom scale.
+The paper’s equations were implemented with the same attention inputs (query/key/value, Q/K/V), rules for which positions may be used (masks), and 32-bit arithmetic (FP32). Separate comparisons covered EFQ selected on DEV, rounding to the nearest permitted value at EFQ’s scaling factor, and nearest rounding at a headroom scale, which is a different rule for choosing that factor.
 
 <a id="case-003-validation"></a>
 ### 5. Validation
@@ -196,7 +202,7 @@ Preparing BF16 Q/K/V for a low-precision call is part of the cost. On short inpu
 <a id="case-004-design"></a>
 ### 4. Experiment design
 
-The comparison used official SageAttention INT8-QK/FP8-PV and the DEV-selected, verified fused BF16 SDPA path. The boundary starts with GPU BF16 inputs and ends with BF16 outputs, including smoothing, quantization, conversion and wrappers.
+The comparison used the official SageAttention operation with INT8 attention-score multiplication (QK) and FP8 information combination (PV). Its reference was the BF16 scaled dot-product attention (SDPA) path selected on DEV and checked to combine operations in a fused implementation. The boundary starts with GPU BF16 inputs and ends with BF16 outputs, including smoothing, quantization, conversion and wrappers.
 
 <a id="case-004-validation"></a>
 ### 5. Validation
@@ -255,7 +261,7 @@ The checks covered nonfinite outputs, sampled-query error and complete-call time
 <a id="case-005-results"></a>
 ### 6. Results
 
-None of the three valid changed settings met every condition. V4 lowered median error from A_PUBLIC’s 2.294% to 1.958%, while speedup fell from 2.110× to 1.338×. The decision is **STOP_DEV_SCREEN**.
+None of the three valid changed settings met every condition. V4 lowered median error from A_PUBLIC’s 2.294% to 1.958%, while speedup fell from 2.110× to 1.338×. The decision is **STOP_DEV_SCREEN**: stop at the setting-development screen because no tested candidate met every requirement.
 
 <a id="case-005-interpretation"></a>
 ### 7. Interpretation
@@ -271,6 +277,8 @@ The completed development screen stopped without a finalist. Post-hoc threshold 
 
 <a id="case-006"></a>
 ## 006 — When do scores and individual choices diverge?
+
+**What I built:** a way to replace one information-combining operation (attention) and inspect which individual answers, probabilities and ties change on matching questions.
 
 <!-- claims: c006-native c006-readout c006-limits c006-timing c006-implementation -->
 
@@ -388,6 +396,8 @@ The original study is COMPLETED_CONTROLLED_STUDY; the supplement is POST_HOC_SAM
 
 <a id="case-007"></a>
 ## 007 — Does joint importance select a better smaller MLP?
+
+**What I built:** tools to choose groups inside one feed-forward block (MLP), cut the actual weight matrices, and check both computation and answer changes.
 
 <!-- claims: c007-transfer c007-quality c007-random -->
 
@@ -507,12 +517,12 @@ The frozen rule requires the 95% upper bound of PAIRWISE−INDEPENDENT local-err
 <a id="case-008-objective"></a>
 ### Objective
 
-Save a changed model and run it in a fresh process. Q handles a GPTQ Qwen 4B checkpoint; R fits the down projection of a fixed smaller Qwen 0.6B MLP. They are separate models/runtimes.
+Built tools to save a changed model and run it in a newly started program. Q connects the existing GPTQ compression method to Qwen 4B storage and execution. R fits the output matrix (down projection) of an already smaller Qwen 0.6B feed-forward block (MLP). They use separate models and execution software.
 
 <a id="case-008-data"></a>
 ### Dataset
 
-English synthetic retrieval, comparison and bounded integer code. Q uses 256 calibration / 64 DEV / 192 held-out prompts; R uses 128 / 48 / 192, plus six smoke inputs each. Actual prompt lengths are Q 98–130 and R 103–134 tokens.
+English questions created for retrieval, comparison and bounded integer-code tasks. Q uses 256 inputs for conversion statistics (calibration) / 64 for setting development (DEV) / 192 reserved for evaluation (held-out); R uses 128 / 48 / 192, plus six basic execution checks (smoke inputs) each. Actual prompt lengths are Q 98–130 and R 103–134 tokens.
 
 <a id="case-008-theory"></a>
 ### Assumptions and theory
@@ -551,7 +561,7 @@ Implemented checkpoint conversion/serialization/runtime integration and same-str
 <a id="case-009"></a>
 ## 009 — Longer decode and concurrent requests
 
-Compares graph/eager serving and official-task records for the existing Qwen 4B BF16/W4 artifacts. Inspect all three server rounds and distinguish calculated quality metrics from native process-exit failures.
+Built a request-measurement runner for the existing Qwen 4B model files with BF16 or four-bit weights (W4). It compares prepared GPU execution sequences (graph) and operations dispatched as they occur (eager), with longer generated answers and simultaneous requests. All three server rounds remain available. Official quality tasks were run separately: a calculated score and a normal process exit are checked separately.
 
 [Methods and results](../../cases/009-q-serving-quality/REPORT.md) · [CPU audits](../../cases/009-q-serving-quality/REPRODUCTION.md)
 
@@ -559,13 +569,13 @@ Compares graph/eager serving and official-task records for the existing Qwen 4B 
 ## 010 — Finite-precision recurrent memory: storage, restart and readout horizon
 
 <!-- claims: c010-state-bytes -->
-**Objective and implementation:** pack recurrent state into low-bit storage and restore failure, randomness and cursor together. The tools compare online residual transport, mixed precision, first-error survival and exact byte ledgers.
+**Objective and implementation:** store the memory updated with each input (recurrent state) in fewer bits and restore its failures, random-generator state and current position together. The tools compare carrying storage-error corrections to the next step (residual transport), storing components at different precision (mixed precision), length until the first wrong answer and exact storage bytes.
 
-**Data and design:** the same three S3 group-tracking checkpoints serve both stages. Stage A (v1) explores storage formats and strengthens comparators using 512 sequences per checkpoint. Stage B (v2) revises failure persistence and evaluates five arms on 1,024 fresh sequences per checkpoint. The cohorts and 546/630/195 confidence families stay separate.
+**Data and design:** the same three S3 group-tracking checkpoints serve both stages. Stage A (v1) explores storage formats and strengthens comparators using 512 sequences per checkpoint. Stage B (v2) revises failure persistence and evaluates five arms on 1,024 fresh sequences per checkpoint. The two groups of sequences and the 546/630/195 families of uncertainty comparisons stay separate.
 
 **Validation and results:** v2 is the current implementation. Serialized state falls from Native 12,305 to INT8 3,137 bytes per stream (about 74.5%), with each checkpoint's mean continuous-correct-length point difference under one token. Fresh-process byte/prediction checks distinguish synthetic contracts from historical measured-input diagnostics.
 
-**Interpretation and conclusion:** Rank2 does not consistently beat Mixed5/6 within the N128 storage cap. Mean length, empirical horizon and confidence-supported grid lower bound are different metrics. Failure persistence improves the execution contract; memory-horizon improvement is evaluated separately.
+**Interpretation and conclusion:** Rank2 does not consistently beat Mixed5/6 within the N128 storage cap; these are the recorded method and budget names. Mean correct-prefix length, a horizon estimated from observed success rates, and the tested-grid length supported by uncertainty bounds measure different things. Saving a failure improves restart behavior; whether memory lasts longer is evaluated separately.
 
 [Unified report](../../cases/010-ckda-finite-precision-memory-horizon/REPORT.md) · [Current implementation](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [CPU audits](../../cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.md) · [Snapshot map](../../cases/010-ckda-finite-precision-memory-horizon/VERSION_MAP.md)
 
@@ -589,11 +599,11 @@ The follow-up using Case010 state storage is [Case011 readout adaptation](#case-
 <a id="case-011"></a>
 ## 011 — Same State, Different Readout
 
-**Objective and implementation:** adapt, save and reload only the final readout weight/bias while preserving state transitions and storage. Three readouts within a storage mode see the same evolving feature; answers do not affect the next state.
+**Objective and implementation:** fit, save and restore only the last answer-reading layer’s two arrays (weight/bias), keeping how the state evolves and is stored unchanged. Three readouts within each storage mode read the same evolving feature; their answers do not affect the next state.
 
-**Data and method:** three existing CKDA checkpoints, Native/INT8 storage, and 16,384 Native feature rows for each refit. SHORT fits positions 1–32; MIXED covers 1–256. Selection uses DEV CE, followed by the same 1,024 fresh sequences through 2,048 symbolic steps.
+**Data and method:** three existing CKDA checkpoints, Native/INT8 storage, and 16,384 Native feature rows for each refit. SHORT fits positions 1–32; MIXED covers 1–256. Selection uses correct-answer probability loss (cross-entropy, CE; lower is better) on DEV, followed by the same 1,024 fresh sequences through 2,048 symbolic steps.
 
-**Checks and findings:** the tool checks a two-tensor, 1,158-value final layer with 0 additional recurrent-state bytes. INT8 MIXED changed mean uninterrupted correct length by −9.89/−10.40/−13.49 tokens on seeds 0/1/2, while gold CE beyond fitting support decreased in all three. SHORT exported unchanged weights; two selected MIXED fits reached the 200-iteration cap.
+**Checks and findings:** the tool checks a two-tensor, 1,158-value final layer with 0 additional recurrent-state bytes. INT8 MIXED changed mean uninterrupted correct length by −9.89/−10.40/−13.49 tokens on seeds 0/1/2, while correct-answer probability loss (gold CE) at positions beyond those used for fitting decreased in all three. SHORT exported unchanged weights; two selected MIXED fits reached the 200-iteration cap.
 
 **Interpretation:** better gold probability scores did not delay the first error. Same-record error shifts and storage interactions are labelled post-hoc analyses. This bounded fitting result does not establish what every possible decoder could recover.
 
@@ -617,18 +627,18 @@ The follow-up using Case010 state storage is [Case011 readout adaptation](#case-
 <a id="case-013"></a>
 ## 013 — Does lower weight error improve real answers?
 
-**Built:** signed group64 INT4 conversion, real nibble storage and reload, a row/column-scale-preserving model adapter, and matched language/long-input/local-tool evaluation with CPU readback.
+**Built:** convert weights to signed four-bit integers (INT4) in groups of 64, store two four-bit values (nibbles) per byte, and reload them with row/column scaling factors preserved. The model adapter and evaluation tools compare matching text, long-input answers and local-tool actions, then recheck saved quality results on CPU. RTN simply rounds to the nearest permitted weight value. D16 uses scaled INT4 weights with BF16 calculation inputs; D4 uses the same weights and also quantizes inputs to INT4.
 
-**Observed:** D16 lowered weight MSE against RTN in both models. On the recorded WikiText subset, 0.6B PPL was 27.576→24.445; 4B PPL was 10.810→10.894. In eight 4B free-tool DEV tasks, BF16/RTN/D16/D4 completed 8/8, 8/8, 6/8, 0/8. The four-task 16K follow-up reuses existing tasks. Full packed-model numeric error exceeded the frozen gate; serving benefits remain unestablished.
+**Observed:** D16 lowered average squared weight error (MSE) against RTN in both models. Text-prediction score PPL (perplexity) is better when lower on the same text. On the recorded WikiText subset, 0.6B PPL was 27.576→24.445; 4B PPL was 10.810→10.894. In eight existing 4B tasks used during setting development (DEV), where the model had to choose and execute tools itself, BF16/RTN/D16/D4 completed 8/8, 8/8, 6/8, 0/8. The four-task 16K follow-up reuses existing tasks. Full packed-model numeric error exceeded the frozen gate; serving benefits remain unestablished.
 
-**Scope:** public-equation reference variant, reconstructed BF16 execution, two pinned Qwen models on RTX 5080. Formal TEST, matched GPTQ serving and native packed W4A4 were not completed. Original outputs and failure probes are retained.
+**Scope:** an implementation variant based on the published equations, using two fixed Qwen versions on RTX 5080. The quality path restores compressed values to BF16 for matrix calculations (reference computation); it does not measure packed execution speed. Evaluation reserved from development (formal TEST), same-condition GPTQ request comparison and direct packed four-bit-weight/four-bit-input execution (W4A4) were not completed. Original outputs and failure-check records are retained.
 
 [Overview](../../cases/013-dualquant-reference-quality/README.md) · [Solver/adapter](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU checks](../../cases/013-dualquant-reference-quality/REPRODUCTION.md) · [Report](../../cases/013-dualquant-reference-quality/REPORT.md)
 
 
 ### Follow-up — Tool-call contracts and recovery
 
-With unchanged quantized weights, registry-aware feedback and name enum decoding were compared separately. On the same eight existing DEV tasks, D16 changed6/8→8/8 and D4 changed0/8→2/8. Enum conditions emitted zero unregistered-name calls; six other D4 tasks failed. Identical final JSON can receive different correctness when actual patch/validation differs. No held-out generalization or packed serving benefit is established.
+Kept the quantized weights unchanged and separately compared call-error explanations and restricting generated tool names to the available list (enum decoding). On the same eight existing DEV tasks, D16 changed 6/8→8/8 and D4 changed 0/8→2/8. Name-limited conditions made zero calls to unregistered tools; six other D4 tasks failed. The same final JSON answer can receive a different correctness judgment if the actual file changes and checks differ. Performance on new tasks and speed from packed request serving remain unestablished.
 
 [Overview and CPU commands](../../research/agent_tool_contract_repair_20261014/README.md) · [Follow-up report](../../research/agent_tool_contract_repair_20261014/records/REPORT.md) · [Earlier diagnostic](../../research/agent_stability_20261013/README.md)
 
@@ -636,8 +646,8 @@ With unchanged quantized weights, registry-aware feedback and name enum decoding
 <a id="case-014"></a>
 ## 014 — Improving Model Quality at the Same INT4 Storage Budget
 
-The case tests quality transfer at identical storage format: P0 algebra/codec → P1 CAL-selection transfer failure → P1b independent selection → P2 own-trajectory full-model comparison.
+This separate research study asks whether correcting compression error improves text prediction while preserving the converted matrices’ INT4 storage. Its stages are P0: check the equations and storage code; P1: a choice made on calibration data (CAL) failed to transfer to reserved data; P1b: select on separate data; P2: collect intermediate values altered by earlier layer compression at the next layer, fit corrections, and compare the full model.
 
-Qwen3-0.6B · 196 projections ·PG19 PPL 57.600→50.156 (12.92% lower). 64/64 excerpts have lower NLL. ArXiv QUARTER has a higher point estimate with a CI crossing 0; HALF has higher NLL. This is a BF16 reload reference; packed speed/VRAM gains are unevaluated.
+Qwen3-0.6B · 196 learned matrix transformations (projections) · PG19 PPL 57.600→50.156 (12.92% lower). All 64/64 excerpts have lower correct-token probability loss (NLL). For ArXiv, the QUARTER setting has a worse point estimate with an uncertainty interval that includes zero; HALF has higher NLL. Quality was checked after restoring values to BF16. Packed execution speed and GPU-memory (VRAM) gains are unevaluated; equal projection bytes do not mean equal total model-file size.
 
 [Pages](https://munsik-kim.github.io/inference-lab/en/case014.html#overview) · [Report](../../cases/014-quantization-compensation/REPORT.md) · [Code](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [CPU](../../cases/014-quantization-compensation/REPRODUCE.md) · [Stage map](../../cases/014-quantization-compensation/STAGE_MAP.md)

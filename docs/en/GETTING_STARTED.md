@@ -4,13 +4,22 @@ English | [한국어](../ko/GETTING_STARTED.md) · [Home](../../README.md)
 
 [New here?](START_HERE.md) · [Plain-language glossary](GLOSSARY.md)
 
-Read the studies, explore recorded inputs, or run a small CPU check. GPU reproduction has its own environment and commands.
+Choose what you want to do before choosing a command:
+
+| Your purpose | Start here | What it gives you |
+|---|---|---|
+| Understand the work or assess a role/project fit | [Portfolio](PORTFOLIO.md) or the [published screen](https://munsik-kim.github.io/inference-lab/en/index.html) | The problem, tools built, related fields and source evidence; no installation |
+| Find which saved answers changed | [Compare your results](#compare-your-results) | A reusable CPU tool that compares two result files |
+| Check the project’s historical numbers | The relevant case’s CPU instructions below | Recalculation of saved results, without running a model |
+| Repeat actual model execution | Each case’s linked reproduction document | Separate model files, fixed software versions and compatible hardware |
+
+The examples below are technical instructions for the tools I built. A successful saved-record check confirms the stated file or arithmetic checks; it does not repeat the original GPU experiment. Here, a model artifact is a converted and saved model file, a scalar is one numerical value, and a hash/manifest is a file fingerprint/list used to check preservation. [Other terms](GLOSSARY.md) can be looked up as needed.
 
 
 <a id="compare-your-results"></a>
 ## Compare your own saved answers first
 
-The [diova-compare user example](../../packages/diova-compare/examples/compare/README.md) uses a dedicated Python 3.10+ environment: two synthetic files → validate → compare → read reports. It needs neither full-vocabulary probabilities nor model downloads. The following paths recheck historical experiments and are separate from comparing your own JSONL.
+The [diova-compare user example](../../packages/diova-compare/examples/compare/README.md) starts with two small files of invented answers: check the input format (`validate`) → compare matching questions (`compare`) → read the reports. It runs independently on CPU in a separate Python 3.10+ environment. Put your saved answers and correctness judgments into the same documented format (JSONL: one JSON record per line). Raw model scores and model downloads are unnecessary. The later commands recheck this project’s historical experiments.
 
 ## Open the published result viewer
 
@@ -48,16 +57,16 @@ python3 -B tools/modelpack_demo/roundtrip.py --output "$OUT/tiny-roundtrip"
 python3 -B -m unittest discover -s tests/modelpack_demo -v
 ```
 
-The command creates a random two-layer Qwen fixture on CPU, reduces layer 1's intermediate width from 64 to 48, saves it and lets the builder process exit. A second process loads a copied artifact from another directory, with access to the original builder directory blocked. It compares complete finite outputs, tensor shapes and tied embedding/head identity. It reuses the frozen Case008 loader; the wrapper does not alter research code.
+The command creates a small, randomly initialized two-layer Qwen test model (fixture) on CPU, reduces layer 1’s intermediate size from 64 to 48, saves it and closes the builder program. A second process reads a copied model from another directory while access to the original directory is blocked. It checks all output values, the dimensions of saved arrays (tensor shapes), and whether the input and output layers still share the same weights (tied embedding/head). It calls the preserved Case008 loader without changing that research code.
 
-The checked summary includes `TINY_RANDOM_CPU_FIXTURE`, widths `[64,48]`, gate/up `[48,32]`, down `[32,48]`, matching logits and shared weights. Generated tiny weights and process logs stay in the external output directory. This is a serialization test, with no trained-model quality or speed claim. To run the historical modelpack tests and this demo together:
+The checked summary includes `TINY_RANDOM_CPU_FIXTURE`, widths `[64,48]`, gate/up `[48,32]`, down `[32,48]`, matching raw output scores (logits) and shared weights. Generated tiny weights and process logs stay in the external output directory. This tests saving and restoring data (serialization); it does not test trained-model quality or speed. To run the historical modelpack tests and this demo together:
 
 ```bash
 OUT=$(mktemp -d)
 python3 -B tools/case008_checks/run.py --mode modelpack --output "$OUT/modelpack"
 ```
 
-The wrapper restores the hash-checked historical tree before its exact-inventory tests. It also checks missing/invalid artifact behavior; it never weakens a frozen inventory test for the current publication tree.
+The helper restores a fingerprint-checked copy of the historical files before tests that require the exact original file list. It also checks that missing or invalid saved models are rejected. The original tests keep their original expectations.
 
 
 <a id="local-showcase"></a>
@@ -93,14 +102,14 @@ OUT=$(mktemp -d)
 "$CPU_PY" -B -m unittest discover -s tests/showcase -v
 ```
 
-The wrapper imports the preserved selector under a unique module name and evaluates the calibration Q matrix. It verifies source hashes, finite symmetric 16×16 Q, contiguous group mapping, frozen budgets and the original lexicographic tie rule. It does not access held-out statistics for selection.
+The helper loads the preserved group-selection code and repeats its decision using the setting data’s 16×16 table of group contributions (calibration Q matrix). It checks source-file fingerprints, valid finite symmetric values, group mapping, removal counts and the original rule for resolving tied choices by ordered group IDs (lexicographic tie rule). Inputs reserved for evaluation (held-out) are not used to select groups.
 
 | Removal budget | Recomputed groups; match with saved selection |
 |---|---|
 | 4/16 | INDEPENDENT `[8,12,13,14]`; PAIRWISE `[8,13,14,15]`; both match |
 | 8/16 | Both `[7,8,9,11,12,13,14,15]`; both match |
 
-Each method evaluates 1,820 or 12,870 small CPU objective values. **Model forwards: 0.** The JSON retains objective values and definitions: independent uses the selected diagonal sum; pairwise uses the entire selected submatrix sum. They are different objectives. This checks the recorded selection logic; GPU quality and timing remain the original experiment.
+Each method evaluates 1,820 or 12,870 small candidate scores on CPU. **Model forwards: 0**—the model is never run. The JSON retains objective values and definitions: independent uses the selected diagonal sum; pairwise uses the entire selected submatrix sum. They are different objectives. This checks the recorded selection logic; GPU quality and timing remain the original experiment.
 
 
 ## 1. Read the evidence
@@ -132,7 +141,7 @@ The supplement has recorded Windows Edge `file://` checks at desktop and emulate
 ### Case007: inspect compression and its trade-offs
 
 <!-- claims: c007-package -->
-Download the [reviewed Case007 ZIP](../../downloads/case007_mlp_pruning_reviewed_publication_v1.zip) and check its [size/hash metadata](../../downloads/case007_mlp_pruning_reviewed_publication_v1.json). Extract it and open `007-interaction-aware-mlp-pruning/demo/index.html` locally. The English UI uses retained measurements only. Choose a method and deletion budget, inspect the prompt ID and removed groups, and separate local reconstruction error from gold-answer transitions. Its headline status is the frozen **COMPLETED_NO_CLEAR_TRANSFER**, not deployment approval. [Result interpretation](CASEBOOK.md#case-007).
+Download the [reviewed Case007 ZIP](../../downloads/case007_mlp_pruning_reviewed_publication_v1.zip) and check its [size/hash metadata](../../downloads/case007_mlp_pruning_reviewed_publication_v1.json). Extract it and open `007-interaction-aware-mlp-pruning/demo/index.html` locally. The English UI uses retained measurements only. Choose a method and deletion budget, inspect the prompt ID and removed groups, and separate local reconstruction error from gold-answer transitions. Its original status, **COMPLETED_NO_CLEAR_TRANSFER**, means the study finished without establishing a clear benefit under the preset comparison rule; deployment was not assessed. [Result interpretation](CASEBOOK.md#case-007).
 
 The original and current publication manifests have different scopes. The existing Case007 package verifier uses the Python standard library. From the checkout root (or the extracted case directory, omitting `cd`), use a new external output file:
 
@@ -172,7 +181,7 @@ Read the [structured report](../../cases/008-build-reconstruct-reload/REPORT.md)
 
 ## Installable CPU result comparison
 
-[diova-compare](../../packages/diova-compare/README.md) validates paired inputs and computes correctness transitions and score changes. Install it in a dedicated CPU environment without a model runtime. The evidence_kind field distinguishes new measurements from historical reanalysis.
+[diova-compare](../../packages/diova-compare/README.md) validates paired inputs and computes correctness transitions and score changes. Install it in a dedicated CPU environment without a model runtime. The `evidence_kind` field says whether a file contains a new measurement or a recalculation of historical records.
 
 ## New graph-serving and official-task study
 
@@ -199,7 +208,7 @@ python -B cases/011-frozen-state-readout-adaptation/publication/run_checks.py \
   --output /tmp/diova-case011-publication-check-new
 ```
 
-Add `--synthetic` for small contract tests requiring Torch. The original 12 fresh-checkpoint reloads and 30 saved-boundary checks are historical receipts; this command does not repeat model inference. The public ZIP excludes original checkpoints and fitted head weights, so model replay requires the recorded environment and separate files.
+Add `--synthetic` for small tests of input/storage rules using invented data; they require Torch. The original 12 fresh-checkpoint reloads and 30 saved-boundary checks are records of past checks; this command does not run the model again. The public ZIP excludes original checkpoints and fitted head weights, so model replay requires the recorded environment and separate files.
 
 <!-- case014-entry -->
 <a id="case014-cpu"></a>
@@ -214,4 +223,4 @@ OUT=$(mktemp -d)
 "$CPU_PY" -B cases/014-quantization-compensation/publication/scripts/run_checks.py --output "$OUT/case014" --tests
 ```
 
-Recalculates closed historical views,2880/3360/320 rows, choices, intervals, display data and CPU tests. No model/private payload/text or new GPU inference. Building the whole portfolio needs a full repository clone, not this Case-only ZIP.
+Restores the preserved file layouts for the P0/P1/P1b/P2 research stages, then checks 2880/3360/320 raw rows, the original setting choices, uncertainty intervals, display data and CPU tests. It uses saved records, without a model, excluded private arrays/source text or new GPU inference. Building the whole portfolio needs a full repository copy (clone), not this case-only ZIP.

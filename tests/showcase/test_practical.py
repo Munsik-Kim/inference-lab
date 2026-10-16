@@ -82,10 +82,10 @@ class PracticalGuide(unittest.TestCase):
                 self.assertNotIn('<script',html)
                 self.assertNotIn('{{',html)
                 if page == 'compare':
-                    self.assertIn('Synthetic CPU example',html)
-                    self.assertNotIn('Recorded public evidence '+REVISION,html)
+                    self.assertIn('Synthetic CPU example' if lang=='en' else '합성 CPU 예제',html)
+                    self.assertNotIn(('Recorded public evidence ' if lang=='en' else '공개된 실험 기록의 버전 ')+REVISION,html)
                 else:
-                    self.assertIn('Recorded public evidence '+REVISION,html)
+                    self.assertIn(('Recorded public evidence ' if lang=='en' else '공개된 실험 기록의 버전 ')+REVISION,html)
 
     def test_memory_reductions_pair_rounds_and_exclude_eager(self):
         processes=self.data['serving']['processes']
@@ -114,8 +114,8 @@ class PracticalGuide(unittest.TestCase):
 
     def test_limitations_remain_visible_outside_disclosures(self):
         p=Structure();p.feed((self.site/'ko/qwen3-4b.html').read_text());text=' '.join(p.visible)
-        for phrase in ('가중치 파일','전체 그래픽카드 전용 메모리','BF16으로 복원','수치 검사 실패',
-                       '비정상 종료','DEV 8과제','80개의 독립 과제가 아닙니다','6개 실패','추가 효과는 입증하지 못했습니다',
+        for phrase in ('가중치 파일','전체 그래픽카드 전용 메모리','BF16으로 복원','전체 모델 계산값 검사는 실패했습니다',
+                       '비정상 종료','문제(DEV) 8개를 재사용했습니다','서로 다른 문제가 80개라는 뜻은 아닙니다','6개 실패','추가 효과는 입증하지 못했습니다',
                        '메모리 정책상 미실행','Qwen3-0.6B','실제 독자 평가'):
             self.assertIn(phrase,text)
         en=(self.site/'en/qwen3-4b.html').read_text()
