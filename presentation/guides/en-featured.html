@@ -1,30 +1,30 @@
 <section class="featured-stories" id="featured-stories" aria-labelledby="featured-title">
-  <p class="eyebrow">FEATURED A · B · C</p><h2 id="featured-title">See the work through its implementation</h2>
+  <p class="eyebrow">FEATURED A · B · C</p><h2 id="featured-title">Three things I built and what the results show</h2>
   <div class="story-grid">
     <article class="story">
       <p class="story-source">A · From conversion to requests · Case008 Q + Case009</p>
       <h3><a href="case008.html#track-q">Store a smaller model and run actual requests</a></h3>
-      <p>Connected existing GPTQ conversion and the execution engine, with artifact inventory, shape and numeric checks followed by fresh-process reload.</p>
-      <p class="story-metric"><span>Case008 Q · Qwen3-4B weight files</span><strong>{{weight_files}}</strong><span>{{file_reduction}} smaller · separate from whole-VRAM reduction</span></p>
-      <p>Case009 separately compares request cost and quality. Task regressions and abnormal quality-process exits remain recorded.</p>
+      <p>Connected existing model compression (GPTQ) to the program that runs the model. Built checks for missing data, array sizes and calculation results, then restarted the program to verify that the saved model still ran.</p>
+      <p class="story-metric"><span>Case008 Q · Qwen3-4B learned-number (weight) files</span><strong>{{weight_files}}</strong><span>{{file_reduction}} smaller · separate from total graphics-card memory (VRAM) reduction</span></p>
+      <p>The deliverable is a conversion, saving and checking workflow. Case009 then compared response time, memory and answers, retaining questions that became wrong and runs that exited abnormally.</p>
       <div class="actions"><a href="case008.html#track-q">Convert, save, reload</a><a href="case009.html#serving">Compare real requests</a></div>
     </article>
     <article class="story">
-      <p class="story-source">B · Standalone CPU tool · diova-compare</p>
+      <p class="story-source">B · Saved-answer comparison tool · diova-compare</p>
       <h3><a href="compare.html">Compare changed answers on the same questions</a></h3>
-      <p>Checks the input, gold-definition and artifact-identity contract, then separates lost answers, gained answers and disagreement.</p>
+      <p>Built a tool that checks whether two saved answer files use the same questions and grading rules. Its reports show previously correct answers lost, new correct answers gained, and changed wrong answers.</p>
       <p class="story-metric"><span>Use your own saved records</span><strong>validate → compare</strong><span>report.md · report.json · pairs.csv</span></p>
-      <p>Recomputes saved results on CPU and retains source exit codes. Callers supply free-form correctness after running and grading their models.</p>
+      <p>Use it to review a model change. Callers run models and grade free-form answers first; this tool summarizes saved results without a graphics card. It retains exit codes, which indicate whether the original program finished normally.</p>
       <div class="actions"><a href="compare.html#run">Run the synthetic example</a><a href="compare.html#own-records">Map your records</a></div>
     </article>
     <article class="story">
       <p class="story-source">C · Actual tool-task completion · Case013 follow-up</p>
       <h3><a href="qwen3-4b.html#mitigation">Check success claims against executed actions</a></h3>
-      <p>Tested registered-name constraints and error feedback, evaluating final JSON alongside real patch and validation events.</p>
-      <p class="story-metric"><span>D16 task success · same {{dev_tasks}} previously observed DEV tasks</span><strong>{{d16_before}} → {{d16_after}}</strong><span>Small sample · dequantized BF16 reference computation<br>No new-input generalization or packed-serving speed claim</span></p>
-      <p>D4 changed {{d4_before}} → {{d4_after}}, leaving {{d4_remaining}} failures. Additional feedback benefit beyond the name constraint was not established.</p>
+      <p>Investigated tasks that failed because the AI called a nonexistent tool name. Built a name restriction and error guidance, then checked actual file edits and successful checks alongside the final success claim.</p>
+      <p class="story-metric"><span>Before/after tool-call rules (D16) · same {{dev_tasks}} development tasks (DEV) reused</span><strong>{{d16_before}} → {{d16_after}}</strong><span>Small sample · four-bit weights restored to a normal 16-bit number format (BF16) for quality checks<br>Unseen-task success and four-bit serving speed unverified</span></p>
+      <p>D16 and D4 use the same four-bit weights. D4 also reduces calculation inputs to four bits and restores them: it changed {{d4_before}} → {{d4_after}}, leaving {{d4_remaining}} failures. Extra error guidance beyond the name restriction showed no added benefit.</p>
       <a href="qwen3-4b.html#mitigation">Mitigation, action evidence and remaining failures</a>
     </article>
   </div>
 </section>
-<section class="model-entry home-model-guides" id="model-guides" aria-labelledby="home-model-title"><p class="eyebrow">Choose what to verify on your GPU</p><h2 id="home-model-title">Read execution and limits by model</h2><p>The current model guide covers <strong>Qwen3-4B-Instruct-2507</strong>: execution paths, memory, speed, quality, failures and reproduction prerequisites observed on an RTX 5080 16GB. These records do not validate every 16GB GPU or workload. English pages are summaries with links to the full Korean guide.</p><div class="actions"><a class="reading-link" href="llm-guide.html">Start the model guides</a><a class="text-link" href="qwen3-4b.html#conclusion">Qwen3-4B findings</a><a class="text-link" href="measurements.html">Read the measurements</a></div></section>
+<section class="model-entry home-model-guides" id="model-guides" aria-labelledby="home-model-title"><p class="eyebrow">Choose what to verify on your GPU</p><h2 id="home-model-title">Read execution and limits by model</h2><p>The current model guide covers <strong>Qwen3-4B-Instruct-2507</strong>: ways to run the model, memory, speed, answer quality, remaining failures and requirements for repeating the checks observed on an RTX 5080 16GB. These records do not validate every 16GB GPU or workload. English pages are summaries with links to the full Korean guide.</p><div class="actions"><a class="reading-link" href="llm-guide.html">Start the model guides</a><a class="text-link" href="qwen3-4b.html#conclusion">Qwen3-4B findings</a><a class="text-link" href="measurements.html">Read the measurements</a></div></section>

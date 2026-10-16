@@ -8,7 +8,7 @@ SETTINGS=('A_time','B_time','C_time')
 
 def human_results(data, lang):
     d=data['human_review'];t=lambda en,ko:ko if lang=='ko' else en
-    out='<div id="human-results"><h3>'+t('Completed human checklist','완료한 사람 체크')+'</h3><p>'+t(
+    out='<div id="human-results"><h3>'+t('Completed human image review','사람이 확인한 이미지 평가')+'</h3><p>'+t(
         f'All 192 images have answers. The user directly checked {d["label_provenance"]["direct_images"]} images and explicitly applied those answers to {d["label_provenance"]["reused_images"]} visually similar images of the same request.',
         f'전체 192장에 답이 있습니다. 사용자가 직접 체크한 {d["label_provenance"]["direct_images"]}장의 답을 같은 요청의 비슷한 사진 {d["label_provenance"]["reused_images"]}장에도 적용했습니다.')+'</p><div class="study-table"><table><thead><tr><th>Loop / Step</th><th>'+t('All conditions met · Human','모든 조건 충족 · 사람')+'</th><th>'+t('Median request time','요청 시간 중앙값')+'</th></tr></thead><tbody>'
     for s in SETTINGS:
@@ -41,7 +41,7 @@ def add_image_judgments(data, lang, html):
     require('id="human-results"' in html,'Human result section missing')
     html=re.sub(r'(<h1>.*?</h1>)<p>.*?</p>',lambda m:m.group(1)+'<p>'+t(
         'The completed human checklist is shown first. Each image retains its human answers and the original AI judgment separately.',
-        '완료한 사람 체크를 먼저 보여 줍니다. 각 이미지에는 사람의 답과 기존 AI 판단을 구분해 표시했습니다.')+'</p>',html,count=1,flags=re.S)
+        '사람이 확인한 이미지 평가를 먼저 보여 줍니다. 각 이미지에는 사람의 답과 기존 AI 판단을 구분해 표시했습니다.')+'</p>',html,count=1,flags=re.S)
     html=html.replace('Saved results · One AI rater','Saved images · Human and AI judgments').replace('저장된 이미지 · 한 AI의 평가','저장된 이미지 · 사람과 AI의 평가')
     html=html.replace('there are zero human raters','the original AI assessment had zero human raters').replace('인간 검증은 미수행입니다.','기존 AI 평가 단계에는 사람 판독이 없었고, 이번 사람 체크는 별도로 표시합니다.')
     html=html.replace('Method and CPU audit','Original AI method and CPU audit').replace('Human verification is not performed.','The original AI stage had no human labels; the completed user review is shown separately above.').replace('평가 방법과 직접 검산','기존 AI 평가 방법과 직접 검산')
@@ -49,7 +49,7 @@ def add_image_judgments(data, lang, html):
     def card(match):
         body=match.group(1);ids=set(re.findall(r'assets/case012-images/([0-9a-f]{24})\.png',body))
         require(len(ids)==1,'Human viewer image mapping');image_id=ids.pop();require(image_id not in seen,'Duplicate human viewer image');seen.add(image_id)
-        row=rows[image_id];origin=t('Direct human check','사람 직접 체크') if not row['reused_constraints'] else t('Human answers reused from a visual group','비슷한 사진의 사람 답 적용')
+        row=rows[image_id];origin=t('Direct human check','사람 직접 체크') if not row['reused_constraints'] else t('Human answers reused for visually similar images','비슷한 사진의 사람 답 적용')
         values={'satisfied':t('Satisfied','충족'),'not_satisfied':t('Not satisfied','미충족'),'uncertain':t('Uncertain','판단 불확실')}
         labels=' · '.join(str(int(c[1:]))+t(': ', '번: ')+values[v] for c,v in sorted(row['values'].items()))
         body=body.replace('<p><strong>','<p><strong>AI: ',1)

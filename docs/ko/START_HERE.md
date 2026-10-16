@@ -4,7 +4,9 @@
 
 ## 1. 어떤 문제를 다루나요?
 
-내 GPU에서 모델을 더 가볍게 실행하려면 저장 공간뿐 아니라 요청 속도와 답변도 확인해야 합니다. DIOVA는 RTX 5080 16GB에서 공개 가중치 모델을 압축해 저장하고 다시 실행하는 도구, 같은 질문의 답변과 비용을 비교하는 실행기, 도구 작업의 실제 완료를 확인하는 검사를 만듭니다. 결과를 읽는 데 AI 전공 지식이나 GPU는 필요 없습니다.
+모델의 저장 공간이 줄어도 답변이 나빠지거나 요청한 작업이 끝나지 않을 수 있습니다. DIOVA는 이 문제를 함께 확인합니다. 저는 저장한 모델을 검사하고 다시 실행하는 도구, 같은 질문의 답변과 실행 비용을 비교하는 도구, AI가 실제로 파일을 고치고 검사했는지 확인하는 도구를 만들었습니다. RTX 5080 16GB와 공개 Qwen 모델의 기록이며, 읽는 데 AI 전공 지식이나 GPU는 필요 없습니다.
+
+채용이나 기술 협업 관점에서는 로컬 AI 실행, 학습된 모델을 잘 작동시키는 추론 엔지니어링, 모델 최적화, 변경 뒤의 품질 저하를 찾는 회귀 검사, 도구 자동화 평가와 관련된 작업입니다. 로컬 실행 실패 진단, 모델 설정 비교, 답변·실제 작업 검사, 출처를 추적할 수 있는 측정 보고서 제작을 논의할 수 있습니다. [포트폴리오](PORTFOLIO.md)에서 각 역량을 코드와 연결했습니다.
 
 ## 2. 온라인 화면부터 읽어보세요
 
@@ -12,12 +14,12 @@
 
 목적에 따라 바로 시작할 수 있습니다.
 
-- **모델을 쓰려는 사람:** [모델별 실전 안내](LLM_GUIDE.md)에서 실행 경로와 전제조건을 확인합니다.
-- **기술 역량을 보려는 사람:** [대표작 A/B/C와 코드 근거](PORTFOLIO.md)를 읽습니다. A는 [Case008 Q 저장·재로딩](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) → [Case009 실제 요청 비교](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving)로 이어집니다.
-- **직접 비교해보려는 사람:** [diova-compare 합성 예제](../../packages/diova-compare/examples/compare/README.ko.md)로 두 파일을 validate하고 보고서를 만듭니다. 이후 자기 기록의 필드를 바꿔 넣습니다.
+- **로컬 모델을 실행하려는 사람:** [모델별 실전 안내](LLM_GUIDE.md)에서 무엇이 실행됐고 무엇이 필요하며 어디서 실패했는지 확인합니다.
+- **채용할 역할이나 의뢰할 기술 작업과의 관련성을 보려는 사람:** [대표작 A/B/C와 코드 근거](PORTFOLIO.md)를 읽습니다. A는 [Case008 Q 저장·재로딩](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) → [Case009 실제 요청 비교](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving)로 이어집니다.
+- **자기 답변 기록을 비교하려는 사람:** [diova-compare의 가상 답변 예제](../../packages/diova-compare/examples/compare/README.ko.md)로 두 파일의 형식을 검사하고 비교 보고서를 만듭니다. 이후 문서의 형식에 맞춰 자기 기록을 넣습니다. 모델 없이 쓰는 독립 CPU 도구입니다.
 - **실험을 검산하려는 사람:** [개발자 재현 안내](GETTING_STARTED.md)에서 과거 기록의 CPU 재계산 경로를 고릅니다. 위의 자기 결과 비교와 별개입니다.
 
-대표작 C는 [도구 이름 제한·오류 피드백과 실제 작업 완료 검사](../../research/agent_tool_contract_repair_20261014/README.ko.md)입니다. 기존 DEV 8과제를 재사용한 BF16 복원 reference 계산이며 새 입력 일반화나 packed INT4 가속 근거로 넓히지 않습니다.
+대표작 C는 [사용 가능한 도구 이름 제한·호출 오류 안내·실제 작업 완료 검사](../../research/agent_tool_contract_repair_20261014/README.ko.md)입니다. 설정을 조정할 때 쓰던 기존 문제(DEV) 8개를 재사용했습니다. D16은 가중치를 4비트 정수(INT4)로 저장하고 계산 입력은 BF16으로 유지합니다. D4는 같은 가중치에 입력까지 INT4로 바꿉니다. 압축 값을 BF16으로 복원해 품질을 확인하는 참조 계산(reference)이므로, 새 문제의 성능이나 압축 상태로 직접 계산하는 속도는 확인하지 않았습니다.
 
 ## 3. 어느 안내를 읽으면 되나요?
 
@@ -48,7 +50,7 @@
 - [012 이미지 생성 시간 배분](CASEBOOK.md#case-012)
 - [013 가중치 오차와 실제 답변·도구 사용](CASEBOOK.md#case-013)
 
-Case008 R은 Qwen3-0.6B의 pruning 후 복원이며 Qwen3-4B 양자화 보정과 별개입니다. 전체 수치·판정은 [사례 안내](CASEBOOK.md), 직접 구현한 부분과 외부 기술의 역할은 [포트폴리오](PORTFOLIO.md)로 이어집니다.
+Case008 R은 더 작은 Qwen3-0.6B에서 한 계산 블록의 일부를 제거한 뒤(pruning) 남은 출력 가중치를 보정하는 작업입니다. Qwen3-4B 압축 흐름과는 별개입니다. 전체 수치·판정은 [사례 안내](CASEBOOK.md), 직접 구현한 부분과 외부 기술의 역할은 [포트폴리오](PORTFOLIO.md)로 이어집니다.
 
 ## 5. 다운로드하거나 직접 검사하려면?
 
@@ -64,4 +66,4 @@ Case008 R은 Qwen3-0.6B의 pruning 후 복원이며 Qwen3-4B 양자화 보정과
 <!-- case014-entry -->
 ## 심화 연구: 같은 INT4 저장량의 품질 보정
 
-[Case014](CASEBOOK.md#case-014) · [Online](https://munsik-kim.github.io/inference-lab/ko/case014.html#overview) · [CPU checks](GETTING_STARTED.md#case014-cpu). 0.6B 전층 품질을 새 문서에서 비교한 연구이며, 기존 Qwen3-4B 실전 안내와 모델·측정 범위가 다릅니다.
+[Case014](CASEBOOK.md#case-014) · [온라인](https://munsik-kim.github.io/inference-lab/ko/case014.html#overview) · [모델 없는 CPU 검산](GETTING_STARTED.md#case014-cpu). Qwen3-0.6B의 압축 오차를 보정한 뒤 새 문서의 텍스트 예측 품질을 비교한 별도 연구입니다. 변환한 행렬의 저장량을 유지한 PG19 결과와 ArXiv의 한계를 나눠 읽으며, 기존 Qwen3-4B 실전 안내와 모델·측정 범위가 다릅니다.

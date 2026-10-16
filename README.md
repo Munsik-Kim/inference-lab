@@ -4,7 +4,11 @@ English | [한국어](README.ko.md)
 
 # Store smaller models, run them, and check the answers that changed.
 
-DIOVA is an inference engineering project connecting conversion, execution and evaluation of public AI models. Using Qwen models and an RTX 5080 16GB, it compares speed and memory alongside answers and actual tool-task outcomes.
+A smaller AI model can fit on a personal GPU yet answer differently or fail to finish a task. In DIOVA, I built Python tools that check all three: saving and running smaller models, comparing answers to the same questions, and verifying that an AI actually made and checked the requested change. The recorded runs use public Qwen models and an RTX 5080 16GB.
+
+This work relates to **local AI execution, inference engineering** (making trained models run), **model optimization, quality regression testing** (finding answers that became wrong after a change), and **tool-automation evaluation**. The code and measurements show what I built and the conditions in which I checked it.
+
+Work you can discuss with me includes diagnosing why a local model will not run, comparing model settings for memory/time/answer quality, building checks for changed answers or missing tool actions, and turning saved results into reusable reports. [Capabilities and source code](docs/en/PORTFOLIO.md) connect these tasks to implementations; production deployment has not been assessed.
 
 [Portfolio and model guides (Pages)](https://munsik-kim.github.io/inference-lab/en/index.html) · [Try it: compare your saved results](packages/diova-compare/examples/compare/README.md)
 
@@ -12,11 +16,11 @@ DIOVA is an inference engineering project connecting conversion, execution and e
 
 | Problem | Built here | Evidence / try it |
 |---|---|---|
-| A. Store a smaller model and run actual requests | Connected existing GPTQ conversion, artifact checks, fresh-process reload and matched request comparison | [Case008 Q](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) → [Case009](https://munsik-kim.github.io/inference-lab/en/case009.html#serving) |
-| B. Compare changed answers on the same questions | diova-compare: input/gold contract checks, losses/gains/disagreement and retained source failure status | [CPU example](packages/diova-compare/examples/compare/README.md) · [Code and tests](packages/diova-compare/README.md#implementation-and-checks) |
-| C. Verify actual tool-task completion | Registered-name constraints, error feedback and patch/validation-event checks | [Case013 follow-up implementation and report](research/agent_tool_contract_repair_20261014/README.md) |
+| A. Store a smaller model and run actual requests | Connected an existing compression method (GPTQ) to checks of saved model files, restart in a new process, and request comparison under matching conditions | [Case008 Q](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) → [Case009](https://munsik-kim.github.io/inference-lab/en/case009.html#serving) |
+| B. Compare changed answers on the same questions | Built diova-compare, an independent CPU tool: check that questions and answer keys match, list lost/new correct answers and other changes, and retain original run failures | [CPU example](packages/diova-compare/examples/compare/README.md) · [Code and tests](packages/diova-compare/README.md#implementation-and-checks) |
+| C. Verify actual tool-task completion | Limited calls to available tool names, explained call errors, and checked records of actual file changes and validation | [Case013 follow-up implementation and report](research/agent_tool_contract_repair_20261014/README.md) |
 
-The current model guide covers public Qwen3-4B-Instruct-2507 records on an RTX 5080 16GB; full detail is Korean with English summaries. Separate 0.6B studies cover structural reconstruction and INT4 compensation. The comparison CLI uses Python 3.10+ on CPU and consumes caller-supplied free-form correctness.
+The current model guide covers Qwen3-4B-Instruct-2507 on an RTX 5080 16GB; full detail is Korean with English summaries. Separate studies use the smaller Qwen3-0.6B model to change its structure or compensate for compression error. The comparison command-line tool (CLI) runs on CPU with Python 3.10+; for freely generated answers, you supply the correctness judgments. It does not run or automatically grade a model.
 
 [Install and map your records](packages/diova-compare/examples/compare/README.md) · [Model guides](docs/en/LLM_GUIDE.md) · [Capabilities and code](docs/en/PORTFOLIO.md) · [Reproduction](docs/en/GETTING_STARTED.md)
 
@@ -24,15 +28,15 @@ The current model guide covers public Qwen3-4B-Instruct-2507 records on an RTX 5
 
 | Project implementation | Upstream components | Code and tests |
 |---|---|---|
-| Artifact validation, partial-output protection and strict reload | PyTorch · Transformers · safetensors | [code](tools/modelpack/artifact.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
-| Q conversion, copying and fresh-runtime checks | GPTQ · LLM Compressor · compressed-tensors · vLLM/Marlin | [code](tools/modelpack/quantized.py) · [tests](cases/008-build-reconstruct-reload/tests/test_boundaries.py) |
-| Fixed-structure ridge fitting and correction in smaller weights | NumPy linear algebra · channel-reconstruction research | [code](tools/modelpack/numerics.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
-| Matched-input measurement and paired result reports | vLLM benchmark · lm-evaluation-harness · comparison metrics | [code](packages/diova-compare/src/diova_compare/core.py) · [tests](packages/diova-compare/tests/test_compare.py) |
-| Low-bit state packing, failure persistence and fresh-process restart | NumPy · PyTorch · ComplexKDA recurrence | [implementation](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [synthetic restart tests](cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
-| Same-state final-layer intervention and two-tensor patch reload | ComplexKDA · PyTorch L-BFGS · NumPy | [adapter](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [patch tests](cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
-| Paired-noise loop/step execution, time selection and image annotation | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [adapter](cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU tests](cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
-| Scale-preserving INT4 conversion and recorded quality audits | DualQuant public equations · PyTorch · NumPy | [solver](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU audit](cases/013-dualquant-reference-quality/analysis/audit.py) |
-| Own-path compensation · INT4 storage/reload · whole-model quality | Guo compensation · PyTorch · Transformers · NumPy | [code](cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [tests](cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) |
+| Check saved model files (artifacts), prevent incomplete saves, and reject incompatible reloads | PyTorch · Transformers · safetensors | [code](tools/modelpack/artifact.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
+| Connect Q model conversion, copying and checks in a newly started inference process | GPTQ · LLM Compressor · compressed-tensors · vLLM/Marlin | [code](tools/modelpack/quantized.py) · [tests](cases/008-build-reconstruct-reload/tests/test_boundaries.py) |
+| Fit output weights to reduce a smaller block’s error (ridge regression) and save the correction | NumPy linear algebra · channel-reconstruction research | [code](tools/modelpack/numerics.py) · [tests](cases/008-build-reconstruct-reload/tests/test_core.py) |
+| Measure matching inputs and report their individual before/after changes (paired comparison) | vLLM benchmark · lm-evaluation-harness · comparison metrics | [code](packages/diova-compare/src/diova_compare/core.py) · [tests](packages/diova-compare/tests/test_compare.py) |
+| Save a model’s changing memory in fewer bits, preserve failures, and resume in a new process | NumPy · PyTorch · ComplexKDA recurrence | [implementation](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [synthetic restart tests](cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
+| Change only the answer-reading layer on the same stored state; save/reapply its two arrays | ComplexKDA · PyTorch L-BFGS · NumPy | [adapter](cases/011-frozen-state-readout-adaptation/source/adapter.py) · [patch tests](cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
+| Generate from the same initial noise; compare steps, internal repeats, time and requested count/color/left-right conditions | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [adapter](cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU tests](cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
+| Convert weights to four-bit integers (INT4) with their scaling factors; recheck recorded quality results | DualQuant public equations · PyTorch · NumPy | [solver](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU audit](cases/013-dualquant-reference-quality/analysis/audit.py) |
+| Collect intermediate values altered by earlier layer compression at the next layer, fit corrections, save/reload INT4 and check whole-model text quality | Guo compensation · PyTorch · Transformers · NumPy | [code](cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [tests](cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) |
 
 [Related work and implementation boundaries](docs/related-work/README.md) · [CPU comparison package](packages/diova-compare/README.md)
 
@@ -43,19 +47,19 @@ The current model guide covers public Qwen3-4B-Instruct-2507 records on an RTX 5
 
 ### Compress, save and reload models
 
-Build GPTQ checkpoints and connect them to the inference engine. Save and restore models with layer-specific MLP widths, and fit the output weights of a smaller module.
+Build saved model files (checkpoints) using the existing GPTQ compression method and connect them to software that runs model requests (an inference engine). Save and restore a Qwen3 model with one reduced feed-forward block (MLP), and fit that smaller block’s output weights to reduce its error.
 
 LLM Compressor · PyTorch · Transformers · safetensors. [Checkpoint loader](tools/modelpack/artifact.py) · [Save–reload tests](cases/008-build-reconstruct-reload/tests/test_core.py)
 
 ### GPU inference measurement and output evaluation
 
-Compare latency, GPU memory and answer scores on matched inputs. Measure individual operations and complete model calls at separate boundaries.
+Compare elapsed time (latency), GPU memory and answer scores on the same inputs. Measure a single operation and a complete model call separately, so a faster part is not mistaken for a faster answer.
 
 vLLM · CUDA runtime · NVML · NumPy. [Request and memory runner](cases/002-bf16-fp8-document-extraction/scripts/run.py) · [Timing boundaries](cases/004-low-precision-attention-break-even/src/timing.py)
 
 ### Reproducible analysis and result explorers
 
-Build Python tools for replaying recorded calculations and web interfaces for inspecting individual results. Automated checks link the displays to their sources.
+Build Python tools that recalculate saved measurements and web screens that show what changed for each question. Automated checks compare the displayed values with their source files.
 
 Python · JavaScript · GitHub Actions · GitHub Pages. [CPU selector replay](tools/showcase/replay_selection.py) · [Display checks and tests](tests/showcase/test_showcase.py)
 
@@ -64,11 +68,11 @@ Python · JavaScript · GitHub Actions · GitHub Pages. [CPU selector replay](to
 
 | Work | Technologies and implementation |
 |---|---|
-| Quantization and compressed storage | **LLM Compressor / GPTQ / compressed-tensors** — Convert Linear weights, inspect packed tensors and record the conversion recipe. |
-| Model structure and serialization | **PyTorch / Transformers / safetensors** — Slice matrices, save layer widths and reload strict tensor shapes and tied weights. |
-| Numerical reconstruction and selection | **NumPy / CPU FP64 / ridge regression / Cholesky** — Fit a fixed smaller MLP’s output weights; compare group selections and paired scores. |
+| Quantization and compressed storage | **LLM Compressor / GPTQ / compressed-tensors** — Convert learned matrix (Linear) weights, inspect arrays packed into fewer bits and record conversion settings (the recipe). |
+| Model structure and serialization | **PyTorch / Transformers / safetensors** — Slice matrices, save layer sizes and restore checked array dimensions (tensor shapes) and shared weights. |
+| Numerical reconstruction and selection | **NumPy / CPU FP64 / ridge regression / Cholesky** — Use 64-bit numerical fitting for a fixed smaller MLP’s output weights; compare removed groups and question-by-question scores. |
 | GPU execution and checks | **vLLM / Marlin / PyTorch SDPA / SageAttention / CUDA runtime / NVML** — Verify actual runtime routes; measure memory and complete-call costs on matching inputs. |
-| Reanalysis and result interfaces | **Python / unittest / GitHub Actions / HTML / CSS / JavaScript** — Check scalars and artifacts, run tiny CPU fixtures and build bilingual result screens. |
+| Reanalysis and result interfaces | **Python / unittest / GitHub Actions / HTML / CSS / JavaScript** — Check saved numerical values and model files, run small CPU examples and build bilingual result screens. |
 
 [Read the implementation and related tests](docs/en/PORTFOLIO.md#code-tour). CUDA supports execution and measurement; public kernels supply the replaced operations.
 
@@ -92,7 +96,7 @@ Qwen3-4B-Instruct-2507 · GPTQ W4A16. **LLM Compressor · compressed-tensors · 
 
 #### R · Structure-aware reload and fixed-weight reconstruction
 
-Stores a ridge fit in the fixed smaller down projection. The loader uses per-layer shape metadata and a meta skeleton, strictly assigns saved tensors, restores tied weights and derived buffers, and reloads in a fresh process without the original checkpoint.
+Fits a smaller block’s output matrix (down projection) toward the original output using ridge regression. The saved model records each layer’s size. The loader builds an empty structure (meta skeleton), checks and assigns all saved number arrays (tensors), restores shared weights and derived working arrays (buffers), and runs in a new process without the original checkpoint.
 
 Qwen3-0.6B · One MLP layer · BF16 · Reconstruction evaluated on 192 short synthetic held-out prompts · **PyTorch · NumPy · safetensors**.
 
@@ -125,7 +129,7 @@ Qwen3-0.6B · One attention layer · Fixed synthetic questions. **PyTorch · Tra
 
 ## New measurement — longer decode and client concurrency
 
-Case009 reuses the existing Qwen3-4B BF16/W4 checkpoints at 256 generated tokens and client concurrency 1/4/16/32. The complete graph grid and matched eager comparison retain all three server rounds. Official task calculations are separate; their native process-exit failures remain explicitly labelled.
+Case009 compares the existing Qwen3-4B models with 16-bit weights (BF16) or four-bit weights (W4), generating 256 text units (tokens) per request with up to 1/4/16/32 simultaneous requests. It keeps all three server rounds for both prepared GPU execution graphs (graph) and calls dispatched as they occur (eager). Official quality tasks were run separately; abnormal process exits remain labelled alongside their calculated scores.
 
 ![Complete 128-input / 256-output TPOT and throughput curves on RTX 5080](cases/009-q-serving-quality/figures/serving-L128.png)
 
@@ -134,15 +138,15 @@ Case009 reuses the existing Qwen3-4B BF16/W4 checkpoints at 256 generated tokens
 ## Case 010 — Low-bit state storage, restart and memory horizon
 
 <!-- claims: c010-state-bytes -->
-Built packed recurrent-state storage and fresh-process resume that preserves numerical failure and per-stream randomness. The study compares the length of continuously correct readout and complete-call cost under explicit storage caps.
+Built storage that packs the memory updated with each input (recurrent state) into fewer bits and resumes in a new process while preserving numerical failures and each input stream’s random-generator state. The study compares the length of continuously correct readout and complete-call cost under explicit storage caps.
 
-**Serialized state per stream: 12,305 → 3,137 bytes, about 74.5% smaller** · Native FP32 → INT8. On fresh inputs for the same three trained CKDA checkpoints, each point estimate of the mean continuous-correct-length difference was under one token. These are state bytes, not whole-process RAM/VRAM or a quality-equivalence result.
+**Saved state per input stream: 12,305 → 3,137 bytes, about 74.5% smaller** · Original 32-bit values (Native FP32) → 8-bit integers (INT8). On fresh inputs for the same three trained CKDA checkpoints, each point estimate of the mean continuous-correct-length difference was under one token. These are state bytes, not whole-process RAM/VRAM or a quality-equivalence result.
 
 [Failure-aware implementation](cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [CPU audits](cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.md) · [Methods and results of both stages](cases/010-ckda-finite-precision-memory-horizon/REPORT.md)
 
 ## Case 011 — Same State, Different Readout
 
-Built a tool that keeps the model's evolving state unchanged across readout comparisons and replaces only the final layer used to read an answer. The adapted two-tensor patch can be saved and applied in a fresh process.
+Built a tool that keeps the model's evolving state unchanged across readout comparisons and replaces only the final layer used to read an answer. The two adjusted number arrays (tensors) can be saved as a change file (patch) and applied in a new process.
 
 **1,158 final-layer values · 0 extra recurrent-state bytes · Fresh-process patch reload**
 
@@ -158,6 +162,8 @@ Built a runner to divide image-generation time between successive updates and in
 
 **Identical initial noise · Per-setting time and memory · Blinded annotation**
 
+L1/L2/L4 mean one, two or four repetitions of the core calculation within each generation step.
+
 The human checklist is complete for 192 MAIN images: 100 directly checked, 92 assigned through explicit visual-group answer reuse. All requested constraints passed in **52/64 at L1, 51/64 at L2 and 53/64 at L4**. L4 gained four passes and lost three against L1, for a net difference of one image. L2 had the shortest recorded median request time. These are descriptive counts with reused judgments; the original AI scores remain separately available.
 
 [Plain-language overview](cases/012-looped-dit-inference-budget/README.md) · [Compare every image](cases/012-looped-dit-inference-budget/publication/IMAGES.md) · [Adapter code](cases/012-looped-dit-inference-budget/source/adapter.py) · [Methods and results](cases/012-looped-dit-inference-budget/REPORT.md)
@@ -166,26 +172,26 @@ The human checklist is complete for 192 MAIN images: 100 directly checked, 92 as
 
 ## Case 013 — Does lower weight error improve real answers?
 
-Built real INT4 packing/reload, a scale-preserving full-model adapter and matched-input language, long-context and local-tool checks. Recorded all four methods on Qwen 0.6B and 4B using an RTX 5080.
+Built tools that store and reload weights as four-bit integers (INT4), preserve their scaling factors, and compare text scores, answers to long inputs and local tool actions on matching inputs. Recorded all four methods on Qwen 0.6B and 4B using an RTX 5080. D16 stores weights in INT4 and keeps calculation inputs in BF16; D4 uses the same weights and also quantizes those inputs to INT4. Both quality paths restore quantized values to BF16 for calculation (reference computation); these names do not denote two weight-compression levels.
 
-D16 reduced weight error in both models. PPL improved in 0.6B but slightly worsened in 4B; the 4B free-tool pilot completed **6/8 versus RTN 8/8** tasks. The full packed-model numeric gate did not pass, so serving acceleration remains unestablished. These are reference-quality and small DEV results.
+D16 reduced weight error in both models. The next-token prediction score (perplexity, PPL; lower is better) improved in 0.6B but slightly worsened in 4B; the 4B free-tool pilot completed **6/8 versus RTN 8/8** tasks. RTN is the comparison that simply rounds weights to the nearest permitted value. The model using compressed GPU operations failed the preset numerical check, so faster request serving remains unestablished. These quality results use a small set of existing tasks used during setting development (DEV).
 
 [Overview](cases/013-dualquant-reference-quality/README.md) · [Solver/adapter](cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU readback](cases/013-dualquant-reference-quality/REPRODUCTION.md) · [Full report](cases/013-dualquant-reference-quality/REPORT.md)
 
 ### Follow-up — Tool names and verified actions
 
-Connected existing records to the CPU comparison CLI and built registered-name decoding with explicit error feedback. On the same eight existing DEV tasks with unchanged weights, D16 changed from **6/8 to 8/8**, and D4 from **0/8 to 2/8**. Enum conditions had zero unregistered-name calls; six other D4 failures remain.
+Connected existing records to the CPU comparison tool, limited generated tool names to the available names (enum decoding), and explained call errors. On the same eight existing DEV tasks with unchanged weights, D16 changed from **6/8 to 8/8**, and D4 from **0/8 to 2/8**. Name-limited conditions had zero calls to unregistered tools; six other D4 failures remain. Success required recorded actions and checks, not just a final message claiming completion. Performance on new tasks has not been established.
 
 [Overview](research/agent_tool_contract_repair_20261014/README.md) · [Full results and report](research/agent_tool_contract_repair_20261014/records/REPORT.md) · [Earlier diagnostic](research/agent_stability_20261013/README.md) · [Recorded comparison CLI](packages/diova-compare/README.md)
 
 <!-- case014-entry -->
 ## Research and numerical engineering — Case014
 
-Built actual-path compensation, INT4 storage/reload and whole-model quality comparison.
+Built a separate research tool that collects intermediate values at the next layer after earlier layers have been compressed, then fits corrections for their changed computation. It saves/reloads corrected INT4 weights and compares whole-model text prediction quality.
 
-**PG19 PPL 12.92% lower · 64/64 excerpts with lower NLL · unchanged projection bytes**
+**PG19 text-prediction score (PPL) 12.92% lower · 64/64 excerpts with lower correct-token loss (NLL) · unchanged bytes for the converted matrices**
 
-Qwen3-0.6B · 196 Transformer projections · 256-token excerpts from 64 fresh PG19 books. Gain not established on ArXiv. Quality after BF16 reload; speed/VRAM savings unmeasured.
+Qwen3-0.6B · 196 learned matrix transformations (Transformer projections) · 256-token excerpts from 64 fresh PG19 books. The same gain was not established on ArXiv text. Quality was checked after restoring values to BF16; speed and GPU-memory (VRAM) savings were not measured. Equal projection bytes do not establish equal total model-file size.
 
 [Compare results](https://munsik-kim.github.io/inference-lab/en/case014.html#results) · [Implementation and reproduction](cases/014-quantization-compensation/REPRODUCE.md) · [Research journey](cases/014-quantization-compensation/STAGE_MAP.md)
 
@@ -207,7 +213,7 @@ Qwen3-0.6B · 196 Transformer projections · 256-token excerpts from 64 fresh PG
 | [009 — How do longer decode and concurrency change cost?](cases/009-q-serving-quality/README.md) | Matched graph/eager serving curves and official quality calculations with recorded runtime-exit failures. |
 | [010 — Can low-bit state restart consistently after failure?](docs/en/CASEBOOK.md#case-010) | Actual bit packing, failure-aware serialization, first-error survival and byte-budget comparisons. |
 | [011 — What changes when only the readout changes?](docs/en/CASEBOOK.md#case-011) | Two-tensor adaptation and reload; paired gold-score and first-error comparisons on the same state. |
-| [012 — Where should image-generation time go?](docs/en/CASEBOOK.md#case-012) | Paired-noise loop/step runner, timing and image inspection. AI assessment of all 192 images with paired constraint gains and losses. |
+| [012 — Where should image-generation time go?](docs/en/CASEBOOK.md#case-012) | Same-noise generation-step/internal-repeat runner and timing. Assessment of requested count, color and left/right conditions in all 192 images, with paired constraint gains and losses. |
 | [013 — Does lower weight error improve real answers?](docs/en/CASEBOOK.md#case-013) | INT4 scale-preserving conversion/reload and matched full-model, long-input and tool-quality records; packed gate remains blocked. |
 | [014 — Can quality improve at the same INT4 storage budget?](docs/en/CASEBOOK.md#case-014) | Own-trajectory compensation/storage/reload/full-model quality, with PG19 gains and ArXiv limits. |
 

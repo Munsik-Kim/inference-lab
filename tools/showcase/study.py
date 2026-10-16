@@ -10,8 +10,8 @@ SECTION_IDS = ('objective','data','theory','design','validation','results','inte
 
 def method_labels(lang: str) -> dict[str,str]:
     if lang=='ko':
-        return {'B':'B · 원래 기준선','INDEPENDENT':'INDEPENDENT · 개별 점수 선택',
-                'PAIRWISE':'PAIRWISE · 상호작용 포함 선택','A_PUBLIC':'A_PUBLIC · FP8 값 결합',
+        return {'B':'B · 원래 기준선','INDEPENDENT':'INDEPENDENT · 묶음별 개별 점수 선택',
+                'PAIRWISE':'PAIRWISE · 묶음 간 상쇄·강화 포함 선택','A_PUBLIC':'A_PUBLIC · FP8 값 결합',
                 'V4':'V4 · FP16 값 결합'}
     return {'B':'B · original baseline','INDEPENDENT':'INDEPENDENT · individual scores',
             'PAIRWISE':'PAIRWISE · interactions included','A_PUBLIC':'A_PUBLIC · FP8 value combination',
@@ -73,16 +73,16 @@ def tables(data: dict, lang: str) -> list[dict]:
     out=[]
     if data['case']=='007':
         local=s['local']['HELD_OUT']
-        out.append(t('local',label('Local reconstruction · lower is closer to B','국소 재구성 · 낮을수록 B에 가까움'),[label('Measure','지표'),'INDEPENDENT','PAIRWISE'],[
+        out.append(t('local',label('Local reconstruction · lower is closer to B','바꾼 MLP 출력의 오차 · 낮을수록 원래 B에 가까움'),[label('Measure','지표'),'INDEPENDENT','PAIRWISE'],[
             [f'{int(b)*100//16}% · '+label('mean error','평균 오차'),*[fmt(local[m+'_'+b]['relative_error']['mean']*100,4)+'%' for m in ('INDEPENDENT','PAIRWISE')]] for b in ('4','8')],source=C7+'/results/derived/summary.json'))
-        out.append(t('transfer',label('Paired change · PAIRWISE minus INDEPENDENT','쌍별 변화 · PAIRWISE−INDEPENDENT'),[label('Budget','삭제 예산'),label('Mean change (percentage points)','평균 변화 (%p)'),label('95% interval (%p)','95% 구간 (%p)')],[
+        out.append(t('transfer',label('Paired change · PAIRWISE minus INDEPENDENT','같은 입력끼리의 변화(paired) · PAIRWISE−INDEPENDENT'),[label('Budget','삭제 예산'),label('Mean change (percentage points)','평균 변화 (%p)'),label('95% interval (%p)','95% 구간 (%p)')],[
             [f'{int(b)*100//16}%',fmt(s['transfer'][b]['mean_paired_relative_error_delta']*100),interval(s['transfer'][b]['ci95'],100)] for b in ('4','8')],
             label('Paired prompt intervals; the 50% structures and outputs are identical.','입력 단위 쌍별 구간입니다. 50%는 구조와 출력이 동일합니다.'),C7+'/results/derived/summary.json'))
         counts=[paired_counts(rows_for(m)) for m in ('INDEPENDENT','PAIRWISE')]
         specs=[(label('Correct choices','정답 수'),lambda x:ratio(x['candidate_correct'],x['n'])),
                (label('Choice flips vs B','B 대비 선택 변경'),lambda x:ratio(x['flips'],x['n'])),
-               (label('Regressions / B-correct','정답 손실 / B 정답'),lambda x:ratio(x['regression'],x['B_correct'])),
-               (label('Gains / B-wrong','정답 획득 / B 오답'),lambda x:ratio(x['gain'],x['n']-x['B_correct'])),
+               (label('Regressions / B-correct','전에 맞힌 답을 새로 틀림 / B 정답'),lambda x:ratio(x['regression'],x['B_correct'])),
+               (label('Gains / B-wrong','새로 맞힌 답 / B 오답'),lambda x:ratio(x['gain'],x['n']-x['B_correct'])),
                (label('Different wrong choices / all','다른 오답 변경 / 전체'),lambda x:ratio(x['wrong_to_wrong'],x['n'])),
                ('KL(B ∥ candidate) · '+label('mean','평균'),lambda x:fmt(x['full_kl'])),
                ('Δ'+label('gold-choice NLL','정답 선택지 NLL')+' · nats',lambda x:fmt(x['delta_nll']))]
@@ -95,12 +95,12 @@ def tables(data: dict, lang: str) -> list[dict]:
             rand.append([f'{int(b)*100//16}%',str(len(values)), ' / '.join(fmt(x,4)+'%' for x in (min(values),median(values),max(values)))])
         out.append(t('random',label('Frozen random sets · local reference only','고정 무작위 집합 · 국소 비교만 측정'),[label('Budget','삭제 예산'),label('Sets','집합 수'),label('Set-mean error: min / median / max','집합별 평균 오차: 최소 / 중앙 / 최대')],rand,
             label('First average each set over the same 192 inputs, then summarize the 20 means. These are not 3,840 independent inputs.','같은 192개 입력에서 집합별 오차를 먼저 평균한 뒤 20개 평균을 요약했습니다. 독립 입력 3,840개가 아닙니다.'),C7+'/results/derived/summary.json'))
-        out.append(t('cost-summary',label('Measured cost · fixed six-input subset','측정 비용 · 고정 입력 6개'),[label('Configuration','설정'),label('One MLP: ratio [95% CI]','한 층 MLP: 속도비 [95% 구간]'),label('Full prefill: ratio [95% CI]','전체 prefill: 속도비 [95% 구간]')],[[m,*[fmt(s['timing'][scope][m]['speedup_median'],3)+'× '+ '['+', '.join(fmt(v,3) for v in s['timing'][scope][m]['ci95'])+']' for scope in ('MLP','MODEL_PREFILL')]] for m in ('INDEPENDENT_4','PAIRWISE_4','INDEPENDENT_8','PAIRWISE_8')],
+        out.append(t('cost-summary',label('Measured cost · fixed six-input subset','측정 비용 · 고정 입력 6개'),[label('Configuration','설정'),label('One MLP: ratio [95% CI]','한 층 MLP: 속도비 [95% 구간]'),label('Initial prompt processing (prefill): ratio [95% CI]','질문을 처음 읽는 전체 계산(prefill): 속도비 [95% 구간]')],[[m,*[fmt(s['timing'][scope][m]['speedup_median'],3)+'× '+ '['+', '.join(fmt(v,3) for v in s['timing'][scope][m]['ci95'])+']' for scope in ('MLP','MODEL_PREFILL')]] for m in ('INDEPENDENT_4','PAIRWISE_4','INDEPENDENT_8','PAIRWISE_8')],
             label('Ratio=B time / candidate time; above 1 is faster. These are configuration-level timings, not times for the item selected below. Every full-prefill interval includes 1.','속도비=B 시간/후보 시간이며 1보다 크면 빠릅니다. 설정별 측정으로, 아래에서 고른 개별 항목의 시간이 아닙니다. 전체 prefill 구간은 모두 1을 포함합니다.'),C7+'/results/derived/summary.json'))
     else:
         for setname,title in [('standard',label('Original readout · standard 192','원래 출력 계산 · 표준 192개')),('boundary_pool',label('Original readout · selected stress 46','원래 출력 계산 · 선정 스트레스 46개'))]:
             counts=[paired_counts(rows_for(m,setname)) for m in ('A_PUBLIC','V4')]
-            specs=[(label('Correct choices','정답 수'),lambda x:ratio(x['candidate_correct'],x['n'])),(label('Choice flips vs B','B 대비 선택 변경'),lambda x:ratio(x['flips'],x['n'])),(label('Regressions / B-correct','정답 손실 / B 정답'),lambda x:ratio(x['regression'],x['B_correct'])),(label('Gains / B-wrong','정답 획득 / B 오답'),lambda x:ratio(x['gain'],x['n']-x['B_correct'])),(label('Different wrong choices / all','다른 오답 변경 / 전체'),lambda x:ratio(x['wrong_to_wrong'],x['n']))]
+            specs=[(label('Correct choices','정답 수'),lambda x:ratio(x['candidate_correct'],x['n'])),(label('Choice flips vs B','B 대비 선택 변경'),lambda x:ratio(x['flips'],x['n'])),(label('Regressions / B-correct','전에 맞힌 답을 새로 틀림 / B 정답'),lambda x:ratio(x['regression'],x['B_correct'])),(label('Gains / B-wrong','새로 맞힌 답 / B 오답'),lambda x:ratio(x['gain'],x['n']-x['B_correct'])),(label('Different wrong choices / all','다른 오답 변경 / 전체'),lambda x:ratio(x['wrong_to_wrong'],x['n']))]
             out.append(t(setname,title,[label('Measure','지표'),'A_PUBLIC','V4'],[[name,*[fn(x) for x in counts]] for name,fn in specs],
                 ('B '+label('correct','정답')+': '+ratio(counts[0]['B_correct'],counts[0]['n'])+'. '+label('Stress is baseline-conditioned and is not pooled with standard.','스트레스는 B 점수에 조건화한 집합으로 표준 집합과 합산하지 않습니다.')),C6+'/results/study/summary.json'))
         values=[s['groups']['standard/L4096']['arms'][a]['task_balanced']['delta_choice_nll'] for a in ('A_PUBLIC','V4')]
@@ -160,5 +160,5 @@ def render(root: Path, data: dict, lang: str) -> str:
     for s in c['sources']:h+='<li><a href="'+escape(source_url(manifest['source_revision'],s['path']),quote=True)+'">'+escape(s[lang])+'</a></li>'
     h+='</ul></div></article></div>'
     h+='<section class="explorer-intro" id="explorer"><p class="eyebrow">09 · '+('입력별 결과 탐색' if ko else 'ITEM EXPLORER')+'</p><h2>'+('이제 같은 입력의 결과를 직접 비교하세요' if ko else 'Compare the same input across settings')+'</h2><ol>'
-    for p in (['평가 집합·과제·삭제 예산 또는 출력 계산을 고릅니다. 아래 숫자는 현재 필터의 분모를 사용합니다.','입력 ID를 선택한 뒤 프롬프트와 별도로 계산한 정답을 확인합니다. 길이 조절용 무관한 채움 내용은 화면에서 생략되며 원문 링크로 확인할 수 있습니다.','같은 입력의 설정별 선택·정답 확률·국소 오차를 비교합니다. JSON 다운로드에는 원래 정밀도의 값과 출처가 들어 있습니다.'] if ko else ['Choose a set, task and pruning budget or readout. Counts below use the current filter’s denominator.','Select an input ID and read its prompt and independently computed gold answer. Irrelevant length filler is omitted from the display; the source link retains the full prompt.','Compare choices, gold probabilities and local errors for that same input. Download JSON for retained precision and source identifiers.']):h+='<li>'+escape(p)+'</li>'
+    for p in (['평가 집합·과제·삭제 예산 또는 마지막 답변 점수를 계산하는 방식을 고릅니다. 아래 숫자는 현재 필터의 분모를 사용합니다.','입력 ID를 선택한 뒤 프롬프트와 별도로 계산한 정답을 확인합니다. 길이 조절용 무관한 채움 내용은 화면에서 생략되며 원문 링크로 확인할 수 있습니다.','같은 입력의 설정별 선택·정답 확률·국소 오차를 비교합니다. JSON 다운로드에는 원래 정밀도의 값과 출처가 들어 있습니다.'] if ko else ['Choose a set, task and number of removed groups or final answer-score calculation (readout). Counts below use the current filter’s denominator.','Select an input ID and read its prompt and independently computed gold answer. Irrelevant length filler is omitted from the display; the source link retains the full prompt.','Compare choices, gold probabilities and local errors for that same input. Download JSON for retained precision and source identifiers.']):h+='<li>'+escape(p)+'</li>'
     return h+'</ol>'+method_key(data['case'],lang)+'</section>'

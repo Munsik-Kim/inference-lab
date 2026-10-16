@@ -85,6 +85,38 @@
 
   const data = global.CASE012_ANNOTATION, copy=global.CASE012_REVIEW_COPY, order=groupedOrder(data,copy), ko = document.documentElement.lang === 'ko';
   const el = id => document.getElementById(id), t = (en, korean) => ko ? korean : en;
+  // Explain rejected files here; keep validation rules and exported fields unchanged.
+  const errorCopy = {
+    'Annotation schema / image set / rubric mismatch': ['This file uses different images or a different checklist.', '현재 페이지와 다른 이미지나 평가 항목으로 만든 답안 파일입니다.'],
+    'Human evaluator ID required; AI labels are separate': ['Enter a human reviewer name or anonymous ID; AI judgments are separate.', '사람이 체크한 답안에 이름이나 익명 식별자를 입력하세요. AI 평가는 별도 기록입니다.'],
+    'Annotation rows and draft rows required': ['Completed or unfinished answers are missing from the file.', '파일에 완료한 답안이나 작성 중인 답안 목록이 없습니다.'],
+    'Unknown / duplicate image ID': ['The file lists an unknown image or repeats an image.', '현재 목록에 없는 이미지가 있거나 같은 이미지가 중복 기록돼 있습니다.'],
+    'Image hash mismatch': ['The image recorded in this answer file differs from the current image.', '답안 파일에 기록된 이미지와 현재 이미지의 내용이 다릅니다.'],
+    'Constraint / value mismatch': ['An answer does not match the checklist or allowed choices.', '평가 항목이나 선택 가능한 답과 맞지 않는 값이 있습니다.'],
+    'Complete / draft constraint coverage mismatch': ['Finished-answer markings do not match the questions answered.', '완료·작성 중 표시와 실제로 답한 항목 수가 맞지 않습니다.'],
+    'Annotation completeness mismatch': ['The finished and unfinished image lists do not match the answers.', '완료·미완료 이미지 목록이 실제 답안과 맞지 않습니다.'],
+    'Cursor / image identity mismatch': ['The saved place to resume does not match the image list.', '이어서 체크할 위치가 현재 이미지 목록과 맞지 않습니다.'],
+    'Enter a name or anonymous ID': ['Enter a name or anonymous ID before downloading your answers.', '답안을 내려받기 전에 이름이나 익명 식별자를 입력하세요.'],
+    'Duplicate review group': ['An image group is listed more than once.', '같은 사진 묶음이 중복 기록돼 있습니다.'],
+    'Review group coverage mismatch': ['The groups do not cover the current image list correctly.', '사진 묶음에 속한 이미지 목록이 현재 목록과 맞지 않습니다.'],
+    'Review cursor / group mismatch': ['The saved review position does not belong to the current group.', '저장된 체크 위치가 현재 사진 묶음에 속하지 않습니다.'],
+    'JSON file exceeds 2 MiB': ['The answer file exceeds the 2 MiB size limit.', '답안 파일이 허용 크기인 2MiB(약 2MB)를 넘습니다.'],
+    'Invalid visual grouping / separated IDs': ['The image groups or separately reviewed image list are not valid.', '사진 묶음이나 따로 체크한 이미지 목록이 올바르지 않습니다.'],
+    'Visual group coverage mismatch': ['The image groups contain missing or repeated images.', '사진 묶음에 빠지거나 중복된 이미지가 있습니다.'],
+    'Visual group prompt / representative mismatch': ['A group has a different request or representative image.', '사진 묶음의 생성 요청이나 대표 이미지가 맞지 않습니다.'],
+    'Visual grouping identity / review mode mismatch': ['This file uses different image groups or review settings.', '현재 페이지와 사진 묶음 구성이나 체크 방식이 다른 파일입니다.'],
+    'Label origin coverage mismatch': ['Some answers do not record whether they were checked directly or copied.', '직접 체크했는지 묶음에서 가져왔는지 기록이 빠진 답안이 있습니다.'],
+    'Unknown label origin': ['An answer has an unknown source.', '어디에서 가져온 판단인지 확인할 수 없는 답안이 있습니다.'],
+    'Invalid direct label origin': ['The record of a directly checked answer is not valid.', '직접 체크한 답안의 기록 형식이 올바르지 않습니다.'],
+    'Invalid reused label origin': ['The record of a copied answer is not valid.', '묶음에서 가져온 답안의 기록 형식이 올바르지 않습니다.'],
+    'Reused label source / membership mismatch': ['A copied answer does not match its source image or group.', '묶음에서 가져온 답이 원래 체크한 이미지나 사진 묶음과 맞지 않습니다.'],
+    'Answer every representative question before applying the group': ['Answer every question for the representative image first.', '대표 이미지의 모든 항목을 체크한 뒤 묶음에 적용하세요.']
+  };
+  const explainError = error => {
+    if (Object.hasOwn(errorCopy, error.message)) return t(...errorCopy[error.message]);
+    if (error instanceof SyntaxError) return t('The answer file cannot be read as JSON. Try the original downloaded file.', '답안 파일(JSON)을 읽을 수 없습니다. 처음 내려받은 파일로 다시 시도하세요.');
+    return t('Original error: ', '원래 오류: ') + error.message;
+  };
   const key = 'case012-human-main-v1:' + data.image_set_sha256;
   let pos = 0, answers = {}, origins={}, separated=[], mode='similarity', storageProblem = false, restoredFromStorage=false;
   const options=()=>({copy,origins,separated,mode});
@@ -103,7 +135,7 @@
     }
   } catch (error) {
     storageProblem = true;
-    message(t('Could not restore browser data. Import your JSON backup; the stored data was not overwritten.', '브라우저 기록을 복원하지 못했습니다. 보관한 JSON을 가져오세요. 기존 저장 기록은 덮어쓰지 않았습니다.') + ' ' + error.message);
+    message(t('Could not restore browser data. Import your JSON backup; the stored data was not overwritten.', '브라우저 기록을 복원하지 못했습니다. 보관한 JSON을 가져오세요. 기존 저장 기록은 덮어쓰지 않았습니다.') + ' ' + explainError(error));
   }
   readPosition();
   if(!restoredFromStorage&&!data.items.some(i=>'#'+i.image_id===location.hash)){
@@ -229,7 +261,7 @@
       message(file.status==='COMPLETE'?
         t(`All ${data.items.length} images are covered. Downloaded the completed answers; keep this JSON for recalculation.`, `전체 ${data.items.length}장의 답안이 완료됐습니다. 완료본을 다운로드했으니 검산할 수 있도록 보관하세요.`):
         t(`Partial answers downloaded: ${file.rows.length}/${data.items.length} images covered. Continue the unfinished groups before submitting a complete review.`, `부분 답안을 다운로드했습니다. ${file.rows.length}/${data.items.length}장 기록이며, 남은 묶음을 체크하면 완료본을 받을 수 있습니다.`));
-    } catch (error) { message(t('Export failed: ', '내보내기 실패: ')+error.message); }
+    } catch (error) { message(t('Export failed: ', '내보내기 실패: ')+explainError(error)); }
   };
   el('import').addEventListener('change', async () => {
     try {
@@ -240,7 +272,7 @@
       pos = restored.cursor; el('evaluator').value = restored.evaluator;
       storageProblem = false; save(); render();
       message(t('Restored your complete and unfinished labels.', '완료·부분 체크 기록을 복원했습니다.'));
-    } catch (error) { message(t('Import rejected; existing choices kept: ', '가져오기 거절 · 기존 체크 유지: ')+error.message); }
+    } catch (error) { message(t('Import rejected; existing choices kept: ', '가져오기 거절 · 기존 체크 유지: ')+explainError(error)); }
     finally { el('import').value = ''; }
   });
   global.addEventListener('hashchange', () => { readPosition(); render(); });

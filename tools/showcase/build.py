@@ -118,20 +118,20 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         return '../'+name+'?v='+hashlib.sha256(files[name]).hexdigest()[:16]
     files['index.html'] = language_index().encode()
     case_paths = sorted(p.parent.relative_to(root).as_posix() for p in (root/'cases').glob('*/README.md'))
-    names = {'en':['Execution compatibility','BF16 / FP8 extraction','Softmax approximation','Complete attention cost','Precision–cost settings','Answer decisions and ties','Structured MLP pruning','Model build, reload and MLP reconstruction'],
-             'ko':['실행 호환성','BF16 / FP8 문서 추출','Softmax 수치 근사','Attention 전체 호출 비용','정밀도와 비용의 절충','답변 선택과 동률','구조화 MLP 압축','모델 제작·재실행과 MLP 출력 복구']}
+    names = {'en':['Check execution in the target environment','Compare document extraction after changing number precision','Approximate probability calculations and measure error','Measure the full cost of connecting input tokens','Compare calculation precision, speed and memory use','Track changed answers and equal top scores','Remove internal channels to shrink a model block','Save and reload a model; repair a separate smaller model'],
+             'ko':['목표 환경에서 모델이 실행되는지 확인','숫자 정밀도를 바꾼 뒤 문서 추출 비교','확률 계산을 간단히 했을 때의 오차 확인','입력 간 연결 계산 전체의 처리 비용 측정','계산 정밀도·속도·메모리 사용량 비교','바뀐 답변과 최고점이 같은 답 추적','내부 계산 채널을 골라 모델 블록 축소','모델 저장·재실행과 별도 소형 모델의 출력 복구']}
     # IDs, translated archive labels, and verified projections are explicit.
     ids = [int(Path(path).name.split('-')[0]) for path in case_paths]
     require(ids == list(range(1, len(ids)+1)) and 8 <= len(ids) <= 14,
             'Unexpected case identity/count; extend the explicit display registry')
     registry = {
-        9: (data9, 'Graph serving and official quality evaluation', 'Graph 요청 비용과 공식 품질 평가'),
-        10: (data10, 'Recurrent-state storage, restart and readout horizon', '반복 상태의 저장·재시작과 판독 수명'),
-        11: (data11, 'Same state, different readout', '같은 상태, 다른 판독기'),
+        9: (data9, 'Process real requests and compare answer quality', '실제 요청 처리 비용과 답변 품질 비교'),
+        10: (data10, 'Save model memory, resume it and test consecutive correct answers', '모델의 중간 기억을 저장·재시작하고 연속 정답 확인'),
+        11: (data11, 'Compare rules for turning saved model memory into answers', '저장된 기억을 답으로 바꾸는 규칙 비교'),
         # Current AI assessment and blank human form retain the historical scope.
         12: (data12, 'Image-generation budget: loops vs steps', '이미지 생성 시간: 반복과 단계'),
-        13: (data13, 'Weight error, real answers and tool use', '가중치 오차와 실제 답변·도구 사용'),
-        14: (data14, 'Same-budget INT4 compensation and whole-model quality', '같은 INT4 저장량과 전층 품질 보정'),
+        13: (data13, 'Compare compressed model values, real answers and tool actions', '모델 압축 오차와 실제 답변·도구 작업 비교'),
+        14: (data14, 'Test quality correction at the same 4-bit weight-storage budget', '같은 4비트 가중치 저장량에서 품질 보정 시험'),
     }
     for case_id in ids[8:]:
         data, en, ko = registry[case_id]
@@ -185,16 +185,25 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 path=C7 if page=='case007' else C6
                 body += '<div class="actions">'+link(source_url(rev,path+'/REPRODUCTION.md'),t['original'])+'</div>'
                 scripts=f'<script defer src="../assets/{lang}.js"></script><script defer src="../data/{page}.js"></script><script defer src="../assets/state.js"></script><script defer src="../assets/app.js"></script>'
-            page_rev = 'Case013 recorded reference variant (file hashes in JSON)' if page=='case013' else 'Case012 recorded PNGs with separate AI and grouped human assessments (file hashes in JSON)' if page.startswith('case012') else 'Case011 original snapshot and post-hoc file hashes (JSON)' if page=='case011' else 'Case010 v1/v2 recorded snapshots (file hashes in JSON)' if page=='case010' else 'Case009 reviewed snapshot (file hashes in JSON)' if page=='case009' else C8_REVISION if page == 'case008' else rev
-            if page=='case014':page_rev='Case014 P0/P1/P1b/P2 recorded scalar sources; execution and build revisions are separate'
+            source_notes = {
+                'case013': ('Saved quality tests using reconstructed compressed values; source checksums in JSON', '압축 값을 일반 정밀도로 복원해 계산한 품질 기록. JSON에 원자료 내용 대조값 기록'),
+                'case012': ('Saved original images; AI assessments and human checks are separate; source checksums in JSON', '저장된 원본 이미지와 구분된 AI 평가·사람의 체크 기록. JSON에 원자료 내용 대조값 기록'),
+                'case011': ('Original saved tests and later output-rule analysis; source checksums in JSON', '원래 저장한 실험과 나중에 수행한 출력 규칙 분석. JSON에 원자료 내용 대조값 기록'),
+                'case010': ('Saved results from separate v1 and v2 tests; source checksums in JSON', '서로 나누어 수행한 v1·v2 시험의 저장된 결과. JSON에 원자료 내용 대조값 기록'),
+                'case009': ('Reviewed saved request and quality tests; source checksums in JSON', '검토한 요청 처리·품질 시험의 저장된 기록. JSON에 원자료 내용 대조값 기록')
+            }
+            note_key = 'case012' if page.startswith('case012') else page
+            page_rev = source_notes[note_key][lang=='ko'] if note_key in source_notes else C8_REVISION if page == 'case008' else rev
+            if page=='case014':page_rev='Saved numbers from Case014 stages P0/P1/P1b/P2; experiment code and page-build versions are separate' if lang=='en' else 'Case014의 P0·P1·P1b·P2 단계에 저장된 수치. 실험 코드 버전과 이 화면을 만든 버전은 구분'
             if page in GUIDE_PAGES:
-                page_rev = 'Recorded public evidence '+practical['evidence_revision']
+                page_rev = ('Recorded public evidence ' if lang=='en' else '공개된 실험 기록의 버전 ')+practical['evidence_revision']
             if page == 'compare':
-                page_rev = 'Synthetic CPU example; no model execution or historical GPU measurement'
+                page_rev = 'Synthetic CPU example; no model execution or historical GPU measurement' if lang=='en' else '합성 CPU 예제: 모델 실행이나 과거 GPU 실측 자료가 아님'
             elif page == 'index':
-                page_rev = 'Per-case source hashes in build manifest; practical guide evidence '+practical['evidence_revision']
+                page_rev = ('Source checksums for each case are in the page-build record; guide evidence version ' if lang=='en' else '사례별 원자료 내용 대조값은 화면 빌드 기록에 수록. 사용 안내의 근거 버전 ')+practical['evidence_revision']
             body+=related_cases(lang,page)
-            body+=f'<details class="provenance"><summary>{t["evidence"]}</summary><p class="small">{t["evidence"]}: <code>{page_rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p></details>'
+            source_help = 'Use these versions and file checksums (hashes) to trace the records behind this page and compare file contents.' if lang=='en' else '이 화면이 어떤 기록과 코드 버전을 참고했는지 확인할 수 있습니다. 파일 내용 대조값(해시)은 같은 파일인지 비교하는 데 씁니다.'
+            body+=f'<details class="provenance"><summary>{t["evidence"]}</summary><p class="small">{source_help}</p><p class="small">{t["evidence"]}: <code>{page_rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p></details>'
             navigation = site_navigation(lang,page)
             notice = '../sources/case013-notice.md.txt' if page=='case013' else '../sources/case012-notice.md.txt' if page.startswith('case012') else '../sources/case011-notice.md.txt' if page=='case011' else '../sources/case010-notice.md.txt' if page=='case010' else '../sources/case009-notice.md.txt' if page=='case009' else source_url(C8_REVISION,C8_PATH+'/NOTICE.md') if page=='case008' else source_url(rev,C7+'/NOTICE.md')
             if page=='case014':notice='../sources/case014-notice.md.txt'
@@ -205,8 +214,8 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
             language_label = ('English summary' if lang=='ko' else '한국어 상세') if page in GUIDE_PAGES and page != 'compare' else t['language']
             titles = {'index':t['homeHeroTitle'], 'guide':t['guide'], 'case006':t['case006'], 'case007':t['case007'], 'case008':t['homeTitle8'],
                       'case009':'Case 009 · Serving and quality' if lang=='en' else 'Case 009 · 요청 비용과 품질',
-                      'case010':'Case 010 · Recurrent memory' if lang=='en' else 'Case 010 · 반복 상태와 기억 수명',
-                      'case011':'Case 011 · Same state, different readout' if lang=='en' else 'Case 011 · 같은 상태, 다른 판독기',
+                      'case010':'Case 010 · Save model memory and test correct-answer length' if lang=='en' else 'Case 010 · 모델의 중간 기억 저장과 연속 정답',
+                      'case011':'Case 011 · Turn saved model memory into answers' if lang=='en' else 'Case 011 · 저장된 기억을 답으로 바꾸기',
                       'case013':'Case 013 · Weight error and real answers' if lang=='en' else 'Case 013 · 가중치 오차와 실제 답변',
                       'case014':'Case 014 · '+C14_TITLES[lang],
                       'case012':'Case 012 · Loops vs steps' if lang=='en' else 'Case 012 · 이미지 생성 시간 배분',
@@ -214,7 +223,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                       **dict(zip(GUIDE_PAGES,GUIDE_TITLES[lang]))}
             page_title = titles[page]
             description = t['pageDescriptions'].get(page,t['pageDescriptions']['case'])
-            html=template.substitute(lang=lang,title=escape(page_title),description=escape(description,quote=True),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=language_label,body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),notice=notice,scripts=scripts)
+            html=template.substitute(lang=lang,title=escape(page_title),description=escape(description,quote=True),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=language_label,body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),license_label='Code license (Apache-2.0)' if lang=='en' else '코드 이용 조건 (Apache-2.0)',notice=notice,notice_label='Sources and terms (NOTICE)' if lang=='en' else '출처·이용 조건 (NOTICE)',scripts=scripts)
             if page in ('index', *GUIDE_PAGES):
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/practical-guide.css"></head>')
             if page in ('case006','case007','case010','case011','case013','case014'):

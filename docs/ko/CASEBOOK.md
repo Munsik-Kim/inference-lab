@@ -4,7 +4,11 @@
 
 [처음 보는 분](START_HERE.md) · [쉬운 용어집](GLOSSARY.md)
 
-실행 진단, 비용 측정, 수치 검산, 모델 변경 평가에 필요한 도구를 사례별로 구현했습니다. 행렬 축소는 [Case007](#case-007), 답변 비교는 [Case006](#case-006)부터 읽고 앞선 조사로 이어갈 수 있습니다. 각 사례는 자체 모델·입력·실험 조건을 갖습니다.
+각 사례는 실제 문제, 이를 조사하기 위해 직접 만든 도구, 결과가 보여주는 것과 한계를 설명합니다. 로컬 AI 실행·모델 최적화·품질 회귀 검사·도구 자동화 평가와 관련된 코드 근거입니다.
+
+먼저 **A: [작은 모델 저장·재실행](#case-008) → [실제 요청 측정](#case-009)**, **B: [diova-compare로 자기 답변 기록 비교](../../packages/diova-compare/examples/compare/README.ko.md)**, **C: [실제 도구 작업 확인](#후속--도구-호출-계약과-오류-회복)** 중 필요한 것을 고르면 됩니다. B는 모델 실험과 독립된 비교 도구입니다. [Case014](#case-014)는 별도 수치 연구이고, [Case007](#case-007)·[Case006](#case-006)은 앞서 만든 모델 축소·답변 비교 도구입니다. 실험마다 모델·입력·조건이 다릅니다.
+
+숫자를 읽을 때 BF16은 16비트 숫자 형식, INT4는 4비트 정수 형식입니다. 모델이 학습한 값은 가중치, 계산에 들어가는 값은 활성값입니다. 저장한 모델 파일은 checkpoint·artifact라고 부릅니다. DEV는 설정을 조정할 때 쓰던 기존 문제, held-out은 그 결정에 쓰지 않고 남긴 평가 입력입니다. 국소 오차는 한 계산의 차이이며 업무 정답률과 다릅니다. 다른 말은 [용어집](GLOSSARY.md)에서 볼 수 있습니다.
 
 각 사례는 **목표 → 데이터셋 → 가정과 이론 → 실험 설계 → 검증 내용 → 결과 → 결과 해석 → 결론** 순서입니다. 아래 목차에서 사례를 고른 뒤 원문·수치 근거로 이어갈 수 있습니다.
 
@@ -34,12 +38,12 @@
 <a id="case-001-objective"></a>
 ### 1. 목표
 
-RTX 5080에서 INT8 모델 실행이 막히는 원인을 찾고, 기존 upstream 선택 조건으로 해결되는지 확인했습니다. 조사 대상은 계산 속도보다 먼저 필요한 실행 호환성입니다.
+RTX 5080에서 8비트 정수(INT8) 모델 실행이 막히는 원인을 찾고 기존 라이브러리 수정의 효과를 확인하는 전후 비교 실행기를 만들었습니다. 선택 조건(guard)은 어떤 GPU 연산을 사용할지 정하는 검사입니다. 조사 대상은 속도·품질에 앞서 실행 자체가 되는지입니다.
 
 <a id="case-001-data"></a>
 ### 2. 데이터셋
 
-같은 RedHatAI Qwen2.5-0.5B W8A8 체크포인트와 짧은 프랑스 수도 질문을 사용했습니다. 대규모 품질 평가 데이터셋이 아니라 초기화·생성 경로를 확인하는 입력입니다.
+가중치와 계산 입력이 8비트인(W8A8) 같은 RedHatAI Qwen2.5-0.5B 모델 저장본(checkpoint)과 짧은 프랑스 수도 질문을 사용했습니다. 대규모 품질 평가 데이터셋이 아니라 초기화·생성 경로를 확인하는 입력입니다.
 
 <a id="case-001-theory"></a>
 ### 3. 가정과 이론
@@ -83,7 +87,7 @@ RTX 5080에서 INT8 모델 실행이 막히는 원인을 찾고, 기존 upstream
 <a id="case-002-objective"></a>
 ### 1. 목표
 
-공식 FP8 모델로 바꿀 때 한국어 문서 추출 결과와 메모리·요청 시간이 어떻게 달라지는지 비교했습니다.
+공식 16비트 BF16 모델과 8비트 부동소수점(FP8) 모델로 한국어 문서에서 정보를 추출하고, 메모리·답변 시간·정오를 비교하는 요청·채점 실행기를 만들었습니다.
 
 <a id="case-002-data"></a>
 ### 2. 데이터셋
@@ -98,7 +102,7 @@ JSON 문법을 지키는 것과 네 필드를 모두 맞히는 것은 다른 조
 <a id="case-002-design"></a>
 ### 4. 실험 설계
 
-공식 Qwen3-4B-Instruct-2507 BF16·FP8 체크포인트를 같은 과제로 비교했습니다. KV cache는 동일한 1 GiB BF16 예산으로 고정하고 streaming client로 요청을 기록했습니다.
+공식 Qwen3-4B-Instruct-2507 BF16·FP8 저장본을 같은 과제로 비교했습니다. 앞서 계산한 key/value 정보를 다시 쓰는 저장 공간(KV cache)은 같은 1 GiB BF16으로 고정했습니다. 답변을 도착하는 대로 받는 클라이언트(streaming client)로 요청을 기록했습니다.
 
 <a id="case-002-validation"></a>
 ### 5. 검증 내용
@@ -132,12 +136,12 @@ FP8 요청은 대체로 먼저 끝났지만 출력 길이가 달라 순수 decod
 <a id="case-003-objective"></a>
 ### 1. 목표
 
-EFQ-Softmax 수치 근사의 오차를 독립 구현으로 확인하고, 코드 매핑의 효과와 비교 기준의 scale 선택을 나누어 조사했습니다.
+논문 방법인 EFQ-Softmax를 수식에서 독립적으로 구현해 오차를 검사했습니다. 숫자를 허용값에 대응시키는 규칙(매핑)과 값의 범위를 맞추는 배율(scale)의 영향을 나눠 조사하는 분석 도구입니다.
 
 <a id="case-003-data"></a>
 ### 2. 데이터셋
 
-실제 Qwen3-0.6B에서 얻은 attention trace를 사용했습니다. 길이 512·2048·4096 각각에서 16문서×3층×4heads의 192개 head 단위를 비교했습니다. 문서 안의 head는 독립 표본이 아닙니다.
+실제 Qwen3-0.6B에서 입력 정보를 조합하는 attention 계산을 기록한 자료(trace)를 사용했습니다. 길이 512·2048·4096 각각에서 16문서×3층×4heads의 192개 head 단위를 비교했습니다. 문서 안의 head는 독립 표본이 아닙니다.
 
 <a id="case-003-theory"></a>
 ### 3. 가정과 이론
@@ -147,7 +151,7 @@ EFQ-Softmax 수치 근사의 오차를 독립 구현으로 확인하고, 코드 
 <a id="case-003-design"></a>
 ### 4. 실험 설계
 
-논문 식을 독립 구현하고 Q/K/V·mask·FP32 계산 조건을 공통으로 유지했습니다. 개발 자료로 선택한 EFQ 설정, EFQ scale의 nearest rounding, 별도 headroom scale의 nearest를 구분했습니다.
+논문 식을 독립 구현하고 attention 입력인 query/key/value(Q/K/V), 참조 가능한 위치 규칙(mask), 32비트 계산(FP32)을 동일하게 유지했습니다. 개발 자료로 고른 EFQ, 같은 배율에서 가까운 허용값으로 반올림(nearest rounding), 다른 규칙으로 고른 배율(headroom scale)의 반올림을 구분했습니다.
 
 <a id="case-003-validation"></a>
 ### 5. 검증 내용
@@ -181,7 +185,7 @@ headroom nearest는 모든 길이에서 중앙값과 p95가 더 낮았습니다.
 <a id="case-004-objective"></a>
 ### 1. 목표
 
-저정밀 attention이 커널 내부뿐 아니라 전처리·변환을 포함한 전체 호출에서도 빠른지, 국소 오차와 함께 확인했습니다.
+입력 정보를 조합하는 attention을 적은 비트로 계산할 때, 핵심 GPU 연산(커널)뿐 아니라 준비·변환까지 빨라지는지 재는 연결 코드와 측정 도구를 만들었습니다. 한 계산의 출력 차이인 국소 오차도 함께 확인했습니다.
 
 <a id="case-004-data"></a>
 ### 2. 데이터셋
@@ -196,7 +200,7 @@ BF16 Q/K/V를 저정밀 연산에 맞게 준비하는 시간도 호출 비용입
 <a id="case-004-design"></a>
 ### 4. 실험 설계
 
-공식 SageAttention INT8-QK/FP8-PV와 개발 자료에서 선택하고 fused 실행을 확인한 BF16 SDPA를 비교했습니다. GPU의 BF16 입력부터 BF16 출력까지 smoothing·양자화·변환·wrapper를 포함했습니다.
+공식 SageAttention의 INT8 attention 점수 계산(QK)·FP8 정보 조합(PV)을 비교했습니다. 기준은 개발 자료로 고르고 연산을 묶어서 실행하는 fused 경로를 확인한 BF16 attention(SDPA)입니다. GPU의 BF16 입력부터 BF16 출력까지 값 범위 조정(smoothing)·양자화·변환·호출 연결 코드(wrapper)를 포함했습니다.
 
 <a id="case-004-validation"></a>
 ### 5. 검증 내용
@@ -230,7 +234,7 @@ BF16 Q/K/V를 저정밀 연산에 맞게 준비하는 시간도 호출 비용입
 <a id="case-005-objective"></a>
 ### 1. 목표
 
-Case004의 attention 경로 주변에서 정밀도 설정을 제한적으로 바꾸어 국소 오차를 낮추면서 전체 호출 속도를 유지할 수 있는지 조사했습니다.
+Case004의 attention 계산에서 몇 가지 숫자 정밀도 설정을 바꿔 비교하는 도구를 만들었습니다. 출력 오차를 줄이면서 준비 작업까지 포함한 속도를 유지하는지 확인하고, 통과 후보가 없을 때 중단한 기록도 남겼습니다.
 
 <a id="case-005-data"></a>
 ### 2. 데이터셋
@@ -255,7 +259,7 @@ NaN/Inf 등 출력 유효성, sampled-query 오차와 전체 호출 시간을 �
 <a id="case-005-results"></a>
 ### 6. 결과
 
-유효한 변경 설정 세 개 중 모든 기준을 충족한 설정은 없었습니다. V4의 중앙값 오차는 A_PUBLIC의 2.294%에서 1.958%로 낮아졌고, 속도비는 2.110×에서 1.338×로 낮아졌습니다. 판정은 **STOP_DEV_SCREEN**입니다.
+유효한 변경 설정 세 개 중 모든 기준을 충족한 설정은 없었습니다. V4의 중앙값 오차는 A_PUBLIC의 2.294%에서 1.958%로 낮아졌고, 속도비는 2.110×에서 1.338×로 낮아졌습니다. 판정은 **STOP_DEV_SCREEN**으로, 설정 개발 단계에서 모든 조건을 통과한 후보가 없어 중단했다는 뜻입니다.
 
 <a id="case-005-interpretation"></a>
 ### 7. 결과 해석
@@ -265,12 +269,14 @@ V4는 충실도와 비용의 절충점입니다. V1/V2는 속도를 유지했지
 <a id="case-005-conclusion"></a>
 ### 8. 결론
 
-최종 후보 없이 개발 screen에서 완료·중단했습니다. 사후 임계값 민감도는 해석 자료로 남으며 원래 기준을 완화한 새 통과 결과가 아닙니다. 국소 오차로 저정밀 attention 전체나 모델 과제 품질을 판정하지 않습니다.
+최종 후보 없이 설정 개발 검사(screen)를 완료하고 중단했습니다. 사후 임계값 민감도는 해석 자료로 남으며 원래 기준을 완화한 새 통과 결과가 아닙니다. 국소 오차로 저정밀 attention 전체나 모델 과제 품질을 판정하지 않습니다.
 
 [개발 결과 — 기술 원문(영어)](../../cases/005-attention-precision-pareto/README.md) · [판정·측정 JSON](../../cases/005-attention-precision-pareto/results/dev_summary.json) · [별도 사후 검토 — 영어](../../cases/005-attention-precision-pareto/POSTHOC_THRESHOLD_REVIEW.md)
 
 <a id="case-006"></a>
 ## 006 — 점수와 개별 답변 선택은 언제 달라지는가?
+
+**직접 만든 것:** 입력 정보를 조합하는 attention 연산 하나를 바꾸고, 같은 질문의 개별 답변·확률·동률이 어떻게 달라졌는지 확인하는 도구입니다.
 
 <!-- claims: c006-native c006-readout c006-limits c006-timing c006-implementation -->
 
@@ -388,6 +394,8 @@ Qwen3-0.6B의 0부터 센 layer 13에서 관측한 프롬프트를 한 번 처�
 
 <a id="case-007"></a>
 ## 007 — 함께 지울 그룹을 고려하면 더 나은 작은 MLP를 고를 수 있는가?
+
+**직접 만든 것:** 한 순방향 계산 블록(MLP)에서 제거할 그룹을 고르고, 실제 가중치 행렬을 자른 뒤 계산·답변 변화를 확인하는 도구입니다.
 
 <!-- claims: c007-transfer c007-quality c007-random -->
 
@@ -507,12 +515,12 @@ B의 과제별 정답은 사실 찾기 63/64, 비교 15/64, 코드 16/64였습�
 <a id="case-008-objective"></a>
 ### 목표
 
-바꾼 모델을 저장하고 새 프로세스에서 다시 실행합니다. Q는 GPTQ Qwen 4B 저장본을, R은 고정된 작은 Qwen 0.6B MLP의 down projection 보정을 다룹니다. 모델·실행기가 다른 두 트랙입니다.
+바꾼 모델을 저장하고 새로 시작한 프로그램에서 실행하는 도구를 만들었습니다. Q는 기존 압축 방법인 GPTQ를 Qwen 4B 저장·실행에 연결합니다. R은 이미 작게 만든 Qwen 0.6B의 순방향 계산 블록(MLP)에서 출력 행렬(down projection)을 보정합니다. 모델·실행 소프트웨어가 다른 두 경로입니다.
 
 <a id="case-008-data"></a>
 ### 데이터셋
 
-영어 합성 검색·비교·제한된 정수 코드입니다. Q는 calibration 256 / DEV 64 / held-out 192입력, R은 128 / 48 / 192입력이며 smoke는 각각 6개입니다. 실제 길이는 Q 98–130, R 103–134토큰입니다.
+검색·비교·제한된 정수 코드용으로 만든 영어 질문입니다. Q는 변환 통계용(calibration) 256 / 설정 개발용(DEV) 64 / 평가용으로 남긴(held-out) 192입력, R은 128 / 48 / 192입력입니다. 기본 실행 확인(smoke) 입력은 각각 6개입니다. 실제 길이는 Q 98–130, R 103–134토큰입니다.
 
 <a id="case-008-theory"></a>
 ### 가정과 이론
@@ -564,7 +572,7 @@ Q 전체 NLL은 낮아졌지만 네 보기 조건부 NLL은 높아졌습니다. 
 <a id="case-009"></a>
 ## 009 — 긴 생성과 동시 요청
 
-기존 Qwen 4B BF16/W4 저장본의 graph/eager 실행과 공식 과제 기록을 비교합니다. 세 server round의 비용 곡선과, 계산된 점수·프로세스 종료 실패를 함께 확인할 수 있습니다.
+기존 Qwen 4B의 BF16·4비트 가중치(W4) 파일로 긴 답변과 동시 요청을 측정하는 실행기를 만들었습니다. GPU 실행 순서를 준비해 재사용하는 graph와 매번 연산을 호출하는 eager를 비교합니다. 세 차례 서버 실행의 비용 곡선을 모두 남겼습니다. 공식 품질 과제는 별도 실행이며 계산된 점수와 프로그램이 정상 종료했는지를 따로 확인할 수 있습니다.
 
 [설계와 결과](../../cases/009-q-serving-quality/REPORT.ko.md) · [CPU 검산](../../cases/009-q-serving-quality/REPRODUCTION.md)
 
@@ -572,13 +580,13 @@ Q 전체 NLL은 낮아졌지만 네 보기 조건부 NLL은 높아졌습니다. 
 ## 010 — 저정밀 recurrent state의 저장·재시작과 기억 수명
 
 <!-- claims: c010-state-bytes -->
-**목표·구현:** 반복 state를 저비트로 저장하고 실패·난수·커서를 함께 복원합니다. 온라인 잔차 보정, 혼합정밀도, 첫 판독 실패와 정확한 바이트 장부를 비교하는 도구입니다.
+**목표·구현:** 입력마다 갱신하는 모델의 기억(recurrent state)을 적은 비트로 저장하고, 실패·난수 생성 상태·현재 위치를 함께 복원하는 도구입니다. 저장 오차의 보정값을 다음 계산으로 전달하기(residual transport), 성분마다 다른 비트 수로 저장하기(혼합정밀도), 첫 오답까지 길이와 실제 저장 바이트를 비교합니다.
 
-**데이터·설계:** S3 group tracking을 학습한 같은 세 checkpoint를 사용합니다. 단계 A(v1)는 저장 방식 탐색과 비교군 보충이며 입력 512개/checkpoint입니다. 단계 B(v2)는 실패 보존 계약을 수정하고 새 입력 1,024개/checkpoint를 다섯 설정에서 평가했습니다. 두 코호트·546/630/195 신뢰 family를 합치지 않습니다.
+**데이터·설계:** S3 group tracking을 학습한 같은 세 checkpoint를 사용합니다. 단계 A(v1)는 저장 방식 탐색과 비교군 보충이며 입력 512개/checkpoint입니다. 단계 B(v2)는 실패 보존 계약을 수정하고 새 입력 1,024개/checkpoint를 다섯 설정에서 평가했습니다. 두 입력 집단과 546/630/195개로 묶인 불확실성 비교군(confidence family)을 합치지 않습니다.
 
 **검증·결과:** 현재 경로는 v2입니다. stream별 직렬화 state가 Native 12,305 → INT8 3,137 bytes(약 74.5% 감소)이며 평균 연속 정답 길이의 점추정 차이는 세 checkpoint 각각 1token 미만입니다. 새 프로세스 재시작의 바이트·예측 대응은 합성 계약 검사와 과거 실제 입력 진단으로 나눠 기록했습니다.
 
-**해석·결론:** 같은 N128 저장 한도에서 Rank2가 Mixed5/6보다 일관되게 우수하지 않았습니다. 평균 길이·경험적 horizon·신뢰지원 grid 하한은 다른 지표입니다. 실패를 저장하는 수정은 실행 계약의 개선이며 기억 수명 향상과 별도로 평가합니다.
+**해석·결론:** 같은 N128 저장 한도에서 Rank2가 Mixed5/6보다 일관되게 우수하지 않았습니다. 이들은 기록에 쓰인 방법·예산 이름입니다. 연속 정답의 평균 길이, 관측 성공률에서 읽은 기억 수명(horizon), 불확실성 기준을 만족하는 평가 지점의 길이 하한은 다른 지표입니다. 실패 저장은 재시작 동작의 개선이며 기억이 오래 유지되는지는 별도로 평가합니다.
 
 [통합 보고서](../../cases/010-ckda-finite-precision-memory-horizon/REPORT.ko.md) · [현재 구현](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [CPU 검산](../../cases/010-ckda-finite-precision-memory-horizon/REPRODUCTION.ko.md) · [원형 대응표](../../cases/010-ckda-finite-precision-memory-horizon/VERSION_MAP.md)
 
@@ -587,11 +595,11 @@ Case010의 저장 구현을 사용하는 후속 질문은 [Case011의 판독층 
 <a id="case-011"></a>
 ## 011 — 같은 상태, 다른 판독기
 
-**목표·구현:** 상태를 갱신하는 방식과 저장 형식을 유지하고 마지막 판독층의 weight/bias만 보정·저장·재적용합니다. 같은 저장 방식에서 세 판독기가 매 시점 같은 특징을 읽으며, 답은 다음 상태에 영향을 주지 않습니다.
+**목표·구현:** 상태의 갱신·저장 방식은 유지하고, 답을 읽는 마지막 층의 두 숫자 배열인 가중치·편향(weight/bias)만 보정·저장·재적용하는 도구입니다. 같은 저장 방식에서 세 판독기가 매 시점 같은 특징을 읽으며, 답은 다음 상태에 영향을 주지 않습니다.
 
-**데이터·방법:** 기존 CKDA checkpoint 세 개에서 Native/INT8 두 저장 방식을 비교했습니다. SHORT와 MIXED는 Native 특징 16,384행씩을 사용하고 각각 위치 1–32/1–256에서 적합했습니다. DEV의 CE로 선택한 뒤 같은 새 입력 1,024개를 2,048 기호 단계까지 평가했습니다.
+**데이터·방법:** 기존 CKDA checkpoint 세 개에서 Native/INT8 두 저장 방식을 비교했습니다. SHORT와 MIXED는 Native 특징 16,384행씩을 사용하고 각각 위치 1–32/1–256에서 적합했습니다. 설정 개발 입력(DEV)의 정답 확률 손실인 교차 엔트로피(CE; 낮을수록 좋음)로 선택한 뒤 같은 새 입력 1,024개를 2,048 기호 단계까지 평가했습니다.
 
-**검증·결과:** 마지막 Linear의 1,158개 값과 두 tensor patch를 검사하며 추가 recurrent-state 저장은 0 B입니다. INT8 MIXED의 평균 연속 정답 길이 변화는 seed0/1/2에서 −9.89/−10.40/−13.49 token이었습니다. 반면 fitting 범위 밖의 정답 CE는 3/3에서 감소했습니다. SHORT는 최종 가중치가 원형과 같고, 선택 MIXED 두 개는 200 iteration 상한에 도달했습니다.
+**검증·결과:** 마지막 행렬 변환(Linear)의 1,158개 값과 변경한 두 숫자 배열을 담은 파일(tensor patch)을 검사합니다. 변화하는 모델 기억(recurrent state)에 추가한 저장량은 0 B입니다. INT8 MIXED의 평균 연속 정답 길이 변화는 seed0/1/2에서 −9.89/−10.40/−13.49 token이었습니다. 반면 가중치를 맞춘 위치 밖의 정답 CE는 3/3에서 감소했습니다. SHORT는 최종 가중치가 원형과 같고, 선택 MIXED 두 개는 200 iteration 상한에 도달했습니다.
 
 **해석:** 정답에 높은 확률을 주는 것과 첫 오류를 늦추는 것은 달랐습니다. 같은 기록의 오류 이동·저장 방식 차이는 사후 분석으로 구분합니다. 이 fitting 예산의 결과가 모든 decoder의 정보 복원 가능성을 결정하지는 않습니다.
 
@@ -602,11 +610,11 @@ Case010의 저장 구현을 사용하는 후속 질문은 [Case011의 판독층 
 
 **목표·구현:** 이미지가 갱신되는 단계 수(Step)와 각 단계에서 핵심 계산을 반복하는 횟수(Loop)에 시간을 나눠 쓰는 실행기입니다. 같은 초기 잡음에서 생성한 이미지를 저장하고, 시간·메모리와 요청한 개수·색·좌우 조건을 비교할 수 있습니다.
 
-**데이터·결과:** 같은 Looped-DiT B/32 저장본과16문장·4초기 잡음으로 MAIN 192장을 생성했습니다. Loop1/Step89, Loop2/Step66, Loop4/Step50의 요청 중앙 시간은4.534/4.385/4.762초였습니다. 시간에는 text encoder와CPU 이미지 변환이 포함됩니다. 정확한 동일 시간 맞추기 목표는 달성하지 못했습니다.
+**데이터·결과:** 같은 Looped-DiT B/32 저장본과 16문장·4초기 잡음으로 MAIN 192장을 생성했습니다. Loop1/Step89, Loop2/Step66, Loop4/Step50의 요청 중앙 시간은 4.534/4.385/4.762초였습니다. 시간에는 문장을 모델 입력으로 바꾸는 text encoder와 CPU 이미지 변환이 포함됩니다. 정확한 동일 시간 맞추기 목표는 달성하지 못했습니다.
 
 **완료한 사람 체크:** 직접 체크 100장과 비슷한 사진의 답 적용 92장으로 192장에 답이 있습니다. 모든 조건을 맞힌 장수는 L1/L2/L4 순서로 52/64·51/64·53/64장입니다. L4는 L1보다 4개를 얻고 3개를 잃었습니다. 묶음 답을 적용한 관측 장수로, 신뢰구간은 붙이지 않았습니다. [답·출처·CPU 계산 안내](../../presentation/evaluations/case012-human-v1/README.ko.md)에서 확인할 수 있습니다.
 
-**보존된 AI 평가:** MAIN 192장을 같은 checklist로 판독했습니다. L1 51/64장, L2 53/64장, L4 53/64장이 모든 항목을 충족했습니다. L4−L1은 +3.12pp, 95% prompt-cluster bootstrap 구간 [-3.12, +10.94]pp로 0을 포함합니다. 같은 입력에서 L4만 충족 4쌍, L1만 충족 2쌍입니다. AI 판독자 1개·인간 0명이며, 7개 애매한 항목은 기본 점수에서 미충족입니다. 이전 예시 노출과 시간 불일치를 포함한 평가 범위는 별도 [평가 문서](../../cases/012-looped-dit-inference-budget/publication/assessment_v1/README.ko.md)에 있습니다.
+**보존된 AI 평가:** MAIN 192장을 같은 checklist로 판독했습니다. L1 51/64장, L2 53/64장, L4 53/64장이 모든 항목을 충족했습니다. L4−L1은 +3.12pp, 같은 문장에 속한 결과를 함께 다시 뽑는 방법(prompt-cluster bootstrap)의 95% 구간 [-3.12, +10.94]pp로 0을 포함합니다. 같은 입력에서 L4만 충족 4쌍, L1만 충족 2쌍입니다. AI 판독자 1개·인간 0명이며, 7개 애매한 항목은 기본 점수에서 미충족입니다. 이전 예시 노출과 시간 불일치를 포함한 평가 범위는 별도 [평가 문서](../../cases/012-looped-dit-inference-budget/publication/assessment_v1/README.ko.md)에 있습니다.
 
 [쉬운 소개](../../cases/012-looped-dit-inference-budget/README.ko.md) · [모든 이미지 비교](../../cases/012-looped-dit-inference-budget/publication/IMAGES.ko.md) · [실행 코드](../../cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU 검산](../../cases/012-looped-dit-inference-budget/REPRODUCTION.md) · [정식 보고서](../../cases/012-looped-dit-inference-budget/REPORT.ko.md)
 
@@ -615,18 +623,18 @@ Case010의 저장 구현을 사용하는 후속 질문은 [Case011의 판독층 
 <a id="case-013"></a>
 ## 013 — 가중치 오차가 줄면 실제 답변도 좋아질까?
 
-**구현:** signed group64 INT4 변환, 실제 nibble 저장·재로딩, 행·열 스케일을 보존하는 모델 adapter와 동일 입력의 문장/장문/로컬 도구 평가·CPU 검산을 만들었습니다.
+**구현:** 가중치를 64개씩 묶어 부호 있는 4비트 정수(INT4)로 변환하고, 한 바이트에 4비트 값(nibble) 두 개를 저장·재로딩합니다. 행·열 배율을 보존하는 모델 연결 코드(adapter)와 같은 입력의 문장·장문 답·로컬 도구 평가, 저장 결과의 CPU 검산을 만들었습니다. RTN은 가까운 허용값으로 단순 반올림합니다. D16은 배율을 적용한 INT4 가중치·BF16 계산 입력, D4는 같은 가중치에 입력까지 INT4로 바꾸는 경로입니다.
 
-**관측:** D16은 RTN보다 두 모델에서 가중치 MSE가 작았습니다. 기록된 WikiText 일부에서 0.6B PPL은 27.576→24.445, 4B는 10.810→10.894였습니다. 4B 자유 도구 DEV 8개에서 BF16/RTN/D16/D4는 8/8·8/8·6/8·0/8을 완료했습니다. 네 문항의 16K 후속은 기존 task를 재사용합니다. Packed 전체 모델 수치 오차는 사전 기준을 넘었고 serving 이득은 아직 확인하지 못했습니다.
+**관측:** D16은 RTN보다 두 모델에서 가중치의 평균 제곱 오차(MSE)가 작았습니다. 텍스트 예측 점수인 PPL은 같은 글에서 낮을수록 좋습니다. 기록된 WikiText 일부에서 0.6B PPL은 27.576→24.445, 4B는 10.810→10.894였습니다. 모델이 도구를 직접 선택·실행하는 기존 4B 설정 개발 문제(DEV) 8개에서 BF16/RTN/D16/D4는 8/8·8/8·6/8·0/8을 완료했습니다. 네 문항의 16K 후속은 기존 task를 재사용합니다. Packed 전체 모델 수치 오차는 사전 기준을 넘었고 serving 이득은 아직 확인하지 못했습니다.
 
-**범위:** 공개 수식의 reference variant, 복원 BF16 연산, RTX 5080의 pinned Qwen 두 모델입니다. Formal TEST·동일 조건 GPTQ serving·native packed W4A4는 미완료이며 원시 출력과 실패 probe를 함께 보존합니다.
+**범위:** 공개 수식에 바탕을 둔 별도 구현이며 RTX 5080에서 고정한 Qwen 두 버전을 사용했습니다. 품질 경로는 압축 값을 BF16으로 복원해 행렬을 계산하는 참조 계산(reference)으로, 압축 상태 실행 속도를 재는 것이 아닙니다. 개발과 분리한 정식 평가(TEST), 같은 조건의 GPTQ 요청 비교, 압축된 4비트 가중치·입력(W4A4)을 직접 처리하는 실행은 미완료입니다. 원시 출력과 실패 검사 기록을 함께 보존합니다.
 
-[쉬운 소개](../../cases/013-dualquant-reference-quality/README.ko.md) · [변환·adapter](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 검산](../../cases/013-dualquant-reference-quality/REPRODUCTION.ko.md) · [보고서](../../cases/013-dualquant-reference-quality/REPORT.ko.md)
+[쉬운 소개](../../cases/013-dualquant-reference-quality/README.ko.md) · [변환·모델 연결 코드](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 검산](../../cases/013-dualquant-reference-quality/REPRODUCTION.ko.md) · [보고서](../../cases/013-dualquant-reference-quality/REPORT.ko.md)
 
 
 ### 후속 — 도구 호출 계약과 오류 회복
 
-원형 가중치를 유지하고 오류 안내/이름 제한을 별도로 비교했습니다. 같은 기존 DEV 8개에서 D16은6/8→8/8, D4는0/8→2/8입니다. 이름 제한 조건의 미등록 호출은0회였고 D4의 나머지6개 과제는 실패했습니다. 최종 JSON이 같아도 실제 patch/validation 성공으로 점수가 달라집니다. 새 일반화·packed serving 이득을 판정하지 않습니다.
+압축 가중치를 유지하고 호출 오류 안내와 사용 가능한 도구 이름만 생성하는 제한(enum decoding)을 따로 비교했습니다. 같은 기존 DEV 8개에서 D16은 6/8→8/8, D4는 0/8→2/8입니다. 이름 제한 조건의 미등록 호출은 0회였고 D4의 나머지 6개 과제는 실패했습니다. 최종 JSON 답이 같아도 실제 파일 수정·검사 실행 여부에 따라 성공 판정이 달라집니다. 새 문제의 성능과 압축 상태의 요청 처리 속도 이득은 확인하지 않았습니다.
 
 [쉬운 소개와 CPU 명령](../../research/agent_tool_contract_repair_20261014/README.ko.md) · [후속 보고서](../../research/agent_tool_contract_repair_20261014/records/REPORT_KO.md) · [앞선 원인 진단](../../research/agent_stability_20261013/README.ko.md)
 
@@ -634,8 +642,8 @@ Case010의 저장 구현을 사용하는 후속 질문은 [Case011의 판독층 
 <a id="case-014"></a>
 ## 014 — 같은 INT4 저장량으로 모델 품질 개선하기
 
-목표는 같은 저장 형식에서 보정의 품질 전이를 확인하는 것입니다. P0 대수·codec → P1 강한 CAL 선택의 전이 실패 → P1b 독립 선택 → P2 자체 경로 전층 비교를 한 사례로 연결했습니다.
+변환한 행렬의 INT4 저장량을 유지하면서 압축 오차 보정이 텍스트 예측 품질도 개선하는지 확인한 별도 연구입니다. P0는 수식·저장 코드 검사, P1은 보정 자료(CAL)에서 고른 설정이 남겨 둔 자료에서 같은 효과를 못 낸 단계, P1b는 별도 자료로 설정을 고른 단계입니다. P2는 앞선 층 압축으로 달라진 중간 계산값을 다음 층에서 수집해 보정하고 모델 전체를 비교합니다.
 
-Qwen3-0.6B ·196 projections ·PG19 PPL57.600→50.156 (12.92% 감소). 64/64 구간 NLL이 낮아졌습니다. ArXiv QUARTER는 악화 점추정·구간0포함, HALF는 악화 구간입니다. BF16 복원 reference이며 packed 속도·VRAM 이득은 미평가입니다.
+Qwen3-0.6B · 학습된 행렬 변환(projection) 196개 · PG19 PPL 57.600→50.156 (12.92% 감소). 64/64 구간의 정답 토큰 확률 손실(NLL)이 낮아졌습니다. ArXiv의 QUARTER 설정은 악화 방향의 추정값이지만 불확실성 구간에 0이 포함됐고, HALF는 NLL이 높아졌습니다. BF16으로 복원한 품질 평가이며 압축 상태 실행 속도·GPU 메모리(VRAM) 이득은 미평가입니다. 행렬 바이트가 같아도 전체 모델 파일 크기가 같다고 볼 수는 없습니다.
 
-[Pages](https://munsik-kim.github.io/inference-lab/ko/case014.html#overview) · [Report](../../cases/014-quantization-compensation/REPORT.ko.md) · [Code](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [CPU](../../cases/014-quantization-compensation/REPRODUCE.md) · [Stage map](../../cases/014-quantization-compensation/STAGE_MAP.md)
+[온라인 결과](https://munsik-kim.github.io/inference-lab/ko/case014.html#overview) · [보고서](../../cases/014-quantization-compensation/REPORT.ko.md) · [코드](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [CPU](../../cases/014-quantization-compensation/REPRODUCE.md) · [연구 단계별 안내](../../cases/014-quantization-compensation/STAGE_MAP.md)

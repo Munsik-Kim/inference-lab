@@ -2,7 +2,7 @@
 
 [English](README.md) · [패키지 안내](../../README.ko.md)
 
-두 모델의 **저장된 답변**을 같은 질문·정답 규칙으로 비교합니다. 모델 실행과 채점은 먼저 끝내고, 이 CLI로 결과를 검사·집계합니다. 아래 네 질문과 답변은 손으로 정한 공개 합성 자료(`synthetic_test`)이며 GPU 실측이 아닙니다.
+모델을 교체하거나 압축한 뒤 **어떤 질문을 새롭게 틀렸는지** 확인하는 예제입니다. 두 설정에서 이미 저장한 답변과 사용자가 정한 정답 판정을 넣으면, 이 명령줄 도구(CLI)가 질문별 변화 보고서를 만듭니다. 모델 실행과 채점은 먼저 끝내야 합니다. 아래 네 질문과 답변은 손으로 정한 공개 합성 자료(`synthetic_test`)이며 GPU 실측이 아닙니다.
 
 ## 1. 합성 예제 실행
 
@@ -17,13 +17,13 @@ python3 -m venv "$EXAMPLE_ROOT/venv"
 "$EXAMPLE_ROOT/venv/bin/diova-compare" compare --baseline packages/diova-compare/examples/compare/baseline.jsonl --candidate packages/diova-compare/examples/compare/candidate.jsonl --output "$EXAMPLE_ROOT/report"
 ```
 
-각 validate는 `{"status": "PASS", "records": 4}`, compare는 `status: PASS`와 `n_pairs: 4`를 반환하며 정상 종료 코드가 0입니다. 새 디렉터리에 `report.md`, `report.json`, `pairs.csv`가 만들어집니다. 설치 시 패키지 빌드 도구를 가져올 수 있지만 모델·Torch·CUDA·NumPy는 필요하지 않습니다. 데이터는 로컬 CLI에서 읽습니다.
+형식 검사 명령인 validate는 각각 `{"status": "PASS", "records": 4}`, 비교 명령인 compare는 `status: PASS`와 `n_pairs: 4`를 반환하며 정상 종료 코드가 0입니다. PASS는 검사·집계 완료이며 네 문제 모두 정답이라는 뜻은 아닙니다. 새 디렉터리에 `report.md`, `report.json`, `pairs.csv`가 만들어집니다. 설치 시 패키지 빌드 도구를 가져올 수 있지만 모델·Torch·CUDA·NumPy는 필요하지 않습니다. 데이터는 로컬 CLI에서 읽습니다.
 
 [기준선 파일](baseline.jsonl) · [후보 파일](candidate.jsonl)
 
 ## 2. 보고서에서 알 수 있는 것
 
-정답은 기준선의 답을 베끼지 않고 **두 정수의 합**으로 정했습니다. `answer`는 추출·공백 제거를 끝낸 십진 정수 문자열입니다. 아래 문장 자체의 UTF-8 SHA256을 `prompt_hash`로 사용했습니다. 끝에 줄바꿈은 없습니다.
+변경 전 결과(기준선, baseline)와 변경 후 결과(후보, candidate)에 쓸 정답은 어느 쪽 답도 베끼지 않고 **두 정수의 합**으로 정했습니다. `answer`는 추출·공백 제거를 끝낸 십진 정수 문자열입니다. 아래 문장 자체의 UTF-8 확인용 SHA256 해시를 `prompt_hash`로 사용했습니다. 끝에 줄바꿈은 없습니다.
 
 | ID | 정확한 입력 문장 | gold | 기준선 → 후보 | 의미 |
 |---|---|---|---|---|
@@ -36,9 +36,11 @@ python3 -m venv "$EXAMPLE_ROOT/venv"
 
 ## 3. 자신의 기록을 넣기
 
+준비할 입력은 두 답변 파일, 허용 정답, 답 추출·채점 규칙입니다. 출력은 사람이 읽을 요약과 질문별 변화표입니다. 모델 비교에 필요한 채점 자료를 이미 갖고 있는 개발자가 이 부분을 재사용할 수 있습니다.
+
 두 실행의 결과를 각각 JSONL로 바꾸되, 양쪽에 같은 질문과 같은 정답 정의를 사용합니다. 위 두 파일을 형식의 출발점으로 삼으세요.
 
-| 내 기록 | JSONL 필드 | 맞춰야 할 계약 |
+| 내 기록 | JSONL 필드 | 제공하거나 같게 맞출 내용 |
 |---|---|---|
 | 평가셋·질문 ID | `task`, `task_version`, `sample_id` | 양쪽에서 같은 입력 쌍을 식별 |
 | 실제 모델에 준 입력 | `prompt_hash` | 동일한 입력 표현의 UTF-8 SHA256; 템플릿·시스템 지시도 포함하는 규칙을 양쪽에 적용 |
@@ -48,9 +50,9 @@ python3 -m venv "$EXAMPLE_ROOT/venv"
 | 자료 종류·형식 | `evidence_kind`, `schema_version` | 실제 측정은 `measurement`, 과거 기록은 `historical`; 현재 버전은 정수 1 |
 | 선택: 원 실행 종료 코드 | `process_exit_code` | 양쪽 모든 행에 정수로 제공하거나 모두 생략; 비정상 종료도 유지 |
 
-입력 hash 계산은 `hashlib.sha256(prompt.encode("utf-8")).hexdigest()`입니다. CLI는 hash 문자열이 같은지 검사하며 원문을 다시 읽거나 실제 입력이었다는 사실을 인증하지 않습니다. `artifact_id` 역시 사용자가 제공한 식별자이며 artifact 파일 내용의 진위를 검증하지 않습니다. 자유 생성의 `correct`는 **입력받는 판정**입니다. 모든 답을 자동으로 채점하지 않습니다.
+입력이 같은지 확인하는 해시(hash) 계산은 `hashlib.sha256(prompt.encode("utf-8")).hexdigest()`입니다. CLI는 hash 문자열이 같은지 검사하며 원문을 다시 읽거나 실제 입력이었다는 사실을 인증하지 않습니다. `artifact_id` 역시 사용자가 제공한 식별자이며 저장 모델 파일(artifact)의 실제 내용이 진짜인지 검증하지 않습니다. 자유 생성의 `correct`는 **입력받는 판정**입니다. 모든 답을 자동으로 채점하지 않습니다.
 
-답변 변경·정답 전환만 보려면 `distribution`과 `scores`를 생략해도 됩니다. 선택지 확률을 제공할 때만 해당 NLL·Brier를, 호환되는 분포를 제공할 때만 KL을 계산합니다. 전체 어휘 확률이나 logits는 기본 비교에 필요하지 않습니다. [정확한 schema와 지표 계약](../../README.ko.md#입력과-지표).
+답변 변경·정답 전환만 보려면 `distribution`과 `scores`를 생략해도 됩니다. 선택지 확률을 제공할 때만 정답에 준 확률의 손실(NLL)과 확률 예측 오차(Brier)를, 서로 맞는 분포를 제공할 때만 원본 확률과의 차이(KL)를 계산합니다. 전체 단어 후보의 확률이나 원점수(logits)는 기본 비교에 필요하지 않습니다. [정확한 입력 형식(schema)과 지표 규칙](../../README.ko.md#입력과-지표).
 
 자기 파일에도 validate를 각각 실행한 뒤 같은 compare 인자에 경로를 넣으세요. 공개할 수 있는 입력만 예제·보고서에 포함하세요. 브라우저 업로드 단계는 없습니다.
 
@@ -69,15 +71,15 @@ PY
 "$EXAMPLE_ROOT/venv/bin/diova-compare" compare --baseline packages/diova-compare/examples/compare/baseline.jsonl --candidate "$EXAMPLE_ROOT/mismatch.jsonl" --output "$EXAMPLE_ROOT/rejected-report"
 ```
 
-예상하는 오류는 `diova-compare: pair mismatch: prompt_hash`이며 종료 코드는 **2**입니다. 보고서 디렉터리도 만들지 않습니다. 정답 정의만 다르면 `pair mismatch: gold_definition`으로 거절합니다. 질문이나 채점 기준이 달라진 두 값을 모델 변경의 효과로 집계하지 않기 위한 검사입니다. 단독 validate가 통과해도 **두 파일의 pairing**은 실패할 수 있습니다. `--intersection`은 입력 계약 불일치를 해결하는 옵션이 아닙니다.
+예상하는 오류는 `diova-compare: pair mismatch: prompt_hash`이며 종료 코드는 **2**입니다. 보고서 디렉터리도 만들지 않습니다. 정답 정의만 다르면 `pair mismatch: gold_definition`으로 거절합니다. 질문이나 채점 기준이 달라진 두 값을 모델 변경의 효과로 집계하지 않기 위한 검사입니다. 한 파일의 형식 검사(validate)가 통과해도 **두 파일의 같은 질문끼리 짝 맞추기(pairing)**는 실패할 수 있습니다. `--intersection`은 달라진 입력·정답 규칙을 고치는 옵션이 아닙니다.
 
-## 기술적 판단 — 현재 구현의 해석
+## 이렇게 만들었고, 여기까지 확인합니다
 
 - **선택:** 같은 입력 쌍에서 손실·회복·불일치를 나누고 원 실행 종료 코드를 보존합니다.
-- **대안:** 양쪽 평균 정답률만 볼 수 있지만, 이 예제처럼 같은 평균 아래의 회귀가 사라집니다.
-- **근거:** [집계 코드](../../src/diova_compare/core.py)와 [정답 전환·실패 보존 테스트](../../tests/test_compare.py)가 이 계약을 구현합니다.
-- **한계·다음 판단:** free-form 정오와 입력·artifact 식별자는 호출자가 제공합니다. 새 과제에서는 채점 규칙의 적합성을 먼저 확인해야 합니다. 이는 현재 설계의 장단점 설명이며 당시 대안 실험을 추가로 주장하지 않습니다.
+- **대안:** 양쪽 평균 정답률만 볼 수 있지만, 이 예제처럼 이전에 맞혔던 답을 잃는 변화(회귀)가 가려집니다.
+- **근거:** [집계 코드](../../src/diova_compare/core.py)와 [정답 전환·실패 보존 테스트](../../tests/test_compare.py)가 이 입력·집계 규칙을 구현합니다.
+- **한계·다음 판단:** 자유 서술형 답의 정오와 입력·모델 파일(artifact) 식별자는 사용자가 제공합니다. 새 과제에서는 채점 규칙의 적합성을 먼저 확인해야 합니다. 이는 현재 설계의 장단점 설명이며 당시 대안 실험을 추가로 주장하지 않습니다.
 
 ## 다른 경로: 과거 실험 재분석
 
-자신의 JSONL을 비교하는 위 경로와 [Case013 export](../../README.ko.md#case013-export)는 별개입니다. 과거 export는 공개 기록의 고정된 채점·도구 실행 계약을 적용하고 원 실행의 실패를 보존합니다. 합성 예제 실행은 외부 사용자 테스트나 GPU 재현이 아닙니다.
+자신의 JSONL을 비교하는 위 경로와 [Case013 export](../../README.ko.md#case013-export)는 별개입니다. 과거 export는 공개 기록의 원래 정한 채점·도구 실행 규칙을 적용하고 원 실행의 실패를 보존합니다. 합성 예제 실행은 외부 사용자 테스트나 GPU 재현이 아닙니다.
