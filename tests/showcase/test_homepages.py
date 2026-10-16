@@ -26,14 +26,16 @@ class Page(HTMLParser):
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
         if 'id' in a: self.ids.append(a['id'])
-        if tag == 'article' and a.get('class') == 'cap-card':
-            self.card = a['id']; self.cards[self.card] = []
+        if tag == 'tr' and a.get('id') in {'model-structure','gpu-comparison','result-delivery'}:
+            self.card = a['id']
+            if self.card in self.cards: raise ValueError('Duplicate capability')
+            self.cards[self.card] = []
         if tag == 'a' and self.card: self.cards[self.card].append(a['href'])
         if tag == 'script': self.scripts.append(a.get('src'))
         if tag == 'h1': self.h1_count += 1
 
     def handle_endtag(self, tag):
-        if tag == 'article': self.card = None
+        if tag == 'tr': self.card = None
 
     def handle_data(self, data): self.text.append(data)
 
@@ -79,6 +81,20 @@ class Homepages(unittest.TestCase):
     def test_paired_capabilities_link_actual_sources(self):
         pages = [check_capabilities((self.site/lang/'index.html').read_text(), ROOT) for lang in ('en','ko')]
         self.assertEqual(pages[0].cards, pages[1].cards)
+
+    def test_home_consolidates_code_and_technologies_in_one_disclosure(self):
+        for lang in ('en','ko'):
+            html = (self.site/lang/'index.html').read_text()
+            self.assertEqual(html.count('class="implementation-details"'),1)
+            detail = html.split('<details class="implementation-details">',1)[1].split('</details>',1)[0]
+            self.assertEqual(detail.count('class="contribution-table"'),1)
+            for name in ('capabilities','tech-stack','model-structure','gpu-comparison','result-delivery'):
+                self.assertIn('id="'+name+'"',detail)
+            for technology in ('FP64','Cholesky','SDPA','SageAttention','NVML','unittest'):
+                self.assertIn(technology,detail)
+            self.assertNotIn('class="cap-card"',html)
+            self.assertNotIn('class="stack-list"',html)
+            self.assertNotIn('class="work-flow"',html)
 
     def test_projects_first_is_rejected(self):
         with self.assertRaisesRegex(ValueError,'Wrong reading order'):

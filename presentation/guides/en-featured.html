@@ -4,17 +4,18 @@
     <article class="story">
       <p class="story-source">A · From conversion to requests · Case008 Q + Case009</p>
       <h3><a href="case008.html#track-q">Store a smaller model and run actual requests</a></h3>
-      <p>Connected existing model compression (GPTQ) to the program that runs the model. Built checks for missing data, array sizes and calculation results, then restarted the program to verify that the saved model still ran.</p>
-      <p class="story-metric"><span>Case008 Q · Qwen3-4B learned-number (weight) files</span><strong>{{weight_files}}</strong><span>{{file_reduction}} smaller · separate from total graphics-card memory (VRAM) reduction</span></p>
-      <p>The deliverable is a conversion, saving and checking workflow. Case009 then compared response time, memory and answers, retaining questions that became wrong and runs that exited abnormally.</p>
-      <div class="actions"><a href="case008.html#track-q">Convert, save, reload</a><a href="case009.html#serving">Compare real requests</a></div>
+      <p>Connected existing compression (GPTQ) to the model runner, implementing saved-file checks and execution in a new process.</p>
+      <p class="story-metric"><span>Qwen3-4B weight files · Case008 Q</span><strong>{{weight_files}}</strong><span>{{file_reduction}} smaller</span><span class="metric-label">Whole-GPU memory during execution · Case009</span><strong>{{memory_saved_gib}} saved</strong><span>{{memory_bf16_gib}} → {{memory_w4_gib}}<br>{{memory_saved_percent}} lower within matching rounds</span></p>
+      <p>File size and runtime memory come from separate experiments. VRAM uses the highest one-second samples over {{memory_rounds}} rounds on the RTX 5080, with prearranged GPU execution (graph) and the same 4 GiB cache budget. Samples include startup, warmup and desktop use.</p>
+      <p>Lost correct answers and abnormal evaluation-process exits remain in the records.</p>
+      <div class="actions"><a href="case008.html#track-q">Compression, storage and reload code</a><a href="qwen3-4b.html#device-memory">VRAM values, conditions and sources</a></div>
     </article>
     <article class="story">
       <p class="story-source">B · Saved-answer comparison tool · diova-compare</p>
       <h3><a href="compare.html">Compare changed answers on the same questions</a></h3>
-      <p>Built a tool that checks whether two saved answer files use the same questions and grading rules. Its reports show previously correct answers lost, new correct answers gained, and changed wrong answers.</p>
+      <p>Built a tool that checks matching questions and grading rules, then separates lost correct answers, new correct answers and changed wrong answers.</p>
       <p class="story-metric"><span>Use your own saved records</span><strong>validate → compare</strong><span>report.md · report.json · pairs.csv</span></p>
-      <p>Use it to review a model change. Callers run models and grade free-form answers first; this tool summarizes saved results without a graphics card. It retains exit codes, which indicate whether the original program finished normally.</p>
+      <p>Compare two files after you have run and graded the models. The CPU tool also preserves the original program’s failure state.</p>
       <div class="actions"><a href="compare.html#run">Run the synthetic example</a><a href="compare.html#own-records">Map your records</a></div>
     </article>
     <article class="story">

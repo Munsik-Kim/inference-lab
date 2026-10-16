@@ -5,17 +5,18 @@
     <article class="story">
       <p class="story-source">A · 모델 변환에서 실제 요청까지 · Case008 Q + Case009</p>
       <h3><a href="case008.html#track-q">모델을 작게 저장하고 실제 요청까지 실행하기</a></h3>
-      <p>기존 압축 기술(GPTQ)과 모델 실행 프로그램을 연결했습니다. 모델 파일을 작게 만든 뒤, 빠진 데이터와 배열 크기·계산 결과를 검사하고 프로그램을 새로 시작해 다시 실행했습니다.</p>
-      <p class="story-metric"><span>Case008 Q · Qwen3-4B의 학습된 숫자(가중치) 파일</span><strong>{{weight_files}}</strong><span>{{file_reduction}} 감소 · 그래픽카드 전체 메모리(VRAM) 감소율과 별도</span></p>
-      <p>모델을 작게 만들어 다시 실행하는 절차와 검사 코드가 결과물입니다. 후속 Case009에서는 응답 시간·메모리·정답을 비교했고, 더 틀린 문제와 비정상 종료 기록도 남겼습니다.</p>
-      <div class="actions"><a href="case008.html#track-q">압축·저장·다시 불러오기</a><a href="case009.html#serving">실제 요청 비교</a></div>
+      <p>기존 압축 기술(GPTQ)을 모델 실행 프로그램과 연결하고, 저장 파일 검사와 새 프로그램에서의 재실행을 구현했습니다.</p>
+      <p class="story-metric"><span>Qwen3-4B 가중치 파일 · Case008 Q</span><strong>{{weight_files}}</strong><span>{{file_reduction}} 감소</span><span class="metric-label">실행 중 GPU 전체 메모리 · Case009</span><strong>{{memory_saved_gib}} 절감</strong><span>{{memory_bf16_gib}} → {{memory_w4_gib}}<br>같은 라운드끼리 {{memory_saved_percent}} 감소</span></p>
+      <p>파일 크기와 실행 메모리는 별도 실험입니다. VRAM은 RTX 5080에서 GPU 작업을 미리 준비한 실행(graph), 같은 캐시 예산 4 GiB로 비교한 {{memory_rounds}}라운드의 1초 간격 최고 표본값입니다. 시작·준비 실행·바탕화면 사용량을 포함합니다.</p>
+      <p>정답 손실과 평가 프로그램의 비정상 종료도 원기록에 남겼습니다.</p>
+      <div class="actions"><a href="case008.html#track-q">압축·저장·재실행 구현</a><a href="qwen3-4b.html#device-memory">VRAM 수치·조건·원자료</a></div>
     </article>
     <article class="story">
       <p class="story-source">B · 저장된 답변 비교 도구 · diova-compare</p>
       <h3><a href="compare.html">바꾼 모델의 답변을 같은 질문 기준으로 비교하기</a></h3>
-      <p>이미 저장한 두 답변 파일에서 같은 질문과 같은 채점 기준을 썼는지 검사하는 도구를 만들었습니다. 이전에 맞혔다가 틀린 답, 새롭게 맞힌 답, 다른 오답으로 바뀐 답을 보고서로 나눠 보여줍니다.</p>
+      <p>같은 질문·채점 기준을 썼는지 검사하고, 새로 틀린 답·새로 맞힌 답·다른 오답으로 바뀐 답을 구분하는 도구를 만들었습니다.</p>
       <p class="story-metric"><span>내 기록으로 직접 사용</span><strong>validate → compare</strong><span>report.md · report.json · pairs.csv</span></p>
-      <p>모델 교체 전후의 결과 검토에 사용할 수 있습니다. 모델 실행과 자유 서술 답변의 채점은 사용자가 먼저 마치며, 이 도구는 그래픽카드 없이 저장된 결과를 집계합니다. 원래 프로그램이 정상 종료했는지를 나타내는 기록(종료 코드)도 남깁니다.</p>
+      <p>사용자가 모델 실행과 채점을 마친 두 결과 파일을 CPU에서 비교합니다. 원래 프로그램의 실패 상태도 결과와 함께 보존합니다.</p>
       <div class="actions"><a href="compare.html#run">합성 예제로 실행하기</a><a href="compare.html#own-records">내 결과 파일의 필드 채우기</a></div>
     </article>
     <article class="story">

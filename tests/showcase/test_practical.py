@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT/'tools/showcase'))
 from build import build
 from check import check
 from common import read, sha
-from practical import PAGES, REVISION, SOURCE_PATHS, graph_memory_pairs, values
+from practical import PAGES, REVISION, SOURCE_PATHS, graph_memory_pairs, values, render
 
 
 class Structure(HTMLParser):
@@ -111,6 +111,20 @@ class PracticalGuide(unittest.TestCase):
             html=(self.site/lang/'qwen3-4b.html').read_text()
             self.assertIn(v['memory_saved_percent'],html)
             self.assertIn('id="device-memory"',html)
+            home=(self.site/lang/'index.html').read_text()
+            featured=home.split('id="featured-stories"',1)[1].split('id="model-guides"',1)[0]
+            for value in ('memory_bf16_gib','memory_w4_gib','memory_saved_gib','memory_saved_percent'):
+                self.assertIn(v[value],featured)
+            self.assertIn('qwen3-4b.html#device-memory',featured)
+            self.assertIn('4 GiB',featured)
+            self.assertIn('1초' if lang=='ko' else 'one-second',featured)
+        changed=copy.deepcopy(self.data)
+        changed['device_memory']['pairs'][0]['w4_peak_mib']+=1024
+        changed['device_memory']['pairs'][0]['saved_mib']-=1024
+        changed['device_memory']['pairs'][0]['reduction_fraction']=changed['device_memory']['pairs'][0]['saved_mib']/changed['device_memory']['pairs'][0]['bf16_peak_mib']
+        updated=values(changed,'ko')
+        self.assertNotEqual(v['memory_saved_gib'],updated['memory_saved_gib'])
+        self.assertIn(updated['memory_saved_gib'],render(ROOT,changed,'ko','featured'))
 
     def test_limitations_remain_visible_outside_disclosures(self):
         p=Structure();p.feed((self.site/'ko/qwen3-4b.html').read_text());text=' '.join(p.visible)

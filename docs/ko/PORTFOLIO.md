@@ -11,7 +11,7 @@
 <!-- claims: c008-tracks c008-artifact-implementation c007-implementation -->
 모델을 작게 저장해도 원래 맞히던 질문을 틀리거나 요청한 작업을 끝내지 못할 수 있습니다. 저는 DIOVA에서 변경한 모델을 저장·재실행하는 도구, 같은 질문의 답변·실행 비용을 비교하는 도구, 실제 도구 작업을 확인하는 도구를 만들었습니다. 공개 모델과 RTX 5080 16GB의 실행 기록이 근거입니다.
 
-이 작업은 **로컬 AI 실행**, 학습된 모델을 작동시키는 **추론 엔지니어링**, **모델 최적화**, 변경 뒤의 정답 손실을 찾는 **품질 회귀 검사**, **도구 자동화 평가**와 관련됩니다. 채용·기술 협업에서는 로컬 실행 실패 진단, 모델 설정 비교, 답변·파일 작업 검사, 출처를 추적할 수 있는 측정 보고서 제작을 논의할 수 있습니다. 아래에서 직접 만든 부분, 사용한 기존 라이브러리, 아직 확인하지 않은 범위를 함께 볼 수 있습니다.
+로컬 AI 실행·추론 최적화·변경 후 품질 검사와 관련된 구현입니다. [기술 협업 범위](#기술-협업-범위)에서 논의할 수 있는 작업을 확인할 수 있습니다.
 
 [대표작과 직접 실행하기](https://munsik-kim.github.io/inference-lab/ko/index.html#featured-stories) · [내 결과 비교 예제](../../packages/diova-compare/examples/compare/README.ko.md)
 
@@ -19,7 +19,11 @@
 
 Case008 Q의 **기존 압축 방법(GPTQ)으로 변환 → 변환해 저장한 모델 파일(artifact) 검사 → 새로 시작한 프로그램에서 재실행**을 Case009의 **실제 요청 시간·메모리·답변 품질 비교**로 연결했습니다. [변환 코드](../../tools/modelpack/quantized.py) · [저장본 검사](../../tools/modelpack/qartifact.py) · [실제 요청 실행기](../../cases/009-q-serving-quality/scripts/serving.py).
 
-가중치 파일 **8.045 GB → 2.652 GB, 약 67.0% 감소**는 Case008 Q의 Qwen3-4B 파일 크기입니다. Case009의 속도·메모리는 별도 실행 조건으로 읽습니다. [Case008 Q 원페이지](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) → [Case009 원페이지](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving). Case008 R은 더 작은 0.6B 모델의 한 블록을 줄인 뒤 보정하는 작업(pruning·복원)으로, 이 4B 압축 흐름과 별개입니다.
+Case008 Q의 가중치 파일은 **8.045 GB → 2.652 GB, 67.0% 감소**했습니다. 같은 실험의 PyTorch GPU 할당 최고값은 **10.4868 → 5.3971 GiB, 약 48.5% 감소**입니다. eager 실행·요청 1개·캐시 1 GiB 조건으로 초기화와 실행을 포함합니다. [파일·할당 메모리 원자료](https://munsik-kim.github.io/inference-lab/ko/qwen3-4b.html#storage).
+
+후속 Case009의 GPU 전체 메모리 최고 표본값은 **14.08–14.51 → 9.08–9.52 GiB**로, 같은 라운드끼리 **4.98–5.06 GiB·34.4–35.8% 감소**했습니다. graph 실행·같은 캐시 4 GiB·3라운드의 1초 간격 표본이며, 시작·준비 실행·바탕화면 사용량을 포함합니다. [VRAM 수치·계산·조건](https://munsik-kim.github.io/inference-lab/ko/qwen3-4b.html#device-memory). 파일 크기와 두 메모리 지표는 서로 다른 경계의 측정입니다.
+
+Case008 R은 별도 Qwen3-0.6B 한 블록의 구조 축소·복원입니다. [Case008 Q 구현](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) → [Case009 실제 요청 비교](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving).
 
 **기술적 판단 — 현재 설계 해석:** 파일이 작아도 불러오기에 실패하거나 의도한 계산을 사용하지 못할 수 있어, 새 프로그램에서 실행하는 것까지 검사합니다. 16비트 가중치(BF16)와 4비트 가중치(W4)는 같은 실행 방식 안에서 비교합니다. GPU 실행 순서를 미리 준비하는 graph와 매번 연산을 호출하는 eager의 차이를 가중치 변경 효과와 구분하기 위해서입니다. [저장 경계 테스트](../../cases/008-build-reconstruct-reload/tests/test_boundaries.py)와 [요청 프로토콜](../../cases/009-q-serving-quality/configs/serving_protocol.json)이 근거입니다. 다른 장치의 이득과 Case009 품질 실행의 비정상 종료 문제는 해결된 것으로 보지 않습니다. 이는 현재 코드·기록의 해석이며 당시 의도를 새로 단정하지 않습니다.
 
@@ -49,20 +53,29 @@ Case006·007·008 R·010–012를 포함한 [전체 사례](CASEBOOK.md)와 아�
 
 *로컬 Edge 화면: 첫 고정 CODE 입력의 25% 삭제 비교입니다. [Case006 출력 계산 화면](../../presentation/screenshots/case006-readout.png)은 별도로 표시한 같은 입력 진단을 보여줍니다. 탐색을 안내하는 선택 화면이며 전체 성능 집계가 아닙니다.*
 
-Case008 R은 모델 블록의 일부를 제거한 뒤, 작은 출력 행렬(down projection)을 원래 출력에 가까워지도록 맞추는 ridge 회귀와 저장·복원을 연결합니다. 저장한 층별 크기를 읽어 빈 구조(meta skeleton)를 만들고, 숫자 배열(tensor)을 빠짐없이 대입합니다. 공유 가중치와 계산용 보조 배열(buffer)을 복원해 원래 모델 파일(checkpoint) 없이 새 프로그램에서 실행합니다. 지원 범위는 Qwen3의 순방향 계산 블록(MLP) 한 층입니다. 제곱 출력 오차(SSE)와 별도 정답 기준의 점수는 아래 평가와 원래 보고서에서 확인할 수 있습니다.
+Qwen3-0.6B의 한 MLP를 줄인 저장본의 구조 복원은 [코드 읽는 순서](#code-tour)에서, 다른 사례는 [전체 사례](CASEBOOK.md)에서 확인합니다.
 
-[기여 표](../../README.ko.md) · [선행연구와 구현 대응](../related-work/README.ko.md) · [같은 질문의 답변을 짝지어 비교하는 CPU 도구](../../packages/diova-compare/README.ko.md) · [코드 설명 노트](../interview-notes.ko.md)
-
-Case009는 기존 Qwen 4B 모델 파일로 같은 조건의 graph/eager 요청 비용을 측정하고 공식 품질 과제 기록을 추가합니다. [전체 곡선과 품질 보고서](../../cases/009-q-serving-quality/REPORT.ko.md)는 프로세스 종료 실패도 계산값과 함께 남깁니다. 명령어로 실행하는 비교 도구(CLI)는 이런 개별 수치(스칼라)와 과거 기록을 문서화된 버전별 입력 형식으로 읽습니다.
-
+<a id="implementation-map"></a>
 ## 구현 역량과 실제 근거
+
+| 프로젝트 구현 | 기존 연구·라이브러리에서 제공 | 코드·테스트 |
+|---|---|---|
+| 변환해 저장한 모델 파일 검사·불완전한 저장 방지·구조가 맞지 않는 재로딩 거절 | PyTorch · Transformers · safetensors | [코드](../../tools/modelpack/artifact.py) · [테스트](../../cases/008-build-reconstruct-reload/tests/test_core.py) |
+| Q 모델의 변환·저장·복사·새로 시작한 추론 프로그램에서 실행 검사 | GPTQ · LLM Compressor · compressed-tensors · vLLM/Marlin | [코드](../../tools/modelpack/quantized.py) · [테스트](../../cases/008-build-reconstruct-reload/tests/test_boundaries.py) |
+| 작은 계산 블록의 출력 오차를 줄이는 가중치 적합(ridge 회귀)·보정 저장 | NumPy · CPU FP64 · ridge 회귀 · Cholesky · 채널 재구성 선행연구 | [코드](../../tools/modelpack/numerics.py) · [테스트](../../cases/008-build-reconstruct-reload/tests/test_core.py) |
+| 같은 질문을 짝지어 측정하고 개별 변화를 보여주는 비교 보고서 | vLLM benchmark · lm-evaluation-harness · 비교 지표 선행연구 | [코드](../../packages/diova-compare/src/diova_compare/core.py) · [테스트](../../packages/diova-compare/tests/test_compare.py) |
+| 모델의 변화하는 기억을 적은 비트로 저장·실패 상태 보존·새 프로그램에서 이어 실행 | NumPy · PyTorch · ComplexKDA recurrence | [구현](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py) · [합성 재시작 테스트](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) |
+| 같은 기억에서 답을 읽는 마지막 층만 교체·변경한 두 배열 저장·재적용 | ComplexKDA · PyTorch L-BFGS · NumPy | [모델 연결 코드](../../cases/011-frozen-state-readout-adaptation/source/adapter.py) · [변경 가중치 저장·재적용 검사](../../cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) |
+| 같은 초기 잡음에서 생성 단계·내부 반복·시간·요청한 개수·색·좌우 조건 충족 여부 비교 | Looped-DiT · FLAN-T5 · PyTorch · Pillow | [모델 연결 코드](../../cases/012-looped-dit-inference-budget/source/adapter.py) · [CPU 검사](../../cases/012-looped-dit-inference-budget/tests/test_analysis.py) |
+| 배율을 유지하는 4비트 정수(INT4) 변환·저장된 품질 결과 재검산 | DualQuant 공개 수식 · PyTorch · NumPy | [변환](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [CPU 검산](../../cases/013-dualquant-reference-quality/analysis/audit.py) |
+| 앞선 층 압축으로 달라진 중간 계산값을 다음 층에서 수집해 보정·INT4 저장/재로딩·모델 전체 문장 품질 비교 | Guo compensation · PyTorch · Transformers · NumPy | [코드](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [테스트](../../cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) |
+| API 이름 변경·관측 이력·상태 회귀시험 | Qwen · PyTorch · Transformers · Python stdlib | [runner](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py) · [tests](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/tests/test_order_contracts.py) |
+| 같은 입력의 GPU 실행 시간·메모리 측정 | vLLM · CUDA · NVML · PyTorch SDPA · SageAttention | [실행기](../../cases/002-bf16-fp8-document-extraction/scripts/run.py) · [시간 측정 경계](../../cases/004-low-precision-attention-break-even/src/timing.py) |
+| 공개 기록 재계산·화면 수치 대조 | Python · NumPy · JavaScript · unittest · GitHub Actions · Pages | [재계산](../../tools/showcase/replay_selection.py) · [표시 검사](../../tests/showcase/test_showcase.py) |
 
 - **실행 경로 진단:** RTX 5080의 GPU 구조(SM120)에 맞는 연산을 선택하도록 하는 기존 라이브러리 수정을 전후 비교 실행기로 확인했습니다. [Case001 실행기](../../cases/001-sm120-int8-fallback/run.py).
 - **비용 측정:** 입력 정보를 조합하는 attention 연산에서 값 범위 조정(smoothing)·적은 비트로 변환(양자화)·형식 변환을 포함한 호출 시간을 측정했습니다. [Case004 어댑터](../../cases/004-low-precision-attention-break-even/src/backends.py).
 - **수치 분석:** EFQ 방법의 숫자 대응과 비교에 쓰는 배율 선택을 나눠 확인하고, 미리 정한 속도·오차 조건을 만족하는 설정이 없을 때 중단한 판정을 기록했습니다. [Case003 분석·영어](../../cases/003-efq-softmax-numerical-audit/ANALYSIS.md) · [Case005 분석·영어](../../cases/005-attention-precision-pareto/ANALYSIS.md).
-- **모델 구조 변경:** 대응하는 행·열을 제거해 실제로 작은 MLP를 만들고, 원래 블록의 같은 채널을 끈 계산(마스킹)과 일치하는지 확인했습니다. [Case007 구조 변경 코드](../../cases/007-interaction-aware-mlp-pruning/src/surgery.py).
-- **입력별 평가:** 별도로 계산한 정답(gold)을 기준으로 각 질문의 정오 변화·점수 변화·최고점 동률을 확인할 수 있습니다. [Case006 분석·영어](../../cases/006-attention-decision-stability/ANALYSIS.md) · [출력 계산의 개별 수치 검사기](../../cases/006-attention-decision-stability/supplemental/readout-ties-v1/scripts/verify_scalar.py).
-- **분석 도구 전달:** 파일 지문(hash)으로 화면 수치를 보존한 원자료와 연결하고, 설정용 자료(calibration)에서 삭제할 그룹을 고르는 계산을 작은 CPU 예제로 반복합니다. [화면 빌더](../../tools/showcase/build.py) · [CPU 예제](../../tools/showcase/replay_selection.py).
 
 <a id="code-tour"></a>
 ## 구현 코드 읽기
@@ -85,19 +98,16 @@ Case009는 기존 Qwen 4B 모델 파일로 같은 조건의 graph/eager 요청 �
 
 과거 GPU 결과 조회는 [Case008 Q](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) → [Case009](https://munsik-kim.github.io/inference-lab/ko/case009.html#quality)로 별도 보여줍니다. 작은 무작위 모델의 [CPU 저장·재로딩 예제](GETTING_STARTED.md#tiny-model-demo)도 별개 구현 경로입니다.
 
-## 근거로 연결되는 소개 문장 세 개
-
-<!-- claims: c004-cost c005-stop -->
-- 그룹 선택과 행렬 축소 도구를 만들고, 마스킹 계산 및 미관측 입력과 비교했습니다. [Case007 방법·영어](../../cases/007-interaction-aware-mlp-pruning/METHODS.md).
-- Qwen 한 층 개입과 답변 확률·정답 손실·정답 획득·동률의 쌍별 분석을 구현했습니다. [Case006 방법·영어](../../cases/006-attention-decision-stability/METHODS.md).
-- Attention 전체 호출 비용을 측정하고, 관측된 정밀도·비용 절충과 **설정 개발 검사에서 중단했다는 판정(`STOP_DEV_SCREEN`)**을 함께 기록했습니다. [Case004 비용·영어](../../cases/004-low-precision-attention-break-even/README.md) · [Case005 판정·영어](../../cases/005-attention-precision-pareto/README.md).
-
+<a id="근거로-연결되는-소개-문장-세-개"></a>
 ## 도구의 성능 평가
 
 <!-- claims: c007-transfer c007-quality c006-native c006-readout -->
 Case008 R은 Qwen 0.6B의 한 층 MLP에서 짧은 합성 평가 입력 192개의 삭제로 생긴 국소 제곱 출력 오차를 **94.1–95.4%** 줄였습니다. 정답 점수 변화는 확률 지표와 보정 구조에 따라 달랐습니다. 측정한 요청 시간비의 불확실성 구간에는 1이 포함돼 전체 요청이 빨라졌다고 확인할 수 없었습니다. [Q 품질·속도 평가](https://munsik-kim.github.io/inference-lab/ko/case008.html#q-evaluation)와 [R 평가](https://munsik-kim.github.io/inference-lab/ko/case008.html#r-evaluation)에서 비교할 수 있습니다.
 
 MLP 25% 삭제에서 그룹 간 영향을 함께 보는 선택법(PAIRWISE)은 출력 오차가 소폭 낮고 원래 모델의 답변을 더 많이 유지했습니다. 그러나 정답에 준 확률로 계산하는 손실(NLL; 낮을수록 좋음)은 그룹을 따로 보는 선택법(INDEPENDENT)이 더 좋았습니다. 50%의 선택 모듈은 같았으며 원래 판정은 **뚜렷한 이득을 확인하지 못한 채 완료(`COMPLETED_NO_CLEAR_TRANSFER`)**입니다. Case006에서는 표준 192개 중 A_PUBLIC은 5개, V4는 8개의 선택이 달라졌습니다. 같은 입력의 사후 출력 계산 진단은 동률과 마지막 어휘 점수 계산을 살펴봅니다. 구현상 선택과 서로 다른 평가 목표를 이 예제들에서 확인할 수 있습니다. [사례 안내](CASEBOOK.md) · [로컬 화면 열기](GETTING_STARTED.md#local-showcase).
+
+<!-- claims: c004-cost c005-stop -->
+Attention 전체 호출 비용을 측정하고, 관측된 정밀도·비용 절충과 **설정 개발 검사에서 중단했다는 판정(`STOP_DEV_SCREEN`)**을 함께 기록했습니다. [Case004 비용·영어](../../cases/004-low-precision-attention-break-even/README.md) · [Case005 판정·영어](../../cases/005-attention-precision-pareto/README.md).
 
 <a id="contribution-and-reuse"></a>
 ## 프로젝트 기여와 재사용
@@ -118,7 +128,7 @@ OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지�
 - 측정·기록·검산 과정을 재사용 가능한 도구로 정리.
 
 
-**모델 변경 전후 평가**, **로컬 모델 실행 문제 진단**, **다시 확인할 수 있는 분석 도구와 결과 화면 제작**을 논의할 수 있습니다. 어떤 모델·업무인지, 무엇이 실패하거나 비교가 필요한지, 어떤 결과가 도움이 될지부터 설명하면 됩니다. 구체적인 측정 범위와 지표는 그다음 함께 정할 수 있습니다. [저장소 이슈](https://github.com/Munsik-Kim/inference-lab/issues)는 공개 기술 질문 경로이며, 인증값이나 비공개 고객 자료는 공개 보고에 넣지 않습니다.
+어떤 모델·업무인지, 무엇이 실패하거나 비교가 필요한지, 어떤 결과가 도움이 될지부터 설명하면 됩니다. 구체적인 측정 범위와 지표는 그다음 함께 정할 수 있습니다. [저장소 이슈](https://github.com/Munsik-Kim/inference-lab/issues)는 공개 기술 질문 경로이며, 인증값이나 비공개 고객 자료는 공개 보고에 넣지 않습니다.
 
 근거는 특정 모델·장치 하나에서 수행한 합성 실험과 Case009의 별도 공식 과제 결과입니다. 실제 서비스 배포 적합성은 **미평가(`NOT_ASSESSED`)**입니다. CPU 검산은 저장된 개별 수치를 다시 계산합니다. 제외된 전체 배열을 복구하거나 GPU 모델 실행을 독립적으로 반복하는 절차는 [재현 안내](GETTING_STARTED.md)에서 따로 설명합니다.
 
