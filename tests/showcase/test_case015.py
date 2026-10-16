@@ -42,5 +42,10 @@ class Case015Display(unittest.TestCase):
             self.assertEqual(r['execution_source_sha256'],self.data['execution_source_sha256']['A1'])
         for x in self.data['A1']['branching']:self.assertFalse(x['same_model_visible_policy_input'])
 
+    def test_early_parse_stop_shows_original_and_annotated_terminal(self):
+        body=render_case015(self.data,'en');start=body.index('id="D16__API_V1__A1-00"');end=body.index('<details class="a1-episode"',start)
+        episode=body[start:end]
+        for text in ['raw_terminal_reason','BUDGET_EXHAUSTED','derived_terminal_reason','PARSE_ERROR','posthoc_metadata_note']:self.assertIn(text,episode)
+
 
 if __name__=='__main__':unittest.main()

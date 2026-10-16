@@ -20,6 +20,7 @@ SOURCE_COPIES={
     'case015-a1-scorer.py.txt':A1+'/src/order_regression/scoring.py','case015-a1-audit.py.txt':A1+'/src/order_regression/audit.py',
     'case015-a1-tests.py.txt':A1+'/tests/test_order_contracts.py','case015-p1-model-adapter.py.txt':C15+'/src/interface_sensitivity/model_adapter.py',
     'case015-a1-protocol.json.txt':A1+'/specs/protocol.json','case015-a1-raw.json.txt':A1+'/results/a1_r1/episodes.jsonl',
+    'case015-a1-annotations.json.txt':A1+'/results/a1_r1/diagnostic_annotations.json',
     'case015-p1-raw.json.txt':C15+'/results/p1_r1/episodes.jsonl','case015-cpu-check.py.txt':C15+'/publication/scripts/run_checks.py',
 }
 
@@ -79,6 +80,7 @@ def render_case015(data,lang):
     out+=section(3,body)
     controls='<div class="filters case015-filters"><label>'+txt('모델','Model')+'<select id="a1-method">'+''.join('<option>'+x+'</option>' for x in ['BF16','RTN','D16'])+'</select></label><label>API<select id="a1-api"><option>API_V1</option><option>API_V2</option></select></label><label>Scenario<select id="a1-scenario">'+''.join('<option>'+s['scenario_id']+'</option>' for s in data['scenarios'] if s['split']=='primary')+'</select></label></div><p id="a1-filter-status" role="status" aria-live="polite"></p><noscript>'+txt('JavaScript가 꺼져 있어 모든 episode를 아래에서 펼쳐 볼 수 있습니다.','JavaScript is off; all episodes remain available below.')+'</noscript>'
     tasks={s['scenario_id']:s for s in data['scenarios']};body=controls
+    annotations={r['episode_id']:r for r in data['A1']['diagnostic_annotations']['episodes']}
     for r in data['A1_episodes']:
         task=tasks[r['scenario_id']];eid=r['episode_id'];body+='<details class="a1-episode" id="'+escape(eid,quote=True)+'" data-method="'+r['method']+'" data-api="'+r['api_version']+'" data-scenario="'+r['scenario_id']+'"><summary>'+escape(eid)+' · '+txt('워크플로','Workflow')+' '+str(r['VERIFIED_WORKFLOW_SUCCESS'])+' · '+txt('상태','State')+' '+str(r['STATE_ONLY_SUCCESS'])+'</summary>'
         body+='<h3>'+txt('요청과 선언된 이름','Request and declared names')+'</h3>'+pre(task['messages'])+pre(data['mappings'][r['api_version']])+'<details><summary>'+txt('초기 JSON','Initial JSON')+'</summary>'+pre(task['orders'])+'</details>'
@@ -88,7 +90,11 @@ def render_case015(data,lang):
                 if event['generated_in_turn']!=turn:continue
                 body+='<details><summary>'+escape(str(event['raw_name']))+' → '+escape(str(event['semantic_tool_id']))+' / '+event['execution_status']+'</summary>'+pre({k:event[k] for k in ['raw_arguments','generated_after_event_ids','tool_result','state_before_execution','state_after_execution','state_version_before','state_version_after']})+'</details>'
             body+='</section>'
-        body+='<h4>'+txt('최종 답·실제 상태·판정','Final answer, actual state and verdict')+'</h4>'+pre({k:r[k] for k in ['final_answer','final_fixture','VERIFIED_WORKFLOW_SUCCESS','STATE_ONLY_SUCCESS','REQUIRED_ACTIONS_DONE','OBSERVATION_ORDER_VALID','observation_violations','terminal_reason']})+'</details>'
+        annotation=annotations[r['episode_id']]
+        body+='<h4>'+txt('최종 답·실제 상태·판정','Final answer, actual state and verdict')+'</h4>'+pre({**{k:r[k] for k in ['final_answer','final_fixture','VERIFIED_WORKFLOW_SUCCESS','STATE_ONLY_SUCCESS','REQUIRED_ACTIONS_DONE','OBSERVATION_ORDER_VALID','observation_violations']},
+            'raw_terminal_reason':r['terminal_reason'],'derived_terminal_reason':annotation['derived_terminal_reason'],
+            'posthoc_metadata_note':annotation['terminal_annotation'],'raw_ARGUMENT_VALUE_WRONG':r['ARGUMENT_VALUE_WRONG'],
+            'derived_ARGUMENT_VALUE_WRONG_including_unknown_order_id':annotation['ARGUMENT_VALUE_WRONG_including_rejected_unknown_order_id']})+'</details>'
     out+=section(4,body)
     cmd='OUT=$(mktemp -d)\npython3 -B cases/015-tool-interface-sensitivity/publication/scripts/run_checks.py --output "$OUT/case015" --tests'
     body='<p>'+txt('공개 API 정의 읽기 → 두 API의 합성 정답 경로 동등성 실행 → 저장된 모델 응답을 새 fixture에 재실행 → 회귀표 재계산 순서입니다. 모델·설치·GPU 없이 Python 표준 라이브러리로 실행합니다.','Read the public API definitions → execute equivalent synthetic oracle traces → replay recorded model responses into fresh fixtures → recompute regression tables. The CPU path uses the Python standard library, without a model, installation or GPU.')+'</p>'+pre(cmd)+'<div class="actions">'+a('../sources/case015-reproduce-'+lang+'.md.txt',txt('전체 CPU 명령과 별도 GPU 범위','Full CPU commands and separate GPU scope'))+' · '+a('../sources/case015-a1-runner.py.txt',txt('실행기','Runner'))+' · '+a('../sources/case015-a1-tests.py.txt',txt('계약 검사','Contract tests'))+' · '+a(data['download_url'],txt('공개 ZIP','Public ZIP'))+'</div>'
