@@ -6,6 +6,13 @@
 
 두 모델 저장본의 입력별 결과를 비교하는 CPU CLI입니다. 입력과 정답 정의가 같은지 확인한 뒤 정답 손실·새 정답·답변 변경을 집계합니다. 호환되는 확률 분포를 제공하면 NLL·Brier·KL도 계산합니다. Python 3.10 이상이며 모델 다운로드나 Torch·CUDA가 필요하지 않습니다.
 
+<a id="compare-your-results"></a>
+## 내 결과로 시작하기
+
+[합성 네 쌍 예제 실행](examples/compare/README.ko.md): 저장된 답변 준비 → 같은 입력·정답 규칙으로 필드 대응 → validate → compare → report.md / report.json / pairs.csv 읽기. 최소 입력, 자유 생성 정오를 제공하는 방식, 입력 불일치 거절 명령까지 따라갈 수 있습니다.
+
+[과거 실험 재분석](#case013-export)은 별도 사용 경로입니다.
+
 ## 설치와 실행
 
 이 디렉터리에서 별도 환경을 사용합니다.

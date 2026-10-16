@@ -10,11 +10,14 @@
 
 [공개 한국어 홈페이지](https://munsik-kim.github.io/inference-lab/ko/index.html)에서 설치 없이 기록된 사례와 코드를 볼 수 있습니다. 실시간 모델 데모가 아니라 저장된 결과입니다. [16GB GPU 모델별 안내](https://munsik-kim.github.io/inference-lab/ko/llm-guide.html)에서 Qwen3-4B의 실행·품질·실패 기록을 이어서 읽으세요. [안내서 연결 문서](LLM_GUIDE.md)에는 로컬 열기 방법도 있습니다.
 
-처음에는 다음 세 가지 문제 중 자신의 상황과 가까운 것을 고르세요.
+목적에 따라 바로 시작할 수 있습니다.
 
-- **모델 파일을 줄이고 다시 실행하고 싶다면:** [Case008 Q](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q). 기존 GPTQ 변환에 저장본 검사·복사·새 프로세스 로딩·실행 경로 확인을 연결했습니다. 가중치 파일 크기와 전체 GPU 메모리는 따로 봅니다.
-- **INT4가 내 요청에서도 빠른지 궁금하다면:** [Case009](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving). 같은 요청 길이와 실행 방식 안에서 비교합니다. 요청 조건에 따라 이득이 달랐고, 별도 품질 평가의 정답 손실과 종료 문제도 남았습니다.
-- **성공했다는 답변과 실제 도구 실행이 다르다면:** [Case013 후속의 공개 보고서](../../research/agent_tool_contract_repair_20261014/records/REPORT_KO.md). 도구 이름 제약과 오류 피드백을 구현하고 실제 수정·검증 이벤트를 검사했습니다. 이미 관찰한 개발용 과제를 재사용했으며 새 입력의 일반화는 미확인입니다. BF16으로 복원한 품질 진단 경로로, packed INT4 가속 실험은 아닙니다.
+- **모델을 쓰려는 사람:** [모델별 실전 안내](LLM_GUIDE.md)에서 실행 경로와 전제조건을 확인합니다.
+- **기술 역량을 보려는 사람:** [대표작 A/B/C와 코드 근거](PORTFOLIO.md)를 읽습니다. A는 [Case008 Q 저장·재로딩](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) → [Case009 실제 요청 비교](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving)로 이어집니다.
+- **직접 비교해보려는 사람:** [diova-compare 합성 예제](../../packages/diova-compare/examples/compare/README.ko.md)로 두 파일을 validate하고 보고서를 만듭니다. 이후 자기 기록의 필드를 바꿔 넣습니다.
+- **실험을 검산하려는 사람:** [개발자 재현 안내](GETTING_STARTED.md)에서 과거 기록의 CPU 재계산 경로를 고릅니다. 위의 자기 결과 비교와 별개입니다.
+
+대표작 C는 [도구 이름 제한·오류 피드백과 실제 작업 완료 검사](../../research/agent_tool_contract_repair_20261014/README.ko.md)입니다. 기존 DEV 8과제를 재사용한 BF16 복원 reference 계산이며 새 입력 일반화나 packed INT4 가속 근거로 넓히지 않습니다.
 
 ## 3. 어느 안내를 읽으면 되나요?
 
@@ -59,6 +62,6 @@ Case008 R은 Qwen3-0.6B의 pruning 후 복원이며 Qwen3-4B 양자화 보정과
 **Case 006:** 질문의 정보를 조합하는 attention 연산 한 곳을 바꾸고, 같은 질문의 점수와 네 가지 보기 중 고른 답을 비교했습니다. 두 설정은 표준 192개 중 각각 5개·8개의 선택을 바꿨습니다. 그 집합에서는 기준선의 정답을 잃지 않았지만, 별도 스트레스 집합에서는 잃은 경우가 있었습니다. 후속 진단은 같은 입력에서 최고점 동률과 마지막 단어 점수 계산을 살폈습니다. 원래 실험과 별도로 표시됩니다. [입력별 결과와 한계](CASEBOOK.md#case-006).
 
 <!-- case014-entry -->
-## 최근 완료: 같은 INT4 저장량의 품질 보정
+## 심화 연구: 같은 INT4 저장량의 품질 보정
 
 [Case014](CASEBOOK.md#case-014) · [Online](https://munsik-kim.github.io/inference-lab/ko/case014.html#overview) · [CPU checks](GETTING_STARTED.md#case014-cpu). 0.6B 전층 품질을 새 문서에서 비교한 연구이며, 기존 Qwen3-4B 실전 안내와 모델·측정 범위가 다릅니다.

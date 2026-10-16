@@ -73,3 +73,14 @@
   .memory-comparison { grid-template-columns:1fr; gap:.75rem; }
   .practical-guide details { padding:.9rem; }
 }
+
+/* Keep secondary records available without repeating every case on arrival. */
+.research-records { margin:2rem 0; min-width:0; border-block:1px solid var(--border); padding:1.2rem 0; }
+.research-records > summary { cursor:pointer; font-size:1.15rem; font-weight:650; padding:.5rem 0; }
+.research-records[open] > summary { margin-bottom:1.5rem; }
+#collaboration li { margin:.6rem 0; }
+.contribution-table { max-width:100%; overflow-x:auto; }
+
+.featured-stories, .home-model-guides, #contributions, #capabilities, #tech-stack,
+#compensation-study, .research-records, #cases { scroll-margin-top:8rem; }
+body[data-case="compare"] .guide-table code { font-size:1em; word-break:normal; }

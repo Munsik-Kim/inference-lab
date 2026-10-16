@@ -7,6 +7,11 @@
 사례를 읽고, 기록된 입력을 탐색하거나, 작은 CPU 검사를 실행할 수 있습니다. GPU 재현에는 별도 환경과 명령이 있습니다.
 
 
+<a id="compare-your-results"></a>
+## 먼저 내 결과를 비교하려면
+
+[diova-compare 사용자 예제](../../packages/diova-compare/examples/compare/README.ko.md)는 Python 3.10+의 별도 venv에서 공개 합성 두 파일 → validate → compare → 보고서 읽기를 실행합니다. 전체 어휘 확률이나 모델 다운로드 없이 시작할 수 있습니다. 아래 절차들은 기존 실험의 기록 검산·재현이며 자기 JSONL 비교와 구분합니다.
+
 ## 설치 없이 공개 결과 화면 열기
 
 [한국어 홈](https://munsik-kim.github.io/inference-lab/ko/index.html) · [Case008 Q: 파일 축소·재실행](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) · [Case009: 서빙 비교](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving) · [도구 실패 완화 보고서](../../research/agent_tool_contract_repair_20261014/records/REPORT_KO.md). Pages 화면은 저장된 측정값을 보여주며 설치나 GPU가 필요 없습니다. 오프라인에서 보려면 아래처럼 로컬 빌드를 사용합니다.

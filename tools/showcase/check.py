@@ -19,7 +19,7 @@ from case013 import load_case013, render_case013, home_case013, SOURCE_COPIES as
 from case014 import load_case014, render_case014, home_case014, SOURCE_COPIES as C14_SOURCES, C14, SECTIONS as C14_SECTIONS, FIGURES as C14_FIGURES, ARCHIVE as C14_ARCHIVE
 from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
-from practical import load_practical, render as practical_render, PAGES as GUIDE_PAGES
+from practical import load_practical, render as practical_render, PAGES as GUIDE_PAGES, COMPARE_EXAMPLES
 
 EXPECTED = {'en/case008.html','ko/case008.html','data/case008.json','assets/case008.css','assets/case008.js','index.html','en/index.html','ko/index.html','en/guide.html','ko/guide.html','en/case006.html','ko/case006.html',
             'en/case007.html','ko/case007.html','assets/icon.svg','assets/app.js','assets/state.js','assets/style.css','assets/study.css',
@@ -118,12 +118,15 @@ def check(root: Path, site: Path) -> dict:
         expected |= {'sources/'+name for name in C14_SOURCES} | set(C14_FIGURES)
     expected |= {lang+'/'+page+'.html' for lang in ('ko','en') for page in GUIDE_PAGES}
     expected |= {'data/practical-guide.json','assets/practical-guide.css'}
+    expected |= set(COMPARE_EXAMPLES)
     require(set(paths)==expected, 'Unexpected/missing deploy artifact member')
     m=read(site/'build_manifest.json')
     require(set(m['files'])==expected-{'build_manifest.json'}, 'Manifest coverage')
     for name,path in paths.items():
         if name!='build_manifest.json':require(sha(path)==m['files'][name], 'Changed build member: '+name)
     require(m['source_manifest_sha256']==sha(root/'presentation/source_manifest.json'), 'Wrong source manifest')
+    for name, source_path in COMPARE_EXAMPLES.items():
+        require(paths[name].read_bytes() == (root/source_path).read_bytes(), 'Changed synthetic comparison example')
     for name,digest in m['presentation_files'].items():
         path=(root/name).resolve()
         require(path.is_relative_to(root.resolve()) and path.is_file() and sha(path)==digest, 'Stale presentation build')

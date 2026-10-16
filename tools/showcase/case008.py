@@ -85,6 +85,9 @@ def render_case008(root: Path, data: dict, lang: str) -> str:
                 rec=v['recovery'];h+='<article class="repair-card"><h3>'+name+' → '+name+'-R</h3><p>'+str(v['width'])+' '+text('channels')+'</p><p class="result-label">'+text('relativeError')+'</p><p class="repair-values">'+pct(v['mean_relative_before'])+' → <strong>'+pct(v['mean_relative_after'])+'</strong></p>'
                 h+='<p>'+text('energy')+' <strong>'+pct(rec['pooled_recovery'])+'</strong><br><span class="small">95% CI ['+f'{100*rec["ci95"][0]:.2f}, {100*rec["ci95"][1]:.2f}'+']%</span></p><p>'+text('improved')+f' {rec["improved_prompts"]}/{rec["n"]}'+'</p><p>'+text('correct')+f': {v["correct_before"]}/192 → {v["correct_after"]}/192'+'</p></article>'
             h += '</div><p class="scope">'+text('rScope')+'</p><h3 id="r-evaluation">'+text('rEvaluation')+'</h3><p>'+text('rConclusion')+'</p>'
+        if isq:
+            h += '<h3 id="q-judgment">'+('기술적 판단 — 현재 설계의 해석' if lang=='ko' else 'Technical judgment — current design')+'</h3>'
+            h += '<ul>'+''.join('<li>'+escape(item)+'</li>' for item in t['qJudgment'])+'</ul>'
         h += '<div class="actions">'+anchor(report8_url(lang)+'#'+('results' if isq else 'methods'),t['report'])+'</div></section>'
     h += '<section id="try-it" class="panel"><h2>'+text('try')+'</h2><p>'+text('fixture')+'</p><p>'+text('routes')+'</p><div class="actions">'+anchor('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/GETTING_STARTED.md#case008-paths',t['fourRoutes'])+anchor('../data/case008.json',t['download'])+'</div></section>'
     h += '<details><summary>'+text('sources')+'</summary><p>COMPLETED · '+escape(data['deployment'])+'</p><ul>'

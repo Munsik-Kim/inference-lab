@@ -105,8 +105,8 @@ artifact and scoped permissions; do not change settings or protection rules.
 
 ## Reader routes and publication gate
 
-The home reads introduction → three featured cases → model guides → implementation
-contributions → capabilities/stack → full case records. Existing section IDs remain.
+The home reads introduction → featured A/B/C implementations → model guides → implementation
+collaboration tasks → contributions → capabilities/stack → separate Case014 research card → expandable case records. Existing section IDs remain.
 The common header uses Home / Model guides / All cases / Reproduce. Individual
 cases keep related-case links; the retained image-review tool keeps its own controls.
 `guide.html` is the developer CPU build/check route. `llm-guide.html` is the model
@@ -130,3 +130,21 @@ Do not change protection rules or Pages settings. Verify the new run's source SH
 checked artifact and deployment status, then open the actual public home, menu and
 Qwen guide. A successful Actions run and a verified public screen are separate
 checks. A local preview does not establish that the public site was updated.
+
+## Compare your saved answers
+
+The home features Case008 Q + Case009 as A, **diova-compare** as B, and the Case013
+tool-action follow-up as C. Case014 is a separate research card after the technical
+stack. Earlier implementation summaries remain in a native disclosure with their
+existing anchors; the complete archive stays directly accessible.
+
+The bilingual `compare.html` pages lead to the [four-pair synthetic CPU example](../packages/diova-compare/examples/compare/README.md).
+They separate your own JSONL workflow from historical Case013 export. Two explicit
+JSONL files are copied byte-for-byte via `COMPARE_EXAMPLES`; the checker extends its
+exact deployment allowlist and checks those bytes. No experiment manifest changes.
+
+The optional guide browser checker starts its own temporary Edge profile and uses
+`--remote-debugging-port=0`, reading only that profile's DevToolsActivePort and
+matching its browser identity. It does not attach to a fixed debugging port.
+Browser screenshots, actual CLI reports and a reading demo belong to the external
+review directory, with their execution/visual-review status recorded in HANDOFF.

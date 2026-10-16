@@ -10,11 +10,14 @@ Running a lighter model on your GPU requires checking storage, request cost and 
 
 Open the [public English home](https://munsik-kim.github.io/inference-lab/en/index.html) without installing anything. It shows recorded results, not a live model demo. Continue to the [16GB GPU model guides](https://munsik-kim.github.io/inference-lab/en/llm-guide.html) for Qwen3-4B execution, quality and failures. The [guide entry](LLM_GUIDE.md) also explains local opening instructions.
 
-Start with one of these three problems:
+Choose a route by your purpose:
 
-- **Make model files smaller and reload them:** [Case008 Q](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) connects existing GPTQ conversion with artifact inspection, copying, fresh-process reload and runtime-path checks. Weight file size and whole-device memory are separate measurements.
-- **Check whether INT4 speeds up your requests:** [Case009](https://munsik-kim.github.io/inference-lab/en/case009.html#serving) compares matched lengths and execution modes. Gains depend on request conditions; separate quality regressions and abnormal process exits remain.
-- **Check whether a claimed success actually used the tools:** the [Case013 follow-up report](../../research/agent_tool_contract_repair_20261014/records/REPORT_KO.md) records registered-name constraints, error feedback and checks of actual patch/validation events. Previously observed development tasks were reused; generalization to new inputs is unverified. This is dequantized BF16 reference computation, not packed INT4 acceleration. The report and full guide are in Korean.
+- **Use a model:** start with [model guides](LLM_GUIDE.md) for execution paths and prerequisites.
+- **Inspect technical capability:** read [featured A/B/C and code evidence](PORTFOLIO.md). A connects [Case008 Q storage/reload](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) → [Case009 actual requests](https://munsik-kim.github.io/inference-lab/en/case009.html#serving).
+- **Compare results yourself:** run the [diova-compare synthetic example](../../packages/diova-compare/examples/compare/README.md), then map your saved records to the same fields.
+- **Recheck an experiment:** choose a historical CPU audit in [developer reproduction](GETTING_STARTED.md). This is separate from comparing your own records.
+
+Featured C tests [registered tool names, error feedback and actual action completion](../../research/agent_tool_contract_repair_20261014/README.md). It reuses eight previously observed DEV tasks with dequantized BF16 reference computation, without establishing new-input generalization or packed INT4 speed.
 
 ## 3. Choose an instruction path
 
@@ -59,6 +62,6 @@ Read online, then choose the [offline explorers](GETTING_STARTED.md#offline-expl
 **Case 006:** one attention operation, which combines information from the question, is changed while scores and choices among four answers are compared on identical questions. Two settings changed 5 and 8 choices out of 192 standard inputs, respectively. Neither lost a baseline-correct answer in that set, but losses occurred in a separate stress set. A follow-up examined equal top scores and the final word-score calculation on the same inputs. It is labelled separately from the original study. [Individual outcomes and limits](CASEBOOK.md#case-006).
 
 <!-- case014-entry -->
-## Recently completed: quality compensation at identical INT4 storage
+## Deeper research: quality compensation at identical INT4 storage
 
 [Case014](CASEBOOK.md#case-014) · [Online](https://munsik-kim.github.io/inference-lab/en/case014.html#overview) · [CPU checks](GETTING_STARTED.md#case014-cpu). A fresh-document0.6B whole-model quality study, distinct from the Qwen3-4B practical guide.
