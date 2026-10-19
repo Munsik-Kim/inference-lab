@@ -305,6 +305,9 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
             'stages':['P0','P1','A1'],'P1_episodes':96,'A1_episodes':96,'A1_endpoint':data15['A1']['endpoint'],
             'execution_source_sha256':data15['execution_source_sha256'],'publication_additional_model_forwards':0,
             'scope':data15['execution_boundary'],'download':data15['download']}
+        if data15.get('P2'):
+            report['case015_units']['stages'].append('P2')
+            report['case015_units']['P2'] = data15['P2']
     git_head=subprocess.run(['git','rev-parse','HEAD'],cwd=root,text=True,capture_output=True)
     git_dirty=subprocess.run(['git','status','--porcelain'],cwd=root,text=True,capture_output=True)
     report['repository_build_revision']=git_head.stdout.strip() if git_head.returncode==0 else None

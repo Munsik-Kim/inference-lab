@@ -153,6 +153,10 @@ def check(root: Path, site: Path) -> dict:
             require(render_case015(data15,lang) in html and set(C15_SECTIONS)<=parser.ids,'Case015 rendering/anchors')
             require(home_case015(data15,lang) in (site/lang/'index.html').read_text(),'Case015 home feature')
             require(html.count('class="a1-episode"')==96,'Case015 measured episode count')
+            if data15.get('P2'):
+                require('p2-recovery' in parser.ids,'Case015 P2 anchor missing')
+                require(m['case015_units']['P2']==data15['P2'],'Case015 P2 raw replay/display differs')
+                require('P2 / fresh64' not in html,'Case015 P2 marked unrun')
     if data14:
         require(read(site/'data/case014.json')==data14,'Case014 raw-derived numeric/source mismatch')
         require(m['case014_units']['source_files']==data14['sources'],'Case014 source identity mismatch')
