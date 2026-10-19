@@ -1,0 +1,15 @@
+{
+  "created_utc": "2026-10-19T02:49:25.562493+00:00",
+  "previous_execution_commit": "447bda9c6311678ea17780c100e7d9a03b12b3b6",
+  "previous_attempt": "run_r1",
+  "previous_new_model_requests": 0,
+  "previous_measured_worker_wall_seconds": 22.078251158000057,
+  "observed_error": "CUDA initialization: no NVIDIA driver in sandbox; /dev/dxg absent, cuInit100",
+  "isolation_diagnosis": "same existing Python outside sandbox: /dev/dxg present, cuInit0; no package/driver/model change",
+  "resolution": "run the authorized local experiment with device access; debit prior attempt and diagnostic costs from the same7200s cap",
+  "conditions_changed": false,
+  "run_source_change": "add explicit prior-receipt debit; count source validation in worker wall; remove copied GPU-only blank EOF",
+  "previous_source_freeze_retained": "history/attempt01_source_freeze.json",
+  "CPU_preparation_source_unchanged": true,
+  "model_downloads_or_requantization": 0
+}

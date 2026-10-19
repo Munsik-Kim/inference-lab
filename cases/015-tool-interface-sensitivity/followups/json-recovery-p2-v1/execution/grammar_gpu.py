@@ -115,4 +115,3 @@ def finite_then_mask(unmasked_scores, allowed_ids):
     if not allowed or min(allowed) < 0 or max(allowed) >= len(unmasked_scores):
         raise ValueError('invalid grammar token IDs')
     return [x if i in allowed else -math.inf for i, x in enumerate(unmasked_scores)]
-

@@ -94,17 +94,38 @@ def cell_id(method, point, arm):
 
 
 def run(args):
+    start = time.monotonic()
     identity = freeze_gate()
     spec = read(P2 / 'execution/spec.json')
     if args.output.resolve().is_relative_to(REPO):
         raise ValueError('private worker output must be outside the Git tree')
     args.output.mkdir(parents=True, exist_ok=False)
-    start = time.monotonic(); deadline = start + spec['worker_wall_limit_seconds']
+    previous = []; previous_hashes = set()
+    for receipt_path in args.prior_receipt:
+        fingerprint = sha(receipt_path)
+        if fingerprint in previous_hashes:
+            raise ValueError('duplicate prior worker receipt')
+        previous_hashes.add(fingerprint)
+        value = read(receipt_path)
+        if value.get('actual_new_model_request_attempts', 0) != 0:
+            raise ValueError('this revised source may only resume pre-response infrastructure failures; do not mix generated source identities')
+        previous.append({'sha256': fingerprint, 'worker_wall_seconds': value['total_worker_wall_seconds'],
+                         'status': value['status'], 'execution_source_commit': value.get('execution_source_commit')})
+    prior_wall = sum(r['worker_wall_seconds'] for r in previous)
+    # Earlier uninstrumented source-validation overhead is conservatively charged,
+    # separately from the measured wall. It never expands the registered cap.
+    prior_overhead = 1.0 if previous else 0.0
+    deadline = start + spec['worker_wall_limit_seconds'] - prior_wall - prior_overhead
+    if time.monotonic() >= deadline:
+        raise ValueError('cumulative worker budget already exhausted')
     journal = args.output / 'attempt_journal.jsonl'; journal.touch(exist_ok=False)
     request_journal = args.output / 'requests.jsonl'; request_journal.touch(exist_ok=False)
     write(args.output / 'identity.json', {**identity, 'execution_spec_sha256': sha(P2 / 'execution/spec.json'),
           'cpu_protocol_sha256': sha(P2 / 'specs/protocol.json'), 'started_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
           'run_id': spec['execution_id'], 'worker_wall_limit_seconds': spec['worker_wall_limit_seconds'], 'smoke_model_requests': 0})
+    write(args.output / 'prior_attempts.json', {'prior_receipts': previous, 'prior_worker_wall_seconds': prior_wall,
+          'conservative_prior_source_validation_overhead_seconds': prior_overhead,
+          'cumulative_cap_seconds': spec['worker_wall_limit_seconds']})
     # Reuse the byte-pinned CPU gates, now under the newly authorized execution.
     from json_recovery_p2.local_inputs import check
     from json_recovery_p2.tokenizer_cpu import retokenize, check_grammar
@@ -237,6 +258,9 @@ def run(args):
           'error': error, 'completed_cells': len(rows), 'C0_reproduction_rows': len(reproduction),
           'actual_new_model_request_attempts': request_counter, 'smoke_model_requests': 0,
           'total_worker_wall_seconds': wall, 'worker_wall_limit_seconds': spec['worker_wall_limit_seconds'],
+          'prior_measured_worker_wall_seconds': prior_wall,
+          'cumulative_measured_worker_wall_seconds': wall + prior_wall,
+          'budget_debited_worker_wall_seconds': wall + prior_wall + prior_overhead,
           'finished_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
           'model_downloads': 0, 'solver_calls': 0, 'encode_calls': 0, 'artifact_writes': 0})
     return 0 if error is None else 2
@@ -246,6 +270,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--runtime', type=Path, required=True); parser.add_argument('--gpu-python', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--prior-receipt', action='append', type=Path, default=[], help='debit preserved pre-response infrastructure attempts from the same cumulative cap')
     return run(parser.parse_args())
 
 
