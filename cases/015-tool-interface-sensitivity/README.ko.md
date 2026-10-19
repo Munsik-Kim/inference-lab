@@ -4,6 +4,10 @@ AI가 사용하는 도구의 이름만 바뀌면, 같은 일을 끝까지 해낼
 
 구체적인 예제는 **구매 내역의 총금액을 계산해 기록하는 일**입니다. AI는 구매한 개수와 개당 가격을 조회하고, 둘을 곱한 금액을 저장한 뒤 제대로 기록됐는지 확인해야 합니다. 이 흐름을 실행하고 결과를 다시 검사하는 도구를 구현했습니다.
 
+> **P2 추가 실험:** 합계를 저장하는 호출문이 깨졌던 4비트 모델 D16의 실패 8건을, 같은 조회·계산 결과에서 다시 확인했습니다. 첫 응답의 형식을 도구 계약에 맞게 제한하자 8/8건이 저장·검증·최종 답변까지 완료됐습니다. 중립 재시도와 오류 설명은 각각 0/8건이었고, 중립 재시도 1건은 저장까지만 회복했습니다. 합성 기록 4개 × 이름 표기 2종의 진단이며 기존 P1/A1 점수와 별도로 봅니다.
+> [P2 결과·한계](followups/json-recovery-p2-v1/REPORT.ko.md) · [모델 없는 재계산](followups/json-recovery-p2-v1/REPRODUCE.ko.md)
+
+
 [Pages](https://munsik-kim.github.io/inference-lab/ko/case015.html#overview) · [Report](REPORT.ko.md) · [CPU / GPU](REPRODUCE.ko.md) · [Stage map](STAGE_MAP.md) · [Runner](followups/order-api-regression-v1/src/order_regression/runner.py) · [Tests](followups/order-api-regression-v1/tests/test_order_contracts.py)
 
 ## AI에게 시킨 일

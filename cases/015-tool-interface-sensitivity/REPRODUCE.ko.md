@@ -1,5 +1,15 @@
 # 모델 없이 API 회귀표 재계산하기
 
+현재 P2까지 포함한 tree에서는 아래 wrapper를 사용합니다. 원 P1/A1 명령은 바이트를 보존한 closed view에서 그대로 실행됩니다. 아래의 과거 본문은 당시 재현 계약으로 보존합니다.
+
+```bash
+OUT=$(mktemp -d)
+python3 -B cases/015-tool-interface-sensitivity/followups/json-recovery-p2-v1/publication/run_checks.py --output "$OUT/case015" --tests
+```
+
+[P2 CPU/GPU 재현 범위](followups/json-recovery-p2-v1/REPRODUCE.ko.md)
+
+
 이 명령은 AI 모델을 다시 돌리는 대신, **구매 정보 확인→금액 계산→저장→확인**의 저장 기록을 재실행합니다. 도구 이름만 바꾼 두 경우의 성공·실패를 다시 세는 방법입니다. [작업과 용어 설명](README.ko.md)을 먼저 읽으면 출력표를 이해하기 쉽습니다.
 
 Python3.10+ 표준 라이브러리만 사용합니다. GPU·모델·새 설치 없이 저장된 응답을 실행하고 원형 파일·점수·표를 확인합니다. 저장소 root에서 실행하며 출력은 새 외부 디렉터리입니다.

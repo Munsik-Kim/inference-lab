@@ -1,68 +1,58 @@
-# CPU 재현과 다음 실행 경계
+# P2 재현: 저장 기록 확인과 모델 실행을 구분합니다
 
-저장소 루트에서 실행합니다. 기본 경로는 Python 표준 라이브러리만 사용합니다. 실제 모델과 모델 실행 프레임워크는 불러오지 않습니다. 기존 원자료가 있는 Case015 전체 상대 경로를 유지해야 하며 이 후속 폴더만으로 독립 실행되는 pip 패키지는 아닙니다.
+## 1. 모델 없이 결과 확인
 
-## 1. 기본 검증과 새 외부 출력
-
-아래와 같은 명령을 실제로 실행해 PASS를 확인했습니다. 매번 새 출력 경로를 사용합니다.
+저장소 루트에서 실행합니다. 표준 라이브러리만으로 원 P1/A1 closed view, CPU 준비/실행 경계, 새 raw fixture 재생과 표 재계산을 확인합니다. 기존 성공 파일을 덮어쓰지 않는 새 외부 출력이 필요합니다.
 
 ```bash
 P2=cases/015-tool-interface-sensitivity/followups/json-recovery-p2-v1
-CPU_OUTPUT=$(mktemp -d /tmp/case015-p2-cpu-XXXXXX)
-export PYTHONPATH="$P2/src" PYTHONDONTWRITEBYTECODE=1
-export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 CUDA_VISIBLE_DEVICES=''
-
-python3 -B -m json_recovery_p2.cli --help
-python3 -B -m json_recovery_p2.cli validate
-python3 -B -m json_recovery_p2.cli audit --output "$CPU_OUTPUT/replay"
-python3 -B -m json_recovery_p2.cli baseline --tests --output "$CPU_OUTPUT/baseline"
-python3 -B -m unittest discover -s "$P2/tests" -p test_cpu_contracts.py -v
-python3 -B -m json_recovery_p2.cli dry-run --output "$CPU_OUTPUT/plan.json"
+OUT=$(mktemp -d /tmp/case015-p2-review-XXXXXX)
+python3 -B "$P2/publication/run_checks.py" --output "$OUT/checks" --tests
+python3 -B "$P2/publication/derive.py" --results "$P2/results/gpu_r2" --output "$OUT/tables"
 ```
 
-`audit`는 summary의 숫자를 정답으로 삼지 않고 원 96개 episode를 실제 fixture에서 재생해 checkpoint·분류·원 판정·원문 hash를 다시 만듭니다. 새 폴더의 생성물과 동결 data를 비교합니다. `prepare --output NEW_DIRECTORY`는 비교 전의 동일한 재구성 단계만 실행합니다.
+문법5개까지 확인하려면 `--grammar-python "$CPU_PYTHON"`을 추가합니다. CPU_PYTHON은 lm-format-enforcer0.11.3과 [고정 CPU 의존성](publication/requirements-cpu.txt)이 **이미 있는** Python 경로입니다. 로컬 연구 환경 설치/업그레이드를 지시하지 않습니다. CI의 깨끗한 CPU runner만 이 lock을 설치합니다.
 
-`baseline --tests`는 원 Case015 457개 파일을 바이트 그대로 복사한 view에서 **기존 publication/scripts/run_checks.py --tests**를 실행합니다. 새 P2가 추가된 전체 tree에 과거 closed-set 검사를 억지로 적용하거나 원 manifest를 변경하지 않습니다. P1 27 / A1 18 / publication 6개의 실제 검사 이름과 수를 로그에서 확인합니다.
+`run_checks.py`는 원 manifest의 파일을 정확히 복원한 두 view를 만듭니다. `legacy_case015_view`는 원457개 파일로 과거 publication/scripts/run_checks.py --tests를 그대로 실행합니다. `cpu_execution_view`는 CPU 준비 당시71개와 실제 GPU 실행 소스를 복원하여 CPU20/문법5/실행경계9개를 검사합니다. 복원 view 밖에서 과거 닫힌 manifest를 느슨하게 만들지 않습니다. 결과에 기존 검사51개와 신규 검사를 구분해 남깁니다.
 
-## 2. 선택적인 로컬 tokenizer·문법 검사
+`derive.py`는 raw를 재파싱·fixture에 재실행한 후 원 assess/independent_endpoint를 확인해 표·paired counts·decision을 다시 만듭니다. 저장 success bool만 합산하는 경로가 아닙니다. 산출 표는 [CSV/JSON](results/gpu_r2/tables)에 있습니다. 예전 A1/P1의 모델 추론과 P0 Monte Carlo는 다시 실행하지 않습니다.
 
-이미 설치된 `tokenizers 0.23.2`, `Jinja2 3.1.6`, `lm-format-enforcer 0.11.3`와 기존 snapshot을 사용했습니다. 패키지 설치·업그레이드는 하지 않았습니다. 아래의 `CPU_PYTHON`, `SNAPSHOT`, `RUNTIME`은 **자신이 보유한 기존 경로**를 설정하는 변수이며 다운로드 지시가 아닙니다. 이번 세션의 실제 경로는 외부 private handoff에 보존했습니다.
+## 2. 로컬 tokenizer가 있을 때의 추가 CPU 검사
+
+MODEL_SNAPSHOT은 기존 revision의 로컬 snapshot입니다. 가중치나 tokenizer 다운로드는 이 명령에 없습니다.
 
 ```bash
-"$CPU_PYTHON" -B -m unittest discover -s "$P2/tests" -p test_grammar_contracts.py -v
-"$CPU_PYTHON" -B -m json_recovery_p2.cli tokenizer-check \
-  --snapshot "$SNAPSHOT" --output "$CPU_OUTPUT/retokenization.json"
-"$CPU_PYTHON" -B -m json_recovery_p2.cli grammar-check \
-  --snapshot "$SNAPSHOT" --output "$CPU_OUTPUT/grammar.json"
-"$CPU_PYTHON" -B -m json_recovery_p2.cli local-inputs-check \
-  --runtime "$RUNTIME" --output "$CPU_OUTPUT/local-identity.json"
+"$CPU_PYTHON" -B "$P2/publication/token_audit.py" \
+  --results "$P2/results/gpu_r2" --snapshot "$MODEL_SNAPSHOT" --output "$OUT/token-audit.json"
 ```
 
-`tokenizer-check`는 로컬 template 렌더와 native tokenizer JSON을 사용하여 8개 입력/24개 방법별 해시를 검사합니다. 추가로 463개 저장된 output ID를 raw/parser text로 복호화합니다. Transformers를 import하지 않습니다. `grammar-check`는 실제 Qwen token ID에 대한 allowed-token 목록을 확인하되 입력은 합성 계약 예제입니다. `local-inputs-check`는 snapshot 가중치 shard 및 RTN/D16 저장 파일의 bytes/hash만 읽고 tensor를 deserialize하지 않습니다.
+이번 실행에서는175개 입력을 다시 토큰화했고175개 output ID를 raw/parser text로 복호화했으며 G의24개 focal,1118개 token mask를 독립 CPU 구현으로 다시 계산했습니다. 일반 clone에 tokenizer가 없으면 이 검사는 미실행입니다. 공개 scalar/fixture audit가 모델 logits 또는 GPU inference 자체를 재현한다고 표시하지 않습니다.
 
-이 의존성이나 tokenizer가 없는 일반 clone에서는 이 세 검사를 실행했다고 쓰지 않습니다. 기본 raw 재생/단위 검사와 선택적인 tokenizer/파일 검사의 범위는 다릅니다. 이 세션에서는 필요한 기존 파일과 의존성이 있어 실제 통과했습니다.
+## 3. GPU 실험을 재현할 조건
 
-## 3. GPU dry-run과 거절 동작
+모델 추론 소스 commit은 **828ac7358b653626bed7e0a609448e73d120f1bb**입니다. 결과/문서 commit과 다릅니다. 이 commit을 새 checkout/worktree로 열어 실행해야 하며 현재 통합 안내를 source commit에 소급 적용하지 않습니다. 모델 원본과 RTN/D16 저장본을 read-only로 사용합니다. 필요한 private runtime schema는 기존 Case015의 실행 receipt/모델 adapter와 같습니다. private runtime 자체를 공개하지 않습니다.
 
 ```bash
-python3 -B -m json_recovery_p2.cli run --dry-run --output "$CPU_OUTPUT/run-plan.json"
+# 위 source commit의 별도 checkout 안에서, 실제로 보유한 경로를 지정합니다.
+P2=cases/015-tool-interface-sensitivity/followups/json-recovery-p2-v1
+python3 -B "$P2/execution/run.py" --help
+python3 -B "$P2/execution/run.py" --runtime "$EXISTING_RUNTIME" \
+  --gpu-python "$EXISTING_GPU_PYTHON" --output "$NEW_PRIVATE_RESULT_ROOT"
 ```
 
-현재 실제 모델 실행 요청은 다음과 같이 **거절**됩니다. 의도한 exit code는 3입니다.
+runtime은 model.path, artifact_root, original_result_root를 기존 로컬 입력에 연결합니다. 모델 revision/tokenizer/template/config·snapshot12파일·RTN/D16 각252파일·actual coverage/W_pre/beta/small weights·dtype/flags를 검증합니다. GPU 장치 접근이 가능한 실행이 필요합니다. 이번 sandbox 실패처럼 장치가 보이지 않으면 환경을 바꾸어 설치하지 말고 실제 접근 조건을 구분합니다.
+
+pre-response 인프라 attempt가 있다면 보존된 receipt를 `--prior-receipt`로 전달해 같은7200초 cap에서 차감합니다. 모델 응답이 이미 있는 다른 source의 결과를 이어 붙이는 옵션은 없습니다. 새 output root는 비어 있어야 합니다. C0재현24/24가 안 맞으면 G/N/E를 멈추고 원인 해석을 보류합니다. 새 실패를 좋은 seed/설정으로 재시도하지 않습니다.
+
+GPU worker는 Torch/Transformers를 명시적으로 import하는 별도 프로세스입니다. CPU 경로의 import 금지는 그대로입니다. 원 solver/encode/apply_artifacts/run_all은 금지하고 기존 Adapter.generate를 재사용합니다. G만 FiniteBudget 뒤에 실제 grammar mask를 연결합니다. [추가 실행 등록](execution/spec.json)과 [소스 동결](execution/source_freeze.json)을 확인합니다.
+
+## 4. private 기록에서 공개본 재생성
+
+이번 수집은 [collect.py](publication/collect.py)로도 별도 출력에 재현하여 **163개 파일의 bytes/hash 일치**를 확인했습니다. private-root에는 실제 run_r1/run_r2와 CPU 감사/검산 기록이 필요합니다. 이는 모델을 다시 실행하는 명령이 아닙니다.
 
 ```bash
-python3 -B -m json_recovery_p2.cli run
+python3 -B "$P2/publication/collect.py" --private-root "$PRIVATE_P2_ROOT" \
+  --runtime "$EXISTING_RUNTIME" --gpu-python "$EXISTING_GPU_PYTHON" --output-p2 "$NEW_PUBLIC_COPY_ROOT"
 ```
 
-향후 실행에 필요한 입력과 조건부 요청 상한은 [dry-run](results/cpu_preparation/dry_run_plan.json), 남은 조건은 [gates.json](results/cpu_preparation/gates.json)에 있습니다. 별도 승인과 총 worker 예산, 검토한 GPU adapter 연결 없이 이 명령을 열지 않습니다. 원 A1 runner의 가드를 우회하는 명령은 제공하지 않습니다.
-
-## 4. 결과를 읽는 방법
-
-- [CPU 재생 요약](results/cpu_preparation/cpu_diagnostic_summary.json): 기존 기록에 대한 확인.
-- [checkpoint summary](results/cpu_preparation/checkpoint_summary.csv): 공통 입력·관측·상태와 prefix 예산.
-- [failure table](results/cpu_preparation/failure_table.csv): 8개 원 실패의 형식·EOS·예산.
-- [새 복구 표](results/cpu_preparation/recovery_results.json): 조건부 계획행 96개, 전부 NOT_RUN/null.
-- [신규/회귀 검사 명세](results/cpu_preparation/test_inventory.json): 고유 검사와 반복 실행을 구분.
-- [실행 receipt](results/cpu_preparation/command_receipts.json): argv, exit, wall, log hash.
-
-CPU scripted trace는 `synthetic_contract_test`입니다. 이것이 올바르게 복구되더라도 LLM의 복구 성공으로 합산하지 않습니다. 새 측정은 없으며 과거 기록은 `historical`임을 유지합니다.
+원문 응답은 그대로이며 개인 경로가 포함된 metadata/log만 label로 정리합니다. [sanitization.json](publication/sanitization.json)에 원본/공개 SHA를 구분합니다. 초기 collector의 패키지 경로 label 탐색 실패2회도 게시 준비 기록에 남겼고 GPU 실행 소스/측정 결과에는 영향이 없습니다.

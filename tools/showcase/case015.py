@@ -32,7 +32,13 @@ def load_case015(root):
     spec=importlib.util.spec_from_file_location('case015_raw_display',case/'publication/scripts/derive.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
     value=m.derive(case);require(value==read(case/'publication/summary/project.json'),'Case015 display differs from raw')
     manifest=read(case/'publication/UNIFIED_PUBLIC_MANIFEST_V3.json')
-    for name,e in manifest['files'].items():require(sha(case/name)==e['sha256'],'Case015 source changed: '+name)
+    followup=case/'followups/json-recovery-p2-v1/publication/verify.py'
+    retained=lambda name:case/name
+    if followup.exists():
+        preserved=importlib.util.spec_from_file_location('case015_p2_public_identity',followup);v=importlib.util.module_from_spec(preserved);preserved.loader.exec_module(v)
+        v.verify(case)
+        retained=lambda name:v.retained(case,name)
+    for name,e in manifest['files'].items():require(sha(retained(name))==e['sha256'],'Case015 source changed: '+name)
     download=read(root/'downloads'/ARCHIVE.replace('.zip','.json'))
     require(download['filename']==ARCHIVE and download['bytes']==(root/'downloads'/ARCHIVE).stat().st_size and download['sha256']==sha(root/'downloads'/ARCHIVE),'Case015 archive mismatch')
     revision=subprocess.run(['git','rev-parse','HEAD'],cwd=root,capture_output=True,text=True).stdout.strip()

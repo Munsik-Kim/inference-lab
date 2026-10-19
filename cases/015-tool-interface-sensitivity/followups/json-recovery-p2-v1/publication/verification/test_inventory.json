@@ -1,0 +1,152 @@
+{
+  "status": "PASS",
+  "unique_relevant_test_methods": 89,
+  "historical_test_methods_rerun": 76,
+  "new_GPU_and_publication_methods": 13,
+  "reruns_not_additional_methods": true,
+  "suites": [
+    {
+      "suite": "P1_regression",
+      "unique_test_methods": 27,
+      "methods": [
+        "test_artifact_preflight_missing_rejected_without_gpu (test_contracts.Contracts.test_artifact_preflight_missing_rejected_without_gpu)",
+        "test_bijection_collision_missing_rejected (test_contracts.Contracts.test_bijection_collision_missing_rejected)",
+        "test_cpu_import_and_help_do_not_import_torch (test_contracts.Contracts.test_cpu_import_and_help_do_not_import_torch)",
+        "test_decoder_solver_mitigation_guards_fail_closed (test_contracts.Contracts.test_decoder_solver_mitigation_guards_fail_closed)",
+        "test_duplicate_and_mapping_input_mismatch_rejected (test_contracts.Contracts.test_duplicate_and_mapping_input_mismatch_rejected)",
+        "test_episode_state_and_message_deepcopy_isolation (test_contracts.Contracts.test_episode_state_and_message_deepcopy_isolation)",
+        "test_error_feedback_has_no_hints (test_contracts.Contracts.test_error_feedback_has_no_hints)",
+        "test_generated_code_is_data_never_executed (test_contracts.Contracts.test_generated_code_is_data_never_executed)",
+        "test_identity_and_typed_roundtrip_all_tasks (test_contracts.Contracts.test_identity_and_typed_roundtrip_all_tasks)",
+        "test_independent_oracle_does_not_trust_claim (test_contracts.Contracts.test_independent_oracle_does_not_trust_claim)",
+        "test_infrastructure_missing_is_not_zero_score (test_contracts.Contracts.test_infrastructure_missing_is_not_zero_score)",
+        "test_interaction_loss_gain_dependency_and_bootstrap (test_contracts.Contracts.test_interaction_loss_gain_dependency_and_bootstrap)",
+        "test_legacy_vs_functional_required_document_read (test_contracts.Contracts.test_legacy_vs_functional_required_document_read)",
+        "test_missing_cells_bounds_shared_I0 (test_contracts.Contracts.test_missing_cells_bounds_shared_I0)",
+        "test_multi_call_budget_counts_attempts_and_connects (test_contracts.Contracts.test_multi_call_budget_counts_attempts_and_connects)",
+        "test_no_global_free_text_replacement (test_contracts.Contracts.test_no_global_free_text_replacement)",
+        "test_not_first_tool_scorer_and_commuted_operands (test_contracts.Contracts.test_not_first_tool_scorer_and_commuted_operands)",
+        "test_old_and_typo_names_are_unknown_no_side_effect (test_contracts.Contracts.test_old_and_typo_names_are_unknown_no_side_effect)",
+        "test_opaque_allocation_does_not_read_gold_or_position (test_contracts.Contracts.test_opaque_allocation_does_not_read_gold_or_position)",
+        "test_oracle_each_step_real_fixture_all32 (test_contracts.Contracts.test_oracle_each_step_real_fixture_all32)",
+        "test_order_only_nonidentity_content_unchanged (test_contracts.Contracts.test_order_only_nonidentity_content_unchanged)",
+        "test_parse_failures_kept_alongside_valid_objects (test_contracts.Contracts.test_parse_failures_kept_alongside_valid_objects)",
+        "test_repeated_bad_call_is_observation_only (test_contracts.Contracts.test_repeated_bad_call_is_observation_only)",
+        "test_schema_key_type_and_value_are_separate (test_contracts.Contracts.test_schema_key_type_and_value_are_separate)",
+        "test_style_is_lower_not_upper_camel (test_contracts.Contracts.test_style_is_lower_not_upper_camel)",
+        "test_unsupported_valid_claim_same_json_different_verdict (test_contracts.Contracts.test_unsupported_valid_claim_same_json_different_verdict)",
+        "test_within_interface_prompt_pairing_rejects_mismatch (test_contracts.Contracts.test_within_interface_prompt_pairing_rejects_mismatch)"
+      ],
+      "log": "cpu_checks_r2/legacy/p1-tests.log"
+    },
+    {
+      "suite": "A1_regression",
+      "unique_test_methods": 18,
+      "methods": [
+        "test_cpu_help_and_guard_imports_without_torch (test_boundaries.Boundaries.test_cpu_help_and_guard_imports_without_torch)",
+        "test_missing_duplicate_synthetic_and_mismatched_rows (test_boundaries.Boundaries.test_missing_duplicate_synthetic_and_mismatched_rows)",
+        "test_both_gold_traces_match_every_state_result_and_receipt (test_order_contracts.OrderContracts.test_both_gold_traces_match_every_state_result_and_receipt)",
+        "test_extra_duplicate_reads_and_commuted_operands_allowed (test_order_contracts.OrderContracts.test_extra_duplicate_reads_and_commuted_operands_allowed)",
+        "test_final_only_correct_json_is_not_workflow_success (test_order_contracts.OrderContracts.test_final_only_correct_json_is_not_workflow_success)",
+        "test_immutable_field_change_is_detected (test_order_contracts.OrderContracts.test_immutable_field_change_is_detected)",
+        "test_isolated_reset_and_path_symlink_guards (test_order_contracts.OrderContracts.test_isolated_reset_and_path_symlink_guards)",
+        "test_old_names_typos_and_collision_rejected_without_effect (test_order_contracts.OrderContracts.test_old_names_typos_and_collision_rejected_without_effect)",
+        "test_only_names_differ_in_two_schemas (test_order_contracts.OrderContracts.test_only_names_differ_in_two_schemas)",
+        "test_other_order_change_then_restore_still_violates (test_order_contracts.OrderContracts.test_other_order_change_then_restore_still_violates)",
+        "test_raw_response_reexecution_and_frozen_visibility (test_order_contracts.OrderContracts.test_raw_response_reexecution_and_frozen_visibility)",
+        "test_same_execution_state_different_receipt_is_not_same_input (test_order_contracts.OrderContracts.test_same_execution_state_different_receipt_is_not_same_input)",
+        "test_same_response_read_multiply_write_is_observation_failure (test_order_contracts.OrderContracts.test_same_response_read_multiply_write_is_observation_failure)",
+        "test_stale_validation_cannot_certify_restored_same_digest (test_order_contracts.OrderContracts.test_stale_validation_cannot_certify_restored_same_digest)",
+        "test_strict_integer_and_boolean_final_types (test_order_contracts.OrderContracts.test_strict_integer_and_boolean_final_types)",
+        "test_validation_must_be_seen_before_final_generation (test_order_contracts.OrderContracts.test_validation_must_be_seen_before_final_generation)",
+        "test_write_and_validate_same_response_are_allowed (test_order_contracts.OrderContracts.test_write_and_validate_same_response_are_allowed)",
+        "test_wrong_schema_valid_total_is_really_stored (test_order_contracts.OrderContracts.test_wrong_schema_valid_total_is_really_stored)"
+      ],
+      "log": "cpu_checks_r2/legacy/a1-tests.log"
+    },
+    {
+      "suite": "old_publication_regression",
+      "unique_test_methods": 6,
+      "methods": [
+        "test_closed_public_v1_restores_without_changing_its_manifest (test_publication.Publication.test_closed_public_v1_restores_without_changing_its_manifest)",
+        "test_closed_public_v2_restores_before_explanation_revision (test_publication.Publication.test_closed_public_v2_restores_before_explanation_revision)",
+        "test_original_view_is_closed_and_byte_preserved (test_publication.Publication.test_original_view_is_closed_and_byte_preserved)",
+        "test_raw_derived_diagnostic_corrections_leave_primary_outcomes (test_publication.Publication.test_raw_derived_diagnostic_corrections_leave_primary_outcomes)",
+        "test_review_renderer_changes_only_the_known_display_separator (test_publication.Publication.test_review_renderer_changes_only_the_known_display_separator)",
+        "test_zip_traversal_duplicate_and_symlink_rejected (test_publication.Publication.test_zip_traversal_duplicate_and_symlink_rejected)"
+      ],
+      "log": "cpu_checks_r2/legacy/publication-tests.log"
+    },
+    {
+      "suite": "CPU_preparation_regression",
+      "unique_test_methods": 20,
+      "methods": [
+        "test_C0_G_identical_payload_and_grammar_only_first_response (test_cpu_contracts.CPUContracts.test_C0_G_identical_payload_and_grammar_only_first_response)",
+        "test_CLI_help_and_run_refusal_have_no_model_dependencies (test_cpu_contracts.CPUContracts.test_CLI_help_and_run_refusal_have_no_model_dependencies)",
+        "test_N_E_share_new_C0_and_differ_only_in_exact_user_feedback (test_cpu_contracts.CPUContracts.test_N_E_share_new_C0_and_differ_only_in_exact_user_feedback)",
+        "test_allowlist_excludes_unseen_oracle_control_and_other_method_outputs (test_cpu_contracts.CPUContracts.test_allowlist_excludes_unseen_oracle_control_and_other_method_outputs)",
+        "test_alternate_reads_swapped_multiply_and_duplicate_write_permitted (test_cpu_contracts.CPUContracts.test_alternate_reads_swapped_multiply_and_duplicate_write_permitted)",
+        "test_conditional_request_bounds_are_not_episode_counts (test_cpu_contracts.CPUContracts.test_conditional_request_bounds_are_not_episode_counts)",
+        "test_feedback_creates_no_tool_observation_and_cannot_repeat (test_cpu_contracts.CPUContracts.test_feedback_creates_no_tool_observation_and_cannot_repeat)",
+        "test_final_answer_alone_cannot_replace_execution (test_cpu_contracts.CPUContracts.test_final_answer_alone_cannot_replace_execution)",
+        "test_historical_failure_is_not_new_C0 (test_cpu_contracts.CPUContracts.test_historical_failure_is_not_new_C0)",
+        "test_key_serialization_order_is_bound_beside_canonical_hash (test_cpu_contracts.CPUContracts.test_key_serialization_order_is_bound_beside_canonical_hash)",
+        "test_mixed_valid_malformed_executes_valid_slot_without_retry (test_cpu_contracts.CPUContracts.test_mixed_valid_malformed_executes_valid_slot_without_retry)",
+        "test_model_context_and_deadline_limits (test_cpu_contracts.CPUContracts.test_model_context_and_deadline_limits)",
+        "test_original_first_dict_and_optional_closing_marker (test_cpu_contracts.CPUContracts.test_original_first_dict_and_optional_closing_marker)",
+        "test_prefix_malformed_shared_C0_costs_are_never_reset (test_cpu_contracts.CPUContracts.test_prefix_malformed_shared_C0_costs_are_never_reset)",
+        "test_same_fixture_different_observation_ids_is_rejected (test_cpu_contracts.CPUContracts.test_same_fixture_different_observation_ids_is_rejected)",
+        "test_same_response_write_validate_then_observed_final_succeeds (test_cpu_contracts.CPUContracts.test_same_response_write_validate_then_observed_final_succeeds)",
+        "test_scripted_recovery_requires_feedback_request_and_actual_completed_chain (test_cpu_contracts.CPUContracts.test_scripted_recovery_requires_feedback_request_and_actual_completed_chain)",
+        "test_stale_validation_rejected_even_when_final_digest_returns (test_cpu_contracts.CPUContracts.test_stale_validation_rejected_even_when_final_digest_returns)",
+        "test_wrong_ID_key_string_and_bool_integer_follow_original_fixture (test_cpu_contracts.CPUContracts.test_wrong_ID_key_string_and_bool_integer_follow_original_fixture)",
+        "test_wrong_integer_is_saved_then_validation_false (test_cpu_contracts.CPUContracts.test_wrong_integer_is_saved_then_validation_false)"
+      ],
+      "log": "cpu_checks_r2/cpu20.log"
+    },
+    {
+      "suite": "grammar_regression",
+      "unique_test_methods": 5,
+      "methods": [
+        "test_all_tools_and_free_wrong_values_without_gold (test_grammar_contracts.GrammarContracts.test_all_tools_and_free_wrong_values_without_gold)",
+        "test_finite_unmasked_before_intentional_negative_infinity_mask (test_grammar_contracts.GrammarContracts.test_finite_unmasked_before_intentional_negative_infinity_mask)",
+        "test_multicall_write_validate_key_order_and_complete_end (test_grammar_contracts.GrammarContracts.test_multicall_write_validate_key_order_and_complete_end)",
+        "test_name_argument_keys_types_and_unknown_name_rejected (test_grammar_contracts.GrammarContracts.test_name_argument_keys_types_and_unknown_name_rejected)",
+        "test_only_registered_names_enumerated_and_final_flag_free (test_grammar_contracts.GrammarContracts.test_only_registered_names_enumerated_and_final_flag_free)"
+      ],
+      "log": "cpu_checks_r2/grammar5.log"
+    },
+    {
+      "suite": "new_GPU_connection",
+      "unique_test_methods": 9,
+      "methods": [
+        "test_N_E_share_actual_C0_and_only_feedback_differs (test_execution.ExecutionContracts.test_N_E_share_actual_C0_and_only_feedback_differs)",
+        "test_actual_ids_hash_and_grammar_stage_rejected_before_execution (test_execution.ExecutionContracts.test_actual_ids_hash_and_grammar_stage_rejected_before_execution)",
+        "test_both_execution_help_paths_do_not_import_model (test_execution.ExecutionContracts.test_both_execution_help_paths_do_not_import_model)",
+        "test_gpu_grammar_function_AST_matches_registered_CPU (test_execution.ExecutionContracts.test_gpu_grammar_function_AST_matches_registered_CPU)",
+        "test_measurement_transition_preserves_prefix_and_no_fake_result (test_execution.ExecutionContracts.test_measurement_transition_preserves_prefix_and_no_fake_result)",
+        "test_mixed_response_is_not_retry_and_G_is_focal_only (test_execution.ExecutionContracts.test_mixed_response_is_not_retry_and_G_is_focal_only)",
+        "test_original_CPU_bytes_and_old_refusal_remain (test_execution.ExecutionContracts.test_original_CPU_bytes_and_old_refusal_remain)",
+        "test_raw_CPU_replay_recomputes_endpoint_and_rejects_tampering (test_execution.ExecutionContracts.test_raw_CPU_replay_recomputes_endpoint_and_rejects_tampering)",
+        "test_retry_complete_workflow_requires_real_write_validation_receipt (test_execution.ExecutionContracts.test_retry_complete_workflow_requires_real_write_validation_receipt)"
+      ],
+      "log": "cpu_checks_r2/gpu-boundaries9.log"
+    },
+    {
+      "suite": "new_publication",
+      "unique_test_methods": 4,
+      "methods": [
+        "test_closed_original_views_restore_exact_older_bytes (test_publication.PublicationContracts.test_closed_original_views_restore_exact_older_bytes)",
+        "test_current_public_bytes_and_extra_file_detection (test_publication.PublicationContracts.test_current_public_bytes_and_extra_file_detection)",
+        "test_map_cannot_relocate_scientific_source (test_publication.PublicationContracts.test_map_cannot_relocate_scientific_source)",
+        "test_retained_path_rejects_escape_and_symlink_parent (test_publication.PublicationContracts.test_retained_path_rejects_escape_and_symlink_parent)"
+      ],
+      "log": "cpu_checks_r2/publication-tests.log"
+    }
+  ],
+  "separate_site_tests": {
+    "docs": 46,
+    "showcase": 141
+  },
+  "GPU_execution_tests_are_CPU_synthetic_boundaries": true
+}

@@ -1,0 +1,29 @@
+Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]Loading weights:  40%|███▉      | 159/398 [00:00<00:00, 1579.85it/s]Loading weights:  82%|████████▏ | 325/398 [00:00<00:00, 1623.93it/s]Loading weights: 100%|██████████| 398/398 [00:00<00:00, 1801.16it/s]
+Traceback (most recent call last):
+  File "${SOURCE_WORKTREE}/cases/015-tool-interface-sensitivity/followups/json-recovery-p2-v1/execution/gpu_worker.py", line 228, in <module>
+    main()
+  File "${SOURCE_WORKTREE}/cases/015-tool-interface-sensitivity/followups/json-recovery-p2-v1/execution/gpu_worker.py", line 181, in main
+    adapter = Adapter(CASE, runtime, args.method, args.output, args.worker_deadline)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "${SOURCE_WORKTREE}/cases/015-tool-interface-sensitivity/src/interface_sensitivity/model_adapter.py", line 89, in __init__
+    gc.collect();w.model.cuda();torch.cuda.synchronize()
+                 ^^^^^^^^^^^^^^
+  File "${EXISTING_GPU_ENV}/lib/python3.12/site-packages/transformers/modeling_utils.py", line 3645, in cuda
+    return super().cuda(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "${EXISTING_GPU_ENV}/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1096, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "${EXISTING_GPU_ENV}/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "${EXISTING_GPU_ENV}/lib/python3.12/site-packages/torch/nn/modules/module.py", line 933, in _apply
+    module._apply(fn)
+  File "${EXISTING_GPU_ENV}/lib/python3.12/site-packages/torch/nn/modules/module.py", line 964, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "${EXISTING_GPU_ENV}/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1096, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File "${EXISTING_GPU_ENV}/lib/python3.12/site-packages/torch/cuda/__init__.py", line 529, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx

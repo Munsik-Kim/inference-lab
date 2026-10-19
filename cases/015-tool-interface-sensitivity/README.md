@@ -4,6 +4,10 @@ Can an AI finish the same task when only its tool names change? This study gives
 
 The concrete example is **calculating and saving the total for a purchase record**. The AI must look up the item count and price per item, multiply them, save the total, and check the saved record. We built tools to execute this sequence and replay the records to audit the outcome.
 
+> **P2 followup:** eight broken write calls from the four-bit D16 model reproduced after the same lookup/calculation results. Constraining the first response to the tool contract recovered 8/8 complete workflows. Neutral retry and parse-error feedback each completed 0/8; neutral retry saved the correct state once. These are four selected synthetic fixtures × two naming versions, separate from P1/A1.
+> [P2 results and limits](followups/json-recovery-p2-v1/REPORT.md) · [Model-free reproduction](followups/json-recovery-p2-v1/REPRODUCE.md)
+
+
 [Pages](https://munsik-kim.github.io/inference-lab/en/case015.html#overview) · [Report](REPORT.md) · [CPU / GPU](REPRODUCE.md) · [Stage map](STAGE_MAP.md) · [Runner](followups/order-api-regression-v1/src/order_regression/runner.py) · [Tests](followups/order-api-regression-v1/tests/test_order_contracts.py)
 
 ## The task given to the AI

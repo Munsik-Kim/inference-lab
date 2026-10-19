@@ -1,5 +1,15 @@
 # Recompute the API regression without a model
 
+For the current tree including P2, use this wrapper. It runs unchanged historical P1/A1 commands inside an exact closed view. The earlier instructions below remain as their historical contract.
+
+```bash
+OUT=$(mktemp -d)
+python3 -B cases/015-tool-interface-sensitivity/followups/json-recovery-p2-v1/publication/run_checks.py --output "$OUT/case015" --tests
+```
+
+[P2 CPU/GPU reproduction scope](followups/json-recovery-p2-v1/REPRODUCE.md)
+
+
 These commands replay the recorded **read purchase details → calculate → save → validate** sequence instead of rerunning an AI model. They recount successes and failures for two naming versions of the same tools. Start with the [task and terminology guide](README.md).
 
 Uses only the Python3.10+ standard library. Execute saved responses and verify original files, scores and tables without a GPU, model or new installation. Run from the repository root; outputs go to a fresh external directory.

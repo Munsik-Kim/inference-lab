@@ -1,0 +1,89 @@
+{
+  "status": "PASS",
+  "preservation": {
+    "status": "PASS",
+    "original_case015_files": 457,
+    "original_CPU_preparation_files": 71,
+    "intentional_guide_changes": [
+      "README.ko.md",
+      "README.md",
+      "REPORT.ko.md",
+      "REPORT.md",
+      "REPRODUCE.ko.md",
+      "REPRODUCE.md",
+      "followups/json-recovery-p2-v1/HANDOFF.ko.md",
+      "followups/json-recovery-p2-v1/README.ko.md",
+      "followups/json-recovery-p2-v1/REPORT.ko.md",
+      "followups/json-recovery-p2-v1/REPRODUCE.ko.md"
+    ],
+    "old_manifests_modified": false,
+    "Git_source_blobs_checked": true,
+    "execution_source_commit": "828ac7358b653626bed7e0a609448e73d120f1bb",
+    "public_files": 728,
+    "measured_cells": 64,
+    "not_applicable_cells": 32,
+    "scope": "P2 followup plus retained older public views; not GPU inference reproduction"
+  },
+  "checks": [
+    {
+      "check": "old-P1-A1-publication",
+      "exit_code": 0,
+      "wall_seconds": 1.6160029870006838,
+      "log": "old-P1-A1-publication.log",
+      "bytes": 189,
+      "sha256": "9e0b4afde7bc7ebbe11a54f18fbff2b8887e8b03dbf4465b124158c489d9b600"
+    },
+    {
+      "check": "cpu20",
+      "exit_code": 0,
+      "wall_seconds": 0.16895990900047764,
+      "log": "cpu20.log",
+      "bytes": 3237,
+      "sha256": "6c5e037b3b85c256d087f875f3d4997bb7eef180b5909fe13c763f1fe1e8f733"
+    },
+    {
+      "check": "gpu-boundaries9",
+      "exit_code": 0,
+      "wall_seconds": 0.22786555800121278,
+      "log": "gpu-boundaries9.log",
+      "bytes": 1513,
+      "sha256": "a61557a8f033dea5439e6eafc8f7f179d73e5921dac8f48d4b53648a35342a75"
+    },
+    {
+      "check": "publication-tests",
+      "exit_code": 0,
+      "wall_seconds": 1.8742957699996623,
+      "log": "publication-tests.log",
+      "bytes": 686,
+      "sha256": "a247932540ac7013b5136723416218414915900e76ee5feb4bfd2e3fc1d271e8"
+    },
+    {
+      "check": "grammar5",
+      "exit_code": 0,
+      "wall_seconds": 0.33263007200002903,
+      "log": "grammar5.log",
+      "bytes": 911,
+      "sha256": "2185d245e31914f673c019ddcd8afecc078f2ef3dbafe4cd76b4a09c218bb465"
+    },
+    {
+      "check": "new-raw-audit",
+      "exit_code": 0,
+      "wall_seconds": 0.4830246250003256,
+      "log": "new-raw-audit.log",
+      "bytes": 791,
+      "sha256": "f2ce46a8d4e93351bb4e62b0f07159cc01bdcdea03911c190bd47e072de0c60a"
+    },
+    {
+      "check": "regenerate-public-tables",
+      "exit_code": 0,
+      "wall_seconds": 0.5378270629989856,
+      "log": "regenerate-public-tables.log",
+      "bytes": 1709,
+      "sha256": "eebf91a37bd3d44f2f66e48edf2c782ca8b42742c36a0e879bb57a08c3e61774"
+    }
+  ],
+  "optional_grammar_tests": "RUN",
+  "new_GPU_model_forwards_in_checks": 0,
+  "scope": "CPU raw/fixture replay and scalar display; no GPU logits reproduction",
+  "older_regressions_counted_separately": true
+}

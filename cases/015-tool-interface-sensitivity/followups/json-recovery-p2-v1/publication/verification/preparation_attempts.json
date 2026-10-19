@@ -1,0 +1,40 @@
+{
+  "GPU_load_attempt01": {
+    "status": "FAILED_PRE_RESPONSE_CUDA_ACCESS",
+    "requests": 0,
+    "retained": "../../results/gpu_r1_infra/receipt.json"
+  },
+  "collector_attempt01": {
+    "exit_code": 1,
+    "reason": "metadata scrubber did not resolve package source prefix; private raw unchanged"
+  },
+  "collector_attempt02": {
+    "exit_code": 1,
+    "reason": "sys.prefix differed from installed torch module source prefix; private raw unchanged"
+  },
+  "collector_attempt03": {
+    "exit_code": 0,
+    "recreated_files": 163,
+    "mismatches": 0
+  },
+  "whitespace_check": {
+    "status": "WARN_EXPECTED_PRESERVED_SOURCE_BYTES",
+    "scope": "original CPU blank EOF and literal diff context whitespace are byte-preserved; semantic tests/hash checks govern; new publication code checked separately"
+  },
+  "publication_checks_r1": {
+    "exit_code": 1,
+    "reason": "scratch .git stub was mistaken for a real repository; verifier now uses git rev-parse; frozen execution/data unchanged"
+  },
+  "publication_checks_r2": {
+    "exit_code": 0,
+    "receipt": "cpu_checks_r2/verification.json"
+  },
+  "site_checks_r1": {
+    "exit_code": 1,
+    "reason": "system Python lacked NumPy and old closed Case015 doc verifier rejected P2 additions; reused existing CPU environment and retained-view verifier; old evidence/manifest unchanged"
+  },
+  "site_checks_r2": {
+    "exit_code": 0,
+    "receipt": "site_checks_r2/checks.json"
+  }
+}

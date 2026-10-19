@@ -1,0 +1,129 @@
+{
+  "rows": [
+    {
+      "method": "BF16",
+      "arm": "C0",
+      "unique_model_requests": 24,
+      "focal": 8,
+      "continuation": 16,
+      "generated_tokens": 965,
+      "generation_seconds_sum": 28.98683833299765
+    },
+    {
+      "method": "BF16",
+      "arm": "G",
+      "unique_model_requests": 24,
+      "focal": 8,
+      "continuation": 16,
+      "generated_tokens": 965,
+      "generation_seconds_sum": 35.762031430995194
+    },
+    {
+      "method": "BF16",
+      "arm": "N",
+      "unique_model_requests": 0,
+      "focal": 0,
+      "continuation": 0,
+      "generated_tokens": 0,
+      "generation_seconds_sum": 0
+    },
+    {
+      "method": "BF16",
+      "arm": "E",
+      "unique_model_requests": 0,
+      "focal": 0,
+      "continuation": 0,
+      "generated_tokens": 0,
+      "generation_seconds_sum": 0
+    },
+    {
+      "method": "RTN",
+      "arm": "C0",
+      "unique_model_requests": 24,
+      "focal": 8,
+      "continuation": 16,
+      "generated_tokens": 960,
+      "generation_seconds_sum": 38.33220542799427
+    },
+    {
+      "method": "RTN",
+      "arm": "G",
+      "unique_model_requests": 24,
+      "focal": 8,
+      "continuation": 16,
+      "generated_tokens": 960,
+      "generation_seconds_sum": 40.78032982100194
+    },
+    {
+      "method": "RTN",
+      "arm": "N",
+      "unique_model_requests": 0,
+      "focal": 0,
+      "continuation": 0,
+      "generated_tokens": 0,
+      "generation_seconds_sum": 0
+    },
+    {
+      "method": "RTN",
+      "arm": "E",
+      "unique_model_requests": 0,
+      "focal": 0,
+      "continuation": 0,
+      "generated_tokens": 0,
+      "generation_seconds_sum": 0
+    },
+    {
+      "method": "D16",
+      "arm": "C0",
+      "unique_model_requests": 8,
+      "focal": 8,
+      "continuation": 0,
+      "generated_tokens": 358,
+      "generation_seconds_sum": 12.744189900002311
+    },
+    {
+      "method": "D16",
+      "arm": "G",
+      "unique_model_requests": 24,
+      "focal": 8,
+      "continuation": 16,
+      "generated_tokens": 948,
+      "generation_seconds_sum": 40.21389731900126
+    },
+    {
+      "method": "D16",
+      "arm": "N",
+      "unique_model_requests": 23,
+      "focal": 8,
+      "continuation": 15,
+      "generated_tokens": 945,
+      "generation_seconds_sum": 35.66461895600332
+    },
+    {
+      "method": "D16",
+      "arm": "E",
+      "unique_model_requests": 24,
+      "focal": 8,
+      "continuation": 16,
+      "generated_tokens": 885,
+      "generation_seconds_sum": 35.1277297250017
+    }
+  ],
+  "memory": {
+    "torch_peak_allocated_bytes": 8418611200,
+    "torch_peak_reserved_bytes": 8671723520,
+    "scope": "per-request peaks including the resident dense BF16 model, not packed-serving memory savings",
+    "device_wide_max_used_at_request_end_bytes": 10158145536,
+    "device_wide_sampling": "CUDA driver free/total after each request; includes other GPU/Windows usage, not continuous NVML sampling"
+  },
+  "worker_wall": {
+    "total_worker_wall_seconds": 519.836960517001,
+    "prior_measured_worker_wall_seconds": 22.29678282900006,
+    "cumulative_measured_worker_wall_seconds": 542.1337433460011,
+    "budget_debited_worker_wall_seconds": 543.1337433460011,
+    "worker_wall_limit_seconds": 7200
+  },
+  "initial_CUDA_load_failure_attempts": 1,
+  "failed_generation_requests": 0,
+  "smoke_model_requests": 0
+}
