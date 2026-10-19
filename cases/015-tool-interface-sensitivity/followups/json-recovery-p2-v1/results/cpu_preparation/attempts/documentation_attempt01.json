@@ -1,0 +1,8 @@
+{
+  "status": "FAILED_DOCUMENT_ASSEMBLY_THEN_RESOLVED",
+  "exit_code": 1,
+  "reason": "relative-link checker ran before its own verification.json output existed",
+  "affected_model_or_recovery_records": false,
+  "resolution": "defer existence check only for that self-output and assert it after atomic write; all other links checked normally",
+  "new_model_forwards": 0
+}

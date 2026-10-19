@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "GPU_gate": "CLOSED_SCOPE",
+  "gates": [
+    {
+      "gate": "analysis_source_and_original_bytes",
+      "status": "PASS",
+      "evidence": "baseline_verification.json; provenance/original_case_files.json"
+    },
+    {
+      "gate": "checkpoint_state_receipts_input_equality",
+      "status": "PASS",
+      "evidence": "independent_record_audit.json; data/checkpoints.json"
+    },
+    {
+      "gate": "full_local_snapshot_and_RTND16_saved_file_identity",
+      "status": "PASS_LOCAL_IDENTITY",
+      "evidence": "local_file_identity.json",
+      "limit": "no official external digest comparison or model deserialization"
+    },
+    {
+      "gate": "retokenized_24_C0_method_references",
+      "status": "PASS",
+      "evidence": "retokenization.json",
+      "unique_payloads": 8
+    },
+    {
+      "gate": "stored_output_ID_decode_463",
+      "status": "PASS",
+      "evidence": "retokenization.json",
+      "limit": "decoding stored IDs, not new generation"
+    },
+    {
+      "gate": "grammar_actual_tokenizer_and_CPU_mask",
+      "status": "PASS_CPU_ONLY",
+      "evidence": "grammar_token_mask.json",
+      "limit": "synthetic paths; not exhaustive vocabulary-path proof or GPU decoding"
+    },
+    {
+      "gate": "actual_loaded_module_coverage_and_beta_inverse_W_pre_small_weights",
+      "status": "NOT_RUN",
+      "required_before_GPU": "review and verify exact original loader,252 per method and unchanged small weights in real model"
+    },
+    {
+      "gate": "new_C0_output_token_reproduction_all24",
+      "status": "NOT_RUN",
+      "required_before_interpretation": "generate new C0 and compare original IDs; investigate differences before attributing intervention effects"
+    },
+    {
+      "gate": "GPU_FiniteBudget_then_grammar_processor_integration",
+      "status": "NOT_RUN",
+      "required_before_GPU": "finite unmasked logits first, intentional -inf second; grammar first response only, full endpoint and stop tokens"
+    },
+    {
+      "gate": "explicit_new_inference_authorization_and_worker_budget",
+      "status": "CLOSED_SCOPE",
+      "reason": "this user request authorizes CPU preparation only; no GPU override exists in CLI"
+    }
+  ]
+}

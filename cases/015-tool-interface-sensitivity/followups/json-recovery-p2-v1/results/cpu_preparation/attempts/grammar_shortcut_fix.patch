@@ -1,0 +1,18 @@
+--- grammar-attempt01.py
++++ grammar-final-frozen.py
+@@ -49,6 +49,15 @@
+         def can_end(self):
+             # A1 accepts a complete call dict even without its closing marker.
+             return self.phase == 'between' or (self.phase in ('call_json', 'final_json') and self.child.can_end())
++
++        def shortcut_key(self):
++            return self.child.shortcut_key() if self.phase in ('call_json', 'final_json') else None
++
++        def cache_key(self):
++            if self.phase in ('start', 'between', 'open', 'close'):
++                return ('envelope', self.phase, self.literal)
++            key = self.child.cache_key()
++            return ('envelope', self.phase, key) if key is not None else None
+ 
+         def add_character(self, char):
+             if char not in self.get_allowed_characters():

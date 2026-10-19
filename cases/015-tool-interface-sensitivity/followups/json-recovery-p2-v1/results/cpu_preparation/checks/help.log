@@ -1,0 +1,26 @@
+usage: cli.py [-h]
+              {validate,prepare,audit,dry-run,baseline,tokenizer-check,grammar-check,local-inputs-check,run}
+              ...
+
+CPU preparation CLI; run is deliberately closed until a separate GPU stage.
+
+positional arguments:
+  {validate,prepare,audit,dry-run,baseline,tokenizer-check,grammar-check,local-inputs-check,run}
+    validate            verify original bytes and P2 registration, CPU only
+    prepare             reconstruct historical evidence into a new external
+                        directory
+    audit               recompute and compare frozen checkpoint/diagnostic
+                        data
+    dry-run             write the conditional future request plan; no model
+                        calls
+    baseline            restore the original closed view and run its unchanged
+                        checks
+    tokenizer-check     optional installed CPU dependencies and local
+                        tokenizer only
+    grammar-check       optional installed CPU dependencies and local
+                        tokenizer only
+    local-inputs-check  hash registered local files without loading a model
+    run                 REFUSED in this CPU stage; --dry-run only
+
+options:
+  -h, --help            show this help message and exit
