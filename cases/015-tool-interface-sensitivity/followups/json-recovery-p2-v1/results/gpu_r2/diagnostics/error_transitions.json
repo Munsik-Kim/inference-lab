@@ -1,0 +1,2520 @@
+{
+  "groups": [
+    {
+      "method": "BF16",
+      "arm": "C0",
+      "observed_cells": 8,
+      "focal_actions": {
+        "order.write": 8
+      },
+      "workflow_success": 7,
+      "correct_write_cells": 8,
+      "state_only_success": 8,
+      "terminal_failure_stages": {
+        "COMPLETED_WORKFLOW": 7,
+        "ARGUMENT_ID": 1
+      },
+      "invalid_ID_cells_including_rejected": 1,
+      "accepted_slots_with_trailing_material": 0
+    },
+    {
+      "method": "BF16",
+      "arm": "G",
+      "observed_cells": 8,
+      "focal_actions": {
+        "order.write": 8
+      },
+      "workflow_success": 7,
+      "correct_write_cells": 8,
+      "state_only_success": 8,
+      "terminal_failure_stages": {
+        "COMPLETED_WORKFLOW": 7,
+        "ARGUMENT_ID": 1
+      },
+      "invalid_ID_cells_including_rejected": 1,
+      "accepted_slots_with_trailing_material": 0
+    },
+    {
+      "method": "BF16",
+      "arm": "N",
+      "observed_cells": 0,
+      "focal_actions": {},
+      "workflow_success": 0,
+      "correct_write_cells": 0,
+      "state_only_success": 0,
+      "terminal_failure_stages": {},
+      "invalid_ID_cells_including_rejected": 0,
+      "accepted_slots_with_trailing_material": 0
+    },
+    {
+      "method": "BF16",
+      "arm": "E",
+      "observed_cells": 0,
+      "focal_actions": {},
+      "workflow_success": 0,
+      "correct_write_cells": 0,
+      "state_only_success": 0,
+      "terminal_failure_stages": {},
+      "invalid_ID_cells_including_rejected": 0,
+      "accepted_slots_with_trailing_material": 0
+    },
+    {
+      "method": "RTN",
+      "arm": "C0",
+      "observed_cells": 8,
+      "focal_actions": {
+        "order.write": 8
+      },
+      "workflow_success": 8,
+      "correct_write_cells": 8,
+      "state_only_success": 8,
+      "terminal_failure_stages": {
+        "COMPLETED_WORKFLOW": 8
+      },
+      "invalid_ID_cells_including_rejected": 0,
+      "accepted_slots_with_trailing_material": 0
+    },
+    {
+      "method": "RTN",
+      "arm": "G",
+      "observed_cells": 8,
+      "focal_actions": {
+        "order.write": 8
+      },
+      "workflow_success": 8,
+      "correct_write_cells": 8,
+      "state_only_success": 8,
+      "terminal_failure_stages": {
+        "COMPLETED_WORKFLOW": 8
+      },
+      "invalid_ID_cells_including_rejected": 0,
+      "accepted_slots_with_trailing_material": 0
+    },
+    {
+      "method": "RTN",
+      "arm": "N",
+      "observed_cells": 0,
+      "focal_actions": {},
+      "workflow_success": 0,
+      "correct_write_cells": 0,
+      "state_only_success": 0,
+      "terminal_failure_stages": {},
+      "invalid_ID_cells_including_rejected": 0,
+      "accepted_slots_with_trailing_material": 0
+    },
+    {
+      "method": "RTN",
+      "arm": "E",
+      "observed_cells": 0,
+      "focal_actions": {},
+      "workflow_success": 0,
+      "correct_write_cells": 0,
+      "state_only_success": 0,
+      "terminal_failure_stages": {},
+      "invalid_ID_cells_including_rejected": 0,
+      "accepted_slots_with_trailing_material": 0
+    },
+    {
+      "method": "D16",
+      "arm": "C0",
+      "observed_cells": 8,
+      "focal_actions": {},
+      "workflow_success": 0,
+      "correct_write_cells": 0,
+      "state_only_success": 0,
+      "terminal_failure_stages": {
+        "JSON_SERIALIZATION": 8
+      },
+      "invalid_ID_cells_including_rejected": 0,
+      "accepted_slots_with_trailing_material": 0
+    },
+    {
+      "method": "D16",
+      "arm": "G",
+      "observed_cells": 8,
+      "focal_actions": {
+        "order.write": 8
+      },
+      "workflow_success": 8,
+      "correct_write_cells": 8,
+      "state_only_success": 8,
+      "terminal_failure_stages": {
+        "COMPLETED_WORKFLOW": 8
+      },
+      "invalid_ID_cells_including_rejected": 0,
+      "accepted_slots_with_trailing_material": 3
+    },
+    {
+      "method": "D16",
+      "arm": "N",
+      "observed_cells": 8,
+      "focal_actions": {
+        "order.read": 8,
+        "amount.multiply": 1,
+        "order.write": 1
+      },
+      "workflow_success": 0,
+      "correct_write_cells": 1,
+      "state_only_success": 1,
+      "terminal_failure_stages": {
+        "JSON_SERIALIZATION": 7,
+        "VALIDATION_OR_COMPLETION": 1
+      },
+      "invalid_ID_cells_including_rejected": 0,
+      "accepted_slots_with_trailing_material": 5
+    },
+    {
+      "method": "D16",
+      "arm": "E",
+      "observed_cells": 8,
+      "focal_actions": {
+        "order.read": 8
+      },
+      "workflow_success": 0,
+      "correct_write_cells": 0,
+      "state_only_success": 0,
+      "terminal_failure_stages": {
+        "JSON_SERIALIZATION": 8
+      },
+      "invalid_ID_cells_including_rejected": 0,
+      "accepted_slots_with_trailing_material": 4
+    }
+  ],
+  "cells": [
+    {
+      "method": "BF16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-00__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0001",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0002",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-00__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0057",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0058",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-06__before-generation-2",
+      "arm": "C0",
+      "workflow_success": false,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [
+        "g3-c0"
+      ],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "ARGUMENT_ID",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0007",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0008",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-06__before-generation-2",
+      "arm": "G",
+      "workflow_success": false,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [
+        "g3-c0"
+      ],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "ARGUMENT_ID",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0063",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0064",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-08__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0013",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0014",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-08__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0069",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0070",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-14__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0019",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0020",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-14__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0075",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0076",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-00__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0004",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0005",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-00__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0060",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0061",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-06__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0010",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0011",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-06__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0066",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0067",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-08__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0016",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0017",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-08__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0072",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0073",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-14__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0022",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0023",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "BF16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-14__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0078",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0079",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-00__before-generation-2",
+      "arm": "C0",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [],
+      "focal_executed_events": 0,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 3,
+      "tool_attempts_charged": 3,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0049",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-00__before-generation-2",
+      "arm": "E",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 1,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0049",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0111",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0112",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0113",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-00__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 1,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0105",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0106",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-00__before-generation-2",
+      "arm": "N",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0049",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0108",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0109",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0110",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-06__before-generation-2",
+      "arm": "C0",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [],
+      "focal_executed_events": 0,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 3,
+      "tool_attempts_charged": 3,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0051",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-06__before-generation-2",
+      "arm": "E",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0051",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0129",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0130",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0131",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-06__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0123",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0124",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-06__before-generation-2",
+      "arm": "N",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 1,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0051",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0126",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0127",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0128",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-08__before-generation-2",
+      "arm": "C0",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [],
+      "focal_executed_events": 0,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 3,
+      "tool_attempts_charged": 3,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0053",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-08__before-generation-2",
+      "arm": "E",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 1,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0053",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0146",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0147",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0148",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-08__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0140",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0141",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-08__before-generation-2",
+      "arm": "N",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 1,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0053",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0143",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0144",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0145",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-14__before-generation-2",
+      "arm": "C0",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [],
+      "focal_executed_events": 0,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 3,
+      "tool_attempts_charged": 3,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0055",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-14__before-generation-2",
+      "arm": "E",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0055",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0164",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0165",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0166",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-14__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0158",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0159",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-14__before-generation-2",
+      "arm": "N",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0055",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0161",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0162",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0163",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-00__before-generation-2",
+      "arm": "C0",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [],
+      "focal_executed_events": 0,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 3,
+      "tool_attempts_charged": 3,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0050",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-00__before-generation-2",
+      "arm": "E",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 1,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0050",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0120",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0121",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0122",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-00__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 1,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0114",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0115",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-00__before-generation-2",
+      "arm": "N",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0050",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0117",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0118",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0119",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-06__before-generation-2",
+      "arm": "C0",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [],
+      "focal_executed_events": 0,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 3,
+      "tool_attempts_charged": 3,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0052",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-06__before-generation-2",
+      "arm": "E",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0052",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0137",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0138",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0139",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-06__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0132",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0133",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-06__before-generation-2",
+      "arm": "N",
+      "workflow_success": false,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.read",
+        "amount.multiply",
+        "order.write"
+      ],
+      "focal_executed_events": 3,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "VALIDATION_OR_COMPLETION",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 6,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 1,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0052",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0135",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0135",
+          "slot": 1,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0135",
+          "slot": 2,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0135",
+          "slot": 3,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0136",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0136",
+          "slot": 1,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-08__before-generation-2",
+      "arm": "C0",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [],
+      "focal_executed_events": 0,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 3,
+      "tool_attempts_charged": 3,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0054",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-08__before-generation-2",
+      "arm": "E",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 1,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0054",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0155",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0156",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0157",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-08__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0149",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0150",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-08__before-generation-2",
+      "arm": "N",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 1,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0054",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0152",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0153",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0154",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-14__before-generation-2",
+      "arm": "C0",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [],
+      "focal_executed_events": 0,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 3,
+      "tool_attempts_charged": 3,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0056",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-14__before-generation-2",
+      "arm": "E",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0056",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0173",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0174",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0175",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-14__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 1,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0167",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0168",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "D16",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-14__before-generation-2",
+      "arm": "N",
+      "workflow_success": false,
+      "state_only_success": false,
+      "focal_actions": [
+        "order.read"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 0,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "JSON_SERIALIZATION",
+      "model_calls_charged": 6,
+      "tool_attempts_charged": 6,
+      "state_version": 0,
+      "accepted_slots_with_trailing_material": 1,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0056",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0170",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0170",
+          "slot": 1,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        },
+        {
+          "request_id": "p2-r1-request-0171",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0172",
+          "slot": 0,
+          "whole_slot_JSON_dict": false,
+          "original_first_dict_accepted": false
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-00__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0025",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0026",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-00__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0081",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0082",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-06__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0031",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0032",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-06__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0087",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0088",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-08__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0037",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0038",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-08__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0093",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0094",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-14__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0043",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0044",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V1",
+      "checkpoint_id": "API_V1__A1-14__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0099",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0100",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-00__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0028",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0029",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-00__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0084",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0085",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-06__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0034",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0035",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-06__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0090",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0091",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-08__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0040",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0041",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-08__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0096",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0097",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-14__before-generation-2",
+      "arm": "C0",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0046",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0047",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    },
+    {
+      "method": "RTN",
+      "api_version": "API_V2",
+      "checkpoint_id": "API_V2__A1-14__before-generation-2",
+      "arm": "G",
+      "workflow_success": true,
+      "state_only_success": true,
+      "focal_actions": [
+        "order.write"
+      ],
+      "focal_executed_events": 1,
+      "correct_actual_write_events": 1,
+      "invalid_ID_events_including_rejected": [],
+      "raw_scorer_ARGUMENT_VALUE_WRONG": false,
+      "terminal_failure_stage": "COMPLETED_WORKFLOW",
+      "model_calls_charged": 5,
+      "tool_attempts_charged": 4,
+      "state_version": 1,
+      "accepted_slots_with_trailing_material": 0,
+      "slot_diagnostics": [
+        {
+          "request_id": "p2-r1-request-0102",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        },
+        {
+          "request_id": "p2-r1-request-0103",
+          "slot": 0,
+          "whole_slot_JSON_dict": true,
+          "original_first_dict_accepted": true
+        }
+      ]
+    }
+  ],
+  "scope": "registered descriptive error-stage diagnostics; scorer and original verdicts unchanged; whole-slot JSON and original first-dict acceptance intentionally distinct"
+}

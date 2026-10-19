@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "execution_id": "case015-p2-gpu-r1",
+  "analysis_base_commit": "51385286063eb55e791f13a0b97f1e341ce6a879",
+  "authorized_scope": "user2026-10-19: registered local GPU P2 and branch push/PR only; no merge or Pages",
+  "cpu_protocol_sha256": "b4603a3bd759518bce3317f880931992baed1d8efcf1b022ccc996659b8c103b",
+  "cpu_execution_source_sha256": "03829dc8549ad45a0949c7f372568ff2fef76e02f4bbb1d5e22131f61e4f4c80",
+  "worker_wall_limit_seconds": 7200,
+  "worker_wall_registration": "new conservative resource cap before any new response; CPU protocol left byte-identical with its original null future cap",
+  "method_order": [
+    "BF16",
+    "RTN",
+    "D16"
+  ],
+  "checkpoint_order": [
+    "API_V1__A1-00__before-generation-2",
+    "API_V2__A1-00__before-generation-2",
+    "API_V1__A1-06__before-generation-2",
+    "API_V2__A1-06__before-generation-2",
+    "API_V1__A1-08__before-generation-2",
+    "API_V2__A1-08__before-generation-2",
+    "API_V1__A1-14__before-generation-2",
+    "API_V2__A1-14__before-generation-2"
+  ],
+  "phase_order": [
+    "all24 C0 focal+original continuations",
+    "global C0 input/output reproduction gate",
+    "G and eligible N then E per checkpoint in registered method order"
+  ],
+  "smoke_model_requests": 0,
+  "first_registered_C0_is_connection_check_and_primary": true,
+  "reproduction_mismatch": "finish C0 records without tuning; do not run G/N/E if any focal mismatch or unobserved C0",
+  "budget": {
+    "greedy": true,
+    "enable_thinking": false,
+    "max_new_tokens": 192,
+    "max_model_calls": 8,
+    "max_tool_calls": 6,
+    "deadline_seconds": 900,
+    "context_limit": 24576,
+    "batch_size": 1,
+    "seed": 610132,
+    "KV": "BF16 within request ON; across-turn prefix cache OFF",
+    "logits_to_keep": 1,
+    "stop_policy": "unchanged saved model generation_config/eos_token_id",
+    "automatic_truncate": false,
+    "stop_token_ids": [
+      151645,
+      151643
+    ]
+  },
+  "prefix_time_policy": "common conservative maximum original full episode wall among methods, an upper bound, not an exact prefix measurement",
+  "retry_time_policy": "inherit common prefix+C0 actual worker cost; charge all host/branch active wall, no fresh budgets; unrelated paused phases before a branch starts not charged as its active wall",
+  "grammar_copy": "exact functions from CPU grammar.py; remove only CPU import guard and unused upstream digest import; GPU process explicitly imports Torch",
+  "publication": "small raw/metadata/reports and CPU replay only; model/snapshot/payload/private runtime remain external",
+  "created_utc": "2026-10-19T02:35:53.074936+00:00"
+}

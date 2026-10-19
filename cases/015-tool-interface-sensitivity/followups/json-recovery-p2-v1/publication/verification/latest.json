@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "created_utc": "2026-10-19T03:33:29.311552+00:00",
+  "execution_source_commit": "828ac7358b653626bed7e0a609448e73d120f1bb",
+  "GPU_experiment": "COMPLETED; results/gpu_r2/receipt.json",
+  "CPU_public_checks": "cpu_checks_r2/verification.json",
+  "test_inventory": "test_inventory.json",
+  "unique_relevant_test_methods": 89,
+  "new_methods": 13,
+  "regression_methods_rerun": 76,
+  "raw_replay": {
+    "branches": 64,
+    "unique_new_requests": 175,
+    "original_assess_and_independent_endpoint": "PASS"
+  },
+  "tokenizer_and_grammar_reaudit": "../../results/gpu_r2/token_audit_r2.json",
+  "base_preservation": "base_file_preservation.json",
+  "site_checks": "site_checks_r2/checks.json",
+  "current_P2_guide_links_checked": 81,
+  "missing_links": [],
+  "private_path_or_secret_scan": "PASS; no personal path/credential match or forbidden tensor payload in P2 public tree",
+  "new_GPU_requests_in_CPU_and_site_checks": 0,
+  "completed_GPU_experiment_requests_separate": 175,
+  "remote_CI": "NOT_RUN_AT_RECEIPT_CREATION; verify current PR head",
+  "browser": "NOT_RUN; this PR adds repository results and preserved-view verification, no Pages or UI deployment",
+  "limits": [
+    "CPU replay does not reproduce GPU logits",
+    "Local tokenizer check requires existing tokenizer; generic clone uses scalar/fixture audit",
+    "Selected 4 fixtures, 8 API checkpoints, not held-out population inference"
+  ],
+  "self_hash_policy": "Receipt aggregates completed checks; new public manifest covers these bytes, excludes itself. Final commit/remote CI are verified separately."
+}

@@ -12,6 +12,10 @@ The three conditions use the same Qwen3-4B model. **BF16** is the original 16-bi
 
 A1 is the new purchase-total application below; P1 is the earlier name/order study. Their results are reported separately.
 
+> **P2 followup:** eight broken write calls from the four-bit D16 model reproduced after the same lookup/calculation results. Constraining the first response to the tool contract recovered 8/8 complete workflows. Neutral retry and parse-error feedback each completed 0/8; neutral retry saved the correct state once. These are four selected synthetic fixtures × two naming versions, separate from P1/A1.
+> [P2 results and limits](followups/json-recovery-p2-v1/REPORT.md) · [Model-free reproduction](followups/json-recovery-p2-v1/REPRODUCE.md)
+
+
 [1. Background](#section-1) · [2. Questions and hypotheses](#section-2) · [3. Principles and execution contract](#section-3) · [4. Method](#section-4) · [5. Experiment](#section-5) · [6. Results](#section-6) · [7. Failure and recovery analysis](#section-7) · [8. Conclusion](#section-8) · [9. Reproduction and sources](#section-9)
 
 <a id="section-1"></a>

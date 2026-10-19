@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "scope": "new external copy with457 original Case015 files plus P2; no private model/runtime inputs required",
+  "commands": [
+    {
+      "command": "validate",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "json_recovery_p2.cli",
+        "validate"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.07068371300010767,
+      "log_sha256": "16d34625d3b05f0a9dff30189b5551e392df72ed6eae24a360a4137995017656"
+    },
+    {
+      "command": "cpu-tests",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "$P2/tests",
+        "-p",
+        "test_cpu_contracts.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.16107182499945338,
+      "log_sha256": "47871c911bfc3edea8f32bbb374f198a1b0554da15de157c710de819ccd39b34",
+      "test_count": 20
+    },
+    {
+      "command": "raw-audit",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "json_recovery_p2.cli",
+        "audit",
+        "--output",
+        "$OUTPUT/fresh_review_replay"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.3369858669993846,
+      "log_sha256": "f79acb1626be95f756f4175b60ef9ea2e2db406eb781220dffe595564d94625a"
+    }
+  ],
+  "new_unique_tests_added_by_this_rerun": 0,
+  "original_file_count": 457,
+  "new_model_forwards": 0,
+  "torch_transformers_import": "forbidden by process guard",
+  "GPU": "NOT_RUN"
+}

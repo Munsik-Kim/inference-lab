@@ -24,16 +24,19 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6; repository pin
         with:
           persist-credentials: false
+          fetch-depth: 0 # Preserve and verify pre-response execution commits.
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6; repository pin
         with:
           python-version: '3.12.14'
-      - name: Preserved P1 and new A1 CPU contracts, raw response replay, paired tables
-        run: python -B cases/015-tool-interface-sensitivity/publication/scripts/run_checks.py --output "$RUNNER_TEMP/case015/full" --tests
+      - name: Install pinned grammar dependencies in the ephemeral CPU runner
+        run: python -m pip install -r cases/015-tool-interface-sensitivity/followups/json-recovery-p2-v1/publication/requirements-cpu.txt
+      - name: Preserved P1/A1 and P2 CPU contracts, raw replay and table regeneration
+        run: python -B cases/015-tool-interface-sensitivity/followups/json-recovery-p2-v1/publication/run_checks.py --output "$RUNNER_TEMP/case015/full" --tests --grammar-python python
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6; existing repository pin
         with:
           node-version: '24.12.0'
       - name: Parse the exact standalone viewer script emitted by CPU reproduction
-        run: node --check "$RUNNER_TEMP/case015/full/a1-explorer/explorer.js"
+        run: node --check "$RUNNER_TEMP/case015/full/legacy/a1-explorer/explorer.js"
       - name: Retain receipts even on failure
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4; repository pin
@@ -42,8 +45,11 @@ jobs:
           path: |
             ${{ runner.temp }}/case015/full/verification.json
             ${{ runner.temp }}/case015/full/*.log
-            ${{ runner.temp }}/case015/full/*audit.json
-            ${{ runner.temp }}/case015/full/a1-summary.json
-            ${{ runner.temp }}/case015/full/a1-explorer/viewer_manifest.json
+            ${{ runner.temp }}/case015/full/legacy/*.log
+            ${{ runner.temp }}/case015/full/legacy/*audit.json
+            ${{ runner.temp }}/case015/full/legacy/a1-summary.json
+            ${{ runner.temp }}/case015/full/legacy/a1-explorer/viewer_manifest.json
+            ${{ runner.temp }}/case015/full/p2-audit/*.json
+            ${{ runner.temp }}/case015/full/derived/*.json
           if-no-files-found: warn
           retention-days: 14

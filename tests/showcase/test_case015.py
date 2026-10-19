@@ -47,5 +47,41 @@ class Case015Display(unittest.TestCase):
         episode=body[start:end]
         for text in ['raw_terminal_reason','BUDGET_EXHAUSTED','derived_terminal_reason','PARSE_ERROR','posthoc_metadata_note']:self.assertIn(text,episode)
 
+    def test_p2_display_comes_from_separate_raw_replay(self):
+        p2=self.data['P2']
+        from case015_p2 import P2
+        expected=read(ROOT/P2/'results/gpu_r2/decision.json')
+        self.assertEqual(p2['summary'],expected['method_summary'])
+        self.assertEqual(p2['C0_reproduction'],expected['C0_reproduction'])
+        costs=p2['costs']
+        self.assertEqual(costs['actual_new_request_attempts'],costs['first_diagnostic_responses']+costs['continuation_responses'])
+        self.assertEqual(p2['selected_fixtures'],4)
+        self.assertEqual(p2['API_checkpoints'],8)
+        for row in p2['summary'][:2]:
+            self.assertEqual(row['N']['status'],'NOT_APPLICABLE')
+            self.assertEqual(row['N']['denominator'],0)
+
+    def test_p2_bilingual_results_cpu_links_and_completed_scope(self):
+        from case015_p2 import P2
+        for lang in ['ko','en']:
+            body=render_case015(self.data,lang)
+            self.assertIn('id="p2-recovery"',body)
+            self.assertIn('case015-p2-report-'+lang+'.md.txt',body)
+            self.assertIn('case015-p2-reproduce-'+lang+'.md.txt',body)
+            self.assertIn(P2+'/publication/run_checks.py',body)
+            self.assertNotIn('P2 / fresh64',body)
+            self.assertIn('case015.html#p2-recovery',home_case015(self.data,lang))
+
+    def test_p2_counts_are_projected_not_hardcoded(self):
+        from case015_p2 import render_p2
+        d=copy.deepcopy(self.data)
+        next(r for r in d['P2']['summary'] if r['method']=='D16')['G']['success']=2
+        d['P2']['costs']['actual_new_request_attempts']=179
+        for lang in ['ko','en']:
+            body=render_p2(d,lang,lambda url,label:label,table)
+            self.assertIn('2/8',body)
+            self.assertIn('179',body)
+            self.assertIn('2/8',home_case015(d,lang))
+
 
 if __name__=='__main__':unittest.main()

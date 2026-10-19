@@ -630,7 +630,9 @@ def check_case015(root: Path, errors: list[str]) -> set[str]:
     if not case.exists():return set()
     try:
         import importlib.util
-        spec=importlib.util.spec_from_file_location('case015_docs_verify',case/'publication/verify.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        verifier=case/'followups/json-recovery-p2-v1/publication/verify.py'
+        if not verifier.exists():verifier=case/'publication/verify.py'
+        spec=importlib.util.spec_from_file_location('case015_docs_verify',verifier);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
         module.verify(case)
         pages=[str((case/name).relative_to(root)) for name in ['README.md','README.ko.md','REPORT.md','REPORT.ko.md','REPRODUCE.md','REPRODUCE.ko.md','NOTICE.md','STAGE_MAP.md']]
         check_links(root,pages,errors,allow_disclosures=True)

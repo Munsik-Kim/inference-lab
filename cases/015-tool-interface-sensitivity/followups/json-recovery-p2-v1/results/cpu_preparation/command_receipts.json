@@ -1,0 +1,257 @@
+[
+  {
+    "command_id": "help",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "json_recovery_p2.cli",
+      "--help"
+    ],
+    "started_utc": "2026-10-19T01:54:10.025428+00:00",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "wall_seconds": 0.040701818999878014,
+    "log_sha256": "1d482bea39aa0eedfe8e8ea8a2cd5832fd268f5ba7741d29c53b9599a5ecaba6",
+    "status": "PASS"
+  },
+  {
+    "command_id": "new-cpu-tests",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "$P2/tests",
+      "-p",
+      "test_cpu_contracts.py",
+      "-v"
+    ],
+    "started_utc": "2026-10-19T01:54:10.066339+00:00",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "wall_seconds": 0.19368299000052502,
+    "log_sha256": "9ef497afed21d6c177bc25bd93b0997b4090a858a6f9e0aa92f44bb71318e182",
+    "status": "PASS",
+    "unique_test_names": [
+      "test_cpu_contracts.CPUContracts.test_C0_G_identical_payload_and_grammar_only_first_response",
+      "test_cpu_contracts.CPUContracts.test_CLI_help_and_run_refusal_have_no_model_dependencies",
+      "test_cpu_contracts.CPUContracts.test_N_E_share_new_C0_and_differ_only_in_exact_user_feedback",
+      "test_cpu_contracts.CPUContracts.test_allowlist_excludes_unseen_oracle_control_and_other_method_outputs",
+      "test_cpu_contracts.CPUContracts.test_alternate_reads_swapped_multiply_and_duplicate_write_permitted",
+      "test_cpu_contracts.CPUContracts.test_conditional_request_bounds_are_not_episode_counts",
+      "test_cpu_contracts.CPUContracts.test_feedback_creates_no_tool_observation_and_cannot_repeat",
+      "test_cpu_contracts.CPUContracts.test_final_answer_alone_cannot_replace_execution",
+      "test_cpu_contracts.CPUContracts.test_historical_failure_is_not_new_C0",
+      "test_cpu_contracts.CPUContracts.test_key_serialization_order_is_bound_beside_canonical_hash",
+      "test_cpu_contracts.CPUContracts.test_mixed_valid_malformed_executes_valid_slot_without_retry",
+      "test_cpu_contracts.CPUContracts.test_model_context_and_deadline_limits",
+      "test_cpu_contracts.CPUContracts.test_original_first_dict_and_optional_closing_marker",
+      "test_cpu_contracts.CPUContracts.test_prefix_malformed_shared_C0_costs_are_never_reset",
+      "test_cpu_contracts.CPUContracts.test_same_fixture_different_observation_ids_is_rejected",
+      "test_cpu_contracts.CPUContracts.test_same_response_write_validate_then_observed_final_succeeds",
+      "test_cpu_contracts.CPUContracts.test_scripted_recovery_requires_feedback_request_and_actual_completed_chain",
+      "test_cpu_contracts.CPUContracts.test_stale_validation_rejected_even_when_final_digest_returns",
+      "test_cpu_contracts.CPUContracts.test_wrong_ID_key_string_and_bool_integer_follow_original_fixture",
+      "test_cpu_contracts.CPUContracts.test_wrong_integer_is_saved_then_validation_false"
+    ],
+    "unique_tests_passed": 20
+  },
+  {
+    "command_id": "new-grammar-tests",
+    "argv": [
+      "$EXISTING_CPU_DEPS_PYTHON",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "$P2/tests",
+      "-p",
+      "test_grammar_contracts.py",
+      "-v"
+    ],
+    "started_utc": "2026-10-19T01:54:10.260670+00:00",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "wall_seconds": 0.32819288700011384,
+    "log_sha256": "2185d245e31914f673c019ddcd8afecc078f2ef3dbafe4cd76b4a09c218bb465",
+    "status": "PASS",
+    "unique_test_names": [
+      "test_grammar_contracts.GrammarContracts.test_all_tools_and_free_wrong_values_without_gold",
+      "test_grammar_contracts.GrammarContracts.test_finite_unmasked_before_intentional_negative_infinity_mask",
+      "test_grammar_contracts.GrammarContracts.test_multicall_write_validate_key_order_and_complete_end",
+      "test_grammar_contracts.GrammarContracts.test_name_argument_keys_types_and_unknown_name_rejected",
+      "test_grammar_contracts.GrammarContracts.test_only_registered_names_enumerated_and_final_flag_free"
+    ],
+    "unique_tests_passed": 5
+  },
+  {
+    "command_id": "validate",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "json_recovery_p2.cli",
+      "validate"
+    ],
+    "started_utc": "2026-10-19T01:54:10.589250+00:00",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "wall_seconds": 0.1486731540007895,
+    "log_sha256": "16d34625d3b05f0a9dff30189b5551e392df72ed6eae24a360a4137995017656",
+    "status": "PASS"
+  },
+  {
+    "command_id": "raw-audit",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "json_recovery_p2.cli",
+      "audit",
+      "--output",
+      "$OUTPUT/raw_audit"
+    ],
+    "started_utc": "2026-10-19T01:54:10.738235+00:00",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "wall_seconds": 0.3442362249988946,
+    "log_sha256": "f79acb1626be95f756f4175b60ef9ea2e2db406eb781220dffe595564d94625a",
+    "status": "PASS"
+  },
+  {
+    "command_id": "baseline-closed-tests",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "json_recovery_p2.cli",
+      "baseline",
+      "--tests",
+      "--output",
+      "$OUTPUT/baseline_closed"
+    ],
+    "started_utc": "2026-10-19T01:54:11.082763+00:00",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "wall_seconds": 1.7614121429996885,
+    "log_sha256": "aaa981981a585af8c5e6c4f1d3f4a9992b5e8000924d636eabd52cc625b50ece",
+    "status": "PASS"
+  },
+  {
+    "command_id": "dry-run",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "json_recovery_p2.cli",
+      "dry-run",
+      "--output",
+      "$OUTPUT/dry_run.json"
+    ],
+    "started_utc": "2026-10-19T01:54:12.844547+00:00",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "wall_seconds": 0.06644663000042783,
+    "log_sha256": "36700106a61dd1d96e3369d0164156282b060df32020c6393339d1e06e1bf598",
+    "status": "PASS"
+  },
+  {
+    "command_id": "run-refused",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "json_recovery_p2.cli",
+      "run"
+    ],
+    "started_utc": "2026-10-19T01:54:12.911292+00:00",
+    "exit_code": 3,
+    "expected_exit_code": 3,
+    "wall_seconds": 0.030472120000922587,
+    "log_sha256": "c808a90afe049833299ca432b0255fe3b2265a1a0f85c44efd2586084dd47872",
+    "status": "PASS"
+  },
+  {
+    "command_id": "run-dry-run",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "json_recovery_p2.cli",
+      "run",
+      "--dry-run",
+      "--output",
+      "$OUTPUT/run_dry_run.json"
+    ],
+    "started_utc": "2026-10-19T01:54:12.942027+00:00",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "wall_seconds": 0.06449311400137958,
+    "log_sha256": "36700106a61dd1d96e3369d0164156282b060df32020c6393339d1e06e1bf598",
+    "status": "PASS"
+  },
+  {
+    "command_id": "input-retokenization",
+    "argv": [
+      "$EXISTING_CPU_DEPS_PYTHON",
+      "-B",
+      "-m",
+      "json_recovery_p2.cli",
+      "tokenizer-check",
+      "--snapshot",
+      "$SNAPSHOT",
+      "--output",
+      "$OUTPUT/retokenization.json"
+    ],
+    "started_utc": "2026-10-19T01:54:13.006798+00:00",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "wall_seconds": 0.39837149499908264,
+    "log_sha256": "5c52b09ae5a8e43915aa50277a65ba7fab290400f9e768c4ac8dd8e3cafbef40",
+    "status": "PASS"
+  },
+  {
+    "command_id": "actual-token-mask",
+    "argv": [
+      "$EXISTING_CPU_DEPS_PYTHON",
+      "-B",
+      "-m",
+      "json_recovery_p2.cli",
+      "grammar-check",
+      "--snapshot",
+      "$SNAPSHOT",
+      "--output",
+      "$OUTPUT/grammar_token_mask.json"
+    ],
+    "started_utc": "2026-10-19T01:54:13.405547+00:00",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "wall_seconds": 3.690538879000087,
+    "log_sha256": "0e1306773ebcd238c201e70a9cefe18f1de90a5831065ce3fc9772e73ca70456",
+    "status": "PASS"
+  },
+  {
+    "command_id": "local-file-identity",
+    "argv": [
+      "$EXISTING_CPU_DEPS_PYTHON",
+      "-B",
+      "-m",
+      "json_recovery_p2.cli",
+      "local-inputs-check",
+      "--runtime",
+      "$EXISTING_A1_RUNTIME",
+      "--output",
+      "$OUTPUT/local_file_identity_final.json"
+    ],
+    "started_utc": "2026-10-19T01:58:41.908112+00:00",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "wall_seconds": 12.184639609000442,
+    "log_sha256": "55ec0e7aeedb433707983a7ff31a049b1a181cc5973364bf96ebf719198fbe99",
+    "status": "PASS"
+  }
+]

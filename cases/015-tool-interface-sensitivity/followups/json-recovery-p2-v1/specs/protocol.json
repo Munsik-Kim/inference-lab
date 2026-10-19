@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "protocol_id": "case015-json-recovery-p2-v1",
+  "created_utc": "2026-10-19T01:39:13.160272+00:00",
+  "phase": "CPU_PREPARATION_AND_PREREGISTRATION_ONLY",
+  "base_commit": "51385286063eb55e791f13a0b97f1e341ce6a879",
+  "design": "post-A1 selected DEV checkpoint diagnosis; four fixtures x two APIs; same observation, not fresh end-to-end evaluation",
+  "new_model_inference_authorized": false,
+  "remote_publication_authorized": false,
+  "stage_status": "PREREGISTERED_NOT_EXECUTED",
+  "methods": [
+    "BF16",
+    "RTN",
+    "D16"
+  ],
+  "selected_scenarios": [
+    "A1-00",
+    "A1-06",
+    "A1-08",
+    "A1-14"
+  ],
+  "apis": [
+    "API_V1",
+    "API_V2"
+  ],
+  "checkpoint_count": 8,
+  "independent_selected_fixture_count": 4,
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "generation": {
+    "greedy": true,
+    "enable_thinking": false,
+    "max_new_tokens": 192,
+    "max_model_calls": 8,
+    "max_tool_calls": 6,
+    "deadline_seconds": 900,
+    "context_limit": 24576,
+    "batch_size": 1,
+    "seed": 610132,
+    "KV": "BF16 within request ON; across-turn prefix cache OFF",
+    "logits_to_keep": 1,
+    "stop_policy": "unchanged saved model generation_config/eos_token_id",
+    "automatic_truncate": false,
+    "stop_token_ids": [
+      151645,
+      151643
+    ]
+  },
+  "execution_boundary": "same saved INT4 -> dense BF16; D16 FP32 input*beta_inverse -> BF16; BF16 W_pre; no new quantization",
+  "conditions": {
+    "C0": {
+      "prompt": "original messages/tools",
+      "grammar": false,
+      "retry": false,
+      "malformed_only": "stop; correct diagnostic label PARSE_ERROR, historical stale BUDGET_EXHAUSTED remains untouched"
+    },
+    "G": {
+      "prompt": "identical to C0",
+      "grammar": "actual allowed-token mask on first checkpoint response only",
+      "source": "four declared tool contracts plus free final-answer field types",
+      "all_four_tools": true,
+      "ID_or_amount_gold_constraints": false,
+      "multiple_calls": true,
+      "write_then_validate_same_response": true,
+      "complete_call_JSON_EOS_without_closing_marker": "allowed to preserve original parser acceptance",
+      "later_generations": "original unmasked policy"
+    },
+    "N": {
+      "trigger": "new same-method C0 has >=1 attempted marker slot and zero accepted parsed dicts; no mixed retry; remaining model/tool/time budget",
+      "feedback_role": "user",
+      "feedback": "No tool was executed. Retry the previous response.",
+      "assistant_content": "the same newly observed C0 raw_text; never a historical substitute",
+      "max_retries": 1
+    },
+    "E": {
+      "trigger": "exact same new C0 as N",
+      "feedback_role": "user",
+      "feedback": "PARSE_ERROR: Tool-call JSON could not be parsed. No tool was executed. Retry the previous response.",
+      "assistant_content": "identical shared new C0 raw_text",
+      "max_retries": 1
+    }
+  },
+  "model_input_allowlist": [
+    "messages",
+    "tools"
+  ],
+  "audit_only_never_prompt": [
+    "initial_fixture_for_audit_only",
+    "historical_continuations",
+    "gold",
+    "oracle",
+    "semantic_tool_id",
+    "control_order_id",
+    "per_method_future_outputs"
+  ],
+  "retry_observations": "host feedback is user content; no fake tool result; available_result_event_ids and file state unchanged",
+  "same_input_policy": "G/C0 payload and token hashes equal; N/E full prompts differ; track shared observation/state separately from intervention/full request hashes",
+  "budget": {
+    "prefix_model_calls_used": 2,
+    "prefix_tool_attempts_used": 2,
+    "malformed_marker_consumes_tool_attempt": true,
+    "N_E_share_C0_cost": true,
+    "prefix_elapsed_debit": "common conservative maximum original full episode wall among methods, an upper bound, not an exact prefix measurement",
+    "branch_elapsed_includes": "prefix debit + shared actual C0 wall + host/intervention overhead + branch continuation wall/idle",
+    "future_total_worker_wall_limit_seconds": null,
+    "future_worker_budget_gate": "requires separate approval; no GPU execution in this registration"
+  },
+  "call_plan": {
+    "C0_first": 24,
+    "G_first": 24,
+    "F_definition": "new malformed-only C0 branches eligible for one retry after cumulative model/tool/time budget checks; count total malformed and ineligible separately",
+    "N_E_first": "2*F, using one shared C0 response per method/checkpoint",
+    "first_calls": "48+2*F",
+    "first_calls_if_historical_F8_reproduces": 64,
+    "maximum_first_calls": 96,
+    "continuation_calls_upper_bound": "5*(24-F)+5*24+8*F = 240+3*F, excluding first diagnostic responses",
+    "continuation_upper_bound_if_F8": 264,
+    "maximum_continuation_calls": 312,
+    "all_new_calls_upper_bound": "288+5*F",
+    "all_new_calls_upper_bound_if_F8": 328,
+    "all_new_calls_absolute_upper_bound": 408,
+    "absolute_new_token_upper_bound": 78336,
+    "reason": "C0 malformed-only branches stop; valid C0/G each have <=5 further calls; each N/E has <=4 calls after its retry; prefix requests are charged but not regenerated",
+    "not_independent_episodes": true
+  },
+  "endpoint": {
+    "primary": "original assess and independent_endpoint VERIFIED_WORKFLOW_SUCCESS",
+    "requires": "actual correct write, immutable/other records preserved throughout, validation for current state observed before final, strict final fields/types, original read/multiply receipt order",
+    "secondary": [
+      "parse",
+      "name",
+      "argument_keys",
+      "argument_types",
+      "argument_values",
+      "EOS_vs_cap",
+      "actual_tool_events",
+      "duplicate_writes",
+      "unsupported_success_claim",
+      "additional_calls_tokens_wall"
+    ],
+    "no_new_scores": "all recovery cells NOT_RUN; scripted tests are synthetic_contract_test"
+  },
+  "interpretation": {
+    "G_full_recovery": "supports a serialization bottleneck on these selected DEV checkpoints",
+    "G_format_only": "separate argument/continuation failures",
+    "E_vs_N": "needed to isolate the error-description contribution",
+    "C0_mismatch": "hold causal interpretation; separate environment/execution/output-token mismatch first",
+    "generalization": "not held-out or a general quantization claim"
+  },
+  "future_gates": [
+    "explicit GPU approval and total worker budget",
+    "full local model/tokenizer/config identity; actual module coverage 252 per RTN/D16",
+    "saved artifact hashes/bytes, read-only loader beta_inverse/W_pre and unchanged small weights",
+    "24 recorded C0 input hashes after retokenization (8 unique payloads)",
+    "new C0 output_token_ids reproduce all24 historical references; otherwise hold mechanism claims",
+    "real model/processor integration: FiniteBudget before mask; G only first response; stop tokens and request budgets",
+    "full primary endpoint replay/auditor for new records"
+  ],
+  "original_A1_generation_config_sha256": "110819ce346343d4b0e262a9f26619d0ae96026ec8555d24c647f620a83cfce5",
+  "registered_runtime_flags": {
+    "attention": "sdpa",
+    "TF32": false,
+    "BF16_reduced_reduction": false,
+    "FP16_reduced_reduction": false,
+    "model_and_activation_dtype": "BF16",
+    "note": "historically recorded flags; actual future runtime must match, not rerun in CPU preparation"
+  }
+}
