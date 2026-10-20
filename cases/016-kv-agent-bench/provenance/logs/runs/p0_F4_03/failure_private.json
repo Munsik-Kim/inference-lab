@@ -1,0 +1,7 @@
+{
+  "type": "RuntimeError",
+  "message": "server exited 1; see attempt log",
+  "traceback": "Traceback (most recent call last):\n  File \"CASE016_WORKTREE/cases/016-kv-agent-bench/src/kv_agent_bench/workload_runner.py\", line 75, in run\n    server.start(ready_seconds=min(900,max(1,int(remaining()))));pre=inspect(server.base);save(public/f'{kv}_cache_before.json',pre);support_check(pre,kv)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"CASE016_WORKTREE/cases/016-kv-agent-bench/src/kv_agent_bench/server_manager.py\", line 37, in start\n    if self.proc.poll() is not None:raise RuntimeError(f'server exited {self.proc.returncode}; see attempt log')\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: server exited 1; see attempt log\n",
+  "completed": 0,
+  "time_utc": "2026-10-19T05:51:50.494472+00:00"
+}

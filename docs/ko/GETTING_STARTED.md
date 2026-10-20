@@ -235,3 +235,17 @@ P0·P1·P1b·P2 연구 단계의 보존된 파일 구성을 복원하고, 원시
 OUT=$(mktemp -d)
 python3 -B cases/015-tool-interface-sensitivity/publication/scripts/run_checks.py --output "$OUT/case015" --tests
 ```
+
+<!-- case016-entry -->
+<a id="case016-cpu"></a>
+## Case016 — 같은 KV 메모리에서 수용량과 요청 비용 검증
+
+RTX 5080에서 실제 NVFP4 KV 저장·읽기 검사와 고정 pool 비교 도구를 구현했습니다. 같은 약4GiB 캐시에서 token 수용량은 3.56배였고, 16K 입력의 동시 요청2/4에서 처리량 비율(F4/B16)은 1.21/1.35배였습니다. 모든 조건이 빨라진 것은 아니며 원 agent 기준선 실패도 보존했습니다.
+
+[Report](../../cases/016-kv-agent-bench/REPORT.ko.md) · [CPU commands](../../cases/016-kv-agent-bench/REPRODUCE.ko.md) · [Implementation](../../cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/runner.py)
+
+```bash
+python3 -B cases/016-kv-agent-bench/publication/run_checks.py --output /tmp/case016-check-new --tests
+```
+
+한영 Pages 화면은 builder에 준비했습니다. 수동 배포는 별도 승인 전 실행하지 않았습니다.

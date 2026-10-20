@@ -1,0 +1,17 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "FAIL_HASH_ARGUMENT",
+      "gpu_operations": false,
+      "reason": "incorrect expected SHA argument; guard rejected before imports"
+    },
+    {
+      "attempt": 2,
+      "status": "FAIL_HARNESS_IMPORT",
+      "gpu_operations": true,
+      "model_forwards": 0,
+      "reason": "exact isolated function body required upstream module-level flashinfer import; first layout write executed before NameError"
+    }
+  ]
+}

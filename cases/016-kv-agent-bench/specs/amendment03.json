@@ -1,0 +1,9 @@
+{
+  "reason": "vLLM normalizes prior tool-call argument strings to JSON objects before rendering. Local continuation token accounting retained pretty-printed argument strings and overcounted by12 tokens in some smoke prompts.",
+  "fix": "Normalize only structured function.arguments fields for the local render; compare each server-returned prompt_token_ids to the local IDs. Messages sent to vLLM and model behavior are unchanged.",
+  "pre_model_input_identity": "Initial smoke IDs already match; all79 stored prompt IDs checked in CPU match after exact vLLM normalization.",
+  "p1_dev_model_requests_before_amendment": 0,
+  "old_p0_raw_and_scores_unchanged": true,
+  "old_p0_token_fields": "local_prompt_tokens/input_token_sha256 describe former local estimate; prompt_token_ids is the actual server input. Use actual server fields in final accounting.",
+  "affected_budget_caps": "No smoke cap was context-limited; overcount did not change requested max_tokens."
+}

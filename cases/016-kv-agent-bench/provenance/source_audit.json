@@ -1,0 +1,72 @@
+{
+  "official_sources": [
+    {
+      "source": "vLLM official pinned source",
+      "relative_file": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357,
+      "commit": "5df63a7203cdb9328d824a27b682e77c7b9928be",
+      "license": "Apache-2.0"
+    },
+    {
+      "source": "vLLM official pinned source",
+      "relative_file": "test_flashinfer.py",
+      "sha256": "93d1042cadf4abfe30a86f386b2801cfb4a5e04c5167be104a0319a51ff185cc",
+      "bytes": 25431,
+      "commit": "5df63a7203cdb9328d824a27b682e77c7b9928be",
+      "license": "Apache-2.0"
+    },
+    {
+      "source": "vLLM official pinned source",
+      "relative_file": "vllm/config/cache.py",
+      "sha256": "d37db21e7a6a1b477a580b54d90011d8708c4e7f6e3903221432d9a39830559b",
+      "bytes": 18043,
+      "commit": "5df63a7203cdb9328d824a27b682e77c7b9928be",
+      "license": "Apache-2.0"
+    },
+    {
+      "source": "vLLM official pinned source",
+      "relative_file": "vllm/v1/attention/backends/flashinfer.py",
+      "sha256": "343b949d62db7fc03f6ca0c682e1ec1cb60125461069b081ac1554b7a05214e9",
+      "bytes": 119489,
+      "commit": "5df63a7203cdb9328d824a27b682e77c7b9928be",
+      "license": "Apache-2.0"
+    },
+    {
+      "source": "vLLM official pinned source",
+      "relative_file": "vllm/entrypoints/openai/chat_completion/protocol.py",
+      "sha256": "8744d5e2004b2d376e34cf17de51c919bca6d81b0cc8392da138db1ef05a7c61",
+      "bytes": 50714,
+      "commit": "5df63a7203cdb9328d824a27b682e77c7b9928be",
+      "license": "Apache-2.0"
+    }
+  ],
+  "vllm_tag": "v0.32.0",
+  "vllm_tag_commit": "5df63a7203cdb9328d824a27b682e77c7b9928be",
+  "qwen_function_call_documentation_url": "https://qwen.readthedocs.io/en/latest/framework/function_call.html",
+  "qwen_function_call_documentation_read": true,
+  "motivational_benchmarks": {
+    "ToolBottleneckBench": {
+      "role": "user-provided design motivation",
+      "paper_body_verified": false,
+      "benchmark_reproduced": false
+    },
+    "LURCH": {
+      "role": "user-provided design motivation",
+      "paper_body_verified": false,
+      "benchmark_reproduced": false
+    },
+    "FEB-30": {
+      "role": "user-provided design motivation",
+      "paper_body_verified": false,
+      "benchmark_reproduced": false
+    }
+  },
+  "scale_policy_source": "vllm/model_executor/layers/quantization/kv_cache.py: absent scales default1.0; verify live before and after requests",
+  "upstream_nvfp4_test_status": "SOURCE_READ; NOT_EXECUTED as full pytest suite; head_dim128 existing, heads4/2 differ from Qwen32/8; adapted targeted check provided",
+  "installed_wheel_files_match_pinned_tag": {
+    "config/cache.py": true,
+    "v1/attention/backends/flashinfer.py": true,
+    "entrypoints/openai/chat_completion/protocol.py": true
+  }
+}

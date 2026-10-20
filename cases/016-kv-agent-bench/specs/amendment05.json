@@ -1,0 +1,9 @@
+{
+  "reason": "NVFP4 CUDA compilation now succeeds; linking fails because official pip runtime provides only versioned libcudart.so.13 and WSL driver libcuda is outside default linker search.",
+  "fix": "Create only a new private libcudart.so link to the installed official runtime. Add that directory and /usr/lib/wsl/lib to process LIBRARY_PATH; add runtime/WSL directories to LD_LIBRARY_PATH. No system or upstream files modified.",
+  "prior_failure_root": "results/p0_r4",
+  "new_root": "results/p0_r5",
+  "p1_dev_model_requests_before_amendment": 0,
+  "same_environment_for_all_candidates": true,
+  "budget_reset": false
+}

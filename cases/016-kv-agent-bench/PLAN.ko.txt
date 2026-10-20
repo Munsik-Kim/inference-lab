@@ -1,0 +1,46 @@
+Case016 — vLLM KV-AgentBench 실행 범위 안내
+
+이 파일은 사용자 실행 지시의 구현 범위를 설명하는 안내이다.
+실제 결과 관측 전 등록 근거는 specs/protocol.json, data의 동결 자료,
+각 단계 code_freeze 및 specs/p1.frozen.json이다. 이 안내의 작성 시각을
+과거 사전 등록 시각으로 소급하지 않는다.
+
+목적: BF16 가중치는 유지하고 실제 vLLM KV 저장 형식을 바꾸어,
+장문 근거가 필요한 합성 업무의 상태·절차·정답·비용을 연결한다.
+
+P0: 새 격리 환경과 CPU 계약 검사, KV별 SMOKE8개, 실제 캐시 형식36층,
+NVFP4 writer/해독, 불완전 응답의 원 token, raw기록 비용과 취소/drain 확인.
+P1: DEV12 × B16/F4 × 메뉴8/32 × 응답cap256/1024 =96개.
+SMOKE8과 향후 EVAL48은 별도 seed이며 EVAL은 모델에 평가하지 않는다.
+
+모든 조건: 기존 Qwen3-4B 고정 revision, BF16 weights, TP1,
+FlashInfer, prefix cache OFF, chunked prefill2048, max-num-seqs4,
+같은4GiB 목표pool, eager, async scheduling OFF, clientC1.
+P1 max-model-len28672이며 첫 입력은 도구/template를 포함8192token이다.
+생성총량8192, 모델요청8, 도구시도6, 요청180초, 업무900초,
+EOS준수, temperature0, 문법·이름제약·repair·alias·자동재시도 OFF.
+상태관측은 generation시작에 고정하며 같은응답 뒤쪽call에 앞call결과를
+소급 제공하지 않는다. 공개검증 도구는 정답금액/최신source를 알려주지 않는다.
+
+가족 A구매·견적/B최신상태/C지연도착/D수정·취소. 도구8/32쌍의
+총길이와 필수근거 위치를 사전 생성 중 맞춘다. 최소 두 초기근거가
+정답에 실제로 필요하고 특정source 조회가 긴초기정책·수량을 대신하지 않는다.
+정답도구경로4회/모델generation5회로 예산안의 경로가 존재한다.
+
+주판정은 VERIFIED_WORKFLOW_SUCCESS이며 상태만 맞음/최종답만 맞음을
+별도 기록한다. baseline usable은 B16/menu8/cap1024에서9/12 및
+각가족2/3 이상이라는 실행범위 관리 제안이다. 점수를 올리기 위해
+과제나도구·한도를 바꾸지 않고, 미달해도96개를 유효하게 실행하면
+완료된 DEV실험으로 남긴다.
+
+초기 환경·메모리/JIT·계측 수정의 이유와 시점은 amendment01~08이다.
+P0의 기본 structured constraint는 실제 vLLM/Hermes request조정에서
+None임을 확인했고 P1에는 OFF환경값도 명시했다.
+
+시간상한: 환경5400초/P0보수적경과3600초/P1worker7200초.
+실패·로드·계측·I/O를 제외하지 않는다. 보수적 P0 경과시계에는
+시도 사이 준비시간도 들어 있으므로 GPU busy나 순수추론시간과 구분한다.
+
+금지: P2/P3,16K평가,동시성확장,weight INT4/RTN/D16,모델다운로드,
+재양자화·학습,기존환경업그레이드,다른서비스종료,공통소스수정,
+Git stage/commit/push/PR/merge/Pages/Drive 게시.

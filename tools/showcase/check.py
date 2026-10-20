@@ -18,6 +18,7 @@ from case012_pages import load_case012, annotation_data, render_case012, render_
 from case013 import load_case013, render_case013, home_case013, SOURCE_COPIES as C13_SOURCES, C13, SECTIONS as C13_SECTIONS, FIGURES as C13_FIGURES
 from case014 import load_case014, render_case014, home_case014, SOURCE_COPIES as C14_SOURCES, C14, SECTIONS as C14_SECTIONS, FIGURES as C14_FIGURES, ARCHIVE as C14_ARCHIVE
 from case015 import load_case015, render_case015, home_case015, SOURCE_COPIES as C15_SOURCES, SECTIONS as C15_SECTIONS
+from case016 import load_case016, render_case016, home_case016, SOURCE_COPIES as C16_SOURCES, FIGURES as C16_FIGURES, SECTIONS as C16_SECTIONS
 from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
 from practical import load_practical, render as practical_render, PAGES as GUIDE_PAGES, COMPARE_EXAMPLES
@@ -97,6 +98,7 @@ def check(root: Path, site: Path) -> dict:
     data13=load_case013(root)
     data14=load_case014(root)
     data15=load_case015(root)
+    data16=load_case016(root)
     practical=load_practical(root,load_case008(root),data9,data13)
     expected=EXPECTED|({'en/case009.html','ko/case009.html','data/case009.json','data/case009.js','assets/case009.js','assets/serving-L128.svg','assets/serving-L1024.svg',
       'sources/diova-compare-core.py.txt','sources/diova-compare-tests.py.txt','sources/diova-compare-edge-tests.py.txt','sources/case009-serving.py.txt','sources/case009-quality.py.txt','sources/case009-report-en.md.txt','sources/case009-report-ko.md.txt','sources/case009-notice.md.txt'} if data9 else set())
@@ -121,6 +123,9 @@ def check(root: Path, site: Path) -> dict:
     if data15:
         expected |= {'en/case015.html','ko/case015.html','data/case015.json','data/case015-download.json','assets/case015.css','assets/case015.js'}
         expected |= {'sources/'+name for name in C15_SOURCES}
+    if data16:
+        expected |= {'en/case016.html','ko/case016.html','data/case016.json','assets/case016.css'}
+        expected |= {'sources/'+name for name in C16_SOURCES} | set(C16_FIGURES)
     expected |= {lang+'/'+page+'.html' for lang in ('ko','en') for page in GUIDE_PAGES}
     expected |= {'data/practical-guide.json','assets/practical-guide.css'}
     expected |= set(COMPARE_EXAMPLES)
@@ -142,6 +147,16 @@ def check(root: Path, site: Path) -> dict:
         for page in GUIDE_PAGES:
             require(practical_render(root,practical,lang,page) in (site/lang/(page+'.html')).read_text(), 'Practical guide rendering mismatch')
         require(practical_render(root,practical,lang,'featured') in (site/lang/'index.html').read_text(), 'Practical home stories mismatch')
+    if data16:
+        require(read(site/'data/case016.json')==data16,'Case016 raw/display mismatch')
+        require(m['case016_units']['source_files']==data16['display_source_files'],'Case016 source identity')
+        for name,path in C16_SOURCES.items():require((site/'sources'/name).read_bytes()==(root/path).read_bytes(),'Case016 source copy changed')
+        for name,path in C16_FIGURES.items():require((site/name).read_bytes()==(root/path).read_bytes(),'Case016 figure changed')
+        for lang in ('ko','en'):
+            html=(site/lang/'case016.html').read_text();parser=Links();parser.feed(html)
+            require(render_case016(data16,lang) in html and set(C16_SECTIONS)<=parser.ids,'Case016 rendering/anchors')
+            require(home_case016(data16,lang) in (site/lang/'index.html').read_text(),'Case016 home entry')
+            require('<script' not in render_case016(data16,lang),'Case016 core must work without JavaScript')
     if data15:
         require(read(site/'data/case015.json')==data15,'Case015 raw/display mismatch')
         require(m['case015_units']['source_files']==data15['sources'],'Case015 source identity')

@@ -1,0 +1,52 @@
+Failed to get device capability: SM 12.x requires CUDA >= 12.9.
+Failed to get device capability: SM 12.x requires CUDA >= 12.9.
+=== Cubin Wheel Install ===
+FlashInfer version: 0.7.0.post1
+Wheel index: https://flashinfer.ai/whl
+Requirement: flashinfer-cubin==0.7.0.post1
+Command: CASE016_PRIVATE/venv_r2/bin/python -m pip install --upgrade --no-deps --index-url https://flashinfer.ai/whl flashinfer-cubin==0.7.0.post1
+Looking in indexes: https://flashinfer.ai/whl
+Collecting flashinfer-cubin==0.7.0.post1
+  Downloading https://github.com/flashinfer-ai/flashinfer/releases/download/v0.7.0.post1/flashinfer_cubin-0.7.0.post1-py3-none-any.whl (1567.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 GB 10.4 MB/s eta 0:00:00
+Installing collected packages: flashinfer-cubin
+Successfully installed flashinfer-cubin-0.7.0.post1
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+✅ flashinfer-cubin installed successfully.
+=== JIT Cache Wheel Install ===
+FlashInfer version: 0.7.0.post1
+CUDA version: 13.0
+Wheel CUDA label: cu130
+Install mode: all
+Wheel index: https://flashinfer.ai/whl/cu130
+Requirement: flashinfer-jit-cache==0.7.0.post1+cu130
+Command: CASE016_PRIVATE/venv_r2/bin/python -m pip install --upgrade --index-url https://flashinfer.ai/whl/cu130 flashinfer-jit-cache==0.7.0.post1+cu130
+Looking in indexes: https://flashinfer.ai/whl/cu130
+Collecting flashinfer-jit-cache==0.7.0.post1+cu130
+  Downloading https://github.com/flashinfer-ai/flashinfer/releases/download/v0.7.0.post1/flashinfer_jit_cache-0.7.0.post1%2Bcu130-cp39-abi3-manylinux_2_28_x86_64.whl (4.5 kB)
+Collecting flashinfer-jit-cache-sm100a==0.7.0.post1+cu130 (from flashinfer-jit-cache==0.7.0.post1+cu130)
+  Downloading https://github.com/flashinfer-ai/flashinfer/releases/download/v0.7.0.post1/flashinfer_jit_cache_sm100a-0.7.0.post1%2Bcu130-cp39-abi3-manylinux_2_28_x86_64.whl (273.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 273.4/273.4 MB 9.5 MB/s eta 0:00:00
+Collecting flashinfer-jit-cache-sm103a==0.7.0.post1+cu130 (from flashinfer-jit-cache==0.7.0.post1+cu130)
+  Downloading https://github.com/flashinfer-ai/flashinfer/releases/download/v0.7.0.post1/flashinfer_jit_cache_sm103a-0.7.0.post1%2Bcu130-cp39-abi3-manylinux_2_28_x86_64.whl (279.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 279.7/279.7 MB 9.7 MB/s eta 0:00:00
+Collecting flashinfer-jit-cache-sm120f==0.7.0.post1+cu130 (from flashinfer-jit-cache==0.7.0.post1+cu130)
+  Downloading https://github.com/flashinfer-ai/flashinfer/releases/download/v0.7.0.post1/flashinfer_jit_cache_sm120f-0.7.0.post1%2Bcu130-cp39-abi3-manylinux_2_28_x86_64.whl (187.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 187.2/187.2 MB 11.3 MB/s eta 0:00:00
+Collecting flashinfer-jit-cache-sm80==0.7.0.post1+cu130 (from flashinfer-jit-cache==0.7.0.post1+cu130)
+  Downloading https://github.com/flashinfer-ai/flashinfer/releases/download/v0.7.0.post1/flashinfer_jit_cache_sm80-0.7.0.post1%2Bcu130-cp39-abi3-manylinux_2_28_x86_64.whl (115.9 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 115.9/115.9 MB 11.5 MB/s eta 0:00:00
+Collecting flashinfer-jit-cache-sm89==0.7.0.post1+cu130 (from flashinfer-jit-cache==0.7.0.post1+cu130)
+  Downloading https://github.com/flashinfer-ai/flashinfer/releases/download/v0.7.0.post1/flashinfer_jit_cache_sm89-0.7.0.post1%2Bcu130-cp39-abi3-manylinux_2_28_x86_64.whl (113.8 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 113.8/113.8 MB 11.7 MB/s eta 0:00:00
+Collecting flashinfer-jit-cache-sm90a==0.7.0.post1+cu130 (from flashinfer-jit-cache==0.7.0.post1+cu130)
+  Downloading https://github.com/flashinfer-ai/flashinfer/releases/download/v0.7.0.post1/flashinfer_jit_cache_sm90a-0.7.0.post1%2Bcu130-cp39-abi3-manylinux_2_28_x86_64.whl (294.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 294.1/294.1 MB 11.2 MB/s eta 0:00:00
+Installing collected packages: flashinfer-jit-cache-sm90a, flashinfer-jit-cache-sm89, flashinfer-jit-cache-sm80, flashinfer-jit-cache-sm120f, flashinfer-jit-cache-sm103a, flashinfer-jit-cache-sm100a, flashinfer-jit-cache
+Successfully installed flashinfer-jit-cache-0.7.0.post1+cu130 flashinfer-jit-cache-sm100a-0.7.0.post1+cu130 flashinfer-jit-cache-sm103a-0.7.0.post1+cu130 flashinfer-jit-cache-sm120f-0.7.0.post1+cu130 flashinfer-jit-cache-sm80-0.7.0.post1+cu130 flashinfer-jit-cache-sm89-0.7.0.post1+cu130 flashinfer-jit-cache-sm90a-0.7.0.post1+cu130
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+✅ flashinfer-jit-cache installed successfully.

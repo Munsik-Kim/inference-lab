@@ -1,0 +1,11 @@
+{
+  "registered_before_model_outputs": true,
+  "model_outputs_so_far": 0,
+  "reason": "vLLM startup memory admission at default0.92 requires14.65GiB but observed free14.60GiB. This occurs before weights/model forward, not allocation failure for4GiB KV.",
+  "change": "Set common gpu_memory_utilization=0.85 for startup admission. Keep explicit KV bytes4294967296 unchanged.",
+  "not_a_total_memory_safety_cap": true,
+  "all_kv_arms_same": true,
+  "prior_result_root": "results/p0_r1",
+  "new_result_root": "results/p0_r2",
+  "p0_budget_reset": false
+}

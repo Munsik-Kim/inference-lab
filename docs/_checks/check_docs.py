@@ -646,6 +646,20 @@ def check_case015(root: Path, errors: list[str]) -> set[str]:
         errors.append('Case015 publication verification failed: '+str(exc));return set()
 
 
+def check_case016(root: Path, errors: list[str]) -> set[str]:
+    case=root/'cases/016-kv-agent-bench'
+    if not case.exists():return set()
+    try:
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('case016_docs_verify',case/'publication/verify.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);m.verify(case)
+        check_links(root,[str((case/n).relative_to(root)) for n in ('README.md','README.ko.md','REPORT.md','REPORT.ko.md','REPRODUCE.md','REPRODUCE.ko.md','NOTICE.md')],errors,allow_disclosures=True)
+        for lang in ('en','ko'):
+            if (root/f'docs/{lang}/CASEBOOK.md').read_text().count('<a id="case-016"></a>')!=1:raise ValueError('Case016 must have exactly one Casebook entry')
+        return {str(p.relative_to(root)) for p in case.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+    except (OSError,ValueError,KeyError,ImportError,AttributeError) as exc:
+        errors.append('Case016 publication verification failed: '+str(exc));return set()
+
+
 def audit(root: Path, inventory: Path | None = None) -> dict:
     root = root.resolve()
     errors: list[str] = []
@@ -664,6 +678,7 @@ def audit(root: Path, inventory: Path | None = None) -> dict:
     additional |= check_case013(root, errors)
     additional |= check_case014(root, errors)
     additional |= check_case015(root, errors)
+    additional |= check_case016(root, errors)
     additional |= check_agent_tool_repair(root, errors)
     protected = check_protection(root, mapping.get('protection_revision', mapping['source_revision']), errors, inventory, additional)
     check_copy_hygiene(root, (*PAGES, CONCEPT_FIGURE, 'docs/_meta/claims.json', 'docs/_meta/MAINTENANCE.md'), errors)

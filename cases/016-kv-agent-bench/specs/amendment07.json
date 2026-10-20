@@ -1,0 +1,8 @@
+{
+  "reason": "All three disconnect probes drained running/waiting counters to0, but vLLM defaults log_requests=false and therefore suppresses its abort log. No abort-log evidence was available.",
+  "change": "P0-only extra one cancel probe per KV with enable-log-requests; reuse all successful raw/cost/incomplete and F4 kernel-profile probes. Main P1 server logging remains unchanged/common.",
+  "new_workflow_requests": 0,
+  "p1_dev_requests_so_far": 0,
+  "p0_budget_reset": false,
+  "raw_p0_evidence_preserved": true
+}
