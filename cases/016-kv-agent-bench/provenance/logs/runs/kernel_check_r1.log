@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "CASE016_WORKTREE/cases/016-kv-agent-bench/src/kv_agent_bench/kernel_check.py", line 46, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "CASE016_WORKTREE/cases/016-kv-agent-bench/src/kv_agent_bench/kernel_check.py", line 23, in main
+    impl=fi.FlashInferImpl(32,128,128**-0.5,8,None,None,'nvfp4')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "CASE016_PRIVATE/venv_r2/lib/python3.12/site-packages/vllm/v1/attention/backends/flashinfer.py", line 1905, in __init__
+    self.supports_xqa_or_trtllm_gen_decode = can_use_trtllm_attention(
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "CASE016_PRIVATE/venv_r2/lib/python3.12/site-packages/vllm/utils/flashinfer.py", line 690, in can_use_trtllm_attention
+    if force_use_trtllm_attention() is False:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "CASE016_PRIVATE/venv_r2/lib/python3.12/site-packages/vllm/utils/flashinfer.py", line 682, in force_use_trtllm_attention
+    vllm_config = get_current_vllm_config()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "CASE016_PRIVATE/venv_r2/lib/python3.12/site-packages/vllm/config/vllm.py", line 3482, in get_current_vllm_config
+    raise AssertionError(
+AssertionError: Current vLLM config is not set. This typically means get_current_vllm_config() was called outside of a set_current_vllm_config() context, or a CustomOp was instantiated at module import time or model forward time when config is not set. For tests that directly test custom ops/modules, use the 'default_vllm_config' pytest fixture from tests/conftest.py.

@@ -29,6 +29,13 @@ Qwen3-4B-Instruct-2507 · RTX 5080 16GB · 원본 BF16 → 가중치를 4비트�
 
 Case009는 시작·준비 실행·바탕화면 사용량을 포함한 표본입니다. 정답 손실과 평가 프로그램의 비정상 종료도 [모델별 안내](docs/ko/LLM_GUIDE.md)에서 함께 읽습니다. Case008 R은 별도 Qwen3-0.6B의 한 계산 블록을 줄이고 복원한 연구입니다.
 
+<!-- case016-entry -->
+## Case016 — 같은 KV 메모리에서 수용량과 요청 비용 검증
+
+RTX 5080에서 실제 NVFP4 KV 저장·읽기 검사와 고정 pool 비교 도구를 구현했습니다. 같은 약4GiB 캐시에서 token 수용량은 3.56배였고, 16K 입력의 동시 요청2/4에서 처리량 비율(F4/B16)은 1.21/1.35배였습니다. 모든 조건이 빨라진 것은 아니며 원 agent 기준선 실패도 보존했습니다.
+
+[Report](cases/016-kv-agent-bench/REPORT.ko.md) · [CPU](cases/016-kv-agent-bench/REPRODUCE.ko.md) · [Code](cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/runner.py)
+
 ## 직접 사용·재현
 
 - 내 모델의 저장된 답 비교: [두 파일 준비 → 검사 → 비교 → 보고서](packages/diova-compare/examples/compare/README.ko.md). Python 3.10+와 CPU로 실행하며, 자유 서술 답의 정오는 사용자가 제공합니다.
@@ -82,6 +89,8 @@ Case009는 시작·준비 실행·바탕화면 사용량을 포함한 표본입�
 | [013 — 가중치 오차가 줄면 실제 답도 좋아질까?](docs/ko/CASEBOOK.md#case-013) | INT4 스케일 보존·저장·재로딩과 동일 입력 품질 기록. Packed 전체 모델 수치 기준 미통과. |
 | [014 — 같은 4비트 저장량에서 품질을 개선할 수 있는가?](docs/ko/CASEBOOK.md#case-014) | PG19 텍스트 예측 품질 개선과 ArXiv 한계. BF16으로 복원한 품질 평가이며 VRAM 절감은 측정하지 않았습니다. |
 | [015 — 도구 이름만 바뀌어도 AI가 같은 일을 끝낼까?](https://munsik-kim.github.io/inference-lab/ko/case015.html#overview) | 구매한 개수와 개당 가격을 조회해 총금액을 계산·저장·확인하는 예제로 비교합니다. 16개 문제에서 BF16 15/16→16/16, RTN 16/16→16/16, D16 12/16→12/16. [작업 설명·용어·CPU 예제](cases/015-tool-interface-sensitivity/README.ko.md). |
+
+| [016 — 실제 NVFP4 KV 저장과 동시 요청 비용은?](cases/016-kv-agent-bench/README.ko.md) | BF16 가중치·같은4GiB pool에서 KV 저장·읽기, token 수용량, 36개 block의 처리량·대기·수치 sanity 비교. |
 
 ## 더 깊게 보기
 

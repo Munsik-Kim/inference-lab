@@ -1,0 +1,37 @@
+{
+  "scope": "Fresh shortP0 profile, actual32-token request after512-token prefill",
+  "paths": [
+    {
+      "kv": "B16",
+      "writer_calls": 1152,
+      "prefill_calls": 36,
+      "xqa_kernel_mha_calls": 1116,
+      "focal_requests": 1,
+      "generated_tokens": 32,
+      "layers": 36
+    },
+    {
+      "kv": "F4",
+      "writer_calls": 1152,
+      "prefill_calls": 36,
+      "xqa_kernel_mha_calls": 1116,
+      "focal_requests": 1,
+      "generated_tokens": 32,
+      "layers": 36
+    }
+  ],
+  "F4_prefill": "FlashInfer FA2 NVFP4 (native __nv_fp4x2_e2m1 KV)",
+  "F4_decode": "FlashInfer XQA kernel_mha;vLLM passes nvfp4_kv_data and nvfp4_kv_block_scales",
+  "query_output": "BF16 in both;query/output dtype is not KV storage dtype",
+  "flag_caveat": "nvfp4_fa2 describes an NVFP4 prefill/FA2 choice;impl.use_xqa absent/None is not decode selection metadata",
+  "source_file": "vllm/v1/attention/backends/flashinfer.py",
+  "source_sha256": "343b949d62db7fc03f6ca0c682e1ec1cb60125461069b081ac1554b7a05214e9",
+  "source_lines": [
+    2511,
+    2518,
+    2520
+  ],
+  "official_source": "https://github.com/vllm-project/vllm/blob/v0.32.0/vllm/v1/attention/backends/flashinfer.py",
+  "old_P0_P1_changed": false,
+  "new_GPU_requests_for_annotation": 0
+}

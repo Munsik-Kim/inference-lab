@@ -1,0 +1,108 @@
+{
+  "schema_version": "case016-v1",
+  "stage": "P0/P1",
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "weight_dtype": "bfloat16",
+  "tensor_parallel_size": 1,
+  "engine": "vllm==0.32.0",
+  "kv": {
+    "B16": "auto",
+    "F8": "fp8_e4m3",
+    "F4": "nvfp4"
+  },
+  "p1_comparison": [
+    "B16",
+    "F4"
+  ],
+  "fp8_pilot_allowed_only_if_f4_technical_block": true,
+  "seeds": {
+    "fixture": 6101901,
+    "smoke": 6101900,
+    "future_eval": 6101911,
+    "order": 6101902,
+    "analysis": 6101903
+  },
+  "p0_smoke_count_per_kv": 8,
+  "dev_tasks": 12,
+  "future_eval_tasks": 48,
+  "initial_p1_tokens": 8192,
+  "future_initial_tokens": 16384,
+  "menus": [
+    8,
+    32
+  ],
+  "request_caps": [
+    256,
+    1024
+  ],
+  "max_model_calls": 8,
+  "max_tool_attempts": 6,
+  "episode_token_budget": 8192,
+  "tool_result_token_limit": 256,
+  "serialization_reserve": 1024,
+  "request_seconds": 180,
+  "episode_seconds": 900,
+  "target_max_model_len": 28672,
+  "initial_smoke_max_model_len": 8192,
+  "target_kv_pool_bytes": 4294967296,
+  "max_num_seqs": 4,
+  "max_num_batched_tokens": 2048,
+  "chunked_prefill": true,
+  "prefix_caching": false,
+  "speculation": false,
+  "mtp": false,
+  "lora": false,
+  "cpu_offload": false,
+  "kv_offload": false,
+  "skip_kv_layers": [],
+  "temperature": 0,
+  "ignore_eos": false,
+  "tool_choice": "auto",
+  "tool_parser": "hermes",
+  "enable_thinking": false,
+  "structured_output_constraints": false,
+  "automatic_http_retry": false,
+  "graph_policy": "common enforce_eager=true to avoid CUDA graph residency; no per-KV difference",
+  "async_scheduling": "same explicit setting, resolve against installed CLI before model execution",
+  "budgets_seconds": {
+    "setup": 5400,
+    "p0_worker": 3600,
+    "p1_worker": 7200
+  },
+  "first_unmet_tie_rule": [
+    "source",
+    "calculation",
+    "write",
+    "validation",
+    "observable_dependency_chain",
+    "final",
+    "correct_state",
+    "protected_state"
+  ],
+  "primary_endpoint": "VERIFIED_WORKFLOW_SUCCESS",
+  "baseline_usable": {
+    "cell": [
+      "B16",
+      8,
+      1024
+    ],
+    "total_at_least": 9,
+    "each_family_at_least": 2,
+    "denominator": 12,
+    "interpretation": "postulated execution-scope management criterion, not literature or certification"
+  },
+  "future_eval_model_execution": false,
+  "p2_run": false,
+  "p3_run": false,
+  "remote_publication": false,
+  "registration_utc": "2026-10-19T05:34:35.722128+00:00",
+  "numerical_checks": {
+    "write_read_same_cache": {
+      "atol": 0.02,
+      "rtol": 0.02,
+      "finite_required": true
+    },
+    "bf16_vs_quantized_cache": "record error, no lossless/equivalence threshold; validity separate from quality"
+  }
+}

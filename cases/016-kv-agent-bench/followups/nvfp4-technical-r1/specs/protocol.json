@@ -1,0 +1,178 @@
+{
+  "schema": "case016-nvfp4-technical-v1",
+  "created_utc": "2026-10-20T00:48:01.541896+00:00",
+  "registered_before_new_gpu_requests": true,
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "engine": "vllm==0.32.0",
+  "weights": "bfloat16",
+  "kv": {
+    "B16": "auto",
+    "F4": "nvfp4"
+  },
+  "pool_bytes": 4294967296,
+  "max_model_len": 28672,
+  "max_num_seqs": 4,
+  "max_num_batched_tokens": 2048,
+  "chunked_prefill": true,
+  "prefix_cache": false,
+  "async_scheduling": false,
+  "attention_backend": "FLASHINFER",
+  "tp": 1,
+  "temperature": 0,
+  "thinking": false,
+  "endpoint": "/v1/completions",
+  "add_special_tokens": false,
+  "timed_ignore_eos": true,
+  "timed_output_tokens": 128,
+  "sanity_ignore_eos": false,
+  "sanity_max_tokens": 64,
+  "raw_token_recording": true,
+  "stream_interval": 1,
+  "tools": null,
+  "request_seconds_including_client_queue": 180,
+  "block_drain_seconds": 30,
+  "worker_seconds_including_p0_warmup_failures": 7200,
+  "max_infra_retries": 1,
+  "orders": [
+    {
+      "round": 1,
+      "kv_order": [
+        "B16",
+        "F4"
+      ],
+      "conditions": [
+        [
+          8192,
+          2
+        ],
+        [
+          8192,
+          1
+        ],
+        [
+          8192,
+          4
+        ],
+        [
+          16384,
+          2
+        ],
+        [
+          16384,
+          1
+        ],
+        [
+          16384,
+          4
+        ]
+      ]
+    },
+    {
+      "round": 2,
+      "kv_order": [
+        "F4",
+        "B16"
+      ],
+      "conditions": [
+        [
+          8192,
+          4
+        ],
+        [
+          16384,
+          4
+        ],
+        [
+          8192,
+          2
+        ],
+        [
+          16384,
+          2
+        ],
+        [
+          8192,
+          1
+        ],
+        [
+          16384,
+          1
+        ]
+      ]
+    },
+    {
+      "round": 3,
+      "kv_order": [
+        "B16",
+        "F4"
+      ],
+      "conditions": [
+        [
+          8192,
+          2
+        ],
+        [
+          16384,
+          2
+        ],
+        [
+          8192,
+          4
+        ],
+        [
+          16384,
+          4
+        ],
+        [
+          8192,
+          1
+        ],
+        [
+          16384,
+          1
+        ]
+      ]
+    }
+  ],
+  "planned_timed_blocks": 36,
+  "planned_timed_requests": 288,
+  "warmup": "One benchmark prompt of each length per owned server/round,12 total, excluded from timed results.",
+  "sanity": "16 separate inputs per KV once,32 natural-end requests;8 copy canary inputs and8 open-text inputs per KV. No full KL/PPL or agent endpoint.",
+  "optional_logprob": "NOT_RUN_SCOPE; no extra teacher-forced requests",
+  "graph_selection_before_timed": "Reuse validated eager mode for P0 finite checks. Probe default CUDA graph mode in separate owned servers with4 short512/16token requests per KV. Select graph only if both startup<=480s,cache/support/request checks pass. Graph errors lead to a common eager amendment before timed results, never based on speed/quality.",
+  "p0_probes": "2 eager32-token actual-attention finite/profile probes, up to8 graph16-token probes, one reused original tiny2-layout kernel check. No agent sweep.",
+  "numeric_tolerance": {
+    "same_compressed_dequant_atol": 0.02,
+    "same_compressed_dequant_rtol": 0.02,
+    "finite_attention_required": true,
+    "bf16_vs_quantization_error": "record only, no lossless threshold"
+  },
+  "primary_conditions": [
+    [
+      16384,
+      2
+    ],
+    [
+      16384,
+      4
+    ]
+  ],
+  "round_uncertainty": "All3 paired ratios plus median/range. No per-request bootstrap for makespan.",
+  "timing_definitions": {
+    "makespan": "first8-request queue launch to last terminal HTTP close; includes failures and client-slot wait",
+    "client_ttft": "first nonempty returned token-ID SSE event minus actual HTTP dispatch; role/empty/usage chunks excluded",
+    "client_decode_mean": "last token-ID event minus first token-ID event, divided by output_token_count-1; client-observed average, not per-token ITL",
+    "engine_queue_decode": "dedicated-server Prometheus interval sum/count deltas; no invented per-request attribution",
+    "successful_request": "HTTP completed,usage and original prompt IDs match,128 observed outputIDs and finish length; quality not scored in timed request success"
+  },
+  "seeds": {
+    "inputs": 6102001,
+    "order": 6102002,
+    "analysis": 6102003
+  },
+  "new_agent_tasks": false,
+  "agent_P2_P3": false,
+  "github_publication": "APPROVED_NORMAL_PR_AND_MERGE",
+  "pages_dispatch": "NOT_APPROVED"
+}

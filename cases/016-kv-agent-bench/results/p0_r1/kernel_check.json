@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "rows": [
+    {
+      "requested_layout": "NHD",
+      "actual_layout": "NHD",
+      "status": "PASS",
+      "query_heads": 32,
+      "kv_heads": 8,
+      "head_dim": 128,
+      "same_compressed_cache_two_decoder_max_abs": 0.0,
+      "bf16_original_vs_quantized_relative_norm_error": 0.09546148777008057,
+      "quantization_error_is_not_decoder_disagreement": true,
+      "packed_data_dtype": "torch.uint8",
+      "block_scale_dtype": "torch.float8_e4m3fn",
+      "writer": "FlashInferImpl.do_kv_cache_update/nvfp4_quantize_append_paged_kv_cache_with_slot_mapping",
+      "reader": "flashinfer.nvfp4_kv_dequantize_paged",
+      "other_layer_untouched": true
+    },
+    {
+      "requested_layout": "HND",
+      "actual_layout": "HND",
+      "status": "PASS",
+      "query_heads": 32,
+      "kv_heads": 8,
+      "head_dim": 128,
+      "same_compressed_cache_two_decoder_max_abs": 0.0,
+      "bf16_original_vs_quantized_relative_norm_error": 0.09534139931201935,
+      "quantization_error_is_not_decoder_disagreement": true,
+      "packed_data_dtype": "torch.uint8",
+      "block_scale_dtype": "torch.float8_e4m3fn",
+      "writer": "FlashInferImpl.do_kv_cache_update/nvfp4_quantize_append_paged_kv_cache_with_slot_mapping",
+      "reader": "flashinfer.nvfp4_kv_dequantize_paged",
+      "other_layer_untouched": true
+    }
+  ],
+  "wall_seconds": 4.874698593001085,
+  "torch_peak_allocated": 4941824,
+  "torch_peak_reserved": 6291456,
+  "model_forwards": 0,
+  "small_kernel_operations": true,
+  "same_cache_decoder_tolerance": {
+    "atol": 0.02,
+    "rtol": 0.02
+  },
+  "upstream_test": "vllm@5df63a7/tests/kernels/attention/test_flashinfer.py::test_flashinfer_nvfp4_kv_cache_update",
+  "upstream_test_suite_executed": false
+}

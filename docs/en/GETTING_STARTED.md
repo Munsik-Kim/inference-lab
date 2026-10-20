@@ -235,3 +235,17 @@ Check whether an AI finishes the same task after a tool rename. The example is *
 OUT=$(mktemp -d)
 python3 -B cases/015-tool-interface-sensitivity/publication/scripts/run_checks.py --output "$OUT/case015" --tests
 ```
+
+<!-- case016-entry -->
+<a id="case016-cpu"></a>
+## Case016 — Native KV capacity and request costs at the same memory budget
+
+Built native NVFP4 KV storage/read checks and a fixed-pool comparison tool on RTX5080. Token capacity was 3.56× at approximately4GiB; F4/B16 request-throughput ratios at16K concurrency2/4 were 1.21/1.35×. Other conditions were not uniformly faster; original agent-baseline failures remain preserved.
+
+[Report](../../cases/016-kv-agent-bench/REPORT.md) · [CPU commands](../../cases/016-kv-agent-bench/REPRODUCE.md) · [Implementation](../../cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/runner.py)
+
+```bash
+python3 -B cases/016-kv-agent-bench/publication/run_checks.py --output /tmp/case016-check-new --tests
+```
+
+Bilingual Pages integration is prepared; manual deployment was not dispatched without separate approval.

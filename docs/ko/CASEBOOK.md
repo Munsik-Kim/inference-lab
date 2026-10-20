@@ -29,6 +29,7 @@
 - [014 — 같은 INT4 저장량으로 모델 품질 개선하기](#case-014)
 
 - [015 — 같은 도구, 다른 이름](#case-015)
+- [016 — NVFP4 KV storage/capacity](#case-016)
 
 <a id="case-001"></a>
 ## 001 — 커널 선택 조건을 고치면 실행할 수 있는가?
@@ -657,3 +658,11 @@ Qwen3-0.6B · 학습된 행렬 변환(projection) 196개 · PG19 PPL 57.600→50
 도구 이름만 바뀌어도 AI가 같은 일을 끝내는지 확인합니다. 예제 작업은 **구매한 개수와 개당 가격을 읽고→총금액을 계산하고→저장한 뒤→맞게 기록됐는지 확인**하는 일입니다. 기능과 입력 형식은 유지하고 `read_order`를 `readOrder`처럼 이름 표기만 바꿉니다. 16개 문제에서 BF16은 **15/16→16/16**, RTN은 **16/16→16/16**, D16은 **12/16→12/16**이었습니다. [작업·용어 안내](../../cases/015-tool-interface-sensitivity/README.ko.md)에서 주문(구매 내역)·단가(개당 가격)와 결과표 읽는 법을 설명합니다. 기존 시험 P1과 새 응용시험 A1의 각 96회는 별도로 집계합니다.
 
 [Pages](https://munsik-kim.github.io/inference-lab/ko/case015.html#overview) · [Report](../../cases/015-tool-interface-sensitivity/REPORT.ko.md) · [CPU example](../../cases/015-tool-interface-sensitivity/REPRODUCE.ko.md) · [Runner](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)
+
+<!-- case016-entry -->
+<a id="case-016"></a>
+## Case016 — 같은 KV 메모리에서 수용량과 요청 비용 검증
+
+RTX 5080에서 실제 NVFP4 KV 저장·읽기 검사와 고정 pool 비교 도구를 구현했습니다. 같은 약4GiB 캐시에서 token 수용량은 3.56배였고, 16K 입력의 동시 요청2/4에서 처리량 비율(F4/B16)은 1.21/1.35배였습니다. 모든 조건이 빨라진 것은 아니며 원 agent 기준선 실패도 보존했습니다.
+
+[Report](../../cases/016-kv-agent-bench/REPORT.ko.md) · [CPU commands](../../cases/016-kv-agent-bench/REPRODUCE.ko.md) · [Implementation](../../cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/runner.py)

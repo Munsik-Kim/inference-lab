@@ -1,0 +1,45 @@
+{
+  "status": "COMPLETED_TECHNICAL_P1T",
+  "TECH_PATH_VALID": true,
+  "TECH_NUMERIC_VALID": true,
+  "CAPACITY_VALID": true,
+  "SERVING_MEASURED": true,
+  "serving_gain_primary_observed": true,
+  "primary_paired_ratios": [
+    {
+      "length": 16384,
+      "concurrency": 2,
+      "paired_ratios": [
+        1.2052751509991004,
+        1.209312358977387,
+        1.2105015962533197
+      ],
+      "ratio_median": 1.209312358977387,
+      "ratio_min": 1.2052751509991004,
+      "ratio_max": 1.2105015962533197
+    },
+    {
+      "length": 16384,
+      "concurrency": 4,
+      "paired_ratios": [
+        1.349993467300691,
+        1.3510635808856077,
+        1.357363786854889
+      ],
+      "ratio_median": 1.3510635808856077,
+      "ratio_min": 1.349993467300691,
+      "ratio_max": 1.357363786854889
+    }
+  ],
+  "new_agent_P2_P3": "NOT_RUN",
+  "Pages_dispatch": "NOT_RUN_NO_APPROVAL",
+  "limitations": [
+    "one device/model;synthetic fixed token workload",
+    "whole configurations include different native kernels and capacity/queue behavior",
+    "same8prompts per length repeated3rounds",
+    "small2-layout dequant fixture;finite attention only shortP0eager",
+    "client terminal timestamp includes SSE assembly and raw parsing;exact HTTPclose not separately timestamped",
+    "legacy cudagraph_policy string is stale;actual compilation_mode and capture logs retained"
+  ],
+  "missing_blocks": []
+}

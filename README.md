@@ -29,6 +29,13 @@ Qwen3-4B-Instruct-2507 · RTX 5080 16GB · original BF16 → GPTQ W4A16. These r
 
 Case009 samples include startup, warmup and desktop use. Read its lost correct answers and abnormal evaluation-process exits in the [model guide](docs/en/LLM_GUIDE.md). Case008 R is a separate study reducing and restoring one block of Qwen3-0.6B.
 
+<!-- case016-entry -->
+## Case016 — Native KV capacity and request costs at the same memory budget
+
+Built native NVFP4 KV storage/read checks and a fixed-pool comparison tool on RTX5080. Token capacity was 3.56× at approximately4GiB; F4/B16 request-throughput ratios at16K concurrency2/4 were 1.21/1.35×. Other conditions were not uniformly faster; original agent-baseline failures remain preserved.
+
+[Report](cases/016-kv-agent-bench/REPORT.md) · [CPU](cases/016-kv-agent-bench/REPRODUCE.md) · [Code](cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/runner.py)
+
 ## Use or reproduce
 
 - Compare saved answers from your models: [prepare two files → validate → compare → reports](packages/diova-compare/examples/compare/README.md). Uses Python 3.10+ and CPU; you supply correctness judgments for free-form answers.
@@ -81,6 +88,8 @@ The [implementation / upstream technology / code / tests table](docs/en/PORTFOLI
 | [013 — Does lower weight error improve real answers?](docs/en/CASEBOOK.md#case-013) | INT4 scale-preserving conversion/reload and matched full-model, long-input and tool-quality records; packed gate remains blocked. |
 | [014 — Can quality improve at the same 4-bit storage?](docs/en/CASEBOOK.md#case-014) | PG19 text-quality gains and ArXiv limits. Quality was evaluated after BF16 restoration; VRAM savings were not measured. |
 | [015 — Can an AI finish the same task after a tool rename?](https://munsik-kim.github.io/inference-lab/en/case015.html#overview) | A purchase example: look up item count and price per item, calculate the total, save and validate it. Across 16 problems: BF16 15/16→16/16, RTN 16/16→16/16, D16 12/16→12/16. [Task, terms and CPU example](cases/015-tool-interface-sensitivity/README.md). |
+
+| [016 — Native NVFP4 KV capacity and serving costs?](cases/016-kv-agent-bench/README.md) | BF16 weights,same4GiB pool:native KV read/write,capacity,36-block throughput/queue/numerical sanity. |
 
 ## Go deeper
 

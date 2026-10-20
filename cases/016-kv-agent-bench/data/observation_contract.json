@@ -1,0 +1,36 @@
+{
+  "evidence_kind": "explanation_of_already_frozen_contract",
+  "new_model_input": false,
+  "rules": [
+    {
+      "from": "initial facts",
+      "to": "all generations",
+      "edge_kind": "available_from_generation0"
+    },
+    {
+      "from": "source result",
+      "to": "calculation",
+      "edge_kind": "must_be_observed_before_generation"
+    },
+    {
+      "from": "calculation result",
+      "to": "write",
+      "edge_kind": "must_be_observed_before_generation"
+    },
+    {
+      "from": "write",
+      "to": "validate",
+      "edge_kind": "execution_order; same response allowed"
+    },
+    {
+      "from": "current validation result",
+      "to": "final answer",
+      "edge_kind": "must_be_observed_before_generation; latest state digest/version required"
+    }
+  ],
+  "original_sources": [
+    "data/tasks.json visible work request",
+    "src/kv_agent_bench/scorer.py",
+    "results/p1_r1/code_freeze.json"
+  ]
+}

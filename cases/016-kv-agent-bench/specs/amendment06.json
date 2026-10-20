@@ -1,0 +1,7 @@
+{
+  "p1_dev_model_requests_before_amendment": 0,
+  "reason": "P0 cancellation probe was rejected before generation because vLLM0.32 rejects an empty tools array even with tool_choice none. Omit tools for the pure-text cancellation probe. Reuse completed raw ON/OFF and incomplete probes, no successful result rerun.",
+  "add_profile": "One32-token F4-only P0 profiler request to record actual prefill/decode kernel names; excluded from workflow denominator.",
+  "source_boundary": "P1 uses raw marker slot order aligned with engine-accepted calls. Partial engine calls remain unaccepted; parser is not relaxed. Added regression tests. Existing P0 raw/scores remain unchanged.",
+  "p0_budget_reset": false
+}

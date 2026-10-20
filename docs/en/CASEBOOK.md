@@ -29,6 +29,7 @@ Each case follows **objective → dataset → assumptions and theory → experim
 - [014 — Improving quality at the same INT4 storage budget](#case-014)
 
 - [015 — Same Tools, Different Interfaces](#case-015)
+- [016 — NVFP4 KV storage/capacity](#case-016)
 
 <a id="case-001"></a>
 ## 001 — Can a kernel-selection change unblock execution?
@@ -661,3 +662,11 @@ Qwen3-0.6B · 196 learned matrix transformations (projections) · PG19 PPL 57.60
 Check whether an AI finishes the same task after a tool rename. The example is **read item count and price per item → calculate the purchase total → save it → validate the record**. Functions and input formats stay fixed; only names change, such as `read_order` to `readOrder`. Across 16 problems, BF16 was **15/16→16/16**, RTN **16/16→16/16**, and D16 **12/16→12/16**. The [task and terminology guide](../../cases/015-tool-interface-sensitivity/README.md) explains orders as purchase records, unit price as price per item, and how to read the results. The 96 runs of the earlier P1 study and the new A1 application are counted separately.
 
 [Pages](https://munsik-kim.github.io/inference-lab/en/case015.html#overview) · [Report](../../cases/015-tool-interface-sensitivity/REPORT.md) · [CPU example](../../cases/015-tool-interface-sensitivity/REPRODUCE.md) · [Runner](../../cases/015-tool-interface-sensitivity/followups/order-api-regression-v1/src/order_regression/runner.py)
+
+<!-- case016-entry -->
+<a id="case-016"></a>
+## Case016 — Native KV capacity and request costs at the same memory budget
+
+Built native NVFP4 KV storage/read checks and a fixed-pool comparison tool on RTX5080. Token capacity was 3.56× at approximately4GiB; F4/B16 request-throughput ratios at16K concurrency2/4 were 1.21/1.35×. Other conditions were not uniformly faster; original agent-baseline failures remain preserved.
+
+[Report](../../cases/016-kv-agent-bench/REPORT.md) · [CPU commands](../../cases/016-kv-agent-bench/REPRODUCE.md) · [Implementation](../../cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/runner.py)

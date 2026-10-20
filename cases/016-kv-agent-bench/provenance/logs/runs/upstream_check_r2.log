@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "CASE016_WORKTREE/cases/016-kv-agent-bench/src/kv_agent_bench/upstream_check.py", line 31, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "CASE016_WORKTREE/cases/016-kv-agent-bench/src/kv_agent_bench/upstream_check.py", line 27, in main
+    with set_current_vllm_config(VllmConfig()):namespace[node.name](None,layout)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pinned_vllm_test_flashinfer.py", line 733, in test_flashinfer_nvfp4_kv_cache_update
+NameError: name 'flashinfer' is not defined
