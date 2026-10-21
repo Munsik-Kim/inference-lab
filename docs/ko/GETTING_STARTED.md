@@ -23,7 +23,7 @@
 
 ## 설치 없이 공개 결과 화면 열기
 
-[한국어 홈](https://munsik-kim.github.io/inference-lab/ko/index.html) · [Case008 Q: 파일 축소·재실행](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) · [Case009: 서빙 비교](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving) · [도구 실패 완화 보고서](../../research/agent_tool_contract_repair_20261014/records/REPORT_KO.md). Pages 화면은 저장된 측정값을 보여주며 설치나 GPU가 필요 없습니다. 오프라인에서 보려면 아래처럼 로컬 빌드를 사용합니다.
+[한국어 홈](https://munsik-kim.github.io/inference-lab/ko/index.html) · [Case008 Q: 파일 축소·재실행](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) · [Case009: 서빙 비교](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving) · [Case017 모델 없는 CPU 재생](../../cases/017-agent-contract-cost-bench/REPRODUCE.ko.md). Pages 화면은 저장된 측정값을 보여주며 설치나 GPU가 필요 없습니다. 오프라인에서 보려면 아래처럼 로컬 빌드를 사용합니다.
 
 모델의 실행 경로·실패·완화는 [모델별 실전 안내](LLM_GUIDE.md), 숫자를 읽는 공통 기준은 안내서의 측정 방법 페이지로 연결합니다. 이 문서는 다운로드·정적 빌드·CPU 검산을 위한 개발자 재현 안내입니다.
 

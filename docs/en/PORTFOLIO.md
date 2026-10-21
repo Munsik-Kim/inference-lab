@@ -33,7 +33,12 @@ Built an independent CPU comparison tool. It checks that two files describe the 
 
 **Technical judgment — current design:** the two example files both score 2/4, but one answer changes from correct to wrong and another from wrong to correct. Matching each question before comparing (paired comparison) reveals what the overall score hides. Basic comparison needs no raw model scores (logits). For freely generated text, users supply correctness judgments and identifiers for inputs and saved results; file checks do not authenticate the underlying data. A new task needs suitable grading and question-matching rules.
 
-## Featured C · Verify actual tool-task completion
+<a id="featured-c--verify-actual-tool-task-completion"></a>
+## Featured C · Verify tool workflow completion and execution costs
+
+Built a replay auditor that checks saved state, observed validation and final answers, and compares completion, failures and execution costs across tool call policies and KV configurations. Measurements cover three synthetic workflows: order totals, inventory transfers and document updates. [Case017 results and recorded episodes](../../cases/017-agent-contract-cost-bench/REPORT.md) · [CPU replay without a model](../../cases/017-agent-contract-cost-bench/REPRODUCE.md). This is exploratory measurement with a disclosed [expansion-gate deviation](../../cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.md).
+
+### Earlier work · Case013 follow-up
 
 A final message claiming success could appear even when the AI had not changed the test file or run the required check. Built restrictions that allow only registered tool names and explanations for call errors, then checked recorded actions and actual changes to the prepared test files. [Tool-name restriction code](../../research/agent_tool_contract_repair_20261014/guard.py) · [Actual-action record analysis](../../research/agent_tool_contract_repair_20261014/analyze.py) · [Tests](../../research/agent_tool_contract_repair_20261014/test_guard.py) · [Report](../../research/agent_tool_contract_repair_20261014/records/REPORT.md).
 

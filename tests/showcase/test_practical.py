@@ -74,6 +74,12 @@ class PracticalGuide(unittest.TestCase):
             self.assertIn('href="#featured-stories"',hero)
             stories=home[home.index('id="featured-stories"'):home.index('id="contributions"')]
             self.assertEqual(stories.count('<article class="story">'),3)
+            featured=re.findall(r'<article class="story">(.*?)</article>',stories,re.S)
+            c=Structure();c.feed(featured[2])
+            self.assertEqual(c.links[0],'case017.html#overview')
+            for link in ('case017.html#episodes','case017.html#reproduce','qwen3-4b.html#mitigation'):
+                self.assertIn(link,c.links)
+            self.assertIn('Case013',' '.join(c.visible))
             for page in PAGES:
                 html=(self.site/lang/(page+'.html')).read_text(); p=Structure();p.feed(html)
                 self.assertEqual(p.headings.count(1),1)
@@ -161,6 +167,8 @@ class PracticalGuide(unittest.TestCase):
             self.assertNotIn('일곱 사례' if lang=='ko' else 'seven cases',text)
             for number in range(1,14):self.assertIn(f'CASEBOOK.md#case-{number:03}',text)
             self.assertLess(text.index('case008.html#track-q'),text.index('case009.html#serving'))
+            self.assertLess(text.index('case009.html#serving'),text.index('017-agent-contract-cost-bench/REPORT'))
+            self.assertLess(text.index('017-agent-contract-cost-bench/REPORT'),text.index('agent_tool_contract_repair_20261014'))
             self.assertLess(text.index('case009.html#serving'),text.index('agent_tool_contract_repair_20261014'))
             self.assertLess(text.index('https://munsik-kim.github.io'),text.index('GETTING_STARTED.md#offline-explorers'))
             reproduction=(ROOT/f'docs/{lang}/GETTING_STARTED.md').read_text()
@@ -212,6 +220,11 @@ class PracticalGuide(unittest.TestCase):
             readme=ROOT/('README.ko.md' if lang=='ko' else 'README.md')
             self.assertIn('docs/'+lang+'/LLM_GUIDE.md',readme.read_text())
             self.assertIn('](LLM_GUIDE.md)',(ROOT/f'docs/{lang}/PORTFOLIO.md').read_text())
+            c=next(line for line in readme.read_text().splitlines() if line.startswith('| C. '))
+            suffix='.ko.md' if lang=='ko' else '.md'
+            links=re.findall(r'\]\(([^)]+)\)',c)
+            self.assertEqual(links[:2],['cases/017-agent-contract-cost-bench/'+name+suffix for name in ('REPORT','REPRODUCE')])
+            self.assertEqual(links[2],'research/agent_tool_contract_repair_20261014/README'+suffix)
 
 
 if __name__=='__main__': unittest.main()

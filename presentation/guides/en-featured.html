@@ -19,12 +19,11 @@
       <div class="actions"><a href="compare.html#run">Run the synthetic example</a><a href="compare.html#own-records">Map your records</a></div>
     </article>
     <article class="story">
-      <p class="story-source">C · Actual tool-task completion · Case013 follow-up</p>
-      <h3><a href="qwen3-4b.html#mitigation">Check success claims against executed actions</a></h3>
-      <p>Investigated tasks that failed because the AI called a nonexistent tool name. Built a name restriction and error guidance, then checked actual file edits and successful checks alongside the final success claim.</p>
-      <p class="story-metric"><span>Before/after tool-call rules (D16) · same {{dev_tasks}} development tasks (DEV) reused</span><strong>{{d16_before}} → {{d16_after}}</strong><span>Small sample · four-bit weights restored to a normal 16-bit number format (BF16) for quality checks<br>Unseen-task success and four-bit serving speed unverified</span></p>
-      <p>D16 and D4 use the same four-bit weights. D4 also reduces calculation inputs to four bits and restores them: it changed {{d4_before}} → {{d4_after}}, leaving {{d4_remaining}} failures. Extra error guidance beyond the name restriction showed no added benefit.</p>
-      <a href="qwen3-4b.html#mitigation">Mitigation, action evidence and remaining failures</a>
+      <p class="story-source">C · Workflow completion and cost replay · Case017</p>
+      <h3><a href="case017.html#overview">Verify tool workflow completion and execution costs</a></h3>
+      <p>Built a replay auditor that checks saved state, observed validation and final answers, and compares completion, failures and execution costs across tool call policies and KV configurations.</p>
+      <p>The study uses three synthetic workflows: order totals, inventory transfers and document updates.</p>
+      <div class="actions"><a href="case017.html#episodes">Case017 recorded episodes</a><a href="case017.html#reproduce">CPU replay without a model</a><a href="qwen3-4b.html#mitigation">Earlier work: Case013 follow-up</a></div>
     </article>
   </div>
 </section>

@@ -20,12 +20,11 @@
       <div class="actions"><a href="compare.html#run">합성 예제로 실행하기</a><a href="compare.html#own-records">내 결과 파일의 필드 채우기</a></div>
     </article>
     <article class="story">
-      <p class="story-source">C · 실제 도구 작업 완료 확인 · Case013 후속</p>
-      <h3><a href="qwen3-4b.html#mitigation">성공했다는 답변과 실제 실행을 함께 확인하기</a></h3>
-      <p>AI가 존재하지 않는 도구 이름을 부르면 작업이 실행되지 않는 문제를 조사했습니다. 등록된 이름만 쓰게 하는 코드와 오류 안내를 만들고, 성공했다는 답변뿐 아니라 실제 파일 수정과 검사 완료 기록을 확인했습니다.</p>
-      <p class="story-metric"><span>도구 호출 규칙 수정 전후(D16) · 개발에 썼던 {{dev_tasks}}개 문제(DEV) 재사용</span><strong>{{d16_before}} → {{d16_after}}</strong><span>작은 표본 · 4비트 가중치를 일반 16비트 형식(BF16)으로 복원해 품질 확인<br>처음 보는 문제의 성공·4비트 실행 가속은 미확인</span></p>
-      <p>D16과 D4는 같은 4비트 가중치를 씁니다. D4는 계산에 들어가는 값도 4비트로 줄였다가 복원하는 조건으로, {{d4_before}} → {{d4_after}}이며 {{d4_remaining}}개 실패가 남았습니다. 이름 제한에 오류 안내를 더한 추가 이득은 확인하지 못했습니다.</p>
-      <a href="qwen3-4b.html#mitigation">오류를 줄이는 코드·실행 기록·남은 실패</a>
+      <p class="story-source">C · 업무 완주·비용 재생 검사 · Case017</p>
+      <h3><a href="case017.html#overview">도구 작업의 실제 완료와 실행 비용 확인</a></h3>
+      <p>저장된 값·수정 후 받은 검증 결과·최종 답을 함께 채점하고, 호출 정책과 KV 구성에 따른 완주·실패·비용을 재생 검사하는 도구를 구현했습니다.</p>
+      <p>상품 합계 기록·창고 이동·문서 정보 변경이라는 세 합성 업무를 시험했습니다.</p>
+      <div class="actions"><a href="case017.html#episodes">Case017 실제 사건</a><a href="case017.html#reproduce">모델 없이 CPU 재생</a><a href="qwen3-4b.html#mitigation">앞선 연구: Case013 후속 구현</a></div>
     </article>
   </div>
 </section>
