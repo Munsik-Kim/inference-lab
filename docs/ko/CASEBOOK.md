@@ -666,3 +666,15 @@ Qwen3-0.6B · 학습된 행렬 변환(projection) 196개 · PG19 PPL 57.600→50
 RTX 5080에서 실제 NVFP4 KV 저장·읽기 검사와 고정 pool 비교 도구를 구현했습니다. 같은 약4GiB 캐시에서 token 수용량은 3.56배였고, 16K 입력의 동시 요청2/4에서 처리량 비율(F4/B16)은 1.21/1.35배였습니다. 모든 조건이 빨라진 것은 아니며 원 agent 기준선 실패도 보존했습니다.
 
 [Report](../../cases/016-kv-agent-bench/REPORT.ko.md) · [CPU commands](../../cases/016-kv-agent-bench/REPRODUCE.ko.md) · [Implementation](../../cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/runner.py)
+
+<!-- case017-entry -->
+<a id="case-017"></a>
+## 017 — 도구 호출 규칙과 업무 완주 비용
+
+도구 호출 규칙이 실제 저장·검증·최종 답의 완료를 얼마나 바꾸는지 비교하는 평가기를 구현했습니다. 상품 합계 기록·창고 이동·문서 정보 변경을 소유한 가상 기록에서 시험합니다.
+
+BF16 가중치를 고정한 NVFP4 KV의 신규 합성 24과제에서 문법 제약은 완주 7/24→15/24, 상태 정확 7/24→22/24를 기록했습니다. 회복 8개·손실 0개와 함께 추가 실행 비용과 남은 실패도 추적했습니다. 완주 수가 늘면서 전체 실행 비용도 늘었습니다. 실패를 포함한 24개 실행의 비용을 완주 수로 나누면 입력 토큰은 약 3.62%, 출력 토큰은 12.36%, 한 과제 실행 시간(episode wall)은 11.27% 증가했습니다.
+
+확대 기준 이탈: 설정 점검용 DEV에서 BF16 KV+C0의 완주는 5/8로 원안의 6/8 기준에 미달했습니다. 당시 로컬 계획과 실행 코드가 이 성공 조건을 누락하고 완료·동결·봉인만 검사해 P2를 진행했습니다. 별도 면제 승인 기록은 확인하지 못했습니다. 이 경위를 공개하며, P2는 해당 기준을 통과한 확인시험이 아닌 신규 합성 과제의 탐색적 측정으로 제시합니다.
+
+[Report](../../cases/017-agent-contract-cost-bench/REPORT.ko.md) · [CPU](../../cases/017-agent-contract-cost-bench/REPRODUCE.ko.md) · [Runner](../../cases/017-agent-contract-cost-bench/src/agent_contract_cost/runner.py) · [Deviation](../../cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.ko.md)

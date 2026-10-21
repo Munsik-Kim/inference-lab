@@ -1,0 +1,139 @@
+[
+  {
+    "description": "Read all line quantities and unit prices in integer minor units, discount basis points, and current total for a purchase record.",
+    "name": "read_order",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "order_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "order_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "description": "Calculate sum(quantity*unit_price_minor), apply discount_bps/10000, round to nearest minor unit with exact halves up, and return total_minor.",
+    "name": "calculate_total",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "discount_bps": {
+          "maximum": 10000,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "lines": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "quantity": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "unit_price_minor": {
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "quantity",
+              "unit_price_minor"
+            ],
+            "type": "object"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "lines",
+        "discount_bps"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "description": "Store the supplied integer total on the specified existing purchase record; preserve all other fields.",
+    "name": "write_order_total",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "order_id": {
+          "type": "string"
+        },
+        "total_minor": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "order_id",
+        "total_minor"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "description": "Check public structure, integer total, and protected-field invariants. This does not compare the amount with the requested calculation.",
+    "name": "validate_order",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "order_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "order_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "description": "Finish the task with its task ID, completed flag, exact resulting values, and whether you observed validation. This action does not change any file.",
+    "name": "final",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "completed": {
+          "type": "boolean"
+        },
+        "result": {
+          "additionalProperties": false,
+          "properties": {
+            "order_id": {
+              "type": "string"
+            },
+            "total_minor": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "validated": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "order_id",
+            "total_minor",
+            "validated"
+          ],
+          "type": "object"
+        },
+        "task_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "completed",
+        "result"
+      ],
+      "type": "object"
+    }
+  }
+]

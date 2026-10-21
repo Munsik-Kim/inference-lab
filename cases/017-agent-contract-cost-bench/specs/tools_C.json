@@ -1,0 +1,145 @@
+[
+  {
+    "description": "Read the current revision and metadata of an existing document.",
+    "name": "read_document",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "document_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "document_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "description": "Set the supplied status, tags and owner on an existing document if expected_revision matches; increment revision exactly once and preserve all other fields.",
+    "name": "update_document",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "document_id": {
+          "type": "string"
+        },
+        "expected_revision": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "owner_id": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "review",
+            "published",
+            "archived"
+          ],
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 0,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "document_id",
+        "expected_revision",
+        "status",
+        "tags",
+        "owner_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "description": "Check public metadata structure, revision type and protected fields; does not compare metadata with a hidden requested answer.",
+    "name": "validate_document",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "document_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "document_id"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "description": "Finish the task with its task ID, completed flag, exact resulting values, and whether you observed validation. This action does not change any file.",
+    "name": "final",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "completed": {
+          "type": "boolean"
+        },
+        "result": {
+          "additionalProperties": false,
+          "properties": {
+            "document_id": {
+              "type": "string"
+            },
+            "owner_id": {
+              "type": "string"
+            },
+            "revision": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "status": {
+              "enum": [
+                "draft",
+                "review",
+                "published",
+                "archived"
+              ],
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 8,
+              "minItems": 0,
+              "type": "array",
+              "uniqueItems": true
+            },
+            "validated": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "document_id",
+            "revision",
+            "status",
+            "tags",
+            "owner_id",
+            "validated"
+          ],
+          "type": "object"
+        },
+        "task_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "completed",
+        "result"
+      ],
+      "type": "object"
+    }
+  }
+]

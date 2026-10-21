@@ -1,0 +1,21 @@
+{
+  "attempt": "CPU_PREPARE_01",
+  "status": "FAILED_BEFORE_MODEL",
+  "error": "TypeError: Object of type BatchEncoding is not JSON serializable",
+  "location": "client.tokenize_messages -> digest(ids)",
+  "cause": "Installed Transformers5.19 apply_chat_template default returns BatchEncoding; code assumed integer list",
+  "model_requests": 0,
+  "gpu_server_started": false,
+  "partial_registered_files_preserved": [
+    "specs/protocol.json",
+    "provenance/model_identity.json",
+    "specs/tools_A.json",
+    "specs/tools_B.json",
+    "specs/tools_C.json",
+    "specs/grammar_A.json",
+    "specs/grammar_B.json",
+    "specs/grammar_C.json"
+  ],
+  "next_action": "Explicit return_dict=False; same-identity preparation resume; add CPU tokenizer regression",
+  "recorded_utc": "2026-10-20T07:05:12.667253+00:00"
+}

@@ -1,0 +1,356 @@
+[
+  {
+    "canonical_task_sha256": "a8809fb340761dfa7e4bf343fceb881b40fe2c9686c64f841fa7f7725817f268",
+    "family": "A",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "order_id": "R-566de0596f7e"
+    },
+    "initial_state": {
+      "orders": {
+        "R-566de0596f7e": {
+          "discount_bps": 825,
+          "lines": [
+            {
+              "quantity": 33,
+              "unit_price_minor": 4722
+            },
+            {
+              "quantity": 12,
+              "unit_price_minor": 14850
+            }
+          ],
+          "protected_customer": "client-60ed36",
+          "total_minor": null
+        },
+        "X-27bf2e0c92ab": {
+          "discount_bps": 0,
+          "lines": [
+            {
+              "quantity": 2,
+              "unit_price_minor": 701
+            }
+          ],
+          "protected_customer": "control-client",
+          "total_minor": 1402
+        }
+      }
+    },
+    "initial_state_sha256": "b8fe914886a97c56a4876f8016d87e7795811969d8f125cb3464e0b150939bc0",
+    "oracle_sha256": "59c53f30f1aa05478a686fcd411b3f7b56b43e6e30d43f10a2f7e518f0e16ada",
+    "prompt": "Task DEV-A00. Read purchase record R-566de0596f7e. Use the returned quantities, unit prices and discount in calculate_total. Store its returned total, validate the record, then send final. Money is stored in integer minor units. A discount basis point is 1/10000; round the discounted total to nearest integer, with exact halves up. Wait for each read/calculation result before creating an action that needs it. Preserve all other records and fields.",
+    "seed": 6102001,
+    "split": "DEV",
+    "task_id": "DEV-A00",
+    "template_id": "DEV-purchase-0"
+  },
+  {
+    "canonical_task_sha256": "65868e0208b9464ea9af5209196e030666533fbce1a2b73d35f983cbc29a69ec",
+    "family": "A",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "order_id": "R-7c33710d77b0"
+    },
+    "initial_state": {
+      "orders": {
+        "R-7c33710d77b0": {
+          "discount_bps": 375,
+          "lines": [
+            {
+              "quantity": 26,
+              "unit_price_minor": 4714
+            },
+            {
+              "quantity": 6,
+              "unit_price_minor": 3066
+            },
+            {
+              "quantity": 24,
+              "unit_price_minor": 7268
+            }
+          ],
+          "protected_customer": "client-453d61",
+          "total_minor": null
+        },
+        "X-26d8458b45fb": {
+          "discount_bps": 0,
+          "lines": [
+            {
+              "quantity": 2,
+              "unit_price_minor": 701
+            }
+          ],
+          "protected_customer": "control-client",
+          "total_minor": 1402
+        }
+      }
+    },
+    "initial_state_sha256": "e9455fdd54bcd3927f80d314c0035ddcccd4f601c5bf66cbfa9152e673c5fc28",
+    "oracle_sha256": "bedf42eed392f80e75576c0e5e3d660ea682d285fdf9c02240df90ffb5d46861",
+    "prompt": "Task DEV-A01. Complete the settlement of R-7c33710d77b0: retrieve its items, calculate the discounted amount with the calculation tool, save the amount, check validation, and finish with final. Money is stored in integer minor units. A discount basis point is 1/10000; round the discounted total to nearest integer, with exact halves up. Wait for each read/calculation result before creating an action that needs it. Preserve all other records and fields.",
+    "seed": 6102001,
+    "split": "DEV",
+    "task_id": "DEV-A01",
+    "template_id": "DEV-purchase-1"
+  },
+  {
+    "canonical_task_sha256": "56b5dcdfa24921f09571a732a67b659ebe2dd5e43dc39d2cd4d741a278f2e200",
+    "family": "A",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "order_id": "R-33097a9cc350"
+    },
+    "initial_state": {
+      "orders": {
+        "R-33097a9cc350": {
+          "discount_bps": 1500,
+          "lines": [
+            {
+              "quantity": 30,
+              "unit_price_minor": 15307
+            },
+            {
+              "quantity": 38,
+              "unit_price_minor": 6861
+            },
+            {
+              "quantity": 21,
+              "unit_price_minor": 16732
+            },
+            {
+              "quantity": 4,
+              "unit_price_minor": 13012
+            }
+          ],
+          "protected_customer": "client-fa02ab",
+          "total_minor": null
+        },
+        "X-0046c0f3a56b": {
+          "discount_bps": 0,
+          "lines": [
+            {
+              "quantity": 2,
+              "unit_price_minor": 701
+            }
+          ],
+          "protected_customer": "control-client",
+          "total_minor": 1402
+        }
+      }
+    },
+    "initial_state_sha256": "be6cba44c5fc2855a3f05d8b7486d0d7cf1a0f05399bbb224e13c4e389722caa",
+    "oracle_sha256": "67bd428d7d2750f9f6bf22d3d38fa29b4d89e274a9a0ae35d23b31f8eb4a8759",
+    "prompt": "Task DEV-A02. The total on purchase record R-33097a9cc350 is unfinished. Inspect that record, obtain the integer payable amount from calculate_total, save and validate it, and return final. Money is stored in integer minor units. A discount basis point is 1/10000; round the discounted total to nearest integer, with exact halves up. Wait for each read/calculation result before creating an action that needs it. Preserve all other records and fields.",
+    "seed": 6102001,
+    "split": "DEV",
+    "task_id": "DEV-A02",
+    "template_id": "DEV-purchase-2"
+  },
+  {
+    "canonical_task_sha256": "0731bc7cc0424eea276449d94a9de7829176d5aff78dba4e151743f7058f217a",
+    "family": "B",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "destination_id": "X-77b586d6d89f",
+      "quantity": 11,
+      "sku": "SKU-c7fec0",
+      "source_id": "R-4f6c3e8add79"
+    },
+    "initial_state": {
+      "warehouses": {
+        "R-4f6c3e8add79": {
+          "protected_label": "origin",
+          "quantity": 72,
+          "revision": 9,
+          "sku": "SKU-c7fec0"
+        },
+        "X-77b586d6d89f": {
+          "protected_label": "destination",
+          "quantity": 24,
+          "revision": 1,
+          "sku": "SKU-c7fec0"
+        },
+        "Z-e94623e820a5": {
+          "protected_label": "unrelated",
+          "quantity": 93,
+          "revision": 2,
+          "sku": "SKU-c7fec0"
+        }
+      }
+    },
+    "initial_state_sha256": "2ebca811d09b6c3927e6a56f24791867c5a9752ca99b812b4ac0c18235c16749",
+    "oracle_sha256": "40e8bd3842a1a0d2424a92fac1c358502f03cb99ba7d8be0dcba9e374dd7c29a",
+    "prompt": "Task DEV-B00. Move 11 units of SKU-c7fec0 from R-4f6c3e8add79 to X-77b586d6d89f. Read both stock records first, transfer atomically using their returned revisions, validate the pair, then send final. Preserve the combined quantity, protected fields, and every unrelated warehouse record. Wait for both read results before creating the transfer action.",
+    "seed": 6102001,
+    "split": "DEV",
+    "task_id": "DEV-B00",
+    "template_id": "DEV-transfer-0"
+  },
+  {
+    "canonical_task_sha256": "66bd71b776fd6f76d206afc52dfcfbc7f0cccd9943fec1363593b3934c1657bc",
+    "family": "B",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "destination_id": "X-9db3f6b89c78",
+      "quantity": 2,
+      "sku": "SKU-30f80c",
+      "source_id": "R-8cae6604ec73"
+    },
+    "initial_state": {
+      "warehouses": {
+        "R-8cae6604ec73": {
+          "protected_label": "origin",
+          "quantity": 72,
+          "revision": 9,
+          "sku": "SKU-30f80c"
+        },
+        "X-9db3f6b89c78": {
+          "protected_label": "destination",
+          "quantity": 26,
+          "revision": 4,
+          "sku": "SKU-30f80c"
+        },
+        "Z-ff4ec97bd4c6": {
+          "protected_label": "unrelated",
+          "quantity": 93,
+          "revision": 2,
+          "sku": "SKU-30f80c"
+        }
+      }
+    },
+    "initial_state_sha256": "b971671057c14a84c56d7aac2b3f906a002c7f730285882e493c1d3c4332186e",
+    "oracle_sha256": "59ec3d218ca5e7a9c5f9556762d88ed72929c6528847f33c0e42cb26cc659bf7",
+    "prompt": "Task DEV-B01. Perform a warehouse transfer: 2 of SKU-30f80c, R-8cae6604ec73 -> X-9db3f6b89c78. Inspect both quantities and revisions, apply one atomic transfer, check validation, and finish with final. Preserve the combined quantity, protected fields, and every unrelated warehouse record. Wait for both read results before creating the transfer action.",
+    "seed": 6102001,
+    "split": "DEV",
+    "task_id": "DEV-B01",
+    "template_id": "DEV-transfer-1"
+  },
+  {
+    "canonical_task_sha256": "cb1d7d6b052be703d7dde874ec33500ad0d23e253ace8acf2233c210a8566b0e",
+    "family": "B",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "destination_id": "X-dde0e37bacfa",
+      "quantity": 18,
+      "sku": "SKU-292893",
+      "source_id": "R-37ecc7ae2946"
+    },
+    "initial_state": {
+      "warehouses": {
+        "R-37ecc7ae2946": {
+          "protected_label": "origin",
+          "quantity": 26,
+          "revision": 9,
+          "sku": "SKU-292893"
+        },
+        "X-dde0e37bacfa": {
+          "protected_label": "destination",
+          "quantity": 5,
+          "revision": 8,
+          "sku": "SKU-292893"
+        },
+        "Z-314b25c41727": {
+          "protected_label": "unrelated",
+          "quantity": 93,
+          "revision": 2,
+          "sku": "SKU-292893"
+        }
+      }
+    },
+    "initial_state_sha256": "5f161c17315313073b8f5c839bf71ba0ef2edd1a8c6a21aabb0a004922f739a7",
+    "oracle_sha256": "2bc550fb22469fef7865ec08768cd83bff3d583968885c83a894eac145d09939",
+    "prompt": "Task DEV-B02. Rebalance the two warehouse records by transferring exactly 18 units of SKU-292893 out of R-37ecc7ae2946 into X-dde0e37bacfa. Read both records, transfer, validate, then submit final. Preserve the combined quantity, protected fields, and every unrelated warehouse record. Wait for both read results before creating the transfer action.",
+    "seed": 6102001,
+    "split": "DEV",
+    "task_id": "DEV-B02",
+    "template_id": "DEV-transfer-2"
+  },
+  {
+    "canonical_task_sha256": "4d9224c23fd7eeccaaa15a250f523a6cec751413b2c4287efd68768ac8045217",
+    "family": "C",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "document_id": "R-69b81b2105f8",
+      "owner_id": "owner-05c7c4",
+      "status": "review",
+      "tags": [
+        "internal",
+        "reviewed"
+      ]
+    },
+    "initial_state": {
+      "documents": {
+        "R-69b81b2105f8": {
+          "owner_id": "owner-old",
+          "protected_title": "Synthetic document bfcba",
+          "revision": 29,
+          "status": "draft",
+          "tags": [
+            "pending"
+          ]
+        },
+        "X-2a09a46e759a": {
+          "owner_id": "owner-control",
+          "protected_title": "Control document",
+          "revision": 8,
+          "status": "published",
+          "tags": [
+            "reference"
+          ]
+        }
+      }
+    },
+    "initial_state_sha256": "3f2fdf01070b299da9485eff80a1fcc8d388e75df2197d60e5edfd032a055d7b",
+    "oracle_sha256": "0db3b8e44f97bdb1e92a231d9818c64b54af1cc74070f1bc5441ac1fb23b0ed1",
+    "prompt": "Task DEV-C00. Update document metadata: document=R-69b81b2105f8, status=review, tags=[\"internal\", \"reviewed\"], owner_id=owner-05c7c4. Read its current revision first, update with that revision, validate the document, then send final. An update increments the revision by exactly one. Preserve the title and every other document. Wait for the current revision before creating the update action.",
+    "seed": 6102001,
+    "split": "DEV",
+    "task_id": "DEV-C00",
+    "template_id": "DEV-metadata-0"
+  },
+  {
+    "canonical_task_sha256": "ffae4fcfc52f2a894331064156c3e77cf73fabb9d8b1faa9a262f58e19cb87f3",
+    "family": "C",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "document_id": "R-428fca789d94",
+      "owner_id": "owner-bb700f",
+      "status": "published",
+      "tags": [
+        "finance",
+        "operations",
+        "release"
+      ]
+    },
+    "initial_state": {
+      "documents": {
+        "R-428fca789d94": {
+          "owner_id": "owner-old",
+          "protected_title": "Synthetic document 86063",
+          "revision": 21,
+          "status": "draft",
+          "tags": [
+            "pending"
+          ]
+        },
+        "X-9d32ba7d57d9": {
+          "owner_id": "owner-control",
+          "protected_title": "Control document",
+          "revision": 8,
+          "status": "published",
+          "tags": [
+            "reference"
+          ]
+        }
+      }
+    },
+    "initial_state_sha256": "2764a5e8ecb024d2e59f7b23aea0c08c4abb947081dc2fa3cd495fd3d642ec7c",
+    "oracle_sha256": "174ca38d9796b8cd3a23469d53edbdc2616204fa15def402d7b6a172d4d6fba0",
+    "prompt": "Task DEV-C01. Complete this document change: document=R-428fca789d94, status=published, tags=[\"finance\", \"operations\", \"release\"], owner_id=owner-bb700f. Inspect the current record, apply the new metadata with its returned revision, check validation, and finish with final. An update increments the revision by exactly one. Preserve the title and every other document. Wait for the current revision before creating the update action.",
+    "seed": 6102001,
+    "split": "DEV",
+    "task_id": "DEV-C01",
+    "template_id": "DEV-metadata-1"
+  }
+]

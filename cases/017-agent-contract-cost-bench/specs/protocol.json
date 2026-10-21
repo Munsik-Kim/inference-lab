@@ -1,0 +1,138 @@
+{
+  "analysis": {
+    "N_vs_E": "independent free runs; not isolated causal effect of feedback information",
+    "bootstrap_replicates": 10000,
+    "bootstrap_unit": "task, stratified by family, all eight cells share sampled task indices",
+    "interval": "pointwise percentile 95%; missing counts, loss/recovery and bounds separate",
+    "kv_pair_within_policy": "K1-K0",
+    "policy_pairs_within_kv": [
+      "G-C0",
+      "N-C0",
+      "E-C0",
+      "E-N"
+    ],
+    "status": "exploratory paired engineering evaluation; no confirmatory p-values or equivalence claim"
+  },
+  "base_commit": "740a26f013c4a516b8322c0c07e077a7667bd8f1",
+  "budget_scope": "Self-imposed operational ceiling for all P0/P1/P2 GPU worker attempts including load, compile, failed attempts, metrics and I/O; CPU implementation/data preparation separately timed. It is not a predicted completion time.",
+  "case": "017",
+  "endpoint": "/v1/chat/completions",
+  "engine": "vLLM 0.32.0",
+  "grammar_backend": "xgrammar",
+  "grammar_no_gold": "Only public tool names, public fields/types/static bounds; no task IDs, state, amounts, oracle or action order.",
+  "grammar_scope": "TOOL_BRANCH_SCHEMA_HOST_ONLY_UNIQUE_ITEMS",
+  "holdout_seal": "Generate only after DEV policy/scorer freeze and P1 completion; generator and fixed seed are frozen before P1. No policy/scorer tuning from HOLDOUT outputs.",
+  "host_only_constraints": [
+    "array uniqueItems"
+  ],
+  "infrastructure_policy": "No automatic cell regeneration. Unobserved transport/raw/server/OOM failures remain missing; normal timeout/budget exhaustion is observed functional failure. Stop if server drain is uncertain.",
+  "kv": {
+    "K0": "auto verified BF16",
+    "K1": "native nvfp4"
+  },
+  "limits": {
+    "client_context_tokens": 24576,
+    "episode_seconds": 900,
+    "generated_tokens": 4096,
+    "initial_prompt_target_tokens": "approximately 2048; actual counts and offsets recorded without truncation",
+    "max_new_tokens": 512,
+    "model_request_attempts": 8,
+    "parsed_tool_and_final_attempts": 6,
+    "request_seconds": 180,
+    "retry_per_episode": 1
+  },
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "native_tool_calls": false,
+  "order": {
+    "P1": [
+      "K0",
+      "K1"
+    ],
+    "P2": [
+      "K1",
+      "K0"
+    ],
+    "within_kv": "fixed seeded shuffle of task/policy cells, no metric-based exclusions"
+  },
+  "policies": [
+    "C0",
+    "G",
+    "N",
+    "E"
+  ],
+  "primary_endpoint": "VERIFIED_WORKFLOW_SUCCESS from actual state, obligations, pre-generation observations, latest validation and strict final",
+  "publication": {
+    "PR": false,
+    "Pages": false,
+    "commit": false,
+    "merge": false,
+    "push": false,
+    "stage": false
+  },
+  "registered_utc": "2026-10-20T07:03:28.201933+00:00",
+  "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "sampling": {
+    "ignore_eos": false,
+    "n": 1,
+    "temperature": 0,
+    "thinking": false,
+    "top_p": 1
+  },
+  "schema": 1,
+  "seeds": {
+    "COST": 6102003,
+    "DEV": 6102001,
+    "HOLDOUT": 6102002,
+    "P1_order": 6102011,
+    "P2_order": 6102012,
+    "bootstrap": 6102013,
+    "engine": 6102007
+  },
+  "serving": {
+    "async_scheduling": false,
+    "episode_concurrency": 1,
+    "max_num_batched_tokens": 2048,
+    "max_num_seqs": 4,
+    "mode": "GRAPH if both P0 gates pass; otherwise a common pre-P1 amendment",
+    "pool_bytes_target": 4294967296,
+    "prefix_cache": false,
+    "server_max_model_len": 28672,
+    "tensor_parallel": 1
+  },
+  "sixth_action_policy": "Final consumes an attempt. Sixth final is admissible; sixth nonfinal executes then TOOL_CALL_LIMIT. No seventh generation because no registered action remains. Record final_opportunity_blocked_by_registered_attempt_budget.",
+  "stages": {
+    "P0": {
+      "planned_model_request_ceiling": 32,
+      "purpose": "technical support, raw observability, schema enforcement, separate synthetic smoke only"
+    },
+    "P1": {
+      "episodes": 64,
+      "family_counts": {
+        "A": 3,
+        "B": 3,
+        "C": 2
+      },
+      "split": "DEV",
+      "tasks": 8
+    },
+    "P2": {
+      "episodes": 192,
+      "family_counts": {
+        "A": 8,
+        "B": 8,
+        "C": 8
+      },
+      "split": "HOLDOUT",
+      "tasks": 24
+    },
+    "P3": {
+      "gpu_status": "NOT_RUN_DESIGN_ONLY",
+      "split": "COST",
+      "tasks": 6
+    }
+  },
+  "user_instruction_extent": "Supplied instructions sections 0 through 5; later-stage details are new local preregistration, not attributed to the user.",
+  "version": "v1.1-local-registration-r1",
+  "weights": "BF16",
+  "worker_budget_seconds": 7200
+}

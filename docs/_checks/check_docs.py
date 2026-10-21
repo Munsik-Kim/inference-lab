@@ -646,6 +646,24 @@ def check_case015(root: Path, errors: list[str]) -> set[str]:
         errors.append('Case015 publication verification failed: '+str(exc));return set()
 
 
+def check_case017(root: Path, errors: list[str]) -> set[str]:
+    case=root/'cases/017-agent-contract-cost-bench'
+    if not case.exists():return set()
+    try:
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('case017_docs_verify',case/'publication/verify.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);m.verify(case)
+        pages=[str((case/n).relative_to(root)) for n in ('README.md','README.ko.md','REPORT.md','REPORT.ko.md','REPRODUCE.md','REPRODUCE.ko.md','PROTOCOL_DEVIATION.md','PROTOCOL_DEVIATION.ko.md')]
+        check_links(root,pages,errors,allow_disclosures=True)
+        for lang in ('en','ko'):
+            if (root/f'docs/{lang}/CASEBOOK.md').read_text().count('<a id="case-017"></a>')!=1:raise ValueError('Case017 requires exactly one Casebook entry')
+        for suffix in ('.md','.ko.md'):
+            text=(case/('README'+suffix)).read_text()
+            if 'PROTOCOL_DEVIATION'+suffix not in text or '5/8' not in text or '6/8' not in text:raise ValueError('Case017 expansion deviation disclosure missing')
+        return {str(p.relative_to(root)) for p in case.rglob('*') if p.is_file()}
+    except Exception as exc:
+        errors.append('Case017 publication verification failed: '+str(exc));return set()
+
+
 def check_case016(root: Path, errors: list[str]) -> set[str]:
     case=root/'cases/016-kv-agent-bench'
     if not case.exists():return set()
@@ -679,6 +697,7 @@ def audit(root: Path, inventory: Path | None = None) -> dict:
     additional |= check_case014(root, errors)
     additional |= check_case015(root, errors)
     additional |= check_case016(root, errors)
+    additional |= check_case017(root, errors)
     additional |= check_agent_tool_repair(root, errors)
     protected = check_protection(root, mapping.get('protection_revision', mapping['source_revision']), errors, inventory, additional)
     check_copy_hygiene(root, (*PAGES, CONCEPT_FIGURE, 'docs/_meta/claims.json', 'docs/_meta/MAINTENANCE.md'), errors)

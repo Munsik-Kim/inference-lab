@@ -670,3 +670,15 @@ Check whether an AI finishes the same task after a tool rename. The example is *
 Built native NVFP4 KV storage/read checks and a fixed-pool comparison tool on RTX5080. Token capacity was 3.56× at approximately4GiB; F4/B16 request-throughput ratios at16K concurrency2/4 were 1.21/1.35×. Other conditions were not uniformly faster; original agent-baseline failures remain preserved.
 
 [Report](../../cases/016-kv-agent-bench/REPORT.md) · [CPU commands](../../cases/016-kv-agent-bench/REPRODUCE.md) · [Implementation](../../cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/runner.py)
+
+<!-- case017-entry -->
+<a id="case-017"></a>
+## 017 — Agent Contract–Cost Bench
+
+We built a benchmark that checks how tool call policies change completion of saved state, observed validation and final answers. It uses owned synthetic records for product totals, inventory transfers and document updates.
+
+With BF16 weights and native NVFP4 KV, grammar changes completion 7/24→15/24 and correct saved states 7/24→22/24 on 24 new synthetic tasks: 8 recoveries and 0 losses. Added execution costs and remaining failures are reported alongside the gain. More tasks completed, while total execution costs also increased. Dividing all 24 runs, including failures, by completions gives approximately 3.62% more input tokens, 12.36% more output tokens and 11.27% more episode-wall time per completion.
+
+Protocol deviation: BF16 KV with free output completed 5/8 DEV tasks, below the original 6/8 expansion criterion. The local plan and execution gate omitted this success threshold and proceeded to P2 after checking completion, freezing and sealing. No separate waiver approval was found. We disclose this deviation and present P2 as an exploratory measurement on new synthetic tasks.
+
+[Report](../../cases/017-agent-contract-cost-bench/REPORT.md) · [CPU](../../cases/017-agent-contract-cost-bench/REPRODUCE.md) · [Runner](../../cases/017-agent-contract-cost-bench/src/agent_contract_cost/runner.py) · [Deviation](../../cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.md)

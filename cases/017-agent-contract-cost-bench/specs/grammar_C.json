@@ -1,0 +1,193 @@
+{
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "additionalProperties": false,
+          "properties": {
+            "document_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "document_id"
+          ],
+          "type": "object"
+        },
+        "tool": {
+          "enum": [
+            "read_document"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "arguments"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "additionalProperties": false,
+          "properties": {
+            "document_id": {
+              "type": "string"
+            },
+            "expected_revision": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "owner_id": {
+              "type": "string"
+            },
+            "status": {
+              "enum": [
+                "draft",
+                "review",
+                "published",
+                "archived"
+              ],
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 8,
+              "minItems": 0,
+              "type": "array"
+            }
+          },
+          "required": [
+            "document_id",
+            "expected_revision",
+            "status",
+            "tags",
+            "owner_id"
+          ],
+          "type": "object"
+        },
+        "tool": {
+          "enum": [
+            "update_document"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "arguments"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "additionalProperties": false,
+          "properties": {
+            "document_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "document_id"
+          ],
+          "type": "object"
+        },
+        "tool": {
+          "enum": [
+            "validate_document"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "arguments"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "additionalProperties": false,
+          "properties": {
+            "completed": {
+              "type": "boolean"
+            },
+            "result": {
+              "additionalProperties": false,
+              "properties": {
+                "document_id": {
+                  "type": "string"
+                },
+                "owner_id": {
+                  "type": "string"
+                },
+                "revision": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "status": {
+                  "enum": [
+                    "draft",
+                    "review",
+                    "published",
+                    "archived"
+                  ],
+                  "type": "string"
+                },
+                "tags": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 8,
+                  "minItems": 0,
+                  "type": "array"
+                },
+                "validated": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "document_id",
+                "revision",
+                "status",
+                "tags",
+                "owner_id",
+                "validated"
+              ],
+              "type": "object"
+            },
+            "task_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "task_id",
+            "completed",
+            "result"
+          ],
+          "type": "object"
+        },
+        "tool": {
+          "enum": [
+            "final"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "arguments"
+      ],
+      "type": "object"
+    }
+  ]
+}

@@ -1,0 +1,470 @@
+{
+  "schema_version": "case017-technical-evidence-map-v1",
+  "created_utc": "2026-10-20T07:20:34.108093+00:00",
+  "purpose": "Read-only source/config map for reports and explorer; this map is not a GPU result or a support PASS receipt.",
+  "new_gpu_requests_by_this_mapping_task": 0,
+  "source_files": [
+    {
+      "location_kind": "repository",
+      "path": "cases/017-agent-contract-cost-bench/src/agent_contract_cost/server_manager.py",
+      "bytes": 7770,
+      "sha256": "f93d615f5043b04a6ef1566935cb8a4172cb8457b0f529b245110af62e0856f3",
+      "functions": [
+        {
+          "symbol": "OwnedServer.command",
+          "line": 60
+        },
+        {
+          "symbol": "OwnedServer.start",
+          "line": 99
+        },
+        {
+          "symbol": "OwnedServer.stop",
+          "line": 129
+        }
+      ]
+    },
+    {
+      "location_kind": "repository",
+      "path": "cases/017-agent-contract-cost-bench/src/agent_contract_cost/client.py",
+      "bytes": 11941,
+      "sha256": "a19407108fc9eb7fae5015695554c8c9adc4068941897f72f5e695d82cd0b60b",
+      "functions": [
+        {
+          "symbol": "build_payload",
+          "line": 30
+        },
+        {
+          "symbol": "StreamAssembly.add",
+          "line": 71
+        },
+        {
+          "symbol": "decoded_raw",
+          "line": 143
+        },
+        {
+          "symbol": "tokenize_messages",
+          "line": 149
+        },
+        {
+          "symbol": "chat",
+          "line": 171
+        }
+      ]
+    },
+    {
+      "location_kind": "repository",
+      "path": "cases/017-agent-contract-cost-bench/src/agent_contract_cost/p0_inspector.py",
+      "bytes": 3906,
+      "sha256": "deadd70a7ebfc9a442d0c2fb6b2444ebf3ba3ad898cbdb59c0982c132e146bda",
+      "functions": [
+        {
+          "symbol": "validate_support",
+          "line": 8
+        },
+        {
+          "symbol": "ContractInspector.inspect_case017",
+          "line": 58
+        }
+      ]
+    },
+    {
+      "location_kind": "repository",
+      "path": "cases/017-agent-contract-cost-bench/src/agent_contract_cost/schemas.py",
+      "bytes": 974,
+      "sha256": "7a2c11e0f487f4aaeb8fb1477c39b5e7056f2a2a2f23275ae0e9cd554b1128fd",
+      "functions": [
+        {
+          "symbol": "server_schema",
+          "line": 16
+        }
+      ]
+    },
+    {
+      "location_kind": "repository",
+      "path": "cases/017-agent-contract-cost-bench/tests/tokenizer_probe.py",
+      "bytes": 10197,
+      "sha256": "d7301b01afc5c8153e5aa9027095d7066a68badc795b1d0f1ab41f117e132236",
+      "functions": [
+        {
+          "symbol": "run",
+          "line": 10
+        },
+        {
+          "symbol": "main",
+          "line": 131
+        }
+      ]
+    },
+    {
+      "location_kind": "repository",
+      "path": "cases/016-kv-agent-bench/src/kv_agent_bench/worker_inspection.py",
+      "bytes": 3614,
+      "sha256": "ba2983eea8804cd5c53df9bd653487de8fd4d0c50b2f4e60fa6d0d41d6894382",
+      "functions": [
+        {
+          "symbol": "CacheInspector.inspect_case016_cache",
+          "line": 3
+        }
+      ]
+    },
+    {
+      "location_kind": "repository",
+      "path": "cases/016-kv-agent-bench/src/kv_agent_bench/profiler_extension.py",
+      "bytes": 1120,
+      "sha256": "82b8ea8d073f21a7bd05a6c4e0254a7f45e040d27be9d56a8897cc1f049d27e4",
+      "functions": [
+        {
+          "symbol": "ProfileInspector.case016_profile_start",
+          "line": 5
+        },
+        {
+          "symbol": "ProfileInspector.case016_profile_stop",
+          "line": 9
+        }
+      ]
+    },
+    {
+      "location_kind": "repository",
+      "path": "cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/worker.py",
+      "bytes": 3031,
+      "sha256": "4681feaa53bfddd836bbca7fd3c7041225369aafa0212e1ae4cfa85a5601dde3",
+      "functions": [
+        {
+          "symbol": "TechnicalInspector.technical_inspect",
+          "line": 5
+        },
+        {
+          "symbol": "TechnicalInspector.technical_finite_start",
+          "line": 18
+        },
+        {
+          "symbol": "TechnicalInspector.technical_finite_stop",
+          "line": 34
+        }
+      ]
+    },
+    {
+      "location_kind": "installed_distribution",
+      "path": "vllm/entrypoints/openai/chat_completion/protocol.py",
+      "bytes": 50714,
+      "sha256": "8744d5e2004b2d376e34cf17de51c919bca6d81b0cc8392da138db1ef05a7c61",
+      "functions": [
+        {
+          "symbol": "ChatCompletionRequest",
+          "line": 220
+        },
+        {
+          "symbol": "ChatCompletionStreamResponse",
+          "line": 173
+        }
+      ]
+    },
+    {
+      "location_kind": "installed_distribution",
+      "path": "vllm/entrypoints/openai/chat_completion/serving.py",
+      "bytes": 57304,
+      "sha256": "5e619c0a6866758a247c76e7b8c472f6e008ddbc720f7efe47cc6776cb986d4f",
+      "functions": [
+        {
+          "symbol": "OpenAIServingChat.chat_completion_stream_generator",
+          "line": 466
+        }
+      ]
+    },
+    {
+      "location_kind": "installed_distribution",
+      "path": "vllm/config/structured_outputs.py",
+      "bytes": 3146,
+      "sha256": "55deb32e0895b88fc7bd11339f3498986ff9d2e7d60a1622147b6c890624206f",
+      "functions": [
+        {
+          "symbol": "StructuredOutputsConfig",
+          "line": 17
+        }
+      ]
+    },
+    {
+      "location_kind": "installed_distribution",
+      "path": "vllm/v1/structured_output/backend_xgrammar.py",
+      "bytes": 19458,
+      "sha256": "1f9a431b38ab980e2a5afd28fcd2eeb5663ce1b147b30ae4e96b3d2eadcc68cf",
+      "functions": [
+        {
+          "symbol": "XgrammarBackend.compile_grammar",
+          "line": 86
+        },
+        {
+          "symbol": "has_xgrammar_unsupported_json_features",
+          "line": 290
+        },
+        {
+          "symbol": "XgrammarGrammar.fill_bitmask",
+          "line": 241
+        }
+      ]
+    },
+    {
+      "location_kind": "installed_distribution",
+      "path": "vllm/v1/attention/backends/flashinfer.py",
+      "bytes": 119489,
+      "sha256": "343b949d62db7fc03f6ca0c682e1ec1cb60125461069b081ac1554b7a05214e9",
+      "functions": [
+        {
+          "symbol": "_nvfp4_kv_views",
+          "line": 116
+        },
+        {
+          "symbol": "FlashInferImpl.forward",
+          "line": 2005
+        },
+        {
+          "symbol": "FlashInferImpl.do_kv_cache_update",
+          "line": 2623
+        }
+      ]
+    },
+    {
+      "location_kind": "installed_distribution",
+      "path": "vllm/utils/torch_utils.py",
+      "bytes": 39132,
+      "sha256": "3518e60b59b657fda45bb8df09a05f2fcd78e94ae36a46d58953cd180351c00f",
+      "functions": [
+        {
+          "symbol": "nvfp4_kv_cache_full_dim",
+          "line": 556
+        },
+        {
+          "symbol": "nvfp4_split_data_scale",
+          "line": 561
+        }
+      ]
+    },
+    {
+      "location_kind": "installed_distribution",
+      "path": "vllm/utils/flashinfer.py",
+      "bytes": 42904,
+      "sha256": "c0db917fb6525ccf616000b976d34028ff38f19f9f31bf445ad4cc4bc07fc5ab",
+      "functions": [
+        {
+          "symbol": "flashinfer_xqa_batch_decode_with_kv_cache lazy wrapper",
+          "line": 336
+        }
+      ]
+    },
+    {
+      "location_kind": "installed_distribution",
+      "path": "flashinfer/page.py",
+      "bytes": 37010,
+      "sha256": "609dcde184160ed53f8115a3b380bdd1465c09a6bdcc9a4855082a0c49707b46",
+      "functions": [
+        {
+          "symbol": "nvfp4_quantize_append_paged_kv_cache_with_slot_mapping",
+          "line": 920
+        }
+      ]
+    },
+    {
+      "location_kind": "installed_distribution",
+      "path": "flashinfer/decode.py",
+      "bytes": 174952,
+      "sha256": "df105a90074609961925686572b7b7e4930bf7e065003829f788452607932d6c",
+      "functions": [
+        {
+          "symbol": "xqa_batch_decode_with_kv_cache",
+          "line": 3773
+        }
+      ]
+    }
+  ],
+  "installed_environment": {
+    "metadata": [
+      {
+        "distribution": "vllm-0.32.0.dist-info",
+        "metadata_sha256": "57db31597e39dc181de07b7b9b0838a9ea59392bf619366edbf08e6ecf03e07b"
+      },
+      {
+        "distribution": "xgrammar-0.2.8.dist-info",
+        "metadata_sha256": "91ffa7936f8bde807ef453245bb41617818b06190d610f9777b135f746197bd8"
+      },
+      {
+        "distribution": "flashinfer_python-0.7.0.post1.dist-info",
+        "metadata_sha256": "92193892e2937c6f2bb74064af52210d80f4a286a0f1a5c7b6ad0ffa1532cc8a"
+      },
+      {
+        "distribution": "torch-2.13.0.dist-info",
+        "metadata_sha256": "63e791c950d477e7107e22f186e91ae81fbca5beec545c013a71edbde72f6c00"
+      },
+      {
+        "distribution": "transformers-5.19.0.dist-info",
+        "metadata_sha256": "25c2bda8ef027a2e2146093b78d8989c59c4cda0d7686429c6aaffe06302879a"
+      },
+      {
+        "distribution": "httpx-0.28.1.dist-info",
+        "metadata_sha256": "febb9b0f8f3e80d57c8199c304f35c4336e8581d1d18d7983c92766b82793b25"
+      }
+    ],
+    "receipt_path": "provenance/environment_identity.json",
+    "receipt_sha256": "583cbb3e3c31586252f5f17ef7a21480bcae71b0587a9970577a528e0932da4e",
+    "version_summary": {
+      "python": "3.12.14",
+      "vllm": "0.32.0",
+      "flashinfer_python": "0.7.0.post1",
+      "torch": "2.13.0",
+      "transformers": "5.19.0",
+      "xgrammar": "0.2.8",
+      "httpx": "0.28.1"
+    },
+    "version_evidence": "Installed METADATA identities read during preparation; CUDA driver/device state must come from runtime receipts.",
+    "historical_wheel_archive": {
+      "source_file": "cases/016-kv-agent-bench/provenance/environment.json",
+      "source_sha256": "faf4c8d98fc6982456e076b88c8a7499b907a5c13fc235655f4d18ee49b07e09",
+      "vllm_wheel_sha256": "5e2ecdc5b0baf72921c288486417ca82778456a448e4fe60b62ee43c0dfc8611",
+      "boundary": "Inherited Case016 download receipt; this task does not download or rehash the absent wheel archive. Installed source/METADATA hashes are separate evidence."
+    }
+  },
+  "identity_boundaries": {
+    "git_base_commit": "740a26f013c4a516b8322c0c07e077a7667bd8f1",
+    "git_base_is_execution_source_commit": false,
+    "case017_git_commit_created": false,
+    "source_freeze_path": "provenance/execution_freeze_p0_r2.json",
+    "source_freeze_sha256": "df6e1f76244192b0afcd20516b36eff127486192541a3dd5ceec864db8fbfba5",
+    "execution_source_sha256": "5dd7b00453abdde2e326eec0a3b873ecf35410f6a15c4cf9f24e42a9cdc0fa53",
+    "registration_bundle_sha256": "4b7edabe941e46ecf22ccdaffe10f7eab0fbe9b56b590f3ccf4b96f674ea9779",
+    "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "model_identity_path": "provenance/model_identity.json",
+    "notes": [
+      "Git commit identifies the pre-existing repository tree; Case017 files are uncommitted because stage/commit are prohibited.",
+      "Execution source bundle SHA256, registration bundle SHA256, individual source hashes, model revision and actual model shard hashes identify different objects.",
+      "This map is a later provenance annotation; it does not change the execution freeze or supply a result to it."
+    ]
+  },
+  "evidence_topics": [
+    {
+      "topic": "shared_output_contract",
+      "source_symbols": [
+        "client.build_payload",
+        "client.StreamAssembly.add",
+        "schemas.server_schema"
+      ],
+      "source_interpretation": [
+        "All arms use /v1/chat/completions and role/content messages; no native tools/tool_choice, auto-tool-parser or Hermes extraction is configured.",
+        "Only G sends the official structured_outputs.json schema; server backend is pinned xgrammar for all arms.",
+        "G schema removes uniqueItems because the installed vLLM backend flags it unsupported; host validation retains the public uniqueness rule for every arm.",
+        "The CPU helper checks58 grammar boundaries plus actual chat-template tokenization; these are synthetic contract probes, not58 model episodes or58 unittest methods."
+      ],
+      "runtime_evidence_required": [
+        "Actual request body and server config/backend",
+        "Raw token IDs/application content and strict parser outcome for every generation"
+      ],
+      "limits": [
+        "HTTP200 or schema compilation alone does not prove an actual generation mask was applied.",
+        "Schema syntax/types do not guarantee correct IDs, values, action choice, observation order or workflow success."
+      ]
+    },
+    {
+      "topic": "native_nvfp4_storage_and_reading",
+      "source_symbols": [
+        "FlashInferImpl.do_kv_cache_update",
+        "_nvfp4_kv_views",
+        "nvfp4_split_data_scale",
+        "TechnicalInspector.technical_inspect",
+        "ContractInspector.inspect_case017"
+      ],
+      "source_interpretation": [
+        "The upstream writer obtains packed data and scale views and calls nvfp4_quantize_append_paged_kv_cache_with_slot_mapping for the NVFP4 FA2 path.",
+        "The upstream cache view splits each side into packed uint8 data and FP8 block scales without allocating a separate full BF16 KV cache.",
+        "Runtime inspection enumerates all attention modules, actual cache tensors and shared storage identities; alias views must not be counted twice.",
+        "On a selected XQA decode route, FlashInferImpl.forward passes nvfp4_kv_data and nvfp4_kv_block_scales into the upstream XQA wrapper.",
+        "The nvfp4_fa2 attribute describes a supported cache/prefill route; it alone is not proof of the selected decode kernel."
+      ],
+      "runtime_evidence_required": [
+        "SM120 capability,36 actual layers, uint8 cache tensors,36 scale views with FP8 E4M3 dtype and shared backing storage",
+        "Actual prefill/decode route or inherited pinned technical evidence plus current path correspondence",
+        "Pool actual unique storage bytes, block count, block size and token capacity"
+      ],
+      "limits": [
+        "A cache dtype string, a CLI option or successful startup alone is insufficient proof.",
+        "Source code permits several runtime routes; a source branch is not proof that it executed.",
+        "BF16 weights are common to both KV conditions; this is not a D16/RTN weight-quantization comparison."
+      ]
+    },
+    {
+      "topic": "raw_text_tokens_and_eos",
+      "source_symbols": [
+        "client.StreamAssembly.add",
+        "client.decoded_raw",
+        "client.chat",
+        "ChatCompletionStreamResponse"
+      ],
+      "source_interpretation": [
+        "raw_text/content_text are exactly the SSE delta.content application text and are the strict JSON parser input.",
+        "raw_token_text is independently decoded with skip_special_tokens=False so EOS/template tokens remain observable; it is never silently substituted for application content.",
+        "The request explicitly keeps EOS enabled and asks the server to omit special control tokens from detokenized application text. This does not authorize stripping prose, repairing JSON or extracting one favorable substring.",
+        "Actual prompt IDs are returned at top level; generated IDs are per-choice deltas and are appended once. Usage/role/DONE chunks are not counted as generated tokens.",
+        "Server finish_reason/stop_reason remain separate from the harness terminal reason."
+      ],
+      "runtime_evidence_required": [
+        "Raw SSE lines, output token IDs, content hash, token-text hash, usage, finish/stop and local-vs-server prompt ID match",
+        "Any difference between decoded token text and application content explained using the pinned EOS/control-token policy"
+      ],
+      "limits": [
+        "The generated token count and a natural EOS must not be labelled budget exhaustion merely because a workflow failed.",
+        "A chunk arrival interval is not a per-token ITL; first token-ID event is a client observation."
+      ]
+    },
+    {
+      "topic": "graph_eager_and_numerical_observation",
+      "source_symbols": [
+        "OwnedServer.command",
+        "TechnicalInspector.technical_finite_start",
+        "TechnicalInspector.technical_finite_stop",
+        "ProfileInspector.case016_profile_start",
+        "ContractInspector.inspect_case017"
+      ],
+      "source_interpretation": [
+        "GRAPH command mode does not set --enforce-eager; actual cudagraph mode is read from the active engine config. EAGER is a distinct explicit command mode.",
+        "Python attention forward hooks can demonstrate finite observed attention outputs only when actual hooks fire on all36 layers.",
+        "CUDA graph replay may bypass Python forward hooks; a missing hook call is not a measured nonfinite output and cannot be changed to PASS.",
+        "A short profiler records actual invoked kernels in its own observed interval; its overhead belongs outside ordinary quality timing unless explicitly registered otherwise.",
+        "Parameter signature samples first/last8 values per named parameter; it is a change detector with narrow scope, not a full GPU weight hash."
+      ],
+      "runtime_evidence_required": [
+        "Actual graph/eager config and common scheduler/pool/maxseq settings for both KVs",
+        "Per-layer hook call count and finite checks if claimed",
+        "Current parameter sample before/after branch execution and unchanged pinned snapshot input evidence"
+      ],
+      "limits": [
+        "No full-vocabulary logit finiteness claim follows from finite attention outputs or readable text.",
+        "A short eager P0 observer result cannot certify every subsequent graph-replay execution.",
+        "Kernel, pool capacity, graph scheduling and queue behavior may all differ between complete KV configurations; observed differences are not rounding-only causal effects."
+      ]
+    },
+    {
+      "topic": "ownership_and_cost_accounting",
+      "source_symbols": [
+        "OwnedServer.start",
+        "OwnedServer.stop",
+        "client.chat"
+      ],
+      "source_interpretation": [
+        "The manager refuses occupied ports, creates a fresh attempt root, launches a new process group and signals only its own retained process object/group.",
+        "No force-kill fallback is implemented; unresolved shutdown is NOT_DRAINED.",
+        "Each HTTP dispatch debits model_request_attempts once; a full response is counted separately. There is no automatic retry at the transport layer.",
+        "On timeout the owned client stream closes; server_abort_requests remains0 unless an explicit abort API is actually called."
+      ],
+      "runtime_evidence_required": [
+        "Owned PID/group launch and shutdown receipts, request attempt/response counters, queue-inclusive elapsed time and timeout/drain state"
+      ],
+      "limits": [
+        "Client disconnect alone is not independently observed proof that the server has drained.",
+        "A timeout or infrastructure failure must retain partial SSE and cannot be retried for a better model answer."
+      ]
+    }
+  ],
+  "measured_result_boundary": "Consult P0/P1/P2 run receipts for actual support, success, failure and cost. No new measured performance or recovery result is asserted by this source map.",
+  "upstream_attribution": {
+    "vllm_flashinfer_kernels": "Upstream Apache-2.0 implementations; no new kernel or NVFP4 algorithm authored in Case017.",
+    "case017_contribution": "Shared contract/policy orchestration, isolated fixtures, observation/attempt records, path verification, independent audit and reporting."
+  }
+}

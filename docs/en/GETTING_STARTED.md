@@ -249,3 +249,19 @@ python3 -B cases/016-kv-agent-bench/publication/run_checks.py --output /tmp/case
 ```
 
 Bilingual Pages integration is prepared; manual deployment was not dispatched without separate approval.
+
+## Case017 — Agent Contract–Cost Bench
+
+We built a benchmark that checks how tool call policies change completion of saved state, observed validation and final answers. It uses owned synthetic records for product totals, inventory transfers and document updates.
+
+With BF16 weights and native NVFP4 KV, grammar changes completion 7/24→15/24 and correct saved states 7/24→22/24 on 24 new synthetic tasks: 8 recoveries and 0 losses. Added execution costs and remaining failures are reported alongside the gain. More tasks completed, while total execution costs also increased. Dividing all 24 runs, including failures, by completions gives approximately 3.62% more input tokens, 12.36% more output tokens and 11.27% more episode-wall time per completion.
+
+Protocol deviation: BF16 KV with free output completed 5/8 DEV tasks, below the original 6/8 expansion criterion. The local plan and execution gate omitted this success threshold and proceeded to P2 after checking completion, freezing and sealing. No separate waiver approval was found. We disclose this deviation and present P2 as an exploratory measurement on new synthetic tasks.
+
+[Report](../../cases/017-agent-contract-cost-bench/REPORT.md) · [CPU command and scope](../../cases/017-agent-contract-cost-bench/REPRODUCE.md) · [Strict parser](../../cases/017-agent-contract-cost-bench/src/agent_contract_cost/contracts.py) · [Independent auditor](../../cases/017-agent-contract-cost-bench/src/agent_contract_cost/audit.py)
+
+```bash
+python3 -B cases/017-agent-contract-cost-bench/publication/run_checks.py --output /tmp/case017-public-check-new --tests
+```
+
+CPU replay of256 saved endpoints, without new inference. Use a fresh output directory.

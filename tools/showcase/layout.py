@@ -7,6 +7,7 @@ from case013 import home_case013
 from case014 import home_case014
 from case015 import home_case015
 from case016 import home_case016
+from case017 import home_case017
 
 C8_PATH = 'cases/008-build-reconstruct-reload'
 C8_REVISION = '9bc8b8fced8dfd5147f9bfdc67564eda04670810'
@@ -42,7 +43,8 @@ def related_cases(lang: str, page: str) -> str:
         'case012-annotate': [('case012.html#human-results', '사람 평가 결과와 실험 조건', 'Human assessment and study conditions')],
         'case013': [('qwen3-4b.html#mitigation', '이 품질 확인용 구현의 도구 작업 실패를 줄인 후속', 'Follow-up reducing tool failures in this quality-check implementation'), ('case009.html#quality', '별도 GPTQ 실행 경로의 품질 기록', 'Quality in the separate GPTQ execution path'), ('case014.html#overview', '별도 0.6B 모델 전체의 가중치 보정 연구', 'Separate 0.6B whole-model weight-compensation study')],
         'case014': [('case013.html#overview', '다른 4비트 품질 확인용 구현의 답변 진단', 'Answer diagnostics for a different 4-bit quality-check implementation'), ('case008.html#track-r', '한 MLP의 별도 구조 복원', 'Separate one-MLP structure reconstruction')],
-        'case016': [('case009.html#serving', '별도 가중치 압축 모델의 서빙 비교', 'Serving a separate weight-compressed model'), ('case015.html#overview', '별도 도구 인터페이스 회귀시험', 'Separate tool-interface regression')],
+        'case017': [('case015.html#p2-recovery', '앞선 선택 실패 복구 진단', 'Earlier selected-failure recovery diagnosis'), ('case016.html#storage', '실제 NVFP4 KV 저장·서빙 검증', 'Native NVFP4 KV storage and serving verification')],
+        'case016': [('case017.html#overview', '후속 합성 업무의 호출 규칙·완주 비용', 'Follow-up action contracts and workflow costs'), ('case009.html#serving', '별도 가중치 압축 모델의 서빙 비교', 'Serving a separate weight-compressed model'), ('case015.html#overview', '별도 도구 인터페이스 회귀시험', 'Separate tool-interface regression')],
         'case015': [('case013.html#overview', '앞선 INT4 도구 품질 진단', 'Earlier INT4 tool quality diagnostics'), ('qwen3-4b.html#mitigation', '별도 도구 계약 완화 연구', 'Separate tool-contract mitigation study')],
     }
     if page not in pairs:
@@ -67,7 +69,7 @@ def output_metrics(data8: dict) -> dict[str, str]:
 
 def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
          revision: str, data8: dict | None = None, data9: dict | None = None, data10: dict | None = None, data11: dict | None = None, data12: dict | None = None, data13: dict | None = None,
-         practical_stories: str = '', data14: dict | None = None, data15: dict | None = None, data16: dict | None = None) -> str:
+         practical_stories: str = '', data14: dict | None = None, data15: dict | None = None, data16: dict | None = None, data17: dict | None = None) -> str:
     if len(case_paths) != len(names):
         raise ValueError('Every case needs a translated archive title')
     docs = f'https://github.com/Munsik-Kim/inference-lab/blob/main/docs/{lang}/'
@@ -114,11 +116,14 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
         out += '<tr id="'+cid+'"><td>'+text(f'cap{number}Title')+'</td><td>'+text(f'cap{number}Tech')+'</td><td>'+anchor(prefix+impl,'Code')+' · '+anchor(prefix+test,'Tests')+'</td></tr>'
     if data14:
         out += '<tr><td>'+('앞선 층을 압축하면서 달라진 중간 계산값을 다음 층에서 수집해 가중치 보정·4비트 저장/재로딩·모델 전체 품질 비교' if lang=='ko' else 'Collect intermediate values changed by earlier-layer compression, fit the next layer’s weights, store/reload at 4 bits and compare whole-model quality')+'</td><td>Guo compensation · PyTorch · Transformers · NumPy</td><td>'+anchor('../sources/case014-runner.py.txt','Code')+' · '+anchor('../sources/case014-tests.py.txt','Tests')+'</td></tr>'
+    if data17:
+        out += '<tr><td>'+('도구 호출 규칙·생성 전 관측·실제 업무 완주와 비용 감사' if lang=='ko' else 'Action contracts, pre-generation observations, workflow completion and cost audits')+'</td><td>Python stdlib · vLLM · FlashInfer · xgrammar</td><td>'+anchor('../sources/case017-runner.py.txt','Code')+' · '+anchor('../sources/case017-tests.py.txt','Tests')+'</td></tr>'
     if data16:
         out += '<tr><td>'+('실제 NVFP4 KV 저장·읽기 검사와 고정 pool 동시 요청 비교' if lang=='ko' else 'Native NVFP4 KV storage/read checks and fixed-pool concurrent requests')+'</td><td>vLLM · FlashInfer · Python stdlib</td><td>'+anchor('../sources/case016-runner.py.txt','Code')+' · '+anchor('../sources/case016-tests.py.txt','Tests')+'</td></tr>'
     if data15:
         out += '<tr><td>'+('API 이름 변경·실제 상태·생성 전 관측 회귀시험' if lang=='ko' else 'API rename, actual state and pre-generation observation regression')+'</td><td>Qwen · PyTorch · Transformers · Python stdlib</td><td>'+anchor('../sources/case015-a1-runner.py.txt','Code')+' · '+anchor('../sources/case015-a1-tests.py.txt','Tests')+'</td></tr>'
     out += '</tbody></table></div></div><p>'+anchor(docs+'PORTFOLIO.md#code-tour',t['stackEvidence'],'text-link')+'</p></details></section>'
+    out += home_case017(data17, lang) if data17 else ''
     out += home_case016(data16, lang) if data16 else ''
     out += home_case015(data15, lang) if data15 else ''
     out += home_case014(data14, lang) if data14 else ''
