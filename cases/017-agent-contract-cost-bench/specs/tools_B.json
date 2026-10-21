@@ -1,0 +1,140 @@
+[
+  {
+    "description": "Read current integer stock quantity and revision for one warehouse and SKU.",
+    "name": "read_stock",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "sku": {
+          "type": "string"
+        },
+        "warehouse_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "warehouse_id",
+        "sku"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "description": "Atomically subtract the supplied quantity from source and add it to destination; require sufficient stock and matching current revisions; increment both revisions once.",
+    "name": "transfer_stock",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "destination_id": {
+          "type": "string"
+        },
+        "destination_revision": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "quantity": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "sku": {
+          "type": "string"
+        },
+        "source_id": {
+          "type": "string"
+        },
+        "source_revision": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "source_id",
+        "destination_id",
+        "sku",
+        "quantity",
+        "source_revision",
+        "destination_revision"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "description": "Check nonnegative quantities, protected fields, and conservation of total stock across the warehouse records; does not verify the requested transfer quantity.",
+    "name": "validate_transfer",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "destination_id": {
+          "type": "string"
+        },
+        "sku": {
+          "type": "string"
+        },
+        "source_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "destination_id",
+        "sku"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "description": "Finish the task with its task ID, completed flag, exact resulting values, and whether you observed validation. This action does not change any file.",
+    "name": "final",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "completed": {
+          "type": "boolean"
+        },
+        "result": {
+          "additionalProperties": false,
+          "properties": {
+            "destination_id": {
+              "type": "string"
+            },
+            "destination_quantity": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "sku": {
+              "type": "string"
+            },
+            "source_id": {
+              "type": "string"
+            },
+            "source_quantity": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "validated": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "source_id",
+            "destination_id",
+            "sku",
+            "source_quantity",
+            "destination_quantity",
+            "validated"
+          ],
+          "type": "object"
+        },
+        "task_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "completed",
+        "result"
+      ],
+      "type": "object"
+    }
+  }
+]

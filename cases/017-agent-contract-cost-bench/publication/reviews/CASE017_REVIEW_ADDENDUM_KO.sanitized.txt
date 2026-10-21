@@ -1,0 +1,608 @@
+CASE017 공개 전 보완 — 기존 원자료의 CPU 추출 (2026-10-21 KST)
+1) DEV BF16 KV+C0는 5/8이며 P2가 실행됐다. 현재 사용자가 제시한 확대 기준 6/8에는 미달한다.
+2) 실제 동결 local 계획·코드는 6/8 성공 gate를 누락하고 P1 완료·동결·봉인만 검사했다. 기준 이탈 공개가 필요하다.
+3) 원 v1.1 전문의 6/8 문구 보존본은 확보하지 못했다. PLAN에는 '0~5절까지 전달'이라고 적혀 있어 전달 경위는 미확인이다.
+4) 5/8에도 계속하라는 별도 사용자 승인·면제 결정문은 확인하지 못했다. Codex local 진행을 사용자 승인으로 소급하지 않는다.
+5) 기존 256행 raw 재생·독립 endpoint 검산은 일치했다는 과거 receipt를 재사용한다. gate 준수와 측정 재현은 별개다.
+6) 장부상 HOLDOUT 생성·봉인과 P2 source freeze는 첫 기록 모델 응답보다 앞선다. 외부 시각 인증은 아니다.
+7) DEV 이후 공통 동결 35개 파일은 동일하며 P2에는 HOLDOUT 입력 2개와 seal만 추가됐다. 원 점수는 유지한다.
+8) NVFP4 G는 C0 7/24→15/24, 회복8·손실0이라는 관측을 유지할 수 있다. gate 통과 확인시험으로 소개하면 안 된다.
+9) G 창고 실패16개는 최신 검증 누락14개와 잘못된 SKU로 이동 미실행2개다. 전부 같은 원인은 아니다.
+10) 이번 산출물은 TXT 1개·256행 ledger뿐이다. 새 GPU/모델 요청0, 서버0, 기존 보고서·소스·ZIP 변경0이다.
+
+[0. 읽는 법·작업 identity]
+작업 worktree: <ORIGINAL_RESEARCH_WORKTREE>
+CASE 상대 root: cases/017-agent-contract-cost-bench/
+branch: research/case017-agent-contract-cost
+HEAD/base: 740a26f013c4a516b8322c0c07e077a7667bd8f1
+적용 AGENTS.md: 확인한 /→/home→<LOCAL_HOME>→Codex_main→worktree→cases→CASE 조상 및 저장소 내 검색에서 발견하지 못했다.
+git status 시작값: CASE 폴더 untracked 1항목, staged 없음. 기존 상태를 바꾸지 않았다.
+K0=실제 BF16 KV, K1=native NVFP4 KV. 가중치는 모두 BF16. C0=FREE, G=GRAMMAR, N=NEUTRAL RETRY, E=ERROR RETRY.
+A=상품 개수·한 개 가격·할인으로 합계 계산/저장, B=두 창고 재고 이동, C=문서 상태·태그·담당자 변경.
+아래 R1=results/p1_r1/cells/, R2=results/p2_r1/cells/ (모두 CASE 기준).
+episode_id = task_id + "_" + kv + "_" + policy; 파일은 R1 또는 R2의 <episode_id>.json.
+JSONpath는 해당 파일 내부의 정확한 위치다. gN은 0-based generation이며 event ID는 episode 내부 ID다.
+'원문'은 저장 raw 문자열의 그대로 인용, '요약'은 사건 설명이다. '...'로 원문을 줄이면 생략이라고 표시한다.
+
+[1. DEV gate: 실제 적용·계획 차이·시점]
+실제 계획 버전: specs/protocol.json $.version = v1.1-local-registration-r1.
+등록 자기기록: $.registered_utc = 2026-10-20T07:03:28.201933+00:00.
+protocol 파일 SHA256: cddbf7d7b53ecee78b0fe24f55099df1dd4c9b7d255237f64562ab30973c4499
+PLAN.ko.txt SHA256: a5f97da13dd2d604df3db199ec8b42b9189bafe9c4d3780f7f7e8fa2089d3a8d
+PLAN:6-8 원문: "사용자 지시는 0~5절까지 전달되었다." / "뒤에 전달되지 않은 절을 읽었다고 가정하지 않는다."
+PLAN:13 원문: "P2: P1 완료·코드 동결 확인 뒤 HOLDOUT24를 생성·봉인하고 192개 episode 실행."
+PLAN 자체는 P1 freeze의 file set에는 없다. 시점 근거는 freeze에 들어간 protocol·실행 코드와 실행 장부를 우선한다.
+protocol $.holdout_seal 원문: "Generate only after DEV policy/scorer freeze and P1 completion; generator and fixed seed are frozen before P1. No policy/scorer tuning from HOLDOUT outputs."
+실제 GPU 전개 gate: src/agent_contract_cost/experiment.py:134-149 check_p2_gate.
+핵심 코드 원문(:138):
+  if completion["status"] != "COMPLETED" or completion["completed"] != 64 or completion["planned"] != 64 or completion["missing"]:
+    raise ValueError("Registered P1 matrix is incomplete")
+이어 P1 freeze·seal outputs_observed=0·seal 입력 hash를 검사한다. verified 성공수를 읽는 조건은 없다.
+seal-holdout 진입부(:417-439)도 P1 완료64개와 freeze만 검사한다.
+따라서 '6/8 미달을 검토해 의도적으로 면제한 코드'가 아니라 성공 gate 자체가 빠진 local 실행 경로다.
+
+BF16 C0 DEV 실패 3건:
+- DEV-B00_K0_C0: R1/DEV-B00_K0_C0.json:$.requests[0].response.raw_text 및 $.requests[0].parse.
+  원문(원 개행 유지; 줄 앞 들여쓰기는 표시용):
+  {"tool":"read_stock","arguments":{"sku":"c7fec0","warehouse_id":"R-4f6c3e8add79"}}
+  {"tool":"read_stock","arguments":{"sku":"c7fec0","warehouse_id":"X-77b586d6d89f"}}
+  판정: 서로 다른 read_stock JSON object 2개를 한 응답에 생성; PARSE_ERROR, expected="single JSON object".
+  생성 전 관측[], event 0개, state_version0, 미수정; terminal=CONTRACT_FAILURE. 호출/토큰 예산 소진이 아니다.
+- DEV-B01_K0_C0: R1/DEV-B01_K0_C0.json:$.requests[0].response.raw_text 및 $.requests[0].parse.
+  원문(원 개행 유지; 줄 앞 들여쓰기는 표시용):
+  {"tool":"read_stock","arguments":{"sku":"SKU-30f80c","warehouse_id":"R-8cae6604ec73"}}
+  {"tool":"read_stock","arguments":{"sku":"SKU-30f80c","warehouse_id":"X-9db3f6b89c78"}}
+  판정: 서로 다른 read_stock JSON object 2개를 한 응답에 생성; PARSE_ERROR, expected="single JSON object".
+  생성 전 관측[], event 0개, state_version0, 미수정; terminal=CONTRACT_FAILURE. 호출/토큰 예산 소진이 아니다.
+- DEV-B02_K0_C0: R1/DEV-B02_K0_C0.json:$.requests[0].response.raw_text 및 $.requests[0].parse.
+  원문(원 개행 유지; 줄 앞 들여쓰기는 표시용):
+  {"tool":"read_stock","arguments":{"sku":"SKU-292893","warehouse_id":"R-37ecc7ae2946"}}
+  {"tool":"read_stock","arguments":{"sku":"SKU-292893","warehouse_id":"X-dde0e37bacfa"}}
+  판정: 서로 다른 read_stock JSON object 2개를 한 응답에 생성; PARSE_ERROR, expected="single JSON object".
+  생성 전 관측[], event 0개, state_version0, 미수정; terminal=CONTRACT_FAILURE. 호출/토큰 예산 소진이 아니다.
+진행 결정 증거:
+- 확인되는 것은 Codex가 만든 local 사전 등록과 위 자동 gate의 실행이다. protocol은 DEV 결과보다 먼저 P2 전개를 등록했다.
+- P1의 5/8 결과 뒤에 '6/8 기준을 면제한다'고 쓴 별도 결정문, 결정 주체의 서명, 사용자 추가 승인 기록은 조사한 PLAN/spec/provenance·P1/P2 attempts·private phase 로그에서 찾지 못했다.
+- 따라서 P2 실행 자체는 확인하지만 품질 gate를 건너뛸 권한을 승인받았다고 확인할 수 없다. 이 TXT는 새 승인서·수정 계획이 아니다.
+- 현재 사용자가 제시한 원래 기준(>=6/8)에 대해 미달·local gate 누락은 분명하다. 원 v1.1 전문을 보존한 파일은 미확보라 어떤 전달/등록 단계에서 누락됐는지는 미확인으로 남긴다.
+
+시점 순서(모두 2026-10-20 UTC; KST는 +9시간):
+07:03:28.201933 protocol 등록($.registered_utc).
+07:21:27.507465 P1 freeze(provenance/execution_freeze_p1.json $.created_utc).
+07:25:17.672620 P1 완료(results/p1_r1/completion.json $.created_utc).
+07:26:44.012959 HOLDOUT input_manifest 생성(provenance/holdout_input_manifest.json $.created_utc).
+07:26:44.040365 HOLDOUT 봉인(provenance/holdout_seal.json $.created_utc, outputs_observed=0).
+07:26:59.253593 P2 freeze(provenance/execution_freeze_p2.json $.created_utc).
+07:27:24.042065 P2 worker START(provenance/worker_journal.jsonl, event=START/stage=P2).
+07:27:42.423255 첫 cell HOLDOUT-B05_K1_N START(results/p2_r1/attempts.jsonl 첫 행 $.utc).
+07:27:42Z 첫 요청 SSE의 created=1792481262(R2/HOLDOUT-B05_K1_N.json $.requests[0].response.raw_sse_lines 내부 data JSON $.created).
+07:38:18.506719 P2 완료(results/p2_r1/completion.json $.created_utc).
+manifest 시간은 task 생성 시작 시각이 아니라 생성 후 기록 시각이다. 정확한 생성 시작 시각은 따로 저장되지 않았다.
+코드상 생성 호출은 P1 완료 검사 뒤에 있고, 봉인 파일·입력 hash는 P2 freeze에 포함됐다.
+SSE created는 초 단위 서버 생성시각이며 클라이언트의 절대 수신시각과 같다고 보지 않는다.
+이 순서는 mtime만 사용한 추정이 아니다. 다만 모두 로컬 자기기록이므로 장부 밖의 관측 여부를 외부 독립 시각 인증으로 증명하지는 못한다.
+판정 분리:
+  측정 재현: 기존 raw 재생 PASS를 출처와 함께 재사용; 이번 scalar 추출도 일치.
+  출력 전 HOLDOUT 봉인: 코드·seal·freeze·첫 SSE 순서가 뒷받침(기록상 미관측).
+  확대 gate 준수: 현재 제시된6/8 기준 미달; 실제 local gate에서 성공 조건 누락. 준수했다고 쓸 수 없음.
+
+DEV 이후 변경:
+P1/P2 freeze 공통35개 file entry는 전부 byte/hash 동일하다. P2에 추가된 것은 data/holdout_tasks.json, data/holdout_model_inputs.json, provenance/holdout_seal.json 3개뿐이다.
+공통에는 protocol/예산·DEV입력·공개 schema·정책·parser·scorer·fixture generator·runner가 포함된다. 현재 P2 freeze 대비 파일 hash 불일치도0이다.
+HOLDOUT 생성은 새 입력 추가이며 DEV 입력을 바꾼 것은 아니다. HOLDOUT 출력 뒤 prompt/parser/scorer/budget를 조정했다는 근거는 없다.
+G uniqueItems host-only 범위는 이미 GPU 전 protocol에 등록된 것이며 DEV 뒤 새 완화가 아니다.
+
+공개 시 제안 문구(현재 원 보고서에 반영하지 않고 제안만 함):
+"BF16 KV+C0의 DEV 완주는5/8로 사용자 제시 확대 기준6/8에 미달했다. 당시 Codex local 계획·코드는 성공 임계값을 누락하고 P1 완료·동결만 검사하여 P2를 진행했다. 별도 사용자 면제 승인 근거는 확인하지 못했다. 이 계획 이탈을 공개하며, P2를 해당 gate를 충족한 확인시험으로 해석하지 않는다. 원 실측과 raw 재생 일치·출력 전 봉인 근거는 별도로 보존한다."
+원 v1.1 전문의 전승/누락 경위는 확인하지 못했다는 점도 함께 남겨야 한다.
+
+[2. 상태·최종 답·현재 상태의 검증 관측]
+원 scorer: src/agent_contract_cost/scoring.py:54-117 assess, SCORER_VERSION=case017-endpoint-v1.
+V=VERIFIED_WORKFLOW_SUCCESS: 올바른 상태·전 과정 보호필드, 필수 올바른 실행 사슬/의존 관측, 현 상태의 성공 validation 사전 관측, strict final, 허용 종료가 모두 필요.
+S=STATE_CORRECT: gold state의 엄격 비교 + 모든 중간 상태/다른 record/보호필드 보존. FINAL이 없어도 상태만 맞으면1일 수 있다.
+F=FINAL_ANSWER_CORRECT: final envelope와 task ID/completed/result의 gold strict equality. bool과int를 같게 보지 않는다. 상태/관측 의무와 별도다.
+S/F는 기존 raw reported_endpoint를 기존 independent audit 행과 대조했다(차이0). 이번에 전체 fixture 재실행을 반복하지 않았다.
+Fresh=FRESH_VALIDATION_OBSERVED는 원 scorer의 별도 저장 flag가 아니라 이번에 event에서 계산한 파생 지표다.
+Fresh 조건:
+  family별 validate_order/validate_transfer/validate_document, 올바른 대상 인자(A order_id; B source_id/destination_id/sku; C document_id),
+  event.status=SUCCESS 및 result.valid가 실제 bool True,
+  event.after_digest = canonical(final_state)의 SHA256, event.version_after = 최종 state_version,
+  event_id가 final을 생성하기 전에 실제 제공된 available_result_event_ids에 포함됨.
+accepted final이 없으면 마지막 실제 generation의 available IDs로 확인한다. 두 방법의 flag 차이는 전체256행에서0이었다.
+'최신'은 마지막 event 번호만 고르는 뜻이 아니라 최종 현재 상태에 유효한 검증이라는 뜻이다.
+Fresh에는 정답 금액/metadata 일치를 넣지 않는다. 따라서 C00_K1_G는 Fresh=1, S/F/V=0일 수 있다.
+Fresh 하나가 모든 실행/관측 의무를 대체하지 않는다.
+
+P2 각 셀 분모24:
+kv,policy,V,S,F,Fresh
+K0,C0,16,21,21,16
+K0,G,16,23,23,16
+K0,N,16,21,21,16
+K0,E,16,21,21,16
+K1,C0,7,7,7,7
+K1,G,15,22,22,16
+K1,N,9,12,12,9
+K1,E,13,16,16,13
+
+G 창고 이동 실패16개 분류(아래 a/b/c는 중복 없는 분류):
+a)14개: 상태/최종 답은 맞지만 이동 뒤 현 상태 validation 관측 없음.
+  HOLDOUT-B00_K0_G,HOLDOUT-B00_K1_G
+  HOLDOUT-B01_K0_G,HOLDOUT-B01_K1_G
+  HOLDOUT-B02_K0_G,HOLDOUT-B02_K1_G
+  HOLDOUT-B03_K0_G,HOLDOUT-B03_K1_G
+  HOLDOUT-B04_K0_G,HOLDOUT-B04_K1_G
+  HOLDOUT-B06_K0_G,HOLDOUT-B06_K1_G
+  HOLDOUT-B07_K0_G,HOLDOUT-B07_K1_G
+  공통 실제 순서 read→read→validate(version0)→transfer(version1)→final. Fresh=0, S=F=1, V=0.
+b)2개: HOLDOUT-B05_K0_G,HOLDOUT-B05_K1_G. sku를 'SKU-b3541f' 대신 'b3541f'로 보내 두 조회 모두 UNKNOWN_STOCK_RECORD.
+  transfer/validation 없이 completed:false final. source28/destination94 그대로이며 요청15 이동 후 목표13/109 미달이다.
+  이는 잘못된 대상 SKU로 필요한 이동을 실행하지 못한 오류다. 재고를 파괴하거나 총합122를 깨뜨린 사례는 아니다.
+c)0개: 상태는 맞으나 final 내용 오류/기타만으로 실패한 G 창고 사례 없음.
+14+2=16 episode이며 a는 고유7 task×KV2, b는 고유1 task×KV2다. 여러 진단 label을 독립 episode로 더하지 않는다.
+
+수정 후 검증 의무가 모델에게 보였는가:
+실제 전송 system은 src/agent_contract_cost/prompts.py:21이며 raw R2/HOLDOUT-B01_K0_G.json:$.requests[0].messages[0].content에서도 확인했다.
+짧은 원문:
+  "Inspect validation after the intended update."
+  "...a successful validation of the current state that you have already received." (앞부분 생략)
+  "An older validation is stale if a subsequent action changed the state."
+data/holdout_tasks.json:$[9].prompt(B01) 원문:
+  "...transfer only the requested amount using current revisions, validate conservation, then issue final." (앞부분 생략)
+공개 validator 설명(src/agent_contract_cost/tools.py:31):
+  "Check nonnegative quantities, protected fields, and conservation of total stock across the warehouse records; does not verify the requested transfer quantity."
+scoring.py:75-91은 transfer<validation 순서·현재 hash/version·final 전 event 관측을 검사한다.
+따라서 '현재 상태를 수정 후 검증하고 결과를 본 뒤 final'은 scorer만 요구한 숨은 의무가 아니다.
+validator가 hidden gold 수량/metadata와 일치를 알려주지 않는 것도 공개 설명과 system에 명시되어 있다.
+
+[3. 결정적 원문 4건 — 모두 저장 실측, 새/합성 응답 없음]
+3-1) HOLDOUT-A00_K1_C0 vs HOLDOUT-A00_K1_G
+R2/HOLDOUT-A00_K1_C0.json:$.requests[0].response.raw_text 원문:
+  {"tool":"read_order","arguments":{"order_id":"R-971ee24ca912"}}}
+끝의 '}'가 하나 더 있다. $.requests[0].parse는 PARSE_ERROR, event=null, 생성 전 관측[].
+요약: state version0, total_minor=null 미수정; V/S/F/Fresh=0/0/0/0, CONTRACT_FAILURE.
+같은 task G의 $.requests[0].response.raw_text 원문:
+  {"tool":"read_order","arguments":{"order_id":"R-971ee24ca912"}}
+R2/HOLDOUT-A00_K1_G.json:$.requests[2].response.raw_text 원문:
+  {"tool":"write_order_total","arguments":{"order_id":"R-971ee24ca912","total_minor":266994}}
+요약: g0 read(event-0000)→g1 calculate(event-0001,total266994)→g2 write(event-0002,v0→1)→g3 validate(event-0003,v1,valid:true)→g4 final(event-0004).
+gN의 $.requests[N].available_result_event_ids는 이전 실제 사건만 포함한다. final은 event-0000..0003을 관측했다.
+실제 $.final_state.orders["R-971ee24ca912"].total_minor=266994.
+final_state hash=a0bc9e31cc6038a53aa37af3080a3e4ee9c490a29eb6bb75eb48275f5ae8cb76.
+V/S/F/Fresh=1/1/1/1, VERIFIED_SUCCESS. 원 JSON을 고친 것이 아니라 G에서 새로 생성된 정상 action과 실제 실행의 회복이다.
+
+3-2) HOLDOUT-B01_K0_G — 오래된 validation
+R2/HOLDOUT-B01_K0_G.json:$.requests[2].response.raw_text 원문:
+  {"tool":"validate_transfer","arguments":{"source_id":"R-82242cbd0e95","destination_id":"X-25a45f1f1419","sku":"SKU-25b9d0"}}
+이 사건(event-0002)은 version0/hash=ccedda6bacecdfb11eaad6ca8960b8315b86ff726e6b54567935e6ea13d4e293에서 valid:true를 반환했다.
+이후 $.requests[3].event=event-0003 transfer_stock(quantity5,source_revision7,destination_revision2).
+실제 source52→47, destination63→68, revisions7/2→8/3, 합계115 보존, state_version0→1.
+최종 hash=9f590736a6ddfe1573892031a4cc427b20a72c5c6535fa6237ba3de5735cd94e.
+$.requests[4].response.raw_text 원문:
+  {"tool":"final","arguments":{"task_id":"HOLDOUT-B01","completed":true,"result":{"source_id":"R-82242cbd0e95","destination_id":"X-25a45f1f1419","sku":"SKU-25b9d0","source_quantity":47,"destination_quantity":68,"validated":true}}}
+final이 관측한 IDs는 event-0000..0003이지만 validation은 이전 version0의 event-0002뿐이다.
+요약: final JSON의 수량은 맞아 S=F=1, Fresh=0, V=0. INCORRECT_FINAL/first_unmet=observable_dependency_chain.
+terminal 이름 INCORRECT_FINAL만 보고 final 숫자가 틀렸다고 해석하면 안 된다. 여기서는 관측 workflow 의무 미충족이다.
+
+3-3) HOLDOUT-C00_K1_G — 요청 review, 저장 published
+data/holdout_tasks.json:$[16].prompt 원문 발췌:
+  "document=R-2fa97057aac6, status=review, tags=[], owner_id=owner-72449d" (주변 문장 생략)
+R2/HOLDOUT-C00_K1_G.json:$.requests[1].response.raw_text 원문:
+  {"tool":"update_document","arguments":{"document_id":"R-2fa97057aac6","expected_revision":25,"status":"published","tags":[],"owner_id":"owner-72449d"}}
+요약: g0 read(event-0000,현재published/revision25)→g1 update(event-0001,published/revision26,v1)→g2 validate(event-0002,valid:true,v1)→g3 final(event-0003,published/validated:true).
+실제 $.final_state.documents["R-2fa97057aac6"].status="published"; 요청/goal.status는 "review".
+현재 상태 validation을 실제 관측해 Fresh=1이나 S=F=V=0, INCORRECT_STATE.
+문법/타입에 맞고 공개 validator가 valid:true를 반환해도 요청 metadata 정답을 보장하지 않는 사례다.
+
+3-4) NVFP4 N의 창고 이동 유일 완주: HOLDOUT-B03_K1_N
+R2/HOLDOUT-B03_K1_N.json:$.requests[0].response.raw_text 원문:
+  {"tool": "read_stock", "arguments": {"sku": "SKU-2172dd", "warehouse_id": "R-11db1291112b"}}}
+여분 '}'로 parse 실패; 실제 도구 실행 없음, 관측[],state version0.
+$.requests[0].feedback 원문(다음 user 메시지로 실제 전달):
+  직전 호출은 실행되지 않았습니다. 동일 작업의 호출을 다시 작성하세요.
+N의 실제 순서:
+  g0 실패(event없음)→g1 source read(event-0000)→g2 destination read(event-0001)→g3 transfer(event-0002)→g4 validate(event-0003,v1)→g5 final(event-0004).
+  final 이전 관측 IDs event-0000..0003. 수량11 이동, source31→20/destination62→73, revisions7/8→8/9.
+  V/S/F/Fresh=1/1/1/1, VERIFIED_SUCCESS, 요청6회.
+R2/HOLDOUT-B03_K1_G.json 비교 요약:
+  g0 source read→g1 destination read→g2 validate(v0)→g3 transfer(v1)→g4 final.
+  G는 parse 실패가 없지만 새 상태 검증이 없어 V=0,S=F=1,Fresh=0,INCORRECT_FINAL; 요청5회.
+R2/HOLDOUT-B03_K1_E.json 비교:
+  $.requests[0].response.raw_text는 N의 실패 raw와 byte/hash 동일:
+  a1b2f23363395e5d58fa615c7c6e1982440879881ba8370a732bcb87b4668f7b
+  두 최초 input_token_sha256도 동일: 000f318cc3d9fbfa748b29a71b8a23451661c2c5057f9508f65deef8f0a92804
+  최초 관측[]·state hash/version도 동일하다.
+  $.requests[0].feedback 원문:
+  {"code":"PARSE_ERROR","path":"$","expected":"single JSON object"}
+  이후 g1 destination read→g2 source read→g3 validate(v0)→g4 transfer(v1)→g5 final.
+  E도 S=F=1이나 Fresh=V=0, INCORRECT_FINAL; 요청6회.
+  N/E 재시도 직후 $.requests[1].response.raw_text 원문은 각각:
+    N: {"tool": "read_stock", "arguments": {"sku": "SKU-2172dd", "warehouse_id": "R-11db1291112b"}}
+    E: {"tool": "read_stock", "arguments": {"sku": "SKU-2172dd", "warehouse_id": "X-562151e94138"}}
+  조회 순서 교환 자체는 허용된 경로다. 첫 관측 내용이 달라진 뒤 후속 이력을 동일 입력으로 강제하지 않는다.
+G/N/E 모두 최종 수량은20/73이고 final_state hash=2235a0f683a2ff07311eee6eafa9c9e80f5ca4180dd0279e93d2f340f254ce78.
+즉 이 사례의 완주 차이는 마지막 수량이 아니라 변경 후 검증 관측 여부다. 한 사건으로 오류 설명/문법의 일반적 원인을 단정하지 않는다.
+원 raw를 수정하거나 이 사건을 합성 회복 예제로 만든 것은 아니다.
+
+[4. 입력/출력·시간 비용 연결]
+각 request의 response.usage.prompt_tokens를 합쳤다. P2 775건 전부 저장 input_token_ids 및 서버 prompt_token_ids 길이와 일치(누락/차이0).
+입력 총계는 턴마다 다시 보낸 history를 포함한다. 고유 입력 길이 또는 KV peak가 아니다.
+P2 셀별 총량:
+kv,policy,episodes,verified,requests,input_tokens,output_tokens,episode_wall_seconds
+K0,C0,24,16,102,201511,4996,77.864714401
+K0,G,24,16,110,217801,5399,84.562621448
+K0,N,24,16,104,205193,5139,80.317695542
+K0,E,24,16,108,213191,5546,85.310678150
+K1,C0,24,7,51,98437,2470,39.188918025
+K1,G,24,15,110,218579,5947,93.437362778
+K1,N,24,9,88,171277,4355,68.265962043
+K1,E,24,13,102,200653,5001,79.399216725
+
+기존 'Tokens/verified job'은 정확히 'Output tokens/verified job'이다. 입력+출력 합계로 바꾸어 부르면 안 된다.
+K1 C0: 출력/완주 = 2470/7 = 352.857142857 tokens; wall/완주 = 39.188918024993/7 = 5.598416861s.
+K1 G: 출력/완주 = 5947/15 = 396.466666667 tokens; wall/완주 = 93.437362777997/15 = 6.229157519s.
+G의 Output tokens/verified job 증가 12.358974% (약12.36%).
+G의 episode-wall seconds/verified job 증가 11.266411% (약11.27%).
+분자는 성공/실패를 포함한24개 전체 비용이고 분모는 완주 수다. 성공 episode만 평균낸 latency가 아니다.
+서버 로드·compile·종료를 셀에 배분한 총 worker 비용이 아니며, 동시 처리량/P3 결과로 바꾸지 않는다.
+
+요청/응답/토큰 회계:
+phase,model_request_attempts,model_responses_received,input_tokens,output_tokens,transport_status
+P0,22,22,41278,678,OK:22
+P1,233,233,452208,11054,OK:233
+P2,775,775,1526642,38853,OK:775
+P1 요청233/출력11054, P2 요청775/출력38853 재확인.
+11054+38853=49907; 50585-49907=678이며 실제 P0 raw 출력678과 정확히 일치한다.
+22+233+775=1030 요청=1030 응답. 계약/업무 실패를 포함하며 HTTP/인프라 실패는 기록상0이다.
+P0 22요청은 기술/문법 probe12 + 별도 smoke workflow2개의 요청10이다. 22개 독립 업무 episode가 아니다.
+P1 attempts.jsonl은 START64+END64, P2는 START192+END192; 주 cell attempt_id는1, 별도 인프라 재생성 attempt는 없다.
+N/E의 등록된 재시도는 해당 episode 안 요청/출력 비용에 이미 포함됐다.
+출력 token은 반환 IDs 개수이고 completion_tokens와 모두 일치한다. API 요청수는 엔진 warmup/prefill/decode forward 횟수가 아니다.
+전체 GPU worker wall은 기존 기록1035.148295s(P0/P1/P2 포함), 새로 측정하지 않았고 정책별로 나누지 않는다.
+약4GiB 고정 KV pool 슬롯은 K0 29120 / K1 103552(약3.556배)라는 저장 용량 이점을 별도로 유지한다.
+이 짧은 C1 실험은 native NVFP4의 전반적인 속도·비용 우위나 전체 VRAM 감소를 증명하지 않는다.
+
+[5. ledger 범위·원자료 identity]
+아래 CSV는 P1 64행/P2 192행, (phase,task_id,kv,policy)256개 고유 키다.
+V/S/F는 원 raw와 이전 independent audit가 일치하는 값이며 Fresh는 위 정의의 새 파생 값이다.
+requests는 episode budget.model_request_attempts, output_tokens는 budget.generated_output_tokens이며 각 요청 raw usage/IDs와 대조했다.
+wall_ms=최상위 $.wall_seconds*1000, 소수3자리 ms로 반올림(1microsecond 해상도).
+비용 표는 원 float를 먼저 합친 값이다. CSV 반올림합과는 셀당 최대0.000012초 수준 차이가 날 수 있다.
+이 CSV만으로 성공 수·paired 손실/회복·출력 토큰 합계를 재계산할 수 있다. 원응답·전체 event가 없으므로 endpoint 전체 재생은 TXT만으로 불가능하다.
+기존 R3 archive content manifest의 P1/P2 raw cell256개와 현물 bytes/hash를 대조했고 불일치0이다.
+
+전체 SHA256(파일 checksum과 execution-source bundle은 서로 다른 객체):
+PLAN.ko.txt
+  a5f97da13dd2d604df3db199ec8b42b9189bafe9c4d3780f7f7e8fa2089d3a8d
+specs/protocol.json
+  cddbf7d7b53ecee78b0fe24f55099df1dd4c9b7d255237f64562ab30973c4499
+provenance/execution_freeze_p0_r2.json
+  df6e1f76244192b0afcd20516b36eff127486192541a3dd5ceec864db8fbfba5
+provenance/execution_freeze_p1.json
+  3c26d74f3160a217b086875080de5046823d09cfe417359f5218ea3d7d947bc3
+provenance/execution_freeze_p2.json
+  f919ead93930fedf4f311f40cd06d9d7c3bd33ebd8c43ffa0dec76e841fdba52
+provenance/dev_input_manifest.json
+  d1fd28d5c05f243fbc9bb0048c07c5d68e53334a3b663860d28fd3e15fc26d6a
+provenance/holdout_input_manifest.json
+  ccc2288251a68989c55bfd77137e57e11817948a756d7dbb395675356c7fc6fa
+provenance/holdout_seal.json
+  24197b03ed6bb476ef3bc99ffa01774b50bc3e5b157efb5613e19c6e28ec82ca
+EXISTING_REVIEW_R3/REVIEW_CONTENT_MANIFEST.json
+  73222abbf5ae74c6b10b725356108f0a58c0175f104f14c6fcc3da6a549140f8
+EXISTING_REVIEW_R3는 worktree 옆 case017-review-20261020-r3/payload/inference-lab을 뜻한다.
+동일 manifest는 기존 ZIP의 inference-lab/REVIEW_CONTENT_MANIFEST.json에 있다.
+P0/P1/P2 공통 execution_source_sha256:
+  5dd7b00453abdde2e326eec0a3b873ecf35410f6a15c4cf9f24e42a9cdc0fa53
+이는 Git commit이 아니다. 당시 commit을 만들지 않았으며 base는 위 HEAD와 같다.
+
+발췌 원 파일 SHA256(경로는 R1/R2 + ID.json):
+DEV-B00_K0_C0: 349849857f7cd269f6ea3a291d7a52ca979c380a53fd87c590cc491f89f8a7a4
+DEV-B01_K0_C0: 4759b1b886eecc03f54d53ad9dfb4cfc44e34c9268aa5f6d5d2945b767e91f21
+DEV-B02_K0_C0: 387afa4f385d8dc058b395b0bc65839b79ac8c34c05a58b50665a720e76e40ef
+HOLDOUT-A00_K1_C0: 1d9fba7e100d785b5ebb94bca19748414ac24e6849eae7d5d8d1be35b69e7293
+HOLDOUT-A00_K1_G: a37d8ce9e3633fb9842e7840c570efee27e67a7b98c483e8e92822061f9b7a6b
+HOLDOUT-B01_K0_G: 2f8218aedb9ac96e8009b47d43fc4a9b99af2033c0e9620057d09072eebd2fa6
+HOLDOUT-B03_K1_E: e850c57ba2c1c42d7fcc4d84d877368f2222fcf58cf777e4a100d7dc963eae9e
+HOLDOUT-B03_K1_G: 53450cc92058bba5ede34f1f37e520356f00cca610e72cea58fa80c5aa163578
+HOLDOUT-B03_K1_N: 792c0bbcff72ca906a61c3ced37cd6cedcade9b784dd4c9a467e27198ec3472b
+HOLDOUT-B05_K0_G: 0bd826f956a78fba754c0cd9520e52119554ae3f101a0e89b94ac5d9cebc0331
+HOLDOUT-B05_K1_G: 84d894fdde0992583acd786cbb5e913b5e94744f10c9bbefcf481f0561984fe7
+HOLDOUT-C00_K1_G: ff12e4b78e21a575dba5899f47ccf4673a938adb98ba7f10bb300ea2d3b9a6f7
+
+BEGIN_EPISODE_LEDGER
+phase,task_id,family,kv,policy,verified,state_correct,final_correct,fresh_validation,requests,output_tokens,wall_ms,terminal_reason
+P1,DEV-A00,A,K0,C0,1,1,1,1,5,191,3171.451,VERIFIED_SUCCESS
+P1,DEV-A00,A,K0,G,1,1,1,1,5,191,3199.609,VERIFIED_SUCCESS
+P1,DEV-A00,A,K0,N,1,1,1,1,5,191,3192.200,VERIFIED_SUCCESS
+P1,DEV-A00,A,K0,E,1,1,1,1,5,191,3172.779,VERIFIED_SUCCESS
+P1,DEV-A00,A,K1,C0,0,0,0,0,1,27,478.576,CONTRACT_FAILURE
+P1,DEV-A00,A,K1,G,1,1,1,1,5,191,3246.984,VERIFIED_SUCCESS
+P1,DEV-A00,A,K1,N,0,0,0,0,2,54,964.448,CONTRACT_FAILURE
+P1,DEV-A00,A,K1,E,1,1,1,1,6,218,3833.798,VERIFIED_SUCCESS
+P1,DEV-A01,A,K0,C0,1,1,1,1,5,207,3388.906,VERIFIED_SUCCESS
+P1,DEV-A01,A,K0,G,1,1,1,1,5,207,3391.846,VERIFIED_SUCCESS
+P1,DEV-A01,A,K0,N,1,1,1,1,5,207,3382.615,VERIFIED_SUCCESS
+P1,DEV-A01,A,K0,E,1,1,1,1,5,207,3347.328,VERIFIED_SUCCESS
+P1,DEV-A01,A,K1,C0,0,0,0,0,1,28,500.079,CONTRACT_FAILURE
+P1,DEV-A01,A,K1,G,1,1,1,1,5,207,3734.595,VERIFIED_SUCCESS
+P1,DEV-A01,A,K1,N,0,0,0,0,2,56,988.402,CONTRACT_FAILURE
+P1,DEV-A01,A,K1,E,1,1,1,1,6,235,4073.462,VERIFIED_SUCCESS
+P1,DEV-A02,A,K0,C0,1,1,1,1,5,221,3593.910,VERIFIED_SUCCESS
+P1,DEV-A02,A,K0,G,1,1,1,1,5,221,3836.352,VERIFIED_SUCCESS
+P1,DEV-A02,A,K0,N,1,1,1,1,5,221,3581.938,VERIFIED_SUCCESS
+P1,DEV-A02,A,K0,E,1,1,1,1,5,221,3689.137,VERIFIED_SUCCESS
+P1,DEV-A02,A,K1,C0,1,1,1,1,5,267,4224.616,VERIFIED_SUCCESS
+P1,DEV-A02,A,K1,G,1,1,1,1,5,266,4225.168,VERIFIED_SUCCESS
+P1,DEV-A02,A,K1,N,1,1,1,1,5,267,4207.963,VERIFIED_SUCCESS
+P1,DEV-A02,A,K1,E,1,1,1,1,5,267,4227.268,VERIFIED_SUCCESS
+P1,DEV-B00,B,K0,C0,0,0,0,0,1,65,986.712,CONTRACT_FAILURE
+P1,DEV-B00,B,K0,G,0,0,0,0,3,143,2248.210,INCORRECT_STATE
+P1,DEV-B00,B,K0,N,0,0,0,0,2,130,1875.884,CONTRACT_FAILURE
+P1,DEV-B00,B,K0,E,0,0,0,0,4,208,3159.537,INCORRECT_STATE
+P1,DEV-B00,B,K1,C0,0,0,0,0,1,33,571.454,CONTRACT_FAILURE
+P1,DEV-B00,B,K1,G,0,0,0,0,3,143,2254.751,INCORRECT_STATE
+P1,DEV-B00,B,K1,N,0,0,0,0,4,176,2774.184,INCORRECT_STATE
+P1,DEV-B00,B,K1,E,0,0,0,0,4,176,2826.835,INCORRECT_STATE
+P1,DEV-B01,B,K0,C0,0,0,0,0,1,71,990.825,CONTRACT_FAILURE
+P1,DEV-B01,B,K0,G,0,1,1,0,5,271,4114.914,INCORRECT_FINAL
+P1,DEV-B01,B,K0,N,0,0,0,0,2,142,2021.691,CONTRACT_FAILURE
+P1,DEV-B01,B,K0,E,0,0,0,0,4,341,4730.338,CONTRACT_FAILURE
+P1,DEV-B01,B,K1,C0,0,0,0,0,1,71,1010.566,CONTRACT_FAILURE
+P1,DEV-B01,B,K1,G,0,1,1,0,5,271,4195.675,INCORRECT_FINAL
+P1,DEV-B01,B,K1,N,0,0,0,0,2,142,2092.982,CONTRACT_FAILURE
+P1,DEV-B01,B,K1,E,0,0,0,0,4,260,3852.150,CONTRACT_FAILURE
+P1,DEV-B02,B,K0,C0,0,0,0,0,1,67,972.205,CONTRACT_FAILURE
+P1,DEV-B02,B,K0,G,0,1,1,0,5,255,3921.783,INCORRECT_FINAL
+P1,DEV-B02,B,K0,N,0,0,0,0,2,134,1891.108,CONTRACT_FAILURE
+P1,DEV-B02,B,K0,E,0,0,0,0,4,320,4529.075,CONTRACT_FAILURE
+P1,DEV-B02,B,K1,C0,0,0,0,0,1,36,587.286,CONTRACT_FAILURE
+P1,DEV-B02,B,K1,G,0,1,1,0,5,255,3959.813,INCORRECT_FINAL
+P1,DEV-B02,B,K1,N,0,0,0,0,2,72,1188.974,CONTRACT_FAILURE
+P1,DEV-B02,B,K1,E,0,0,0,0,2,70,1167.484,CONTRACT_FAILURE
+P1,DEV-C00,C,K0,C0,1,1,1,1,4,183,2838.686,VERIFIED_SUCCESS
+P1,DEV-C00,C,K0,G,1,1,1,1,4,182,3015.116,VERIFIED_SUCCESS
+P1,DEV-C00,C,K0,N,1,1,1,1,4,183,2883.617,VERIFIED_SUCCESS
+P1,DEV-C00,C,K0,E,1,1,1,1,4,183,2933.839,VERIFIED_SUCCESS
+P1,DEV-C00,C,K1,C0,1,1,1,1,4,221,3371.512,VERIFIED_SUCCESS
+P1,DEV-C00,C,K1,G,1,1,1,1,4,221,3415.032,VERIFIED_SUCCESS
+P1,DEV-C00,C,K1,N,1,1,1,1,4,221,3366.995,VERIFIED_SUCCESS
+P1,DEV-C00,C,K1,E,1,1,1,1,4,221,3482.145,VERIFIED_SUCCESS
+P1,DEV-C01,C,K0,C0,1,1,1,1,4,179,2808.834,VERIFIED_SUCCESS
+P1,DEV-C01,C,K0,G,1,1,1,1,4,178,2833.383,VERIFIED_SUCCESS
+P1,DEV-C01,C,K0,N,1,1,1,1,4,179,2800.943,VERIFIED_SUCCESS
+P1,DEV-C01,C,K0,E,1,1,1,1,4,179,2845.777,VERIFIED_SUCCESS
+P1,DEV-C01,C,K1,C0,0,0,0,0,1,27,485.812,CONTRACT_FAILURE
+P1,DEV-C01,C,K1,G,1,1,1,1,4,178,2919.237,VERIFIED_SUCCESS
+P1,DEV-C01,C,K1,N,0,0,0,0,2,54,953.829,CONTRACT_FAILURE
+P1,DEV-C01,C,K1,E,0,0,0,0,2,54,1001.053,CONTRACT_FAILURE
+P2,HOLDOUT-A00,A,K0,C0,1,1,1,1,5,172,2943.174,VERIFIED_SUCCESS
+P2,HOLDOUT-A00,A,K0,G,1,1,1,1,5,172,2900.107,VERIFIED_SUCCESS
+P2,HOLDOUT-A00,A,K0,N,1,1,1,1,5,172,2970.791,VERIFIED_SUCCESS
+P2,HOLDOUT-A00,A,K0,E,1,1,1,1,5,172,2895.737,VERIFIED_SUCCESS
+P2,HOLDOUT-A00,A,K1,C0,0,0,0,0,1,26,470.047,CONTRACT_FAILURE
+P2,HOLDOUT-A00,A,K1,G,1,1,1,1,5,172,3120.476,VERIFIED_SUCCESS
+P2,HOLDOUT-A00,A,K1,N,0,0,0,0,2,52,955.007,CONTRACT_FAILURE
+P2,HOLDOUT-A00,A,K1,E,0,0,0,0,2,52,972.299,CONTRACT_FAILURE
+P2,HOLDOUT-A01,A,K0,C0,1,1,1,1,5,207,3348.869,VERIFIED_SUCCESS
+P2,HOLDOUT-A01,A,K0,G,1,1,1,1,5,207,3375.942,VERIFIED_SUCCESS
+P2,HOLDOUT-A01,A,K0,N,1,1,1,1,5,207,3477.009,VERIFIED_SUCCESS
+P2,HOLDOUT-A01,A,K0,E,1,1,1,1,5,207,3361.928,VERIFIED_SUCCESS
+P2,HOLDOUT-A01,A,K1,C0,1,1,1,1,5,249,4052.058,VERIFIED_SUCCESS
+P2,HOLDOUT-A01,A,K1,G,1,1,1,1,5,248,4204.665,VERIFIED_SUCCESS
+P2,HOLDOUT-A01,A,K1,N,1,1,1,1,5,249,3869.756,VERIFIED_SUCCESS
+P2,HOLDOUT-A01,A,K1,E,1,1,1,1,5,249,4031.175,VERIFIED_SUCCESS
+P2,HOLDOUT-A02,A,K0,C0,1,1,1,1,5,234,3742.151,VERIFIED_SUCCESS
+P2,HOLDOUT-A02,A,K0,G,1,1,1,1,5,234,3813.661,VERIFIED_SUCCESS
+P2,HOLDOUT-A02,A,K0,N,1,1,1,1,5,234,3820.752,VERIFIED_SUCCESS
+P2,HOLDOUT-A02,A,K0,E,1,1,1,1,5,234,3756.369,VERIFIED_SUCCESS
+P2,HOLDOUT-A02,A,K1,C0,1,1,1,1,5,283,4366.856,VERIFIED_SUCCESS
+P2,HOLDOUT-A02,A,K1,G,1,1,1,1,5,283,4427.863,VERIFIED_SUCCESS
+P2,HOLDOUT-A02,A,K1,N,1,1,1,1,5,283,4429.145,VERIFIED_SUCCESS
+P2,HOLDOUT-A02,A,K1,E,1,1,1,1,5,283,4460.474,VERIFIED_SUCCESS
+P2,HOLDOUT-A03,A,K0,C0,1,1,1,1,5,246,3838.915,VERIFIED_SUCCESS
+P2,HOLDOUT-A03,A,K0,G,1,1,1,1,5,246,3858.227,VERIFIED_SUCCESS
+P2,HOLDOUT-A03,A,K0,N,1,1,1,1,5,246,3959.348,VERIFIED_SUCCESS
+P2,HOLDOUT-A03,A,K0,E,1,1,1,1,5,246,3885.007,VERIFIED_SUCCESS
+P2,HOLDOUT-A03,A,K1,C0,1,1,1,1,5,246,3954.169,VERIFIED_SUCCESS
+P2,HOLDOUT-A03,A,K1,G,1,1,1,1,5,246,4000.790,VERIFIED_SUCCESS
+P2,HOLDOUT-A03,A,K1,N,1,1,1,1,5,246,4013.356,VERIFIED_SUCCESS
+P2,HOLDOUT-A03,A,K1,E,1,1,1,1,5,246,3921.938,VERIFIED_SUCCESS
+P2,HOLDOUT-A04,A,K0,C0,1,1,1,1,5,177,3015.785,VERIFIED_SUCCESS
+P2,HOLDOUT-A04,A,K0,G,1,1,1,1,5,177,2996.896,VERIFIED_SUCCESS
+P2,HOLDOUT-A04,A,K0,N,1,1,1,1,5,177,2996.329,VERIFIED_SUCCESS
+P2,HOLDOUT-A04,A,K0,E,1,1,1,1,5,177,2927.214,VERIFIED_SUCCESS
+P2,HOLDOUT-A04,A,K1,C0,0,0,0,0,1,27,491.742,CONTRACT_FAILURE
+P2,HOLDOUT-A04,A,K1,G,1,1,1,1,5,177,3047.216,VERIFIED_SUCCESS
+P2,HOLDOUT-A04,A,K1,N,0,0,0,0,2,54,985.844,CONTRACT_FAILURE
+P2,HOLDOUT-A04,A,K1,E,1,1,1,1,6,204,3597.742,VERIFIED_SUCCESS
+P2,HOLDOUT-A05,A,K0,C0,1,1,1,1,5,206,3391.033,VERIFIED_SUCCESS
+P2,HOLDOUT-A05,A,K0,G,1,1,1,1,5,206,3404.725,VERIFIED_SUCCESS
+P2,HOLDOUT-A05,A,K0,N,1,1,1,1,5,206,3334.817,VERIFIED_SUCCESS
+P2,HOLDOUT-A05,A,K0,E,1,1,1,1,5,206,3437.063,VERIFIED_SUCCESS
+P2,HOLDOUT-A05,A,K1,C0,0,0,0,0,1,31,531.559,CONTRACT_FAILURE
+P2,HOLDOUT-A05,A,K1,G,1,1,1,1,5,247,4023.807,VERIFIED_SUCCESS
+P2,HOLDOUT-A05,A,K1,N,1,1,1,1,6,279,4431.357,VERIFIED_SUCCESS
+P2,HOLDOUT-A05,A,K1,E,1,1,1,1,6,279,4577.885,VERIFIED_SUCCESS
+P2,HOLDOUT-A06,A,K0,C0,1,1,1,1,5,227,3743.011,VERIFIED_SUCCESS
+P2,HOLDOUT-A06,A,K0,G,1,1,1,1,5,227,3580.308,VERIFIED_SUCCESS
+P2,HOLDOUT-A06,A,K0,N,1,1,1,1,5,227,3672.146,VERIFIED_SUCCESS
+P2,HOLDOUT-A06,A,K0,E,1,1,1,1,5,227,3688.438,VERIFIED_SUCCESS
+P2,HOLDOUT-A06,A,K1,C0,0,0,0,0,1,25,471.362,CONTRACT_FAILURE
+P2,HOLDOUT-A06,A,K1,G,1,1,1,1,5,227,3728.487,VERIFIED_SUCCESS
+P2,HOLDOUT-A06,A,K1,N,0,0,0,0,2,50,918.495,CONTRACT_FAILURE
+P2,HOLDOUT-A06,A,K1,E,1,1,1,1,6,252,4224.736,VERIFIED_SUCCESS
+P2,HOLDOUT-A07,A,K0,C0,1,1,1,1,5,259,4066.453,VERIFIED_SUCCESS
+P2,HOLDOUT-A07,A,K0,G,1,1,1,1,5,259,4060.879,VERIFIED_SUCCESS
+P2,HOLDOUT-A07,A,K0,N,1,1,1,1,5,259,4137.795,VERIFIED_SUCCESS
+P2,HOLDOUT-A07,A,K0,E,1,1,1,1,5,259,3958.642,VERIFIED_SUCCESS
+P2,HOLDOUT-A07,A,K1,C0,1,1,1,1,5,312,4899.425,VERIFIED_SUCCESS
+P2,HOLDOUT-A07,A,K1,G,1,1,1,1,5,312,4734.951,VERIFIED_SUCCESS
+P2,HOLDOUT-A07,A,K1,N,1,1,1,1,5,312,4789.076,VERIFIED_SUCCESS
+P2,HOLDOUT-A07,A,K1,E,1,1,1,1,5,312,4855.553,VERIFIED_SUCCESS
+P2,HOLDOUT-B00,B,K0,C0,0,0,0,0,1,73,987.823,CONTRACT_FAILURE
+P2,HOLDOUT-B00,B,K0,G,0,1,1,0,5,283,4346.944,INCORRECT_FINAL
+P2,HOLDOUT-B00,B,K0,N,0,0,0,0,2,146,2052.873,CONTRACT_FAILURE
+P2,HOLDOUT-B00,B,K0,E,0,0,0,0,4,354,4922.272,CONTRACT_FAILURE
+P2,HOLDOUT-B00,B,K1,C0,0,0,0,0,1,44,685.545,CONTRACT_FAILURE
+P2,HOLDOUT-B00,B,K1,G,0,1,1,0,5,334,4969.627,INCORRECT_FINAL
+P2,HOLDOUT-B00,B,K1,N,0,0,0,0,3,131,2112.021,CONTRACT_FAILURE
+P2,HOLDOUT-B00,B,K1,E,0,1,1,0,6,378,5709.146,INCORRECT_FINAL
+P2,HOLDOUT-B01,B,K0,C0,0,1,1,0,5,281,4226.184,INCORRECT_FINAL
+P2,HOLDOUT-B01,B,K0,G,0,1,1,0,5,281,4244.169,INCORRECT_FINAL
+P2,HOLDOUT-B01,B,K0,N,0,1,1,0,5,281,4282.553,INCORRECT_FINAL
+P2,HOLDOUT-B01,B,K0,E,0,1,1,0,5,281,4275.016,INCORRECT_FINAL
+P2,HOLDOUT-B01,B,K1,C0,0,0,0,0,1,45,709.916,CONTRACT_FAILURE
+P2,HOLDOUT-B01,B,K1,G,0,1,1,0,5,332,5090.019,INCORRECT_FINAL
+P2,HOLDOUT-B01,B,K1,N,0,0,0,0,3,153,2340.531,CONTRACT_FAILURE
+P2,HOLDOUT-B01,B,K1,E,0,0,0,0,2,88,1393.169,CONTRACT_FAILURE
+P2,HOLDOUT-B02,B,K0,C0,0,1,1,0,5,326,4775.075,INCORRECT_FINAL
+P2,HOLDOUT-B02,B,K0,G,0,1,1,0,5,326,4896.923,INCORRECT_FINAL
+P2,HOLDOUT-B02,B,K0,N,0,1,1,0,5,326,4811.571,INCORRECT_FINAL
+P2,HOLDOUT-B02,B,K0,E,0,1,1,0,5,326,4802.708,INCORRECT_FINAL
+P2,HOLDOUT-B02,B,K1,C0,0,0,0,0,1,44,674.905,CONTRACT_FAILURE
+P2,HOLDOUT-B02,B,K1,G,0,1,1,0,5,326,4934.101,INCORRECT_FINAL
+P2,HOLDOUT-B02,B,K1,N,0,1,1,0,6,370,5616.843,INCORRECT_FINAL
+P2,HOLDOUT-B02,B,K1,E,0,0,0,0,3,128,2067.669,CONTRACT_FAILURE
+P2,HOLDOUT-B03,B,K0,C0,0,1,1,0,5,392,5724.820,INCORRECT_FINAL
+P2,HOLDOUT-B03,B,K0,G,0,1,1,0,5,392,5768.851,INCORRECT_FINAL
+P2,HOLDOUT-B03,B,K0,N,0,1,1,0,5,392,5644.834,INCORRECT_FINAL
+P2,HOLDOUT-B03,B,K0,E,0,1,1,0,5,392,5595.133,INCORRECT_FINAL
+P2,HOLDOUT-B03,B,K1,C0,0,0,0,0,1,43,694.151,CONTRACT_FAILURE
+P2,HOLDOUT-B03,B,K1,G,0,1,1,0,5,332,4985.323,INCORRECT_FINAL
+P2,HOLDOUT-B03,B,K1,N,1,1,1,1,6,375,5657.640,VERIFIED_SUCCESS
+P2,HOLDOUT-B03,B,K1,E,0,1,1,0,6,375,5661.690,INCORRECT_FINAL
+P2,HOLDOUT-B04,B,K0,C0,0,0,0,0,1,70,962.190,CONTRACT_FAILURE
+P2,HOLDOUT-B04,B,K0,G,0,1,1,0,5,271,4050.733,INCORRECT_FINAL
+P2,HOLDOUT-B04,B,K0,N,0,0,0,0,2,140,1988.627,CONTRACT_FAILURE
+P2,HOLDOUT-B04,B,K0,E,0,0,0,0,4,339,4835.154,CONTRACT_FAILURE
+P2,HOLDOUT-B04,B,K1,C0,0,0,0,0,1,43,685.876,CONTRACT_FAILURE
+P2,HOLDOUT-B04,B,K1,G,0,1,1,0,5,322,4932.953,INCORRECT_FINAL
+P2,HOLDOUT-B04,B,K1,N,0,1,1,0,5,305,4550.113,INCORRECT_FINAL
+P2,HOLDOUT-B04,B,K1,E,0,1,1,0,6,365,5518.229,INCORRECT_FINAL
+P2,HOLDOUT-B05,B,K0,C0,0,0,0,0,3,147,2227.243,INCORRECT_STATE
+P2,HOLDOUT-B05,B,K0,G,0,0,0,0,3,147,2261.111,INCORRECT_STATE
+P2,HOLDOUT-B05,B,K0,N,0,0,0,0,3,147,2233.008,INCORRECT_STATE
+P2,HOLDOUT-B05,B,K0,E,0,0,0,0,3,147,2246.944,INCORRECT_STATE
+P2,HOLDOUT-B05,B,K1,C0,0,0,0,0,3,176,2594.380,INCORRECT_STATE
+P2,HOLDOUT-B05,B,K1,G,0,0,0,0,3,176,2623.222,INCORRECT_STATE
+P2,HOLDOUT-B05,B,K1,N,0,0,0,0,3,176,2692.077,INCORRECT_STATE
+P2,HOLDOUT-B05,B,K1,E,0,0,0,0,3,176,2596.123,INCORRECT_STATE
+P2,HOLDOUT-B06,B,K0,C0,0,1,1,0,5,321,4706.825,INCORRECT_FINAL
+P2,HOLDOUT-B06,B,K0,G,0,1,1,0,5,321,4780.844,INCORRECT_FINAL
+P2,HOLDOUT-B06,B,K0,N,0,1,1,0,5,321,4682.536,INCORRECT_FINAL
+P2,HOLDOUT-B06,B,K0,E,0,1,1,0,5,321,4727.747,INCORRECT_FINAL
+P2,HOLDOUT-B06,B,K1,C0,0,0,0,0,1,34,579.874,CONTRACT_FAILURE
+P2,HOLDOUT-B06,B,K1,G,0,1,1,0,5,270,4304.838,INCORRECT_FINAL
+P2,HOLDOUT-B06,B,K1,N,0,1,1,0,5,253,3819.242,INCORRECT_FINAL
+P2,HOLDOUT-B06,B,K1,E,0,0,0,0,3,104,1761.749,CONTRACT_FAILURE
+P2,HOLDOUT-B07,B,K0,C0,0,1,1,0,5,292,4480.819,INCORRECT_FINAL
+P2,HOLDOUT-B07,B,K0,G,0,1,1,0,5,292,4450.858,INCORRECT_FINAL
+P2,HOLDOUT-B07,B,K0,N,0,1,1,0,5,292,4424.131,INCORRECT_FINAL
+P2,HOLDOUT-B07,B,K0,E,0,1,1,0,5,292,4371.408,INCORRECT_FINAL
+P2,HOLDOUT-B07,B,K1,C0,0,0,0,0,1,45,719.915,CONTRACT_FAILURE
+P2,HOLDOUT-B07,B,K1,G,0,1,1,0,5,343,5198.414,INCORRECT_FINAL
+P2,HOLDOUT-B07,B,K1,N,0,0,0,0,3,134,2103.365,CONTRACT_FAILURE
+P2,HOLDOUT-B07,B,K1,E,0,0,0,0,2,90,1392.501,CONTRACT_FAILURE
+P2,HOLDOUT-C00,C,K0,C0,1,1,1,1,4,165,2631.002,VERIFIED_SUCCESS
+P2,HOLDOUT-C00,C,K0,G,1,1,1,1,4,164,2669.648,VERIFIED_SUCCESS
+P2,HOLDOUT-C00,C,K0,N,1,1,1,1,4,165,2663.341,VERIFIED_SUCCESS
+P2,HOLDOUT-C00,C,K0,E,1,1,1,1,4,165,2626.434,VERIFIED_SUCCESS
+P2,HOLDOUT-C00,C,K1,C0,0,0,0,0,1,25,454.652,CONTRACT_FAILURE
+P2,HOLDOUT-C00,C,K1,G,0,0,0,1,4,164,2698.483,INCORRECT_STATE
+P2,HOLDOUT-C00,C,K1,N,0,0,0,0,2,50,940.888,CONTRACT_FAILURE
+P2,HOLDOUT-C00,C,K1,E,1,1,1,1,5,190,3146.398,VERIFIED_SUCCESS
+P2,HOLDOUT-C01,C,K0,C0,1,1,1,1,4,159,2540.096,VERIFIED_SUCCESS
+P2,HOLDOUT-C01,C,K0,G,1,1,1,1,4,158,2589.975,VERIFIED_SUCCESS
+P2,HOLDOUT-C01,C,K0,N,1,1,1,1,4,159,2549.768,VERIFIED_SUCCESS
+P2,HOLDOUT-C01,C,K0,E,1,1,1,1,4,159,2527.896,VERIFIED_SUCCESS
+P2,HOLDOUT-C01,C,K1,C0,0,0,0,0,1,28,488.202,CONTRACT_FAILURE
+P2,HOLDOUT-C01,C,K1,G,1,1,1,1,4,199,3130.322,VERIFIED_SUCCESS
+P2,HOLDOUT-C01,C,K1,N,0,0,0,0,2,56,1002.941,CONTRACT_FAILURE
+P2,HOLDOUT-C01,C,K1,E,1,1,1,1,5,228,3622.493,VERIFIED_SUCCESS
+P2,HOLDOUT-C02,C,K0,C0,1,1,1,1,4,163,2604.859,VERIFIED_SUCCESS
+P2,HOLDOUT-C02,C,K0,G,1,1,1,1,4,162,2593.279,VERIFIED_SUCCESS
+P2,HOLDOUT-C02,C,K0,N,1,1,1,1,4,163,2611.590,VERIFIED_SUCCESS
+P2,HOLDOUT-C02,C,K0,E,1,1,1,1,4,163,2624.788,VERIFIED_SUCCESS
+P2,HOLDOUT-C02,C,K1,C0,0,0,0,0,1,27,480.280,CONTRACT_FAILURE
+P2,HOLDOUT-C02,C,K1,G,1,1,1,1,4,201,3154.807,VERIFIED_SUCCESS
+P2,HOLDOUT-C02,C,K1,N,0,0,0,0,2,54,961.740,CONTRACT_FAILURE
+P2,HOLDOUT-C02,C,K1,E,1,1,1,1,5,229,3656.308,VERIFIED_SUCCESS
+P2,HOLDOUT-C03,C,K0,C0,1,1,1,1,4,187,2914.466,VERIFIED_SUCCESS
+P2,HOLDOUT-C03,C,K0,G,1,1,1,1,4,186,2939.262,VERIFIED_SUCCESS
+P2,HOLDOUT-C03,C,K0,N,1,1,1,1,4,187,2957.288,VERIFIED_SUCCESS
+P2,HOLDOUT-C03,C,K0,E,1,1,1,1,4,187,2929.327,VERIFIED_SUCCESS
+P2,HOLDOUT-C03,C,K1,C0,1,1,1,1,4,228,3449.516,VERIFIED_SUCCESS
+P2,HOLDOUT-C03,C,K1,G,1,1,1,1,4,227,3482.660,VERIFIED_SUCCESS
+P2,HOLDOUT-C03,C,K1,N,1,1,1,1,4,228,3490.694,VERIFIED_SUCCESS
+P2,HOLDOUT-C03,C,K1,E,1,1,1,1,4,228,3606.040,VERIFIED_SUCCESS
+P2,HOLDOUT-C04,C,K0,C0,1,1,1,1,4,173,2727.620,VERIFIED_SUCCESS
+P2,HOLDOUT-C04,C,K0,G,1,1,1,1,4,172,2748.527,VERIFIED_SUCCESS
+P2,HOLDOUT-C04,C,K0,N,1,1,1,1,4,173,2786.945,VERIFIED_SUCCESS
+P2,HOLDOUT-C04,C,K0,E,1,1,1,1,4,173,2728.076,VERIFIED_SUCCESS
+P2,HOLDOUT-C04,C,K1,C0,0,0,0,0,1,28,496.214,CONTRACT_FAILURE
+P2,HOLDOUT-C04,C,K1,G,1,1,1,1,4,172,2828.591,VERIFIED_SUCCESS
+P2,HOLDOUT-C04,C,K1,N,0,0,0,0,2,56,1007.099,CONTRACT_FAILURE
+P2,HOLDOUT-C04,C,K1,E,0,0,0,0,2,56,980.355,CONTRACT_FAILURE
+P2,HOLDOUT-C05,C,K0,C0,1,1,1,1,4,175,2772.867,VERIFIED_SUCCESS
+P2,HOLDOUT-C05,C,K0,G,1,1,1,1,4,174,2769.243,VERIFIED_SUCCESS
+P2,HOLDOUT-C05,C,K0,N,1,1,1,1,4,175,2816.057,VERIFIED_SUCCESS
+P2,HOLDOUT-C05,C,K0,E,1,1,1,1,4,175,2774.471,VERIFIED_SUCCESS
+P2,HOLDOUT-C05,C,K1,C0,1,1,1,1,4,216,3333.581,VERIFIED_SUCCESS
+P2,HOLDOUT-C05,C,K1,G,1,1,1,1,4,215,3338.378,VERIFIED_SUCCESS
+P2,HOLDOUT-C05,C,K1,N,1,1,1,1,4,216,3291.335,VERIFIED_SUCCESS
+P2,HOLDOUT-C05,C,K1,E,1,1,1,1,4,216,3355.330,VERIFIED_SUCCESS
+P2,HOLDOUT-C06,C,K0,C0,1,1,1,1,4,167,2690.467,VERIFIED_SUCCESS
+P2,HOLDOUT-C06,C,K0,G,1,1,1,1,4,166,2684.666,VERIFIED_SUCCESS
+P2,HOLDOUT-C06,C,K0,N,1,1,1,1,4,167,2665.967,VERIFIED_SUCCESS
+P2,HOLDOUT-C06,C,K0,E,1,1,1,1,4,167,2614.780,VERIFIED_SUCCESS
+P2,HOLDOUT-C06,C,K1,C0,0,0,0,0,1,28,490.031,CONTRACT_FAILURE
+P2,HOLDOUT-C06,C,K1,G,1,1,1,1,4,205,3178.683,VERIFIED_SUCCESS
+P2,HOLDOUT-C06,C,K1,N,0,0,0,0,2,56,975.394,CONTRACT_FAILURE
+P2,HOLDOUT-C06,C,K1,E,0,0,0,0,2,56,996.170,CONTRACT_FAILURE
+P2,HOLDOUT-C07,C,K0,C0,1,1,1,1,4,177,2802.968,VERIFIED_SUCCESS
+P2,HOLDOUT-C07,C,K0,G,1,1,1,1,4,176,2776.842,VERIFIED_SUCCESS
+P2,HOLDOUT-C07,C,K0,N,1,1,1,1,4,177,2777.619,VERIFIED_SUCCESS
+P2,HOLDOUT-C07,C,K0,E,1,1,1,1,4,177,2798.126,VERIFIED_SUCCESS
+P2,HOLDOUT-C07,C,K1,C0,1,1,1,1,4,217,3414.662,VERIFIED_SUCCESS
+P2,HOLDOUT-C07,C,K1,G,1,1,1,1,4,217,3298.689,VERIFIED_SUCCESS
+P2,HOLDOUT-C07,C,K1,N,1,1,1,1,4,217,3312.003,VERIFIED_SUCCESS
+P2,HOLDOUT-C07,C,K1,E,1,1,1,1,4,217,3294.046,VERIFIED_SUCCESS
+END_EPISODE_LEDGER
+
+[6. 검증 재사용 / 이번 CPU 계산 / 미검증]
+기존 검증 재사용:
+- results/p1_r1/audit/audit_receipt.json:64개 raw 새 fixture replay·별도 endpoint PASS.
+- results/p2_r1/audit/audit_receipt.json:192개 동일 범위 PASS.
+- results/p1_input_verification_r1/receipt.json:64cell/233request 입력·history·schema 대조 PASS.
+- results/p2_input_verification_r1/receipt.json:192cell/775request 대조 PASS.
+- results/terminal_independence_r1/receipt.json:저장 종료 자격을 빼도256 endpoint 점수 차이0(과거 검산).
+- 신규 unit92개/기존 관련 회귀151개/브라우저48개는 과거 receipt의 기록이다. 이번에 재실행하거나 새 성과로 합산하지 않았다.
+  출처 results/cpu_verification/receipt.json, results/cpu_regression/receipt.json, results/local_browser/browser.json.
+원 scorer의 보조 unmet 라벨 terminal_budget_or_infrastructure는 의미적 실패 종료에도 붙는 포괄 라벨이다.
+예산 소진 근거로 쓰지 않는다. 실제 terminal_reason/예산/사건을 읽었고 원 라벨을 고치지 않았다.
+
+이번에 새로 한 CPU 작업:
+- 기존256 raw JSON을 읽어 최소 ledger와 원 flag/cached audit 일치·고유성·분모를 확인했다.
+- 현재 상태 hash/version/대상/사전 available event IDs로 Fresh를256행에서 계산했다.
+- 원 usage와 저장/서버 token IDs의 입력·출력 개수를 확인하고8셀/phase 비용을 합산했다.
+- G 창고16건 분류·원문4사건·DEV3실패·freeze35공통파일·시점 장부를 읽고 대조했다.
+- 기존 manifest의 raw256개 hash, case 파일 목록/전체 bytes/hash, 기존ZIP3개의 bytes/hash, git HEAD/branch/status를 읽기 전후 비교했다.
+- TXT UTF-8/65536bytes상한/CSV256고유행/수치 합계를 확인했다. TXT 자기 hash는 이 파일 안에 넣지 않는다.
+이번 작업의 GPU/model 요청·서버 기동·설치·다운로드·P3·전체 테스트/브라우저/fixture replay·Git 변경은0이다.
+
+미확인·한계:
+- 원 v1.1 전문/6/8 gate의 전승·등록 누락 경위, 별도 면제 승인·결정 주체의 독립 문서는 미확인.
+- 로컬 시점의 외부 서명/독립 타임스탬프, 장부 밖 HOLDOUT 관측 가능성은 검증하지 않았다.
+- 원 tokenizer로 재토큰화, GPU 출력/가중치/커널 재현, 전체 endpoint 새 replay는 이번 범위 밖이다.
+- Fresh는 명시한 파생 지표이며 원 논문 지표·새 모델 성능 실험이 아니다.
+- P2는 조건부 관측값과 원 기록으로 보존하되, 제시된6/8 확대 gate를 충족한 확인시험이라는 해석은 유지할 수 없다.
+
+무변경 확인 범위:
+CASE 아래 기존 795개 파일(합계282565307bytes)의 정렬 path/bytes/SHA256 목록을 읽기 전후 동일 방식으로 계산했다.
+inventory SHA256(canonical JSON:sort_keys=True,ensure_ascii=False,separators=(',',':')):
+  f0e96b6428193e937fcd8eecb7500335ffed41a15e80d3d73b2faaaecfb8efa2
+여기에는 원 raw·frozen source·기존 report·local browser 등 기존 파일이 포함된다. 모델 weight 전체를 새로 읽거나 hash하지 않았다.
+기존 ZIP r1/r2/r3도 각각 bytes/SHA256이 동일하며, r3은10342127bytes/기존 SHA256:
+  b7cf69d03b0158f82c31d843663f17785609a2da7d2e55bf85862a9f7d2b35c2
+worktree HEAD·branch·porcelain status·staged 목록도 시작/종료 동일하다. 새 TXT는 worktree 밖 새 디렉터리에만 쓴다.
+끝.

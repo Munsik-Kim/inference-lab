@@ -1,0 +1,42 @@
+name: Case017 stored traces and publication contracts
+on:
+  pull_request:
+    paths: ['cases/017-agent-contract-cost-bench/**', 'tools/showcase/**', 'presentation/**', 'tests/showcase/**', '.github/workflows/case017-checks.yml']
+  push:
+    branches: [main]
+    paths: ['cases/017-agent-contract-cost-bench/**', 'tools/showcase/**', 'presentation/**', 'tests/showcase/**', '.github/workflows/case017-checks.yml']
+permissions:
+  contents: read
+concurrency:
+  group: case017-cpu-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      HF_HUB_OFFLINE: '1'
+      TRANSFORMERS_OFFLINE: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6; repository pin
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6; repository pin
+        with:
+          python-version: '3.12.14'
+      - name: Restore exact source view and replay all256 saved episodes on CPU
+        run: python -B cases/017-agent-contract-cost-bench/publication/run_checks.py --output "$RUNNER_TEMP/case017" --tests
+      - name: Keep verification receipts even on failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4; repository pin
+        with:
+          name: case017-cpu-receipts
+          path: |
+            ${{ runner.temp }}/case017/verification.json
+            ${{ runner.temp }}/case017/failed_commands.json
+            ${{ runner.temp }}/case017/*.log
+          if-no-files-found: warn
+          retention-days: 14

@@ -36,6 +36,17 @@ RTX 5080에서 실제 NVFP4 KV 저장·읽기 검사와 고정 pool 비교 도�
 
 [Report](cases/016-kv-agent-bench/REPORT.ko.md) · [CPU](cases/016-kv-agent-bench/REPRODUCE.ko.md) · [Code](cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/runner.py)
 
+<!-- case017-entry -->
+## Case017 — 도구 호출 규칙과 업무 완주 비용
+
+도구 호출 규칙이 실제 저장·검증·최종 답의 완료를 얼마나 바꾸는지 비교하는 평가기를 구현했습니다. 상품 합계 기록·창고 이동·문서 정보 변경을 소유한 가상 기록에서 시험합니다.
+
+BF16 가중치를 고정한 NVFP4 KV의 신규 합성 24과제에서 문법 제약은 완주 7/24→15/24, 상태 정확 7/24→22/24를 기록했습니다. 회복 8개·손실 0개와 함께 추가 실행 비용과 남은 실패도 추적했습니다. 완주 수가 늘면서 전체 실행 비용도 늘었습니다. 실패를 포함한 24개 실행의 비용을 완주 수로 나누면 입력 토큰은 약 3.62%, 출력 토큰은 12.36%, 한 과제 실행 시간(episode wall)은 11.27% 증가했습니다.
+
+확대 기준 이탈: 설정 점검용 DEV에서 BF16 KV+C0의 완주는 5/8로 원안의 6/8 기준에 미달했습니다. 당시 로컬 계획과 실행 코드가 이 성공 조건을 누락하고 완료·동결·봉인만 검사해 P2를 진행했습니다. 별도 면제 승인 기록은 확인하지 못했습니다. 이 경위를 공개하며, P2는 해당 기준을 통과한 확인시험이 아닌 신규 합성 과제의 탐색적 측정으로 제시합니다.
+
+[Results](cases/017-agent-contract-cost-bench/REPORT.ko.md) · [CPU replay](cases/017-agent-contract-cost-bench/REPRODUCE.ko.md) · [Code](cases/017-agent-contract-cost-bench/src/agent_contract_cost/runner.py) · [Protocol deviation](cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.ko.md)
+
 ## 직접 사용·재현
 
 - 내 모델의 저장된 답 비교: [두 파일 준비 → 검사 → 비교 → 보고서](packages/diova-compare/examples/compare/README.ko.md). Python 3.10+와 CPU로 실행하며, 자유 서술 답의 정오는 사용자가 제공합니다.
@@ -89,8 +100,8 @@ RTX 5080에서 실제 NVFP4 KV 저장·읽기 검사와 고정 pool 비교 도�
 | [013 — 가중치 오차가 줄면 실제 답도 좋아질까?](docs/ko/CASEBOOK.md#case-013) | INT4 스케일 보존·저장·재로딩과 동일 입력 품질 기록. Packed 전체 모델 수치 기준 미통과. |
 | [014 — 같은 4비트 저장량에서 품질을 개선할 수 있는가?](docs/ko/CASEBOOK.md#case-014) | PG19 텍스트 예측 품질 개선과 ArXiv 한계. BF16으로 복원한 품질 평가이며 VRAM 절감은 측정하지 않았습니다. |
 | [015 — 도구 이름만 바뀌어도 AI가 같은 일을 끝낼까?](https://munsik-kim.github.io/inference-lab/ko/case015.html#overview) | 구매한 개수와 개당 가격을 조회해 총금액을 계산·저장·확인하는 예제로 비교합니다. 16개 문제에서 BF16 15/16→16/16, RTN 16/16→16/16, D16 12/16→12/16. [작업 설명·용어·CPU 예제](cases/015-tool-interface-sensitivity/README.ko.md). |
-
 | [016 — 실제 NVFP4 KV 저장과 동시 요청 비용은?](cases/016-kv-agent-bench/README.ko.md) | BF16 가중치·같은4GiB pool에서 KV 저장·읽기, token 수용량, 36개 block의 처리량·대기·수치 sanity 비교. |
+| [017 — 도구 호출 규칙과 업무 완주 비용](cases/017-agent-contract-cost-bench/README.ko.md) | 엄격한 JSON·실제 상태·최신 검증 관측·완주 비용. 확대 기준 누락을 공개한 탐색적 측정. |
 
 ## 더 깊게 보기
 

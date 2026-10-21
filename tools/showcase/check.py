@@ -21,6 +21,7 @@ from case015 import load_case015, render_case015, home_case015, SOURCE_COPIES as
 from case016 import load_case016, render_case016, home_case016, SOURCE_COPIES as C16_SOURCES, FIGURES as C16_FIGURES, SECTIONS as C16_SECTIONS
 from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
+from case017 import load_case017, render_case017, home_case017, check_evidence_download, SOURCE_COPIES as C17_SOURCES, FIGURES as C17_FIGURES, SECTIONS as C17_SECTIONS, EVIDENCE_ASSET as C17_ARCHIVE, EVIDENCE_SOURCE as C17_ARCHIVE_SOURCE
 from practical import load_practical, render as practical_render, PAGES as GUIDE_PAGES, COMPARE_EXAMPLES
 
 EXPECTED = {'en/case008.html','ko/case008.html','data/case008.json','assets/case008.css','assets/case008.js','index.html','en/index.html','ko/index.html','en/guide.html','ko/guide.html','en/case006.html','ko/case006.html',
@@ -99,6 +100,7 @@ def check(root: Path, site: Path) -> dict:
     data14=load_case014(root)
     data15=load_case015(root)
     data16=load_case016(root)
+    data17=load_case017(root)
     practical=load_practical(root,load_case008(root),data9,data13)
     expected=EXPECTED|({'en/case009.html','ko/case009.html','data/case009.json','data/case009.js','assets/case009.js','assets/serving-L128.svg','assets/serving-L1024.svg',
       'sources/diova-compare-core.py.txt','sources/diova-compare-tests.py.txt','sources/diova-compare-edge-tests.py.txt','sources/case009-serving.py.txt','sources/case009-quality.py.txt','sources/case009-report-en.md.txt','sources/case009-report-ko.md.txt','sources/case009-notice.md.txt'} if data9 else set())
@@ -126,6 +128,9 @@ def check(root: Path, site: Path) -> dict:
     if data16:
         expected |= {'en/case016.html','ko/case016.html','data/case016.json','assets/case016.css'}
         expected |= {'sources/'+name for name in C16_SOURCES} | set(C16_FIGURES)
+    if data17:
+        expected |= {'en/case017.html','ko/case017.html','data/case017.json','assets/case017.css','assets/case017.js',C17_ARCHIVE}
+        expected |= {'sources/'+name for name in C17_SOURCES} | set(C17_FIGURES)
     expected |= {lang+'/'+page+'.html' for lang in ('ko','en') for page in GUIDE_PAGES}
     expected |= {'data/practical-guide.json','assets/practical-guide.css'}
     expected |= set(COMPARE_EXAMPLES)
@@ -147,6 +152,18 @@ def check(root: Path, site: Path) -> dict:
         for page in GUIDE_PAGES:
             require(practical_render(root,practical,lang,page) in (site/lang/(page+'.html')).read_text(), 'Practical guide rendering mismatch')
         require(practical_render(root,practical,lang,'featured') in (site/lang/'index.html').read_text(), 'Practical home stories mismatch')
+    if data17:
+        require(read(site/'data/case017.json')==data17,'Case017 raw/display mismatch')
+        require(m['case017_units']['source_files']==data17['display_source_files'],'Case017 source identity')
+        require(m['case017_units']['gate']==data17['gate'],'Case017 disclosed gate identity')
+        for name,path in C17_SOURCES.items():require((site/'sources'/name).read_bytes()==(root/path).read_bytes(),'Case017 source copy changed')
+        for name,path in C17_FIGURES.items():require((site/name).read_bytes()==(root/path).read_bytes(),'Case017 figure changed')
+        require((site/C17_ARCHIVE).read_bytes()==(root/C17_ARCHIVE_SOURCE).read_bytes(),'Case017 lossless evidence copy')
+        for lang in ('en','ko'):
+            html=(site/lang/'case017.html').read_text();parser=Links();parser.feed(html)
+            require(render_case017(data17,lang) in html and set(C17_SECTIONS)<=parser.ids,'Case017 rendering/anchors')
+            require(home_case017(data17,lang) in (site/lang/'index.html').read_text(),'Case017 home entry')
+            require(html.index('case017-deviation')<html.index('id="workflow"'),'Case017 deviation must be near first results')
     if data16:
         require(read(site/'data/case016.json')==data16,'Case016 raw/display mismatch')
         require(m['case016_units']['source_files']==data16['display_source_files'],'Case016 source identity')
@@ -318,6 +335,12 @@ def check(root: Path, site: Path) -> dict:
     forbidden=('ghp_','hf_','sk-proj-','BEGIN PRIVATE KEY')
     private_path=re.compile(r'/home/[^/\s]+/|/mnt/[a-z]/|[A-Za-z]:\\Users\\')
     for name,path in paths.items():
+        if data17 and name==C17_ARCHIVE:
+            # Only the exact source-matched lossless Case017 archive is binary.
+            # Member safety/coverage/privacy is checked; arbitrary binaries remain rejected.
+            require(path.read_bytes()==(root/C17_ARCHIVE_SOURCE).read_bytes(),'Case017 evidence source bytes')
+            check_evidence_download(path.read_bytes())
+            continue
         if data12 and name in data12['images']:
             # Only the exact 192 source-verified MAIN PNGs are binary artifacts.
             require(path.read_bytes().startswith(b'\x89PNG\r\n\x1a\n'), 'Invalid Case012 PNG signature')

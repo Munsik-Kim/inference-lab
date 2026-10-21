@@ -1,0 +1,1122 @@
+[
+  {
+    "canonical_task_sha256": "1f1ce9e94ff09e28225ccd069b001d5360e0f5020934e87eca8970c5e63a68fb",
+    "family": "A",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "order_id": "R-971ee24ca912"
+    },
+    "initial_state": {
+      "orders": {
+        "R-971ee24ca912": {
+          "discount_bps": 0,
+          "lines": [
+            {
+              "quantity": 39,
+              "unit_price_minor": 6846
+            }
+          ],
+          "protected_customer": "client-db8b9b",
+          "total_minor": null
+        },
+        "X-f2e25e816a8b": {
+          "discount_bps": 0,
+          "lines": [
+            {
+              "quantity": 2,
+              "unit_price_minor": 701
+            }
+          ],
+          "protected_customer": "control-client",
+          "total_minor": 1402
+        }
+      }
+    },
+    "initial_state_sha256": "bae414e9d4c71aa4824ff31231617c72dada093e9132a92f2cd7340735f8f873",
+    "oracle_sha256": "b22983169f0d70926cfe90ef4d2b3b0cbf2cbc50fee868d2683728d91ec63740",
+    "prompt": "Task HOLDOUT-A00. Close the payable calculation for purchase R-971ee24ca912. Inspect its complete line list and discount, pass those to the calculation tool, persist the returned payable total, inspect validation, and issue final. Money is stored in integer minor units. A discount basis point is 1/10000; round the discounted total to nearest integer, with exact halves up. Wait for each read/calculation result before creating an action that needs it. Preserve all other records and fields.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-A00",
+    "template_id": "HOLDOUT-purchase-0"
+  },
+  {
+    "canonical_task_sha256": "ba6558af935086dfbd386ff2edf678d42c156a4d0e6accda78dd0edf66776c84",
+    "family": "A",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "order_id": "R-8277b943be69"
+    },
+    "initial_state": {
+      "orders": {
+        "R-8277b943be69": {
+          "discount_bps": 375,
+          "lines": [
+            {
+              "quantity": 2,
+              "unit_price_minor": 19166
+            },
+            {
+              "quantity": 32,
+              "unit_price_minor": 3766
+            },
+            {
+              "quantity": 14,
+              "unit_price_minor": 17484
+            }
+          ],
+          "protected_customer": "client-2f8c82",
+          "total_minor": 18
+        },
+        "X-90807c8e6f6d": {
+          "discount_bps": 0,
+          "lines": [
+            {
+              "quantity": 2,
+              "unit_price_minor": 701
+            }
+          ],
+          "protected_customer": "control-client",
+          "total_minor": 1402
+        }
+      }
+    },
+    "initial_state_sha256": "ceed3f51e227bf20001711b03fbab13b2d0e3e3707fe603ecf72bb49dad5b5d1",
+    "oracle_sha256": "da0f5e74eb4e9cc1ad5d5c75a0eb33b0f396f39c53131027162095397d7b5d4a",
+    "prompt": "Task HOLDOUT-A01. Reconcile the current total on purchase R-8277b943be69. The existing amount may be missing or stale. Fetch the underlying line and discount fields, calculate from those fields, replace the total, validate the result, and complete via final. Money is stored in integer minor units. A discount basis point is 1/10000; round the discounted total to nearest integer, with exact halves up. Wait for each read/calculation result before creating an action that needs it. Preserve all other records and fields.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-A01",
+    "template_id": "HOLDOUT-purchase-1"
+  },
+  {
+    "canonical_task_sha256": "c2a4cdd78536a09db423f18bb1dbd5a6de3c9b8d768cfeef0669655a458eb530",
+    "family": "A",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "order_id": "R-2fc0393f6d11"
+    },
+    "initial_state": {
+      "orders": {
+        "R-2fc0393f6d11": {
+          "discount_bps": 825,
+          "lines": [
+            {
+              "quantity": 38,
+              "unit_price_minor": 7015
+            },
+            {
+              "quantity": 35,
+              "unit_price_minor": 11224
+            },
+            {
+              "quantity": 2,
+              "unit_price_minor": 13950
+            },
+            {
+              "quantity": 31,
+              "unit_price_minor": 8010
+            },
+            {
+              "quantity": 8,
+              "unit_price_minor": 8957
+            }
+          ],
+          "protected_customer": "client-ca7007",
+          "total_minor": null
+        },
+        "X-042c6c457719": {
+          "discount_bps": 0,
+          "lines": [
+            {
+              "quantity": 2,
+              "unit_price_minor": 701
+            }
+          ],
+          "protected_customer": "control-client",
+          "total_minor": 1402
+        }
+      }
+    },
+    "initial_state_sha256": "afbdd314c01d71ed2b2ca2d6041dc53c32a5ce489f64cc1c3ab2050fb4c8404e",
+    "oracle_sha256": "8101b943a69d676e24dedf69be7dbebc35fa1dab1a65372f86a66c86cb6983b8",
+    "prompt": "Task HOLDOUT-A02. Prepare purchase R-2fc0393f6d11 for the ledger. Obtain all component amounts through read_order; calculate_total must determine the discounted integer amount. Save the calculation result, check its record validation, and submit the final record values. Money is stored in integer minor units. A discount basis point is 1/10000; round the discounted total to nearest integer, with exact halves up. Wait for each read/calculation result before creating an action that needs it. Preserve all other records and fields.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-A02",
+    "template_id": "HOLDOUT-purchase-2"
+  },
+  {
+    "canonical_task_sha256": "b963a7599ef253c77b356f98daacf2455acaec903e68c1be8044d2997c5b2bcd",
+    "family": "A",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "order_id": "R-fdc3f5106c8f"
+    },
+    "initial_state": {
+      "orders": {
+        "R-fdc3f5106c8f": {
+          "discount_bps": 2250,
+          "lines": [
+            {
+              "quantity": 13,
+              "unit_price_minor": 8800
+            },
+            {
+              "quantity": 23,
+              "unit_price_minor": 12714
+            },
+            {
+              "quantity": 26,
+              "unit_price_minor": 16713
+            },
+            {
+              "quantity": 9,
+              "unit_price_minor": 9054
+            },
+            {
+              "quantity": 14,
+              "unit_price_minor": 1990
+            },
+            {
+              "quantity": 33,
+              "unit_price_minor": 3233
+            }
+          ],
+          "protected_customer": "client-d14edf",
+          "total_minor": 20
+        },
+        "X-9f10908cf0fe": {
+          "discount_bps": 0,
+          "lines": [
+            {
+              "quantity": 2,
+              "unit_price_minor": 701
+            }
+          ],
+          "protected_customer": "control-client",
+          "total_minor": 1402
+        }
+      }
+    },
+    "initial_state_sha256": "3db8226012a8dc0409ab8d2e6254cddb103b241bfa936bb3d121f41b60fa2fd5",
+    "oracle_sha256": "b4a5cf15e28e4b69ebf3ae2ff38c65068326ea418ca0b0e42accfddcab4ec10e",
+    "prompt": "Task HOLDOUT-A03. Audit and settle purchase R-fdc3f5106c8f: read the source line items and discount; obtain a tool-computed payable amount; write it back; verify public record invariants; then return final after reading validation. Money is stored in integer minor units. A discount basis point is 1/10000; round the discounted total to nearest integer, with exact halves up. Wait for each read/calculation result before creating an action that needs it. Preserve all other records and fields.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-A03",
+    "template_id": "HOLDOUT-purchase-3"
+  },
+  {
+    "canonical_task_sha256": "8ed951f9e64aa50acedec57e4e6cdfd86b7fcf7a4b1da70fe42f322e27c36852",
+    "family": "A",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "order_id": "R-c1b86e597754"
+    },
+    "initial_state": {
+      "orders": {
+        "R-c1b86e597754": {
+          "discount_bps": 0,
+          "lines": [
+            {
+              "quantity": 40,
+              "unit_price_minor": 18346
+            }
+          ],
+          "protected_customer": "client-3d905d",
+          "total_minor": null
+        },
+        "X-ea5a83597ff6": {
+          "discount_bps": 0,
+          "lines": [
+            {
+              "quantity": 2,
+              "unit_price_minor": 701
+            }
+          ],
+          "protected_customer": "control-client",
+          "total_minor": 1402
+        }
+      }
+    },
+    "initial_state_sha256": "95584ca3476c7c9bda2d47c678d04eafc0f9adbb5d186595120ed53ba3f014ff",
+    "oracle_sha256": "b00f497f5b01879bd9ddd3ff52f00c5d6043618139a5da4b79238f4c148d56bf",
+    "prompt": "Task HOLDOUT-A04. Close the payable calculation for purchase R-c1b86e597754. Inspect its complete line list and discount, pass those to the calculation tool, persist the returned payable total, inspect validation, and issue final. Money is stored in integer minor units. A discount basis point is 1/10000; round the discounted total to nearest integer, with exact halves up. Wait for each read/calculation result before creating an action that needs it. Preserve all other records and fields.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-A04",
+    "template_id": "HOLDOUT-purchase-0"
+  },
+  {
+    "canonical_task_sha256": "afb0e12322cc49015fd01a56dee14837cd5f40df83f89cad526381c7916f9275",
+    "family": "A",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "order_id": "R-a3220698982f"
+    },
+    "initial_state": {
+      "orders": {
+        "R-a3220698982f": {
+          "discount_bps": 375,
+          "lines": [
+            {
+              "quantity": 14,
+              "unit_price_minor": 13811
+            },
+            {
+              "quantity": 5,
+              "unit_price_minor": 6321
+            },
+            {
+              "quantity": 7,
+              "unit_price_minor": 19171
+            }
+          ],
+          "protected_customer": "client-bb79db",
+          "total_minor": 22
+        },
+        "X-294d91f925c8": {
+          "discount_bps": 0,
+          "lines": [
+            {
+              "quantity": 2,
+              "unit_price_minor": 701
+            }
+          ],
+          "protected_customer": "control-client",
+          "total_minor": 1402
+        }
+      }
+    },
+    "initial_state_sha256": "57496ba6d630bc10d1f089fa0fc3f9c33a12f24d96fbcaf2943605cb25e19dd4",
+    "oracle_sha256": "1c6cb88958e478fd2324ad4027ba429f0727ded868f05c599fc1e41cb8ec8c52",
+    "prompt": "Task HOLDOUT-A05. Reconcile the current total on purchase R-a3220698982f. The existing amount may be missing or stale. Fetch the underlying line and discount fields, calculate from those fields, replace the total, validate the result, and complete via final. Money is stored in integer minor units. A discount basis point is 1/10000; round the discounted total to nearest integer, with exact halves up. Wait for each read/calculation result before creating an action that needs it. Preserve all other records and fields.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-A05",
+    "template_id": "HOLDOUT-purchase-1"
+  },
+  {
+    "canonical_task_sha256": "4371e4a252937dc7daaae73c8b2df643bf8dc1ab6fb4cbbe36db12680ddebe08",
+    "family": "A",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "order_id": "R-c73756ab5fb5"
+    },
+    "initial_state": {
+      "orders": {
+        "R-c73756ab5fb5": {
+          "discount_bps": 825,
+          "lines": [
+            {
+              "quantity": 40,
+              "unit_price_minor": 4852
+            },
+            {
+              "quantity": 18,
+              "unit_price_minor": 15889
+            },
+            {
+              "quantity": 16,
+              "unit_price_minor": 16914
+            },
+            {
+              "quantity": 8,
+              "unit_price_minor": 7371
+            },
+            {
+              "quantity": 33,
+              "unit_price_minor": 5857
+            }
+          ],
+          "protected_customer": "client-1b9fe1",
+          "total_minor": null
+        },
+        "X-f344be8322f3": {
+          "discount_bps": 0,
+          "lines": [
+            {
+              "quantity": 2,
+              "unit_price_minor": 701
+            }
+          ],
+          "protected_customer": "control-client",
+          "total_minor": 1402
+        }
+      }
+    },
+    "initial_state_sha256": "9b753b3051d474e0d4e5666e582b9bd61cee0ea2dc7a3b2b45d05e30ce5e26d6",
+    "oracle_sha256": "a84d4b1904ac722778716e49b9d8580b5e7f8c302f968b57a049819256a7bae1",
+    "prompt": "Task HOLDOUT-A06. Prepare purchase R-c73756ab5fb5 for the ledger. Obtain all component amounts through read_order; calculate_total must determine the discounted integer amount. Save the calculation result, check its record validation, and submit the final record values. Money is stored in integer minor units. A discount basis point is 1/10000; round the discounted total to nearest integer, with exact halves up. Wait for each read/calculation result before creating an action that needs it. Preserve all other records and fields.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-A06",
+    "template_id": "HOLDOUT-purchase-2"
+  },
+  {
+    "canonical_task_sha256": "52074c4c09d206ef4a1f10918203b5f873b6308e6851f521a0910a6d7d976e12",
+    "family": "A",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "order_id": "R-750a699c5d09"
+    },
+    "initial_state": {
+      "orders": {
+        "R-750a699c5d09": {
+          "discount_bps": 2250,
+          "lines": [
+            {
+              "quantity": 34,
+              "unit_price_minor": 12967
+            },
+            {
+              "quantity": 33,
+              "unit_price_minor": 17816
+            },
+            {
+              "quantity": 4,
+              "unit_price_minor": 8640
+            },
+            {
+              "quantity": 35,
+              "unit_price_minor": 16772
+            },
+            {
+              "quantity": 39,
+              "unit_price_minor": 11603
+            },
+            {
+              "quantity": 21,
+              "unit_price_minor": 14372
+            }
+          ],
+          "protected_customer": "client-c0c72f",
+          "total_minor": 24
+        },
+        "X-3d4e636c10e4": {
+          "discount_bps": 0,
+          "lines": [
+            {
+              "quantity": 2,
+              "unit_price_minor": 701
+            }
+          ],
+          "protected_customer": "control-client",
+          "total_minor": 1402
+        }
+      }
+    },
+    "initial_state_sha256": "ee49f4d710c4b175f2fb83fcfe9a4aed970b55aef795b65a0f845b593275f8cd",
+    "oracle_sha256": "f6748e3c9939f7328add363e85e3c110b0102c9a9deae3c6059082fd5bb2604a",
+    "prompt": "Task HOLDOUT-A07. Audit and settle purchase R-750a699c5d09: read the source line items and discount; obtain a tool-computed payable amount; write it back; verify public record invariants; then return final after reading validation. Money is stored in integer minor units. A discount basis point is 1/10000; round the discounted total to nearest integer, with exact halves up. Wait for each read/calculation result before creating an action that needs it. Preserve all other records and fields.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-A07",
+    "template_id": "HOLDOUT-purchase-3"
+  },
+  {
+    "canonical_task_sha256": "2a4cf5701fac960dfd4f0ba6dbd90f60ad5efd2fcc7eb65aec70cd7985d98fad",
+    "family": "B",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "destination_id": "X-c8257d9f0168",
+      "quantity": 16,
+      "sku": "SKU-04d099",
+      "source_id": "R-eb0c2a3721b6"
+    },
+    "initial_state": {
+      "warehouses": {
+        "R-eb0c2a3721b6": {
+          "protected_label": "origin",
+          "quantity": 40,
+          "revision": 12,
+          "sku": "SKU-04d099"
+        },
+        "X-c8257d9f0168": {
+          "protected_label": "destination",
+          "quantity": 0,
+          "revision": 4,
+          "sku": "SKU-04d099"
+        },
+        "Z-a01c3f46aeb3": {
+          "protected_label": "unrelated",
+          "quantity": 93,
+          "revision": 2,
+          "sku": "SKU-04d099"
+        }
+      }
+    },
+    "initial_state_sha256": "b77b0418c98a75041519e9fa5ac626eb229e3106a90e286061f2d68cde2feb29",
+    "oracle_sha256": "f47c936a661896d90a15715eaf89da7a9f8e6658438d5487fbc689287b98bdc9",
+    "prompt": "Task HOLDOUT-B00. Fulfil a stock relocation ticket: send exactly 16 units of SKU-04d099 from warehouse R-eb0c2a3721b6 to X-c8257d9f0168. Discover both endpoint revisions and quantities, perform the atomic transfer, inspect validation of the resulting pair, and finish. Preserve the combined quantity, protected fields, and every unrelated warehouse record. Wait for both read results before creating the transfer action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-B00",
+    "template_id": "HOLDOUT-transfer-0"
+  },
+  {
+    "canonical_task_sha256": "b3acb680ae19f79b995a9cabd304704255c82c36d6d933f650d377059ef4661d",
+    "family": "B",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "destination_id": "X-25a45f1f1419",
+      "quantity": 5,
+      "sku": "SKU-25b9d0",
+      "source_id": "R-82242cbd0e95"
+    },
+    "initial_state": {
+      "warehouses": {
+        "R-82242cbd0e95": {
+          "protected_label": "origin",
+          "quantity": 52,
+          "revision": 7,
+          "sku": "SKU-25b9d0"
+        },
+        "X-25a45f1f1419": {
+          "protected_label": "destination",
+          "quantity": 63,
+          "revision": 2,
+          "sku": "SKU-25b9d0"
+        },
+        "Z-264dd91c496c": {
+          "protected_label": "unrelated",
+          "quantity": 93,
+          "revision": 2,
+          "sku": "SKU-25b9d0"
+        },
+        "Z-c2c95c9d8969": {
+          "protected_label": "additional-unrelated",
+          "quantity": 61,
+          "revision": 1,
+          "sku": "SKU-25b9d0"
+        }
+      }
+    },
+    "initial_state_sha256": "ccedda6bacecdfb11eaad6ca8960b8315b86ff726e6b54567935e6ea13d4e293",
+    "oracle_sha256": "12aefc16c6dc4d034bd1328851440943fe4423a29fc5cdd0b1b875f563ad5f92",
+    "prompt": "Task HOLDOUT-B01. The destination warehouse X-25a45f1f1419 needs 5 units of SKU-25b9d0 from R-82242cbd0e95. Inspect destination and source stock, transfer only the requested amount using current revisions, validate conservation, then issue final. Preserve the combined quantity, protected fields, and every unrelated warehouse record. Wait for both read results before creating the transfer action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-B01",
+    "template_id": "HOLDOUT-transfer-1"
+  },
+  {
+    "canonical_task_sha256": "ffbdb23d74f61f50edfa09b9bec5d236e892c6553ec161b478eae6a900e07cf6",
+    "family": "B",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "destination_id": "X-202feacc1d32",
+      "quantity": 12,
+      "sku": "SKU-b59207",
+      "source_id": "R-44b6227a3031"
+    },
+    "initial_state": {
+      "warehouses": {
+        "R-44b6227a3031": {
+          "protected_label": "origin",
+          "quantity": 49,
+          "revision": 11,
+          "sku": "SKU-b59207"
+        },
+        "X-202feacc1d32": {
+          "protected_label": "destination",
+          "quantity": 0,
+          "revision": 10,
+          "sku": "SKU-b59207"
+        },
+        "Z-8a2a0c150965": {
+          "protected_label": "additional-unrelated",
+          "quantity": 33,
+          "revision": 1,
+          "sku": "SKU-b59207"
+        },
+        "Z-d0d3509a78d9": {
+          "protected_label": "additional-unrelated",
+          "quantity": 24,
+          "revision": 1,
+          "sku": "SKU-b59207"
+        },
+        "Z-fe8a0d03e4fa": {
+          "protected_label": "unrelated",
+          "quantity": 93,
+          "revision": 2,
+          "sku": "SKU-b59207"
+        }
+      }
+    },
+    "initial_state_sha256": "10f087bd174fb65b76163226739a1fe7804859ae1539495c4e0baef20b7aad2b",
+    "oracle_sha256": "ff7c958fa025235990e0d2e4a8163a3b2cd45cef7c40dd0f4664592c9fceaeb9",
+    "prompt": "Task HOLDOUT-B02. Record one inventory movement: SKU=SKU-b59207, units=12, origin=R-44b6227a3031, receiving warehouse=X-202feacc1d32. Retrieve both current records before the atomic movement; review validation and report resulting quantities through final. Preserve the combined quantity, protected fields, and every unrelated warehouse record. Wait for both read results before creating the transfer action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-B02",
+    "template_id": "HOLDOUT-transfer-2"
+  },
+  {
+    "canonical_task_sha256": "c00a6d3edde7062fce79fe8c5ef1ddf673d6604bb7370afe99fb208e76715f48",
+    "family": "B",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "destination_id": "X-562151e94138",
+      "quantity": 11,
+      "sku": "SKU-2172dd",
+      "source_id": "R-11db1291112b"
+    },
+    "initial_state": {
+      "warehouses": {
+        "R-11db1291112b": {
+          "protected_label": "origin",
+          "quantity": 31,
+          "revision": 7,
+          "sku": "SKU-2172dd"
+        },
+        "X-562151e94138": {
+          "protected_label": "destination",
+          "quantity": 62,
+          "revision": 8,
+          "sku": "SKU-2172dd"
+        },
+        "Z-796fea4a3645": {
+          "protected_label": "unrelated",
+          "quantity": 93,
+          "revision": 2,
+          "sku": "SKU-2172dd"
+        }
+      }
+    },
+    "initial_state_sha256": "98efb87c9663b9fb9e75cb9db6969ee8e76c1d6c5a00161b33ec6aaa14eec760",
+    "oracle_sha256": "4af699bdb817bcd59e42e7ce60ff54ea282fb416f3fb831fa65e7045fcf9345e",
+    "prompt": "Task HOLDOUT-B03. Handle transfer request R-11db1291112b -> X-562151e94138 for 11 units of SKU-2172dd. Obtain the source and destination snapshots, submit the revision-checked transfer, check the pair's invariant validation, and complete with final. Preserve the combined quantity, protected fields, and every unrelated warehouse record. Wait for both read results before creating the transfer action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-B03",
+    "template_id": "HOLDOUT-transfer-3"
+  },
+  {
+    "canonical_task_sha256": "03665429368a5ee41e9069d633b4cb774d2da334a2dbe9e4fb484e75e66bc1fb",
+    "family": "B",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "destination_id": "X-a532dd15764c",
+      "quantity": 9,
+      "sku": "SKU-766bf5",
+      "source_id": "R-3a9251f773fd"
+    },
+    "initial_state": {
+      "warehouses": {
+        "R-3a9251f773fd": {
+          "protected_label": "origin",
+          "quantity": 44,
+          "revision": 8,
+          "sku": "SKU-766bf5"
+        },
+        "X-a532dd15764c": {
+          "protected_label": "destination",
+          "quantity": 0,
+          "revision": 8,
+          "sku": "SKU-766bf5"
+        },
+        "Z-0efc58dac9c2": {
+          "protected_label": "additional-unrelated",
+          "quantity": 46,
+          "revision": 1,
+          "sku": "SKU-766bf5"
+        },
+        "Z-478b8ce36acb": {
+          "protected_label": "unrelated",
+          "quantity": 93,
+          "revision": 2,
+          "sku": "SKU-766bf5"
+        }
+      }
+    },
+    "initial_state_sha256": "e5367db150c7702722542c32825212987994a5b1639761a7a34260e5b3e02115",
+    "oracle_sha256": "dc3a8bb6dadebd8ff0e44bf80d497d66b209ca6f878ce8dcf6ee318760f56a51",
+    "prompt": "Task HOLDOUT-B04. Fulfil a stock relocation ticket: send exactly 9 units of SKU-766bf5 from warehouse R-3a9251f773fd to X-a532dd15764c. Discover both endpoint revisions and quantities, perform the atomic transfer, inspect validation of the resulting pair, and finish. Preserve the combined quantity, protected fields, and every unrelated warehouse record. Wait for both read results before creating the transfer action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-B04",
+    "template_id": "HOLDOUT-transfer-0"
+  },
+  {
+    "canonical_task_sha256": "54a8c2d4b86f196e267200697be7c86bcb2610ccb40b287ea5e5457b3ef8da36",
+    "family": "B",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "destination_id": "X-82dd4fc15485",
+      "quantity": 15,
+      "sku": "SKU-b3541f",
+      "source_id": "R-a49d75af3198"
+    },
+    "initial_state": {
+      "warehouses": {
+        "R-a49d75af3198": {
+          "protected_label": "origin",
+          "quantity": 28,
+          "revision": 2,
+          "sku": "SKU-b3541f"
+        },
+        "X-82dd4fc15485": {
+          "protected_label": "destination",
+          "quantity": 94,
+          "revision": 5,
+          "sku": "SKU-b3541f"
+        },
+        "Z-7a6199e87061": {
+          "protected_label": "additional-unrelated",
+          "quantity": 96,
+          "revision": 1,
+          "sku": "SKU-b3541f"
+        },
+        "Z-9807a04155e8": {
+          "protected_label": "unrelated",
+          "quantity": 93,
+          "revision": 2,
+          "sku": "SKU-b3541f"
+        },
+        "Z-b00f2e1f43a7": {
+          "protected_label": "additional-unrelated",
+          "quantity": 27,
+          "revision": 1,
+          "sku": "SKU-b3541f"
+        }
+      }
+    },
+    "initial_state_sha256": "891cb3355d4d6ca258d9b967140e48a047eb2d3e18940d25432a7e1d91953012",
+    "oracle_sha256": "ea857bf8847a897b285877afcb5db75acc82a80a7c93deeccc75e7d9114f82c0",
+    "prompt": "Task HOLDOUT-B05. The destination warehouse X-82dd4fc15485 needs 15 units of SKU-b3541f from R-a49d75af3198. Inspect destination and source stock, transfer only the requested amount using current revisions, validate conservation, then issue final. Preserve the combined quantity, protected fields, and every unrelated warehouse record. Wait for both read results before creating the transfer action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-B05",
+    "template_id": "HOLDOUT-transfer-1"
+  },
+  {
+    "canonical_task_sha256": "694fc76a20090a1620322a9fa4acc454d878cd2ce24b4854af8646e7efcce035",
+    "family": "B",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "destination_id": "X-3a146a3a5233",
+      "quantity": 13,
+      "sku": "SKU-c66349",
+      "source_id": "R-fcb170cd33ca"
+    },
+    "initial_state": {
+      "warehouses": {
+        "R-fcb170cd33ca": {
+          "protected_label": "origin",
+          "quantity": 50,
+          "revision": 12,
+          "sku": "SKU-c66349"
+        },
+        "X-3a146a3a5233": {
+          "protected_label": "destination",
+          "quantity": 0,
+          "revision": 3,
+          "sku": "SKU-c66349"
+        },
+        "Z-a24b227c8956": {
+          "protected_label": "unrelated",
+          "quantity": 93,
+          "revision": 2,
+          "sku": "SKU-c66349"
+        }
+      }
+    },
+    "initial_state_sha256": "6226e8ba344b0e432acdb317cccadf659e01912d1c172df498b745c56adf6d66",
+    "oracle_sha256": "daa9dd7e9b027087e8795603e1dc79d3625d71e555c453f4458b17a9075b63d2",
+    "prompt": "Task HOLDOUT-B06. Record one inventory movement: SKU=SKU-c66349, units=13, origin=R-fcb170cd33ca, receiving warehouse=X-3a146a3a5233. Retrieve both current records before the atomic movement; review validation and report resulting quantities through final. Preserve the combined quantity, protected fields, and every unrelated warehouse record. Wait for both read results before creating the transfer action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-B06",
+    "template_id": "HOLDOUT-transfer-2"
+  },
+  {
+    "canonical_task_sha256": "02f98dc19f7c5f359d8362598cf44313c030db25d0263cb81ad8e79ad75d086c",
+    "family": "B",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "destination_id": "X-33c5060f80a6",
+      "quantity": 13,
+      "sku": "SKU-45a84f",
+      "source_id": "R-0249e016f025"
+    },
+    "initial_state": {
+      "warehouses": {
+        "R-0249e016f025": {
+          "protected_label": "origin",
+          "quantity": 63,
+          "revision": 12,
+          "sku": "SKU-45a84f"
+        },
+        "X-33c5060f80a6": {
+          "protected_label": "destination",
+          "quantity": 74,
+          "revision": 12,
+          "sku": "SKU-45a84f"
+        },
+        "Z-7101b2ac4733": {
+          "protected_label": "unrelated",
+          "quantity": 93,
+          "revision": 2,
+          "sku": "SKU-45a84f"
+        },
+        "Z-e2fb15107dd8": {
+          "protected_label": "additional-unrelated",
+          "quantity": 36,
+          "revision": 1,
+          "sku": "SKU-45a84f"
+        }
+      }
+    },
+    "initial_state_sha256": "f938dc4b0c68ddc0003a35c05733d7cfb0561b85902e6dfc93762b52c5e500df",
+    "oracle_sha256": "b15e0bdd6b9e80dde8c946216898dcc248df433b39fd03f62e518b7de530fa2c",
+    "prompt": "Task HOLDOUT-B07. Handle transfer request R-0249e016f025 -> X-33c5060f80a6 for 13 units of SKU-45a84f. Obtain the source and destination snapshots, submit the revision-checked transfer, check the pair's invariant validation, and complete with final. Preserve the combined quantity, protected fields, and every unrelated warehouse record. Wait for both read results before creating the transfer action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-B07",
+    "template_id": "HOLDOUT-transfer-3"
+  },
+  {
+    "canonical_task_sha256": "e96f289c1fd16b493408d7d20ad3c166db7d43eb345b247dd8dddadcc877f743",
+    "family": "C",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "document_id": "R-2fa97057aac6",
+      "owner_id": "owner-72449d",
+      "status": "review",
+      "tags": []
+    },
+    "initial_state": {
+      "documents": {
+        "R-2fa97057aac6": {
+          "owner_id": "owner-old",
+          "protected_title": "Synthetic document 8b38e",
+          "revision": 25,
+          "status": "published",
+          "tags": []
+        },
+        "X-51dbce6c122e": {
+          "owner_id": "owner-control",
+          "protected_title": "Control document",
+          "revision": 8,
+          "status": "published",
+          "tags": [
+            "reference"
+          ]
+        }
+      }
+    },
+    "initial_state_sha256": "168f5f4df18e493e0ffeb647c021ef57a1eb860562947b208d3ba53f8b2dd724",
+    "oracle_sha256": "3c6bb5ad7c7ae0487d14c7c3ccdf0e525e53bb45fc186cd3fa8d30c7e312b87a",
+    "prompt": "Task HOLDOUT-C00. Process a document publication change request: document=R-2fa97057aac6, status=review, tags=[], owner_id=owner-72449d. Discover the current revision, apply the requested fields using that revision, inspect validation of the updated record, and submit final. An update increments the revision by exactly one. Preserve the title and every other document. Wait for the current revision before creating the update action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-C00",
+    "template_id": "HOLDOUT-metadata-0"
+  },
+  {
+    "canonical_task_sha256": "8838f74c42ccc0cc2855f21c6d1d5d19fa761516361f6623a607fe1b659a6d95",
+    "family": "C",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "document_id": "R-c74ede9ac213",
+      "owner_id": "owner-old",
+      "status": "published",
+      "tags": [
+        "finance",
+        "reference",
+        "release"
+      ]
+    },
+    "initial_state": {
+      "documents": {
+        "R-c74ede9ac213": {
+          "owner_id": "owner-old",
+          "protected_title": "Synthetic document 18f14",
+          "revision": 18,
+          "status": "archived",
+          "tags": [
+            "legacy",
+            "pending",
+            "retain"
+          ]
+        },
+        "X-c7dbb2e2bca1": {
+          "owner_id": "owner-control",
+          "protected_title": "Control document",
+          "revision": 8,
+          "status": "published",
+          "tags": [
+            "reference"
+          ]
+        }
+      }
+    },
+    "initial_state_sha256": "b42974904aafde8abee252acc710ccc15c4b8ecaeb5e872c999c38a1e31f0b03",
+    "oracle_sha256": "b111ea62500e9d798ddf2a99d6e1891d3fc35c8c637362a797b91e5fb6bac8f1",
+    "prompt": "Task HOLDOUT-C01. Synchronize document ownership and labels to these exact settings: document=R-c74ede9ac213, status=published, tags=[\"finance\", \"reference\", \"release\"], owner_id=owner-old. First retrieve the existing record revision. Commit the metadata update, read validation, and complete with final. An update increments the revision by exactly one. Preserve the title and every other document. Wait for the current revision before creating the update action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-C01",
+    "template_id": "HOLDOUT-metadata-1"
+  },
+  {
+    "canonical_task_sha256": "8e01b4abe07f593e90f544271f36fcf0a182bd340b1fc414dac9df3e1a134d58",
+    "family": "C",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "document_id": "R-e666cac9abc4",
+      "owner_id": "owner-ff375c",
+      "status": "archived",
+      "tags": [
+        "internal",
+        "operations"
+      ]
+    },
+    "initial_state": {
+      "documents": {
+        "R-e666cac9abc4": {
+          "owner_id": "owner-old",
+          "protected_title": "Synthetic document 783fb",
+          "revision": 22,
+          "status": "draft",
+          "tags": []
+        },
+        "X-8e982a2f620b": {
+          "owner_id": "owner-control",
+          "protected_title": "Control document",
+          "revision": 8,
+          "status": "published",
+          "tags": [
+            "reference"
+          ]
+        }
+      }
+    },
+    "initial_state_sha256": "621e3be68ed251b2e802de43177f0fcbacca94d6e407065b3a96a2cbdb06a912",
+    "oracle_sha256": "230d00d852be99320db4e667c8743bf9a5f76c73124750e5e54d8f85f4411891",
+    "prompt": "Task HOLDOUT-C02. An editorial ticket specifies document=R-e666cac9abc4, status=archived, tags=[\"internal\", \"operations\"], owner_id=owner-ff375c. Inspect the current document; replace the listed metadata under its current revision; validate the revised record; then send final with the resulting revision and metadata. An update increments the revision by exactly one. Preserve the title and every other document. Wait for the current revision before creating the update action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-C02",
+    "template_id": "HOLDOUT-metadata-2"
+  },
+  {
+    "canonical_task_sha256": "a9624c7ee0b82a4b183ff03581e4637d77cb0b18241804ba88fd020f48437242",
+    "family": "C",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "document_id": "R-4871394a4d2d",
+      "owner_id": "owner-63678e",
+      "status": "review",
+      "tags": [
+        "internal",
+        "reference",
+        "release"
+      ]
+    },
+    "initial_state": {
+      "documents": {
+        "R-4871394a4d2d": {
+          "owner_id": "owner-old",
+          "protected_title": "Synthetic document 155fb",
+          "revision": 29,
+          "status": "review",
+          "tags": [
+            "legacy",
+            "pending",
+            "retain"
+          ]
+        },
+        "X-e6979e16fb6a": {
+          "owner_id": "owner-control",
+          "protected_title": "Control document",
+          "revision": 8,
+          "status": "published",
+          "tags": [
+            "reference"
+          ]
+        }
+      }
+    },
+    "initial_state_sha256": "bfeac82666c8334a53ff1ab44b8f9ffa0f4121f22dbc40fed2f4b585daaa9cd9",
+    "oracle_sha256": "c1d8935e2d5547f694519cdb1d423ab1b78f684b04e68651f942e1ba9de72c44",
+    "prompt": "Task HOLDOUT-C03. Apply this document metadata patch as a revision-checked update: document=R-4871394a4d2d, status=review, tags=[\"internal\", \"reference\", \"release\"], owner_id=owner-63678e. Fetch the present revision before writing, confirm validation after the write, and report completion through final. An update increments the revision by exactly one. Preserve the title and every other document. Wait for the current revision before creating the update action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-C03",
+    "template_id": "HOLDOUT-metadata-3"
+  },
+  {
+    "canonical_task_sha256": "368b0c7e5811402d7c197750f78f0e9f95c1628c5152c43d140d3d79b502101a",
+    "family": "C",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "document_id": "R-80c08b283427",
+      "owner_id": "owner-2af1c6",
+      "status": "published",
+      "tags": []
+    },
+    "initial_state": {
+      "documents": {
+        "R-80c08b283427": {
+          "owner_id": "owner-old",
+          "protected_title": "Synthetic document fbc43",
+          "revision": 5,
+          "status": "published",
+          "tags": []
+        },
+        "X-53db57903ba4": {
+          "owner_id": "owner-control",
+          "protected_title": "Control document",
+          "revision": 8,
+          "status": "published",
+          "tags": [
+            "reference"
+          ]
+        }
+      }
+    },
+    "initial_state_sha256": "ead5e4d27cc1bd249d1f25fa6db6904c92907ed1c1520214d5076f688cd106ec",
+    "oracle_sha256": "be8a724741621b83a1b58da3f65854ac3026894024da9af04c746a2b9e59962b",
+    "prompt": "Task HOLDOUT-C04. Process a document publication change request: document=R-80c08b283427, status=published, tags=[], owner_id=owner-2af1c6. Discover the current revision, apply the requested fields using that revision, inspect validation of the updated record, and submit final. An update increments the revision by exactly one. Preserve the title and every other document. Wait for the current revision before creating the update action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-C04",
+    "template_id": "HOLDOUT-metadata-0"
+  },
+  {
+    "canonical_task_sha256": "76091960260f25b92f00b73c98b5dde11668b462e9a256128f7e912894da9a3d",
+    "family": "C",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "document_id": "R-8008c0db0a66",
+      "owner_id": "owner-old",
+      "status": "archived",
+      "tags": [
+        "internal",
+        "release",
+        "reviewed"
+      ]
+    },
+    "initial_state": {
+      "documents": {
+        "R-8008c0db0a66": {
+          "owner_id": "owner-old",
+          "protected_title": "Synthetic document 88bcc",
+          "revision": 18,
+          "status": "archived",
+          "tags": [
+            "legacy",
+            "pending",
+            "retain"
+          ]
+        },
+        "X-1bc4b92f1d80": {
+          "owner_id": "owner-control",
+          "protected_title": "Control document",
+          "revision": 8,
+          "status": "published",
+          "tags": [
+            "reference"
+          ]
+        }
+      }
+    },
+    "initial_state_sha256": "a103faebf4c685bc39760df513d0c34134ade4c1b6c20d2ff34b34343038c8f5",
+    "oracle_sha256": "fcea7ecfb4d7f4d1238d94a655760c80d055f7149b9353dcc4c4f75bae6a836e",
+    "prompt": "Task HOLDOUT-C05. Synchronize document ownership and labels to these exact settings: document=R-8008c0db0a66, status=archived, tags=[\"internal\", \"release\", \"reviewed\"], owner_id=owner-old. First retrieve the existing record revision. Commit the metadata update, read validation, and complete with final. An update increments the revision by exactly one. Preserve the title and every other document. Wait for the current revision before creating the update action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-C05",
+    "template_id": "HOLDOUT-metadata-1"
+  },
+  {
+    "canonical_task_sha256": "11b9cb3221841b3310855666aca662d507de72dba2e593bdd0cbc6fceb5ca37c",
+    "family": "C",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "document_id": "R-8eb3cca4fa4d",
+      "owner_id": "owner-1a9ad2",
+      "status": "review",
+      "tags": [
+        "operations",
+        "reviewed"
+      ]
+    },
+    "initial_state": {
+      "documents": {
+        "R-8eb3cca4fa4d": {
+          "owner_id": "owner-old",
+          "protected_title": "Synthetic document 0e7c4",
+          "revision": 19,
+          "status": "draft",
+          "tags": []
+        },
+        "X-176bc15d8094": {
+          "owner_id": "owner-control",
+          "protected_title": "Control document",
+          "revision": 8,
+          "status": "published",
+          "tags": [
+            "reference"
+          ]
+        }
+      }
+    },
+    "initial_state_sha256": "0d6e0078b0b1576d025fbc2e54a17d271431ad8c5b77347d76631106fbe2387c",
+    "oracle_sha256": "3493e0945d9646d1191f3aff575ade78fe9282890481a8812908ba44af12d3c4",
+    "prompt": "Task HOLDOUT-C06. An editorial ticket specifies document=R-8eb3cca4fa4d, status=review, tags=[\"operations\", \"reviewed\"], owner_id=owner-1a9ad2. Inspect the current document; replace the listed metadata under its current revision; validate the revised record; then send final with the resulting revision and metadata. An update increments the revision by exactly one. Preserve the title and every other document. Wait for the current revision before creating the update action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-C06",
+    "template_id": "HOLDOUT-metadata-2"
+  },
+  {
+    "canonical_task_sha256": "2451927e5cdd2cb436fdc5fc93b1f39379a24f776e6aec243b519ca9438a2822",
+    "family": "C",
+    "generator_version": "case017-fixtures-v1",
+    "goal": {
+      "document_id": "R-34fe3ab279a2",
+      "owner_id": "owner-b38a93",
+      "status": "published",
+      "tags": [
+        "finance",
+        "internal",
+        "operations"
+      ]
+    },
+    "initial_state": {
+      "documents": {
+        "R-34fe3ab279a2": {
+          "owner_id": "owner-old",
+          "protected_title": "Synthetic document 65175",
+          "revision": 16,
+          "status": "review",
+          "tags": [
+            "legacy",
+            "pending",
+            "retain"
+          ]
+        },
+        "X-e97e7bdaad4b": {
+          "owner_id": "owner-control",
+          "protected_title": "Control document",
+          "revision": 8,
+          "status": "published",
+          "tags": [
+            "reference"
+          ]
+        }
+      }
+    },
+    "initial_state_sha256": "6a1b9183f2f3f3149b16fbf7d3d94116b773e8128ff395f7d0b980aa7582b1ba",
+    "oracle_sha256": "1d8c3a039f27ba104051245b2f8dbdae9fe099af73d7b897f6269b31b6aa417c",
+    "prompt": "Task HOLDOUT-C07. Apply this document metadata patch as a revision-checked update: document=R-34fe3ab279a2, status=published, tags=[\"finance\", \"internal\", \"operations\"], owner_id=owner-b38a93. Fetch the present revision before writing, confirm validation after the write, and report completion through final. An update increments the revision by exactly one. Preserve the title and every other document. Wait for the current revision before creating the update action.",
+    "seed": 6102002,
+    "split": "HOLDOUT",
+    "task_id": "HOLDOUT-C07",
+    "template_id": "HOLDOUT-metadata-3"
+  }
+]

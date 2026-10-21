@@ -249,3 +249,19 @@ python3 -B cases/016-kv-agent-bench/publication/run_checks.py --output /tmp/case
 ```
 
 한영 Pages 화면은 builder에 준비했습니다. 수동 배포는 별도 승인 전 실행하지 않았습니다.
+
+## Case017 — 도구 호출 규칙과 업무 완주 비용
+
+도구 호출 규칙이 실제 저장·검증·최종 답의 완료를 얼마나 바꾸는지 비교하는 평가기를 구현했습니다. 상품 합계 기록·창고 이동·문서 정보 변경을 소유한 가상 기록에서 시험합니다.
+
+BF16 가중치를 고정한 NVFP4 KV의 신규 합성 24과제에서 문법 제약은 완주 7/24→15/24, 상태 정확 7/24→22/24를 기록했습니다. 회복 8개·손실 0개와 함께 추가 실행 비용과 남은 실패도 추적했습니다. 완주 수가 늘면서 전체 실행 비용도 늘었습니다. 실패를 포함한 24개 실행의 비용을 완주 수로 나누면 입력 토큰은 약 3.62%, 출력 토큰은 12.36%, 한 과제 실행 시간(episode wall)은 11.27% 증가했습니다.
+
+확대 기준 이탈: 설정 점검용 DEV에서 BF16 KV+C0의 완주는 5/8로 원안의 6/8 기준에 미달했습니다. 당시 로컬 계획과 실행 코드가 이 성공 조건을 누락하고 완료·동결·봉인만 검사해 P2를 진행했습니다. 별도 면제 승인 기록은 확인하지 못했습니다. 이 경위를 공개하며, P2는 해당 기준을 통과한 확인시험이 아닌 신규 합성 과제의 탐색적 측정으로 제시합니다.
+
+[Report](../../cases/017-agent-contract-cost-bench/REPORT.ko.md) · [CPU command and scope](../../cases/017-agent-contract-cost-bench/REPRODUCE.ko.md) · [Strict parser](../../cases/017-agent-contract-cost-bench/src/agent_contract_cost/contracts.py) · [Independent auditor](../../cases/017-agent-contract-cost-bench/src/agent_contract_cost/audit.py)
+
+```bash
+python3 -B cases/017-agent-contract-cost-bench/publication/run_checks.py --output /tmp/case017-public-check-new --tests
+```
+
+저장된256개 endpoint의 CPU 재생입니다. 새 모델 추론은 수행하지 않습니다. 출력 경로는 새 경로를 쓰세요.

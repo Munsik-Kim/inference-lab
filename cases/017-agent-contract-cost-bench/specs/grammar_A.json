@@ -1,0 +1,201 @@
+{
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "additionalProperties": false,
+          "properties": {
+            "order_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "type": "object"
+        },
+        "tool": {
+          "enum": [
+            "read_order"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "arguments"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "additionalProperties": false,
+          "properties": {
+            "discount_bps": {
+              "maximum": 10000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "lines": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "quantity": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "unit_price_minor": {
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "quantity",
+                  "unit_price_minor"
+                ],
+                "type": "object"
+              },
+              "maxItems": 16,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "lines",
+            "discount_bps"
+          ],
+          "type": "object"
+        },
+        "tool": {
+          "enum": [
+            "calculate_total"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "arguments"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "additionalProperties": false,
+          "properties": {
+            "order_id": {
+              "type": "string"
+            },
+            "total_minor": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "order_id",
+            "total_minor"
+          ],
+          "type": "object"
+        },
+        "tool": {
+          "enum": [
+            "write_order_total"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "arguments"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "additionalProperties": false,
+          "properties": {
+            "order_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "type": "object"
+        },
+        "tool": {
+          "enum": [
+            "validate_order"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "arguments"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "additionalProperties": false,
+          "properties": {
+            "completed": {
+              "type": "boolean"
+            },
+            "result": {
+              "additionalProperties": false,
+              "properties": {
+                "order_id": {
+                  "type": "string"
+                },
+                "total_minor": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "validated": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "order_id",
+                "total_minor",
+                "validated"
+              ],
+              "type": "object"
+            },
+            "task_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "task_id",
+            "completed",
+            "result"
+          ],
+          "type": "object"
+        },
+        "tool": {
+          "enum": [
+            "final"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "arguments"
+      ],
+      "type": "object"
+    }
+  ]
+}
