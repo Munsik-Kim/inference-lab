@@ -17,7 +17,7 @@ Choose a route by your purpose:
 - **Compare your own saved answers:** run the [diova-compare example with invented answers](../../packages/diova-compare/examples/compare/README.md), then put your records into its documented format. This independent CPU tool does not require a model.
 - **Recheck an experiment:** choose a historical CPU audit in [developer reproduction](GETTING_STARTED.md). This is separate from comparing your own records.
 
-For featured work C, read the [tool-name constraints and actual-task checks](../../research/agent_tool_contract_repair_20261014/README.md), including the implementation and remaining failures.
+Start featured work C with [Case017 results and recorded episodes](../../cases/017-agent-contract-cost-bench/REPORT.md). Continue to [CPU replay without a model](../../cases/017-agent-contract-cost-bench/REPRODUCE.md) or the [earlier Case013 follow-up](../../research/agent_tool_contract_repair_20261014/README.md).
 
 ## 3. Reference guides
 

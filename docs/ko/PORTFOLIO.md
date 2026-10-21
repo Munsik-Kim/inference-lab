@@ -33,7 +33,12 @@ Case008 R은 별도 Qwen3-0.6B 한 블록의 구조 축소·복원입니다. [Ca
 
 **기술적 판단 — 현재 설계 해석:** 예제의 두 파일은 모두 2/4 정답이지만, 원래 맞힌 답 하나를 잃고 다른 답 하나를 새로 맞힙니다. 질문을 하나씩 짝지어 보는 비교(paired comparison)로 평균 정답률이 가린 변화를 찾습니다. 기본 비교에는 모델의 원시 점수(logits)가 필요 없습니다. 자유롭게 생성한 답의 정오와 입력·결과 파일 식별자는 사용자가 제공합니다. 파일 검사가 자동 채점이나 원자료의 진위를 보증하지는 않습니다. 새 업무에는 그 업무에 맞는 채점·질문 대응 규칙이 필요합니다.
 
-## 대표작 C · 답변이 아니라 실제 도구 작업 완료 확인하기
+<a id="대표작-c--답변이-아니라-실제-도구-작업-완료-확인하기"></a>
+## 대표작 C · 도구 작업의 실제 완료와 실행 비용 확인
+
+저장된 값·수정 후 받은 검증 결과·최종 답을 함께 채점하고, 호출 정책과 KV 구성에 따른 완주·실패·비용을 재생 검사하는 도구를 구현했습니다. 상품 합계 기록·창고 이동·문서 정보 변경이라는 세 합성 업무의 측정입니다. [Case017 결과와 실제 사건](../../cases/017-agent-contract-cost-bench/REPORT.ko.md) · [모델 없이 CPU 재생](../../cases/017-agent-contract-cost-bench/REPRODUCE.ko.md). 확대 기준 누락을 공개한 탐색적 측정이며, [이탈 경위](../../cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.ko.md)를 함께 읽습니다.
+
+### 앞선 연구 · Case013 후속 구현
 
 AI가 성공했다는 최종 메시지를 냈어도 시험용 파일을 고치거나 요구한 검사를 실행하지 않은 경우가 있었습니다. 사용 가능한 도구 이름만 허용하는 제한과 호출 오류 안내를 만들고, 실제 실행 기록과 파일 변경을 확인했습니다. [도구 이름 제한 코드](../../research/agent_tool_contract_repair_20261014/guard.py) · [실제 작업 기록 분석](../../research/agent_tool_contract_repair_20261014/analyze.py) · [기능 테스트](../../research/agent_tool_contract_repair_20261014/test_guard.py) · [전체 보고서](../../research/agent_tool_contract_repair_20261014/records/REPORT_KO.md).
 

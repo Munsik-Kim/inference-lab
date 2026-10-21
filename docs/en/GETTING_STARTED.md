@@ -23,7 +23,7 @@ The [diova-compare user example](../../packages/diova-compare/examples/compare/R
 
 ## Open the published result viewer
 
-[English home](https://munsik-kim.github.io/inference-lab/en/index.html) · [Case008 Q: smaller files and reload](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) · [Case009: serving comparison](https://munsik-kim.github.io/inference-lab/en/case009.html#serving) · [tool-failure mitigation report (Korean)](../../research/agent_tool_contract_repair_20261014/records/REPORT_KO.md). These Pages screens use saved measurements and require no installation or GPU. Use the local build below for offline viewing.
+[English home](https://munsik-kim.github.io/inference-lab/en/index.html) · [Case008 Q: smaller files and reload](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) · [Case009: serving comparison](https://munsik-kim.github.io/inference-lab/en/case009.html#serving) · [Case017 CPU replay without a model](../../cases/017-agent-contract-cost-bench/REPRODUCE.md). These Pages screens use saved measurements and require no installation or GPU. Use the local build below for offline viewing.
 
 Use the [model guide entry](LLM_GUIDE.md) for execution paths, failures and mitigations, then the measurement page for interpreting numbers. This document covers downloads, static builds and CPU checks.
 

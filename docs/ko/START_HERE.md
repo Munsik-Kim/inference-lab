@@ -17,7 +17,7 @@
 - **자기 답변 기록을 비교하려는 사람:** [diova-compare의 가상 답변 예제](../../packages/diova-compare/examples/compare/README.ko.md)로 두 파일의 형식을 검사하고 비교 보고서를 만듭니다. 이후 문서의 형식에 맞춰 자기 기록을 넣습니다. 모델 없이 쓰는 독립 CPU 도구입니다.
 - **실험을 검산하려는 사람:** [개발자 재현 안내](GETTING_STARTED.md)에서 과거 기록의 CPU 재계산 경로를 고릅니다. 위의 자기 결과 비교와 별개입니다.
 
-대표작 C의 [도구 이름 제한·실제 작업 검사 보고서](../../research/agent_tool_contract_repair_20261014/README.ko.md)에서 구현과 남은 실패를 확인할 수 있습니다.
+대표작 C는 [Case017 결과와 실제 사건](../../cases/017-agent-contract-cost-bench/REPORT.ko.md)에서 시작합니다. [모델 없이 CPU 재생](../../cases/017-agent-contract-cost-bench/REPRODUCE.ko.md)과 [앞선 Case013 후속 구현](../../research/agent_tool_contract_repair_20261014/README.ko.md)도 연결합니다.
 
 ## 3. 참고 안내
 

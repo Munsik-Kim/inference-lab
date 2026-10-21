@@ -79,10 +79,27 @@ def wording(data,lang):
 def deviation(data,lang):
     return '<p class="case017-deviation">'+escape(wording(data,lang)['deviation'])+' '+a('case017.html#protocol-deviation','경위·원안 근거' if lang=='ko' else 'Chronology and original intent')+'</p>'
 
+def home_text(data,lang):
+    """Short entry copy; detailed wording and retained case documents stay intact."""
+    free,grammar=group(data,'K1','C0'),group(data,'K1','G')
+    n=free['n']
+    gate=data['gate'];observed=gate['observed_dev_verified'];required=gate['required_dev_verified'];dev_n=gate['denominator']
+    if lang=='ko':
+        return {
+            'intro':'상품 합계 기록·창고 이동·문서 정보 변경을 시험하고, 저장된 값·수정 후 받은 검증 결과·최종 답을 함께 검사하는 평가기를 구현했습니다.',
+            'result':f"BF16 가중치를 고정한 신규 합성 {n}과제에서, NVFP4 KV의 문법 제약은 자유 출력보다 완주 {free['verified']}/{n}→{grammar['verified']}/{n}, 상태 정확 {free['state_correct']}/{n}→{grammar['state_correct']}/{n}를 기록했습니다. 실패를 포함한 실행 비용과 남은 오류도 공개합니다.",
+            'deviation':f'DEV에서 BF16 KV·자유 출력은 {observed}/{dev_n}로 확대 기준 {required}/{dev_n}에 미달했지만, 로컬 gate의 기준 누락으로 P2가 진행됐습니다. 이 이탈을 공개한 탐색적 측정입니다.',
+        }
+    return {
+        'intro':'We built a benchmark that checks saved state, validation observed after updates, and final answers on synthetic order, inventory and document tasks.',
+        'result':f"With BF16 weights fixed on {n} new synthetic tasks, grammar-constrained output with native NVFP4 KV completed {grammar['verified']}/{n} versus {free['verified']}/{n} with free output; correct saved states rose from {free['state_correct']}/{n} to {grammar['state_correct']}/{n}. Costs including failures and remaining errors are reported alongside these observations.",
+        'deviation':f'BF16 KV/free output completed {observed}/{dev_n} DEV tasks, below the {required}/{dev_n} expansion criterion. The local gate omitted this threshold and proceeded to P2; we disclose the deviation and treat P2 as exploratory.',
+    }
+
 def home_case017(data,lang):
     t=lambda k,e:k if lang=='ko' else e
-    copy=wording(data,lang)
-    return '<section class="panel" id="contract-cost-study"><p class="eyebrow">CASE 017 · AGENT CONTRACT &amp; COST</p><h2>'+a('case017.html#overview',TITLES[lang])+'</h2><p>'+escape(copy['home_intro'])+'</p><p>'+escape(copy['kv_intro'])+'</p><p>'+escape(copy['policy_intro'])+'</p>'+successes(data,lang)+'<p>'+escape(copy['home_result'])+'</p><p>'+escape(copy['cost'])+'</p>'+deviation(data,lang)+'<div class="actions">'+a('case017.html#results',t('결과와 실패','Results and failures'))+' · '+a('case017.html#episodes',t('실제 사건 비교','Recorded episodes'))+' · '+a('case017.html#reproduce',t('모델 없이 재생','Model-free replay'))+'</div></section>'
+    copy=home_text(data,lang)
+    return '<section class="panel" id="contract-cost-study"><p class="eyebrow">CASE 017 · AGENT CONTRACT &amp; COST</p><h2>'+a('case017.html#overview',TITLES[lang])+'</h2><p>'+escape(copy['intro'])+'</p><p>'+escape(copy['result'])+'</p><p class="case017-deviation">'+escape(copy['deviation'])+'</p><div class="actions">'+a('case017.html#results',t('결과','Results'))+' · '+a('case017.html#episodes',t('실제 사건','Recorded episodes'))+' · '+a('case017.html#reproduce',t('CPU 재생','CPU replay'))+' · '+a('case017.html#protocol-deviation',t('확대 기준 이탈 경위','Protocol deviation'))+'</div></section>'
 
 def render_case017(data,lang):
     t=lambda k,e:k if lang=='ko' else e

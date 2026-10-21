@@ -15,7 +15,7 @@ I built tools to run public AI models on a limited GPU and check changed answers
 |---|---|---|
 | A. Store a smaller model and run actual requests | Connected an existing compression method (GPTQ) to checks of saved model files, restart in a new process, and request comparison under matching conditions | [Case008 Q](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) → [Case009](https://munsik-kim.github.io/inference-lab/en/case009.html#serving) |
 | B. Compare changed answers on the same questions | Built diova-compare, an independent CPU tool: check that questions and answer keys match, list lost/new correct answers and other changes, and retain original run failures | [CPU example](packages/diova-compare/examples/compare/README.md) · [Code and tests](packages/diova-compare/README.md#implementation-and-checks) |
-| C. Verify actual tool-task completion | Limited calls to available tool names, explained call errors, and checked records of actual file changes and validation | [Case013 follow-up implementation and report](research/agent_tool_contract_repair_20261014/README.md) |
+| C. Verify tool workflow completion and execution costs | Replay saved state, observed validation and final answers; compare completion, failures and execution costs across call policies and KV configurations | [Case017 results and recorded episodes](cases/017-agent-contract-cost-bench/REPORT.md) · [CPU replay without a model](cases/017-agent-contract-cost-bench/REPRODUCE.md) · Earlier work: [Case013 follow-up](research/agent_tool_contract_repair_20261014/README.md) |
 
 ## Recorded storage and runtime memory
 
@@ -39,13 +39,13 @@ Built native NVFP4 KV storage/read checks and a fixed-pool comparison tool on RT
 <!-- case017-entry -->
 ## Case017 — Agent Contract–Cost Bench
 
-We built a benchmark that checks how tool call policies change completion of saved state, observed validation and final answers. It uses owned synthetic records for product totals, inventory transfers and document updates.
+We built a benchmark that checks saved state, validation observed after updates, and final answers on synthetic order, inventory and document tasks.
 
-With BF16 weights and native NVFP4 KV, grammar changes completion 7/24→15/24 and correct saved states 7/24→22/24 on 24 new synthetic tasks: 8 recoveries and 0 losses. Added execution costs and remaining failures are reported alongside the gain. More tasks completed, while total execution costs also increased. Dividing all 24 runs, including failures, by completions gives approximately 3.62% more input tokens, 12.36% more output tokens and 11.27% more episode-wall time per completion.
+With BF16 weights fixed on 24 new synthetic tasks, grammar-constrained output with native NVFP4 KV completed 15/24 versus 7/24 with free output; correct saved states rose from 7/24 to 22/24. Costs including failures and remaining errors are reported alongside these observations.
 
-Protocol deviation: BF16 KV with free output completed 5/8 DEV tasks, below the original 6/8 expansion criterion. The local plan and execution gate omitted this success threshold and proceeded to P2 after checking completion, freezing and sealing. No separate waiver approval was found. We disclose this deviation and present P2 as an exploratory measurement on new synthetic tasks.
+BF16 KV/free output completed 5/8 DEV tasks, below the 6/8 expansion criterion. The local gate omitted this threshold and proceeded to P2; we disclose the deviation and treat P2 as exploratory.
 
-[Results](cases/017-agent-contract-cost-bench/REPORT.md) · [CPU replay](cases/017-agent-contract-cost-bench/REPRODUCE.md) · [Code](cases/017-agent-contract-cost-bench/src/agent_contract_cost/runner.py) · [Protocol deviation](cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.md)
+[Results and recorded episodes](cases/017-agent-contract-cost-bench/REPORT.md) · [CPU replay](cases/017-agent-contract-cost-bench/REPRODUCE.md) · [Protocol deviation](cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.md)
 
 ## Use or reproduce
 

@@ -5,7 +5,7 @@ import sys
 import unittest
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'tools/showcase'))
-from case017 import load_case017,render_case017,home_case017,check_evidence_download,wording,EVIDENCE_SOURCE,SECTIONS
+from case017 import load_case017,render_case017,home_case017,home_text,check_evidence_download,wording,EVIDENCE_SOURCE,SECTIONS
 
 class Case017(unittest.TestCase):
     @classmethod
@@ -24,9 +24,26 @@ class Case017(unittest.TestCase):
         data=copy.deepcopy(self.data)
         g=next(x for x in data['groups'] if (x['stage'],x['kv'],x['policy'])==('P2','K1','G'))
         g['verified']=3
+        g['state_correct']=4
         for lang in ('ko','en'):
             self.assertIn('3/24',home_case017(data,lang))
+            self.assertIn('4/24',home_case017(data,lang))
             self.assertNotEqual(home_case017(data,lang),home_case017(self.data,lang))
+            home=home_case017(self.data,lang)
+            self.assertNotIn('<table',home)
+            self.assertNotIn('<details',home)
+            self.assertEqual(home.count('class="case017-deviation"'),1)
+            for fragment in ('overview','results','episodes','reproduce','protocol-deviation'):
+                self.assertIn('href="case017.html#'+fragment+'"',home)
+            readme=(ROOT/('README.ko.md' if lang=='ko' else 'README.md')).read_text().split('<!-- case017-entry -->',1)[1]
+            from html import escape
+            for value in home_text(self.data,lang).values():
+                self.assertIn(escape(value),home)
+                self.assertIn(value,readme)
+            for value in ('7/24','15/24','22/24','5/8','6/8'):
+                self.assertIn(value,home)
+            # Shortening the entry must preserve the full disclosure in detail.
+            self.assertIn(escape(wording(self.data,lang)['deviation']),render_case017(self.data,lang))
 
     def test_raw_output_and_request_are_html_escaped(self):
         data=copy.deepcopy(self.data)

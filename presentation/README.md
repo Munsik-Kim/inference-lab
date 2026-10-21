@@ -133,8 +133,10 @@ checks. A local preview does not establish that the public site was updated.
 
 ## Compare your saved answers
 
-The home features Case008 Q + Case009 as A, **diova-compare** as B, and the Case013
-tool-action follow-up as C. Case014 is a separate research card after the technical
+The home features Case008 Q + Case009 as A, **diova-compare** as B, and Case017
+workflow completion and execution-cost auditing as C. Case013 tool-contract work
+remains linked as earlier research. The short Case017 home copy is separate from
+the unchanged detailed reports and keeps the expansion-gate deviation visible. Case014 is a separate research card after the technical
 stack. Earlier implementation summaries remain in a native disclosure with their
 existing anchors; the complete archive stays directly accessible.
 

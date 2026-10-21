@@ -15,7 +15,7 @@
 |---|---|---|
 | A. 모델을 작게 저장하고 실제 요청까지 실행하기 | 기존 압축 방법(GPTQ)을 연결하고, 저장 파일 검사·새로 시작한 프로그램에서 재실행·동일 조건의 요청 비교 구현 | [Case008 Q](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) → [Case009](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving) |
 | B. 바꾼 모델의 답변을 같은 질문 기준으로 비교하기 | 독립 CPU 도구 diova-compare 제작: 질문·정답 기준이 같은지 검사하고, 잃은 정답·새 정답·그 밖의 변경과 원 실행 실패 표시 | [CPU 실행 예제](packages/diova-compare/examples/compare/README.ko.md) · [코드·테스트](packages/diova-compare/README.ko.md#구현) |
-| C. 답변이 아니라 실제 도구 작업의 완료를 확인하기 | 사용 가능한 도구 이름으로 호출을 제한하고 오류를 안내하며, 실제 파일 수정·검사 실행 기록을 확인 | [Case013 후속 구현·보고서](research/agent_tool_contract_repair_20261014/README.ko.md) |
+| C. 도구 작업의 실제 완료와 실행 비용 확인 | 저장된 값·수정 후 검증 관측·최종 답을 함께 채점하고, 호출 정책과 KV 구성에 따른 완주·실패·비용을 재생 검사 | [Case017 결과와 실제 사건](cases/017-agent-contract-cost-bench/REPORT.ko.md) · [모델 없이 CPU 재생](cases/017-agent-contract-cost-bench/REPRODUCE.ko.md) · 앞선 연구: [Case013 후속 구현](research/agent_tool_contract_repair_20261014/README.ko.md) |
 
 ## 확인된 저장 공간·실행 메모리
 
@@ -39,13 +39,13 @@ RTX 5080에서 실제 NVFP4 KV 저장·읽기 검사와 고정 pool 비교 도�
 <!-- case017-entry -->
 ## Case017 — 도구 호출 규칙과 업무 완주 비용
 
-도구 호출 규칙이 실제 저장·검증·최종 답의 완료를 얼마나 바꾸는지 비교하는 평가기를 구현했습니다. 상품 합계 기록·창고 이동·문서 정보 변경을 소유한 가상 기록에서 시험합니다.
+상품 합계 기록·창고 이동·문서 정보 변경을 시험하고, 저장된 값·수정 후 받은 검증 결과·최종 답을 함께 검사하는 평가기를 구현했습니다.
 
-BF16 가중치를 고정한 NVFP4 KV의 신규 합성 24과제에서 문법 제약은 완주 7/24→15/24, 상태 정확 7/24→22/24를 기록했습니다. 회복 8개·손실 0개와 함께 추가 실행 비용과 남은 실패도 추적했습니다. 완주 수가 늘면서 전체 실행 비용도 늘었습니다. 실패를 포함한 24개 실행의 비용을 완주 수로 나누면 입력 토큰은 약 3.62%, 출력 토큰은 12.36%, 한 과제 실행 시간(episode wall)은 11.27% 증가했습니다.
+BF16 가중치를 고정한 신규 합성 24과제에서, NVFP4 KV의 문법 제약은 자유 출력보다 완주 7/24→15/24, 상태 정확 7/24→22/24를 기록했습니다. 실패를 포함한 실행 비용과 남은 오류도 공개합니다.
 
-확대 기준 이탈: 설정 점검용 DEV에서 BF16 KV+C0의 완주는 5/8로 원안의 6/8 기준에 미달했습니다. 당시 로컬 계획과 실행 코드가 이 성공 조건을 누락하고 완료·동결·봉인만 검사해 P2를 진행했습니다. 별도 면제 승인 기록은 확인하지 못했습니다. 이 경위를 공개하며, P2는 해당 기준을 통과한 확인시험이 아닌 신규 합성 과제의 탐색적 측정으로 제시합니다.
+DEV에서 BF16 KV·자유 출력은 5/8로 확대 기준 6/8에 미달했지만, 로컬 gate의 기준 누락으로 P2가 진행됐습니다. 이 이탈을 공개한 탐색적 측정입니다.
 
-[Results](cases/017-agent-contract-cost-bench/REPORT.ko.md) · [CPU replay](cases/017-agent-contract-cost-bench/REPRODUCE.ko.md) · [Code](cases/017-agent-contract-cost-bench/src/agent_contract_cost/runner.py) · [Protocol deviation](cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.ko.md)
+[결과·실제 사건](cases/017-agent-contract-cost-bench/REPORT.ko.md) · [CPU 재생](cases/017-agent-contract-cost-bench/REPRODUCE.ko.md) · [확대 기준 이탈 경위](cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.ko.md)
 
 ## 직접 사용·재현
 
