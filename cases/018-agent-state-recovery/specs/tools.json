@@ -1,0 +1,227 @@
+[
+  {
+    "name": "read_records",
+    "description": "Read named inventory records and the current revision. IDs are data, never file paths.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "record_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "minItems": 1,
+          "maxItems": 12
+        }
+      },
+      "required": [
+        "record_ids"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "read_history",
+    "description": "Read the append-only audit history including incident before/after quantities and the current revision.",
+    "parameters": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "read_operation",
+    "description": "Read one processing-ledger entry, dedup status, active operation lane and current revision.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "operation_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "apply_transfer",
+    "description": "Atomically transfer the supplied quantity between existing unprotected records of one SKU. Require current revision and no active operation. A matching previously completed or compensated operation ID is ignored. No checkpoint comparison.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "destination_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        }
+      },
+      "required": [
+        "operation_id",
+        "source_id",
+        "destination_id",
+        "quantity",
+        "expected_revision"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "compensate_stock",
+    "description": "For the named operation, add source_restore to its source and subtract destination_remove from its destination. Supplied quantities are applied as written; no checkpoint comparison or automatic inverse. Require current revision and nonnegative stock. Does not release the operation.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "source_restore": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "destination_remove": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        }
+      },
+      "required": [
+        "operation_id",
+        "source_restore",
+        "destination_remove",
+        "expected_revision"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "release_operation",
+    "description": "Mark the named operation compensated, retain its ledger/audit history and close its active lane. Does not inspect checkpoint equality or correct inventory quantities. Require current revision.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        }
+      },
+      "required": [
+        "operation_id",
+        "expected_revision"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "validate_inventory",
+    "description": "Validate public nonnegative integer stock, protected fields/record, conserved SKU totals and ledger references. Returns current state digest/version. Does not judge recovery or supply target quantities. Inspect this result after the last mutation before final.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "scope_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "scope_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "final",
+    "description": "Finish recovery with task ID, declaration, every registered record quantity and the observed validation event ID. Does not mutate state. R1 requires successful current validation already delivered to the generating request.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "recovered": {
+          "type": "boolean"
+        },
+        "quantities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "record_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "quantity": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000
+              }
+            },
+            "required": [
+              "record_id",
+              "quantity"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 12
+        },
+        "validation_event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "task_id",
+        "recovered",
+        "quantities",
+        "validation_event_id"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

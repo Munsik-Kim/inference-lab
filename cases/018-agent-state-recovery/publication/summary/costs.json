@@ -1,0 +1,121 @@
+{
+  "phases": [
+    {
+      "phase": "P1",
+      "model_requests": 180,
+      "model_input": 353632,
+      "model_output": 10692,
+      "technical_attempts": 6,
+      "technical_complete": 4,
+      "technical_input": 3868,
+      "technical_observed_output": 52,
+      "unknown_engine_output_attempts": 2,
+      "technical_rows": [
+        {
+          "source": "TECH_K1_normal.json",
+          "complete": true,
+          "received_IDs": 13,
+          "engine_output_tokens": 13,
+          "input_tokens": 967,
+          "reason": null
+        },
+        {
+          "source": "TECH_K1_normal.json",
+          "complete": true,
+          "received_IDs": 13,
+          "engine_output_tokens": 13,
+          "input_tokens": 967,
+          "reason": null
+        },
+        {
+          "source": "TECH_K0_cancel.json",
+          "complete": false,
+          "received_IDs": 0,
+          "engine_output_tokens": null,
+          "input_tokens": null,
+          "reason": "Incomplete cancelled stream; engine-generated tokens NOT_RECORDED"
+        },
+        {
+          "source": "TECH_K0_normal.json",
+          "complete": true,
+          "received_IDs": 13,
+          "engine_output_tokens": 13,
+          "input_tokens": 967,
+          "reason": null
+        },
+        {
+          "source": "TECH_K1_cancel.json",
+          "complete": false,
+          "received_IDs": 0,
+          "engine_output_tokens": null,
+          "input_tokens": null,
+          "reason": "Incomplete cancelled stream; engine-generated tokens NOT_RECORDED"
+        },
+        {
+          "source": "TECH_K1_normal.json",
+          "complete": true,
+          "received_IDs": 13,
+          "engine_output_tokens": 13,
+          "input_tokens": 967,
+          "reason": null
+        }
+      ],
+      "worker_wall_seconds": 439.69224416399993,
+      "worker_attempt_walls": [
+        81.22101626599942,
+        31.13711305200013,
+        31.148528106999947,
+        41.969447543999195,
+        254.21613919500123
+      ]
+    },
+    {
+      "phase": "P2",
+      "model_requests": 728,
+      "model_input": 1456444,
+      "model_output": 47204,
+      "technical_attempts": 3,
+      "technical_complete": 3,
+      "technical_input": 2901,
+      "technical_observed_output": 39,
+      "unknown_engine_output_attempts": 0,
+      "technical_rows": [
+        {
+          "source": "RELOAD_K1_normal.json",
+          "complete": true,
+          "received_IDs": 13,
+          "engine_output_tokens": 13,
+          "input_tokens": 967,
+          "reason": null
+        },
+        {
+          "source": "TECH_K0_normal.json",
+          "complete": true,
+          "received_IDs": 13,
+          "engine_output_tokens": 13,
+          "input_tokens": 967,
+          "reason": null
+        },
+        {
+          "source": "TECH_K1_normal.json",
+          "complete": true,
+          "received_IDs": 13,
+          "engine_output_tokens": 13,
+          "input_tokens": 967,
+          "reason": null
+        }
+      ],
+      "worker_wall_seconds": 855.0693826000006,
+      "worker_attempt_walls": [
+        855.0693826000006
+      ]
+    }
+  ],
+  "attempts": 917,
+  "complete": 915,
+  "observed_output_lower_bound": 57987,
+  "exact_engine_output_total": null,
+  "unknown_engine_output_attempts": 2,
+  "worker_wall_seconds": 1294.7616267640005,
+  "scope": "Worker includes load/compile/failures/cleanup and overlaps episode wall. Not GPU busy time or serving throughput."
+}

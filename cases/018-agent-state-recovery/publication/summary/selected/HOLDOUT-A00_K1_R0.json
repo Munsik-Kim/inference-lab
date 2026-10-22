@@ -1,0 +1,650 @@
+{
+  "episode_id": "HOLDOUT-A00_K1_R0",
+  "evidence_kind": "LOSSLESS_RAW_TEXT_EXCERPT_WITH_DERIVED_SUMMARY",
+  "diagnostic": {
+    "phase": "P2",
+    "episode_id": "HOLDOUT-A00_K1_R0",
+    "task_id": "HOLDOUT-A00",
+    "family": "A",
+    "kv": "K1",
+    "policy": "R0",
+    "D": 1,
+    "B": 1,
+    "P": 1,
+    "F": 1,
+    "C1": 1,
+    "C2": 1,
+    "Q": 1,
+    "W": 1,
+    "FINAL_CONTENT_CORRECT": 1,
+    "Fresh": 1,
+    "original_final_correct": 1,
+    "requests": 8,
+    "responses": 8,
+    "input_tokens": 15141,
+    "output_tokens": 401,
+    "guard_rejections": 0,
+    "episode_wall_seconds": 6.45879614200021,
+    "terminal_reason": "ACCEPTED_FINAL",
+    "has_accepted_final": 1,
+    "anchor_generation": 7,
+    "anchor_kind": "ACCEPTED_FINAL_PRE_GENERATION",
+    "anchor_available_result_event_ids": [
+      "e000",
+      "e001",
+      "e002",
+      "e003",
+      "e004",
+      "e005",
+      "e006"
+    ],
+    "required_record_keys": [
+      "r-edbdaabb-s",
+      "r-edbdaabb-d",
+      "r-edbdaabb-x",
+      "r-edbdaabb-y",
+      "r-edbdaabb-u"
+    ],
+    "scope_id": "scope-edbdaabb",
+    "last_quantity_change_event": {
+      "r-edbdaabb-s": null,
+      "r-edbdaabb-d": null,
+      "r-edbdaabb-x": "e003",
+      "r-edbdaabb-y": "e003",
+      "r-edbdaabb-u": null
+    },
+    "last_state_mutation_event": "e004",
+    "metadata_only_mutation_events": [
+      "e004"
+    ],
+    "observed_read_events": [
+      {
+        "event_id": "e000",
+        "event_index": 0,
+        "keys": [
+          "r-edbdaabb-s",
+          "r-edbdaabb-d",
+          "r-edbdaabb-x",
+          "r-edbdaabb-y",
+          "r-edbdaabb-u"
+        ],
+        "quantities": {
+          "r-edbdaabb-s": 52,
+          "r-edbdaabb-d": 17,
+          "r-edbdaabb-x": 37,
+          "r-edbdaabb-y": 34,
+          "r-edbdaabb-u": 50
+        },
+        "still_current_keys": [
+          "r-edbdaabb-s",
+          "r-edbdaabb-d",
+          "r-edbdaabb-u"
+        ],
+        "after_all_mutations": false,
+        "later_metadata_only_events": [
+          "e004"
+        ],
+        "jsonpath": "$.events[0].result.records"
+      },
+      {
+        "event_id": "e005",
+        "event_index": 5,
+        "keys": [
+          "r-edbdaabb-s",
+          "r-edbdaabb-d",
+          "r-edbdaabb-x",
+          "r-edbdaabb-y",
+          "r-edbdaabb-u"
+        ],
+        "quantities": {
+          "r-edbdaabb-s": 52,
+          "r-edbdaabb-d": 17,
+          "r-edbdaabb-x": 43,
+          "r-edbdaabb-y": 28,
+          "r-edbdaabb-u": 50
+        },
+        "still_current_keys": [
+          "r-edbdaabb-s",
+          "r-edbdaabb-d",
+          "r-edbdaabb-x",
+          "r-edbdaabb-y",
+          "r-edbdaabb-u"
+        ],
+        "after_all_mutations": true,
+        "later_metadata_only_events": [],
+        "jsonpath": "$.events[5].result.records"
+      }
+    ],
+    "rejected_read_events": [],
+    "current_read_coverage_keys": [
+      "r-edbdaabb-d",
+      "r-edbdaabb-s",
+      "r-edbdaabb-u",
+      "r-edbdaabb-x",
+      "r-edbdaabb-y"
+    ],
+    "current_read_coverage": 5,
+    "required_count": 5,
+    "current_quantity_read_observed": 1,
+    "read_after_all_state_mutations_observed": 1,
+    "terminal_quantities": {
+      "r-edbdaabb-s": 52,
+      "r-edbdaabb-d": 17,
+      "r-edbdaabb-x": 43,
+      "r-edbdaabb-y": 28,
+      "r-edbdaabb-u": 50
+    },
+    "final_quantities": {
+      "r-edbdaabb-s": 52,
+      "r-edbdaabb-d": 17,
+      "r-edbdaabb-x": 43,
+      "r-edbdaabb-y": 28,
+      "r-edbdaabb-u": 50
+    },
+    "final_quantity_error": null,
+    "final_quantity_matches_terminal": true,
+    "first_observed_read_event": "e000",
+    "first_read_quantities": {
+      "r-edbdaabb-s": 52,
+      "r-edbdaabb-d": 17,
+      "r-edbdaabb-x": 37,
+      "r-edbdaabb-y": 34,
+      "r-edbdaabb-u": 50
+    },
+    "first_read_comparison_reason": null,
+    "final_matches_first_read": false,
+    "evidence_paths": {
+      "anchor": "$.requests[7]",
+      "terminal": "$.terminal_snapshot.records",
+      "final": "$.final_action.arguments.quantities"
+    },
+    "source_path": "results/p2_r1/episodes/HOLDOUT-A00_K1_R0.json",
+    "source_sha256": "3fb1a4bf07c6728a6bfe2f82f9ac7239f895b267b128bcea0f8fff3b38bed650",
+    "rejected_final_request_ids": []
+  },
+  "request": {
+    "checkpoint_event_id": "h000",
+    "incident_operation_id": "incident-edbdaabb",
+    "record_ids": [
+      "r-edbdaabb-s",
+      "r-edbdaabb-d",
+      "r-edbdaabb-x",
+      "r-edbdaabb-y",
+      "r-edbdaabb-u"
+    ],
+    "request": "A transfer modified the wrong SKU records after the checkpoint. Undo that incident, including its active processing entry. Do not perform the intended SKU-M transfer yet.",
+    "scope_id": "scope-edbdaabb",
+    "task_id": "HOLDOUT-A00"
+  },
+  "initial_quantities": {
+    "r-edbdaabb-d": 17,
+    "r-edbdaabb-s": 52,
+    "r-edbdaabb-u": 50,
+    "r-edbdaabb-x": 37,
+    "r-edbdaabb-y": 34
+  },
+  "terminal_quantities": {
+    "r-edbdaabb-s": 52,
+    "r-edbdaabb-d": 17,
+    "r-edbdaabb-x": 43,
+    "r-edbdaabb-y": 28,
+    "r-edbdaabb-u": 50
+  },
+  "endpoint": {
+    "D": true,
+    "B": true,
+    "P": true,
+    "F": true,
+    "C1": true,
+    "C2": true,
+    "Q": true,
+    "W": true,
+    "FINAL_CONTENT_CORRECT": true,
+    "fresh_event_id": "e006",
+    "F_context": "FINAL_PRE_GENERATION"
+  },
+  "turns": [
+    {
+      "generation": 0,
+      "request_id": "g000",
+      "available_result_event_ids": [],
+      "raw_text": "{\"tool\": \"read_records\", \"arguments\": {\"record_ids\": [\"r-edbdaabb-s\", \"r-edbdaabb-d\", \"r-edbdaabb-x\", \"r-edbdaabb-y\", \"r-edbdaabb-u\"]}}",
+      "decision": "TOOL_RESULT_RETURNED",
+      "guard": null,
+      "event": {
+        "arguments": {
+          "record_ids": [
+            "r-edbdaabb-s",
+            "r-edbdaabb-d",
+            "r-edbdaabb-x",
+            "r-edbdaabb-y",
+            "r-edbdaabb-u"
+          ]
+        },
+        "call_index": 0,
+        "callable_executed": true,
+        "event_id": "e000",
+        "generated_after_event_ids": [],
+        "generated_in_turn": 0,
+        "result": {
+          "records": [
+            {
+              "owner": "synthetic-owner",
+              "protected": false,
+              "quantity": 52,
+              "record_id": "r-edbdaabb-s",
+              "sku": "SKU-M",
+              "warehouse": "W0"
+            },
+            {
+              "owner": "synthetic-owner",
+              "protected": false,
+              "quantity": 17,
+              "record_id": "r-edbdaabb-d",
+              "sku": "SKU-M",
+              "warehouse": "W1"
+            },
+            {
+              "owner": "synthetic-owner",
+              "protected": false,
+              "quantity": 37,
+              "record_id": "r-edbdaabb-x",
+              "sku": "SKU-X",
+              "warehouse": "W0"
+            },
+            {
+              "owner": "synthetic-owner",
+              "protected": false,
+              "quantity": 34,
+              "record_id": "r-edbdaabb-y",
+              "sku": "SKU-X",
+              "warehouse": "W1"
+            },
+            {
+              "owner": "synthetic-owner",
+              "protected": true,
+              "quantity": 50,
+              "record_id": "r-edbdaabb-u",
+              "sku": "SKU-U",
+              "warehouse": "W0"
+            }
+          ],
+          "revision": 1
+        },
+        "side_effect_write": false,
+        "state_after_execution_digest": "84003774c393b347adb6f0a787442a1e62c6e04400d3064b65d2029bd6fd5585",
+        "state_before_execution_digest": "84003774c393b347adb6f0a787442a1e62c6e04400d3064b65d2029bd6fd5585",
+        "state_version_after": 1,
+        "state_version_before": 1,
+        "status": "SUCCESS",
+        "tool": "read_records"
+      }
+    },
+    {
+      "generation": 1,
+      "request_id": "g001",
+      "available_result_event_ids": [
+        "e000"
+      ],
+      "raw_text": "{\"tool\": \"read_history\", \"arguments\": {}}",
+      "decision": "TOOL_RESULT_RETURNED",
+      "guard": null,
+      "event": {
+        "arguments": {},
+        "call_index": 0,
+        "callable_executed": true,
+        "event_id": "e001",
+        "generated_after_event_ids": [
+          "e000"
+        ],
+        "generated_in_turn": 1,
+        "result": {
+          "history": [
+            {
+              "audit_id": "h000",
+              "kind": "OPENING",
+              "records": {
+                "r-edbdaabb-d": {
+                  "owner": "synthetic-owner",
+                  "protected": false,
+                  "quantity": 17,
+                  "sku": "SKU-M",
+                  "warehouse": "W1"
+                },
+                "r-edbdaabb-s": {
+                  "owner": "synthetic-owner",
+                  "protected": false,
+                  "quantity": 52,
+                  "sku": "SKU-M",
+                  "warehouse": "W0"
+                },
+                "r-edbdaabb-u": {
+                  "owner": "synthetic-owner",
+                  "protected": true,
+                  "quantity": 50,
+                  "sku": "SKU-U",
+                  "warehouse": "W0"
+                },
+                "r-edbdaabb-x": {
+                  "owner": "synthetic-owner",
+                  "protected": false,
+                  "quantity": 43,
+                  "sku": "SKU-X",
+                  "warehouse": "W0"
+                },
+                "r-edbdaabb-y": {
+                  "owner": "synthetic-owner",
+                  "protected": false,
+                  "quantity": 28,
+                  "sku": "SKU-X",
+                  "warehouse": "W1"
+                }
+              }
+            },
+            {
+              "audit_id": "h001",
+              "changes": {
+                "r-edbdaabb-x": [
+                  43,
+                  37
+                ],
+                "r-edbdaabb-y": [
+                  28,
+                  34
+                ]
+              },
+              "kind": "FAULT_INJECTION",
+              "operation_id": "incident-edbdaabb",
+              "partial": false
+            }
+          ],
+          "revision": 1
+        },
+        "side_effect_write": false,
+        "state_after_execution_digest": "84003774c393b347adb6f0a787442a1e62c6e04400d3064b65d2029bd6fd5585",
+        "state_before_execution_digest": "84003774c393b347adb6f0a787442a1e62c6e04400d3064b65d2029bd6fd5585",
+        "state_version_after": 1,
+        "state_version_before": 1,
+        "status": "SUCCESS",
+        "tool": "read_history"
+      }
+    },
+    {
+      "generation": 2,
+      "request_id": "g002",
+      "available_result_event_ids": [
+        "e000",
+        "e001"
+      ],
+      "raw_text": "{\"tool\": \"read_operation\", \"arguments\": {\"operation_id\": \"incident-edbdaabb\"}}",
+      "decision": "TOOL_RESULT_RETURNED",
+      "guard": null,
+      "event": {
+        "arguments": {
+          "operation_id": "incident-edbdaabb"
+        },
+        "call_index": 0,
+        "callable_executed": true,
+        "event_id": "e002",
+        "generated_after_event_ids": [
+          "e000",
+          "e001"
+        ],
+        "generated_in_turn": 2,
+        "result": {
+          "active_operations": {
+            "stock-lane": "incident-edbdaabb"
+          },
+          "dedup_status": "ACTIVE",
+          "operation": {
+            "compensations": [],
+            "destination_id": "r-edbdaabb-y",
+            "phase": "COMPLETED",
+            "quantity": 6,
+            "source_id": "r-edbdaabb-x"
+          },
+          "operation_id": "incident-edbdaabb",
+          "revision": 1
+        },
+        "side_effect_write": false,
+        "state_after_execution_digest": "84003774c393b347adb6f0a787442a1e62c6e04400d3064b65d2029bd6fd5585",
+        "state_before_execution_digest": "84003774c393b347adb6f0a787442a1e62c6e04400d3064b65d2029bd6fd5585",
+        "state_version_after": 1,
+        "state_version_before": 1,
+        "status": "SUCCESS",
+        "tool": "read_operation"
+      }
+    },
+    {
+      "generation": 3,
+      "request_id": "g003",
+      "available_result_event_ids": [
+        "e000",
+        "e001",
+        "e002"
+      ],
+      "raw_text": "{\n  \"tool\": \"compensate_stock\",\n  \"arguments\": {\n    \"operation_id\": \"incident-edbdaabb\",\n    \"source_restore\": 6,\n    \"destination_remove\": 6,\n    \"expected_revision\": 1\n  }\n}",
+      "decision": "TOOL_RESULT_RETURNED",
+      "guard": null,
+      "event": {
+        "arguments": {
+          "destination_remove": 6,
+          "expected_revision": 1,
+          "operation_id": "incident-edbdaabb",
+          "source_restore": 6
+        },
+        "call_index": 0,
+        "callable_executed": true,
+        "event_id": "e003",
+        "generated_after_event_ids": [
+          "e000",
+          "e001",
+          "e002"
+        ],
+        "generated_in_turn": 3,
+        "result": {
+          "compensated": true,
+          "revision": 2
+        },
+        "side_effect_write": true,
+        "state_after_execution_digest": "8b1e86b60253425b8ad4fe7bc62fad9a85eea02e6a441183e6a8b981b891d4a3",
+        "state_before_execution_digest": "84003774c393b347adb6f0a787442a1e62c6e04400d3064b65d2029bd6fd5585",
+        "state_version_after": 2,
+        "state_version_before": 1,
+        "status": "SUCCESS",
+        "tool": "compensate_stock"
+      }
+    },
+    {
+      "generation": 4,
+      "request_id": "g004",
+      "available_result_event_ids": [
+        "e000",
+        "e001",
+        "e002",
+        "e003"
+      ],
+      "raw_text": "{\n  \"tool\": \"release_operation\",\n  \"arguments\": {\n    \"operation_id\": \"incident-edbdaabb\",\n    \"expected_revision\": 2\n  }\n}",
+      "decision": "TOOL_RESULT_RETURNED",
+      "guard": null,
+      "event": {
+        "arguments": {
+          "expected_revision": 2,
+          "operation_id": "incident-edbdaabb"
+        },
+        "call_index": 0,
+        "callable_executed": true,
+        "event_id": "e004",
+        "generated_after_event_ids": [
+          "e000",
+          "e001",
+          "e002",
+          "e003"
+        ],
+        "generated_in_turn": 4,
+        "result": {
+          "released": true,
+          "revision": 3
+        },
+        "side_effect_write": true,
+        "state_after_execution_digest": "e2f9d2343fc951a3143cf1ea73e3b0373f8d0dfcb533832813cc259e3989d761",
+        "state_before_execution_digest": "8b1e86b60253425b8ad4fe7bc62fad9a85eea02e6a441183e6a8b981b891d4a3",
+        "state_version_after": 3,
+        "state_version_before": 2,
+        "status": "SUCCESS",
+        "tool": "release_operation"
+      }
+    },
+    {
+      "generation": 5,
+      "request_id": "g005",
+      "available_result_event_ids": [
+        "e000",
+        "e001",
+        "e002",
+        "e003",
+        "e004"
+      ],
+      "raw_text": "{\"tool\": \"read_records\", \"arguments\": {\"record_ids\": [\"r-edbdaabb-s\", \"r-edbdaabb-d\", \"r-edbdaabb-x\", \"r-edbdaabb-y\", \"r-edbdaabb-u\"]}}",
+      "decision": "TOOL_RESULT_RETURNED",
+      "guard": null,
+      "event": {
+        "arguments": {
+          "record_ids": [
+            "r-edbdaabb-s",
+            "r-edbdaabb-d",
+            "r-edbdaabb-x",
+            "r-edbdaabb-y",
+            "r-edbdaabb-u"
+          ]
+        },
+        "call_index": 0,
+        "callable_executed": true,
+        "event_id": "e005",
+        "generated_after_event_ids": [
+          "e000",
+          "e001",
+          "e002",
+          "e003",
+          "e004"
+        ],
+        "generated_in_turn": 5,
+        "result": {
+          "records": [
+            {
+              "owner": "synthetic-owner",
+              "protected": false,
+              "quantity": 52,
+              "record_id": "r-edbdaabb-s",
+              "sku": "SKU-M",
+              "warehouse": "W0"
+            },
+            {
+              "owner": "synthetic-owner",
+              "protected": false,
+              "quantity": 17,
+              "record_id": "r-edbdaabb-d",
+              "sku": "SKU-M",
+              "warehouse": "W1"
+            },
+            {
+              "owner": "synthetic-owner",
+              "protected": false,
+              "quantity": 43,
+              "record_id": "r-edbdaabb-x",
+              "sku": "SKU-X",
+              "warehouse": "W0"
+            },
+            {
+              "owner": "synthetic-owner",
+              "protected": false,
+              "quantity": 28,
+              "record_id": "r-edbdaabb-y",
+              "sku": "SKU-X",
+              "warehouse": "W1"
+            },
+            {
+              "owner": "synthetic-owner",
+              "protected": true,
+              "quantity": 50,
+              "record_id": "r-edbdaabb-u",
+              "sku": "SKU-U",
+              "warehouse": "W0"
+            }
+          ],
+          "revision": 3
+        },
+        "side_effect_write": false,
+        "state_after_execution_digest": "e2f9d2343fc951a3143cf1ea73e3b0373f8d0dfcb533832813cc259e3989d761",
+        "state_before_execution_digest": "e2f9d2343fc951a3143cf1ea73e3b0373f8d0dfcb533832813cc259e3989d761",
+        "state_version_after": 3,
+        "state_version_before": 3,
+        "status": "SUCCESS",
+        "tool": "read_records"
+      }
+    },
+    {
+      "generation": 6,
+      "request_id": "g006",
+      "available_result_event_ids": [
+        "e000",
+        "e001",
+        "e002",
+        "e003",
+        "e004",
+        "e005"
+      ],
+      "raw_text": "{\"tool\": \"validate_inventory\", \"arguments\": {\"scope_id\": \"scope-edbdaabb\"}}",
+      "decision": "TOOL_RESULT_RETURNED",
+      "guard": null,
+      "event": {
+        "arguments": {
+          "scope_id": "scope-edbdaabb"
+        },
+        "call_index": 0,
+        "callable_executed": true,
+        "event_id": "e006",
+        "generated_after_event_ids": [
+          "e000",
+          "e001",
+          "e002",
+          "e003",
+          "e004",
+          "e005"
+        ],
+        "generated_in_turn": 6,
+        "result": {
+          "scope_id": "scope-edbdaabb",
+          "state_digest": "e2f9d2343fc951a3143cf1ea73e3b0373f8d0dfcb533832813cc259e3989d761",
+          "state_version": 3,
+          "valid": true,
+          "violations": []
+        },
+        "side_effect_write": false,
+        "state_after_execution_digest": "e2f9d2343fc951a3143cf1ea73e3b0373f8d0dfcb533832813cc259e3989d761",
+        "state_before_execution_digest": "e2f9d2343fc951a3143cf1ea73e3b0373f8d0dfcb533832813cc259e3989d761",
+        "state_version_after": 3,
+        "state_version_before": 3,
+        "status": "SUCCESS",
+        "tool": "validate_inventory"
+      }
+    },
+    {
+      "generation": 7,
+      "request_id": "g007",
+      "available_result_event_ids": [
+        "e000",
+        "e001",
+        "e002",
+        "e003",
+        "e004",
+        "e005",
+        "e006"
+      ],
+      "raw_text": "{\"tool\": \"final\", \"arguments\": {\"task_id\": \"HOLDOUT-A00\", \"recovered\": true, \"quantities\": [{\"record_id\": \"r-edbdaabb-s\", \"quantity\": 52}, {\"record_id\": \"r-edbdaabb-d\", \"quantity\": 17}, {\"record_id\": \"r-edbdaabb-x\", \"quantity\": 43}, {\"record_id\": \"r-edbdaabb-y\", \"quantity\": 28}, {\"record_id\": \"r-edbdaabb-u\", \"quantity\": 50}], \"validation_event_id\": \"e006\"}}",
+      "decision": "FINAL_ACCEPTED",
+      "guard": null,
+      "event": null
+    }
+  ]
+}

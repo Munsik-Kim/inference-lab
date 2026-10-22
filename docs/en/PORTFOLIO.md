@@ -182,3 +182,10 @@ With BF16 weights and native NVFP4 KV, grammar changes completion 7/24→15/24 a
 Protocol deviation: BF16 KV with free output completed 5/8 DEV tasks, below the original 6/8 expansion criterion. The local plan and execution gate omitted this success threshold and proceeded to P2 after checking completion, freezing and sealing. No separate waiver approval was found. We disclose this deviation and present P2 as an exploratory measurement on new synthetic tasks.
 
 [Report](../../cases/017-agent-contract-cost-bench/REPORT.md) · [CPU command and scope](../../cases/017-agent-contract-cost-bench/REPRODUCE.md) · [Strict parser](../../cases/017-agent-contract-cost-bench/src/agent_contract_cost/contracts.py) · [Independent auditor](../../cases/017-agent-contract-cost-bench/src/agent_contract_cost/audit.py)
+
+<!-- case018-entry -->
+## Case018 — State Recovery and Final-Report Consistency
+
+Built an evaluator for wrong-target, duplicate and partial inventory recovery, checking saved state and final quantities. On24 new synthetic tasks, both policies scored Q24/W0 with BF16 KV and Q19/W5 with NVFP4 KV. The freshness guard blocked ineligible finals without improving repair or correct reporting. Quantity re-observation is a separate posthoc observational analysis.
+
+[Report](../../cases/018-agent-state-recovery/REPORT.md) · [CPU replay](../../cases/018-agent-state-recovery/REPRODUCE.md)

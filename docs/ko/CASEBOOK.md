@@ -678,3 +678,11 @@ BF16 가중치를 고정한 NVFP4 KV의 신규 합성 24과제에서 문법 제�
 확대 기준 이탈: 설정 점검용 DEV에서 BF16 KV+C0의 완주는 5/8로 원안의 6/8 기준에 미달했습니다. 당시 로컬 계획과 실행 코드가 이 성공 조건을 누락하고 완료·동결·봉인만 검사해 P2를 진행했습니다. 별도 면제 승인 기록은 확인하지 못했습니다. 이 경위를 공개하며, P2는 해당 기준을 통과한 확인시험이 아닌 신규 합성 과제의 탐색적 측정으로 제시합니다.
 
 [Report](../../cases/017-agent-contract-cost-bench/REPORT.ko.md) · [CPU](../../cases/017-agent-contract-cost-bench/REPRODUCE.ko.md) · [Runner](../../cases/017-agent-contract-cost-bench/src/agent_contract_cost/runner.py) · [Deviation](../../cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.ko.md)
+
+<!-- case018-entry -->
+<a id="case-018"></a>
+## Case018 — 상태 복구와 최종 보고는 함께 맞을까?
+
+재고의 잘못된 대상·중복·부분 차감을 복구한 뒤 저장 상태와 최종 수량 보고를 함께 검사했습니다. 신규 합성24과제에서 BF16 KV는 두 정책 모두 Q24/W0, NVFP4 KV는 Q19/W5였습니다. 최신 검증 가드가 부적격 final 수용을 막아도 복구·정확 보고가 개선되지는 않았습니다. 현재 수량 재관측과 최종 보고의 관계는 별도 사후 관측 분석입니다.
+
+[Report](../../cases/018-agent-state-recovery/REPORT.ko.md) · [CPU replay](../../cases/018-agent-state-recovery/REPRODUCE.ko.md)

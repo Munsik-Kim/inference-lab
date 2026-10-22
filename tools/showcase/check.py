@@ -21,6 +21,7 @@ from case015 import load_case015, render_case015, home_case015, SOURCE_COPIES as
 from case016 import load_case016, render_case016, home_case016, SOURCE_COPIES as C16_SOURCES, FIGURES as C16_FIGURES, SECTIONS as C16_SECTIONS
 from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
+from case018 import load_case018, render_case018, home_case018, check_evidence_download as check_case018_evidence, SOURCE_COPIES as C18_SOURCES, FIGURES as C18_FIGURES, SECTIONS as C18_SECTIONS, EVIDENCE_ASSET as C18_ARCHIVE, EVIDENCE_SOURCE as C18_ARCHIVE_SOURCE
 from case017 import load_case017, render_case017, home_case017, check_evidence_download, SOURCE_COPIES as C17_SOURCES, FIGURES as C17_FIGURES, SECTIONS as C17_SECTIONS, EVIDENCE_ASSET as C17_ARCHIVE, EVIDENCE_SOURCE as C17_ARCHIVE_SOURCE
 from practical import load_practical, render as practical_render, PAGES as GUIDE_PAGES, COMPARE_EXAMPLES
 
@@ -101,6 +102,7 @@ def check(root: Path, site: Path) -> dict:
     data15=load_case015(root)
     data16=load_case016(root)
     data17=load_case017(root)
+    data18=load_case018(root)
     practical=load_practical(root,load_case008(root),data9,data13)
     expected=EXPECTED|({'en/case009.html','ko/case009.html','data/case009.json','data/case009.js','assets/case009.js','assets/serving-L128.svg','assets/serving-L1024.svg',
       'sources/diova-compare-core.py.txt','sources/diova-compare-tests.py.txt','sources/diova-compare-edge-tests.py.txt','sources/case009-serving.py.txt','sources/case009-quality.py.txt','sources/case009-report-en.md.txt','sources/case009-report-ko.md.txt','sources/case009-notice.md.txt'} if data9 else set())
@@ -128,6 +130,9 @@ def check(root: Path, site: Path) -> dict:
     if data16:
         expected |= {'en/case016.html','ko/case016.html','data/case016.json','assets/case016.css'}
         expected |= {'sources/'+name for name in C16_SOURCES} | set(C16_FIGURES)
+    if data18:
+        expected |= {'en/case018.html','ko/case018.html','data/case018.json','assets/case018.css','assets/case018.js',C18_ARCHIVE}
+        expected |= {'sources/'+name for name in C18_SOURCES} | set(C18_FIGURES)
     if data17:
         expected |= {'en/case017.html','ko/case017.html','data/case017.json','assets/case017.css','assets/case017.js',C17_ARCHIVE}
         expected |= {'sources/'+name for name in C17_SOURCES} | set(C17_FIGURES)
@@ -152,6 +157,16 @@ def check(root: Path, site: Path) -> dict:
         for page in GUIDE_PAGES:
             require(practical_render(root,practical,lang,page) in (site/lang/(page+'.html')).read_text(), 'Practical guide rendering mismatch')
         require(practical_render(root,practical,lang,'featured') in (site/lang/'index.html').read_text(), 'Practical home stories mismatch')
+    if data18:
+        require(read(site/'data/case018.json')==data18,'Case018 data/source mismatch')
+        require(m['case018_units']['source_files']==data18['display_source_files'],'Case018 build source identity')
+        for name,path in C18_SOURCES.items():require((site/'sources'/name).read_bytes()==(root/path).read_bytes(),'Case018 source copy differs')
+        for name,path in C18_FIGURES.items():require((site/name).read_bytes()==(root/path).read_bytes(),'Case018 figure differs')
+        require((site/C18_ARCHIVE).read_bytes()==(root/C18_ARCHIVE_SOURCE).read_bytes(),'Case018 archive differs')
+        for lang in ('en','ko'):
+            html=(site/lang/'case018.html').read_text();parser=Links();parser.feed(html)
+            require(render_case018(data18,lang) in html and set(C18_SECTIONS)<=parser.ids,'Case018 render/anchor contract')
+            require(home_case018(data18,lang) in (site/lang/'index.html').read_text(),'Case018 home entry')
     if data17:
         require(read(site/'data/case017.json')==data17,'Case017 raw/display mismatch')
         require(m['case017_units']['source_files']==data17['display_source_files'],'Case017 source identity')
@@ -335,6 +350,10 @@ def check(root: Path, site: Path) -> dict:
     forbidden=('ghp_','hf_','sk-proj-','BEGIN PRIVATE KEY')
     private_path=re.compile(r'/home/[^/\s]+/|/mnt/[a-z]/|[A-Za-z]:\\Users\\')
     for name,path in paths.items():
+        if data18 and name==C18_ARCHIVE:
+            require(path.read_bytes()==(root/C18_ARCHIVE_SOURCE).read_bytes(),'Case018 exact archive source')
+            check_case018_evidence(root,path.read_bytes())
+            continue
         if data17 and name==C17_ARCHIVE:
             # Only the exact source-matched lossless Case017 archive is binary.
             # Member safety/coverage/privacy is checked; arbitrary binaries remain rejected.

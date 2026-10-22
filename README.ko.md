@@ -47,6 +47,13 @@ DEV에서 BF16 KV·자유 출력은 5/8로 확대 기준 6/8에 미달했지만,
 
 [결과·실제 사건](cases/017-agent-contract-cost-bench/REPORT.ko.md) · [CPU 재생](cases/017-agent-contract-cost-bench/REPRODUCE.ko.md) · [확대 기준 이탈 경위](cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.ko.md)
 
+<!-- case018-entry -->
+## Case018 — 상태 복구와 최종 보고는 함께 맞을까?
+
+재고의 잘못된 대상·중복·부분 차감을 복구한 뒤 저장 상태와 최종 수량 보고를 함께 검사했습니다. 신규 합성24과제에서 BF16 KV는 두 정책 모두 Q24/W0, NVFP4 KV는 Q19/W5였습니다. 최신 검증 가드가 부적격 final 수용을 막아도 복구·정확 보고가 개선되지는 않았습니다. 현재 수량 재관측과 최종 보고의 관계는 별도 사후 관측 분석입니다.
+
+[Report](cases/018-agent-state-recovery/REPORT.ko.md) · [CPU replay](cases/018-agent-state-recovery/REPRODUCE.ko.md)
+
 ## 직접 사용·재현
 
 - 내 모델의 저장된 답 비교: [두 파일 준비 → 검사 → 비교 → 보고서](packages/diova-compare/examples/compare/README.ko.md). Python 3.10+와 CPU로 실행하며, 자유 서술 답의 정오는 사용자가 제공합니다.
