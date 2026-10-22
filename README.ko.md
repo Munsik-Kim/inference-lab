@@ -1,12 +1,12 @@
-**Munsik-Kim | DIOVA**
-
-[English](README.md) | 한국어
-
-# 모델을 작게 저장하고, 실행하고, 달라진 답변까지 확인합니다.
+# DIOVA — 모델 압축·실행·결과 검사
 
 공개 AI 모델을 제한된 그래픽카드에서 실행하고, 변경 전후의 답변과 실제 작업 결과를 검사하는 도구를 만들었습니다. DIOVA의 공개 구현과 측정 기록은 **로컬 모델 실행·최적화, 변경 전후 품질 검사, 도구 자동화 평가**와 관련됩니다.
 
+**Munsik Kim | DIOVA** · [English](README.md) | 한국어
+
 [포트폴리오·모델별 안내 (Pages)](https://munsik-kim.github.io/inference-lab/ko/index.html) · [직접 사용: 내 결과 비교 예제](packages/diova-compare/examples/compare/README.ko.md)
+
+<a id="모델을-작게-저장하고-실행하고-달라진-답변까지-확인합니다"></a>
 
 ## 대표작 A · B · C
 

@@ -1,12 +1,12 @@
-**Munsik-Kim | DIOVA**
-
-English | [한국어](README.ko.md)
-
-# Store smaller models, run them, and check the answers that changed.
+# DIOVA — Model compression, execution and evaluation
 
 I built tools to run public AI models on a limited GPU and check changed answers and actual task results. The public implementations and measurements relate to **local model execution and optimization, quality checks after model changes, and tool-automation evaluation**.
 
+**Munsik Kim | DIOVA** · English | [한국어](README.ko.md)
+
 [Portfolio and model guides (Pages)](https://munsik-kim.github.io/inference-lab/en/index.html) · [Try it: compare your saved results](packages/diova-compare/examples/compare/README.md)
+
+<a id="store-smaller-models-run-them-and-check-the-answers-that-changed"></a>
 
 ## Featured work A · B · C
 
