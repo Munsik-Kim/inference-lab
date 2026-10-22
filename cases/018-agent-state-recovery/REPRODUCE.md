@@ -1,16 +1,20 @@
-# Case018 — State Recovery and Final-Report Consistency — CPU replay
+# Case018 — Checking inventory recovery and completion reports — CPU record replay
 
 ```bash
 python3 -B cases/018-agent-state-recovery/publication/run_checks.py --output /tmp/case018-public-check-new --tests
 ```
 
-Python3.12+ standard library only. A fresh external output is required; existing results/research paths are not written. Allow roughly1GiB RAM and1GiB restoration disk. No model/tokenizer/Torch/vLLM/xgrammar installation or download. This command has no GPU path.
+Use Python 3.12+ and its standard library. Choose a fresh external output directory that does not exist. Allow roughly 1 GiB each for restoration disk space and RAM. No model/tokenizer download or Torch/vLLM/xgrammar installation is needed.
 
-1. Check manifest, XZ signature, every member path, uniqueness, regular type, sizes/hashes and alias coverage, then restore.
-2. Run phase-specific frozen sources for26 P0/24 P1/96 P2 endpoints, observations, continuations, termination, budgets and SSE/IDs/usage.
-3. Recompute token totals, cancellation missingness, worker costs and registered paired bootstrap.
-4. Regenerate120 posthoc rows, tables, selected raw-text excerpts and SVG; compare public summaries exactly.
-5. --tests runs17 new publication boundaries. Historical37/48/59 test receipts are reused, not claimed as new full-suite runs.
+1. Verify the manifest, full XZ paths, regular files, duplicates, bytes/hashes and alias coverage; restore the evidence.
+2. Replay 120 model endpoints and the separate 26 P0 synthetic traces with phase-specific frozen sources.
+3. Recalculate state, observations, continuations, termination, budgets, SSE/IDs/usage, costs and paired bootstrap.
+4. Regenerate the existing 120-row posthoc analysis, selected excerpts and SVGs; compare with public summaries.
+5. `--tests` runs 17 publication-boundary tests. Historical 37/48/59-test records remain in their original receipts.
+
+CPU record replay has passed in a local public-only copy and on GitHub-hosted Ubuntu. The link below shows current main runs and receipts. This command replays saved execution records; retained receipts document the original tokenizer re-encoding and KV/grammar technical gates.
+
+[CPU record replay · main](https://github.com/Munsik-Kim/inference-lab/actions/workflows/case018-checks.yml?query=branch%3Amain)
 
 [Original mapping](publication/provenance/original_mapping.json) · [Public manifest](publication/PUBLIC_MANIFEST.json) · [Archive](publication/data/original-evidence.tar.xz) · [Redactions](publication/provenance/redactions.json)
 

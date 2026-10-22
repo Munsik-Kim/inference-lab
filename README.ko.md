@@ -48,11 +48,11 @@ DEV에서 BF16 KV·자유 출력은 5/8로 확대 기준 6/8에 미달했지만,
 [결과·실제 사건](cases/017-agent-contract-cost-bench/REPORT.ko.md) · [CPU 재생](cases/017-agent-contract-cost-bench/REPRODUCE.ko.md) · [확대 기준 이탈 경위](cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.ko.md)
 
 <!-- case018-entry -->
-## Case018 — 상태 복구와 최종 보고는 함께 맞을까?
+## Case018 — 재고 복구와 완료 보고를 따로 검사했습니다
 
-재고의 잘못된 대상·중복·부분 차감을 복구한 뒤 저장 상태와 최종 수량 보고를 함께 검사했습니다. 신규 합성24과제에서 BF16 KV는 두 정책 모두 Q24/W0, NVFP4 KV는 Q19/W5였습니다. 최신 검증 가드가 부적격 final 수용을 막아도 복구·정확 보고가 개선되지는 않았습니다. 현재 수량 재관측과 최종 보고의 관계는 별도 사후 관측 분석입니다.
+재고 복구 환경과 검사 도구를 만들어 복구된 상태와 마지막 보고를 따로 확인했습니다. 같은 24개 합성 과제에서 두 정책 모두 상태·후속 검사 통과는 BF16 KV 24/24, NVFP4 KV 19/24였고, 검증·완료 보고까지 충족한 수는 각각 0/24, 5/24였습니다. 양쪽 가중치는 BF16으로 고정했습니다.
 
-[Report](cases/018-agent-state-recovery/REPORT.ko.md) · [CPU replay](cases/018-agent-state-recovery/REPRODUCE.ko.md)
+[결과·실제 사건](cases/018-agent-state-recovery/REPORT.ko.md) · [모델 없이 검산하기](cases/018-agent-state-recovery/REPRODUCE.ko.md)
 
 ## 직접 사용·재현
 

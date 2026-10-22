@@ -1,58 +1,155 @@
-# Case018 — State Recovery and Final-Report Consistency
+# Case018 — Checking inventory recovery and completion reports
 
 ## Question and implementation
 
-We built a small tool environment for recovering wrong-target inventory changes, duplicate transfers and partial debits. The evaluator checks the terminal state, validation actually observed by the model, final quantities and two fixed CPU continuations. These continuations are evaluator programs, not autonomous follow-up work by the model.
+We asked an AI agent to undo wrong-target inventory changes, duplicate transfers and partial debits. We checked the recovered state separately from its completion report.
 
-A reverses the wrong target; intended work is deferred. B retains one valid transfer and compensates only the duplicate. C reverses a partial debit. Hidden checkpoints and correct scripts are not sent to the model. Validation checks only public invariants.
+We built an inventory/operation-ledger environment and auditing tools that track saved values, protection of unrelated records, validation actually received after changes, and the final answer. After recovery, the evaluator runs two fixed follow-up programs and compares them with the same programs from a clean checkpoint.
 
-## Method and frozen contract
+## HOLDOUT results and pairing
 
-K0=BF16 KV; K1=native NVFP4 KV; both use Qwen3-4B-Instruct-2507 BF16 weights, revision cdbee75f17c01a7cc42f958dc650907174af0554. R0 accepts a well-formed final and scores afterward. R1 checks whether successful validation of the current scope/digest/version was actually observed before final. It neither checks final quantities against gold nor repairs state. Both use grammar G, strict parser, eight APIs, greedy decoding and common limits:16 requests,512 tokens/request,8192 output/episode,24576 context,180/900 seconds. The original model-success expansion threshold is null.
+**State and follow-up checks (Q)** require restored business values, protection throughout recovery and correct results from both follow-up programs. **Validation and correct report (W)** additionally requires an accepted, correct completion response after observing successful current validation.
 
-D is a recovered:true declaration, including rejected finals. B is business restoration, P is protection throughout recovery, Fresh is pre-generation observation of current successful validation. Q=B∧P∧C1∧C2; W=Q∧accepted final∧correct final∧Fresh. Without accepted final, terminal Q is still evaluated, W is0 and Fresh is a last-generation diagnostic. Restoring stock but reporting old quantities can yield Q1/W0.
+| KV storage | Completion policy | State and follow-up checks (Q) | Validation and correct report (W) |
+| --- | --- | --- | --- |
+| BF16 | Basic acceptance (R0) | 24/24 | 0/24 |
+| BF16 | Current-validation guard (R1) | 24/24 | 0/24 |
+| NVFP4 | Basic acceptance (R0) | 19/24 | 5/24 |
+| NVFP4 | Current-validation guard (R1) | 19/24 | 5/24 |
 
-## HOLDOUT results and paired comparison
+Each row uses the same 24 synthetic tasks, producing 96 episodes in total. Qwen weights stay BF16 in both configurations. KV stores the keys and values used for attention over previous tokens.
 
-On24 new synthetic HOLDOUT tasks, both policies scored Q24/W0 with BF16 KV and Q19/W5 with native NVFP4 KV. The freshness guard blocked15 ineligible final attempts across five NVFP4 episodes but recovered no Q/W successes; output cost increased18.69%. Weights were BF16 in both configurations.
+With BF16 KV, both policies passed state and follow-up checks in 24/24 tasks, but 0/24 also met validation and correct-report requirements. The NVFP4 KV counts were 19/24 and 5/24. Agents repeatedly restored inventory while reporting the quantities they had read at the start.
 
-| KV | Policy | Q /24 | W /24 | Requests | Input tokens | Output tokens | Guard rejections | Episode wall s |
-|---|---|---:|---:|---:|---:|---:|---:|---:|
-| BF16 | R0 | 24 | 0 | 168 | 323375 | 10953 | 0 | 164.144812115 |
-| BF16 | R1 | 24 | 0 | 168 | 323375 | 10953 | 0 | 164.157640174 |
-| NVFP4 | R0 | 19 | 5 | 186 | 369881 | 11568 | 0 | 179.978763365 |
-| NVFP4 | R1 | 19 | 5 | 206 | 439813 | 13730 | 15 | 213.922486411 |
+The current-validation guard blocked ineligible completion responses without increasing recovered or fully verified completions. NVFP4 output tokens increased by 18.69%.
 
-Q checks business restoration, protection throughout recovery and the two fixed continuations. W additionally requires an accepted, correct final answer and observed current successful validation. This is exploratory measurement on a small synthetic sample; metric rankings differ. It does not establish KV quality equivalence, serving speed or internal memory mechanisms.
+## Recorded episodes
 
-There are24 independent tasks ×four conditions=96 episodes, eight per family. The registered family-stratified paired task bootstrap uses10000 draws, seed61022018, retaining all four conditions jointly; intervals are exploratory pointwise percentile95%. R1−R0 Q/W is0pp [0,0] in both KV settings, not equivalence evidence. K1−K0 Q is−20.83pp [−33.33,−8.33]; W is+20.83pp [8.33,37.50]. B/C1/C2 success sets are identical in the actual P1/P2 samples; added discrimination by continuations was not observed. P0 synthetic counterexamples validate the evaluator separately.
+### A00: first read, restored inventory and report
+
+In the BF16 episode, inventory returned to 43 / 28, but the report still said 37 / 34. The table shows the two affected records; the recovery target was 43 / 28.
+
+| Stage | BF16 KV · basic acceptance | NVFP4 KV · basic acceptance |
+| --- | --- | --- |
+| First read | 37 / 34 | 37 / 34 |
+| Saved after repair | 43 / 28 | 43 / 28 |
+| Reported quantities | 37 / 34 | 43 / 28 |
+
+`HOLDOUT-A00_K0_R0`: first read (e000) → compensation (e003) → release (e004) → current validation valid:true (e005) → completion response. The agent received validation, yet reported the first quantities: Q=1/Fresh=1/W=0.
+
+`HOLDOUT-A00_K1_R0`: after the same initial input and repair/release, it reread current inventory (e005), validated (e006) and reported the current quantities: W=1. Selected original excerpts retain event IDs, raw model text and pre-generation available results.
+
+The public validator checks nonnegative inventory, protected fields, conservation and ledger references. Its response does not include all current quantities. A separate evaluator compares the reported quantity map with saved inventory. Observing successful current validation (Fresh) and rereading current quantities are therefore different observations.
+
+[BF16 A00 excerpt](publication/summary/selected/HOLDOUT-A00_K0_R0.json) · [NVFP4 A00 excerpt](publication/summary/selected/HOLDOUT-A00_K1_R0.json)
+
+### What the guard checked and blocked
+
+**Check:** the agent must have received successful validation matching the current scope/digest/version before generating its completion response.
+
+**Block:** 15 ineligible attempts across 5 NVFP4 R1 episodes were not accepted.
+
+**Remaining failure:** the guard neither repairs state nor compares final quantities. Those states remained unrecovered; R0 and R1 had identical Q and W counts in both KV settings. System acceptance and correctness are assessed separately.
+
+### A06/C01: accurate reports of wrong recoveries
+
+C01 NVFP4 should restore 62 / 16, but subtracting destination stock while undoing a source-only debit left 62 / 12. R0 accurately reported that inventory but scored Q=0/Fresh=0/W=0. R1 blocked three completion attempts while the same failure remained.
+
+A06 NVFP4 left 80 / 0 instead of 42 / 28, increasing total inventory by 10 and violating protection. Accurately reporting the ending inventory does not undo damage during recovery.
+
+[Selected excerpts and full source pointers](publication/summary/selected/) distinguish explanatory summaries from raw text.
 
 ## Posthoc quantity observation diagnostic
 
-Posthoc analysis confirmed that all76 Q1/W0 episodes reported their first observed quantities. Among91 accepted finals, all13 with observed current record quantities matched the terminal quantity map; all78 without them differed. The13 include three accurate reports of incorrectly recovered states, so reporting consistency is not successful recovery. Five guard-limited episodes have no accepted-final comparison. This is an association, not a forced-reread intervention.
+This posthoc analysis examines existing records, motivated by A00 and the already-seen Q=1/W=0 cases. [Definitions, code and input hashes](publication/analysis/ANALYSIS_FREEZE.json) were saved before the new full aggregate. The table compares 91 completion responses accepted by the system.
 
-| KV | Policy | Accepted / no final | Read0 wrong | Read0 right | Read1 wrong | Read1 right |
-|---|---|---|---:|---:|---:|---:|
+| Current quantities reread | Report matches terminal quantities | Mismatch |
+| --- | --- | --- |
+| Yes | 13 | 0 |
+| No | 0 | 78 |
+
+Of the 13 matching reports, 3 **accurately described incorrectly recovered states**. The 5 episodes without an accepted final have separate NA comparisons. All 76 episodes that passed Q but failed W reported their first observed quantities. These are episodes across repeated conditions, not distinct tasks.
+
+Current-quantity observations and accurate reports occurred together in these saved trajectories. Actions and KV configurations also differed, so measuring the effect of requiring a reread would need a separate comparison experiment.
+
+<details>
+<summary>Tables by condition and exact observation definition</summary>
+
+
+Current-quantity re-observation requires successful read_records results actually delivered for every required record, with no subsequent quantity change. Failed, undelivered and partial reads do not count as full observation. Change-and-restore expires the old read; a metadata-only revision does not. The separately stored after-all-state-mutations flag coincides in this sample. Neither final correctness nor checkpoint gold enters the flag. The anchor is the accepted final’s pre-generation available event IDs, or a last-generation diagnostic without accepted final. Of five guard-limited episodes, three observed current quantities and two did not.
+
+| KV | Policy | Accepted / none | No read · mismatch | No read · match | Read · mismatch | Read · match |
+| --- | --- | --- | --- | --- | --- | --- |
 | BF16 | R0 | 24 / 0 | 24 | 0 | 0 | 0 |
 | BF16 | R1 | 24 / 0 | 24 | 0 | 0 | 0 |
 | NVFP4 | R0 | 24 / 0 | 16 | 0 | 0 | 8 |
 | NVFP4 | R1 | 19 / 5 | 14 | 0 | 0 | 5 |
 
-Read0/1 denotes actual delivery of current quantities for every publicly required record through read_records. Any later quantity change, including change-and-restore, expires that record observation. A metadata-only global revision change does not. A stricter after-all-state-mutations read flag is stored separately; flags coincide in these measured samples. Neither final correctness nor checkpoint gold enters the flag. The anchor is accepted-final pre-generation available IDs; without final it is last-generation diagnostic and final comparisons are NA. Of five guard-limited cases, three have current-read1 and two current-read0. Observed0/correct-report and observed1/incorrect-report accepted cells are both zero; this is not causal evidence.
+DEV uses a separate six-task denominator. Each BF16 cell has two current-read/matching reports and four no-read/mismatching reports. NVFP4 R0 has six no-read/mismatching reports; R1 has five plus one episode without accepted final. The 18 DEV Q=1/W=0 episodes also reported first-read quantities. The Q=1 subgroup is an outcome-selected auxiliary analysis retained in the [full ledger](publication/summary/quantity_ledger.json).
 
-Separate P1 auxiliary analysis: per six BF16 episodes, read1/correct-report2 and read0/incorrect-report4; NVFP4 R0 has six read0/incorrect reports, R1 five plus one no-final. All18 P1 Q1/W0 cases match the first observed read. Phases are not pooled. Q1 subgroup tables are outcome-selected auxiliary summaries retained in the [ledger](publication/summary/quantity_ledger.json). The already-seen76 cases and A00 motivated this analysis; [definitions and registration](publication/analysis/ANALYSIS_FREEZE.json) precede the new aggregate, not unseen-results preregistration.
+[Exact definition](publication/analysis/DEFINITION.json) · [All 120 diagnostic rows](publication/summary/quantity_ledger.json)
 
-## Recorded episodes
+</details>
 
-A00 K0: after6/6 compensation and release, x/y are43/28; current valid:true is observed, but final reports37/34:Q1/Fresh1/W0. K1 reads43/28 after repair, validates and reports correctly:W1. A06 K1 applies40/30 compensation, leaving80/0 and increasing total stock by10:P0/Q0. Accurately reporting these wrong values is not recovery. C01 K1 subtracts4 from the destination while undoing a partial debit, leaving62/12. R0 accurately reports that wrong state:Q0/Fresh0/W0. R1 receives three final rejections without repairing it. [Selected excerpts](publication/summary/selected/) retain original raw text and observation IDs; complete records are archived. Summaries are not raw records.
+## Method and original contract
 
-## Costs, KV storage and technical limits
+The 24 synthetic tasks contain 8 examples each of wrong target (A), duplicate processing (B) and partial debit (C). A restores the wrong-SKU records; B preserves one valid transfer and compensates the extra one; C undoes only the source debit. Quantity compensation and active-operation release use separate APIs.
 
-NVFP4 R0→R1:186→206 requests; input369881→439813(+18.91%), output11568→13730(+18.69%), episode wall179.978763365→213.922486411s(+18.86%), with unchanged Q19/W5. Costs cover all24 episodes including failures, not successful-only latency, billing or energy. Cost per zero successes is undefined. Input and output are not interchangeable compute costs.
+The evaluator’s first follow-up program performs the pending normal transfer for A/C, or the next one-unit transfer for B, then reads and validates. The second redelivers the original registered transfer and performs the next one-unit transfer; B’s completed transfer must be ignored as a duplicate. Each program starts from an independent state copy, reads the current revision publicly and compares business values, ledger state, duplicate effects and protection with the same program from a clean checkpoint.
 
-P1 has180 DEV requests plus six TECH attempts (four complete/two cancelled); P2 has728 HOLDOUT plus three complete TECH requests. Cumulative917 attempts/915 complete, observed output lower bound57987 tokens; engine-generated token costs for the two cancellations remain null. P2 HOLDOUT input/output1456444/47204, TECH2901/39. Worker439.692244164+855.069382600=1294.761626764s includes failed probes, load/compile/shutdown and overlaps episode wall. New CPU publication cost is recorded separately.
+All runs use Qwen3-4B-Instruct-2507 revision `cdbee75f17c01a7cc42f958dc650907174af0554` with BF16 weights. K0=BF16 KV; K1=native NVFP4 KV. R0 accepts a well-formed final for subsequent scoring; R1 checks prior observation of current successful validation. The common system already requires validation after the last change in both policies. Both share grammar G, a strict parser, eight APIs and greedy decoding: 16 requests, 512 output tokens/request, 8,192 output tokens/episode, 24,576 context tokens and 180/900-second request/episode limits. Rejections, errors and later generations use the same budget. The original model-success expansion threshold is null.
 
-Actual approximately4GiB pools: BF16 4293918720B,147456B/token,29120slots; NVFP4 4294508544B,41472B/token,103552slots. Historical receipts retain packed uint8+FP8 block scales,36-layer write/read and finite attention outputs. The3.556× ratio is token-slot capacity, not whole-VRAM savings, single100K context or speed superiority. Runtime is vLLM0.32.0/FlashInfer0.7.0.post1/xgrammar0.2.8; kernel paths also differ. Failed attempts and upstream force-kill/semaphore warnings are retained. No new profiling/GPU/model requests.
+B=business restoration, P=protection throughout, C1/C2=two fixed continuations and Q=B∧P∧C1∧C2. Fresh means prior observation of successful current validation; W=Q∧accepted correct final∧Fresh. Final-content checks cover task/recovered, the full quantity map and validation event ID. D counts recovered:true declarations, including rejected finals. Without accepted final, Q is assessed at termination and W=0; Fresh then describes observations before the last actual generation.
+
+The public validator checks nonnegative inventory, protected fields, conservation and ledger references. Its response does not include all current quantities. A separate evaluator compares the reported quantity map with saved inventory. Observing successful current validation (Fresh) and rereading current quantities are therefore different observations.
+
+<details>
+<summary>Component metrics, separate DEV and paired intervals</summary>
+
+
+| KV | Policy | D | B | P | Fresh | C1 | C2 | Q | W |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| BF16 | R0 | 24 | 24 | 24 | 24 | 24 | 24 | 24 | 0 |
+| BF16 | R1 | 24 | 24 | 24 | 24 | 24 | 24 | 24 | 0 |
+| NVFP4 | R0 | 24 | 19 | 23 | 19 | 19 | 19 | 19 | 5 |
+| NVFP4 | R1 | 24 | 19 | 23 | 19 | 19 | 19 | 19 | 5 |
+
+| KV | Policy | Q / 6 | W / 6 |
+| --- | --- | --- | --- |
+| BF16 | R0 | 6 | 2 |
+| BF16 | R1 | 6 | 2 |
+| NVFP4 | R0 | 5 | 0 |
+| NVFP4 | R1 | 5 | 0 |
+
+| Paired comparison | Metric | Difference (pp) | Exploratory 95% interval (pp) |
+| --- | --- | --- | --- |
+| K0_R1-R0 | Q | 0.00 | 0.00 / 0.00 |
+| K0_R1-R0 | W | 0.00 | 0.00 / 0.00 |
+| K1_R1-R0 | Q | 0.00 | 0.00 / 0.00 |
+| K1_R1-R0 | W | 0.00 | 0.00 / 0.00 |
+| R0_K1-K0 | Q | -20.83 | -33.33 / -8.33 |
+| R0_K1-K0 | W | 20.83 | 8.33 / 37.50 |
+| R1_K1-K0 | Q | -20.83 | -33.33 / -8.33 |
+| R1_K1-K0 | W | 20.83 | 8.33 / 37.50 |
+
+The family-stratified paired task bootstrap jointly resamples a task’s four conditions over 10,000 draws, seed 61022018. Intervals are exploratory pointwise percentile 95%. Zero R1−R0 Q/W differences and intervals here leave differences on other tasks unresolved. B/C1/C2 success sets coincide in the measured P1/P2 samples, so added continuation discrimination was not observed here. P0 synthetic counterexamples separately test discrimination of operational-state faults.
+
+</details>
+
+## Costs, KV storage and technical scope
+
+| KV | Policy | Requests | Input tokens | Output tokens | Rejections | Episode wall s |
+| --- | --- | --- | --- | --- | --- | --- |
+| BF16 | R0 | 168 | 323375 | 10953 | 0 | 164.144812115 |
+| BF16 | R1 | 168 | 323375 | 10953 | 0 | 164.157640174 |
+| NVFP4 | R0 | 186 | 369881 | 11568 | 0 | 179.978763365 |
+| NVFP4 | R1 | 206 | 439813 | 13730 | 15 | 213.922486411 |
+
+NVFP4 R0→R1 increases input by 18.91%, output by 18.69% and episode wall by 18.86%. The table includes all 24 successes and failures. Cost/Q and cost/W divide these total costs by Q/W successes; zero successes gives undefined. Input and output are shown separately because their computational costs differ.
+
+P1 records 180 DEV requests and six TECH attempts (four complete/two cancelled); P2 records 728 HOLDOUT and three complete TECH responses. Totals are 917 attempts/915 complete responses and an observed output lower bound of 57987 tokens. Actual engine output for the two cancellations remains null. P2 HOLDOUT input/output is 1,456,444/47,204; TECH is 2,901/39. Worker wall 439.692244164 + 855.069382600 = 1294.761626764 seconds includes loading, compilation, failures and shutdown and overlaps episode wall. New editorial CPU verification cost is recorded separately.
+
+The approximately 4 GiB KV pool holds 29,120 BF16 token slots or 103,552 NVFP4 slots (about 3.556×). Actual pools are 4,293,918,720/4,294,508,544 bytes, at 147,456/41,472 bytes per token. Weights and temporary execution memory are outside this slot calculation. Technical receipts retain packed uint8 data, FP8 block scales, storage/reads across 36 layers and finite attention outputs. This compares configurations including vLLM 0.32.0, FlashInfer 0.7.0.post1, xgrammar 0.2.8 and their actual kernel paths. Failed attempts and EngineCore force-kill/semaphore shutdown warnings remain in the evidence.
 
 ## Reproduction, sources and conclusion
 
@@ -60,6 +157,12 @@ Actual approximately4GiB pools: BF16 4293918720B,147456B/token,29120slots; NVFP4
 python3 -B cases/018-agent-state-recovery/publication/run_checks.py --output /tmp/case018-public-check-new --tests
 ```
 
-The public archive restores120 model endpoints and26 P0 synthetic traces, replayed with phase-specific frozen sources. ReferenceState transitions, protection, continuations and SSE assembly are independent; strict parser, serialization, public builder and wire rendering are shared. Stored booleans are comparison targets, not verdict inputs. Prior tokenizer re-encoding receipts are reused; this CPU path loads no model/tokenizer/SDK. This is same-machine clean-copy validation, not external human or GPU reproduction.
+Use Python 3.12+ with the standard library and a fresh output directory to replay saved records without a model download.
 
-We observed an association between current quantity re-observation and final-report consistency in stored trajectories. We do not conclude that rereading caused correctness or that NVFP4 improved memory. Forced reread, new policies and P3 model experiments are NOT_RUN. This independently adapts recovery-followed-by-action evaluation to small tools; it does not reproduce the full GUI/on-policy paper. [SOURCE_MAP](SOURCE_MAP.md) · [REUSE_MAP](REUSE_MAP.md) · [NOTICE](NOTICE.md) · [Reproduction](REPRODUCE.md).
+CPU replay recalculates transitions, observations and verdicts for 120 model episodes from public evidence. The 26 P0 synthetic traces are a separate test set. Phase-specific frozen sources are used; ReferenceState, protection, continuations and SSE assembly are independently implemented, while strict parser/serialization/public builder/wire rendering are shared. Stored booleans are comparison targets for recalculated verdicts. Original tokenizer re-encoding uses retained receipts. A local public-only copy and GitHub-hosted Ubuntu execution have passed.
+
+[CPU record replay · main](https://github.com/Munsik-Kim/inference-lab/actions/workflows/case018-checks.yml?query=branch%3Amain)
+
+Direct work comprises the inventory/operation ledger, compensation and release APIs, strict parser, completion guard, pre-generation observation tracking, separate state/continuation audits, posthoc quantity analysis and public tools. Qwen, vLLM, FlashInfer KV kernels and xgrammar come from upstream.
+
+The three error types and 24 synthetic tasks show failures in this environment. We independently adapt post-recovery evaluation to small tools; [SOURCE_MAP](SOURCE_MAP.md) explains the differences from the original GUI/on-policy setting. [REUSE_MAP](REUSE_MAP.md) and [NOTICE](NOTICE.md) document reuse, Codex assistance and licenses; [REPRODUCE](REPRODUCE.md) gives the replay details.

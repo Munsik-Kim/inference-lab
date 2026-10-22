@@ -1,20 +1,36 @@
-# Case018 — State Recovery and Final-Report Consistency
+# Case018 — Checking inventory recovery and completion reports
 
-We built a small tool environment for recovering wrong-target inventory changes, duplicate transfers and partial debits. The evaluator checks the terminal state, validation actually observed by the model, final quantities and two fixed CPU continuations. These continuations are evaluator programs, not autonomous follow-up work by the model.
+We asked an AI agent to undo wrong-target inventory changes, duplicate transfers and partial debits. We checked the recovered state separately from its completion report.
 
-On24 new synthetic HOLDOUT tasks, both policies scored Q24/W0 with BF16 KV and Q19/W5 with native NVFP4 KV. The freshness guard blocked15 ineligible final attempts across five NVFP4 episodes but recovered no Q/W successes; output cost increased18.69%. Weights were BF16 in both configurations.
+We built an inventory/operation-ledger environment and auditing tools that track saved values, protection of unrelated records, validation actually received after changes, and the final answer. After recovery, the evaluator runs two fixed follow-up programs and compares them with the same programs from a clean checkpoint.
 
-| KV | Policy | Q /24 | W /24 | Requests | Input tokens | Output tokens | Guard rejections | Episode wall s |
-|---|---|---:|---:|---:|---:|---:|---:|---:|
-| BF16 | R0 | 24 | 0 | 168 | 323375 | 10953 | 0 | 164.144812115 |
-| BF16 | R1 | 24 | 0 | 168 | 323375 | 10953 | 0 | 164.157640174 |
-| NVFP4 | R0 | 19 | 5 | 186 | 369881 | 11568 | 0 | 179.978763365 |
-| NVFP4 | R1 | 19 | 5 | 206 | 439813 | 13730 | 15 | 213.922486411 |
+**State and follow-up checks (Q)** require restored business values, protection throughout recovery and correct results from both follow-up programs. **Validation and correct report (W)** additionally requires an accepted, correct completion response after observing successful current validation.
 
-Q checks business restoration, protection throughout recovery and the two fixed continuations. W additionally requires an accepted, correct final answer and observed current successful validation. This is exploratory measurement on a small synthetic sample; metric rankings differ. It does not establish KV quality equivalence, serving speed or internal memory mechanisms.
+| KV storage | Completion policy | State and follow-up checks (Q) | Validation and correct report (W) |
+| --- | --- | --- | --- |
+| BF16 | Basic acceptance (R0) | 24/24 | 0/24 |
+| BF16 | Current-validation guard (R1) | 24/24 | 0/24 |
+| NVFP4 | Basic acceptance (R0) | 19/24 | 5/24 |
+| NVFP4 | Current-validation guard (R1) | 19/24 | 5/24 |
 
-Posthoc analysis confirmed that all76 Q1/W0 episodes reported their first observed quantities. Among91 accepted finals, all13 with observed current record quantities matched the terminal quantity map; all78 without them differed. The13 include three accurate reports of incorrectly recovered states, so reporting consistency is not successful recovery. Five guard-limited episodes have no accepted-final comparison. This is an association, not a forced-reread intervention.
+Each row uses the same 24 synthetic tasks, producing 96 episodes in total. Qwen weights stay BF16 in both configurations. KV stores the keys and values used for attention over previous tokens.
 
-[Results and method](REPORT.md) · [Model-free CPU replay](REPRODUCE.md) · [Posthoc definition](publication/analysis/DEFINITION.json) · [120-row CSV](publication/summary/episode_ledger.csv) · [NOTICE](NOTICE.md)
+With BF16 KV, both policies passed state and follow-up checks in 24/24 tasks, but 0/24 also met validation and correct-report requirements. The NVFP4 KV counts were 19/24 and 5/24. Agents repeatedly restored inventory while reporting the quantities they had read at the start.
 
-Direct contributions: synthetic environment, strict parser, completion guard, observation tracking, independent state replay and diagnostic/publication tools. Qwen, vLLM/FlashInfer KV kernels and xgrammar are upstream. P0 is CPU contract testing, P1 is DEV24, P2 is HOLDOUT96. This publication added zero GPU/model requests.
+The current-validation guard blocked ineligible completion responses without increasing recovered or fully verified completions. NVFP4 output tokens increased by 18.69%.
+
+[Recorded episodes](REPORT.md#recorded-episodes) · [Results and method](REPORT.md) · [CPU record replay](REPRODUCE.md)
+
+## Replay the records
+
+```bash
+python3 -B cases/018-agent-state-recovery/publication/run_checks.py --output /tmp/case018-public-check-new --tests
+```
+
+Use Python 3.12+ and the standard library to replay records into a fresh output directory. No model download is needed.
+
+[CPU record replay · main](https://github.com/Munsik-Kim/inference-lab/actions/workflows/case018-checks.yml?query=branch%3Amain)
+
+Direct work comprises the inventory/operation ledger, compensation and release APIs, strict parser, completion guard, pre-generation observation tracking, separate state/continuation audits, posthoc quantity analysis and public tools. Qwen, vLLM, FlashInfer KV kernels and xgrammar come from upstream.
+
+[Posthoc definition](publication/analysis/DEFINITION.json) · [120-row ledger](publication/summary/episode_ledger.csv) · [Sources and licensing](NOTICE.md)

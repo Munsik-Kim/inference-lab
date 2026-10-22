@@ -1,16 +1,20 @@
-# Case018 — 상태 복구와 최종 보고는 함께 맞을까? — CPU replay
+# Case018 — 재고 복구와 완료 보고를 따로 검사했습니다 — CPU 기록 재생
 
 ```bash
 python3 -B cases/018-agent-state-recovery/publication/run_checks.py --output /tmp/case018-public-check-new --tests
 ```
 
-Python3.12+ 표준 라이브러리만 사용합니다. 새 외부 output을 요구하며 기존 output·연구 경로에는 쓰지 않습니다. 대략 RAM1GiB, 복원용 disk1GiB 여유를 권장합니다. 모델·tokenizer·Torch/vLLM/xgrammar 설치/다운로드가 필요 없습니다. GPU 경로는 이번 명령에 없습니다.
+Python 3.12+ 표준 라이브러리만 사용합니다. 존재하지 않는 새 외부 output 경로를 지정하세요. 복원용 disk 1 GiB와 RAM 약 1 GiB 여유를 권장합니다. 모델·tokenizer 다운로드나 Torch/vLLM/xgrammar 설치가 필요하지 않습니다.
 
-1. 공개 manifest·XZ signature/전체 member 경로·중복·regular file·bytes/hash·alias coverage를 검사하고 새 폴더에 복원합니다.
-2. 각 phase의 실제 frozen source로 P0 26/P1 24/P2 96 endpoint·사전 관측·후속·종료·예산·raw SSE/IDs/usage를 독립 재생합니다.
-3. 실제 token 합계·취소 결측·worker 비용·등록 paired bootstrap을 대조합니다.
-4. 전체120행 새 사후 진단·표·선택 원문 excerpt·SVG를 재생성하고 공개 summary와 정확히 대조합니다.
-5. --tests는 새 publication 경계17개를 검사합니다. 과거37/48/59개 검사 이력은 원 receipt 재사용이며 이번 전체 재실행이라고 쓰지 않습니다.
+1. manifest·XZ 전체 경로·regular file·중복·bytes/hash·alias coverage를 검사하고 복원합니다.
+2. 각 phase의 frozen source로 120개 모델 endpoint와 별도 P0 합성 trace 26개를 재생합니다.
+3. 상태·관측·후속 절차·종료·예산·SSE/IDs/usage·비용·paired bootstrap을 다시 계산합니다.
+4. 기존 120행 사후 진단·선택 원문·SVG를 재생성해 공개 요약과 대조합니다.
+5. `--tests`는 publication 경계 검사 17개를 실행합니다. 과거 37/48/59개 이력은 원 receipt로 보존합니다.
+
+로컬 공개 사본 검사와 GitHub-hosted Ubuntu의 CPU 기록 재생이 통과했습니다. 아래 링크에서 현재 main의 run과 receipt를 확인할 수 있습니다. 이 명령의 대상은 저장된 실행 기록이며, 과거 실제 tokenizer 재인코딩·KV/grammar 기술 검증은 보존된 receipt에 연결합니다.
+
+[CPU 기록 재생 · main](https://github.com/Munsik-Kim/inference-lab/actions/workflows/case018-checks.yml?query=branch%3Amain)
 
 [Original mapping](publication/provenance/original_mapping.json) · [Public manifest](publication/PUBLIC_MANIFEST.json) · [Archive](publication/data/original-evidence.tar.xz) · [Redactions](publication/provenance/redactions.json)
 
