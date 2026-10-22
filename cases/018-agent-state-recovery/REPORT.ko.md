@@ -1,58 +1,155 @@
-# Case018 — 상태 복구와 최종 보고는 함께 맞을까?
+# Case018 — 재고 복구와 완료 보고를 따로 검사했습니다
 
 ## 질문과 구현
 
-잘못 옮긴 재고, 두 번 처리한 이동, 일부만 차감한 기록을 복구하는 작은 도구 환경을 구현했습니다. 종료 상태뿐 아니라 모델이 실제 받은 검증 결과·최종 수량 보고와 두 고정 CPU 후속 절차를 함께 검사합니다. 후속 절차는 평가기가 실행하며 모델의 자율 후속 업무가 아닙니다.
+잘못 옮긴 재고, 두 번 처리한 이동, 일부만 차감한 기록을 AI가 되돌리게 했습니다. 재고가 올바르게 복구됐는지와 마지막 보고까지 맞는지를 따로 검사했습니다.
 
-창고·상품 수량과 처리 원장을 함께 복구합니다. A는 잘못 바꾼 대상을 되돌리고 원래 작업은 후속 절차에서 수행합니다. B는 정상1회는 보존하고 중복1회만 보상합니다. C는 부분 차감을 되돌립니다. 숨은 checkpoint·정답 script를 모델에 주지 않습니다. validator는 공개 불변식만 검사합니다.
-
-## 방법과 사전 계약
-
-K0=BF16 KV, K1=native NVFP4 KV; 양쪽 Qwen3-4B-Instruct-2507 BF16 weights, revision cdbee75f17c01a7cc42f958dc650907174af0554. R0는 형식에 맞는 final을 수용하고 사후 채점하며 R1은 현재 scope/digest/version의 성공 validation을 final 전에 실제 받았는지만 확인합니다. final 수량 정답을 검사하거나 자동 복구하지 않습니다. 공통 grammar G, strict parser, API8, greedy, 요청16/출력512·episode8192/문맥24576/180·900초 예산입니다. 모델 성공수 확대 임계값은 원 계획에서 null입니다.
-
-D는 recovered:true 선언(거절된 final도 포함), B는 업무 값 복원, P는 전 과정 보호, Fresh는 현재 성공 검증의 사전 관측입니다. Q=B∧P∧C1∧C2, W=Q∧accepted final∧정확한 final∧Fresh입니다. accepted final이 없을 때도 terminal Q를 계산하고 W0이며 Fresh는 마지막 생성 전 진단입니다. 예: 수량은 복원됐으나 최초 수량을 final에 쓰면 Q1/W0입니다.
+재고·처리 원장 환경과 검사 도구를 구현해 저장된 값, 무관 기록의 보호, 수정 뒤 실제 받은 검증 결과와 최종 답을 추적했습니다. 복구가 끝나면 평가기가 두 가지 정해진 후속 절차를 실행하고 정상 checkpoint의 결과와 비교합니다.
 
 ## HOLDOUT 결과와 짝 비교
 
-신규 합성 HOLDOUT24에서 BF16 KV는 두 정책 모두 Q24/W0, native NVFP4 KV는 Q19/W5였습니다. 최신 검증 가드는 NVFP4의 부적격 final 15시도/5episode 수용을 막았지만 Q/W 회복은0이었고 출력 비용은18.69% 늘었습니다. 양쪽 가중치는 BF16 고정입니다.
+**상태·후속 검사 통과(Q)**는 저장된 업무 값이 복구 목표와 같고, 복구 과정의 보호 계약과 두 후속 절차를 모두 만족한 경우입니다. **검증·완료 보고까지 충족(W)**은 여기에 최신 성공 검증의 실제 관측과 시스템이 수용한 정확한 완료 응답을 더합니다.
 
-| KV | Policy | Q /24 | W /24 | Requests | Input tokens | Output tokens | Guard rejections | Episode wall s |
-|---|---|---:|---:|---:|---:|---:|---:|---:|
-| BF16 | R0 | 24 | 0 | 168 | 323375 | 10953 | 0 | 164.144812115 |
-| BF16 | R1 | 24 | 0 | 168 | 323375 | 10953 | 0 | 164.157640174 |
-| NVFP4 | R0 | 19 | 5 | 186 | 369881 | 11568 | 0 | 179.978763365 |
-| NVFP4 | R1 | 19 | 5 | 206 | 439813 | 13730 | 15 | 213.922486411 |
+| KV 저장 | 완료 응답 정책 | 상태·후속 검사 통과 (Q) | 검증·완료 보고까지 충족 (W) |
+| --- | --- | --- | --- |
+| BF16 | 기본 수용 (R0) | 24/24 | 0/24 |
+| BF16 | 최신 검증 가드 (R1) | 24/24 | 0/24 |
+| NVFP4 | 기본 수용 (R0) | 19/24 | 5/24 |
+| NVFP4 | 최신 검증 가드 (R1) | 19/24 | 5/24 |
 
-Q는 업무 값·전 과정 보호·두 고정 후속 절차의 적합성이고, W는 여기에 정확한 accepted final과 최신 성공 검증 관측을 더합니다. 작은 합성 표본의 탐색 측정이며 지표별 순위가 달랐습니다. KV 품질 동등성·서빙 속도·모델 내부 기억의 원인을 증명하지 않습니다.
+각 행은 같은 24개 합성 과제이며 총 96개 episode입니다. 양쪽 Qwen 가중치는 BF16으로 고정했습니다. KV는 앞선 토큰의 attention 계산에 쓰는 key/value 저장 공간입니다.
 
-24task×4조건=96episode이며 독립 단위는24task입니다. A/B/C 각8개, 4조건을 함께 유지하는 family-stratified paired bootstrap10000/seed61022018의 pointwise percentile95% 구간입니다. R1−R0 Q/W는 두 KV에서0pp [0,0]이며 일반 동등성 증명이 아닙니다. K1−K0 Q는 −20.83pp [−33.33,−8.33], W는 +20.83pp [8.33,37.50]입니다. B/C1/C2 성공 집합이 P1/P2 실제 표본에서 같아 후속 절차의 추가 판별력은 관측되지 않았습니다. P0 합성 반례는 별도 평가기 검증입니다.
+BF16 KV는 두 정책 모두 24/24에서 상태·후속 검사를 통과했지만, 검증·정확한 완료 보고까지 충족한 수는 0/24였습니다. NVFP4 KV는 각각 19/24, 5/24였습니다. 재고를 복구한 뒤에도 처음 읽은 수량을 마지막 답에 적은 사례가 반복됐습니다.
+
+최신 검증 가드는 완료 응답 수용을 차단했지만, 복구·정확한 완료 건수는 늘리지 못했습니다. NVFP4의 출력 토큰은 18.69% 늘었습니다.
+
+## 원문 사건
+
+### A00: 처음 조회·복구 후 저장·최종 보고
+
+BF16 사례에서는 재고가 43 / 28로 돌아왔지만 보고에는 37 / 34가 남았습니다. 표는 잘못 변경된 두 기록의 수량입니다. 복구 목표는 43 / 28였습니다.
+
+| 시점 | BF16 KV · 기본 수용 | NVFP4 KV · 기본 수용 |
+| --- | --- | --- |
+| 처음 조회 | 37 / 34 | 37 / 34 |
+| 복구 후 저장 | 43 / 28 | 43 / 28 |
+| 완료 응답에 적은 수량 | 37 / 34 | 43 / 28 |
+
+`HOLDOUT-A00_K0_R0`: 처음 조회(e000) → 보상(e003) → 활성 처리 해제(e004) → 현재 검증 valid:true(e005) → 완료 응답. 모델은 검증 결과를 실제 받았으나 보고 수량은 처음 값이었습니다. Q=1/Fresh=1/W=0입니다.
+
+`HOLDOUT-A00_K1_R0`: 같은 최초 입력에서 보상·해제 후 현재 수량을 다시 조회(e005) → 검증(e006) → 현재 수량 보고로 W=1입니다. 정확한 event ID·모델 원문·생성 전 관측 목록은 아래 선택 원문 파일에서 확인할 수 있습니다.
+
+공개 validator는 비음수 재고·보호 필드·수량 보존·원장 참조를 확인하고, 전체 현재 수량을 응답에 넣지는 않습니다. 별도 판정기가 마지막 답의 수량을 저장된 수량과 비교합니다. 따라서 최신 성공 검증을 받은 것(Fresh)과 현재 수량을 다시 본 것은 다른 관측입니다.
+
+[BF16 A00 원문](publication/summary/selected/HOLDOUT-A00_K0_R0.json) · [NVFP4 A00 원문](publication/summary/selected/HOLDOUT-A00_K1_R0.json)
+
+### 가드가 확인·차단한 것
+
+**확인:** 모델이 현재 scope/digest/version에 맞는 성공 validation 결과를 실제 받은 뒤 완료 응답을 생성했는지 확인합니다.
+
+**차단:** NVFP4 R1의 5개 episode에서 부적격 완료 응답 15시도를 수용하지 않았습니다.
+
+**남은 실패:** 가드는 상태 수리와 최종 수량 비교를 수행하지 않습니다. 해당 궤적의 실패 상태는 회복되지 않았으며 두 KV 모두 R0/R1의 Q와 W가 같았습니다. 시스템이 수용한 완료 응답과 최종 정답 판정은 별도입니다.
+
+### 현재 보고가 맞아도 복구는 틀린 A06/C01
+
+C01 NVFP4의 목표는 62 / 16였지만, 부분 차감을 복구하면서 도착 수량까지 빼 62 / 12를 저장했습니다. R0는 이 현재 수량을 정확히 보고해도 Q=0/Fresh=0/W=0입니다. R1은 같은 실패 상태에서 완료 응답 수용을 세 번 차단했습니다.
+
+A06 NVFP4는 목표 42 / 28 대신 80 / 0를 남겼고 총수량이 10 늘어 보호 계약도 위반했습니다. 종료 수량을 맞게 보고해도 복구 과정의 손상은 남습니다.
+
+[선택 원문과 전체 source pointer](publication/summary/selected/) — 설명용 요약과 원문을 구분합니다.
 
 ## 사후 수량 관측 진단
 
-사후 진단에서 Q1/W0 76개 모두 final 수량이 최초 관측 수량과 같았습니다. accepted final91개 중 현재 수량을 재관측한13개는 종료 수량 map과 일치했고, 재관측하지 않은78개는 달랐습니다. 이13개 중 잘못 복구한 상태를 정확히 보고한3개가 포함돼 보고 일치가 복구 성공을 뜻하지 않습니다. 가드 종료5개는 final 비교 NA입니다. 관련성만 관측했으며 재조회를 강제한 새 실험은 하지 않았습니다.
+기존 실행 기록에서 뒤늦게 조사한 사후 분석입니다. 앞서 본 A00와 Q=1/W=0 사례가 동기였으며 전체 집계 전 [정의·코드·입력 hash](publication/analysis/ANALYSIS_FREEZE.json)를 저장했습니다. 다음 표는 시스템이 수용한 완료 응답 91개를 비교합니다.
 
-| KV | Policy | Accepted / no final | Read0 wrong | Read0 right | Read1 wrong | Read1 right |
-|---|---|---|---:|---:|---:|---:|
+| 현재 수량 재관측 | 종료 수량과 보고 일치 | 불일치 |
+| --- | --- | --- |
+| 있음 | 13 | 0 |
+| 없음 | 0 | 78 |
+
+일치한 13건 중 3건은 **잘못 복구한 상태를 정확히 보고**했습니다. 완료 응답이 수용되지 않은 5개 episode의 수량 비교는 NA로 따로 표시합니다. 상태·후속 검사는 통과했지만 완료 보고까지 충족하지 못한 76개 episode는 모두 처음 관측한 수량을 보고했습니다. 같은 과제를 여러 조건으로 실행한 episode 수입니다.
+
+기존 실행 기록을 나눠 보니 최신 수량 관측과 보고 정확성이 함께 나타났습니다. 행동 경로와 KV 구성도 함께 달랐으므로, 재조회를 강제했을 때 정확성이 얼마나 바뀌는지는 별도 비교 실험에서 확인해야 합니다.
+
+<details>
+<summary>조건별 표와 정확한 관측 정의</summary>
+
+
+현재 수량 재관측은 필요한 모든 record를 실제 전달된 성공 read_records 결과로 확인하고, 이후 그 수량이 변하지 않은 경우입니다. 실패·미전달·부분 조회는 전체 관측으로 세지 않습니다. 수량 변경 후 원복도 이전 관측을 만료시키지만, 수량을 바꾸지 않는 메타데이터 revision은 만료시키지 않습니다. 모든 상태 변경 뒤 조회한 보조 flag도 별도 보존했고 이번 표본에서는 두 flag가 같습니다. flag 판정에는 final 정답이나 checkpoint를 쓰지 않습니다. accepted final 생성 직전 available event ID가 anchor이고, final이 없으면 마지막 실제 생성 직전 관측을 진단합니다. 가드 종료 5건 중 현재 수량 관측은 3건, 미관측은 2건입니다.
+
+| KV | Policy | 수용 / 없음 | No read · mismatch | No read · match | Read · mismatch | Read · match |
+| --- | --- | --- | --- | --- | --- | --- |
 | BF16 | R0 | 24 / 0 | 24 | 0 | 0 | 0 |
 | BF16 | R1 | 24 / 0 | 24 | 0 | 0 | 0 |
 | NVFP4 | R0 | 24 / 0 | 16 | 0 | 0 | 8 |
 | NVFP4 | R1 | 19 / 5 | 14 | 0 | 0 | 5 |
 
-Read0/1은 필요한 모든 공개 record의 현재 수량을 실제 전달된 read_records에서 관측했는지입니다. 마지막 수량 변경 뒤 읽은 값만 유효하며 변경 후 원복도 이전 read를 무효화합니다. 메타데이터만 바뀐 global revision은 수량 관측을 무효화하지 않습니다. 모든 상태 변경 뒤 read라는 더 엄격한 보조 flag도 별도 저장했습니다(이번 실제 표본의 flag는 일치). final의 정답이나 checkpoint를 flag 판정에 쓰지 않습니다. accepted final 전 available ID를 anchor로 하며 final이 없으면 마지막 생성 전 진단, 수량 비교 NA입니다. guard 종료5개 중3개는 현재 수량 관측1,2개는0입니다. 관측0/정확 보고 및 관측1/오보고는 accepted 표본에서 각각0이며 인과 증명이 아닙니다.
+DEV 6개는 별도 분모입니다. BF16 각 6개 중 현재 수량 재관측·정확 보고 2개, 미관측·오보고 4개입니다. NVFP4 R0는 미관측·오보고 6개, R1은 5개와 accepted final 없음 1개입니다. DEV의 Q=1/W=0 18개도 최초 수량을 보고했습니다. Q=1 하위 분석은 실행 결과로 선택된 보조 집계이며 [전체 ledger](publication/summary/quantity_ledger.json)에 보존했습니다.
 
-P1 별도 보조 분석: BF16 각6 중 read1/정확 보고2·read0/오보고4; NVFP4 R0는 read0/오보고6, R1은5와 no final1입니다. P1 Q1/W0 18개도 최초 관측 수량과 일치했습니다. P1/P2 분모를 합치지 않았습니다. Q1 하위 표는 결과로 선택된 조건부 집계이며 [전체 ledger](publication/summary/quantity_ledger.json)에 별도 보존했습니다. 이미 본76개/A00가 분석 동기이며 새 전체 집계 전 [정의·등록](publication/analysis/ANALYSIS_FREEZE.json)을 저장했습니다. 결과 미관측 사전등록이 아닙니다.
+[정확한 정의](publication/analysis/DEFINITION.json) · [120행 전체 근거](publication/summary/quantity_ledger.json)
 
-## 원문 사건
+</details>
 
-A00 K0: 보상6/6·release 후 실제 x/y43/28, 현재 valid:true를 관측했지만 final37/34로 Q1/Fresh1/W0입니다. K1은 보상 뒤 read43/28→검증→final로 W1입니다. A06 K1은 잘못된40/30 보상으로 x/y80/0·총량+10, P0/Q0입니다. 이후 현재 값을 정확히 보고해도 복구 성공이 아닙니다. C01 K1은 부분 차감을 되돌릴 때 도착도4를 빼 s/d62/12로 오복구했습니다. R0는 이 현재 값을 정확히 보고했지만 Q0/Fresh0/W0, R1은 같은 잘못된 상태에서 세 final을 거절받았습니다. 원문·관측 ID·종료 상태는 [선택 사건](publication/summary/selected/)에 있고 전체 원기록은 archive에 보존했습니다. 요약은 raw 자체가 아닙니다.
+## 방법과 사전 계약
+
+잘못된 대상(A)·중복 처리(B)·부분 차감(C)을 각 8개씩 만든 24개 합성 과제입니다. A는 잘못 바꾼 상품을 되돌리고, B는 정상 1회를 보존한 채 추가 1회만 보상하며, C는 실행된 출발 수량 차감만 되돌립니다. 수량 보상과 활성 처리 해제는 별도 API입니다.
+
+평가기의 첫 후속 절차는 A/C에서 남은 정상 이동, B에서 다음 1개 이동을 실행한 뒤 조회·검증합니다. 둘째 절차는 등록된 원래 이동을 다시 전달하고 다음 1개 이동을 실행합니다. B에서는 이미 완료한 이동이 중복 방지로 다시 적용되지 않아야 합니다. 각 절차는 독립 상태 복사본에서 공개 조회로 현재 revision을 얻어 실행하고, 정상 checkpoint의 같은 프로그램과 업무 값·원장·중복 효과·보호를 비교합니다.
+
+Qwen3-4B-Instruct-2507 revision `cdbee75f17c01a7cc42f958dc650907174af0554`와 BF16 weights를 공통 사용했습니다. K0=BF16 KV, K1=native NVFP4 KV입니다. R0는 형식에 맞는 final을 수용하고 사후 채점하며, R1은 최신 성공 검증의 사전 관측을 host에서 확인합니다. 공통 system은 두 정책에 모두 마지막 변경 뒤 현재 검증을 요구했습니다. 공통 grammar G·strict parser·8개 API·greedy, 요청 16회/요청 출력 512/episode 출력 8,192/문맥 24,576 tokens, 요청 180초/episode 900초입니다. 거절·오류·재생성도 같은 예산을 쓰며 모델 성공수 확대 임계값은 원 계획에서 null입니다.
+
+B=업무 값 복원, P=전 과정 보호, C1/C2=두 고정 후속 절차, Q=B∧P∧C1∧C2입니다. Fresh는 현재 성공 검증의 사전 관측이고 W=Q∧수용된 정확한 final∧Fresh입니다. final 내용은 task/recovered·전체 수량 map·검증 event ID를 검사합니다. D는 거절된 final을 포함한 recovered:true 선언입니다. accepted final이 없어도 종료 상태에서 Q를 계산하고 W=0이며 Fresh는 마지막 실제 생성 직전 관측 진단입니다.
+
+공개 validator는 비음수 재고·보호 필드·수량 보존·원장 참조를 확인하고, 전체 현재 수량을 응답에 넣지는 않습니다. 별도 판정기가 마지막 답의 수량을 저장된 수량과 비교합니다. 따라서 최신 성공 검증을 받은 것(Fresh)과 현재 수량을 다시 본 것은 다른 관측입니다.
+
+<details>
+<summary>세부 지표·별도 DEV·짝 비교 구간</summary>
+
+
+| KV | Policy | D | B | P | Fresh | C1 | C2 | Q | W |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| BF16 | R0 | 24 | 24 | 24 | 24 | 24 | 24 | 24 | 0 |
+| BF16 | R1 | 24 | 24 | 24 | 24 | 24 | 24 | 24 | 0 |
+| NVFP4 | R0 | 24 | 19 | 23 | 19 | 19 | 19 | 19 | 5 |
+| NVFP4 | R1 | 24 | 19 | 23 | 19 | 19 | 19 | 19 | 5 |
+
+| KV | Policy | Q / 6 | W / 6 |
+| --- | --- | --- | --- |
+| BF16 | R0 | 6 | 2 |
+| BF16 | R1 | 6 | 2 |
+| NVFP4 | R0 | 5 | 0 |
+| NVFP4 | R1 | 5 | 0 |
+
+| 짝 비교 | 지표 | 차이 (pp) | 탐색적 95% 구간 (pp) |
+| --- | --- | --- | --- |
+| K0_R1-R0 | Q | 0.00 | 0.00 / 0.00 |
+| K0_R1-R0 | W | 0.00 | 0.00 / 0.00 |
+| K1_R1-R0 | Q | 0.00 | 0.00 / 0.00 |
+| K1_R1-R0 | W | 0.00 | 0.00 / 0.00 |
+| R0_K1-K0 | Q | -20.83 | -33.33 / -8.33 |
+| R0_K1-K0 | W | 20.83 | 8.33 / 37.50 |
+| R1_K1-K0 | Q | -20.83 | -33.33 / -8.33 |
+| R1_K1-K0 | W | 20.83 | 8.33 / 37.50 |
+
+family-stratified paired task bootstrap은 10,000회, seed 61022018로 한 task의 네 조건을 함께 재표집합니다. 표는 pointwise percentile 95% 탐색 구간입니다. R1−R0 Q/W의 관측 차이와 구간이 0이어도 다른 과제에서의 차이는 열려 있습니다. B/C1/C2의 성공 집합이 P1/P2 실제 표본에서 같아 이번에는 후속 절차의 추가 판별력이 관측되지 않았습니다. 활성 처리 상태를 구별하는 P0 합성 반례는 별도 평가기 검사입니다.
+
+</details>
 
 ## 비용·KV 저장·기술 한계
 
-NVFP4 R0→R1:186→206 requests, 입력369881→439813(+18.91%), 출력11568→13730(+18.69%), episode wall179.978763365→213.922486411초(+18.86%). Q19/W5는 그대로입니다. 실패 포함 전체24개 비용이며 성공만의 평균 latency·과금·전력이 아닙니다. 성공0이면 비용/성공은 undefined입니다. 입력과 출력을 같은 연산 비용으로 합치지 않습니다.
+| KV | Policy | Requests | Input tokens | Output tokens | 수용 차단 | Episode wall s |
+| --- | --- | --- | --- | --- | --- | --- |
+| BF16 | R0 | 168 | 323375 | 10953 | 0 | 164.144812115 |
+| BF16 | R1 | 168 | 323375 | 10953 | 0 | 164.157640174 |
+| NVFP4 | R0 | 186 | 369881 | 11568 | 0 | 179.978763365 |
+| NVFP4 | R1 | 206 | 439813 | 13730 | 15 | 213.922486411 |
 
-P1 DEV180+TECH6 attempts(4완전/2취소), P2 HOLDOUT728+TECH3완전입니다. 누적917 attempts/915완전, 관측 출력 하한57987 tokens이며 취소2건의 엔진 생성 token은 null입니다. P2 HOLDOUT 입력1456444/출력47204, TECH입력2901/출력39입니다. worker439.692244164+855.069382600=1294.761626764초는 실패 기술 시도·load/compile/종료를 포함하고 episode wall과 겹칩니다. CPU 공개 분석 비용은 별도 receipt이며 worker에 더하지 않습니다.
+NVFP4 R0→R1에서 입력은 +18.91%, 출력은 +18.69%, episode wall은 +18.86%였습니다. 표는 성공·실패 24회 전체 비용입니다. 비용/Q와 비용/W는 이 전체 비용을 각각 Q/W 성공 수로 나눈 값이며 성공 0이면 undefined입니다. 입력과 출력은 계산 비용이 달라 따로 표시합니다.
 
-실제 약4GiB pool: BF16 4293918720B·147456B/token·29120slots, NVFP4 4294508544B·41472B/token·103552slots. packed uint8+FP8 block scale와36층 write/read/유한 attention 출력의 과거 기술 receipt를 보존했습니다. 약3.556배는 token-slot 수용량이지 전체 VRAM 절감·single100K context·속도 우위가 아닙니다. vLLM0.32.0/FlashInfer0.7.0.post1/xgrammar0.2.8이며 KV 반올림만이 아니라 커널 경로도 다른 구성 비교입니다. 엔진 force-kill/semaphore 경고와 실패 시도도 숨기지 않았습니다. 새 profiling/GPU/모델 요청은0입니다.
+P1 DEV 180회와 TECH 6시도(4완전/2취소), P2 HOLDOUT 728회와 TECH 3완전 응답을 기록했습니다. 누적 917시도/915완전 응답, 관측 출력 하한 57987 tokens입니다. 과거 취소 2건의 실제 엔진 생성 token은 null로 남습니다. P2 HOLDOUT 입력 1,456,444/출력 47,204, TECH 입력 2,901/출력 39입니다. worker 439.692244164 + 855.069382600 = 1294.761626764초에는 적재·컴파일·실패·종료가 포함되며 episode wall과 겹칩니다. 새 CPU 편집 검증 비용은 별도 receipt에 기록합니다.
+
+약 4 GiB KV 저장 공간의 토큰 슬롯은 BF16 29,120개에서 NVFP4 103,552개로 늘었습니다(약 3.556배). 실제 pool은 4,293,918,720/4,294,508,544 bytes, 토큰당 147,456/41,472 bytes입니다. 모델 가중치와 실행 임시 메모리는 이 슬롯 계산에 포함되지 않습니다. packed uint8+FP8 block scales, 36층 저장·읽기·유한 attention 출력의 기술 receipt를 보존했습니다. vLLM 0.32.0/FlashInfer 0.7.0.post1/xgrammar 0.2.8과 각 KV의 실제 커널 경로를 포함한 구성 비교입니다. 실패 시도와 EngineCore force-kill/semaphore 종료 경고도 원자료에 있습니다.
 
 ## 재현·출처·결론
 
@@ -60,6 +157,12 @@ P1 DEV180+TECH6 attempts(4완전/2취소), P2 HOLDOUT728+TECH3완전입니다. �
 python3 -B cases/018-agent-state-recovery/publication/run_checks.py --output /tmp/case018-public-check-new --tests
 ```
 
-공개 archive에서120 model endpoint와P0 26 synthetic trace를 phase별 frozen source로 독립 재생합니다. ReferenceState 상태 전이·보호·후속·SSE는 별도 구현이고 strict parser/serialization/public builder/wire rendering은 공유합니다. 저장 bool을 판정 입력으로 쓰지 않습니다. 원 tokenizer 재인코딩 receipt는 재사용하며 이번 CPU 경로에서 모델·tokenizer·SDK를 로드하지 않습니다. same-machine clean-copy 검산이며 외부 사람/GPU 독립 재현이 아닙니다.
+Python 3.12+ 표준 라이브러리, 새 output 경로를 사용합니다. 모델 다운로드 없이 저장된 기록을 재생합니다.
 
-현재 수량 재관측과 최종 보고 정확성의 연관을 저장 궤적에서 사후 분석했습니다. 재조회가 정확성을 일으켰거나 NVFP4가 기억을 개선했다는 결론은 내리지 않습니다. read 강제·새 정책·P3 모델 실험은 NOT_RUN입니다. 원문의 복구 뒤 행동 평가 원리를 작은 도구 환경에 응용했으며 GUI/on-policy 논문 전체 재현이 아닙니다. [SOURCE_MAP](SOURCE_MAP.md) · [REUSE_MAP](REUSE_MAP.md) · [NOTICE](NOTICE.md) · [재현](REPRODUCE.ko.md).
+공개 원자료를 CPU에서 재생해 120개 모델 episode의 상태 전이·관측·최종 판정을 다시 계산합니다. P0 합성 trace 26개는 별도 검사 대상입니다. 각 phase의 frozen source를 쓰며 ReferenceState·보호·후속 절차·SSE 조립은 별도 구현이고 strict parser/serialization/public builder/wire rendering은 공유합니다. 저장 bool은 재계산 결과의 대조 대상으로만 사용합니다. 원 tokenizer 재인코딩은 과거 receipt를 참조합니다. 로컬 공개 사본 검사와 GitHub-hosted Ubuntu 실행이 통과했습니다.
+
+[CPU 기록 재생 · main](https://github.com/Munsik-Kim/inference-lab/actions/workflows/case018-checks.yml?query=branch%3Amain)
+
+직접 구현한 부분은 재고·처리 원장, 보상·처리 해제 API, 엄격한 parser, 완료 가드, 생성 전 관측 추적, 별도 상태·후속 절차 감사, 사후 수량 분석과 공개 도구입니다. Qwen 모델·vLLM·FlashInfer KV 커널·xgrammar는 upstream을 사용했습니다.
+
+이 세 오류 유형·24개 합성 과제는 이 환경에서 어떤 실패가 생기는지 보여줍니다. 원문의 복구 뒤 행동 평가 원리를 작은 도구 환경에 독립 적용했으며, GUI/on-policy 원문과의 차이는 [SOURCE_MAP](SOURCE_MAP.md)에 기록했습니다. 구현 재사용·Codex 지원·라이선스는 [REUSE_MAP](REUSE_MAP.md)과 [NOTICE](NOTICE.md), 재현 상세는 [REPRODUCE](REPRODUCE.ko.md)에서 확인할 수 있습니다.

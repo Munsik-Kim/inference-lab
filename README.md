@@ -48,11 +48,11 @@ BF16 KV/free output completed 5/8 DEV tasks, below the 6/8 expansion criterion. 
 [Results and recorded episodes](cases/017-agent-contract-cost-bench/REPORT.md) · [CPU replay](cases/017-agent-contract-cost-bench/REPRODUCE.md) · [Protocol deviation](cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.md)
 
 <!-- case018-entry -->
-## Case018 — State Recovery and Final-Report Consistency
+## Case018 — Checking inventory recovery and completion reports
 
-Built an evaluator for wrong-target, duplicate and partial inventory recovery, checking saved state and final quantities. On24 new synthetic tasks, both policies scored Q24/W0 with BF16 KV and Q19/W5 with NVFP4 KV. The freshness guard blocked ineligible finals without improving repair or correct reporting. Quantity re-observation is a separate posthoc observational analysis.
+Built an inventory recovery environment and auditor that checks restored state separately from completion reports. On the same 24 synthetic tasks, both policies passed state/follow-up checks in 24/24 tasks with BF16 KV and 19/24 with NVFP4 KV; including validation and a correct report, counts were 0/24 and 5/24. Weights stayed BF16 in both configurations.
 
-[Report](cases/018-agent-state-recovery/REPORT.md) · [CPU replay](cases/018-agent-state-recovery/REPRODUCE.md)
+[Results and recorded episodes](cases/018-agent-state-recovery/REPORT.md) · [CPU record replay](cases/018-agent-state-recovery/REPRODUCE.md)
 
 ## Use or reproduce
 
