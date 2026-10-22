@@ -1,0 +1,20 @@
+{
+  "name": "Posthoc quantity observation and final-report consistency",
+  "version": "1.0",
+  "evidence_kind": "POSTHOC_STORED_TRACE_DIAGNOSTIC",
+  "motivation": "P2 Q1/W0 76 episodes and A00 were already observed. This is not unseen-outcome preregistration.",
+  "primary_population": "P2 all96 episodes;24 paired tasks, each KV/policy cell24",
+  "auxiliary_population": "P1 all24 episodes;6 paired tasks, each KV/policy cell6;never pool phases",
+  "anchor": "Accepted final's pre-generation available_result_event_ids; otherwise last actual generation pre-observations with no accepted final retained. Quantity validity is tested through terminal snapshot, including a last action not yet observed.",
+  "required_scope": "All public_request.record_ids in public scope_id; never final-selected keys or checkpoint gold",
+  "primary_flag": "Union of actually executed successful read_records results delivered before anchor. Each covered record must have no subsequent quantity-changing event through terminal. Change-away-and-restore expires a read. Values must agree with the recorded public result and execution state. No final or checkpoint correctness in this flag.",
+  "metadata": "A global revision/digest-only change, including release_operation, does not expire a quantity read. Track metadata-only mutations separately.",
+  "auxiliary_flag": "All required keys read and delivered after the last mutation of any state field, stricter than the primary quantity-only criterion",
+  "other_tools": "read_history exposes opening quantities and historical before/after changes, not a direct current-record snapshot; read_operation.quantity is a transfer amount. Mutation results contain status/revision only. validate_inventory contains valid/digest/version, no current quantities. These are not counted as read_records observations or inferred numeric reads.",
+  "report_metrics": "Strict accepted final full map vs terminal quantities; duplicates, missing/extra keys and non-int/bool fail. No accepted final = null/no_accepted_final. First-read comparison uses earliest successful delivered read and is null for partial coverage; do not substitute a later fuller read.",
+  "original_metrics": "Recompute Q/W/Fresh/FINAL_CONTENT_CORRECT through frozen independent ReferenceState audit; never replace original scores with these new flags",
+  "conditional_analysis": "Q=1 subgroup is auxiliary and outcome-selected; report separate denominators",
+  "interpretation_limit": "Association in stored trajectories only. No causal reread, memory, attention or quantization mechanism claim; forced-reread experiment NOT_RUN.",
+  "missingness": "Malformed or unknown event lineage raises an exception; absent final remains null. Failed/unobserved/wrong-scope reads do not count. CPU continuation/reference and post-terminal reads never enter model events.",
+  "boundary_tests": ["request_not_observed", "failed_read", "wrong_scope", "partial_read", "before_quantity_change", "metadata_only", "change_then_restore", "CPU_post_terminal_read", "no_final", "union_reads", "bool_quantity", "missing_and_extra_keys"]
+}

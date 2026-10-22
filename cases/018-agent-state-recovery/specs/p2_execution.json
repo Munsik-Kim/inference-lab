@@ -1,0 +1,665 @@
+{
+  "phase": "P2_HOLDOUT",
+  "version": "p2-orchestration-v1",
+  "created_utc": "2026-10-22T02:58:47.472699+00:00",
+  "before_generation": true,
+  "holdout_outputs_observed": 0,
+  "prior_observed": {
+    "DEV_episodes": 24,
+    "DEV_responses": 180,
+    "TECH_attempts": 6
+  },
+  "parent_evidence": "<LOCAL_HOME>/Codex_main/case018-p1-evidence-20261022-101706",
+  "evidence": "<LOCAL_HOME>/Codex_main/case018-p2-evidence-20261022-114400",
+  "output": "results/p2_r1",
+  "runtime": {
+    "python": "<LOCAL_HOME>/Codex_main/case016-kv-agent-private-20261019/venv_r2/bin/python",
+    "snapshot": "<LOCAL_HOME>/inference-lab/.cache/step03/huggingface/hub/models--Qwen--Qwen3-4B-Instruct-2507/snapshots/cdbee75f17c01a7cc42f958dc650907174af0554",
+    "case_root": "<LOCAL_HOME>/Codex_main/inference-lab-case018-state-recovery-20261022-093529/cases/018-agent-state-recovery",
+    "original_case": "<LOCAL_HOME>/Codex_main/inference-lab-case017-contract-cost-20261020/cases/016-kv-agent-bench",
+    "private_root": "<LOCAL_HOME>/Codex_main/case018-p2-evidence-20261022-114400/runtime",
+    "port": 8197,
+    "max_model_len": 28672,
+    "pool_bytes": 4294967296,
+    "seed": 61022007,
+    "served_model_name": "case018-qwen3-4b",
+    "registered_client_context_limit": 24576
+  },
+  "scientific_protocol_sha256": "996e1ed65d3f9be59e5e7d211ce4a12dc8cb202ca1c9380a16e2c812eaa769e2",
+  "original_grammar_file_sha256": "33492b1ed8e71bc752bd5b33fb1861e418650de473a3291186c5d6236e590daf",
+  "P1_execution_source_sha256": "e60dc421c2dc28c59e29ab26cb9faa6a2893208d5399577eed08d9745211ee7b",
+  "generator_seed": 61022002,
+  "order_seed": 61022012,
+  "model_success_threshold": null,
+  "limits": {
+    "model_requests": 16,
+    "request_output_tokens": 512,
+    "episode_output_tokens": 8192,
+    "parsed_tool_or_final_attempts": 16,
+    "request_seconds": 180,
+    "episode_seconds": 900,
+    "guard_feedbacks": 2,
+    "context_tokens": 24576
+  },
+  "analysis": {
+    "primary": "within each KV Q(R1-R0)",
+    "secondary": [
+      "W",
+      "components",
+      "KV differences"
+    ],
+    "bootstrap_replicates": 10000,
+    "seed": 61022018,
+    "unit": "paired task, family stratified; all four conditions jointly resampled",
+    "interval": "exploratory pointwise percentile 95%",
+    "denominators": "DEV and HOLDOUT separate; no P0 model estimates",
+    "pairs": [
+      "both_success",
+      "loss",
+      "recovery",
+      "both_failure"
+    ]
+  },
+  "percentile_implementation": "linear interpolation at rank (n-1)*p; pointwise exploratory paired task intervals",
+  "planned": [
+    {
+      "task_id": "HOLDOUT-C06",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C06_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C03",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C03_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A02",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A02_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A04",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A04_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B04",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B04_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B01",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B01_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C00",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C00_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B03",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B03_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C01",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C01_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C02",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C02_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A06",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A06_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C02",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C02_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B06",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B06_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C04",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C04_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C05",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C05_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A06",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A06_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A05",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A05_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C06",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C06_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B03",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B03_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C04",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C04_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A05",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A05_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B02",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B02_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B05",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B05_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A07",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A07_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A02",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A02_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B07",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B07_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B07",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B07_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C03",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C03_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A04",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A04_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A07",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A07_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B02",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B02_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C07",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C07_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A00",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A00_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B00",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B00_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C05",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C05_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C07",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C07_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C01",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C01_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B00",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B00_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B04",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B04_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B01",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B01_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B05",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B05_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C00",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C00_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A03",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A03_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A01",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A01_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A01",
+      "kv": "K0",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A01_K0_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A03",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A03_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A00",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A00_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B06",
+      "kv": "K0",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B06_K0_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C00",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C00_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C07",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C07_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A00",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A00_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C05",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C05_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C05",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C05_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A05",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A05_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A01",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A01_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C01",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C01_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A01",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A01_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B04",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B04_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B07",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B07_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C04",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C04_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C00",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C00_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C03",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C03_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A03",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A03_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C07",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C07_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B00",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B00_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A07",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A07_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B06",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B06_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A04",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A04_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B03",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B03_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B02",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B02_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A05",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A05_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A04",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A04_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B05",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B05_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A00",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A00_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A02",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A02_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B01",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B01_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A07",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A07_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C04",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C04_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C06",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C06_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C02",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-C02_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B04",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B04_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C02",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C02_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A03",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A03_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B05",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B05_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B06",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B06_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B02",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B02_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B07",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B07_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-A06",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-A06_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A02",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A02_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B03",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B03_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-C06",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C06_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C01",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C01_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-C03",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-C03_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-B00",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-B00_K1_R0"
+    },
+    {
+      "task_id": "HOLDOUT-B01",
+      "kv": "K1",
+      "policy": "R1",
+      "episode_id": "HOLDOUT-B01_K1_R1"
+    },
+    {
+      "task_id": "HOLDOUT-A06",
+      "kv": "K1",
+      "policy": "R0",
+      "episode_id": "HOLDOUT-A06_K1_R0"
+    }
+  ],
+  "planned_count": 96,
+  "KV_order": [
+    "K0",
+    "K1"
+  ],
+  "technical_order": [
+    "K1",
+    "K0"
+  ],
+  "TECH_generation_ceiling": 8,
+  "HOLDOUT_generation_ceiling": 1536,
+  "total_generation_ceiling": 1544,
+  "technical_plan": "one short TECH API + two direct finite forwards per new worker; K1 technical then K0 technical reused, K1 reload rechecks before its episodes. Normally3 TECH requests/6 direct forwards; no new cancellation probe.",
+  "common_worker_budget_seconds": 3600,
+  "parent_worker_debit_seconds": 439.69224416399993,
+  "parent_unobserved_cancel_token_cost_attempts": 2,
+  "generation_rule": "one invocation of unchanged registered generator; no reroll or dropping invalid/duplicate tasks",
+  "CPU_controls": 72,
+  "additional_guard_script_feasibility_traces": 24,
+  "scenario_disjointness": "ID-free family + origin quantity vector + incident quantity/phase. Family templates intentionally shared, instances distinct.",
+  "source_boundaries": "P2-only modules/tests/spec; all P1 existing source/spec/DEV/docs/raw/receipts remain byte-identical",
+  "P3": "NOT_RUN",
+  "remote_publication": false
+}

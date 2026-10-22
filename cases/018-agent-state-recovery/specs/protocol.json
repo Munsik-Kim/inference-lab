@@ -1,0 +1,240 @@
+{
+  "case": "018",
+  "title_ko": "복구한 AI는 다음 업무도 제대로 수행할 수 있을까?",
+  "title_en": "State Recovery and Continuation Bench",
+  "version": "p0-v1",
+  "base_commit": "83e1cef6dd60384931a38e016ea5e8d069d40674",
+  "scope": "P0_CPU_ONLY",
+  "evidence_kind": "SYNTHETIC_CONTRACT_TEST",
+  "future_model": {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "weights": "BF16",
+    "runtime": "vLLM 0.32.0 + FlashInfer (recorded Case017 identity only)",
+    "identity_verification": "NOT_RUN_CURRENT_LOCAL_ARTIFACT",
+    "tokenization": "NOT_RUN",
+    "grammar_backend": "NOT_RUN",
+    "native_KV": "NOT_RUN"
+  },
+  "arms": {
+    "K0_R0": {
+      "kv": "BF16",
+      "policy": "R0"
+    },
+    "K0_R1": {
+      "kv": "BF16",
+      "policy": "R1"
+    },
+    "K1_R0": {
+      "kv": "native NVFP4",
+      "policy": "R0"
+    },
+    "K1_R1": {
+      "kv": "native NVFP4",
+      "policy": "R1"
+    }
+  },
+  "seeds": {
+    "DEV": 61022001,
+    "HOLDOUT": 61022002,
+    "P1_order": 61022011,
+    "P2_order": 61022012,
+    "engine": 61022007,
+    "analysis": 61022018
+  },
+  "future_episodes": {
+    "P1_DEV": 24,
+    "P2_HOLDOUT": 96,
+    "total": 120
+  },
+  "splits": {
+    "DEV": {
+      "tasks": 6,
+      "per_family": 2
+    },
+    "HOLDOUT": {
+      "tasks": 24,
+      "per_family": 8,
+      "status": "NOT_CREATED",
+      "generation_allowed": "only after P1 completion, source freeze and technical identity gates"
+    }
+  },
+  "generator_version": "inventory-recovery-v1",
+  "holdout_frozen_fields": [
+    "task_id",
+    "family",
+    "origin_state",
+    "checkpoint",
+    "fault_trace",
+    "error_state",
+    "public_request",
+    "continuations",
+    "oracle",
+    "allowed_compensation"
+  ],
+  "state_contract": {
+    "business_projection": [
+      "records.<id>.quantity",
+      "records.<id>.sku",
+      "records.<id>.warehouse"
+    ],
+    "protected_data": [
+      "records membership",
+      "records.<id>.sku",
+      "records.<id>.warehouse",
+      "records.<id>.owner",
+      "records.<id>.protected",
+      "records.<protected_id>.quantity",
+      "scope_id",
+      "stock_totals",
+      "audit prefix at recovery start"
+    ],
+    "operational_state": [
+      "ledger.<operation_id>.source_id",
+      "ledger.<operation_id>.destination_id",
+      "ledger.<operation_id>.quantity",
+      "ledger.<operation_id>.phase",
+      "ledger.<operation_id>.compensations",
+      "dedup.<operation_id>",
+      "active_operations.stock-lane"
+    ],
+    "legal_metadata_differences": [
+      "revision increases",
+      "append-only audit entries",
+      "compensated incident ledger/dedup entries remain as tombstones"
+    ],
+    "intermediate_policy": "Start at error snapshot; initial partial deficit is injected damage. No new negative/protected damage. Each SKU deficit may only move monotonically from its initial nonpositive debt toward zero; no surplus. Check every before/after state, not only terminal.",
+    "validator": "public invariants only; active operation is legal if references are coherent; no checkpoint/oracle comparison",
+    "continuation_observation": "fixed evaluator program reads current revision immediately before mutation; same business arguments and procedure from independent clones of terminal/checkpoint; no result-driven repair or path choice"
+  },
+  "metrics": {
+    "D": "DECLARED_RECOVERED",
+    "B": "BUSINESS_RESTORED",
+    "P": "PROTECTED_OK",
+    "F": "FRESH_VALIDATION_OBSERVED",
+    "C1": "CONTINUATION_F1_CORRECT",
+    "C2": "CONTINUATION_F2_CORRECT",
+    "Q": "B and P and C1 and C2",
+    "W": "Q and accepted final and exact final contents and F",
+    "primary": "Q",
+    "names": {
+      "Q": "종료 상태·후속 업무 적합",
+      "W": "검증된 복구 workflow 완주"
+    },
+    "no_final": "B/P/C/Q still evaluated; W=0; F uses last actual generation pre-observations, labelled diagnostic",
+    "D_definition": "Any schema-valid final with recovered strict bool true, including a guard-rejected final; declaration is not acceptance or truth.",
+    "continuation_state_comparison": "business values, applied/duplicate effects and live (non-compensated) ledger/dedup/active state; incident tombstones and revision/audit suffix ignored"
+  },
+  "policies": {
+    "R0": "accept strict schema-valid final, score freshness afterward",
+    "R1": "check only observed successful validation for current scope/digest/version before final, never hidden target; reject with FRESH_VALIDATION_REQUIRED at most twice; third ineligible final terminates"
+  },
+  "limits": {
+    "model_requests": 16,
+    "request_output_tokens": 512,
+    "episode_output_tokens": 8192,
+    "parsed_tool_or_final_attempts": 16,
+    "request_seconds": 180,
+    "episode_seconds": 900,
+    "guard_feedbacks": 2,
+    "context_tokens": 24576
+  },
+  "budget_rules": {
+    "strict_parse_error": "terminal CONTRACT_FAILURE",
+    "parsed_invalid_object": "consumes parsed attempt; terminal CONTRACT_FAILURE",
+    "normal_tool_error": "consumes request/parsed attempt, result delivered; may continue",
+    "final": "consumes parsed attempt; sixteenth accepted final allowed, sixteenth nonfinal executes then TOOL_CALL_LIMIT; no seventeenth request",
+    "guard": "rejected final consumes request/parsed attempt; feedback only if fewer than two previously sent",
+    "tokens": "P0 units simulated, no actual tokenizer or server usage",
+    "P0_context": "same context arithmetic exercised using explicitly simulated UTF8-byte/4 units; actual tokenization/grammar/server enforcement is a P1 gate"
+  },
+  "terminal_reasons": [
+    "ACCEPTED_FINAL",
+    "CONTRACT_FAILURE",
+    "GUARD_LIMIT",
+    "MODEL_CALL_LIMIT",
+    "TOOL_CALL_LIMIT",
+    "TOKEN_LIMIT",
+    "CONTEXT_LIMIT",
+    "REQUEST_TIMEOUT",
+    "EPISODE_DEADLINE",
+    "CLIENT_EXHAUSTED",
+    "ADAPTER_ERROR"
+  ],
+  "gates": {
+    "P0": [
+      "contracts",
+      "independent_audit",
+      "controls",
+      "counterexamples",
+      "preservation",
+      "budget_feasibility"
+    ],
+    "P1": [
+      "DEV24_complete",
+      "execution_source_frozen",
+      "actual_KV_verified",
+      "grammar_verified",
+      "input_identity_verified"
+    ],
+    "model_success_threshold": null,
+    "P2_generation_requires": "P1 gates all pass; model success count is not a gate",
+    "seal_time": "local self-record only"
+  },
+  "analysis": {
+    "primary": "within each KV Q(R1-R0)",
+    "secondary": [
+      "W",
+      "components",
+      "KV differences"
+    ],
+    "bootstrap_replicates": 10000,
+    "seed": 61022018,
+    "unit": "paired task, family stratified; all four conditions jointly resampled",
+    "interval": "exploratory pointwise percentile 95%",
+    "denominators": "DEV and HOLDOUT separate; no P0 model estimates",
+    "pairs": [
+      "both_success",
+      "loss",
+      "recovery",
+      "both_failure"
+    ]
+  },
+  "future_execution": {
+    "KV_blocks": [
+      "K0",
+      "K1"
+    ],
+    "within_block": "seeded task/policy shuffle before observation",
+    "prefix_caching": false,
+    "episode_fixture": "pristine independent root",
+    "first_input": "messages/tools/schema bytes and actual token IDs compared across four conditions",
+    "rollout": "later histories may diverge",
+    "sampling": {
+      "temperature": 0,
+      "enable_thinking": false,
+      "ignore_eos": false
+    }
+  },
+  "accounting": [
+    "model_request_attempts",
+    "model_responses_received",
+    "server_abort_requests",
+    "parsed_attempts",
+    "contract_rejections",
+    "callable_executions",
+    "side_effect_writes",
+    "final_attempts",
+    "guard_rejections",
+    "input_tokens",
+    "output_tokens",
+    "episode_wall_seconds",
+    "worker_wall_seconds",
+    "CPU_continuation_seconds",
+    "simulated_usage"
+  ],
+  "cost_per_success_zero": "undefined, never zero",
+  "P0_model_statistics": "NOT_RUN",
+  "P3": "NOT_RUN",
+  "remote_publication": false
+}

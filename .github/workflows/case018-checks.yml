@@ -1,0 +1,44 @@
+name: Case018 stored recovery traces and posthoc contracts
+on:
+  pull_request:
+    paths: ['cases/018-agent-state-recovery/**', 'tools/showcase/**', 'presentation/**', 'tests/showcase/**', '.github/workflows/case018-checks.yml']
+  push:
+    branches: [main]
+    paths: ['cases/018-agent-state-recovery/**', 'tools/showcase/**', 'presentation/**', 'tests/showcase/**', '.github/workflows/case018-checks.yml']
+permissions:
+  contents: read
+concurrency:
+  group: case018-cpu-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+      HF_HUB_OFFLINE: '1'
+      TRANSFORMERS_OFFLINE: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6; repository pin
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6; repository pin
+        with:
+          python-version: '3.12.14'
+      - name: Restore public evidence, replay120 endpoints and26 CPU controls, check posthoc diagnostics
+        run: python -B cases/018-agent-state-recovery/publication/run_checks.py --output "$RUNNER_TEMP/case018" --tests
+      - name: Retain success and failure receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4; repository pin
+        with:
+          name: case018-cpu-receipts
+          path: |
+            ${{ runner.temp }}/case018/verification.json
+            ${{ runner.temp }}/case018/failure.json
+            ${{ runner.temp }}/case018/*-audit.json
+            ${{ runner.temp }}/case018/*.log
+            ${{ runner.temp }}/case018/derived/CPU_receipt.json
+          if-no-files-found: warn
+          retention-days: 14

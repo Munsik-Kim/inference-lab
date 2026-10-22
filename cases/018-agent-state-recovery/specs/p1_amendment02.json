@@ -1,0 +1,22 @@
+{
+  "created_utc": "2026-10-22T01:53:13.889843+00:00",
+  "previous_attempts": [
+    "results/p1_r1",
+    "results/p1_r2"
+  ],
+  "DEV_outputs_observed": 0,
+  "generation_API_requests_observed": 0,
+  "direct_forward_probes_observed": 4,
+  "observation": "Both runs returned finite hidden states but all36 Python module hooks had zero calls. They do not establish attention-output finiteness.",
+  "installed_source_evidence": "gpu_model_runner.py _dummy_run sets num_tokens_unpadded=0 unless is_profile=True (lines5805\u20135808); FlashInferImpl.forward has explicit output buffer and null metadata profiling branch (lines2005\u20132042).",
+  "change": "TECH-only direct forward uses is_profile=True for unpadded tokens and wraps actual attention impl.forward output buffers, with nonnull metadata required. Original methods and context flags restored in finally. No upstream file/weight/kernel or main GRAPH configuration change.",
+  "former_skip_compiled_not_sufficient": true,
+  "model_quality_retry": false,
+  "scientific_contract_changed": false,
+  "previous_worker_debit_seconds": 112.35812931799956,
+  "budget_reset": false,
+  "source_snapshots": [
+    "case018-p1-evidence-20261022-101706/attempt01-source",
+    "case018-p1-evidence-20261022-101706/attempt02-source"
+  ]
+}

@@ -1,0 +1,628 @@
+{
+  "allowed_compensation": {
+    "explicit_values_required": true,
+    "operation_id": "incident-2486a442",
+    "stock_record_ids": [
+      "r-2486a442-x",
+      "r-2486a442-y"
+    ],
+    "stock_then_release": true
+  },
+  "checkpoint": {
+    "active_operations": {},
+    "audit": [
+      {
+        "audit_id": "h000",
+        "kind": "OPENING",
+        "records": {
+          "r-2486a442-d": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 20,
+            "sku": "SKU-M",
+            "warehouse": "W1"
+          },
+          "r-2486a442-s": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 42,
+            "sku": "SKU-M",
+            "warehouse": "W0"
+          },
+          "r-2486a442-u": {
+            "owner": "synthetic-owner",
+            "protected": true,
+            "quantity": 50,
+            "sku": "SKU-U",
+            "warehouse": "W0"
+          },
+          "r-2486a442-x": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 43,
+            "sku": "SKU-X",
+            "warehouse": "W0"
+          },
+          "r-2486a442-y": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 19,
+            "sku": "SKU-X",
+            "warehouse": "W1"
+          }
+        }
+      }
+    ],
+    "dedup": {},
+    "ledger": {},
+    "records": {
+      "r-2486a442-d": {
+        "owner": "synthetic-owner",
+        "protected": false,
+        "quantity": 20,
+        "sku": "SKU-M",
+        "warehouse": "W1"
+      },
+      "r-2486a442-s": {
+        "owner": "synthetic-owner",
+        "protected": false,
+        "quantity": 42,
+        "sku": "SKU-M",
+        "warehouse": "W0"
+      },
+      "r-2486a442-u": {
+        "owner": "synthetic-owner",
+        "protected": true,
+        "quantity": 50,
+        "sku": "SKU-U",
+        "warehouse": "W0"
+      },
+      "r-2486a442-x": {
+        "owner": "synthetic-owner",
+        "protected": false,
+        "quantity": 43,
+        "sku": "SKU-X",
+        "warehouse": "W0"
+      },
+      "r-2486a442-y": {
+        "owner": "synthetic-owner",
+        "protected": false,
+        "quantity": 19,
+        "sku": "SKU-X",
+        "warehouse": "W1"
+      }
+    },
+    "revision": 0,
+    "scope_id": "scope-2486a442",
+    "stock_totals": {
+      "SKU-M": 62,
+      "SKU-U": 50,
+      "SKU-X": 62
+    }
+  },
+  "continuations": {
+    "F1": [
+      {
+        "destination_id": "r-2486a442-d",
+        "operation_id": "delivery-2486a442",
+        "quantity": 5,
+        "source_id": "r-2486a442-s"
+      }
+    ],
+    "F2": [
+      {
+        "destination_id": "r-2486a442-d",
+        "operation_id": "delivery-2486a442",
+        "quantity": 5,
+        "source_id": "r-2486a442-s"
+      },
+      {
+        "destination_id": "r-2486a442-d",
+        "operation_id": "next-2486a442",
+        "quantity": 1,
+        "source_id": "r-2486a442-s"
+      }
+    ]
+  },
+  "error_state": {
+    "active_operations": {
+      "stock-lane": "incident-2486a442"
+    },
+    "audit": [
+      {
+        "audit_id": "h000",
+        "kind": "OPENING",
+        "records": {
+          "r-2486a442-d": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 20,
+            "sku": "SKU-M",
+            "warehouse": "W1"
+          },
+          "r-2486a442-s": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 42,
+            "sku": "SKU-M",
+            "warehouse": "W0"
+          },
+          "r-2486a442-u": {
+            "owner": "synthetic-owner",
+            "protected": true,
+            "quantity": 50,
+            "sku": "SKU-U",
+            "warehouse": "W0"
+          },
+          "r-2486a442-x": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 43,
+            "sku": "SKU-X",
+            "warehouse": "W0"
+          },
+          "r-2486a442-y": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 19,
+            "sku": "SKU-X",
+            "warehouse": "W1"
+          }
+        }
+      },
+      {
+        "audit_id": "h001",
+        "changes": {
+          "r-2486a442-x": [
+            43,
+            38
+          ],
+          "r-2486a442-y": [
+            19,
+            24
+          ]
+        },
+        "kind": "FAULT_INJECTION",
+        "operation_id": "incident-2486a442",
+        "partial": false
+      }
+    ],
+    "dedup": {
+      "incident-2486a442": "ACTIVE"
+    },
+    "ledger": {
+      "incident-2486a442": {
+        "compensations": [],
+        "destination_id": "r-2486a442-y",
+        "phase": "COMPLETED",
+        "quantity": 5,
+        "source_id": "r-2486a442-x"
+      }
+    },
+    "records": {
+      "r-2486a442-d": {
+        "owner": "synthetic-owner",
+        "protected": false,
+        "quantity": 20,
+        "sku": "SKU-M",
+        "warehouse": "W1"
+      },
+      "r-2486a442-s": {
+        "owner": "synthetic-owner",
+        "protected": false,
+        "quantity": 42,
+        "sku": "SKU-M",
+        "warehouse": "W0"
+      },
+      "r-2486a442-u": {
+        "owner": "synthetic-owner",
+        "protected": true,
+        "quantity": 50,
+        "sku": "SKU-U",
+        "warehouse": "W0"
+      },
+      "r-2486a442-x": {
+        "owner": "synthetic-owner",
+        "protected": false,
+        "quantity": 38,
+        "sku": "SKU-X",
+        "warehouse": "W0"
+      },
+      "r-2486a442-y": {
+        "owner": "synthetic-owner",
+        "protected": false,
+        "quantity": 24,
+        "sku": "SKU-X",
+        "warehouse": "W1"
+      }
+    },
+    "revision": 1,
+    "scope_id": "scope-2486a442",
+    "stock_totals": {
+      "SKU-M": 62,
+      "SKU-U": 50,
+      "SKU-X": 62
+    }
+  },
+  "family": "A",
+  "fault_trace": [
+    {
+      "action": {
+        "audit_id": "h001",
+        "changes": {
+          "r-2486a442-x": [
+            43,
+            38
+          ],
+          "r-2486a442-y": [
+            19,
+            24
+          ]
+        },
+        "kind": "FAULT_INJECTION",
+        "operation_id": "incident-2486a442",
+        "partial": false
+      },
+      "evidence_kind": "CPU_FAULT_INJECTION",
+      "state_after": {
+        "active_operations": {
+          "stock-lane": "incident-2486a442"
+        },
+        "audit": [
+          {
+            "audit_id": "h000",
+            "kind": "OPENING",
+            "records": {
+              "r-2486a442-d": {
+                "owner": "synthetic-owner",
+                "protected": false,
+                "quantity": 20,
+                "sku": "SKU-M",
+                "warehouse": "W1"
+              },
+              "r-2486a442-s": {
+                "owner": "synthetic-owner",
+                "protected": false,
+                "quantity": 42,
+                "sku": "SKU-M",
+                "warehouse": "W0"
+              },
+              "r-2486a442-u": {
+                "owner": "synthetic-owner",
+                "protected": true,
+                "quantity": 50,
+                "sku": "SKU-U",
+                "warehouse": "W0"
+              },
+              "r-2486a442-x": {
+                "owner": "synthetic-owner",
+                "protected": false,
+                "quantity": 43,
+                "sku": "SKU-X",
+                "warehouse": "W0"
+              },
+              "r-2486a442-y": {
+                "owner": "synthetic-owner",
+                "protected": false,
+                "quantity": 19,
+                "sku": "SKU-X",
+                "warehouse": "W1"
+              }
+            }
+          },
+          {
+            "audit_id": "h001",
+            "changes": {
+              "r-2486a442-x": [
+                43,
+                38
+              ],
+              "r-2486a442-y": [
+                19,
+                24
+              ]
+            },
+            "kind": "FAULT_INJECTION",
+            "operation_id": "incident-2486a442",
+            "partial": false
+          }
+        ],
+        "dedup": {
+          "incident-2486a442": "ACTIVE"
+        },
+        "ledger": {
+          "incident-2486a442": {
+            "compensations": [],
+            "destination_id": "r-2486a442-y",
+            "phase": "COMPLETED",
+            "quantity": 5,
+            "source_id": "r-2486a442-x"
+          }
+        },
+        "records": {
+          "r-2486a442-d": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 20,
+            "sku": "SKU-M",
+            "warehouse": "W1"
+          },
+          "r-2486a442-s": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 42,
+            "sku": "SKU-M",
+            "warehouse": "W0"
+          },
+          "r-2486a442-u": {
+            "owner": "synthetic-owner",
+            "protected": true,
+            "quantity": 50,
+            "sku": "SKU-U",
+            "warehouse": "W0"
+          },
+          "r-2486a442-x": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 38,
+            "sku": "SKU-X",
+            "warehouse": "W0"
+          },
+          "r-2486a442-y": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 24,
+            "sku": "SKU-X",
+            "warehouse": "W1"
+          }
+        },
+        "revision": 1,
+        "scope_id": "scope-2486a442",
+        "stock_totals": {
+          "SKU-M": 62,
+          "SKU-U": 50,
+          "SKU-X": 62
+        }
+      },
+      "state_before": {
+        "active_operations": {},
+        "audit": [
+          {
+            "audit_id": "h000",
+            "kind": "OPENING",
+            "records": {
+              "r-2486a442-d": {
+                "owner": "synthetic-owner",
+                "protected": false,
+                "quantity": 20,
+                "sku": "SKU-M",
+                "warehouse": "W1"
+              },
+              "r-2486a442-s": {
+                "owner": "synthetic-owner",
+                "protected": false,
+                "quantity": 42,
+                "sku": "SKU-M",
+                "warehouse": "W0"
+              },
+              "r-2486a442-u": {
+                "owner": "synthetic-owner",
+                "protected": true,
+                "quantity": 50,
+                "sku": "SKU-U",
+                "warehouse": "W0"
+              },
+              "r-2486a442-x": {
+                "owner": "synthetic-owner",
+                "protected": false,
+                "quantity": 43,
+                "sku": "SKU-X",
+                "warehouse": "W0"
+              },
+              "r-2486a442-y": {
+                "owner": "synthetic-owner",
+                "protected": false,
+                "quantity": 19,
+                "sku": "SKU-X",
+                "warehouse": "W1"
+              }
+            }
+          }
+        ],
+        "dedup": {},
+        "ledger": {},
+        "records": {
+          "r-2486a442-d": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 20,
+            "sku": "SKU-M",
+            "warehouse": "W1"
+          },
+          "r-2486a442-s": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 42,
+            "sku": "SKU-M",
+            "warehouse": "W0"
+          },
+          "r-2486a442-u": {
+            "owner": "synthetic-owner",
+            "protected": true,
+            "quantity": 50,
+            "sku": "SKU-U",
+            "warehouse": "W0"
+          },
+          "r-2486a442-x": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 43,
+            "sku": "SKU-X",
+            "warehouse": "W0"
+          },
+          "r-2486a442-y": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 19,
+            "sku": "SKU-X",
+            "warehouse": "W1"
+          }
+        },
+        "revision": 0,
+        "scope_id": "scope-2486a442",
+        "stock_totals": {
+          "SKU-M": 62,
+          "SKU-U": 50,
+          "SKU-X": 62
+        }
+      }
+    }
+  ],
+  "generator_version": "inventory-recovery-v1",
+  "identity": {
+    "checkpoint": "6edc96f72298d443e7ca90a04ed64e817147369dd05c951f903ed2a0698a0dc2",
+    "continuations": "c56211e07ac7b01119f3334c17dc3a8bc4d4f0b0bf1acd3eb631954b38c13e19",
+    "error_state": "e8e61bbf5e9e59b42953b0562043ec6136ddce32dc8fedef4afa6113314deead",
+    "fault_trace": "54823e6cf94991d7a2479501ced057c20f2b013193658e8266d5440f5468ecf7",
+    "oracle": "55a9e9b2a757692d2cc209eaa72bf4dbaa30c9c9821f3986a64b134d12b824ce",
+    "public_request": "6c2fce9f2de632762080acfd7200cab906a79bfafb9f762d6300d4472eb0d90e"
+  },
+  "oracle": {
+    "business_projection": {
+      "r-2486a442-d": {
+        "quantity": 20,
+        "sku": "SKU-M",
+        "warehouse": "W1"
+      },
+      "r-2486a442-s": {
+        "quantity": 42,
+        "sku": "SKU-M",
+        "warehouse": "W0"
+      },
+      "r-2486a442-u": {
+        "quantity": 50,
+        "sku": "SKU-U",
+        "warehouse": "W0"
+      },
+      "r-2486a442-x": {
+        "quantity": 43,
+        "sku": "SKU-X",
+        "warehouse": "W0"
+      },
+      "r-2486a442-y": {
+        "quantity": 19,
+        "sku": "SKU-X",
+        "warehouse": "W1"
+      }
+    },
+    "meaning": "restore checkpoint, not finish pending work"
+  },
+  "origin_state": {
+    "active_operations": {},
+    "audit": [
+      {
+        "audit_id": "h000",
+        "kind": "OPENING",
+        "records": {
+          "r-2486a442-d": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 20,
+            "sku": "SKU-M",
+            "warehouse": "W1"
+          },
+          "r-2486a442-s": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 42,
+            "sku": "SKU-M",
+            "warehouse": "W0"
+          },
+          "r-2486a442-u": {
+            "owner": "synthetic-owner",
+            "protected": true,
+            "quantity": 50,
+            "sku": "SKU-U",
+            "warehouse": "W0"
+          },
+          "r-2486a442-x": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 43,
+            "sku": "SKU-X",
+            "warehouse": "W0"
+          },
+          "r-2486a442-y": {
+            "owner": "synthetic-owner",
+            "protected": false,
+            "quantity": 19,
+            "sku": "SKU-X",
+            "warehouse": "W1"
+          }
+        }
+      }
+    ],
+    "dedup": {},
+    "ledger": {},
+    "records": {
+      "r-2486a442-d": {
+        "owner": "synthetic-owner",
+        "protected": false,
+        "quantity": 20,
+        "sku": "SKU-M",
+        "warehouse": "W1"
+      },
+      "r-2486a442-s": {
+        "owner": "synthetic-owner",
+        "protected": false,
+        "quantity": 42,
+        "sku": "SKU-M",
+        "warehouse": "W0"
+      },
+      "r-2486a442-u": {
+        "owner": "synthetic-owner",
+        "protected": true,
+        "quantity": 50,
+        "sku": "SKU-U",
+        "warehouse": "W0"
+      },
+      "r-2486a442-x": {
+        "owner": "synthetic-owner",
+        "protected": false,
+        "quantity": 43,
+        "sku": "SKU-X",
+        "warehouse": "W0"
+      },
+      "r-2486a442-y": {
+        "owner": "synthetic-owner",
+        "protected": false,
+        "quantity": 19,
+        "sku": "SKU-X",
+        "warehouse": "W1"
+      }
+    },
+    "revision": 0,
+    "scope_id": "scope-2486a442",
+    "stock_totals": {
+      "SKU-M": 62,
+      "SKU-U": 50,
+      "SKU-X": 62
+    }
+  },
+  "public_request": {
+    "checkpoint_event_id": "h000",
+    "incident_operation_id": "incident-2486a442",
+    "record_ids": [
+      "r-2486a442-s",
+      "r-2486a442-d",
+      "r-2486a442-x",
+      "r-2486a442-y",
+      "r-2486a442-u"
+    ],
+    "request": "A transfer modified the wrong SKU records after the checkpoint. Undo that incident, including its active processing entry. Do not perform the intended SKU-M transfer yet.",
+    "scope_id": "scope-2486a442",
+    "task_id": "HOLDOUT-A07"
+  },
+  "split": "HOLDOUT",
+  "task_id": "HOLDOUT-A07"
+}

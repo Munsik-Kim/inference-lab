@@ -1,0 +1,14 @@
+{
+  "created_utc": "2026-10-22T01:58:27.368042+00:00",
+  "previous_attempt": "results/p1_r3",
+  "DEV_outputs_observed": 0,
+  "TECH_generation_requests_observed": 1,
+  "TECH_response": "valid read_history, 13 returned tokens; raw retained",
+  "G3": "all36 actual impl.forward outputs finite for prefill/decode with nonnull metadata",
+  "G2_gap": "runner_class is vllm.v1.worker.gpu.model_runner.GPUModelRunner (V2 default); prior mask observer targeted legacy vllm.v1.worker.gpu_model_runner.apply_grammar_bitmask and had zero calls",
+  "correction": "Observe actual V2 model_runner.structured_outputs_worker.apply_grammar_bitmask; original invoked unchanged, only metadata/finite counts read. Do not set VLLM_USE_V2_MODEL_RUNNER=0.",
+  "scientific_or_main_runtime_change": false,
+  "previous_cumulative_worker_debit_seconds": 143.5066574249995,
+  "budget_reset": false,
+  "source_snapshot": "case018-p1-evidence-20261022-101706/attempt03-source"
+}
