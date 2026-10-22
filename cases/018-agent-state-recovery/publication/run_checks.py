@@ -34,6 +34,13 @@ def main():
         (out/'derived/costs.json').write_text(json.dumps(costs,indent=2)+'\n')
         expected=CASE/'publication/summary/project.json'
         if expected.exists() and read(expected)!=project:raise ValueError('Raw-to-display projection mismatch')
+        # Validate shipped tables/figures/excerpts, not only the in-memory project.
+        for name in ['episode_ledger.csv','quantity_ledger.json','quality.svg','observation.svg','costs.json']:
+            if (out/'derived'/name).read_bytes()!=(CASE/'publication/summary'/name).read_bytes():
+                raise ValueError('Regenerated publication artifact differs: '+name)
+        for path in (out/'derived/selected').glob('*.json'):
+            if path.read_bytes()!=(CASE/'publication/summary/selected'/path.name).read_bytes():
+                raise ValueError('Regenerated selected excerpt differs')
         # All historical original scalar costs and bootstrap rows are comparison targets only.
         p2=project['phases'][1];p1=project['phases'][0]
         for p,expected_counts in [(p1,[(6,2),(6,2),(5,0),(5,0)]),(p2,[(24,0),(24,0),(19,5),(19,5)])]:

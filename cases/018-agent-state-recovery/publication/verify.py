@@ -92,6 +92,12 @@ def restore(case, output):
     for r in mapping['files']:
         dst=output/safe(r['path']);dst.parent.mkdir(parents=True,exist_ok=True)
         dst.write_bytes(data[r['member']])
+    for r in mapping.get('additional_public_files',[]):
+        safe(r['path'])
+        if r['path'] in paths:raise ValueError('Duplicate additional restoration path')
+        src=case/safe(r['public_path']);b=src.read_bytes()
+        if src.is_symlink() or len(b)!=r['bytes'] or sha(b)!=r['sha256']:raise ValueError('Additional original bytes differ')
+        dst=output/safe(r['path']);dst.parent.mkdir(parents=True,exist_ok=True);dst.write_bytes(b);paths.add(r['path'])
     return {'status':'PASS','files':len(paths),'objects':len(seen),
             'redacted_files':mapping['redacted_files'],'archive':a,
             'scope':mapping['scope']}
