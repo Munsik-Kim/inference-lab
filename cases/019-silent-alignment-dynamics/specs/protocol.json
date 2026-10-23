@@ -1,0 +1,28 @@
+{
+  "version": "case019-p0-v1",
+  "phase": "P0_CPU",
+  "loss": "0.5*||U V^T-C||_F^2",
+  "time": "unscaled gradient-flow time; no 1/d or 1/m",
+  "initialization": {
+    "U0": "zero",
+    "V0": "sqrt(2*rho)*R",
+    "R": "sign-corrected Gaussian QR Haar Stiefel; random streams fixed across rho and solvers",
+    "imbalance": "V^T V-U^T U=2*rho*I"
+  },
+  "statistics": "finite deterministic paired pilot; no population inference",
+  "gate": "implementation and numerical agreement, not ordering of alignment/visibility thresholds",
+  "config": "configs/p0.json",
+  "protected": "existing cases and worktrees read-only; no original scientific source reused",
+  "hypothesis": "Directional structure may prepare multiple abrupt performance transitions; preserved as an unproven observation hypothesis. Aligned controls test amplitude growth without directional learning.",
+  "not_run": [
+    "P1 sweep",
+    "P2 intervention",
+    "P3 nonlinear/quantization/continual study",
+    "GPU",
+    "model requests",
+    "servers",
+    "install/upgrade",
+    "git stage/commit/push/PR",
+    "website/Pages"
+  ]
+}

@@ -690,3 +690,11 @@ Protocol deviation: BF16 KV with free output completed 5/8 DEV tasks, below the 
 Built an evaluator for wrong-target, duplicate and partial inventory recovery, checking saved state and final quantities. On24 new synthetic tasks, both policies scored Q24/W0 with BF16 KV and Q19/W5 with NVFP4 KV. The freshness guard blocked ineligible finals without improving repair or correct reporting. Quantity re-observation is a separate posthoc observational analysis.
 
 [Report](../../cases/018-agent-state-recovery/REPORT.md) · [CPU replay](../../cases/018-agent-state-recovery/REPRODUCE.md)
+
+<a id="case-019"></a>
+
+## Case019 — Learning Before the Loss Moves
+
+An independent two-layer linear CPU model separates directional alignment from prediction-amplitude growth, then compares checkpoint interventions at fixed prediction size. Partial numerical reproduction, local controls and reversed outcomes are distinguished.
+
+[Report](../../cases/019-silent-alignment-dynamics/REPORT.md) · [CPU quick/full](../../cases/019-silent-alignment-dynamics/REPRODUCE.md)

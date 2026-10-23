@@ -23,6 +23,7 @@ from study import SECTION_IDS, result_html
 from layout import report8_url, C8_PATH, C8_REVISION
 from case018 import load_case018, render_case018, home_case018, check_evidence_download as check_case018_evidence, SOURCE_COPIES as C18_SOURCES, FIGURES as C18_FIGURES, SECTIONS as C18_SECTIONS, EVIDENCE_ASSET as C18_ARCHIVE, EVIDENCE_SOURCE as C18_ARCHIVE_SOURCE
 from case017 import load_case017, render_case017, home_case017, check_evidence_download, SOURCE_COPIES as C17_SOURCES, FIGURES as C17_FIGURES, SECTIONS as C17_SECTIONS, EVIDENCE_ASSET as C17_ARCHIVE, EVIDENCE_SOURCE as C17_ARCHIVE_SOURCE
+from case019 import load_case019, render_case019, home_case019, SOURCE_COPIES as C19_SOURCES, FIGURES as C19_FIGURES, SECTIONS as C19_SECTIONS
 from practical import load_practical, render as practical_render, PAGES as GUIDE_PAGES, COMPARE_EXAMPLES
 
 EXPECTED = {'en/case008.html','ko/case008.html','data/case008.json','assets/case008.css','assets/case008.js','index.html','en/index.html','ko/index.html','en/guide.html','ko/guide.html','en/case006.html','ko/case006.html',
@@ -103,6 +104,7 @@ def check(root: Path, site: Path) -> dict:
     data16=load_case016(root)
     data17=load_case017(root)
     data18=load_case018(root)
+    data19=load_case019(root)
     practical=load_practical(root,load_case008(root),data9,data13)
     expected=EXPECTED|({'en/case009.html','ko/case009.html','data/case009.json','data/case009.js','assets/case009.js','assets/serving-L128.svg','assets/serving-L1024.svg',
       'sources/diova-compare-core.py.txt','sources/diova-compare-tests.py.txt','sources/diova-compare-edge-tests.py.txt','sources/case009-serving.py.txt','sources/case009-quality.py.txt','sources/case009-report-en.md.txt','sources/case009-report-ko.md.txt','sources/case009-notice.md.txt'} if data9 else set())
@@ -130,6 +132,9 @@ def check(root: Path, site: Path) -> dict:
     if data16:
         expected |= {'en/case016.html','ko/case016.html','data/case016.json','assets/case016.css'}
         expected |= {'sources/'+name for name in C16_SOURCES} | set(C16_FIGURES)
+    if data19:
+        expected |= {'en/case019.html','ko/case019.html','data/case019.json','data/case019.js','assets/case019.css','assets/case019.js'}
+        expected |= {'sources/'+name for name in C19_SOURCES} | set(C19_FIGURES)
     if data18:
         expected |= {'en/case018.html','ko/case018.html','data/case018.json','assets/case018.css','assets/case018.js',C18_ARCHIVE}
         expected |= {'sources/'+name for name in C18_SOURCES} | set(C18_FIGURES)
@@ -157,6 +162,18 @@ def check(root: Path, site: Path) -> dict:
         for page in GUIDE_PAGES:
             require(practical_render(root,practical,lang,page) in (site/lang/(page+'.html')).read_text(), 'Practical guide rendering mismatch')
         require(practical_render(root,practical,lang,'featured') in (site/lang/'index.html').read_text(), 'Practical home stories mismatch')
+    if data19:
+        require(read(site/'data/case019.json')==data19,'Case019 saved display/source mismatch')
+        require(m['case019_units']['source_files']==data19['display_source_files'],'Case019 source identity')
+        require(m['case019_units']['full_evidence_in_site'] is False,'Case019 full evidence must remain outside Pages')
+        require(not any('case019-recorded-evidence' in name for name in paths),'Unpublished Case019 asset in site')
+        for name,path in C19_SOURCES.items():require((site/'sources'/name).read_bytes()==(root/path).read_bytes(),'Case019 source copy')
+        for name,path in C19_FIGURES.items():require((site/name).read_bytes()==(root/path).read_bytes(),'Case019 figure copy')
+        for lang in ('en','ko'):
+            html=(site/lang/'case019.html').read_text();parser=Links();parser.feed(html)
+            require(render_case019(data19,lang) in html and set(C19_SECTIONS)<=parser.ids,'Case019 render and anchors')
+            require(home_case019(data19,lang) in (site/lang/'index.html').read_text(),'Case019 home link')
+            require('/home/' not in html and '<noscript>' in html,'Case019 offline/safe-link contract')
     if data18:
         require(read(site/'data/case018.json')==data18,'Case018 data/source mismatch')
         require(m['case018_units']['source_files']==data18['display_source_files'],'Case018 build source identity')
@@ -337,7 +354,8 @@ def check(root: Path, site: Path) -> dict:
         for tag,url in parser.links:
             u=urlsplit(url)
             if u.scheme:
-                citation=name in ('ko/case014.html','en/case014.html') and u.hostname in ('arxiv.org','huggingface.co')
+                citation=(name in ('ko/case014.html','en/case014.html') and u.hostname in ('arxiv.org','huggingface.co')) or (
+                    name in ('ko/case019.html','en/case019.html') and url=='https://arxiv.org/abs/2610.29864v1')
                 require(tag=='a' and u.scheme=='https' and (u.hostname=='github.com' or citation), 'External runtime dependency/unsafe link')
                 continue
             require(not url.startswith(('/', '//')) and '\\' not in url, 'Nonportable local URL')

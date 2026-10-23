@@ -189,3 +189,11 @@ BF16 가중치를 고정한 NVFP4 KV의 신규 합성 24과제에서 문법 제�
 재고의 잘못된 대상·중복·부분 차감을 복구한 뒤 저장 상태와 최종 수량 보고를 함께 검사했습니다. 신규 합성24과제에서 BF16 KV는 두 정책 모두 Q24/W0, NVFP4 KV는 Q19/W5였습니다. 최신 검증 가드가 부적격 final 수용을 막아도 복구·정확 보고가 개선되지는 않았습니다. 현재 수량 재관측과 최종 보고의 관계는 별도 사후 관측 분석입니다.
 
 [Report](../../cases/018-agent-state-recovery/REPORT.ko.md) · [CPU replay](../../cases/018-agent-state-recovery/REPRODUCE.ko.md)
+
+<!-- case019-entry -->
+
+## Case019 — 손실은 그대로인데 학습은 진행될까?
+
+두 층 선형망을 CPU로 독립 구현해 방향 정렬과 예측 크기 성장의 시간을 나누어 관측하고, 학습 중 같은 크기를 보존한 방향 개입을 비교했습니다. 원문 부분 수치 재현과 자체 통제 실험, 반대 결과를 함께 읽을 수 있습니다.
+
+[Report](../../cases/019-silent-alignment-dynamics/REPORT.ko.md) · [CPU quick/full](../../cases/019-silent-alignment-dynamics/REPRODUCE.ko.md)

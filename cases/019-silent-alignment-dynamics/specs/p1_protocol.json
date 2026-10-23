@@ -1,0 +1,27 @@
+{
+  "version": "case019-p1-v1",
+  "created_utc": "2026-10-23T01:30:49.187343+00:00",
+  "phase": "P1_CPU",
+  "questions": [
+    "paired rho effect on visible/alignment separation",
+    "boundary gap: average vs worst principal direction",
+    "already-aligned mode growth and extra random delay"
+  ],
+  "motivation": "P0 observed 17 trajectories; design follows those observations. P1 primary outputs=0 at design.",
+  "scientific_contract": "P0 FP64 loss/gradient-flow time/initialization/imbalance unchanged; new boundary pair and worst-angle metrics",
+  "config": "configs/p1.json",
+  "amendment": "P1_AMENDMENT_01.md",
+  "success_gate": "source/input preservation, numerical agreement, all planned trajectories and regeneration; no phenomenon ordering requirement",
+  "analysis_censoring": "report reached/8 and null for unreached; conditional reached-only descriptive summaries explicit",
+  "statistics": "no population hypothesis testing; finite conditional-on-target initialization repeats",
+  "raw_schema": "compact scalar/spectral/mode/angle/Gram-eigen diagnostics every grid; physical U,V at11 times; full factors between checkpoints not stored",
+  "no_autorun": [
+    "P2",
+    "P3",
+    "GPU",
+    "model",
+    "server",
+    "Git stage/commit/remote writes",
+    "Pages"
+  ]
+}
