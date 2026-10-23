@@ -1,0 +1,183 @@
+{
+  "version": "case019-p2-v1",
+  "parent_run": "results/p1_20261023-104046",
+  "rho": 1e-06,
+  "gaps": [
+    0.4,
+    0.025
+  ],
+  "t_stars": [
+    1,
+    5
+  ],
+  "rotation_seed": 61023022,
+  "order_seed": 61023023,
+  "order_rule": "seeded parent-block permutation then seeded four-arm permutation; fixed128 order before outputs; enables in-memory full Z gauge check",
+  "time": {
+    "tau_end": 155,
+    "grid_count": 1677,
+    "common_checkpoints": [
+      0,
+      0.25,
+      0.5,
+      1,
+      2,
+      5,
+      10,
+      20,
+      40,
+      80,
+      155
+    ],
+    "fixed_effect_times": [
+      0,
+      0.5,
+      1,
+      2,
+      5,
+      10,
+      20,
+      40,
+      80,
+      155
+    ]
+  },
+  "solver": {
+    "rtol": 1e-10,
+    "atol": 1e-12,
+    "reference_steps": [
+      0.01,
+      0.005
+    ]
+  },
+  "tolerances": {
+    "z_relative": 1e-06,
+    "z_absolute": 1e-10,
+    "z_near_zero_norm": 1e-08,
+    "normalized_loss_absolute": 1e-07,
+    "projector_absolute": 1e-05,
+    "monotonic_loss_increase_normalized": 1e-09,
+    "imbalance_relative_gram": 1e-07,
+    "rank_relative": 1e-12,
+    "rank_scaled_absolute": 1e-14,
+    "aligned_distance": 1e-12,
+    "boundary_gap_warning": 1e-10,
+    "closed_form_relative": 1e-08,
+    "raw_algebra_absolute": 1e-08,
+    "worst_absolute": 1e-05,
+    "spectrum_absolute": 1e-12,
+    "basis_overlap_absolute": 1e-10,
+    "input_orthogonality_absolute": 1e-12,
+    "initial_gram_relative": 1e-12,
+    "cosine_roundoff_limit": 4.547473508864641e-13,
+    "aligned_worst_absolute": 1e-12
+  },
+  "graph_absolute": 1e-05,
+  "graph_max_top_condition": 1000000000000.0,
+  "matching": {
+    "atol": 1e-12,
+    "rtol": 1e-10,
+    "norm_based": true
+  },
+  "drift_contract": {
+    "inherited_relative_gram": 1e-07,
+    "new_observed_drift_absolute": 1e-08,
+    "nominal_absolute": "reported; pre-existing checkpoint drift preserved"
+  },
+  "reference_selection": [
+    {
+      "g_index": 2,
+      "R_index": 2,
+      "t_star": 5,
+      "arm": "CONTINUE"
+    },
+    {
+      "g_index": 2,
+      "R_index": 2,
+      "t_star": 5,
+      "arm": "GAUGE"
+    },
+    {
+      "g_index": 2,
+      "R_index": 2,
+      "t_star": 5,
+      "arm": "ALIGN"
+    },
+    {
+      "g_index": 2,
+      "R_index": 2,
+      "t_star": 5,
+      "arm": "ROTATE"
+    },
+    {
+      "g_index": 0,
+      "R_index": 0,
+      "t_star": 1,
+      "arm": "CONTINUE"
+    },
+    {
+      "g_index": 0,
+      "R_index": 0,
+      "t_star": 1,
+      "arm": "ALIGN"
+    }
+  ],
+  "block_a_reference_keys": [
+    "g2_rho0_R2",
+    "g2_rho2_R2"
+  ],
+  "counts": {
+    "parents": 32,
+    "primary_continuations": 128,
+    "block_a_RK4": 4,
+    "branch_RK4": 12,
+    "new_RK4_total": 16,
+    "algebraic_evaluations": 137862,
+    "P1_random_mode_series": 144
+  },
+  "analysis": {
+    "mode_threshold": 0.1,
+    "persistence_duration": 10,
+    "modes_one_based": [
+      1,
+      32,
+      33
+    ],
+    "normalization": "same target original L0-Lmin for every arm",
+    "statistics": [
+      "mean",
+      "median",
+      "sample_sd",
+      "min",
+      "max",
+      "valid",
+      "not_reached",
+      "failed",
+      "missing"
+    ],
+    "unit": "eight fixed R initializations; same target basis and parents; one shared rotation triple",
+    "p_values": "NOT_REQUESTED"
+  },
+  "budget": {
+    "campaign_limit_seconds": 1800,
+    "prior_P1_outer_worker_seconds": 189.4325839030007,
+    "campaign_start_remaining_seconds": 1610.5674160969993,
+    "P2_worker_seconds": 900,
+    "peak_rss_target_kib": 2097152,
+    "raw_checkpoint_target_bytes": 536870912,
+    "hard_new_disk_bytes": 1073741824
+  },
+  "previously_observed": {
+    "P0_primary": 17,
+    "P1_primary": 81,
+    "R2_selected_after_observation": true
+  },
+  "forbidden_actions": {
+    "GPU": 0,
+    "model_requests": 0,
+    "servers": 0,
+    "installs": 0,
+    "git_stage_commit_remote_writes": 0,
+    "P3": "NOT_RUN"
+  }
+}

@@ -1,0 +1,57 @@
+name: Case019 CPU quick slice and frozen unit contracts
+on:
+  pull_request:
+    paths: ['cases/019-silent-alignment-dynamics/**', 'tools/showcase/**', 'presentation/**', 'tests/showcase/**', '.github/workflows/case019-checks.yml']
+  push:
+    branches: [main]
+    paths: ['cases/019-silent-alignment-dynamics/**', 'tools/showcase/**', 'presentation/**', 'tests/showcase/**', '.github/workflows/case019-checks.yml']
+permissions:
+  contents: read
+concurrency:
+  group: case019-cpu-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  quick:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+      CUDA_VISIBLE_DEVICES: ''
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6; repository pin
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6; repository pin
+        with:
+          python-version: '3.11.15'
+      - name: Create isolated CPU environment and install declared pins
+        run: |
+          python -m venv "$RUNNER_TEMP/case019-env"
+          "$RUNNER_TEMP/case019-env/bin/python" -I -B -m pip install -r cases/019-silent-alignment-dynamics/publication/requirements-cpu.txt
+          "$RUNNER_TEMP/case019-env/bin/python" -I -B -m pip check
+      - name: Verify small public slice and original frozen unit fixtures
+        run: |
+          "$RUNNER_TEMP/case019-env/bin/python" -I -B cases/019-silent-alignment-dynamics/publication/run_checks.py --output "$RUNNER_TEMP/case019-quick" --mode quick --tests
+      - name: Full evidence scope
+        run: echo 'Full recorded replay is NOT_RUN in quick CI; requires explicit separately distributed --evidence. No automatic download.'
+      - name: Documentation and Case019 display contracts
+        run: |
+          "$RUNNER_TEMP/case019-env/bin/python" -I -B -m unittest discover -s docs/_checks -v
+          "$RUNNER_TEMP/case019-env/bin/python" -I -B docs/_checks/check_docs.py --output "$RUNNER_TEMP/case019-docs.json"
+          "$RUNNER_TEMP/case019-env/bin/python" -I -B -m unittest discover -s tests/showcase -p test_case019.py -v
+      - name: Retain success and failure receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4; repository pin
+        with:
+          name: case019-quick-cpu-receipts
+          path: |
+            ${{ runner.temp }}/case019-quick/verification.json
+            ${{ runner.temp }}/case019-quick/failure.json
+            ${{ runner.temp }}/case019-quick/*.log
+            ${{ runner.temp }}/case019-quick/tests-*/verification.json
+          if-no-files-found: warn
+          retention-days: 14

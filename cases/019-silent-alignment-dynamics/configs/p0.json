@@ -1,0 +1,203 @@
+{
+  "schema_version": "case019-p0-v1",
+  "root_seed": 61023019,
+  "dtype": "float64",
+  "time": {
+    "end": 20.0,
+    "display_step": 0.02,
+    "extra_initial_times": [
+      0.25,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "checkpoints": [
+      0.0,
+      0.25,
+      0.5,
+      1.0,
+      2.0,
+      5.0,
+      10.0,
+      20.0
+    ]
+  },
+  "solver": {
+    "primary": "DOP853_scaled",
+    "rtol": 1e-10,
+    "atol": 1e-12,
+    "reference_steps": [
+      0.01,
+      0.005
+    ],
+    "reference": "RK4_original_physical",
+    "scalar_reference": "DOP853_scalar_z"
+  },
+  "tolerances": {
+    "z_relative": 1e-06,
+    "z_absolute": 1e-10,
+    "z_near_zero_norm": 1e-08,
+    "normalized_loss_absolute": 1e-07,
+    "projector_absolute": 1e-05,
+    "monotonic_loss_increase_normalized": 1e-09,
+    "imbalance_relative_gram": 1e-07,
+    "rank_relative": 1e-12,
+    "rank_scaled_absolute": 1e-14,
+    "aligned_distance": 1e-12,
+    "boundary_gap_warning": 1e-10,
+    "closed_form_relative": 1e-08,
+    "raw_algebra_absolute": 1e-09
+  },
+  "metrics": {
+    "visible_residual": 0.9,
+    "align_fraction_initial": 0.5,
+    "crossing": "first bracketing saved-grid interval; linear interpolation; NOT_REACHED retains end=20; aligned=0",
+    "left_at_t0": "NA",
+    "mode_coefficients": "signed target l_i^T Z r_i, separate from sorted singular values"
+  },
+  "blocks": {
+    "A": {
+      "sigmas": [
+        0.5,
+        1.0
+      ],
+      "rhos": [
+        0.01,
+        0.0001,
+        1e-06
+      ],
+      "count": 6
+    },
+    "B": {
+      "p": 8,
+      "d": 8,
+      "m": 4,
+      "spectrum": [
+        1.0,
+        0.9,
+        0.8,
+        0.7,
+        0.4,
+        0.3,
+        0.2,
+        0.1
+      ],
+      "rhos": [
+        0.01,
+        0.0001,
+        1e-06
+      ],
+      "random_repetitions": 2,
+      "aligned_unique": 3,
+      "count": 9
+    },
+    "C": {
+      "p": 64,
+      "d": 64,
+      "m": 32,
+      "rho": 0.0001,
+      "top_spectrum": {
+        "start": 1.0,
+        "stop": 0.8,
+        "count": 32
+      },
+      "bottom_spectrum": {
+        "start": 0.4,
+        "stop": 0.2,
+        "count": 32
+      },
+      "random_repetitions": 1,
+      "aligned_unique": 1,
+      "count": 2
+    }
+  },
+  "streams": {
+    "B_left": [
+      61023019,
+      2,
+      1
+    ],
+    "B_right": [
+      61023019,
+      2,
+      2
+    ],
+    "B_random0": [
+      61023019,
+      2,
+      3,
+      0
+    ],
+    "B_random1": [
+      61023019,
+      2,
+      3,
+      1
+    ],
+    "C_left": [
+      61023019,
+      3,
+      1
+    ],
+    "C_right": [
+      61023019,
+      3,
+      2
+    ],
+    "C_random0": [
+      61023019,
+      3,
+      3,
+      0
+    ],
+    "tests": [
+      61023019,
+      99
+    ]
+  },
+  "references": {
+    "rk4_full_grid_all_17": [
+      0.01,
+      0.005
+    ],
+    "gram_closed_form": {
+      "block": "B",
+      "times": [
+        0.25,
+        0.5,
+        1.0,
+        2.0
+      ],
+      "scope": "all 9 B trajectories; symmetric eig exponential integral + solve; no inverse"
+    },
+    "small_rho_linearized": {
+      "block": "B",
+      "times": [
+        0.25,
+        0.5,
+        1.0,
+        2.0
+      ],
+      "scope": "scientific approximation only; not numerical PASS gate"
+    },
+    "scalar_fixed_amplitude": {
+      "fraction_target": 0.1,
+      "slope_prediction": "1/(2*sigma)",
+      "fit": "three rho finite-pilot descriptive OLS only"
+    },
+    "early_scalar_approx": {
+      "max_fraction_target": 0.01,
+      "formula": "rho*sinh(2*sigma*t)"
+    }
+  },
+  "limits": {
+    "pilot_reference_worker_wall_seconds": 300.0,
+    "raw_bytes_target": 134217728
+  },
+  "planned_primary_trajectories": 17,
+  "future_status": {
+    "P1": "NOT_RUN_DESIGN_ONLY",
+    "P2": "NOT_RUN_DESIGN_ONLY",
+    "P3": "NOT_RUN_DESIGN_ONLY"
+  }
+}

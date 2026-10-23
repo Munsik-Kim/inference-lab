@@ -1,0 +1,5 @@
+# Notice
+
+This independently written Case019 code and documentation follow the repository Apache-2.0 license. The original paper, its authors' work, and third-party NumPy/SciPy/Matplotlib are credited under their respective rights; no claim is made to their authorship or a new license grant. No paper full text or author code is included. Original source development, documentation and publication tooling used Codex assistance.
+
+This is a finite-dimensional CPU implementation, partial numerical reproduction and explicitly defined intervention study. The runtime, numerical library implementations and paper mathematics are upstream contributions. The package contains no model weights, model-serving environment, credentials, full research environments or unrelated projects. Historical original paths in evidence are inert provenance; current instructions are relative. The local-only P3 publication state is retained in publication/history; current evidence location metadata is separate from historical scientific execution identities.
