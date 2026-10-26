@@ -15,9 +15,9 @@ We used **the official OPTIC decoder and synthetic embedding tables**, rather th
 
 **Less memory did not automatically mean a cheaper call.**
 
-- **Memory:** for LARGE/Z32/M2048/U512, A's roughly304MiB became roughly81MiB for B: about73% less **PyTorch allocated peak**, not total device VRAM.
-- **Individual calls:** P4 kept the methods in one process and alternated their order. Across7 conditions and30 process-block comparisons, C was faster than B in **0/30**. A block is a fresh-process repetition, not an independent user workload.
-- **Reuse:** measuring setup, N real calls and cleanup together, A beat B in all three blocks at N1024 and4096. Session ordering was mixed at N128. The whole process, including Python startup and common CUDA initialization, favored B in3/3 N128 blocks, but its median advantage was only about17ms.
+- **Memory:** for LARGE/Z32/M2048/U512, A's roughly 304 MiB became roughly 81 MiB for B: about 73% less **PyTorch allocated peak**, not total device VRAM.
+- **Individual calls:** P4 kept the methods in one process and alternated their order. Across7 conditions and 30 process-block comparisons, C was faster than B in **0/30**. A block is a fresh-process repetition, not an independent user workload.
+- **Reuse:** measuring setup, N real calls and cleanup together, A beat B in all three blocks at N1024 and 4096. Session ordering was mixed at N128. The whole process, including Python startup and common CUDA initialization, favored B in 3/3 N128 blocks, but its median advantage was only about 17 ms.
 
 ![Memory costs for the same output](figures/01_memory.png)
 
@@ -34,13 +34,13 @@ Each entry is the median of the within-block host medians, in µs (millionths of
 | 644/2048/512 | 54.04 | 330.87 | 431.95 |
 
 
-The first two conditions have6 blocks, the last3. Each block measures120 calls per method. The [direct-time CSV](summary/representative_direct_summary.csv) and [report](REPORT.md) retain p95, every block and ranges. A median of paired C/B block ratios can differ from dividing the C and B medians in this table.
+The first two conditions have 6 blocks, the last3. Each block measures120 calls per method. The [direct-time CSV](summary/representative_direct_summary.csv) and [report](REPORT.md) retain p95, every block and ranges. A median of paired C/B block ratios can differ from dividing the C and B medians in this table.
 
 ## Which option should I consider?
 
-**Consider B when keeping a large GPU table is impractical.** It retains compact state and pays reconstruction cost for each call. **Consider A when the same table will be reused long enough.** Its initial preparation can be spread over many lookups. The measured median session ordering changed between128 and1024 calls; we did not invent an exact operational crossover.
+**Consider B when keeping a large GPU table is impractical.** It retains compact state and pays reconstruction cost for each call. **Consider A when the same table will be reused long enough.** Its initial preparation can be spread over many lookups. The measured median session ordering changed between128 and 1024 calls; we did not invent an exact operational crossover.
 
-**Evaluate C's memory and total time together.** Duplicate IDs reduce reconstructed rows but add duplicate finding and order restoration. With a wider intermediate vector Z644, repeated IDs still gave a1.142 median paired C/B ratio. The historical489-fold resident-tensor ratio applies only to Z32; at Z644 it was about24.65-fold.
+**Evaluate C's memory and total time together.** Duplicate IDs reduce reconstructed rows but add duplicate finding and order restoration. With a wider intermediate vector Z644, repeated IDs still gave a1.142 median paired C/B ratio. The historical489-fold resident-tensor ratio applies only to Z32; at Z644 it was about 24.65-fold.
 
 The work implemented here includes fixtures, comparison wrappers, measurement, independent NumPy checks and public reproduction tools. OPTIC decoding and Torch matrix multiplication/memory management are reused. Codex assisted implementation, analysis and documentation. The [reuse map](REUSE_MAP.md) links these boundaries to code.
 

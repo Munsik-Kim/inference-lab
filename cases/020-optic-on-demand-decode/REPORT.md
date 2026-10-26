@@ -4,7 +4,7 @@
 
 ## 1. Question and observations
 
-Does smaller embedding storage also run faster? B retained much less state and had a smaller allocation peak than A. But C beat B in0/30 primary P4 H process-block comparisons. When setup and actual calls were measured together, A/B session ordering was mixed at N128; A won all blocks at N1024 and4096. The historical operator runtime was RTX5080/sm_120, Python3.12.14, Torch2.13.0+cu130, CUDA13.0, driver621.01. Publication reanalyzes saved records on CPU.
+Does smaller embedding storage also run faster? B retained much less state and had a smaller allocation peak than A. But C beat B in 0/30 primary P4 H process-block comparisons. When setup and actual calls were measured together, A/B session ordering was mixed at N128; A won all blocks at N1024 and 4096. The historical operator runtime was RTX5080/sm_120, Python3.12.14, Torch2.13.0+cu130, CUDA13.0, driver621.01. Publication reanalyzes saved records on CPU.
 
 ## 2. Methods and shared output contract
 
@@ -30,13 +30,13 @@ The following LARGE/Z32/M2048/U512 values matched across all three original bloc
 | C | 550998 | 548928 | 52.571 | 102.000 | 20.571 |
 
 
-*The final column subtracts the common32MiB baseline from total peak; it is derived accounting, not new measurement or device VRAM.* The common NPZ is550998 bytes. The489.02-fold resident-module ratio and about73.4% A→B allocated-peak reduction describe different quantities. Output16MiB, IDs16KiB, FP32 intermediates and library/allocator memory matter. C's allocated peak was about34.9% below B, while reserved increased82→102MiB. Reserved includes memory held for reuse.
+*The final column subtracts the common 32 MiB baseline from total peak; it is derived accounting, not new measurement or device VRAM.* The common NPZ is 550998 bytes. The489.02-fold resident-module ratio and about 73.4% A→B allocated-peak reduction describe different quantities. Output16 MiB, IDs16 KiB, FP32 intermediates and library/allocator memory matter. C's allocated peak was about 34.9% below B, while reserved increased82→102 MiB. Reserved includes memory held for reuse.
 
 ![Memory](figures/01_memory.png)
 
 ## 4. P4 direct A/B/C calls and separate clocks
 
-Primary H keeps A and one B/C-shared compact module in one process, alternating method order. After a pre-call synchronize, host timing covers fn and completion synchronize. Each method has120 rounds; core has6 blocks and each new-width input3. The table summarizes the median and range of within-block medians and p95s. Inner calls are not independent models or tasks.
+Primary H keeps A and one B/C-shared compact module in one process, alternating method order. After a pre-call synchronize, host timing covers fn and completion synchronize. Each method has 120 rounds; core has 6 blocks and each new-width input 3. The table summarizes the median and range of within-block medians and p95s. Inner calls are not independent models or tasks.
 
 | Z / M / U | method | blocks | host median* µs [block range] | host p95* µs [block range] |
 |---|---|---|---|---|
@@ -92,7 +92,7 @@ Z is the intermediate vector width used by reconstruction. V32768/L16/H256/K256/
 | 644 | 161 | 10891362 | 10889216 | 10890504 | 10890504 | 6 | 10.3860 | 24.65 |
 
 
-Theory is `V*G + 2*K*Z + 2*L*H*Z + 2*L*H + 8*G`. The final term includes non-persistent group_offsets, which still uses GPU memory. Saved inventories18/6/6 per width agree. A's dense table is256MiB. The489-fold Z32 ratio does not apply to Z644 or a trained model. Z644/U512 narrowed C/B to1.142, but C remained slower in3/3 blocks. Width changes groups, codebook, storage and work together, rather than isolating one causal factor. Z644 matches only E4B's latent width, not its full shape or quality.
+Theory is `V*G + 2*K*Z + 2*L*H*Z + 2*L*H + 8*G`. The final term includes non-persistent group_offsets, which still uses GPU memory. Saved inventories18/6/6 per width agree. A's dense table is 256 MiB. The489-fold Z32 ratio does not apply to Z644 or a trained model. Z644/U512 narrowed C/B to 1.142, but C remained slower in 3/3 blocks. Width changes groups, codebook, storage and work together, rather than isolating one causal factor. Z644 matches only E4B's latent width, not its full shape or quality.
 
 ![Width, storage and call costs](figures/03_width_storage.png)
 
@@ -113,9 +113,9 @@ The input is Z32/M2048/U512. A/B/C×N128/1024/4096×3 blocks gives27 fresh proce
 | 4096 | C | 1.234773 [1.125446, 1.362115] | 3.017688 [2.867949, 3.179739] |
 
 
-Each entry is a median/range of three blocks for that method. At N4096, A was53.0% cheaper than B by session medians and23.8% by whole-worker medians. These compare marginal method medians, not median paired-block reductions. N128 sessions favored B in2/3 blocks; whole workers favored B in3/3 with only about17ms median difference. N1024/4096 sessions favored A in3/3. C's session median was higher than B at every N, but one N4096 block had C<B.
+Each entry is a median/range of three blocks for that method. At N4096, A was53.0% cheaper than B by session medians and 23.8% by whole-worker medians. These compare marginal method medians, not median paired-block reductions. N128 sessions favored B in 2/3 blocks; whole workers favored B in 3/3 with only about 17 ms median difference. N1024/4096 sessions favored A in 3/3. C's session median was higher than B at every N, but one N4096 block had C<B.
 
-First calls were about92–119ms for B,122–164ms for C, and1.2–2.1ms for A's first gather after decoder execution during table setup. No unprofiled cause is assigned to cold-call overhead. OS caches may be warm. The earlier setup+N×warm-median scenario remains historical at about920–2319 calls. New median ordering changes between tested128 and1024; no exact operational crossover is interpolated. Session/N is an amortized mean, not per-call p95.
+First calls were about 92–119 ms for B,122–164 ms for C, and 1.2–2.1 ms for A's first gather after decoder execution during table setup. No unprofiled cause is assigned to cold-call overhead. OS caches may be warm. The earlier setup+N×warm-median scenario remains historical at about 920–2319 calls. New median ordering changes between tested128 and 1024; no exact operational crossover is interpolated. Session/N is an amortized mean, not per-call p95.
 
 ![Session and whole process](figures/04_session_worker.png)
 
@@ -154,16 +154,16 @@ First calls were about92–119ms for B,122–164ms for C, and1.2–2.1ms for A's
 
 *First call is already included in loop.* [lifecycle_block.csv](summary/lifecycle_block.csv) contains detailed artifact/H2D/dense intervals, process CPU time and peak RSS. CPU/RSS are final-report samples before JSON/exit, not complete parent-side process accounting.
 
-## 7. Where the common32MiB appeared
+## 7. Where the common 32 MiB appeared
 
-All90 historical final records had32MiB allocated after common library initialization, before artifact/IDs. Warm−baseline−module−IDs left0–952 bytes. Separate historical after-load/output-release endpoints and allocation stacks were absent. New P4 A/B/C diagnostics show context0→small FP16 GEMM32MiB→module/ID removal32MiB. Remaining active-block stack frames include setWorkspaceForHandle/getCurrentCUDABlasHandle and the FP16 cuBLAS GEMM helper, identifying **Torch cuBLAS handle workspace in the new replay**. It is not a recovered historical allocation stack. See [stages](summary/memory_stages.csv) and [preserved P4 stack raw](publication/originals/pre-publication/followup/p4_speed_cost/results/p4-20261026-1451/memory_B.json).
+All90 historical final records had32 MiB allocated after common library initialization, before artifact/IDs. Warm−baseline−module−IDs left0–952 bytes. Separate historical after-load/output-release endpoints and allocation stacks were absent. New P4 A/B/C diagnostics show context0→small FP16 GEMM32 MiB→module/ID removal32 MiB. Remaining active-block stack frames include setWorkspaceForHandle/getCurrentCUDABlasHandle and the FP16 cuBLAS GEMM helper, identifying **Torch cuBLAS handle workspace in the new replay**. It is not a recovered historical allocation stack. See [stages](summary/memory_stages.csv) and [preserved P4 stack raw](publication/originals/pre-publication/followup/p4_speed_cost/results/p4-20261026-1451/memory_B.json).
 
 ## 8. Validation, denominators, history and reproduction
 
-Final P2 has10 inputs×3 methods×3 blocks=90 cell-blocks. The earlier90 with a verification-order deviation remain diagnostic. Historical C wins were host5/30, event mean4/30, intersection0/30; three host wins had U=M. Those results are retained rather than deleted or pooled into P4. P4 core3 inputs×6 blocks and width4 inputs×3 blocks yield30 C/B comparisons, not30 independent workloads. Timing30 workers/96 method-blocks, lifecycle27, preflight3+smoke1+memory3 sum to64 new workers. GPU failures/retries/missing=0; profiling workers0.
+Final P2 has 10 inputs×3 methods×3 blocks=90 cell-blocks. The earlier90 with a verification-order deviation remain diagnostic. Historical C wins were host5/30, event mean4/30, intersection0/30; three host wins had U=M. Those results are retained rather than deleted or pooled into P4. P4 core3 inputs×6 blocks and width4 inputs×3 blocks yield30 C/B comparisons, not30 independent workloads. Timing30 workers/96 method-blocks, lifecycle27, preflight3+smoke1+memory3 sum to 64 new workers. GPU failures/retries/missing=0; profiling workers0.
 
-Historical GPU-related worker wall is196 workers457.424303870s plus64 workers265.775915436s, totaling260 workers723.200219306s and1076.799780694s left from1800s. Publication adds no GPU execution. Worker wall is not GPU busy time. Tiny GEMM probes are already inside each worker and are not double-debited.
+Historical GPU-related worker wall is 196 workers457.424303870s plus64 workers265.775915436s, totaling 260 workers723.200219306s and 1076.799780694s left from 1800s. Publication adds no GPU execution. Worker wall is not GPU busy time. Tiny GEMM probes are already inside each worker and are not double-debited.
 
-The publication calculator reads raw H/D/E, original P2 statistics, storage, lifecycle intervals and ledgers. Full mode restores the exact747-file historical scope in a temporary external directory for the unchanged P2 auditor, invokes the unchanged P4 auditor in portable mode, and cross-checks an alternative NumPy statistics path. Frozen source is not edited. [Preservation mapping](publication/preservation_map.json) retains all original Case and referenced external analysis/handoff bytes. Historical NOT_RUN receipts remain historical; new verification receipts record current checks. See [quick/full reproduction](REPRODUCE.md), [reuse](REUSE_MAP.md) and [sources](SOURCE_MAP.md).
+The publication calculator reads raw H/D/E, original P2 statistics, storage, lifecycle intervals and ledgers. Full mode restores the exact 747-file historical scope in a temporary external directory for the unchanged P2 auditor, invokes the unchanged P4 auditor in portable mode, and cross-checks an alternative NumPy statistics path. Frozen source is not edited. [Preservation mapping](publication/preservation_map.json) retains all original Case and referenced external analysis/handoff bytes. Historical NOT_RUN receipts remain historical; new verification receipts record current checks. See [quick/full reproduction](REPRODUCE.md), [reuse](REUSE_MAP.md) and [sources](SOURCE_MAP.md).
 
 Scope is one RTX5080, identical synthetic IDs reused in warm-cache calls, unfixed CPU/GPU clocks and Linux/WSL memory attribution. LLM inference, trained-artifact quality, TTFT/TPOT, KV redistribution, server concurrency, electricity and cloud billing are unmeasured. Official codec/Torch GEMM/allocator and authored harness/audit are distinguished. Publication commits are new packaging; historical executions have separate source bundles. Native Windows was not validated.

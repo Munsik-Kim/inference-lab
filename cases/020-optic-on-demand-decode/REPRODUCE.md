@@ -31,9 +31,9 @@ PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 \
   --mode full --tests --output /tmp/case020-full-new
 ```
 
-Full adds NPZ CRC/member/magic checks, unchanged P2/P4 auditors, all preserved P1 tokens/layers/seeds/controls, saved P2 BF16 outputs and P4 preflight checks, an alternative statistics cross-check, and four PNG/SVG pairs. Historical manifest coverage is checked on an exact747-file temporary copy, removed afterward. No verifier expectation or numerical tolerance is weakened.
+Full adds NPZ CRC/member/magic checks, unchanged P2/P4 auditors, all preserved P1 tokens/layers/seeds/controls, saved P2 BF16 outputs and P4 preflight checks, an alternative statistics cross-check, and four PNG/SVG pairs. Historical manifest coverage is checked on an exact 747-file temporary copy, removed afterward. No verifier expectation or numerical tolerance is weakened.
 
-P4 portable mode discloses unavailable original-machine external paths. Exact public copies of19 external originals are independently verified by preservation_map. Recorded absolute paths remain unchanged; the wrapper selects the archive within the current checkout. This is not new GPU/model reproduction.
+P4 portable mode discloses unavailable original-machine external paths. Exact public copies of 19 external originals are independently verified by preservation_map. Recorded absolute paths remain unchanged; the wrapper selects the archive within the current checkout. This is not new GPU/model reproduction.
 
 ## Inputs and outputs
 
@@ -44,7 +44,7 @@ P4 portable mode discloses unavailable original-machine external paths. Exact pu
 - Full audit outputs: `OUTPUT/historical_P2_summary/`, `OUTPUT/historical_P4_summary/`, `OUTPUT/figures/`.
 - Success/failure: `OUTPUT/verification.json` or `failure.json`, `tests.log` / `failure.log`.
 
-All evidence is in ordinary Git files: no Release asset or implicit evidence download. Checks enforce25MiB/file and128MiB/Case. Full temporarily needs about81MiB for the historical copy, plus its external outputs.
+All evidence is in ordinary Git files: no Release asset or implicit evidence download. Checks enforce25 MiB/file and 128 MiB/Case. Full temporarily needs about 81 MiB for the historical copy, plus its external outputs.
 
 The performed fresh-environment validation is recorded in publication/receipts/local_cpu.json. Remote CI runs Case020 CPU quick checks, not the historical GPU experiment. Post-publication self-checks are reported against distinct PR/main SHAs in the final handoff. Historical NOT_RUN receipts are unchanged.
 

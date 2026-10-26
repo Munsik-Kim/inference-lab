@@ -57,7 +57,7 @@ Built an inventory recovery environment and auditor that checks restored state s
 <!-- case020-entry -->
 ## Case020 — Does Smaller Embedding Storage Also Run Faster?
 
-Compared precomputed lookup, request-time reconstruction and per-call deduplication of the same OPTIC representation. Synthetic-table PyTorch allocated peak fell from about304 to81MiB, while deduplication won0/30 P4 process-block call comparisons. Precomputation was faster in actual1024/4096-call reuse sessions.
+Compared precomputed lookup, request-time reconstruction and per-call deduplication of the same OPTIC representation. Synthetic-table PyTorch allocated peak fell from about 304 to 81 MiB, while deduplication won0/30 P4 process-block call comparisons. Precomputation was faster in actual1024/4096-call reuse sessions.
 
 [Plain explanation](cases/020-optic-on-demand-decode/README.md) · [Report](cases/020-optic-on-demand-decode/REPORT.md) · [CPU checks without a model](cases/020-optic-on-demand-decode/REPRODUCE.md)
 
