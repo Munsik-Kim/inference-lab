@@ -121,4 +121,4 @@ def save(data,out):
   if isinstance(v,dict):(out/(k+'.json')).write_text(json.dumps(v,indent=2,allow_nan=False)+'\n')
   else:
    fields=list(dict.fromkeys(k for x in v for k in x))
-   with (out/(k+'.csv')).open('w',newline='') as f:w=csv.DictWriter(f,fields);w.writeheader();w.writerows(v)
+   with (out/(k+'.csv')).open('w',newline='') as f:w=csv.DictWriter(f,fields,lineterminator="\n");w.writeheader();w.writerows(v)

@@ -9,7 +9,7 @@ def render(data,out):
  import matplotlib.pyplot as plt
  plt.rcParams.update({'font.family':'DejaVu Sans','font.size':10,'axes.spines.top':False,'axes.spines.right':False,'svg.hashsalt':'case020-publication'})
  out=Path(out);out.mkdir(parents=True,exist_ok=True);colors={'A':'#334155','B':'#0284c7','C':'#e76f16'};marks=['o','s','^','D','v','P']
- def save(f,name):f.savefig(out/(name+'.png'),dpi=160,bbox_inches='tight',facecolor='white');f.savefig(out/(name+'.svg'),bbox_inches='tight',metadata={'Date':None});plt.close(f)
+ def save(f,name):f.savefig(out/(name+'.png'),dpi=160,bbox_inches='tight',facecolor='white');f.savefig(out/(name+'.svg'),bbox_inches='tight',metadata={'Date':None});svg=out/(name+'.svg');svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines())+'\n');plt.close(f)
  # Same shape, original method-isolated accounting, all3 blocks represented.
  f,axs=plt.subplots(1,2,figsize=(11,4.5));f.suptitle('Same output, different memory costs | P2 LARGE Z32, M2048 / U512')
  for ax,key,title in [(axs[0],'resident_bytes','Tensors retained between calls'),(axs[1],'total_allocated_peak_bytes','PyTorch allocated peak during calls')]:
