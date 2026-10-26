@@ -1,0 +1,309 @@
+{
+  "question": "Does smaller embedding storage also run faster?",
+  "memory_condition": "P2 LARGE Z32 M2048 U512; method-isolated",
+  "P2_final_cell_blocks": 90,
+  "P2_diagnostic_cell_blocks": 90,
+  "memory": {
+    "A_to_B_allocated_peak_reduction": 0.7342585573315517,
+    "A_to_B_module_ratio": 489.0176052232715,
+    "C_vs_B_allocated_peak_reduction": 0.34928712596021927,
+    "observations": [
+      {
+        "shape": "LARGE",
+        "M": 2048,
+        "U": 512,
+        "block": 0,
+        "method": "B",
+        "NPZ_bytes": 550998,
+        "resident_bytes": 548928,
+        "baseline_allocated_bytes": 33554432,
+        "total_allocated_peak_bytes": 84713984,
+        "total_reserved_peak_bytes": 85983232,
+        "incremental_peak_above_common_baseline_bytes": 51159552
+      },
+      {
+        "shape": "LARGE",
+        "M": 2048,
+        "U": 512,
+        "block": 0,
+        "method": "A",
+        "NPZ_bytes": 550998,
+        "resident_bytes": 268435456,
+        "baseline_allocated_bytes": 33554432,
+        "total_allocated_peak_bytes": 318783488,
+        "total_reserved_peak_bytes": 354418688,
+        "incremental_peak_above_common_baseline_bytes": 285229056
+      },
+      {
+        "shape": "LARGE",
+        "M": 2048,
+        "U": 512,
+        "block": 0,
+        "method": "C",
+        "NPZ_bytes": 550998,
+        "resident_bytes": 548928,
+        "baseline_allocated_bytes": 33554432,
+        "total_allocated_peak_bytes": 55124480,
+        "total_reserved_peak_bytes": 106954752,
+        "incremental_peak_above_common_baseline_bytes": 21570048
+      },
+      {
+        "shape": "LARGE",
+        "M": 2048,
+        "U": 512,
+        "block": 1,
+        "method": "B",
+        "NPZ_bytes": 550998,
+        "resident_bytes": 548928,
+        "baseline_allocated_bytes": 33554432,
+        "total_allocated_peak_bytes": 84713984,
+        "total_reserved_peak_bytes": 85983232,
+        "incremental_peak_above_common_baseline_bytes": 51159552
+      },
+      {
+        "shape": "LARGE",
+        "M": 2048,
+        "U": 512,
+        "block": 1,
+        "method": "C",
+        "NPZ_bytes": 550998,
+        "resident_bytes": 548928,
+        "baseline_allocated_bytes": 33554432,
+        "total_allocated_peak_bytes": 55124480,
+        "total_reserved_peak_bytes": 106954752,
+        "incremental_peak_above_common_baseline_bytes": 21570048
+      },
+      {
+        "shape": "LARGE",
+        "M": 2048,
+        "U": 512,
+        "block": 1,
+        "method": "A",
+        "NPZ_bytes": 550998,
+        "resident_bytes": 268435456,
+        "baseline_allocated_bytes": 33554432,
+        "total_allocated_peak_bytes": 318783488,
+        "total_reserved_peak_bytes": 354418688,
+        "incremental_peak_above_common_baseline_bytes": 285229056
+      },
+      {
+        "shape": "LARGE",
+        "M": 2048,
+        "U": 512,
+        "block": 2,
+        "method": "C",
+        "NPZ_bytes": 550998,
+        "resident_bytes": 548928,
+        "baseline_allocated_bytes": 33554432,
+        "total_allocated_peak_bytes": 55124480,
+        "total_reserved_peak_bytes": 106954752,
+        "incremental_peak_above_common_baseline_bytes": 21570048
+      },
+      {
+        "shape": "LARGE",
+        "M": 2048,
+        "U": 512,
+        "block": 2,
+        "method": "B",
+        "NPZ_bytes": 550998,
+        "resident_bytes": 548928,
+        "baseline_allocated_bytes": 33554432,
+        "total_allocated_peak_bytes": 84713984,
+        "total_reserved_peak_bytes": 85983232,
+        "incremental_peak_above_common_baseline_bytes": 51159552
+      },
+      {
+        "shape": "LARGE",
+        "M": 2048,
+        "U": 512,
+        "block": 2,
+        "method": "A",
+        "NPZ_bytes": 550998,
+        "resident_bytes": 268435456,
+        "baseline_allocated_bytes": 33554432,
+        "total_allocated_peak_bytes": 318783488,
+        "total_reserved_peak_bytes": 354418688,
+        "incremental_peak_above_common_baseline_bytes": 285229056
+      }
+    ]
+  },
+  "P4_timing_workers": 30,
+  "P4_method_blocks": 96,
+  "P4_lifecycle_workers": 27,
+  "P4_C_B_block_comparisons": 30,
+  "P4_C_faster_blocks": 0,
+  "P2_host_C_wins": 5,
+  "P2_event_mean_C_wins": 4,
+  "P2_common_C_wins": 0,
+  "N4096_A_reduction_ratio_of_method_medians": {
+    "session_wall_seconds": 0.5303058474443486,
+    "worker_wall_seconds": 0.23833484531934268
+  },
+  "lifecycle_direction_counts": [
+    {
+      "N": 128,
+      "blocks": 3,
+      "session_wall_seconds_A_faster_than_B_blocks": 1,
+      "worker_wall_seconds_A_faster_than_B_blocks": 0
+    },
+    {
+      "N": 1024,
+      "blocks": 3,
+      "session_wall_seconds_A_faster_than_B_blocks": 3,
+      "worker_wall_seconds_A_faster_than_B_blocks": 3
+    },
+    {
+      "N": 4096,
+      "blocks": 3,
+      "session_wall_seconds_A_faster_than_B_blocks": 3,
+      "worker_wall_seconds_A_faster_than_B_blocks": 3
+    }
+  ],
+  "ratios": [
+    {
+      "Z": 32,
+      "input": "m1",
+      "blocks": 6,
+      "median_of_block_C_B_ratios": 2.3332739136338287,
+      "min": 1.741621116823907,
+      "max": 2.5953421351671135,
+      "median_of_block_C_minus_B_us": 138.17075,
+      "C_faster_blocks": 0
+    },
+    {
+      "Z": 32,
+      "input": "repeat2048",
+      "blocks": 6,
+      "median_of_block_C_B_ratios": 1.7774023199708995,
+      "min": 1.5114784205693297,
+      "max": 1.9202887730876625,
+      "median_of_block_C_minus_B_us": 114.27325000000003,
+      "C_faster_blocks": 0
+    },
+    {
+      "Z": 32,
+      "input": "unique2048",
+      "blocks": 6,
+      "median_of_block_C_B_ratios": 1.9355144406025477,
+      "min": 1.8639643934019154,
+      "max": 2.1549478137479627,
+      "median_of_block_C_minus_B_us": 140.92175,
+      "C_faster_blocks": 0
+    },
+    {
+      "Z": 128,
+      "input": "repeat2048",
+      "blocks": 3,
+      "median_of_block_C_B_ratios": 1.7996607192351493,
+      "min": 1.744716749608017,
+      "max": 1.8174824799123404,
+      "median_of_block_C_minus_B_us": 119.73200000000003,
+      "C_faster_blocks": 0
+    },
+    {
+      "Z": 128,
+      "input": "unique2048",
+      "blocks": 3,
+      "median_of_block_C_B_ratios": 1.9422188615734544,
+      "min": 1.7991869780740732,
+      "max": 1.9432711032914645,
+      "median_of_block_C_minus_B_us": 265.91850000000005,
+      "C_faster_blocks": 0
+    },
+    {
+      "Z": 644,
+      "input": "repeat2048",
+      "blocks": 3,
+      "median_of_block_C_B_ratios": 1.141756186632555,
+      "min": 1.114941376539009,
+      "max": 1.3055021609695652,
+      "median_of_block_C_minus_B_us": 56.12900000000002,
+      "C_faster_blocks": 0
+    },
+    {
+      "Z": 644,
+      "input": "unique2048",
+      "blocks": 3,
+      "median_of_block_C_B_ratios": 1.4085684103446925,
+      "min": 1.3504144846002282,
+      "max": 1.4703030907993466,
+      "median_of_block_C_minus_B_us": 130.53249999999997,
+      "C_faster_blocks": 0
+    }
+  ],
+  "width_storage": [
+    {
+      "Z": 32,
+      "groups": 8,
+      "artifact_npz_bytes": 550998,
+      "array_payload_bytes": 548864,
+      "observed_unique_module_storage_bytes": 548928,
+      "inventory_observations": 18,
+      "theoretical_storage_bytes": 548928,
+      "module_MiB": 0.52349853515625,
+      "dense_BF16_table_bytes": 268435456,
+      "dense_over_observed_module": 489.0176052232715,
+      "storage_source": "compact subset of saved shared_inventory; excludes A table and common IDs"
+    },
+    {
+      "Z": 128,
+      "groups": 32,
+      "artifact_npz_bytes": 2173022,
+      "array_payload_bytes": 2170880,
+      "observed_unique_module_storage_bytes": 2171136,
+      "inventory_observations": 6,
+      "theoretical_storage_bytes": 2171136,
+      "module_MiB": 2.070556640625,
+      "dense_BF16_table_bytes": 268435456,
+      "dense_over_observed_module": 123.63825020634359,
+      "storage_source": "compact subset of saved shared_inventory; excludes A table and common IDs"
+    },
+    {
+      "Z": 644,
+      "groups": 161,
+      "artifact_npz_bytes": 10891362,
+      "array_payload_bytes": 10889216,
+      "observed_unique_module_storage_bytes": 10890504,
+      "inventory_observations": 6,
+      "theoretical_storage_bytes": 10890504,
+      "module_MiB": 10.385993957519531,
+      "dense_BF16_table_bytes": 268435456,
+      "dense_over_observed_module": 24.64857971678813,
+      "storage_source": "compact subset of saved shared_inventory; excludes A table and common IDs"
+    }
+  ],
+  "statistical_unit": "fresh process block; inner samples are repeated operator calls",
+  "memory_baseline_attribution": "New replay stack identifies Torch cuBLAS handle workspace; historical stack not captured",
+  "budget": {
+    "original_workers": 196,
+    "original_wall_seconds": 457.42430387000195,
+    "P4_workers": 64,
+    "P4_wall_seconds": 265.7759154359974,
+    "total_workers": 260,
+    "total_wall_seconds": 723.2002193059993,
+    "remaining_original_1800s": 1076.7997806940007,
+    "this_publication_GPU_workers": 0,
+    "P4_kind": {
+      "lifecycle": {
+        "workers": 27,
+        "wall_seconds": 61.774636382997414
+      },
+      "memory": {
+        "workers": 3,
+        "wall_seconds": 8.893412413000988
+      },
+      "preflight": {
+        "workers": 3,
+        "wall_seconds": 31.34397989899844
+      },
+      "smoke": {
+        "workers": 1,
+        "wall_seconds": 2.267547396999362
+      },
+      "timing": {
+        "workers": 30,
+        "wall_seconds": 161.49633934400117
+      }
+    }
+  }
+}

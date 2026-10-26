@@ -1,0 +1,387 @@
+{
+  "timestamp": "2026-10-26T06:42:37.058910+00:00",
+  "audit_summary": {
+    "decision": {
+      "status": "COMPLETE",
+      "planned_timing_workers": 30,
+      "actual_timing_workers": 30,
+      "planned_method_blocks": 96,
+      "actual_method_blocks": 96,
+      "planned_lifecycle_workers": 27,
+      "actual_lifecycle_workers": 27,
+      "failed_workers": [],
+      "missing_timing_workers": [],
+      "missing_lifecycle_workers": [],
+      "descriptive_decisions": [
+        {
+          "Z": 32,
+          "condition": "m1",
+          "blocks": 6,
+          "planned_blocks": 6,
+          "median_C_B_host_median_ratio": 2.3332739136338287,
+          "C_faster_blocks": 0,
+          "ratios": [
+            2.2729963473261336,
+            2.425354275457749,
+            2.393551479941524,
+            2.0204436069163973,
+            2.5953421351671135,
+            1.741621116823907
+          ],
+          "label": "NO_REPEATABLE_BENEFIT_UNDER_RULE",
+          "no_row_reduction": true
+        },
+        {
+          "Z": 32,
+          "condition": "unique2048",
+          "blocks": 6,
+          "planned_blocks": 6,
+          "median_C_B_host_median_ratio": 1.9355144406025477,
+          "C_faster_blocks": 0,
+          "ratios": [
+            1.927243416097361,
+            1.9376453451227926,
+            1.9333835360823028,
+            1.9470660432967548,
+            2.1549478137479627,
+            1.8639643934019154
+          ],
+          "label": "NO_REPEATABLE_BENEFIT_UNDER_RULE",
+          "no_row_reduction": true
+        },
+        {
+          "Z": 32,
+          "condition": "repeat2048",
+          "blocks": 6,
+          "planned_blocks": 6,
+          "median_C_B_host_median_ratio": 1.7774023199708995,
+          "C_faster_blocks": 0,
+          "ratios": [
+            1.8348962741161572,
+            1.7460570837955782,
+            1.6063028912399393,
+            1.8087475561462205,
+            1.5114784205693297,
+            1.9202887730876625
+          ],
+          "label": "NO_REPEATABLE_BENEFIT_UNDER_RULE",
+          "no_row_reduction": false
+        },
+        {
+          "Z": 128,
+          "condition": "unique2048",
+          "blocks": 3,
+          "planned_blocks": 3,
+          "median_C_B_host_median_ratio": 1.9422188615734544,
+          "C_faster_blocks": 0,
+          "ratios": [
+            1.9432711032914645,
+            1.7991869780740732,
+            1.9422188615734544
+          ],
+          "label": "NO_REPEATABLE_BENEFIT_UNDER_RULE",
+          "no_row_reduction": true
+        },
+        {
+          "Z": 128,
+          "condition": "repeat2048",
+          "blocks": 3,
+          "planned_blocks": 3,
+          "median_C_B_host_median_ratio": 1.7996607192351493,
+          "C_faster_blocks": 0,
+          "ratios": [
+            1.7996607192351493,
+            1.744716749608017,
+            1.8174824799123404
+          ],
+          "label": "NO_REPEATABLE_BENEFIT_UNDER_RULE",
+          "no_row_reduction": false
+        },
+        {
+          "Z": 644,
+          "condition": "unique2048",
+          "blocks": 3,
+          "planned_blocks": 3,
+          "median_C_B_host_median_ratio": 1.4085684103446925,
+          "C_faster_blocks": 0,
+          "ratios": [
+            1.4703030907993466,
+            1.4085684103446925,
+            1.3504144846002282
+          ],
+          "label": "NO_REPEATABLE_BENEFIT_UNDER_RULE",
+          "no_row_reduction": true
+        },
+        {
+          "Z": 644,
+          "condition": "repeat2048",
+          "blocks": 3,
+          "planned_blocks": 3,
+          "median_C_B_host_median_ratio": 1.141756186632555,
+          "C_faster_blocks": 0,
+          "ratios": [
+            1.141756186632555,
+            1.3055021609695652,
+            1.114941376539009
+          ],
+          "label": "NO_REPEATABLE_BENEFIT_UNDER_RULE",
+          "no_row_reduction": false
+        }
+      ],
+      "legacy_recomputed": {
+        "host_median_wins": 5,
+        "event_mean_wins": 4,
+        "common_wins": 0,
+        "direction_disagreements": 9,
+        "host_wins_U_equals_M": 3,
+        "all3_winning_conditions": 0
+      },
+      "preservation": {
+        "original_files_verified": 747,
+        "extra_files_outside_allowlist": [],
+        "external_originals_verified": 18,
+        "external_missing_portable": []
+      },
+      "P2_performance_samples_merged_with_P4": false,
+      "torch_imported": false
+    },
+    "budget": {
+      "prior_workers": 196,
+      "prior_wall_seconds": 457.42430387000195,
+      "P4_workers": 64,
+      "P4_wall_seconds": 265.7759154359974,
+      "P4_cap_seconds": 900,
+      "P4_remaining_seconds": 634.2240845640026,
+      "global_workers": 260,
+      "global_wall_seconds": 723.2002193059993,
+      "global_remaining_seconds": 1076.7997806940007,
+      "kind_counts": {
+        "preflight": 3,
+        "smoke": 1,
+        "timing": 30,
+        "lifecycle": 27,
+        "memory": 3
+      },
+      "kind_wall_seconds": {
+        "preflight": 31.34397989899844,
+        "smoke": 2.267547396999362,
+        "timing": 161.49633934400117,
+        "lifecycle": 61.774636382997414,
+        "memory": 8.893412413000988
+      },
+      "GPU_worker_wall_is_not_GPU_busy_time": true,
+      "common_small_GEMM_probe_calls": 64,
+      "PLE_method_fn_calls": 108553,
+      "official_decoder_full_table_setup_calls": 5632
+    }
+  },
+  "external_summary_command": [
+    "/home/mskim/inference-lab/.venv-baseline/bin/python",
+    "src/audit.py",
+    "summarize",
+    "--out",
+    "/home/mskim/Codex_main/case020-p4-private-20261026-1451/rebuild_summary"
+  ],
+  "external_summary_files_byte_equal": [
+    {
+      "path": "budget.json",
+      "bytes": 807,
+      "sha256": "86a940c0e3fe4e57364e3e154897e75b4476c99e9a1907fd815b3d046e4bc54d"
+    },
+    {
+      "path": "controlled_latency.csv",
+      "bytes": 121083,
+      "sha256": "f1c911fec320134e9aae2e2e4e60338342f4be68162801f80e49a2052d50443d"
+    },
+    {
+      "path": "decision.json",
+      "bytes": 3739,
+      "sha256": "02cc851287665b855c56905e3100726d284804c8762bd870b844b32ae14fba0c"
+    },
+    {
+      "path": "legacy_matched_statistics.csv",
+      "bytes": 213,
+      "sha256": "bfdb4793c5bb86d80d4959c9d8c06d451b04116044ab3b95c763e66b180c2bb4"
+    },
+    {
+      "path": "legacy_memory.csv",
+      "bytes": 7701,
+      "sha256": "51bbccd861270b6cdc0559004334a625b417420e215a06eb2c2a7958395378b4"
+    },
+    {
+      "path": "legacy_paired_statistics.csv",
+      "bytes": 12562,
+      "sha256": "af17285af60999abbc6aec76c1b76bc00bbb4026165ad8ec21bc195e15fdf0a7"
+    },
+    {
+      "path": "legacy_statistics.csv",
+      "bytes": 28087,
+      "sha256": "98828f1c99649dd0d074078778fc9a969d934f50213deb9e0b6de316e4af4886"
+    },
+    {
+      "path": "lifecycle.csv",
+      "bytes": 11873,
+      "sha256": "681ac56a3b39cf3d43744e1765c9ca7edf727550a5ff884fb920e29e92641dcb"
+    },
+    {
+      "path": "memory_attribution.csv",
+      "bytes": 740,
+      "sha256": "6c5955d6fe3537d504f8dc4a6d960a39b2afb6ed6a77b2fe6a323f3c79257330"
+    },
+    {
+      "path": "memory_stages.csv",
+      "bytes": 2342,
+      "sha256": "de0f0e7df9b101b0a7524c869317017ee70b820cb9e5899a3bac6bc7686e1987"
+    },
+    {
+      "path": "paired_block_comparison.csv",
+      "bytes": 31660,
+      "sha256": "c35e4aef7b1843fa17f0555cfecf8cfc9ed1e5ed320deaf1446b21e6365dd72b"
+    },
+    {
+      "path": "paired_round_comparison.csv",
+      "bytes": 1999442,
+      "sha256": "db6db58d804e05c5f676172706ab78700da86af13825768f6242727421a84264"
+    },
+    {
+      "path": "preflight_audit.csv",
+      "bytes": 419,
+      "sha256": "ce3412e52b5df8526f02c9d6c91480354bcb054334996d86a53532e0be355861"
+    },
+    {
+      "path": "round_samples.csv",
+      "bytes": 2376666,
+      "sha256": "069fbc1f2a8fd7e4fcb5455367ba74012e7e01d166f17f2b1ffb7fccde653ca9"
+    },
+    {
+      "path": "same_call_dual_timer.csv",
+      "bytes": 819260,
+      "sha256": "313f63fbcba538ae565bc5267d6f8e7471c4d74c19ee20fef7d6fa55b6d6ad5a"
+    },
+    {
+      "path": "smoke_latency.csv",
+      "bytes": 4037,
+      "sha256": "a0a5da774612c5ac423036aadbeb0ecc98cbe46857a860b52e35622d59724bad"
+    },
+    {
+      "path": "width_comparison.csv",
+      "bytes": 7767,
+      "sha256": "5bc3ffdb94da4d92e2ed0faa31a444cb6861a34ba20599ec5ef2cec0f636fb30"
+    },
+    {
+      "path": "work_counts.csv",
+      "bytes": 19156,
+      "sha256": "728e305a738c9151f7372b21ab705b107276082ad0116c17839d7d1813e01668"
+    }
+  ],
+  "external_figure_files": [
+    {
+      "path": "01_shared_context_latency.png",
+      "bytes": 252984,
+      "sha256": "d70b59cf1b92dc58ccf783f32e319d7bd418441588721c0a82ab588bdac7e50b",
+      "same_environment_byte_equal": true
+    },
+    {
+      "path": "01_shared_context_latency.svg",
+      "bytes": 206764,
+      "sha256": "d24e152efaa60b512d5e0dff602828fb3011859024ee0eb28e6a8b3bae991b07",
+      "same_environment_byte_equal": true
+    },
+    {
+      "path": "02_width_comparison.png",
+      "bytes": 111593,
+      "sha256": "92bf18a2d4b877a2157ca6bbd30296d14eef4d99049c00febe7a38bd547e9921",
+      "same_environment_byte_equal": true
+    },
+    {
+      "path": "02_width_comparison.svg",
+      "bytes": 85611,
+      "sha256": "b696f3cd3deae4b3ac0164baac2a2c1445407e19e67787e7b1745c3cfcc061fb",
+      "same_environment_byte_equal": true
+    },
+    {
+      "path": "03_actual_lifecycle.png",
+      "bytes": 108927,
+      "sha256": "b750af245b4ddab7a363fa2c93da6ac52a3e3da6a71323d9b56f7696aa0128b5",
+      "same_environment_byte_equal": true
+    },
+    {
+      "path": "03_actual_lifecycle.svg",
+      "bytes": 98978,
+      "sha256": "0b1f430bd7b0a1249cdb1473091a9fd0f3997c6d02c311d90d91ef97fa6d0e75",
+      "same_environment_byte_equal": true
+    },
+    {
+      "path": "04_memory_attribution.png",
+      "bytes": 263800,
+      "sha256": "cbe108c439cea93713a3fd58cedcd3af6b74757c67e5ae612d2bd708c510b73c",
+      "same_environment_byte_equal": true
+    },
+    {
+      "path": "04_memory_attribution.svg",
+      "bytes": 130200,
+      "sha256": "e5e03e03dded7c6022108b79924331782ebe22af5e4dbd0123586e9b24f41f6c",
+      "same_environment_byte_equal": true
+    }
+  ],
+  "numerical_equality_required": true,
+  "figure_byte_equality_observed_only_same_environment": true,
+  "tests": {
+    "command": [
+      "/home/mskim/inference-lab/.venv-baseline/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_event_K_conversion_refused (test_audit.AuditFixtures.test_event_K_conversion_refused) ... ok\ntest_host_unit_error_refused (test_audit.AuditFixtures.test_host_unit_error_refused) ... ok\ntest_manifest_mutation_and_unlisted_file_refused (test_audit.AuditFixtures.test_manifest_mutation_and_unlisted_file_refused) ... ok\ntest_numeric_saved_PASS_not_trusted (test_audit.AuditFixtures.test_numeric_saved_PASS_not_trusted) ... ok\ntest_same_call_timers_need_not_match (test_audit.AuditFixtures.test_same_call_timers_need_not_match) ... ok\ntest_input_boundary_and_CPU_only_import (test_contract.Contracts.test_input_boundary_and_CPU_only_import) ... ok\ntest_plan_balance_and_denominators (test_contract.Contracts.test_plan_balance_and_denominators) ... ok\ntest_preflight_hash_and_source_mismatch_reject (test_contract.Contracts.test_preflight_hash_and_source_mismatch_reject) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.005s\n\nOK\n"
+  },
+  "CPU_help": {
+    "command": [
+      "/home/mskim/inference-lab/.venv-baseline/bin/python",
+      "-c",
+      "import runpy,sys,json;sys.argv=['audit.py','--help'];\ntry:runpy.run_path('src/audit.py',run_name='__main__')\nexcept SystemExit as e:assert e.code==0\nassert 'torch' not in sys.modules;print('CPU_HELP_NO_TORCH_IMPORT')"
+    ],
+    "exit_code": 0,
+    "stdout": "usage: audit.py [-h] [--root ROOT] [--out OUT] [--portable]\n                {verify,summarize,figures}\n\nIndependent CPU audit and aggregation of P4 evidence. Never imports\nTorch/worker/base.\n\npositional arguments:\n  {verify,summarize,figures}\n\noptions:\n  -h, --help            show this help message and exit\n  --root ROOT\n  --out OUT\n  --portable            Map recorded case paths to current case; explicitly\n                        report unavailable outside-case originals rather than\n                        claiming their verification\nCPU_HELP_NO_TORCH_IMPORT\n",
+    "stderr": ""
+  },
+  "torch_imported_in_audit": false,
+  "local_links_checked": 43,
+  "owned_worker_processes_after": [],
+  "figure_visual_review": {
+    "method": "Four PNGs opened individually with view_image",
+    "files": [
+      "01_shared_context_latency.png",
+      "02_width_comparison.png",
+      "03_actual_lifecycle.png",
+      "04_memory_attribution.png"
+    ],
+    "checked": [
+      "titles",
+      "units",
+      "zero-based linear axes and all origins",
+      "legend meanings",
+      "process block counts",
+      "range bars versus uncertainty",
+      "P2 isolated memory distinct from P4 shared latency"
+    ],
+    "result": "No material layout/label issue found"
+  },
+  "historical_helper_receipt": {
+    "copied_files": 747,
+    "original_verifier_modified": false,
+    "expected_coverage_modified": false,
+    "exit_code": 0,
+    "stdout": "{\n  \"status\": \"COMPLETE\",\n  \"planned_cells\": 30,\n  \"planned_cell_blocks\": 90,\n  \"actual_cells\": 30,\n  \"success_cell_blocks\": 90,\n  \"failed_cell_blocks\": 0,\n  \"failed\": [],\n  \"missing_cell_blocks\": 0,\n  \"missing\": [],\n  \"labels\": [\n    \"OPERATOR_VALIDATED\",\n    \"MEMORY_TRADEOFF_OBSERVED\",\n    \"DEDUP_UNRESOLVED_BLOCK_VARIATION\"\n  ],\n  \"dedup_gain_conditions\": [],\n  \"host_C_faster_paired_blocks\": 5,\n  \"paired_comparisons\": 30,\n  \"judgment_note\": \"Descriptive rule: report conditions with C<B in all three host blocks and retain all other ratios. This rule was selected after seeing the diagnostic run, before corrected primary timing; no formal statistical threshold is claimed.\",\n  \"run_id\": \"20261026-1235\",\n  \"primary_gpu_workers\": 99,\n  \"primary_gpu_worker_wall_seconds\": 224.77486773000123,\n  \"prior_diagnostic_cell_blocks\": 90,\n  \"gpu_workers_total\": 196,\n  \"gpu_worker_wall_seconds\": 457.42430387000195,\n  \"gpu_worker_budget_remaining_seconds\": 1342.575696129998,\n  \"independent_method_pair_records\": 90,\n  \"cpu_only_reaggregation\": true,\n  \"torch_imported\": false,\n  \"quantile\": \"linear\",\n  \"public_raw_bf16_scope\": \"B block0 all ten inputs plus P1 A/B/C all257tokens, seeds0/1/2; requested outputs only\"\n}\n",
+    "stderr": "",
+    "temporary_copy_removed_on_exit": true
+  },
+  "remote_CI": "NOT_RUN",
+  "cross_machine": "NOT_RUN",
+  "publication": "NOT_RUN"
+}

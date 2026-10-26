@@ -1,0 +1,305 @@
+{
+  "kind": "probe",
+  "baseline": {
+    "allocated": 33554432,
+    "reserved": 33554432,
+    "device": {
+      "exit_code": 0,
+      "sample": "2222 MiB, 0 %, 34.20, 30.61 W",
+      "stderr": ""
+    }
+  },
+  "device_name": "NVIDIA GeForce RTX 5080",
+  "sm": [
+    12,
+    0
+  ],
+  "policy_before": {
+    "tf32": false,
+    "fp16_reduction": true,
+    "bf16_reduction": true
+  },
+  "policy_after": {
+    "tf32": false,
+    "fp16_reduction": false,
+    "bf16_reduction": false,
+    "fp16_accumulation": false
+  },
+  "cuda_path_probe": "FP16 torch.mm(out_dtype=FP32) finite PASS",
+  "allocator": "native",
+  "upstream_sha": "344c712aeb6620e39eb78930fb922447f0e123f3",
+  "correctness": {
+    "relative_L2": 0.0016811884691349435,
+    "max_abs": 0.007124036550521851,
+    "rmse": 0.0008266233091800336,
+    "zero_reference": false,
+    "finite": true,
+    "pass": true,
+    "layers": [
+      {
+        "relative_L2": 0.0016732121712423526,
+        "max_abs": 0.006056756246834993,
+        "rmse": 0.0008023263045598264,
+        "zero_reference": false,
+        "finite": true,
+        "pass": true
+      },
+      {
+        "relative_L2": 0.0017244079965089316,
+        "max_abs": 0.007124036550521851,
+        "rmse": 0.0007782283198103217,
+        "zero_reference": false,
+        "finite": true,
+        "pass": true
+      },
+      {
+        "relative_L2": 0.0016567153361024415,
+        "max_abs": 0.0038917530328035355,
+        "rmse": 0.0008947354184874013,
+        "zero_reference": false,
+        "finite": true,
+        "pass": true
+      }
+    ]
+  },
+  "dtype": "torch.bfloat16",
+  "shape": [
+    257,
+    48
+  ],
+  "inventory": [
+    {
+      "name": "token_codes",
+      "dtype": "torch.uint8",
+      "shape": [
+        257,
+        2
+      ],
+      "numel": 514,
+      "element_size": 1,
+      "payload_bytes": 514,
+      "storage_bytes": 514,
+      "storage_key": [
+        "cuda:0",
+        47345303552,
+        514
+      ],
+      "unique_storage": true,
+      "device": "cuda:0",
+      "persistent": true
+    },
+    {
+      "name": "codebooks",
+      "dtype": "torch.float16",
+      "shape": [
+        2,
+        256,
+        4
+      ],
+      "numel": 2048,
+      "element_size": 2,
+      "payload_bytes": 4096,
+      "storage_bytes": 4096,
+      "storage_key": [
+        "cuda:0",
+        47345304576,
+        4096
+      ],
+      "unique_storage": true,
+      "device": "cuda:0",
+      "persistent": true
+    },
+    {
+      "name": "decoder_weight",
+      "dtype": "torch.float16",
+      "shape": [
+        48,
+        8
+      ],
+      "numel": 384,
+      "element_size": 2,
+      "payload_bytes": 768,
+      "storage_bytes": 768,
+      "storage_key": [
+        "cuda:0",
+        47345308672,
+        768
+      ],
+      "unique_storage": true,
+      "device": "cuda:0",
+      "persistent": true
+    },
+    {
+      "name": "decoder_bias",
+      "dtype": "torch.float16",
+      "shape": [
+        48
+      ],
+      "numel": 48,
+      "element_size": 2,
+      "payload_bytes": 96,
+      "storage_bytes": 96,
+      "storage_key": [
+        "cuda:0",
+        47345309696,
+        96
+      ],
+      "unique_storage": true,
+      "device": "cuda:0",
+      "persistent": true
+    },
+    {
+      "name": "group_offsets",
+      "dtype": "torch.int64",
+      "shape": [
+        1,
+        2
+      ],
+      "numel": 2,
+      "element_size": 8,
+      "payload_bytes": 16,
+      "storage_bytes": 16,
+      "storage_key": [
+        "cuda:0",
+        47345310720,
+        16
+      ],
+      "unique_storage": true,
+      "device": "cuda:0",
+      "persistent": false
+    }
+  ],
+  "torch_profiler_path": "probe_trace.json",
+  "profiler_ops": [
+    {
+      "name": "aten::reshape",
+      "count": 5
+    },
+    {
+      "name": "aten::view",
+      "count": 8
+    },
+    {
+      "name": "aten::to",
+      "count": 4
+    },
+    {
+      "name": "aten::index_select",
+      "count": 2
+    },
+    {
+      "name": "aten::empty",
+      "count": 3
+    },
+    {
+      "name": "aten::resize_",
+      "count": 2
+    },
+    {
+      "name": "aten::expand",
+      "count": 2
+    },
+    {
+      "name": "aten::as_strided",
+      "count": 7
+    },
+    {
+      "name": "aten::gather",
+      "count": 2
+    },
+    {
+      "name": "Activity Buffer Request",
+      "count": 1
+    },
+    {
+      "name": "cudaLaunchKernel",
+      "count": 7
+    },
+    {
+      "name": "aten::_to_copy",
+      "count": 3
+    },
+    {
+      "name": "void at::native::_scatter_gather_elementwise_kernel<128, 8, at::native::_cuda_scatter_gather_internal_kernel<false, at::native::OpaqueType<1>, long>::operator()<at::native::TensorAssign>(at::TensorIterator&, long, long, long, at::native::TensorAssign const&)::{lambda(int)#1}>(int, at::native::_cuda_scatter_gather_internal_kernel<false, at::native::OpaqueType<1>, long>::operator()<at::native::TensorAssign>(at::TensorIterator&, long, long, long, at::native::TensorAssign const&)::{lambda(int)#1})",
+      "count": 1
+    },
+    {
+      "name": "aten::empty_strided",
+      "count": 3
+    },
+    {
+      "name": "aten::copy_",
+      "count": 3
+    },
+    {
+      "name": "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1}, std::array<char*, 2ul>, 4, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >(int, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1}, std::array<char*, 2ul>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1>)",
+      "count": 1
+    },
+    {
+      "name": "aten::add",
+      "count": 1
+    },
+    {
+      "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<long> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<long> const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<long> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<long> const&)::{lambda(int)#1})",
+      "count": 1
+    },
+    {
+      "name": "aten::embedding",
+      "count": 1
+    },
+    {
+      "name": "aten::numpy_T",
+      "count": 1
+    },
+    {
+      "name": "aten::permute",
+      "count": 1
+    },
+    {
+      "name": "void at::native::_scatter_gather_elementwise_kernel<128, 8, at::native::_cuda_scatter_gather_internal_kernel<false, at::native::OpaqueType<2>, long>::operator()<at::native::TensorAssign>(at::TensorIterator&, long, long, long, at::native::TensorAssign const&)::{lambda(int)#1}>(int, at::native::_cuda_scatter_gather_internal_kernel<false, at::native::OpaqueType<2>, long>::operator()<at::native::TensorAssign>(at::TensorIterator&, long, long, long, at::native::TensorAssign const&)::{lambda(int)#1})",
+      "count": 1
+    },
+    {
+      "name": "aten::mm",
+      "count": 1
+    },
+    {
+      "name": "cudaDeviceGetAttribute",
+      "count": 1
+    },
+    {
+      "name": "cuLaunchKernel",
+      "count": 1
+    },
+    {
+      "name": "void cutlass::Kernel2<cutlass_80_wmma_tensorop_s161616gemm_f16_32x32_64x2_tn_align8>(cutlass_80_wmma_tensorop_s161616gemm_f16_32x32_64x2_tn_align8::Params)",
+      "count": 1
+    },
+    {
+      "name": "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, 4, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >(int, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1>)",
+      "count": 1
+    },
+    {
+      "name": "aten::add_",
+      "count": 1
+    },
+    {
+      "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<float> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<float> const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<float> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<float> const&)::{lambda(int)#1})",
+      "count": 1
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>)",
+      "count": 1
+    },
+    {
+      "name": "cudaDeviceSynchronize",
+      "count": 2
+    }
+  ],
+  "status": "PASS",
+  "final_device": {
+    "exit_code": 0,
+    "sample": "2233 MiB, 0 %, 34.50, 48.86 W",
+    "stderr": ""
+  }
+}

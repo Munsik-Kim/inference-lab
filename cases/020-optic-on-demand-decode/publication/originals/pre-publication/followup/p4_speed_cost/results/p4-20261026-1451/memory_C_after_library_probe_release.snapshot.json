@@ -1,0 +1,329 @@
+[
+  {
+    "device": 0,
+    "address": 47311749120,
+    "total_size": 33554432,
+    "allocated_size": 33554432,
+    "active_size": 33554432,
+    "requested_size": 33554432,
+    "stream": 0,
+    "segment_type": "large",
+    "segment_pool_id": [
+      0,
+      0
+    ],
+    "is_expandable": false,
+    "blocks": [
+      {
+        "address": 47311749120,
+        "size": 33554432,
+        "requested_size": 33554432,
+        "state": "active_allocated",
+        "frames": [
+          {
+            "name": "torch::unwind::unwind()",
+            "filename": "??",
+            "line": 0
+          },
+          {
+            "name": "torch::CapturedTraceback::gather(bool, bool, bool)",
+            "filename": "??",
+            "line": 0
+          },
+          {
+            "name": "torch::cuda::(anonymous namespace)::gather_with_cpp()",
+            "filename": "memory_snapshot.cpp",
+            "line": 0
+          },
+          {
+            "name": "c10::cuda::CUDACachingAllocator::Native::NativeCachingAllocator::malloc(void**, signed char, unsigned long, CUstream_st*)",
+            "filename": "",
+            "line": 0
+          },
+          {
+            "name": "c10::cuda::CUDACachingAllocator::Native::NativeCachingAllocator::allocate(unsigned long)",
+            "filename": "",
+            "line": 0
+          },
+          {
+            "name": "at::cuda::setWorkspaceForHandle(cublasContext*, c10::cuda::CUDAStream)",
+            "filename": "",
+            "line": 0
+          },
+          {
+            "name": "at::cuda::getCurrentCUDABlasHandle(bool)",
+            "filename": "??",
+            "line": 0
+          },
+          {
+            "name": "void at::cuda::blas::gemm_internal_cublas_half_helper<float>(char, char, long, long, long, float, c10::Half const*, long, c10::Half const*, long, float, float*, long)",
+            "filename": "",
+            "line": 0
+          },
+          {
+            "name": "at::native::(anonymous namespace)::addmm_out_cuda_impl(at::Tensor&, at::Tensor const&, at::Tensor const&, at::Tensor const&, c10::Scalar const&, c10::Scalar const&, at::native::(anonymous namespace)::Activation, bool) [clone .isra.0]",
+            "filename": "Blas.cpp",
+            "line": 0
+          },
+          {
+            "name": "at::native::_mm_dtype_out_cuda(at::Tensor const&, at::Tensor const&, c10::ScalarType, at::Tensor&)",
+            "filename": "??",
+            "line": 0
+          },
+          {
+            "name": "at::native::_mm_dtype_cuda(at::Tensor const&, at::Tensor const&, c10::ScalarType)",
+            "filename": "??",
+            "line": 0
+          },
+          {
+            "name": "c10::impl::wrap_kernel_functor_unboxed_<c10::impl::detail::WrapFunctionIntoFunctor_<c10::CompileTimeFunctionPointer<at::Tensor (at::Tensor const&, at::Tensor const&, c10::ScalarType), &at::(anonymous namespace)::(anonymous namespace)::wrapper_CUDA_dtype_mm>, at::Tensor, c10::guts::typelist::typelist<at::Tensor const&, at::Tensor const&, c10::ScalarType> >, at::Tensor (at::Tensor const&, at::Tensor const&, c10::ScalarType)>::call(c10::OperatorKernel*, c10::DispatchKeySet, at::Tensor const&, at::Tensor const&, c10::ScalarType)",
+            "filename": "RegisterCUDA_0.cpp",
+            "line": 0
+          },
+          {
+            "name": "at::_ops::mm_dtype::call(at::Tensor const&, at::Tensor const&, c10::ScalarType)",
+            "filename": "??",
+            "line": 0
+          },
+          {
+            "name": "torch::autograd::THPVariable_mm(_object*, _object*, _object*)",
+            "filename": "python_torch_functions_1.cpp",
+            "line": 0
+          },
+          {
+            "name": "cfunction_call",
+            "filename": "/usr/local/src/conda/python-split-3.12.14/Objects/methodobject.c",
+            "line": 537
+          },
+          {
+            "name": "_PyObject_MakeTpCall",
+            "filename": "/usr/local/src/conda/python-split-3.12.14/Objects/call.c",
+            "line": 240
+          },
+          {
+            "name": "main",
+            "filename": "/home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/src/worker.py",
+            "line": 46
+          },
+          {
+            "name": "_PyEval_EvalFrameDefault",
+            "filename": "/home/conda/feedstock_root/build_artifacts/python-split_1788390929916/work/build-static/Python/bytecodes.c",
+            "line": 2715
+          },
+          {
+            "name": "PyEval_EvalCode",
+            "filename": "/usr/local/src/conda/python-split-3.12.14/Python/ceval.c",
+            "line": 580
+          },
+          {
+            "name": "run_eval_code_obj",
+            "filename": "/usr/local/src/conda/python-split-3.12.14/Python/pythonrun.c",
+            "line": 1757
+          },
+          {
+            "name": "run_mod",
+            "filename": "/usr/local/src/conda/python-split-3.12.14/Python/pythonrun.c",
+            "line": 1778
+          },
+          {
+            "name": "pyrun_file",
+            "filename": "/usr/local/src/conda/python-split-3.12.14/Python/pythonrun.c",
+            "line": 1674
+          },
+          {
+            "name": "_PyRun_SimpleFileObject",
+            "filename": "/usr/local/src/conda/python-split-3.12.14/Python/pythonrun.c",
+            "line": 459
+          },
+          {
+            "name": "_PyRun_AnyFileObject",
+            "filename": "/usr/local/src/conda/python-split-3.12.14/Python/pythonrun.c",
+            "line": 78
+          },
+          {
+            "name": "pymain_run_file_obj",
+            "filename": "/usr/local/src/conda/python-split-3.12.14/Modules/main.c",
+            "line": 361
+          },
+          {
+            "name": "Py_BytesMain",
+            "filename": "/usr/local/src/conda/python-split-3.12.14/Modules/main.c",
+            "line": 768
+          },
+          {
+            "name": "__libc_init_first",
+            "filename": "??",
+            "line": 0
+          },
+          {
+            "name": "__libc_start_main",
+            "filename": "??",
+            "line": 0
+          },
+          {
+            "name": "_start",
+            "filename": "??",
+            "line": 0
+          },
+          {
+            "name": "<module>",
+            "filename": "/home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/src/worker.py",
+            "line": 111
+          }
+        ]
+      }
+    ],
+    "frames": [
+      {
+        "name": "torch::unwind::unwind()",
+        "filename": "??",
+        "line": 0
+      },
+      {
+        "name": "torch::CapturedTraceback::gather(bool, bool, bool)",
+        "filename": "??",
+        "line": 0
+      },
+      {
+        "name": "torch::cuda::(anonymous namespace)::gather_with_cpp()",
+        "filename": "memory_snapshot.cpp",
+        "line": 0
+      },
+      {
+        "name": "c10::cuda::CUDACachingAllocator::Native::NativeCachingAllocator::malloc(void**, signed char, unsigned long, CUstream_st*)",
+        "filename": "",
+        "line": 0
+      },
+      {
+        "name": "c10::cuda::CUDACachingAllocator::Native::NativeCachingAllocator::allocate(unsigned long)",
+        "filename": "",
+        "line": 0
+      },
+      {
+        "name": "at::cuda::setWorkspaceForHandle(cublasContext*, c10::cuda::CUDAStream)",
+        "filename": "",
+        "line": 0
+      },
+      {
+        "name": "at::cuda::getCurrentCUDABlasHandle(bool)",
+        "filename": "??",
+        "line": 0
+      },
+      {
+        "name": "void at::cuda::blas::gemm_internal_cublas_half_helper<float>(char, char, long, long, long, float, c10::Half const*, long, c10::Half const*, long, float, float*, long)",
+        "filename": "",
+        "line": 0
+      },
+      {
+        "name": "at::native::(anonymous namespace)::addmm_out_cuda_impl(at::Tensor&, at::Tensor const&, at::Tensor const&, at::Tensor const&, c10::Scalar const&, c10::Scalar const&, at::native::(anonymous namespace)::Activation, bool) [clone .isra.0]",
+        "filename": "Blas.cpp",
+        "line": 0
+      },
+      {
+        "name": "at::native::_mm_dtype_out_cuda(at::Tensor const&, at::Tensor const&, c10::ScalarType, at::Tensor&)",
+        "filename": "??",
+        "line": 0
+      },
+      {
+        "name": "at::native::_mm_dtype_cuda(at::Tensor const&, at::Tensor const&, c10::ScalarType)",
+        "filename": "??",
+        "line": 0
+      },
+      {
+        "name": "c10::impl::wrap_kernel_functor_unboxed_<c10::impl::detail::WrapFunctionIntoFunctor_<c10::CompileTimeFunctionPointer<at::Tensor (at::Tensor const&, at::Tensor const&, c10::ScalarType), &at::(anonymous namespace)::(anonymous namespace)::wrapper_CUDA_dtype_mm>, at::Tensor, c10::guts::typelist::typelist<at::Tensor const&, at::Tensor const&, c10::ScalarType> >, at::Tensor (at::Tensor const&, at::Tensor const&, c10::ScalarType)>::call(c10::OperatorKernel*, c10::DispatchKeySet, at::Tensor const&, at::Tensor const&, c10::ScalarType)",
+        "filename": "RegisterCUDA_0.cpp",
+        "line": 0
+      },
+      {
+        "name": "at::_ops::mm_dtype::call(at::Tensor const&, at::Tensor const&, c10::ScalarType)",
+        "filename": "??",
+        "line": 0
+      },
+      {
+        "name": "torch::autograd::THPVariable_mm(_object*, _object*, _object*)",
+        "filename": "python_torch_functions_1.cpp",
+        "line": 0
+      },
+      {
+        "name": "cfunction_call",
+        "filename": "/usr/local/src/conda/python-split-3.12.14/Objects/methodobject.c",
+        "line": 537
+      },
+      {
+        "name": "_PyObject_MakeTpCall",
+        "filename": "/usr/local/src/conda/python-split-3.12.14/Objects/call.c",
+        "line": 240
+      },
+      {
+        "name": "main",
+        "filename": "/home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/src/worker.py",
+        "line": 46
+      },
+      {
+        "name": "_PyEval_EvalFrameDefault",
+        "filename": "/home/conda/feedstock_root/build_artifacts/python-split_1788390929916/work/build-static/Python/bytecodes.c",
+        "line": 2715
+      },
+      {
+        "name": "PyEval_EvalCode",
+        "filename": "/usr/local/src/conda/python-split-3.12.14/Python/ceval.c",
+        "line": 580
+      },
+      {
+        "name": "run_eval_code_obj",
+        "filename": "/usr/local/src/conda/python-split-3.12.14/Python/pythonrun.c",
+        "line": 1757
+      },
+      {
+        "name": "run_mod",
+        "filename": "/usr/local/src/conda/python-split-3.12.14/Python/pythonrun.c",
+        "line": 1778
+      },
+      {
+        "name": "pyrun_file",
+        "filename": "/usr/local/src/conda/python-split-3.12.14/Python/pythonrun.c",
+        "line": 1674
+      },
+      {
+        "name": "_PyRun_SimpleFileObject",
+        "filename": "/usr/local/src/conda/python-split-3.12.14/Python/pythonrun.c",
+        "line": 459
+      },
+      {
+        "name": "_PyRun_AnyFileObject",
+        "filename": "/usr/local/src/conda/python-split-3.12.14/Python/pythonrun.c",
+        "line": 78
+      },
+      {
+        "name": "pymain_run_file_obj",
+        "filename": "/usr/local/src/conda/python-split-3.12.14/Modules/main.c",
+        "line": 361
+      },
+      {
+        "name": "Py_BytesMain",
+        "filename": "/usr/local/src/conda/python-split-3.12.14/Modules/main.c",
+        "line": 768
+      },
+      {
+        "name": "__libc_init_first",
+        "filename": "??",
+        "line": 0
+      },
+      {
+        "name": "__libc_start_main",
+        "filename": "??",
+        "line": 0
+      },
+      {
+        "name": "_start",
+        "filename": "??",
+        "line": 0
+      },
+      {
+        "name": "<module>",
+        "filename": "/home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/src/worker.py",
+        "line": 111
+      }
+    ]
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "status": "DIAGNOSTIC_ONLY_PROTOCOL_ORDER",
+  "discovered_at": "2026-10-26T03:34:38.722960+00:00",
+  "reason": "Direct P2 A/B/C numerical comparison was performed after timing instead of before. Per-worker independent FP64 validation was before timing. First90 cell-blocks retain numerical PASS but are not the primary protocol-compliant comparison.",
+  "remedy": "One complete rerun with all-condition dedicated preflight before timing, unchanged shapes/inputs/tolerances/loops/order seeds. Preserve every original result, count all GPU wall cumulatively.",
+  "new_run_id": "20261026-1235",
+  "prior_observed": "All first90 timings/memory and method pairs already observed. No parameter selection from them."
+}

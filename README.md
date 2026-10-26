@@ -54,6 +54,13 @@ Built an inventory recovery environment and auditor that checks restored state s
 
 [Results and recorded episodes](cases/018-agent-state-recovery/REPORT.md) · [CPU record replay](cases/018-agent-state-recovery/REPRODUCE.md)
 
+<!-- case020-entry -->
+## Case020 — Does Smaller Embedding Storage Also Run Faster?
+
+Compared precomputed lookup, request-time reconstruction and per-call deduplication of the same OPTIC representation. Synthetic-table PyTorch allocated peak fell from about304 to81MiB, while deduplication won0/30 P4 process-block call comparisons. Precomputation was faster in actual1024/4096-call reuse sessions.
+
+[Plain explanation](cases/020-optic-on-demand-decode/README.md) · [Report](cases/020-optic-on-demand-decode/REPORT.md) · [CPU checks without a model](cases/020-optic-on-demand-decode/REPRODUCE.md)
+
 ## Use or reproduce
 
 - Compare saved answers from your models: [prepare two files → validate → compare → reports](packages/diova-compare/examples/compare/README.md). Uses Python 3.10+ and CPU; you supply correctness judgments for free-form answers.

@@ -54,6 +54,13 @@ DEV에서 BF16 KV·자유 출력은 5/8로 확대 기준 6/8에 미달했지만,
 
 [결과·실제 사건](cases/018-agent-state-recovery/REPORT.ko.md) · [모델 없이 검산하기](cases/018-agent-state-recovery/REPRODUCE.ko.md)
 
+<!-- case020-entry -->
+## Case020 — 임베딩을 작게 보관하면 실행도 빨라질까?
+
+같은 OPTIC 압축 표현을 전체 미리 계산·요청 복원·중복 제거 복원으로 비교했습니다. 합성 표의 PyTorch allocated peak는 약304→81MiB로 줄었지만, P4의30개 process block에서 중복 제거의 호출 속도 이득은0/30이었습니다. 실제1024/4096회 재사용 세션은 전체를 미리 계산한 방식이 더 빨랐습니다.
+
+[쉬운 설명](cases/020-optic-on-demand-decode/README.ko.md) · [보고서](cases/020-optic-on-demand-decode/REPORT.ko.md) · [모델 없이 CPU 검산](cases/020-optic-on-demand-decode/REPRODUCE.ko.md)
+
 ## 직접 사용·재현
 
 - 내 모델의 저장된 답 비교: [두 파일 준비 → 검사 → 비교 → 보고서](packages/diova-compare/examples/compare/README.ko.md). Python 3.10+와 CPU로 실행하며, 자유 서술 답의 정오는 사용자가 제공합니다.

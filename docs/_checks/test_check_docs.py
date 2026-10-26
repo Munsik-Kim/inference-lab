@@ -9,7 +9,7 @@ from pathlib import Path
 from check_docs import (anchors, check_claims, check_links, check_pairs, check_packages,
                         check_protected_additions, check_protection,
                         check_beginner_routes, check_concept_figure, check_copy_hygiene,
-                        check_unified_case010, check_case012, CONCEPT_FIGURE, PAGES)
+                        check_unified_case010, check_case012, check_case020, CONCEPT_FIGURE, PAGES)
 
 
 class DocumentChecks(unittest.TestCase):
@@ -86,6 +86,14 @@ class DocumentChecks(unittest.TestCase):
         errors = []
         self.assertEqual(check_case012(self.root, errors), set())
         self.assertTrue(any('Case012 publication verification failed' in e for e in errors))
+
+    def test_incomplete_case020_is_not_added_to_protection_allowlist(self):
+        case = self.root/'cases/020-optic-on-demand-decode'
+        case.mkdir(parents=True)
+        (case/'raw.npz').write_bytes(b'not an approved package')
+        errors = []
+        self.assertEqual(check_case020(self.root, errors), set())
+        self.assertTrue(any('Case020 publication verification failed' in e for e in errors))
 
     def test_rehashed_case012_original_cannot_authorize_source_changes(self):
         case = self.root/'cases/012-looped-dit-inference-budget/publication'

@@ -1,0 +1,25 @@
+{
+  "captured_at": "2026-10-26T03:41:21.514875+00:00",
+  "gpu": {
+    "command": [
+      "/usr/lib/wsl/lib/nvidia-smi",
+      "--query-gpu=name,driver_version,memory.total,memory.used,utilization.gpu,power.draw,temperature.gpu",
+      "--format=csv,noheader"
+    ],
+    "exit_code": 0,
+    "stdout": "NVIDIA GeForce RTX 5080, 621.01, 16303 MiB, 1842 MiB, 0 %, 12.81 W, 37.10\n",
+    "stderr": ""
+  },
+  "compute_apps": {
+    "command": [
+      "/usr/lib/wsl/lib/nvidia-smi",
+      "--query-compute-apps=pid,process_name,used_memory",
+      "--format=csv"
+    ],
+    "exit_code": 0,
+    "stdout": "pid, process_name, used_gpu_memory [MiB]\n",
+    "stderr": ""
+  },
+  "owned_gpu_processes": [],
+  "scope": "WSL/NVML observation; no assertion about every service or continuous peak."
+}

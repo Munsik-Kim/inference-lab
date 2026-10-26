@@ -1,0 +1,254 @@
+{
+  "job": {
+    "id": "life_A_N4096_b0",
+    "kind": "lifecycle",
+    "phase": "lifecycle",
+    "Z": 32,
+    "condition": "repeat2048",
+    "method": "A",
+    "N": 4096,
+    "block": 0
+  },
+  "source_hash": "e841f818bf81263fcd78f5513244feabc79a73bc8dc07d68a53fcf1d5cfcd25e",
+  "config_sha256": "31c29c6724c221c72d7a8f43fb1e8d5098c19b3871e375f043aa3664054b939f",
+  "upstream_sha": "344c712aeb6620e39eb78930fb922447f0e123f3",
+  "artifact_sha256": "c3b28a795cc07b914d0a606363112614c94c398f9c2a6e0fdf4b7f2652f979fc",
+  "preflight_identity": {
+    "path": "results/p4-20261026-1451/preflight_Z32.json",
+    "sha256": "79813f339c14237c1cf085d8397c5d28a7f0730d25c0f11d492c1f5a9a3353e1"
+  },
+  "python": "3.12.14 (main, Sep  2 2026, 23:27:36) [GCC 15.3.0]",
+  "executable": "/home/mskim/inference-lab/.venv-baseline/bin/python",
+  "torch": "2.13.0+cu130",
+  "torch_path": "/home/mskim/inference-lab/.venv-baseline/lib/python3.12/site-packages/torch/__init__.py",
+  "numpy_path": "/home/mskim/inference-lab/.venv-baseline/lib/python3.12/site-packages/numpy/__init__.py",
+  "torch_import_seconds": 0.532143731,
+  "telemetry_before": {
+    "timestamp": "2026-10-26T06:07:56.311925+00:00",
+    "gpu_command": [
+      "/usr/lib/wsl/lib/nvidia-smi",
+      "--query-gpu=name,driver_version,memory.used,utilization.gpu,clocks.sm,clocks.mem,power.draw,temperature.gpu",
+      "--format=csv,noheader"
+    ],
+    "exit_code": 0,
+    "gpu": "NVIDIA GeForce RTX 5080, 621.01, 1853 MiB, 0 %, 2707 MHz, 15001 MHz, 50.06 W, 42.70",
+    "stderr": "",
+    "CPU_MHz_samples": [
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110"
+    ],
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "status": "PASS",
+  "device": {
+    "name": "NVIDIA GeForce RTX 5080",
+    "sm": [
+      12,
+      0
+    ],
+    "runtime": "13.0",
+    "allocator": "native",
+    "threads": 1,
+    "interop_threads": 16,
+    "sys_path": [
+      "/home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/vendor/optic/src",
+      "/home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/src",
+      "/home/mskim/inference-lab/.venv-baseline/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages",
+      "/home/mskim/inference-lab/.venv-baseline/lib/python312.zip",
+      "/home/mskim/inference-lab/.venv-baseline/lib/python3.12",
+      "/home/mskim/inference-lab/.venv-baseline/lib/python3.12/lib-dynload",
+      "/home/mskim/inference-lab/.venv-baseline/lib/python3.12/site-packages"
+    ],
+    "default_stream": 0,
+    "current_stream": 0
+  },
+  "policy_before": {
+    "TF32": false,
+    "fp16_reduction": true,
+    "bf16_reduction": true,
+    "fp16_accumulation": false
+  },
+  "policy_after": {
+    "TF32": false,
+    "fp16_reduction": false,
+    "bf16_reduction": false,
+    "fp16_accumulation": false
+  },
+  "probe": {
+    "left_dtype": "torch.float16",
+    "out_dtype": "torch.float32",
+    "finite": true
+  },
+  "baseline": {
+    "allocated": 33554432,
+    "reserved": 33554432,
+    "allocated_peak": 33557504,
+    "reserved_peak": 35651584,
+    "inventory": []
+  },
+  "common_runtime_init_seconds": 0.649924162,
+  "official_import_path": "/home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/vendor/optic/src/ple_eval/compact_adapter.py",
+  "method_inventory": [
+    {
+      "name": "IDs",
+      "shape": [
+        2048
+      ],
+      "dtype": "torch.int64",
+      "numel": 2048,
+      "element_size": 8,
+      "payload_bytes": 16384,
+      "storage_bytes": 16384,
+      "key": [
+        "cuda:0",
+        47345853440,
+        16384
+      ],
+      "unique": true
+    },
+    {
+      "name": "dense_table",
+      "shape": [
+        32768,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "numel": 134217728,
+      "element_size": 2,
+      "payload_bytes": 268435456,
+      "storage_bytes": 268435456,
+      "key": [
+        "cuda:0",
+        47785705472,
+        268435456
+      ],
+      "unique": true
+    }
+  ],
+  "lifecycle": {
+    "session_start_ns": 10764421054676,
+    "artifact_start_ns": 10764421054907,
+    "artifact_end_ns": 10764427771875,
+    "ID_start_ns": 10764427772146,
+    "ID_end_ns": 10764427996828,
+    "dense_start_ns": 10764427996998,
+    "dense_end_ns": 10764569722605,
+    "loop_start_ns": 10764569767277,
+    "first_start_ns": 10764569767498,
+    "first_end_ns": 10764571480424,
+    "loop_end_ns": 10764841444959,
+    "session_end_ns": 10764863142016,
+    "artifact_load_H2D_seconds": 0.006716968,
+    "ID_read_H2D_seconds": 0.000224682,
+    "dense_build_cleanup_seconds": 0.141725607,
+    "setup_seconds": 0.148712601,
+    "first_call_seconds": 0.001712926,
+    "total_loop_seconds": 0.271677682,
+    "final_cleanup_seconds": 0.021697057,
+    "session_wall_seconds": 0.44208734,
+    "actual_fn_calls": 4096,
+    "completion_synchronizations": 4096,
+    "warmup_calls": 0,
+    "session_per_call_us": 107.9314794921875
+  },
+  "peak": {
+    "allocated": 302006272,
+    "reserved": 320864256,
+    "allocated_peak": 318783488,
+    "reserved_peak": 325058560,
+    "inventory": []
+  },
+  "after_final_cleanup": {
+    "allocated": 33554432,
+    "reserved": 33554432,
+    "allocated_peak": 318783488,
+    "reserved_peak": 325058560,
+    "inventory": []
+  },
+  "gate": true,
+  "allocated_delta_peak": 285229056,
+  "memory_gate": true,
+  "telemetry_after": {
+    "timestamp": "2026-10-26T06:07:57.483813+00:00",
+    "gpu_command": [
+      "/usr/lib/wsl/lib/nvidia-smi",
+      "--query-gpu=name,driver_version,memory.used,utilization.gpu,clocks.sm,clocks.mem,power.draw,temperature.gpu",
+      "--format=csv,noheader"
+    ],
+    "exit_code": 0,
+    "gpu": "NVIDIA GeForce RTX 5080, 621.01, 2218 MiB, 17 %, 2737 MHz, 14801 MHz, 62.04 W, 43.80",
+    "stderr": "",
+    "CPU_MHz_samples": [
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110",
+      "cpu MHz\t\t: 4691.110"
+    ],
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "process_cost": {
+    "user_cpu_seconds": 1.180505,
+    "system_cpu_seconds": 0.128962,
+    "peak_RSS_bytes": 952840192
+  }
+}
