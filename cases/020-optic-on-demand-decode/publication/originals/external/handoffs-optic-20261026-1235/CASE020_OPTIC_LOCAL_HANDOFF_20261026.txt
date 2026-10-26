@@ -1,0 +1,63 @@
+Case020 OPTIC 압축 PLE 실행 비용 — 로컬 인계
+작성: 2026-10-26T12:49:58.244321+09:00
+
+상태: P0 PASS / P1 PASS / P2 COMPLETE / P3 COMPLETE_LOCAL_ARTIFACTS.
+게시하지 않은 로컬 공개 후보다. Git stage/commit/push/PR/merge/Release, 사이트, Pages, Drive 업로드 없음.
+
+위치
+worktree: /home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215
+Case: /home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode
+branch: research/case020-optic-on-demand-decode-20261026-1215
+base HEAD: 3e6f2c6b36fb2a3853cc3677bee84904d28567cf
+upstream: 344c712aeb6620e39eb78930fb922447f0e123f3
+primary run: 20261026-1235
+diagnostic run: 20261026-1215
+main source/config/input bundle SHA256: c43ea3a0a27cd28be7b9e8e26ce5cd65a42af28c070a49cd1f1b06cd77bc489b
+protocol SHA256: c930534682204b99990bc58540c170925bd32ada3045a0027367e50130f34987
+GPU worker SHA256: fd0716a262f3444b4bbec49131ed06ecd04532337f5a962119b3367a5fdf5b77
+PUBLIC_MANIFEST bytes/SHA256: 144596 / f4aa25642fdaa16a7d2e943da8ae903d057a0ebe52d01c337dcfa68764e801a2
+
+핵심 관측
+PLE는 token이 각 layer에서 쓰는 추가 임베딩이다. 같은 OPTIC 압축 artifact를 A 전체 복원 table/gather, B 공식 요청 decoder, C unique→공식 decoder→inverse gather로 실행했다. raw unscaled BF16 전체 layer 출력 계약이다.
+module GPU tensor resident:
+SMALL A16,777,216bytes(16MiB), B/C149,568bytes(0.143MiB).
+LARGE A268,435,456bytes(256MiB), B/C548,928bytes(0.523MiB).
+upstream compact_resident_bytes는 nonpersistent group_offsets64bytes를 제외하므로 주 회계와 별도다.
+LARGE M2048/U512 timed allocated peak: A304.02MiB, B80.79MiB, C52.57MiB.
+같은 조건 reserved peak: A338MiB, B82MiB, C102MiB. payload 배율은 전체 VRAM 절감 배율이 아니다.
+LARGE M2048/U512 host median(us), block0/1/2:
+A 29.55/60.16/25.35; B123.14/126.41/178.65; C869.78/247.07/860.85.
+C/B 7.064/1.955/4.819. 전체30짝 중5개 block에서 C가 빠르지만3 block 모두 C가 빠른 조건은0개. host/event 변동을 보존했고 일반 우위를 단정하지 않는다.
+판정: OPERATOR_VALIDATED, MEMORY_TRADEOFF_OBSERVED, DEDUP_UNRESOLVED_BLOCK_VARIATION.
+이는 synthetic Z32 operator warm-cache 측정이며 원래 미압축 PLE/학습 품질/언어 능력/전체 모델 serving TTFT/TPOT/KV효과를 재현하지 않는다.
+
+실행과 오류 보존
+계획30cell/90cell-block 대비 수정 본 run30/90, worker 실패0, 누락0.
+첫 run90cell-block은 직접 P2 A/B/C 대조가 timing 뒤였던 순서 오류 때문에 DIAGNOSTIC_ONLY_PROTOCOL_ORDER로 보존했다. per-worker FP64 대조는 원래도 timing 전에 있었다. 수정 run은 정확성 전용2process로 모든10조건을 먼저 검사하고 source/input preflight hash를 각 worker에서 확인한 뒤 같은 grid를 한 번 재실행했다. shape/seed/ID/tolerance/loop/order는 바꾸지 않았다. 이전 raw·source·freeze·draft표/그림을 보존했다.
+본99worker224.774868초 + 이전97worker232.649436초 = 누적196worker457.424304초.
+누적1800초 중1342.575696초가 남음. import/context/setup/종료/probe/smoke/정확성process/첫진단까지 포함하며 장부 초기화 없음.
+largest recorded phase/preflight allocated delta319,627,776bytes(<2GiB). dtype/CPU fallback 없음.
+FP16 GEMM→FP32 out_dtype 실제 PASS(sm_120). TF32false, reduced fp16/bf16 reductions false(runtime 기본 true와의 차이 공개), fp16 accumulation false.
+P1 공식 CPU 예제와 seed0/1/2·모든257token/layer·bias-only/zero/shape/order/invalid-ID 검산 PASS. NumPy FP64는 저장된 FP16 값을 참조한다. CPU/GPU 산술 경로는 다르다.
+
+CPU 재현(모델/Torch/GPU 불필요)
+cd /home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode
+/home/mskim/inference-lab/.venv-baseline/bin/python -B src/audit_v2.py verify
+/home/mskim/inference-lab/.venv-baseline/bin/python -B src/audit_v2.py summarize --out /tmp/optic-summary
+MPLCONFIGDIR=/tmp/optic-mpl /home/mskim/miniforge3/envs/ai_lab/bin/python -B src/audit_v2.py figures --out /tmp/optic-figures
+/home/mskim/inference-lab/.venv-baseline/bin/python -B tests/test_audit_v2.py -v
+일반 환경에서는 NumPy2.2.6/2.3.5, 그림용 Matplotlib3.10.8이 필요하다.
+verify/summarize/figures/help는 Torch를 import하거나 CUDA context를 만들지 않는다.
+raw: results/20261026-1235/
+독립 집계: results/summary/correctness.csv, memory.csv, latency.csv, paired.csv, decision.json
+그림: figures/01_memory,02_latency,03_unique_cost PNG3+SVG3
+문서: README.ko.md/README.md, REPORT.ko.md/REPORT.md, REPRODUCE.ko.md/REPRODUCE.md, SOURCE_MAP.md, REUSE_MAP.md, THIRD_PARTY_NOTICES.md
+새 외부 final_cpu_rebuild에서 summary5파일·그림6파일 bytes/hash 동등 확인, PNG3 실제 열어 축/단위/범례/원점/양음 차이 확인. 변조/정상 fixture4개 PASS. PUBLIC_MANIFEST 자기 자신 제외 전 파일 bytes/hash verify PASS.
+
+자원·보존·미실행
+실제 WSL Ubuntu/Bash에서 수행. 기존 Python3.12.14/NumPy2.3.5/Torch2.13.0+cu130을 읽기 전용 재사용했고 그림은 기존 Python3.10.19/NumPy2.2.6/Matplotlib3.10.8이다. clean environment/다른 머신/원격 CI 검증은 아니다.
+upstream 고정 실행/doc/license7파일과 고지1파일만 원형 보존. 모델/학습 데이터/wheel/의존성 다운로드·vLLM 설치·전체 Gemma 로딩·학습·generation 없음. D의 모델 parameter도 이번 operator에는 필요하지 않았다.
+기존 worktree의 tracked Case tree/Git 상태와 참고4파일 bytes/hash 전후 일치. 원 checkout의 보관 삭제 상태를 reset/clean/stash/복구하지 않았다. 다른 연구/사용자cache/serving process를 건드리지 않았다.
+소유 GPU process는 자연 종료했고 잔류0 확인. 최종 NVML compute-app 목록은 비었고 utilization0%,1842MiB였다. WSL 관측 한계와 장치 표본/연속 peak 구분은 문서화했다.
+task-owned cuda/cache/matplotlib 캐시와 비어 있는 임시 요청-output 폴더만 정리했다. 원 source·결과·실패 기록과 외부 재생성 증거는 보존했다. 새 ZIP/dense table/model 사본 없음.
+전체 모델 단계는 수행하거나 자동 승인하지 않았다. 별도 지시 없이 확장하지 않는다.

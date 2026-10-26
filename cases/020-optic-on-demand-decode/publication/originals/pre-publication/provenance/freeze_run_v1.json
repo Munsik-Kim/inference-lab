@@ -1,0 +1,433 @@
+{
+  "captured_at": "2026-10-26T03:16:13.077707+00:00",
+  "base_head": "3e6f2c6b36fb2a3853cc3677bee84904d28567cf",
+  "upstream_sha": "344c712aeb6620e39eb78930fb922447f0e123f3",
+  "already_observed": [
+    "P1 official example and387 CPU arithmetic records PASS",
+    "Windows/WSL location and nvidia-smi device state; no GPU compute executed"
+  ],
+  "files": {
+    "src/common.py": {
+      "bytes": 4815,
+      "sha256": "e135d6c4c48f57575a7244524cdec627ebd2e6eefec5672719c056686ce8a9ba"
+    },
+    "src/prepare.py": {
+      "bytes": 5257,
+      "sha256": "2196608ea8b64e2765b4f94d158951cd7167eb1ba14f637cddfac3547d11b92d"
+    },
+    "src/cpu_checks.py": {
+      "bytes": 4731,
+      "sha256": "9779583f7315e359f90f09235b4173f3276b41c4fc906c444901c38bfdd42ed0"
+    },
+    "src/gpu_worker.py": {
+      "bytes": 9247,
+      "sha256": "701b549514cdd2a056945d86080a4ad6cdf8a21ebc8bba8bbb6740c48fe59981"
+    },
+    "configs/protocol.json": {
+      "bytes": 2241,
+      "sha256": "c0590594d720a80e5123d59d7ef0337b43f39e240e72793ef0023016e2d86019"
+    },
+    "inputs/p1_seed1_bias_only.npz": {
+      "bytes": 7584,
+      "sha256": "390267bbffe7044b7b56b3c461aff6825cae4be03901d83e741f2ca96dc4f33b"
+    },
+    "inputs/p1_seed0_zero.npz": {
+      "bytes": 7584,
+      "sha256": "4783d865855ca43763d2b88c578219ce617bedea4846c946eb2df30d714e7949"
+    },
+    "inputs/LARGE_M2048_repeat75.npy": {
+      "bytes": 16512,
+      "sha256": "14ea62958b2ca8893ae6bc06229d5691fc8eb28f5e21a008a620a07c864d9ae9"
+    },
+    "inputs/LARGE.npz": {
+      "bytes": 550998,
+      "sha256": "c3b28a795cc07b914d0a606363112614c94c398f9c2a6e0fdf4b7f2652f979fc"
+    },
+    "inputs/LARGE_M128_unique.npy": {
+      "bytes": 1152,
+      "sha256": "195c8ec9104af3ebbeddb5942bd01247e8cd3175cb060316cbc5d35d0b2965de"
+    },
+    "inputs/p1_seed1_random.npz": {
+      "bytes": 7584,
+      "sha256": "86673046e4b30f2e476a2972a16e2b0b1fd70b79a708f25c5696ca0de9928c42"
+    },
+    "inputs/SMALL_M1_unique.npy": {
+      "bytes": 136,
+      "sha256": "eb2bfe6dfeed20f38972bbda35b2e4917a4adbc88661273d363547b6af84dd3a"
+    },
+    "inputs/p1_seed0_bias_only.npz": {
+      "bytes": 7584,
+      "sha256": "2617a6d431e7f47725a6fdff8a1903a189e8f56461fa492f535c48edcf0410e9"
+    },
+    "inputs/p1_seed1_zero.npz": {
+      "bytes": 7584,
+      "sha256": "10d3e40956fe3a157fdd10be6925b77bc2e26b2f7fd1e62207fb48a4354c5bae"
+    },
+    "inputs/p1_seed0_random.npz": {
+      "bytes": 7584,
+      "sha256": "b30fdad40349c781d07f64180138d41a1a586692f6475ebf9e019b2958c0078e"
+    },
+    "inputs/SMALL_M128_unique.npy": {
+      "bytes": 1152,
+      "sha256": "7a76ecc2bbfbd571271631252de47e72d11a3138854b56ecaabc8549911eabb4"
+    },
+    "inputs/SMALL_M2048_unique.npy": {
+      "bytes": 16512,
+      "sha256": "c9dd151ef001830f10758b4a61c0479ea01fcea9c95a4374063b5da085549dbe"
+    },
+    "inputs/p1_seed2_bias_only.npz": {
+      "bytes": 7584,
+      "sha256": "e95c65fd854790ea96d82f701012d5c445e02f41f5618d1cda167a537896fb49"
+    },
+    "inputs/p1_seed2_random.npz": {
+      "bytes": 7584,
+      "sha256": "b32ab721d4b06525dc6f0f018d82a4c2504c46b722d1e0d9732e41e35b62374c"
+    },
+    "inputs/p1_seed2_zero.npz": {
+      "bytes": 7584,
+      "sha256": "0ef65919d2453da984654b183868fa79bd9570609e2e89352731963d1b9a6d26"
+    },
+    "inputs/LARGE_M128_repeat75.npy": {
+      "bytes": 1152,
+      "sha256": "73965b762fcb3c816b8641bce1b4d4f069a17df1422aab2a839aa4a34b3ac1f0"
+    },
+    "inputs/LARGE_M2048_unique.npy": {
+      "bytes": 16512,
+      "sha256": "1c036a5b3ada6ba75fde34f5bd0aff8ccf5389ba40e6e08123ce4da6959264cb"
+    },
+    "inputs/SMALL_M2048_repeat75.npy": {
+      "bytes": 16512,
+      "sha256": "1fb3ba0645328c10cb8918831c97c750c30e472aea31551783fb3daa9e3787a1"
+    },
+    "inputs/LARGE_M1_unique.npy": {
+      "bytes": 136,
+      "sha256": "1cb38039cc14f365e019d2dec59b126b5aa83dd2bb5e4d801e5838c0b00d20fa"
+    },
+    "inputs/SMALL.npz": {
+      "bytes": 151634,
+      "sha256": "9aa0a85b16f696985f2ff12213cb2cf2e10f63c70b46eb5a9e0e69f566ff72e9"
+    },
+    "inputs/SMALL_M128_repeat75.npy": {
+      "bytes": 1152,
+      "sha256": "e8dfc9e87f90d65cc4ab8e928eb2ab421fb94aa7646062e6d044172417dbf781"
+    },
+    "vendor/optic/LICENSE": {
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "vendor/optic/README.md": {
+      "bytes": 10249,
+      "sha256": "bab96b89beb4a65fe62c933f1b76f79174c6c6d46ff0b6252caa6cd8f2167a4c"
+    },
+    "vendor/optic/pyproject.toml": {
+      "bytes": 470,
+      "sha256": "691845d68ea6aede351770b9b3a18ed22f107fde42c5745fc99b29ecc8f5a576"
+    },
+    "vendor/optic/examples/decode_optic.py": {
+      "bytes": 1981,
+      "sha256": "6ac71b2fd1e17c1675249f7d4a25bf97a3bc00360466120a304d4a2b1cc317b3"
+    },
+    "vendor/optic/docs/deployment.md": {
+      "bytes": 3473,
+      "sha256": "8242b8d243c8fdf4220beb04723501b2d63bccf50dc483522827d3a117d2c669"
+    },
+    "vendor/optic/src/ple_eval/compact_adapter.py": {
+      "bytes": 28778,
+      "sha256": "67797855d757b542762c9a3c04cc49504ec02a63ae0c4e8a5bd3fee32d7c93c1"
+    },
+    "vendor/optic/src/ple_eval/__init__.py": {
+      "bytes": 69,
+      "sha256": "cf6d794b6078d3a2a0392fc26315839e628acd7288cd44c57e6d9061dbf78f47"
+    }
+  },
+  "bundle_sha256": "a80b48fb7f0aa80f295580d1fa1efa6b64c1a887cb863fdf2cdaddae5f538926",
+  "note": "Uncommitted local source bundle identity; distinct from Git base. GPU code must be added to amendment freeze before first CUDA execution.",
+  "gpu_source_frozen_at": "2026-10-26T03:16:55.220641+00:00",
+  "gpu_files": {
+    "src/common.py": {
+      "bytes": 4815,
+      "sha256": "e135d6c4c48f57575a7244524cdec627ebd2e6eefec5672719c056686ce8a9ba"
+    },
+    "src/prepare.py": {
+      "bytes": 5257,
+      "sha256": "2196608ea8b64e2765b4f94d158951cd7167eb1ba14f637cddfac3547d11b92d"
+    },
+    "src/cpu_checks.py": {
+      "bytes": 4731,
+      "sha256": "9779583f7315e359f90f09235b4173f3276b41c4fc906c444901c38bfdd42ed0"
+    },
+    "src/gpu_worker.py": {
+      "bytes": 9579,
+      "sha256": "96e303799bb12191b11cd61d76ed9dcf059acb39cd173309daa0880aabfff146"
+    },
+    "src/gpu_run.py": {
+      "bytes": 4668,
+      "sha256": "2ccfa96480f3f3ebaa2f6f082de3522e148c606b43697b160350e85bff7f728d"
+    },
+    "configs/protocol.json": {
+      "bytes": 2241,
+      "sha256": "c0590594d720a80e5123d59d7ef0337b43f39e240e72793ef0023016e2d86019"
+    },
+    "inputs/p1_seed1_bias_only.npz": {
+      "bytes": 7584,
+      "sha256": "390267bbffe7044b7b56b3c461aff6825cae4be03901d83e741f2ca96dc4f33b"
+    },
+    "inputs/p1_seed0_zero.npz": {
+      "bytes": 7584,
+      "sha256": "4783d865855ca43763d2b88c578219ce617bedea4846c946eb2df30d714e7949"
+    },
+    "inputs/LARGE_M2048_repeat75.npy": {
+      "bytes": 16512,
+      "sha256": "14ea62958b2ca8893ae6bc06229d5691fc8eb28f5e21a008a620a07c864d9ae9"
+    },
+    "inputs/LARGE.npz": {
+      "bytes": 550998,
+      "sha256": "c3b28a795cc07b914d0a606363112614c94c398f9c2a6e0fdf4b7f2652f979fc"
+    },
+    "inputs/LARGE_M128_unique.npy": {
+      "bytes": 1152,
+      "sha256": "195c8ec9104af3ebbeddb5942bd01247e8cd3175cb060316cbc5d35d0b2965de"
+    },
+    "inputs/p1_seed1_random.npz": {
+      "bytes": 7584,
+      "sha256": "86673046e4b30f2e476a2972a16e2b0b1fd70b79a708f25c5696ca0de9928c42"
+    },
+    "inputs/SMALL_M1_unique.npy": {
+      "bytes": 136,
+      "sha256": "eb2bfe6dfeed20f38972bbda35b2e4917a4adbc88661273d363547b6af84dd3a"
+    },
+    "inputs/p1_seed0_bias_only.npz": {
+      "bytes": 7584,
+      "sha256": "2617a6d431e7f47725a6fdff8a1903a189e8f56461fa492f535c48edcf0410e9"
+    },
+    "inputs/p1_seed1_zero.npz": {
+      "bytes": 7584,
+      "sha256": "10d3e40956fe3a157fdd10be6925b77bc2e26b2f7fd1e62207fb48a4354c5bae"
+    },
+    "inputs/p1_seed0_random.npz": {
+      "bytes": 7584,
+      "sha256": "b30fdad40349c781d07f64180138d41a1a586692f6475ebf9e019b2958c0078e"
+    },
+    "inputs/SMALL_M128_unique.npy": {
+      "bytes": 1152,
+      "sha256": "7a76ecc2bbfbd571271631252de47e72d11a3138854b56ecaabc8549911eabb4"
+    },
+    "inputs/SMALL_M2048_unique.npy": {
+      "bytes": 16512,
+      "sha256": "c9dd151ef001830f10758b4a61c0479ea01fcea9c95a4374063b5da085549dbe"
+    },
+    "inputs/p1_seed2_bias_only.npz": {
+      "bytes": 7584,
+      "sha256": "e95c65fd854790ea96d82f701012d5c445e02f41f5618d1cda167a537896fb49"
+    },
+    "inputs/p1_seed2_random.npz": {
+      "bytes": 7584,
+      "sha256": "b32ab721d4b06525dc6f0f018d82a4c2504c46b722d1e0d9732e41e35b62374c"
+    },
+    "inputs/p1_seed2_zero.npz": {
+      "bytes": 7584,
+      "sha256": "0ef65919d2453da984654b183868fa79bd9570609e2e89352731963d1b9a6d26"
+    },
+    "inputs/LARGE_M128_repeat75.npy": {
+      "bytes": 1152,
+      "sha256": "73965b762fcb3c816b8641bce1b4d4f069a17df1422aab2a839aa4a34b3ac1f0"
+    },
+    "inputs/LARGE_M2048_unique.npy": {
+      "bytes": 16512,
+      "sha256": "1c036a5b3ada6ba75fde34f5bd0aff8ccf5389ba40e6e08123ce4da6959264cb"
+    },
+    "inputs/SMALL_M2048_repeat75.npy": {
+      "bytes": 16512,
+      "sha256": "1fb3ba0645328c10cb8918831c97c750c30e472aea31551783fb3daa9e3787a1"
+    },
+    "inputs/LARGE_M1_unique.npy": {
+      "bytes": 136,
+      "sha256": "1cb38039cc14f365e019d2dec59b126b5aa83dd2bb5e4d801e5838c0b00d20fa"
+    },
+    "inputs/SMALL.npz": {
+      "bytes": 151634,
+      "sha256": "9aa0a85b16f696985f2ff12213cb2cf2e10f63c70b46eb5a9e0e69f566ff72e9"
+    },
+    "inputs/SMALL_M128_repeat75.npy": {
+      "bytes": 1152,
+      "sha256": "e8dfc9e87f90d65cc4ab8e928eb2ab421fb94aa7646062e6d044172417dbf781"
+    },
+    "vendor/optic/LICENSE": {
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "vendor/optic/README.md": {
+      "bytes": 10249,
+      "sha256": "bab96b89beb4a65fe62c933f1b76f79174c6c6d46ff0b6252caa6cd8f2167a4c"
+    },
+    "vendor/optic/pyproject.toml": {
+      "bytes": 470,
+      "sha256": "691845d68ea6aede351770b9b3a18ed22f107fde42c5745fc99b29ecc8f5a576"
+    },
+    "vendor/optic/examples/decode_optic.py": {
+      "bytes": 1981,
+      "sha256": "6ac71b2fd1e17c1675249f7d4a25bf97a3bc00360466120a304d4a2b1cc317b3"
+    },
+    "vendor/optic/docs/deployment.md": {
+      "bytes": 3473,
+      "sha256": "8242b8d243c8fdf4220beb04723501b2d63bccf50dc483522827d3a117d2c669"
+    },
+    "vendor/optic/src/ple_eval/compact_adapter.py": {
+      "bytes": 28778,
+      "sha256": "67797855d757b542762c9a3c04cc49504ec02a63ae0c4e8a5bd3fee32d7c93c1"
+    },
+    "vendor/optic/src/ple_eval/__init__.py": {
+      "bytes": 69,
+      "sha256": "cf6d794b6078d3a2a0392fc26315839e628acd7288cd44c57e6d9061dbf78f47"
+    }
+  },
+  "gpu_bundle_sha256": "13395f664d27b0aa17b76e7ba79e1ca527e13f8ab2566bd8f39b3c37c1e2a8f1",
+  "amendments_before_cuda": [
+    "Added GPU worker and orchestration before first CUDA execution. No observed GPU numerics/latency. Shapes, inputs, seeds, gates and loops unchanged."
+  ],
+  "main_source_frozen_at": "2026-10-26T03:18:38.764247+00:00",
+  "main_files": {
+    "src/common.py": {
+      "bytes": 4815,
+      "sha256": "e135d6c4c48f57575a7244524cdec627ebd2e6eefec5672719c056686ce8a9ba"
+    },
+    "src/prepare.py": {
+      "bytes": 5257,
+      "sha256": "2196608ea8b64e2765b4f94d158951cd7167eb1ba14f637cddfac3547d11b92d"
+    },
+    "src/cpu_checks.py": {
+      "bytes": 4915,
+      "sha256": "19f8622a61baf540c36d7364dda9ef2c1ac470a9ff5949dd5d2e683c90557026"
+    },
+    "src/gpu_worker.py": {
+      "bytes": 9947,
+      "sha256": "d8970bd936c92beb151fe181e9b1efabe195ed5b87bd0ea8e37efc4849fb8911"
+    },
+    "src/gpu_run.py": {
+      "bytes": 4872,
+      "sha256": "78409e5839ebb67521438ce54dbfd0862265923ababa0f912da37793f1304872"
+    },
+    "configs/protocol.json": {
+      "bytes": 2241,
+      "sha256": "c0590594d720a80e5123d59d7ef0337b43f39e240e72793ef0023016e2d86019"
+    },
+    "inputs/p1_seed1_bias_only.npz": {
+      "bytes": 7584,
+      "sha256": "390267bbffe7044b7b56b3c461aff6825cae4be03901d83e741f2ca96dc4f33b"
+    },
+    "inputs/p1_seed0_zero.npz": {
+      "bytes": 7584,
+      "sha256": "4783d865855ca43763d2b88c578219ce617bedea4846c946eb2df30d714e7949"
+    },
+    "inputs/LARGE_M2048_repeat75.npy": {
+      "bytes": 16512,
+      "sha256": "14ea62958b2ca8893ae6bc06229d5691fc8eb28f5e21a008a620a07c864d9ae9"
+    },
+    "inputs/LARGE.npz": {
+      "bytes": 550998,
+      "sha256": "c3b28a795cc07b914d0a606363112614c94c398f9c2a6e0fdf4b7f2652f979fc"
+    },
+    "inputs/LARGE_M128_unique.npy": {
+      "bytes": 1152,
+      "sha256": "195c8ec9104af3ebbeddb5942bd01247e8cd3175cb060316cbc5d35d0b2965de"
+    },
+    "inputs/p1_seed1_random.npz": {
+      "bytes": 7584,
+      "sha256": "86673046e4b30f2e476a2972a16e2b0b1fd70b79a708f25c5696ca0de9928c42"
+    },
+    "inputs/SMALL_M1_unique.npy": {
+      "bytes": 136,
+      "sha256": "eb2bfe6dfeed20f38972bbda35b2e4917a4adbc88661273d363547b6af84dd3a"
+    },
+    "inputs/p1_seed0_bias_only.npz": {
+      "bytes": 7584,
+      "sha256": "2617a6d431e7f47725a6fdff8a1903a189e8f56461fa492f535c48edcf0410e9"
+    },
+    "inputs/p1_seed1_zero.npz": {
+      "bytes": 7584,
+      "sha256": "10d3e40956fe3a157fdd10be6925b77bc2e26b2f7fd1e62207fb48a4354c5bae"
+    },
+    "inputs/p1_seed0_random.npz": {
+      "bytes": 7584,
+      "sha256": "b30fdad40349c781d07f64180138d41a1a586692f6475ebf9e019b2958c0078e"
+    },
+    "inputs/SMALL_M128_unique.npy": {
+      "bytes": 1152,
+      "sha256": "7a76ecc2bbfbd571271631252de47e72d11a3138854b56ecaabc8549911eabb4"
+    },
+    "inputs/SMALL_M2048_unique.npy": {
+      "bytes": 16512,
+      "sha256": "c9dd151ef001830f10758b4a61c0479ea01fcea9c95a4374063b5da085549dbe"
+    },
+    "inputs/p1_seed2_bias_only.npz": {
+      "bytes": 7584,
+      "sha256": "e95c65fd854790ea96d82f701012d5c445e02f41f5618d1cda167a537896fb49"
+    },
+    "inputs/p1_seed2_random.npz": {
+      "bytes": 7584,
+      "sha256": "b32ab721d4b06525dc6f0f018d82a4c2504c46b722d1e0d9732e41e35b62374c"
+    },
+    "inputs/p1_seed2_zero.npz": {
+      "bytes": 7584,
+      "sha256": "0ef65919d2453da984654b183868fa79bd9570609e2e89352731963d1b9a6d26"
+    },
+    "inputs/LARGE_M128_repeat75.npy": {
+      "bytes": 1152,
+      "sha256": "73965b762fcb3c816b8641bce1b4d4f069a17df1422aab2a839aa4a34b3ac1f0"
+    },
+    "inputs/LARGE_M2048_unique.npy": {
+      "bytes": 16512,
+      "sha256": "1c036a5b3ada6ba75fde34f5bd0aff8ccf5389ba40e6e08123ce4da6959264cb"
+    },
+    "inputs/SMALL_M2048_repeat75.npy": {
+      "bytes": 16512,
+      "sha256": "1fb3ba0645328c10cb8918831c97c750c30e472aea31551783fb3daa9e3787a1"
+    },
+    "inputs/LARGE_M1_unique.npy": {
+      "bytes": 136,
+      "sha256": "1cb38039cc14f365e019d2dec59b126b5aa83dd2bb5e4d801e5838c0b00d20fa"
+    },
+    "inputs/SMALL.npz": {
+      "bytes": 151634,
+      "sha256": "9aa0a85b16f696985f2ff12213cb2cf2e10f63c70b46eb5a9e0e69f566ff72e9"
+    },
+    "inputs/SMALL_M128_repeat75.npy": {
+      "bytes": 1152,
+      "sha256": "e8dfc9e87f90d65cc4ab8e928eb2ab421fb94aa7646062e6d044172417dbf781"
+    },
+    "vendor/optic/LICENSE": {
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "vendor/optic/README.md": {
+      "bytes": 10249,
+      "sha256": "bab96b89beb4a65fe62c933f1b76f79174c6c6d46ff0b6252caa6cd8f2167a4c"
+    },
+    "vendor/optic/pyproject.toml": {
+      "bytes": 470,
+      "sha256": "691845d68ea6aede351770b9b3a18ed22f107fde42c5745fc99b29ecc8f5a576"
+    },
+    "vendor/optic/examples/decode_optic.py": {
+      "bytes": 1981,
+      "sha256": "6ac71b2fd1e17c1675249f7d4a25bf97a3bc00360466120a304d4a2b1cc317b3"
+    },
+    "vendor/optic/docs/deployment.md": {
+      "bytes": 3473,
+      "sha256": "8242b8d243c8fdf4220beb04723501b2d63bccf50dc483522827d3a117d2c669"
+    },
+    "vendor/optic/src/ple_eval/compact_adapter.py": {
+      "bytes": 28778,
+      "sha256": "67797855d757b542762c9a3c04cc49504ec02a63ae0c4e8a5bd3fee32d7c93c1"
+    },
+    "vendor/optic/src/ple_eval/__init__.py": {
+      "bytes": 69,
+      "sha256": "cf6d794b6078d3a2a0392fc26315839e628acd7288cd44c57e6d9061dbf78f47"
+    }
+  },
+  "main_bundle_sha256": "56d04293a0bf1a4f77ae58f7cbbc7a1c270690096589551a55dfda2089900d6e",
+  "main_amendments": [
+    "Raw requested BF16 output preservation added for independent CPU audit; arithmetic/timing loops/shapes/tolerances unchanged. Original probe/smoke source in provenance/source_v1.",
+    "Already observed: probe PASS,6 smoke cells PASS including full host/event diagnostic loops, all layers relativeL2 about0.00166 and max extra allocated285229056bytes. Smoke excluded from main summaries.",
+    "P1 rerun with BF16 raw output preservation; original P1 receipts retained."
+  ]
+}

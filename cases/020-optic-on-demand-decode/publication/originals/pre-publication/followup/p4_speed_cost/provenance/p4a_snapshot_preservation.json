@@ -1,0 +1,28 @@
+{
+  "timestamp": "2026-10-26T06:42:35.354938+00:00",
+  "event": "CPU_REPLAY_SCOPE_ORGANIZATION",
+  "observed_error": "ValueError: External numerical replay mismatch legacy_decision.json",
+  "cause": "Initial P4A exploratory snapshots were retained alongside independently regenerated summary outputs; audit.save does not generate those three snapshot names. No numerical output disagreed.",
+  "resolution": "Preserve those three initial snapshots byte-identically under results/p4a_initial. Canonical summary now contains only independently regenerated outputs.",
+  "files": [
+    {
+      "original_P4A_path": "summary/legacy_decision.json",
+      "preserved_path": "results/p4a_initial/legacy_decision.json",
+      "bytes": 813,
+      "sha256": "d57e38697babcb643f9dc547f57c086e13bc553e737e6195f1f01d7335cf6464"
+    },
+    {
+      "original_P4A_path": "summary/legacy_memory_stages.csv",
+      "preserved_path": "results/p4a_initial/legacy_memory_stages.csv",
+      "bytes": 9365,
+      "sha256": "163870a683b7dd097770167511dd683e7ff082b756374136047844d43e2bd373"
+    },
+    {
+      "original_P4A_path": "summary/legacy_paired.csv",
+      "preserved_path": "results/p4a_initial/legacy_paired.csv",
+      "bytes": 12523,
+      "sha256": "18a9a53cd4bc9c05d076830724eb6661ff8a4e4cd598c9999ac86d31bf9cfd50"
+    }
+  ],
+  "GPU_source_config_raw_or_budget_changed": false
+}

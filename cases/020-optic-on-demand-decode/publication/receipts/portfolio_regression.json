@@ -1,0 +1,24 @@
+{
+  "status": "FAIL",
+  "checks": [
+    {
+      "check": "docs-tests",
+      "exit_code": 0
+    },
+    {
+      "check": "docs",
+      "exit_code": 0
+    },
+    {
+      "check": "showcase-tests",
+      "exit_code": 1
+    }
+  ],
+  "protected_files": 9790,
+  "evidence_unchanged": true,
+  "new_gpu_runs": 0,
+  "remote_ci": "NOT_RUN_LOCALLY",
+  "scope": "Package preservation, public scalar audits, docs, CPU selector, display extraction and build; browser is separate. No original GPU tests or full-vector replay.",
+  "blocker": "tools/showcase/build.py:163 permits only Case001\u2013019. Case020 is GitHub-only and site implementation changes are forbidden by current instruction.",
+  "resolution": "Not bypassed or patched. Keep PR unmerged pending authorized site-discovery scope resolution."
+}

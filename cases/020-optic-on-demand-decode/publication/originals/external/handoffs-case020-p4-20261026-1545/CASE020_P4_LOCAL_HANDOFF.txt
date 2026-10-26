@@ -1,0 +1,120 @@
+Case020 P4 로컬 인계 — 속도 변동·decoder 폭·호출 누적 비용
+작성 시각: 2026-10-26T15:45:49.504024+09:00
+상태: COMPLETE / 로컬 공개 후보. 게시·Git stage/commit/push/PR/merge/Release·Pages·Drive는 실행하지 않음.
+
+1. 위치와 식별
+Worktree: /home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215
+Case: /home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode
+신규 범위: /home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost
+Branch: research/case020-optic-on-demand-decode-20261026-1215
+HEAD/base: 3e6f2c6b36fb2a3853cc3677bee84904d28567cf
+Upstream: 344c712aeb6620e39eb78930fb922447f0e123f3
+P4 run: p4-20261026-1451
+실행 source/config/input bundle SHA256: e841f818bf81263fcd78f5513244feabc79a73bc8dc07d68a53fcf1d5cfcd25e
+PROTOCOL SHA256: 31c29c6724c221c72d7a8f43fb1e8d5098c19b3871e375f043aa3664054b939f
+PUBLIC_MANIFEST_P4 SHA256: 1509e334fcad51b4a74f1b5903082f73e27c7cafc93008c6ed132264bef14e73
+원 Case manifest SHA256: f4aa25642fdaa16a7d2e943da8ae903d057a0ebe52d01c337dcfa68764e801a2
+Git 변경은 원과 같은 untracked Case020 디렉터리이며 staged/tracked diff 없음.
+
+2. 먼저 읽을 문서
+/home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/INTEGRATED_REPORT.ko.md
+/home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/INTEGRATED_REPORT.md
+/home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/REPORT.ko.md
+/home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/REPRODUCE.ko.md
+원 REPORT/PUBLIC_MANIFEST는 당시 기록이며 수정하지 않았다.
+
+3. 완료 분모와 기술 gate
+P4A: 최종 P2 raw90개에서 host100/event100 전체 통계 재계산.
+P4B core18 + width12 = timing30/30 worker, method-block96/96.
+P4C lifecycle27/27 worker. N128/1024/4096 각각 새 process.
+추가 preflight3, smoke1, memory3; profile0, probe-only0.
+GPU worker 전체64, 실패0, 재시도0, 누락0.
+공통 작은 GEMM probe64회는 이64 worker 내부에 있으며 추가 worker로 합산하지 않음.
+RTX5080 sm_120, 실제 FP16 GEMM FP32 out_dtype finite, 모든16 layer A/B/C/S 검산 통과.
+BF16 relative_L2<=1e-2 유지; 관측 최대 layer relative_L2=0.0017823104599562255.
+모든 worker 추가 allocated peak<=2GiB gate 통과.
+기존 decoder/dtype/FP32 accumulation 정책 유지. TF32/reduced-precision reduction=false.
+초기 freeze15:03:17 KST, preflight/smoke를 기록한 main freeze15:04:16 KST.
+P2를 관측한 뒤 설계한 후속 실험이며 미관측 사전등록으로 소급하지 않음.
+
+4. 핵심 관측
+기존 LARGE/Z32 resident tensor: A268435456 bytes(256MiB), B/C548928 bytes(약0.524MiB).
+기존 M2048/U512 timed allocated peak: A318783488, B84713984, C55124480 bytes.
+동일 조건 reserved peak: A354418688, B85983232, C106954752 bytes. allocated 절감과 reserved는 구분.
+
+주 지표 H는 같은 context에서 방법 순서를 교차한 동기 host 호출.
+C/B block-median ratio의 중앙값:
+Z32 M1/U1 2.333; M2048/U2048 1.936; M2048/U512 1.777 (각6block, C승리0/6).
+Z128 U2048 1.942 / U512 1.800 (각3block).
+Z644 U2048 1.409 / U512 1.142 (각3block).
+30개 C/B block 모두 C가 느렸다. 고정 이득 문턱을 만족한 조건 없음.
+Z644의 폭 증가에서 일부 상대 차이가 줄었지만 groups/codebook/storage/work도 바뀌며 단조 변화는 아님.
+S는 Z32/M2048/U2048만 수행: H S/B 중앙비1.763, C/S1.133.
+U=M에서 복원 행 감소는 없으며 C-S를 unique의 순수 인과 비용으로 읽지 않음.
+
+D는 같은 호출의 두 clock이지만 host에 event 기록/wait 포함. E는 공통K16 stream elapsed/16.
+D/E는 H 대체값이나 순수 kernel 합이 아니다. mean/median/p95를 pass/clock별로 분리 보존.
+기존 P2 host-median 승리5/30, event-mean4/30, 공통0/30, 불일치9/30 재확인.
+median/median은5/4/1/7, mean/mean은8/4/1/10. 통계량을 맞춰도 원 별도 pass 계약은 유지.
+
+실제 session(artifact 전 시작→setup→N실호출→최종정리):
+N128: median session A=0.196438s B=0.185433s C=0.229143s; block3개의 모든 원점은 lifecycle.csv/보고서에 보존.
+N1024: median session A=0.223652s B=0.410242s C=0.632942s; block3개의 모든 원점은 lifecycle.csv/보고서에 보존.
+N4096: median session A=0.442087s B=0.941224s C=1.234773s; block3개의 모든 원점은 lifecycle.csv/보고서에 보존.
+N128 A/B는 block마다 우열이 섞임(B승리2/3), N1024·4096은 A3/3 빠름.
+중앙값 순서의 변화는 관측한128–1024 사이로만 보고하며 정확한 운영 교차점을 보간하지 않음.
+원 선형 시나리오 약920–2319회는 당시 결과로 유지. 새 cold B/C 첫 호출 비용 포함.
+C session 중앙값은 모든N에서 B보다 높음. N4096 개별1block은 C<B이므로 모든 실행에서 C불리라는 주장은 하지 않음.
+first_call은 total_loop의 일부, session은 worker_wall의 일부이며 중복 가산하지 않음.
+session/N은 평균 상각 비용이지 per-call p95가 아님.
+
+5. 32MiB attribution
+원90 raw에서 post-library baseline이 이미33554432 bytes. artifact/ID 전부터 존재.
+warm−baseline−module−ID 잔여0–952 bytes. 원 after-load/output-release endpoint와 stack은 없음.
+새 A/B/C 진단3개: context0→작은 GEMM 후32MiB→module/ID 제거 뒤32MiB.
+남은 active33554432-byte block에 setWorkspaceForHandle/getCurrentCUDABlasHandle/FP16 GEMM helper C++ stack 확인.
+새 replay의 Torch cuBLAS handle workspace 소유자 확인. 과거 allocation stack을 소급 복원했다고 주장하지 않음.
+
+6. 시간·자원 장부
+원196 worker 정확 합계: 457.42430387000195s (전달457.424초의 반올림과 일치).
+원 잔여: 1342.575696129998s. P4 추가 상한=min(900,실제잔여)=900s.
+신규64 worker 합계: 265.7759154359974s, P4잔여 634.2240845640026s.
+신규 kind별 wall: {"preflight": 31.34397989899844, "smoke": 2.267547396999362, "timing": 161.49633934400117, "lifecycle": 61.774636382997414, "memory": 8.893412413000988}
+전체260 worker: 723.2002193059993s, 전체1800초 잔여 1076.7997806940007s.
+parent spawn→exit를 차감해 import/context/setup/preflight CPU 검산/종료도 포함.
+원 diagnostic/final/P4는 wall만 합산, 성능 표본은 합치지 않음. GPU worker wall은 GPU busy time이 아님.
+유리한 cell 추가 반복, 자동 grid 확대, 모델/데이터 다운로드/서빙/학습 없음.
+읽기 전용 Python3.12.14 / Torch2.13.0+cu130 / NumPy2.3.5. CUDA13.0, driver621.01.
+그림 runtime Python3.10.19 / NumPy2.2.6 / Matplotlib3.10.8. 설치·업그레이드 없음.
+
+7. CPU 감사와 재현
+모델/GPU 없이 실행:
+PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 /home/mskim/inference-lab/.venv-baseline/bin/python /home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/src/audit.py verify
+재집계:
+PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 /home/mskim/inference-lab/.venv-baseline/bin/python /home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/src/audit.py summarize --out /tmp/case020-p4-summary-fresh
+그림:
+PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 MPLCONFIGDIR=/tmp/case020-p4-mpl-fresh /home/mskim/miniforge3/envs/ai_lab/bin/python /home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/src/audit.py figures --out /tmp/case020-p4-figures-fresh
+출력 경로가 이미 있으면 새 이름을 선택한다. 기존 GPU prepare/run을 다시 실행해 장부를 초기화하지 않는다.
+다른 위치의 전체Case 복사본은 --portable: Case 내부 recorded path를 현재Case로 연결하고 없는 외부원본은 미확인 경로로 보고.
+raw: /home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/results/p4-20261026-1451
+summary: /home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/summary
+figures: /home/mskim/Codex_main/inference-lab-case020-optic-decode-20261026-1215/cases/020-optic-on-demand-decode/followup/p4_speed_cost/figures
+source/metadata: PROTOCOL.json, SOURCE_MAP.md, REUSE_MAP.md, provenance/*.json.
+독립 CPU검사는 stored PASS가 아닌 raw 숫자/hash/order/K/ns interval/N을 재계산.
+표18파일과 PNG/SVG8파일을 새 외부 출력으로 재생성하고 동일 환경 bytes 일치 관측.
+변조 거절 등 검사8개 PASS. CPU import/help에서 Torch import 없음.
+그림4개를 실제 개별로 열어 단위/축/범례/실제분모/점·범위 표시 확인.
+초기 CPU 감사 변수 중복과 초기 P4A snapshot 범위 분리 오류는 journal/receipt에 보존.
+수치/원 GPU source/raw는 바뀌지 않았고 GPU 실패·재시도에 해당하지 않음.
+원 verifier는 수정 없이 원747파일만 둔 외부 임시 복원본에서 PASS; coverage기대값 완화 없음.
+
+8. 보존과 종료
+원 Case747파일, Case 밖 분석/이전인계18파일의 bytes/SHA256 그대로.
+신규 파일272개(자기manifest 제외)는 PUBLIC_MANIFEST_P4가 식별.
+원 staged/tracked diff 없음. 다른 Case/연구 runtime/cache/결과는 정리하지 않음.
+소유 GPU worker는 모두 종료했고 종료 후 compute-apps 목록 비어 있음. 다른 service 종료나 GPU clock/power/driver 변경 없음.
+소유 sibling의 cuda_cache/cache/mpl_cache만 제거. 원 runtime/user cache는 그대로.
+새 public후보 약29.6MB; 로컬 검증/정리 상세는 provenance/resource_closeout.json.
+큰 ZIP/dense table 사본/모델은 만들지 않음.
+원격CI, 다른 머신 재현, 원격 게시 모두 NOT_RUN. 전체 모델·품질·KV·TTFT/TPOT는 계속 미측정.
+남은 게시 전 작업은 별도 승인된 Git/원격검토/CI/게시 단계이며 이번 인계가 자동 승인하지 않음.

@@ -1,0 +1,101 @@
+{
+  "run_id": "p4-20261026-1451",
+  "designed_after_observing": "Original final P2 and diagnostic raw plus outside analysis already observed. Followup, not retroactive preregistration.",
+  "upstream_sha": "344c712aeb6620e39eb78930fb922447f0e123f3",
+  "original_run_id": "20261026-1235",
+  "prior_gpu_workers": 196,
+  "prior_gpu_wall_exact": 457.42430387000195,
+  "P4_wall_cap_seconds": 900,
+  "global_gpu_cap_seconds": 1800,
+  "additional_allocated_cap_bytes": 2147483648,
+  "disk_target_bytes": 268435456,
+  "disk_hard_cap_bytes": 536870912,
+  "CUDA_CACHE_MAXSIZE": 134217728,
+  "total_wall_start_KST": "2026-10-26T14:51:53+09:00",
+  "stop_GPU_before_KST": "2026-10-26T17:21:53+09:00",
+  "time_budget_note": "3h target with30min documentation reserve; no adaptive grid expansion.",
+  "runtime": "Read-only /home/mskim/inference-lab/.venv-baseline/bin/python; Python>=3.12,Torch2.13+cu130, no installs",
+  "arithmetic": {
+    "TF32": false,
+    "fp16_reduced_precision_reduction": false,
+    "bf16_reduced_precision_reduction": false,
+    "fp16_accumulation": false,
+    "autograd": false,
+    "eager": true,
+    "dtype": "BF16",
+    "output": "[M,L,H] raw unscaled all layers",
+    "dense_chunk": 256
+  },
+  "correctness": {
+    "fp64_rtol": 1e-10,
+    "fp64_atol": 1e-12,
+    "BF16_relative_L2_max": 0.01,
+    "zero_max_abs": 1e-06,
+    "finite_required": true,
+    "preflight_separate_process": true,
+    "cold_main_not_used_for_correctness": true
+  },
+  "timing": {
+    "initial_warm_each_method": 20,
+    "pass_start_warm_each_method": 20,
+    "H_rounds": 120,
+    "H_K": 1,
+    "D_rounds": 48,
+    "D_K": 1,
+    "D_host_includes_event_records_and_wait": true,
+    "E_brackets": 24,
+    "E_K": 16,
+    "p95": "linear",
+    "trim": false,
+    "pass_order": "core six permutations across6blocks; width cyclic Latin across3blocks",
+    "method_order": "all6 or24 permutations, seeded shuffled cycle; full multiples in all main passes"
+  },
+  "fixture_seeds": {
+    "new_width": "SeedSequence([61026020,4,Z]); original distribution/scale retained",
+    "ordering": 61026024,
+    "worker_order": 61026025,
+    "lifecycle_order": 61026026
+  },
+  "planned": {
+    "core_workers": 18,
+    "width_workers": 12,
+    "timing_workers": 30,
+    "method_blocks": 96,
+    "lifecycle_workers": 27,
+    "preflight_workers": 3,
+    "smoke_workers": 1,
+    "memory_max_workers": 3,
+    "profile_workers": 0
+  },
+  "lifecycle": {
+    "N": [
+      128,
+      1024,
+      4096
+    ],
+    "methods": [
+      "A",
+      "B",
+      "C"
+    ],
+    "blocks": 3,
+    "no_warmup": true,
+    "session": "before artifact read through final owned-tensor cleanup+sync; IDs H2D included",
+    "loop": "N real fn+completion synchronize; first call included; output immediately deleted; no events/sample copies",
+    "worker_wall": "parent spawn to exit, includes import/context/setup/teardown",
+    "costs_not_additive": "first call part of total_loop; setup and final cleanup part of session; session part of worker wall"
+  },
+  "memory": {
+    "enabled_if_remaining_seconds_at_least": 30,
+    "history": "installed torch.cuda.memory._record_memory_history(state, all stacks,max_entries512), public memory_snapshot(include_traces=False)",
+    "owner_rule": "stage correlation only unless stack identifies allocation owner; otherwise UNATTRIBUTED",
+    "main_latency_shared_residency": "not method-isolated memory; never merge with P2 peaks"
+  },
+  "decision": {
+    "core": "median C/B H block-median ratios<=0.90 and>=5/6 faster -> REPEATABLE_IN_THIS_CORE_TEST candidate",
+    "width": "same threshold and3/3 faster -> EXPLORATORY_WIDTH_SIGNAL",
+    "small_difference": "median ratio within(0.90,1.10); descriptive not significance or implementation gate",
+    "host_event_common_win_required": false
+  },
+  "retry_limit": 1
+}

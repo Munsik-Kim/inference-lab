@@ -646,6 +646,26 @@ def check_case015(root: Path, errors: list[str]) -> set[str]:
         errors.append('Case015 publication verification failed: '+str(exc));return set()
 
 
+def check_case020(root: Path, errors: list[str]) -> set[str]:
+    """Authorize new Case020 files only after exact mapping and closed-byte checks.
+
+    NPZ and images stay binary: the case verifier hashes their bytes; numerical
+    and NPZ member/CRC checks run in its dedicated CPU workflow.
+    """
+    case=root/'cases/020-optic-on-demand-decode'
+    if not case.exists():return set()
+    try:
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('case020_docs_verify',case/'publication/verify.py')
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        module.verify(case)
+        for lang in ('en','ko'):
+            if (root/f'docs/{lang}/CASEBOOK.md').read_text().count('<a id="case-020"></a>')!=1:raise ValueError('Case020 needs one Casebook entry')
+        return {str(p.relative_to(root)) for p in case.rglob('*') if p.is_file()}
+    except Exception as exc:
+        errors.append('Case020 publication verification failed: '+str(exc));return set()
+
+
 def check_case019(root: Path, errors: list[str]) -> set[str]:
     case=root/'cases/019-silent-alignment-dynamics'
     if not case.exists():return set()
@@ -733,6 +753,7 @@ def audit(root: Path, inventory: Path | None = None) -> dict:
     additional |= check_case017(root, errors)
     additional |= check_case018(root, errors)
     additional |= check_case019(root, errors)
+    additional |= check_case020(root, errors)
     additional |= check_agent_tool_repair(root, errors)
     protected = check_protection(root, mapping.get('protection_revision', mapping['source_revision']), errors, inventory, additional)
     check_copy_hygiene(root, (*PAGES, CONCEPT_FIGURE, 'docs/_meta/claims.json', 'docs/_meta/MAINTENANCE.md'), errors)

@@ -1,0 +1,312 @@
+{
+  "captured_at": "2026-10-26T03:49:57.405720+00:00",
+  "checks": [
+    {
+      "command": [
+        "/home/mskim/inference-lab/.venv-baseline/bin/python",
+        "-B",
+        "src/audit_v2.py",
+        "--help"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.05847672399977455,
+      "stdout": "usage: audit_v2.py [-h] [--root ROOT] [--out OUT] {verify,summarize,figures}\n\nIndependent CPU reaggregation. Deliberately imports neither Torch nor\nbenchmark code.\n\npositional arguments:\n  {verify,summarize,figures}\n\noptions:\n  -h, --help            show this help message and exit\n  --root ROOT\n  --out OUT\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/mskim/inference-lab/.venv-baseline/bin/python",
+        "-B",
+        "tests/test_audit_v2.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.07237781100002394,
+      "stdout": "",
+      "stderr": "test_changed_input_manifest_U_is_rejected (__main__.TamperTests.test_changed_input_manifest_U_is_rejected) ... ok\ntest_changed_raw_sample_hash_is_rejected (__main__.TamperTests.test_changed_raw_sample_hash_is_rejected) ... ok\ntest_dtype_payload_units_are_recomputed (__main__.TamperTests.test_dtype_payload_units_are_recomputed) ... ok\ntest_positive_fixture_and_no_torch_import (__main__.TamperTests.test_positive_fixture_and_no_torch_import) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.003s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/home/mskim/inference-lab/.venv-baseline/bin/python",
+        "-B",
+        "src/audit_v2.py",
+        "summarize",
+        "--out",
+        "/home/mskim/Codex_main/case020-optic-private-20261026-1215/final_cpu_rebuild/summary"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.6067924109997875,
+      "stdout": "{\n  \"status\": \"COMPLETE\",\n  \"planned_cells\": 30,\n  \"planned_cell_blocks\": 90,\n  \"actual_cells\": 30,\n  \"success_cell_blocks\": 90,\n  \"failed_cell_blocks\": 0,\n  \"failed\": [],\n  \"missing_cell_blocks\": 0,\n  \"missing\": [],\n  \"labels\": [\n    \"OPERATOR_VALIDATED\",\n    \"MEMORY_TRADEOFF_OBSERVED\",\n    \"DEDUP_UNRESOLVED_BLOCK_VARIATION\"\n  ],\n  \"dedup_gain_conditions\": [],\n  \"host_C_faster_paired_blocks\": 5,\n  \"paired_comparisons\": 30,\n  \"judgment_note\": \"Descriptive rule: report conditions with C<B in all three host blocks and retain all other ratios. This rule was selected after seeing the diagnostic run, before corrected primary timing; no formal statistical threshold is claimed.\",\n  \"run_id\": \"20261026-1235\",\n  \"primary_gpu_workers\": 99,\n  \"primary_gpu_worker_wall_seconds\": 224.77486773000123,\n  \"prior_diagnostic_cell_blocks\": 90,\n  \"gpu_workers_total\": 196,\n  \"gpu_worker_wall_seconds\": 457.42430387000195,\n  \"gpu_worker_budget_remaining_seconds\": 1342.575696129998,\n  \"independent_method_pair_records\": 90,\n  \"cpu_only_reaggregation\": true,\n  \"torch_imported\": false,\n  \"quantile\": \"linear\",\n  \"public_raw_bf16_scope\": \"B block0 all ten inputs plus P1 A/B/C all257tokens, seeds0/1/2; requested outputs only\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/mskim/miniforge3/envs/ai_lab/bin/python",
+        "-B",
+        "src/audit_v2.py",
+        "figures",
+        "--out",
+        "/home/mskim/Codex_main/case020-optic-private-20261026-1215/final_cpu_rebuild/figures"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.1695727490000536,
+      "stdout": "{\n  \"status\": \"COMPLETE\",\n  \"planned_cells\": 30,\n  \"planned_cell_blocks\": 90,\n  \"actual_cells\": 30,\n  \"success_cell_blocks\": 90,\n  \"failed_cell_blocks\": 0,\n  \"failed\": [],\n  \"missing_cell_blocks\": 0,\n  \"missing\": [],\n  \"labels\": [\n    \"OPERATOR_VALIDATED\",\n    \"MEMORY_TRADEOFF_OBSERVED\",\n    \"DEDUP_UNRESOLVED_BLOCK_VARIATION\"\n  ],\n  \"dedup_gain_conditions\": [],\n  \"host_C_faster_paired_blocks\": 5,\n  \"paired_comparisons\": 30,\n  \"judgment_note\": \"Descriptive rule: report conditions with C<B in all three host blocks and retain all other ratios. This rule was selected after seeing the diagnostic run, before corrected primary timing; no formal statistical threshold is claimed.\",\n  \"run_id\": \"20261026-1235\",\n  \"primary_gpu_workers\": 99,\n  \"primary_gpu_worker_wall_seconds\": 224.77486773000123,\n  \"prior_diagnostic_cell_blocks\": 90,\n  \"gpu_workers_total\": 196,\n  \"gpu_worker_wall_seconds\": 457.42430387000195,\n  \"gpu_worker_budget_remaining_seconds\": 1342.575696129998,\n  \"independent_method_pair_records\": 90,\n  \"cpu_only_reaggregation\": true,\n  \"torch_imported\": false,\n  \"quantile\": \"linear\",\n  \"public_raw_bf16_scope\": \"B block0 all ten inputs plus P1 A/B/C all257tokens, seeds0/1/2; requested outputs only\"\n}\n",
+      "stderr": ""
+    }
+  ],
+  "external_output": "/home/mskim/Codex_main/case020-optic-private-20261026-1215/final_cpu_rebuild",
+  "equivalence": {
+    "results/summary/correctness.csv": {
+      "original": {
+        "bytes": 48233,
+        "sha256": "afd2640708140300199bc4e4e9347837a0ff57f9b40490da86be7c2e395920bf"
+      },
+      "external_rebuild": {
+        "bytes": 48233,
+        "sha256": "afd2640708140300199bc4e4e9347837a0ff57f9b40490da86be7c2e395920bf"
+      }
+    },
+    "results/summary/latency.csv": {
+      "original": {
+        "bytes": 15413,
+        "sha256": "526b9d62986ad5910a34903b93f26d2811324c8dbeb4d1a50fe1b2bcf6bc28bd"
+      },
+      "external_rebuild": {
+        "bytes": 15413,
+        "sha256": "526b9d62986ad5910a34903b93f26d2811324c8dbeb4d1a50fe1b2bcf6bc28bd"
+      }
+    },
+    "results/summary/decision.json": {
+      "original": {
+        "bytes": 1216,
+        "sha256": "e74ff97c574f8ae94f0a48936306c9358413c9e2555aa2f2b3b2c5a93e1aa71c"
+      },
+      "external_rebuild": {
+        "bytes": 1216,
+        "sha256": "e74ff97c574f8ae94f0a48936306c9358413c9e2555aa2f2b3b2c5a93e1aa71c"
+      }
+    },
+    "results/summary/paired.csv": {
+      "original": {
+        "bytes": 3860,
+        "sha256": "ac7ba24e3d0348bd013e268d0e4c2c7e4ef6c45dbcf5ee1895166e2442a74c18"
+      },
+      "external_rebuild": {
+        "bytes": 3860,
+        "sha256": "ac7ba24e3d0348bd013e268d0e4c2c7e4ef6c45dbcf5ee1895166e2442a74c18"
+      }
+    },
+    "results/summary/memory.csv": {
+      "original": {
+        "bytes": 20381,
+        "sha256": "49501d8897ea7b6d2228a1b36eac4a78db218638977e115072259196707484f4"
+      },
+      "external_rebuild": {
+        "bytes": 20381,
+        "sha256": "49501d8897ea7b6d2228a1b36eac4a78db218638977e115072259196707484f4"
+      }
+    },
+    "figures/03_unique_cost.svg": {
+      "original": {
+        "bytes": 132484,
+        "sha256": "5149c58af4326d6a6623ecf32a8fe63202557a4cb588c413c70b2e8555568aae"
+      },
+      "external_rebuild": {
+        "bytes": 132484,
+        "sha256": "5149c58af4326d6a6623ecf32a8fe63202557a4cb588c413c70b2e8555568aae"
+      }
+    },
+    "figures/01_memory.svg": {
+      "original": {
+        "bytes": 123057,
+        "sha256": "aefb91c2b47b9c6c8738699b0227d1f88e1e4fa5ff9ea2c0d0f7aee3018279f7"
+      },
+      "external_rebuild": {
+        "bytes": 123057,
+        "sha256": "aefb91c2b47b9c6c8738699b0227d1f88e1e4fa5ff9ea2c0d0f7aee3018279f7"
+      }
+    },
+    "figures/03_unique_cost.png": {
+      "original": {
+        "bytes": 210212,
+        "sha256": "6e3267b280dc5296b2225c2f54e93200a1c8336a476e6fab08912a11116ca952"
+      },
+      "external_rebuild": {
+        "bytes": 210212,
+        "sha256": "6e3267b280dc5296b2225c2f54e93200a1c8336a476e6fab08912a11116ca952"
+      }
+    },
+    "figures/02_latency.svg": {
+      "original": {
+        "bytes": 181232,
+        "sha256": "1ae57693046dcca0c33d101bf58e8b441b8fa41e16e3fb0c9daf27829b68b696"
+      },
+      "external_rebuild": {
+        "bytes": 181232,
+        "sha256": "1ae57693046dcca0c33d101bf58e8b441b8fa41e16e3fb0c9daf27829b68b696"
+      }
+    },
+    "figures/01_memory.png": {
+      "original": {
+        "bytes": 186651,
+        "sha256": "04d8adf5ebfe91f783efd09d9be5b940145a55152ddc88b0adb361c171ee3fa8"
+      },
+      "external_rebuild": {
+        "bytes": 186651,
+        "sha256": "04d8adf5ebfe91f783efd09d9be5b940145a55152ddc88b0adb361c171ee3fa8"
+      }
+    },
+    "figures/02_latency.png": {
+      "original": {
+        "bytes": 366468,
+        "sha256": "762d5ccf5b455eb0e522eca89e59adce53fe3fc38971d705f6460ca9327f62fc"
+      },
+      "external_rebuild": {
+        "bytes": 366468,
+        "sha256": "762d5ccf5b455eb0e522eca89e59adce53fe3fc38971d705f6460ca9327f62fc"
+      }
+    }
+  },
+  "summary_numeric_equivalence": true,
+  "summary_byte_equality_observed": true,
+  "six_figure_byte_equality_observed": true,
+  "byte_equality_scope": "Same existing local CPU environments only; not scientific correctness criterion or remote CI evidence",
+  "visual_QA": {
+    "files": [
+      "figures/01_memory.png",
+      "figures/02_latency.png",
+      "figures/03_unique_cost.png"
+    ],
+    "opened_actual_PNGs": true,
+    "titles_axes_units_legends_reviewed": true,
+    "cell_block_count": "90 primary cell-blocks; three block origins; one M1 condition per shape",
+    "range_bars": "Observed block min\u2013max, not confidence intervals",
+    "figure03_signed_values": "All negative and positive block values visible after fixing initial draft limits",
+    "initial_issue_receipt": "provenance/execution_history.json"
+  },
+  "no_Torch_CPU_path": true,
+  "document_local_links_checked": [
+    {
+      "document": "README.ko.md",
+      "target": "figures/01_memory.png"
+    },
+    {
+      "document": "README.ko.md",
+      "target": "figures/02_latency.png"
+    },
+    {
+      "document": "README.ko.md",
+      "target": "REPRODUCE.ko.md"
+    },
+    {
+      "document": "README.ko.md",
+      "target": "REPORT.ko.md"
+    },
+    {
+      "document": "README.ko.md",
+      "target": "SOURCE_MAP.md"
+    },
+    {
+      "document": "README.ko.md",
+      "target": "REUSE_MAP.md"
+    },
+    {
+      "document": "README.ko.md",
+      "target": "THIRD_PARTY_NOTICES.md"
+    },
+    {
+      "document": "README.md",
+      "target": "figures/01_memory.png"
+    },
+    {
+      "document": "README.md",
+      "target": "figures/02_latency.png"
+    },
+    {
+      "document": "README.md",
+      "target": "REPRODUCE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "REPORT.md"
+    },
+    {
+      "document": "README.md",
+      "target": "README.ko.md"
+    },
+    {
+      "document": "README.md",
+      "target": "SOURCE_MAP.md"
+    },
+    {
+      "document": "README.md",
+      "target": "REUSE_MAP.md"
+    },
+    {
+      "document": "README.md",
+      "target": "THIRD_PARTY_NOTICES.md"
+    },
+    {
+      "document": "REPORT.ko.md",
+      "target": "figures/03_unique_cost.png"
+    },
+    {
+      "document": "REPORT.ko.md",
+      "target": "configs/protocol.json"
+    },
+    {
+      "document": "REPORT.ko.md",
+      "target": "results/20261026-1235"
+    },
+    {
+      "document": "REPORT.ko.md",
+      "target": "results/summary/decision.json"
+    },
+    {
+      "document": "REPORT.ko.md",
+      "target": "SOURCE_MAP.md"
+    },
+    {
+      "document": "REPORT.ko.md",
+      "target": "REPRODUCE.ko.md"
+    },
+    {
+      "document": "REPORT.md",
+      "target": "figures/03_unique_cost.png"
+    },
+    {
+      "document": "REPORT.md",
+      "target": "configs/protocol.json"
+    },
+    {
+      "document": "REPORT.md",
+      "target": "results/20261026-1235"
+    },
+    {
+      "document": "REPORT.md",
+      "target": "results/summary/decision.json"
+    },
+    {
+      "document": "REPORT.md",
+      "target": "SOURCE_MAP.md"
+    },
+    {
+      "document": "REPORT.md",
+      "target": "REPRODUCE.md"
+    },
+    {
+      "document": "SOURCE_MAP.md",
+      "target": "provenance/source_manifest.json"
+    },
+    {
+      "document": "THIRD_PARTY_NOTICES.md",
+      "target": "vendor/optic/LICENSE"
+    },
+    {
+      "document": "THIRD_PARTY_NOTICES.md",
+      "target": "vendor/optic/THIRD_PARTY_NOTICES.md"
+    }
+  ],
+  "remote_CI": "NOT_RUN",
+  "other_machine": "NOT_RUN"
+}

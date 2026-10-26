@@ -1,0 +1,2323 @@
+{
+  "kind": "preflight",
+  "baseline": {
+    "allocated": 33554432,
+    "reserved": 33554432,
+    "device": {
+      "exit_code": 0,
+      "sample": "2222 MiB, 1 %, 34.40, 38.00 W",
+      "stderr": ""
+    }
+  },
+  "device_name": "NVIDIA GeForce RTX 5080",
+  "sm": [
+    12,
+    0
+  ],
+  "policy_before": {
+    "tf32": false,
+    "fp16_reduction": true,
+    "bf16_reduction": true
+  },
+  "policy_after": {
+    "tf32": false,
+    "fp16_reduction": false,
+    "bf16_reduction": false,
+    "fp16_accumulation": false
+  },
+  "cuda_path_probe": "FP16 torch.mm(out_dtype=FP32) finite PASS",
+  "allocator": "native",
+  "upstream_sha": "344c712aeb6620e39eb78930fb922447f0e123f3",
+  "records": [
+    {
+      "shape": "SMALL",
+      "M": 1,
+      "U": 1,
+      "condition": "unique",
+      "ids_bytes_sha256": "1c5613dc1170cca070ad96697e4aa70a7378efa152b165aa61db6502a3b71a57",
+      "artifact_sha256": "9aa0a85b16f696985f2ff12213cb2cf2e10f63c70b46eb5a9e0e69f566ff72e9",
+      "methods": {
+        "A": {
+          "relative_L2": 0.0016030320147363624,
+          "max_abs": 0.005593184847384691,
+          "rmse": 0.0012601484133735149,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016929542700778546,
+              "max_abs": 0.0038149153988342732,
+              "rmse": 0.0013614719494318922,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016629237111680348,
+              "max_abs": 0.0037924814969301224,
+              "rmse": 0.0013053449849574398,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001598382448961102,
+              "max_abs": 0.004022100707516074,
+              "rmse": 0.0012951601687259673,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001743561215277443,
+              "max_abs": 0.004428843967616558,
+              "rmse": 0.001415887431126081,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0015696133919062777,
+              "max_abs": 0.0035327915102243423,
+              "rmse": 0.0011538561925902103,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016198504374624618,
+              "max_abs": 0.005350898951292038,
+              "rmse": 0.0012598019863799095,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0013406805109140879,
+              "max_abs": 0.0030103991739451885,
+              "rmse": 0.0009238647249930487,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0015074689877033513,
+              "max_abs": 0.005593184847384691,
+              "rmse": 0.0013007968798208918,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "B": {
+          "relative_L2": 0.0016030320147363624,
+          "max_abs": 0.005593184847384691,
+          "rmse": 0.0012601484133735149,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016929542700778546,
+              "max_abs": 0.0038149153988342732,
+              "rmse": 0.0013614719494318922,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016629237111680348,
+              "max_abs": 0.0037924814969301224,
+              "rmse": 0.0013053449849574398,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001598382448961102,
+              "max_abs": 0.004022100707516074,
+              "rmse": 0.0012951601687259673,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001743561215277443,
+              "max_abs": 0.004428843967616558,
+              "rmse": 0.001415887431126081,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0015696133919062777,
+              "max_abs": 0.0035327915102243423,
+              "rmse": 0.0011538561925902103,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016198504374624618,
+              "max_abs": 0.005350898951292038,
+              "rmse": 0.0012598019863799095,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0013406805109140879,
+              "max_abs": 0.0030103991739451885,
+              "rmse": 0.0009238647249930487,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0015074689877033513,
+              "max_abs": 0.005593184847384691,
+              "rmse": 0.0013007968798208918,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "C": {
+          "relative_L2": 0.0016030320147363624,
+          "max_abs": 0.005593184847384691,
+          "rmse": 0.0012601484133735149,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016929542700778546,
+              "max_abs": 0.0038149153988342732,
+              "rmse": 0.0013614719494318922,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016629237111680348,
+              "max_abs": 0.0037924814969301224,
+              "rmse": 0.0013053449849574398,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001598382448961102,
+              "max_abs": 0.004022100707516074,
+              "rmse": 0.0012951601687259673,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001743561215277443,
+              "max_abs": 0.004428843967616558,
+              "rmse": 0.001415887431126081,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0015696133919062777,
+              "max_abs": 0.0035327915102243423,
+              "rmse": 0.0011538561925902103,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016198504374624618,
+              "max_abs": 0.005350898951292038,
+              "rmse": 0.0012598019863799095,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0013406805109140879,
+              "max_abs": 0.0030103991739451885,
+              "rmse": 0.0009238647249930487,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0015074689877033513,
+              "max_abs": 0.005593184847384691,
+              "rmse": 0.0013007968798208918,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        }
+      },
+      "pairs": {
+        "A/B": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "B/C": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "A/C": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "shape": "SMALL",
+      "M": 128,
+      "U": 128,
+      "condition": "unique",
+      "ids_bytes_sha256": "a26813910cba61649b9df9287f946851926437f5368918e7b05b3d0fd9da2ae6",
+      "artifact_sha256": "9aa0a85b16f696985f2ff12213cb2cf2e10f63c70b46eb5a9e0e69f566ff72e9",
+      "methods": {
+        "A": {
+          "relative_L2": 0.001658008812639322,
+          "max_abs": 0.01508411020040512,
+          "rmse": 0.0016636370536888573,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016456533615733168,
+              "max_abs": 0.0077997607295401394,
+              "rmse": 0.0014208997105329695,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016513122217610755,
+              "max_abs": 0.0077761514112353325,
+              "rmse": 0.0014762107154831046,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016449114953136503,
+              "max_abs": 0.007750459015369415,
+              "rmse": 0.001532290553981315,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016635516011903311,
+              "max_abs": 0.009639734402298927,
+              "rmse": 0.0016263160020363397,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001661455090516747,
+              "max_abs": 0.01338702067732811,
+              "rmse": 0.001663690782445747,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016577736228398697,
+              "max_abs": 0.014708776958286762,
+              "rmse": 0.0017158184402261086,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016723880372831305,
+              "max_abs": 0.01508411020040512,
+              "rmse": 0.0018514889634251846,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016577376999453552,
+              "max_abs": 0.014552535489201546,
+              "rmse": 0.0019520815828116733,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "B": {
+          "relative_L2": 0.001658008812639322,
+          "max_abs": 0.01508411020040512,
+          "rmse": 0.0016636370536888573,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016456533615733168,
+              "max_abs": 0.0077997607295401394,
+              "rmse": 0.0014208997105329695,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016513122217610755,
+              "max_abs": 0.0077761514112353325,
+              "rmse": 0.0014762107154831046,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016449114953136503,
+              "max_abs": 0.007750459015369415,
+              "rmse": 0.001532290553981315,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016635516011903311,
+              "max_abs": 0.009639734402298927,
+              "rmse": 0.0016263160020363397,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001661455090516747,
+              "max_abs": 0.01338702067732811,
+              "rmse": 0.001663690782445747,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016577736228398697,
+              "max_abs": 0.014708776958286762,
+              "rmse": 0.0017158184402261086,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016723880372831305,
+              "max_abs": 0.01508411020040512,
+              "rmse": 0.0018514889634251846,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016577376999453552,
+              "max_abs": 0.014552535489201546,
+              "rmse": 0.0019520815828116733,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "C": {
+          "relative_L2": 0.001658008812639322,
+          "max_abs": 0.01508411020040512,
+          "rmse": 0.0016636370536888573,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016456533615733168,
+              "max_abs": 0.0077997607295401394,
+              "rmse": 0.0014208997105329695,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016513122217610755,
+              "max_abs": 0.0077761514112353325,
+              "rmse": 0.0014762107154831046,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016449114953136503,
+              "max_abs": 0.007750459015369415,
+              "rmse": 0.001532290553981315,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016635516011903311,
+              "max_abs": 0.009639734402298927,
+              "rmse": 0.0016263160020363397,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001661455090516747,
+              "max_abs": 0.01338702067732811,
+              "rmse": 0.001663690782445747,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016577736228398697,
+              "max_abs": 0.014708776958286762,
+              "rmse": 0.0017158184402261086,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016723880372831305,
+              "max_abs": 0.01508411020040512,
+              "rmse": 0.0018514889634251846,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016577376999453552,
+              "max_abs": 0.014552535489201546,
+              "rmse": 0.0019520815828116733,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        }
+      },
+      "pairs": {
+        "A/B": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "B/C": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "A/C": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "shape": "SMALL",
+      "M": 128,
+      "U": 32,
+      "condition": "repeat75",
+      "ids_bytes_sha256": "cada2e07411f82fb491cf3912a343fdcec7622eab4829155123212e6d54019ff",
+      "artifact_sha256": "9aa0a85b16f696985f2ff12213cb2cf2e10f63c70b46eb5a9e0e69f566ff72e9",
+      "methods": {
+        "A": {
+          "relative_L2": 0.0016507939553545448,
+          "max_abs": 0.013848105911165476,
+          "rmse": 0.001647845663213508,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016361850359023402,
+              "max_abs": 0.0077873775735497475,
+              "rmse": 0.0014385642082241565,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016386102868044912,
+              "max_abs": 0.0078027090057730675,
+              "rmse": 0.0014940948406765775,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016767180511959039,
+              "max_abs": 0.013848105911165476,
+              "rmse": 0.0015555112423830779,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016685707408676436,
+              "max_abs": 0.007704064715653658,
+              "rmse": 0.0016421858621516524,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001605197328008911,
+              "max_abs": 0.007779804989695549,
+              "rmse": 0.0016255986779610718,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016853966686134333,
+              "max_abs": 0.007795771583914757,
+              "rmse": 0.0017139277264007933,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001663407428389266,
+              "max_abs": 0.013256952166557312,
+              "rmse": 0.0017850045737943965,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016332974989037182,
+              "max_abs": 0.007799614919349551,
+              "rmse": 0.001881123598129735,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "B": {
+          "relative_L2": 0.0016507939553545448,
+          "max_abs": 0.013848105911165476,
+          "rmse": 0.001647845663213508,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016361850359023402,
+              "max_abs": 0.0077873775735497475,
+              "rmse": 0.0014385642082241565,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016386102868044912,
+              "max_abs": 0.0078027090057730675,
+              "rmse": 0.0014940948406765775,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016767180511959039,
+              "max_abs": 0.013848105911165476,
+              "rmse": 0.0015555112423830779,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016685707408676436,
+              "max_abs": 0.007704064715653658,
+              "rmse": 0.0016421858621516524,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001605197328008911,
+              "max_abs": 0.007779804989695549,
+              "rmse": 0.0016255986779610718,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016853966686134333,
+              "max_abs": 0.007795771583914757,
+              "rmse": 0.0017139277264007933,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001663407428389266,
+              "max_abs": 0.013256952166557312,
+              "rmse": 0.0017850045737943965,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016332974989037182,
+              "max_abs": 0.007799614919349551,
+              "rmse": 0.001881123598129735,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "C": {
+          "relative_L2": 0.0016507939553545448,
+          "max_abs": 0.013848105911165476,
+          "rmse": 0.001647845663213508,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016361850359023402,
+              "max_abs": 0.0077873775735497475,
+              "rmse": 0.0014385642082241565,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016386102868044912,
+              "max_abs": 0.0078027090057730675,
+              "rmse": 0.0014940948406765775,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016767180511959039,
+              "max_abs": 0.013848105911165476,
+              "rmse": 0.0015555112423830779,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016685707408676436,
+              "max_abs": 0.007704064715653658,
+              "rmse": 0.0016421858621516524,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001605197328008911,
+              "max_abs": 0.007779804989695549,
+              "rmse": 0.0016255986779610718,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016853966686134333,
+              "max_abs": 0.007795771583914757,
+              "rmse": 0.0017139277264007933,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001663407428389266,
+              "max_abs": 0.013256952166557312,
+              "rmse": 0.0017850045737943965,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016332974989037182,
+              "max_abs": 0.007799614919349551,
+              "rmse": 0.001881123598129735,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        }
+      },
+      "pairs": {
+        "A/B": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "B/C": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "A/C": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "shape": "SMALL",
+      "M": 2048,
+      "U": 2048,
+      "condition": "unique",
+      "ids_bytes_sha256": "5725ff1d80ce8df3f030c3f1741cb09b84aa9d3eddda15c78c169f190afcfb8a",
+      "artifact_sha256": "9aa0a85b16f696985f2ff12213cb2cf2e10f63c70b46eb5a9e0e69f566ff72e9",
+      "methods": {
+        "A": {
+          "relative_L2": 0.0016613299606708242,
+          "max_abs": 0.015623490326106548,
+          "rmse": 0.0016731404409573293,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016573814656964992,
+              "max_abs": 0.013626365922391415,
+              "rmse": 0.0014308364505047824,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001660313342646987,
+              "max_abs": 0.015595764038152993,
+              "rmse": 0.001472934725134371,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016524502812351872,
+              "max_abs": 0.013498401269316673,
+              "rmse": 0.001524198516354128,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016650621762499972,
+              "max_abs": 0.015384281054139137,
+              "rmse": 0.001633312210022292,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016630889349902142,
+              "max_abs": 0.014654166996479034,
+              "rmse": 0.001669593969809029,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001664051326942395,
+              "max_abs": 0.015582454390823841,
+              "rmse": 0.00172884552817857,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001659966220298779,
+              "max_abs": 0.015611554495990276,
+              "rmse": 0.0018559527268305154,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016645884611741423,
+              "max_abs": 0.015623490326106548,
+              "rmse": 0.001991597481298853,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "B": {
+          "relative_L2": 0.0016613299606708242,
+          "max_abs": 0.015623490326106548,
+          "rmse": 0.0016731404409573293,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016573814656964992,
+              "max_abs": 0.013626365922391415,
+              "rmse": 0.0014308364505047824,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001660313342646987,
+              "max_abs": 0.015595764038152993,
+              "rmse": 0.001472934725134371,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016524502812351872,
+              "max_abs": 0.013498401269316673,
+              "rmse": 0.001524198516354128,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016650621762499972,
+              "max_abs": 0.015384281054139137,
+              "rmse": 0.001633312210022292,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016630889349902142,
+              "max_abs": 0.014654166996479034,
+              "rmse": 0.001669593969809029,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001664051326942395,
+              "max_abs": 0.015582454390823841,
+              "rmse": 0.00172884552817857,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001659966220298779,
+              "max_abs": 0.015611554495990276,
+              "rmse": 0.0018559527268305154,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016645884611741423,
+              "max_abs": 0.015623490326106548,
+              "rmse": 0.001991597481298853,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "C": {
+          "relative_L2": 0.0016613299606708242,
+          "max_abs": 0.015623490326106548,
+          "rmse": 0.0016731404409573293,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016573814656964992,
+              "max_abs": 0.013626365922391415,
+              "rmse": 0.0014308364505047824,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001660313342646987,
+              "max_abs": 0.015595764038152993,
+              "rmse": 0.001472934725134371,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016524502812351872,
+              "max_abs": 0.013498401269316673,
+              "rmse": 0.001524198516354128,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016650621762499972,
+              "max_abs": 0.015384281054139137,
+              "rmse": 0.001633312210022292,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016630889349902142,
+              "max_abs": 0.014654166996479034,
+              "rmse": 0.001669593969809029,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001664051326942395,
+              "max_abs": 0.015582454390823841,
+              "rmse": 0.00172884552817857,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001659966220298779,
+              "max_abs": 0.015611554495990276,
+              "rmse": 0.0018559527268305154,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016645884611741423,
+              "max_abs": 0.015623490326106548,
+              "rmse": 0.001991597481298853,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        }
+      },
+      "pairs": {
+        "A/B": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "B/C": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "A/C": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "shape": "SMALL",
+      "M": 2048,
+      "U": 512,
+      "condition": "repeat75",
+      "ids_bytes_sha256": "f8df5bfcd6753234b57cdb7a5bc9d519535d20886e2c2624268cfed37d9bc8fc",
+      "artifact_sha256": "9aa0a85b16f696985f2ff12213cb2cf2e10f63c70b46eb5a9e0e69f566ff72e9",
+      "methods": {
+        "A": {
+          "relative_L2": 0.0016633776539251867,
+          "max_abs": 0.01532300841063261,
+          "rmse": 0.0016751357738191055,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016456099836502976,
+              "max_abs": 0.011300941929221153,
+              "rmse": 0.0014104438299731262,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016570052494992668,
+              "max_abs": 0.0078085605055093765,
+              "rmse": 0.001459130409624678,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016621334859851155,
+              "max_abs": 0.0078009311109781265,
+              "rmse": 0.0015250829954829375,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016718429626382022,
+              "max_abs": 0.012874758685939014,
+              "rmse": 0.0016398889482401443,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001666384330546543,
+              "max_abs": 0.014120988547801971,
+              "rmse": 0.0016761065622043184,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016689502429981106,
+              "max_abs": 0.007810348644852638,
+              "rmse": 0.001737939077384538,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001663667907055431,
+              "max_abs": 0.013946925289928913,
+              "rmse": 0.0018719696928226424,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016643034296495904,
+              "max_abs": 0.01532300841063261,
+              "rmse": 0.0019952633046655907,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "B": {
+          "relative_L2": 0.0016633776539251867,
+          "max_abs": 0.01532300841063261,
+          "rmse": 0.0016751357738191055,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016456099836502976,
+              "max_abs": 0.011300941929221153,
+              "rmse": 0.0014104438299731262,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016570052494992668,
+              "max_abs": 0.0078085605055093765,
+              "rmse": 0.001459130409624678,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016621334859851155,
+              "max_abs": 0.0078009311109781265,
+              "rmse": 0.0015250829954829375,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016718429626382022,
+              "max_abs": 0.012874758685939014,
+              "rmse": 0.0016398889482401443,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001666384330546543,
+              "max_abs": 0.014120988547801971,
+              "rmse": 0.0016761065622043184,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016689502429981106,
+              "max_abs": 0.007810348644852638,
+              "rmse": 0.001737939077384538,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001663667907055431,
+              "max_abs": 0.013946925289928913,
+              "rmse": 0.0018719696928226424,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016643034296495904,
+              "max_abs": 0.01532300841063261,
+              "rmse": 0.0019952633046655907,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "C": {
+          "relative_L2": 0.0016633776539251867,
+          "max_abs": 0.01532300841063261,
+          "rmse": 0.0016751357738191055,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0016456099836502976,
+              "max_abs": 0.011300941929221153,
+              "rmse": 0.0014104438299731262,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016570052494992668,
+              "max_abs": 0.0078085605055093765,
+              "rmse": 0.001459130409624678,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016621334859851155,
+              "max_abs": 0.0078009311109781265,
+              "rmse": 0.0015250829954829375,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016718429626382022,
+              "max_abs": 0.012874758685939014,
+              "rmse": 0.0016398889482401443,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001666384330546543,
+              "max_abs": 0.014120988547801971,
+              "rmse": 0.0016761065622043184,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016689502429981106,
+              "max_abs": 0.007810348644852638,
+              "rmse": 0.001737939077384538,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.001663667907055431,
+              "max_abs": 0.013946925289928913,
+              "rmse": 0.0018719696928226424,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0016643034296495904,
+              "max_abs": 0.01532300841063261,
+              "rmse": 0.0019952633046655907,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        }
+      },
+      "pairs": {
+        "A/B": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "B/C": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        },
+        "A/C": {
+          "relative_L2": 0.0,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "zero_reference": false,
+          "finite": true,
+          "pass": true,
+          "layers": [
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            },
+            {
+              "relative_L2": 0.0,
+              "max_abs": 0.0,
+              "rmse": 0.0,
+              "zero_reference": false,
+              "finite": true,
+              "pass": true
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "worker_source_sha256": "fd0716a262f3444b4bbec49131ed06ecd04532337f5a962119b3367a5fdf5b77",
+  "protocol_sha256": "c930534682204b99990bc58540c170925bd32ada3045a0027367e50130f34987",
+  "allocated_delta_peak": 29821440,
+  "memory_gate_pass": true,
+  "status": "PASS",
+  "final_device": {
+    "exit_code": 0,
+    "sample": "2260 MiB, 1 %, 34.60, 49.69 W",
+    "stderr": ""
+  }
+}

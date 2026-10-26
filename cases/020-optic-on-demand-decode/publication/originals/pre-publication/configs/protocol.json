@@ -1,0 +1,78 @@
+{
+  "run_id": "20261026-1235",
+  "upstream_sha": "344c712aeb6620e39eb78930fb922447f0e123f3",
+  "shapes": {
+    "SMALL": {
+      "V": 8192,
+      "L": 8,
+      "H": 128,
+      "Z": 32,
+      "G": 8,
+      "D": 4
+    },
+    "LARGE": {
+      "V": 32768,
+      "L": 16,
+      "H": 256,
+      "Z": 32,
+      "G": 8,
+      "D": 4
+    }
+  },
+  "methods": {
+    "A": "DENSE_RECON_LOOKUP",
+    "B": "COMPACT_REQUEST_DECODE",
+    "C": "COMPACT_UNIQUE_DECODE"
+  },
+  "artifact_seed": 61026020,
+  "input_seed": 61026021,
+  "order_seed": 61026022,
+  "mapping": "SeedSequence([root_seed,shape_index,condition_index]); shape_index SMALL=0,LARGE=1; condition index order M1unique,M128unique,M128repeat75,M2048unique,M2048repeat75",
+  "warmup": 20,
+  "host_samples": 100,
+  "event_brackets": 100,
+  "event_calls": {
+    "1": 32,
+    "128": 8,
+    "2048": 1
+  },
+  "blocks": 3,
+  "dense_chunk": 256,
+  "rtol_fp64": 1e-10,
+  "atol_fp64": 1e-12,
+  "relative_L2_limit": 0.01,
+  "zero_max_abs_limit": 1e-06,
+  "quantile": "numpy.quantile(method=linear)",
+  "max_gpu_worker_wall_seconds": 1800,
+  "max_allocated_delta_bytes": 2147483648,
+  "planned_cells": 30,
+  "planned_cell_blocks": 90,
+  "output": "raw unscaled BF16 [*ids.shape,L*H], interpreted [M,L,H]",
+  "timing": "warm-cache eager operator, GPU-resident IDs/output; synchronized host wall includes completion synchronize; event bracket stream elapsed/K",
+  "autograd": false,
+  "cuda_graph": false,
+  "torch_compile": false,
+  "reduced_precision_reduction": false,
+  "tf32": false,
+  "source_freeze": "after P1 observed; before CUDA probe/smoke and sweep; not a global preregistration",
+  "budgets": {
+    "initial_start_kst": "2026-10-26T09:57:00+09:00",
+    "environment_switch_interruption": "User interrupted and switched Windows native to WSL; resumed 12:12 KST. Preserve elapsed calendar time; aim final before13:57 KST.",
+    "documentation_minimum_seconds": 1800
+  },
+  "resource_estimate": {
+    "worktree_bytes_observed": 1160000000,
+    "new_dependencies_download_bytes": 0,
+    "max_new_bytes": 8589934592,
+    "public_case_target_bytes": 134217728,
+    "dense_table_bytes": {
+      "SMALL": 16777216,
+      "LARGE": 268435456
+    },
+    "estimated_max_operator_extra_bytes": 629145600
+  },
+  "cpu_evidence_run_id": "20261026-1215",
+  "prior_diagnostic_run_id": "20261026-1215",
+  "preflight": "Dedicated shape correctness workers verify A/B/C/FP64 for all ten inputs before smoke and main. Each main worker checks matching input/source preflight identity before timing.",
+  "budget_ledger": "results/gpu_worker_budget.json; cumulative across both run IDs"
+}

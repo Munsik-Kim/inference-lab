@@ -31,6 +31,8 @@
 - [015 — 같은 도구, 다른 이름](#case-015)
 - [016 — NVFP4 KV storage/capacity](#case-016)
 
+- [020 — 임베딩을 작게 보관하면 실행도 빨라질까?](#case-020)
+
 <a id="case-001"></a>
 ## 001 — 커널 선택 조건을 고치면 실행할 수 있는가?
 
@@ -694,3 +696,11 @@ BF16 가중치를 고정한 NVFP4 KV의 신규 합성 24과제에서 문법 제�
 두 층 선형망을 CPU로 독립 구현해 방향 정렬과 예측 크기 성장의 시간을 나누어 관측하고, 학습 중 같은 크기를 보존한 방향 개입을 비교했습니다. 원문 부분 수치 재현과 자체 통제 실험, 반대 결과를 함께 읽을 수 있습니다.
 
 [Report](../../cases/019-silent-alignment-dynamics/REPORT.ko.md) · [CPU quick/full](../../cases/019-silent-alignment-dynamics/REPRODUCE.ko.md)
+
+<a id="case-020"></a>
+
+## Case020 — 임베딩을 작게 보관하면 실행도 빨라질까?
+
+같은 압축 표현을 A 전체 미리 계산·B 요청 복원·C 중복 제거 후 원 순서 복귀로 비교했습니다. 합성 LARGE/Z32에서 PyTorch allocated peak는 약304→81MiB였고, P4 H의7조건·30개 process block에서 C가 B보다 빠른 block은0/30이었습니다. 실제 N1024/4096 세션에서는 A가 B보다 세 block 모두 빨랐습니다. 공식 복원 코드를 재사용하고 fixture·계측·독립 CPU 검산을 구현했습니다.
+
+[Report](../../cases/020-optic-on-demand-decode/REPORT.ko.md) · [CPU quick/full](../../cases/020-optic-on-demand-decode/REPRODUCE.ko.md)

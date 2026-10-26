@@ -31,6 +31,8 @@ Each case follows **objective → dataset → assumptions and theory → experim
 - [015 — Same Tools, Different Interfaces](#case-015)
 - [016 — NVFP4 KV storage/capacity](#case-016)
 
+- [020 — Does Smaller Embedding Storage Also Run Faster?](#case-020)
+
 <a id="case-001"></a>
 ## 001 — Can a kernel-selection change unblock execution?
 
@@ -698,3 +700,11 @@ Built an evaluator for wrong-target, duplicate and partial inventory recovery, c
 An independent two-layer linear CPU model separates directional alignment from prediction-amplitude growth, then compares checkpoint interventions at fixed prediction size. Partial numerical reproduction, local controls and reversed outcomes are distinguished.
 
 [Report](../../cases/019-silent-alignment-dynamics/REPORT.md) · [CPU quick/full](../../cases/019-silent-alignment-dynamics/REPRODUCE.md)
+
+<a id="case-020"></a>
+
+## Case020 — Does Smaller Embedding Storage Also Run Faster?
+
+Compared A precomputed lookup, B requested-row decoding and C per-call deduplication/order restoration of the same representation. Synthetic LARGE/Z32 PyTorch allocated peak was about304→81MiB. C beat B in0/30 primary H process-block comparisons across7 conditions; actual N1024/4096 sessions favored A over B in all three blocks. Official decoding is reused; fixtures, measurement and independent CPU checks were implemented.
+
+[Report](../../cases/020-optic-on-demand-decode/REPORT.md) · [CPU quick/full](../../cases/020-optic-on-demand-decode/REPRODUCE.md)

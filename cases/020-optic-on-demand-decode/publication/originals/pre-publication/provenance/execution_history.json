@@ -1,0 +1,49 @@
+{
+  "initial_environment_query_failures": [
+    {
+      "action": "default exec in provided Windows cwd",
+      "error": "directory name invalid(os error267)",
+      "resolution": "Use a known Windows working directory; inspect WSL read-only."
+    },
+    {
+      "action": "sandbox WSL listing / ubuntu_workspace access",
+      "error": "WSL E_ACCESSDENIED / network access denied",
+      "resolution": "Scoped elevated read; user subsequently switched native session to WSL."
+    },
+    {
+      "action": "sandbox NVML query",
+      "error": "Failed to initialize NVML: Generic operating system error",
+      "resolution": "Scoped out-of-sandbox NVML reads/GPU worker execution."
+    },
+    {
+      "action": "combined runtime query importing Matplotlib in baseline",
+      "error": "ModuleNotFoundError: matplotlib",
+      "resolution": "Read-only existing ai_lab CPU plotting runtime; no install/upgrade."
+    }
+  ],
+  "measurement_protocol_correction": {
+    "status": "DIAGNOSTIC_ONLY_PROTOCOL_ORDER",
+    "discovered_at": "2026-10-26T03:34:38.722960+00:00",
+    "reason": "Direct P2 A/B/C numerical comparison was performed after timing instead of before. Per-worker independent FP64 validation was before timing. First90 cell-blocks retain numerical PASS but are not the primary protocol-compliant comparison.",
+    "remedy": "One complete rerun with all-condition dedicated preflight before timing, unchanged shapes/inputs/tolerances/loops/order seeds. Preserve every original result, count all GPU wall cumulatively.",
+    "new_run_id": "20261026-1235",
+    "prior_observed": "All first90 timings/memory and method pairs already observed. No parameter selection from them."
+  },
+  "auditor_draft_corrections": [
+    "Expected method-pair count corrected45\u219290=3blocks*10inputs*3pairs.",
+    "First diagnostic draft NO_DEDUP_BENEFIT label corrected because10 paired blocks favored C; final primary has5 faster paired blocks and no condition favored C in all3."
+  ],
+  "figure_QA": {
+    "initial_issue": "Initial v1 figure03 clipped negative points through a mistaken lower ylim.",
+    "resolution": "Limits now include min/max of all block values; final3 PNGs opened and checked.",
+    "initial_image_retained": "/home/mskim/Codex_main/case020-optic-private-20261026-1215/figure03_initial_clipped.png",
+    "initial_image": {
+      "bytes": 188417,
+      "sha256": "500e93c6972d7ed2bbc3ecbc279bd3701ba5e226a69ef6333d83778598b28d25"
+    }
+  },
+  "raw_modifications": "None. Original run kept under20261026-1215, corrected primary under20261026-1235; no seed/tolerance/shape/timing order selection.",
+  "GPU_retries": "One full protocol-order correction rerun, no worker failure retries. Global wall never reset.",
+  "writing_style": "No connected style search tool was available in the discovered inventory; used explicit user format and supplied prose, without claiming retrieved personal-style evidence.",
+  "publication": "No stage/commit/push/PR/merge/Release/site/Drive/Pages."
+}

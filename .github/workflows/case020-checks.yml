@@ -1,0 +1,63 @@
+name: Case020 stored operator evidence CPU checks
+on:
+  pull_request:
+    paths: ['cases/020-optic-on-demand-decode/**', 'README.md', 'README.ko.md', 'docs/en/CASEBOOK.md', 'docs/ko/CASEBOOK.md', 'docs/_checks/**', 'tools/showcase/**', 'tests/showcase/**', 'presentation/**', '.github/workflows/case020-checks.yml']
+  push:
+    branches: [main]
+    paths: ['cases/020-optic-on-demand-decode/**', 'README.md', 'README.ko.md', 'docs/en/CASEBOOK.md', 'docs/ko/CASEBOOK.md', 'docs/_checks/**', 'tools/showcase/**', 'tests/showcase/**', 'presentation/**', '.github/workflows/case020-checks.yml']
+permissions:
+  contents: read
+concurrency:
+  group: case020-cpu-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+      CUDA_VISIBLE_DEVICES: ''
+      HF_HUB_OFFLINE: '1'
+      TRANSFORMERS_OFFLINE: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6; repository pin
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6; repository pin
+        with:
+          python-version: '3.12.14'
+      - name: Install pinned small CPU dependencies in a dedicated environment
+        run: |
+          python -m venv "$RUNNER_TEMP/case020-env"
+          "$RUNNER_TEMP/case020-env/bin/python" -I -B -m pip install -r cases/020-optic-on-demand-decode/publication/requirements-cpu.txt
+          "$RUNNER_TEMP/case020-env/bin/python" -I -B -m pip check
+      - name: Check recorded bytes, statistics, small reference and mutation contracts
+        run: |
+          "$RUNNER_TEMP/case020-env/bin/python" -I -B cases/020-optic-on-demand-decode/publication/run_checks.py --mode quick --tests --output "$RUNNER_TEMP/case020-quick"
+      - name: Regression and bilingual registry links
+        run: |
+          "$RUNNER_TEMP/case020-env/bin/python" -I -B -m unittest discover -s docs/_checks -v
+          "$RUNNER_TEMP/case020-env/bin/python" -I -B docs/_checks/check_docs.py --output "$RUNNER_TEMP/case020-docs.json"
+      - name: Case020 display and registry contracts
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/case020-env/bin/python" -I -B -m unittest discover -s tests/showcase -p test_case020.py -v 2>&1 | tee "$RUNNER_TEMP/case020-display-tests.log"
+      - name: Declare execution scope
+        run: echo 'CPU stored-record quick audit and static display/registry checks. No GPU/model experiment or automatic evidence download. Full historical numerical audit and figures are an explicit local full mode.'
+      - name: Preserve success and failure receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4; repository pin
+        with:
+          name: case020-cpu-receipts
+          path: |
+            ${{ runner.temp }}/case020-quick/verification.json
+            ${{ runner.temp }}/case020-quick/failure.json
+            ${{ runner.temp }}/case020-quick/*.log
+            ${{ runner.temp }}/case020-docs.json
+            ${{ runner.temp }}/case020-display-tests.log
+          if-no-files-found: warn
+          retention-days: 14
