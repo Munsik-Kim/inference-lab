@@ -21,3 +21,7 @@ Case020 CPU full checks and47 document regressions passed. The existing Portfoli
 An initial local invocation used Python -I on the existing Portfolio runner, which requires its sibling common module on script sys.path. It was rerun using the workflow’s normal Python -B invocation without modifying that runner. The real registry failure above was retained rather than skipped.
 
 The first local publication commit retained generated CSV CRLF and Matplotlib SVG trailing indentation. Those new publication outputs were normalized to LF/no trailing whitespace by their writers, with numeric tables and PNG content unchanged. Historical originals retain their exact original formatting. This was packaging-only and did not rerun GPU work.
+
+## Follow-up: full Case020 site integration authorized
+
+After PR40 exposed the Case001–019 display limit, the user explicitly requested fixing the failure and integrating Case020 alongside the existing19. This supersedes the prior site-implementation exclusion only for this integration. Case020 is registered normally with bilingual home/archive/detail pages, source-checked tables/figures and rejection of unknown Case021. The earlier proposed exclusion patch is not applied. Existing scientific results and all archived source/raw/receipts remain unchanged. Pages dispatch/deployment remains outside scope.

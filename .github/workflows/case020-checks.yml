@@ -1,10 +1,10 @@
 name: Case020 stored operator evidence CPU checks
 on:
   pull_request:
-    paths: ['cases/020-optic-on-demand-decode/**', 'README.md', 'README.ko.md', 'docs/en/CASEBOOK.md', 'docs/ko/CASEBOOK.md', 'docs/_checks/**', '.github/workflows/case020-checks.yml']
+    paths: ['cases/020-optic-on-demand-decode/**', 'README.md', 'README.ko.md', 'docs/en/CASEBOOK.md', 'docs/ko/CASEBOOK.md', 'docs/_checks/**', 'tools/showcase/**', 'tests/showcase/**', 'presentation/**', '.github/workflows/case020-checks.yml']
   push:
     branches: [main]
-    paths: ['cases/020-optic-on-demand-decode/**', 'README.md', 'README.ko.md', 'docs/en/CASEBOOK.md', 'docs/ko/CASEBOOK.md', 'docs/_checks/**', '.github/workflows/case020-checks.yml']
+    paths: ['cases/020-optic-on-demand-decode/**', 'README.md', 'README.ko.md', 'docs/en/CASEBOOK.md', 'docs/ko/CASEBOOK.md', 'docs/_checks/**', 'tools/showcase/**', 'tests/showcase/**', 'presentation/**', '.github/workflows/case020-checks.yml']
 permissions:
   contents: read
 concurrency:
@@ -42,8 +42,12 @@ jobs:
         run: |
           "$RUNNER_TEMP/case020-env/bin/python" -I -B -m unittest discover -s docs/_checks -v
           "$RUNNER_TEMP/case020-env/bin/python" -I -B docs/_checks/check_docs.py --output "$RUNNER_TEMP/case020-docs.json"
+      - name: Case020 display and registry contracts
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/case020-env/bin/python" -I -B -m unittest discover -s tests/showcase -p test_case020.py -v 2>&1 | tee "$RUNNER_TEMP/case020-display-tests.log"
       - name: Declare execution scope
-        run: echo 'CPU stored-record quick audit only. No GPU/model experiment or automatic evidence download. Full historical numerical audit and figures are an explicit local full mode.'
+        run: echo 'CPU stored-record quick audit and static display/registry checks. No GPU/model experiment or automatic evidence download. Full historical numerical audit and figures are an explicit local full mode.'
       - name: Preserve success and failure receipts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4; repository pin
@@ -54,5 +58,6 @@ jobs:
             ${{ runner.temp }}/case020-quick/failure.json
             ${{ runner.temp }}/case020-quick/*.log
             ${{ runner.temp }}/case020-docs.json
+            ${{ runner.temp }}/case020-display-tests.log
           if-no-files-found: warn
           retention-days: 14

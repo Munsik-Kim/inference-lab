@@ -11,3 +11,5 @@
 | Exact public mapping/manifests, fresh-output CPU CLI, plain bilingual docs and four figures | New publication layer | [verify.py](publication/verify.py), [run_checks.py](publication/run_checks.py), [figures.py](publication/figures.py) |
 
 OpenAI Codex assisted implementation, execution analysis, validation and documentation. The work does not claim authorship of OPTIC's codec, Torch GEMM/allocator, or a new compression algorithm/kernel. No learned-model quality improvement is inferred from synthetic reconstruction gates.
+
+Case020 now also has a normal bilingual home/archive/detail display alongside Cases001–019, implemented in [case020.py](../../tools/showcase/case020.py) with shared build/registry/checker integration. Its projection checks saved block aggregates and source identity without executing Torch or a new experiment. Original scientific records and old CI failures remain preserved. Pages deployment is a separate step.
