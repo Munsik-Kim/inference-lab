@@ -1,0 +1,85 @@
+Machine lubrication route
+Purpose: Record checks for an industrial maintenance route.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: A particle increase triggers a sample before oil is replaced. Adding clean oil can dilute a symptom without identifying the component that produced the particles.
+
+record_format = sectioned key-value register
+review_policy = retain original observations and append corrections
+
+[record_1]
+record_id = 1
+entity = gearbox
+observations.oil_level = 50
+observations.vibration = 66
+observations.particle_count = 80
+observations.running_hours = 83
+observations.oil_temperature = 20
+observations.leak_count = 87
+review_note = gearbox is inspected at its own checkpoint. Values for oil_level, vibration, particle_count are recorded before the decision for this machine lubrication route is made.
+evidence_rule = A particle increase triggers a sample before oil is replaced. Adding clean oil can dilute a symptom without identifying the component that produced the particles.
+next_action = Compare vibration with the applicable operating limit, record the result, and assign a follow-up for gearbox when evidence is incomplete.
+
+[record_2]
+record_id = 2
+entity = bearing
+observations.oil_level = 48
+observations.vibration = 2
+observations.particle_count = 33
+observations.running_hours = 43
+observations.oil_temperature = 27
+observations.leak_count = 50
+review_note = bearing is inspected at its own checkpoint. Values for oil_level, vibration, particle_count are recorded before the decision for this machine lubrication route is made.
+evidence_rule = The reviewer preserves the measured vibration and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare particle_count with the applicable operating limit, record the result, and assign a follow-up for bearing when evidence is incomplete.
+
+[record_3]
+record_id = 3
+entity = pump
+observations.oil_level = 77
+observations.vibration = 81
+observations.particle_count = 54
+observations.running_hours = 12
+observations.oil_temperature = 29
+observations.leak_count = 15
+review_note = pump is inspected at its own checkpoint. Values for oil_level, vibration, particle_count are recorded before the decision for this machine lubrication route is made.
+evidence_rule = The reviewer preserves the measured particle_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare running_hours with the applicable operating limit, record the result, and assign a follow-up for pump when evidence is incomplete.
+
+[record_4]
+record_id = 4
+entity = slideway
+observations.oil_level = 5
+observations.vibration = 9
+observations.particle_count = 24
+observations.running_hours = 81
+observations.oil_temperature = 83
+observations.leak_count = 64
+review_note = slideway is inspected at its own checkpoint. Values for oil_level, vibration, particle_count are recorded before the decision for this machine lubrication route is made.
+evidence_rule = The reviewer preserves the measured running_hours and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare oil_temperature with the applicable operating limit, record the result, and assign a follow-up for slideway when evidence is incomplete.
+
+[record_5]
+record_id = 5
+entity = reservoir
+observations.oil_level = 84
+observations.vibration = 84
+observations.particle_count = 63
+observations.running_hours = 31
+observations.oil_temperature = 84
+observations.leak_count = 2
+review_note = reservoir is inspected at its own checkpoint. Values for oil_level, vibration, particle_count are recorded before the decision for this machine lubrication route is made.
+evidence_rule = The reviewer preserves the measured oil_temperature and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare leak_count with the applicable operating limit, record the result, and assign a follow-up for reservoir when evidence is incomplete.
+
+[record_6]
+record_id = 6
+entity = return_filter
+observations.oil_level = 51
+observations.vibration = 14
+observations.particle_count = 19
+observations.running_hours = 39
+observations.oil_temperature = 51
+observations.leak_count = 72
+review_note = return_filter is inspected at its own checkpoint. Values for oil_level, vibration, particle_count are recorded before the decision for this machine lubrication route is made.
+evidence_rule = The reviewer preserves the measured leak_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare oil_level with the applicable operating limit, record the result, and assign a follow-up for return_filter when evidence is incomplete.

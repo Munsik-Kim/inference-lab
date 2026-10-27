@@ -1,0 +1,100 @@
+{
+  "title": "Consent catalogue schema",
+  "purpose": "Record permitted uses for a collection of invented demonstration assets",
+  "schema_version": 1,
+  "operating_rule": "Each allowed use is listed explicitly. A withdrawn permission blocks future distribution but the catalogue preserves the date and scope of the prior decision.",
+  "units": "illustrative dimensionless values; field names identify the intended quantity",
+  "records": [
+    {
+      "record_id": 1,
+      "entity": "diagram",
+      "observations": {
+        "asset_number": 18,
+        "revision_number": 7,
+        "retention_days": 14,
+        "permission_count": 76,
+        "review_interval": 19,
+        "withdrawal_delay": 88
+      },
+      "review_note": "diagram is inspected at its own checkpoint. Values for asset_number, revision_number, retention_days are recorded before the decision for this consent catalogue schema is made.",
+      "evidence_rule": "Each allowed use is listed explicitly. A withdrawn permission blocks future distribution but the catalogue preserves the date and scope of the prior decision.",
+      "next_action": "Compare revision_number with the applicable operating limit, record the result, and assign a follow-up for diagram when evidence is incomplete."
+    },
+    {
+      "record_id": 2,
+      "entity": "audio_sample",
+      "observations": {
+        "asset_number": 72,
+        "revision_number": 9,
+        "retention_days": 26,
+        "permission_count": 23,
+        "review_interval": 63,
+        "withdrawal_delay": 23
+      },
+      "review_note": "audio_sample is inspected at its own checkpoint. Values for asset_number, revision_number, retention_days are recorded before the decision for this consent catalogue schema is made.",
+      "evidence_rule": "The reviewer preserves the measured revision_number and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare retention_days with the applicable operating limit, record the result, and assign a follow-up for audio_sample when evidence is incomplete."
+    },
+    {
+      "record_id": 3,
+      "entity": "portrait_placeholder",
+      "observations": {
+        "asset_number": 53,
+        "revision_number": 56,
+        "retention_days": 67,
+        "permission_count": 30,
+        "review_interval": 79,
+        "withdrawal_delay": 5
+      },
+      "review_note": "portrait_placeholder is inspected at its own checkpoint. Values for asset_number, revision_number, retention_days are recorded before the decision for this consent catalogue schema is made.",
+      "evidence_rule": "The reviewer preserves the measured retention_days and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare permission_count with the applicable operating limit, record the result, and assign a follow-up for portrait_placeholder when evidence is incomplete."
+    },
+    {
+      "record_id": 4,
+      "entity": "chart",
+      "observations": {
+        "asset_number": 4,
+        "revision_number": 21,
+        "retention_days": 24,
+        "permission_count": 12,
+        "review_interval": 79,
+        "withdrawal_delay": 35
+      },
+      "review_note": "chart is inspected at its own checkpoint. Values for asset_number, revision_number, retention_days are recorded before the decision for this consent catalogue schema is made.",
+      "evidence_rule": "The reviewer preserves the measured permission_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare review_interval with the applicable operating limit, record the result, and assign a follow-up for chart when evidence is incomplete."
+    },
+    {
+      "record_id": 5,
+      "entity": "icon",
+      "observations": {
+        "asset_number": 40,
+        "revision_number": 20,
+        "retention_days": 29,
+        "permission_count": 22,
+        "review_interval": 14,
+        "withdrawal_delay": 43
+      },
+      "review_note": "icon is inspected at its own checkpoint. Values for asset_number, revision_number, retention_days are recorded before the decision for this consent catalogue schema is made.",
+      "evidence_rule": "The reviewer preserves the measured review_interval and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare withdrawal_delay with the applicable operating limit, record the result, and assign a follow-up for icon when evidence is incomplete."
+    },
+    {
+      "record_id": 6,
+      "entity": "brochure",
+      "observations": {
+        "asset_number": 13,
+        "revision_number": 88,
+        "retention_days": 69,
+        "permission_count": 57,
+        "review_interval": 46,
+        "withdrawal_delay": 35
+      },
+      "review_note": "brochure is inspected at its own checkpoint. Values for asset_number, revision_number, retention_days are recorded before the decision for this consent catalogue schema is made.",
+      "evidence_rule": "The reviewer preserves the measured withdrawal_delay and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare asset_number with the applicable operating limit, record the result, and assign a follow-up for brochure when evidence is incomplete."
+    }
+  ],
+  "missing_value_policy": "Use null for an unobserved value. Never replace missing observations with zero. Keep the original record and append a dated correction."
+}

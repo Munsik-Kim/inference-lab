@@ -1,0 +1,70 @@
+"""Interval merge algorithm
+Purpose: Combine overlapping maintenance intervals while preserving uncovered gaps.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: Sort intervals by start and then end. Extend the active interval only when the next start is no later than the active end; otherwise emit the completed interval.
+
+Implementation review notes: Validate input before changing state. Preserve a stable ordering and return explicit errors. The examples below are synthetic fixtures, not production defaults.
+"""
+def merge_intervals(intervals):
+    pending = sorted(intervals)
+    merged = []
+    for start, end in pending:
+        if end < start:
+            raise ValueError('reversed interval')
+        if merged and start <= merged[-1][1]:
+            merged[-1] = (merged[-1][0], max(merged[-1][1], end))
+        else:
+            merged.append((start, end))
+    return merged
+
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Observation:
+    entity: str
+    values: dict
+
+def validate_record(record):
+    errors = []
+    if not record.entity:
+        errors.append("entity is required")
+    for name, value in sorted(record.values.items()):
+        if not isinstance(value, int) or value < 0:
+            errors.append((name, "expected nonnegative integer"))
+    return errors
+
+def review_records(records):
+    reviewed = []
+    for sequence, record in enumerate(records):
+        errors = validate_record(record)
+        reviewed.append({"sequence": sequence, "entity": record.entity,
+                         "errors": errors, "accepted_for_review": not errors})
+    return reviewed
+
+EXAMPLES = [
+    # inspection is inspected at its own checkpoint. Values for start_minute, end_minute, crew_count are recorded before the decision for this interval merge algorithm is made.
+    # Compare end_minute with the applicable operating limit, record the result, and assign a follow-up for inspection when evidence is incomplete.
+    Observation('inspection', {'start_minute': 42, 'end_minute': 76, 'crew_count': 65, 'travel_minutes': 11, 'setup_minutes': 33, 'interruption_count': 80}),
+    # cleaning is inspected at its own checkpoint. Values for start_minute, end_minute, crew_count are recorded before the decision for this interval merge algorithm is made.
+    # Compare crew_count with the applicable operating limit, record the result, and assign a follow-up for cleaning when evidence is incomplete.
+    Observation('cleaning', {'start_minute': 83, 'end_minute': 5, 'crew_count': 40, 'travel_minutes': 16, 'setup_minutes': 18, 'interruption_count': 84}),
+    # repair is inspected at its own checkpoint. Values for start_minute, end_minute, crew_count are recorded before the decision for this interval merge algorithm is made.
+    # Compare travel_minutes with the applicable operating limit, record the result, and assign a follow-up for repair when evidence is incomplete.
+    Observation('repair', {'start_minute': 61, 'end_minute': 6, 'crew_count': 10, 'travel_minutes': 48, 'setup_minutes': 24, 'interruption_count': 36}),
+    # calibration is inspected at its own checkpoint. Values for start_minute, end_minute, crew_count are recorded before the decision for this interval merge algorithm is made.
+    # Compare setup_minutes with the applicable operating limit, record the result, and assign a follow-up for calibration when evidence is incomplete.
+    Observation('calibration', {'start_minute': 40, 'end_minute': 6, 'crew_count': 23, 'travel_minutes': 68, 'setup_minutes': 35, 'interruption_count': 8}),
+    # cooling is inspected at its own checkpoint. Values for start_minute, end_minute, crew_count are recorded before the decision for this interval merge algorithm is made.
+    # Compare interruption_count with the applicable operating limit, record the result, and assign a follow-up for cooling when evidence is incomplete.
+    Observation('cooling', {'start_minute': 84, 'end_minute': 44, 'crew_count': 2, 'travel_minutes': 34, 'setup_minutes': 34, 'interruption_count': 17}),
+    # verification is inspected at its own checkpoint. Values for start_minute, end_minute, crew_count are recorded before the decision for this interval merge algorithm is made.
+    # Compare start_minute with the applicable operating limit, record the result, and assign a follow-up for verification when evidence is incomplete.
+    Observation('verification', {'start_minute': 76, 'end_minute': 89, 'crew_count': 40, 'travel_minutes': 60, 'setup_minutes': 15, 'interruption_count': 24}),
+]
+
+if __name__ == "__main__":
+    report = review_records(EXAMPLES)
+    assert len(report) == len(EXAMPLES)
+    assert [r["sequence"] for r in report] == list(range(len(EXAMPLES)))
+    for row in report:
+        print(row)

@@ -1,0 +1,116 @@
+# Case021 재현 안내
+
+기록을 검산하는 CPU 경로와 모델을 다시 실행하는 GPU 경로를 구분합니다.
+이 폴더는 아직 게시하지 않은 로컬 공개 후보입니다. 새 모델·데이터를
+자동으로 내려받는 명령은 없습니다.
+
+## 1. 작은 공개 자료의 CPU 검산
+
+저장소 루트에서, 존재하지 않는 새 출력 경로를 지정합니다.
+
+```bash
+CASE=cases/021-rounding-execution-diagnostics
+PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=2 \
+  python "$CASE/analysis/verify.py" \
+  --output /tmp/case021-public-check-new --figures
+```
+
+필요한 패키지는 NumPy와 Matplotlib입니다. 기존 연구 환경을 업그레이드하지
+않고 별도 CPU 환경을 만들려면 다음과 같이 준비할 수 있습니다.
+
+```bash
+python3.11 -m venv /tmp/case021-cpu-new
+/tmp/case021-cpu-new/bin/python -m pip install \
+  -r cases/021-rounding-execution-diagnostics/requirements-cpu.txt
+```
+
+이 작업에서 실제로 사용한 CPU 환경은 Python3.11.15 / NumPy1.26.4 /
+Matplotlib3.10.9의 기존 환경을 읽기 전용으로 재사용한 것입니다. 새 venv
+설치나 다른 머신 검증을 완료했다고 주장하지 않습니다. Linux/WSL에서
+검사했으며 native Windows 검증은 하지 않았습니다.
+
+빠른 검사는 다음을 확인합니다.
+
+- 동결 source/input, 공개 manifest, 보존한 Case013 원문 파일의 bytes/hash.
+- 본 실행 384개 metadata와 전체 위치 lm_head 계산 계약.
+- 위치별 통계에서 문서 평균·paired bootstrap·판정을 다시 계산.
+- worker 장부와 timing raw에서 예산·median/p95 등을 다시 계산.
+- CPU unit 검사와 공개 DEV4 문서 × 2위치 × 6조건의 실제 logits를 이용한
+  full-vocabulary FP64 KL 검산.
+- 표에서 PNG/SVG 3종 재생성. 이미지 byte 일치는 과학적 판정 기준이 아닙니다.
+
+이 경로는 전체 EVAL logits를 읽지 않습니다. 공개 subset의 KL 검산과
+전체 통계표 재집계를 전체 로컬 raw의 KL 검산으로 부르지 않습니다.
+Torch를 설치하거나 CUDA context를 만들지 않습니다.
+
+## 2. 로컬 전체 raw의 CPU 재집계
+
+원 실행의 전체 selected logits는 다음 외부 폴더에 보존돼 있습니다.
+
+`<PRIVATE_LOCAL_ROOT>`
+
+아래 main 로그 재집계·감사 명령은 다른 위치로 옮긴 자료에도 `--private`로
+경로를 지정할 수 있습니다. 교체 실험의 역사적 receipt에는 절대경로가 들어
+있으므로 해당 추가 감사는 원 위치가 필요합니다. 이 경로를 바꿀 때는 원본을
+수정하지 않고 별도 mapping/adapter가 필요하며, 자동 이식 검증은 하지 않았습니다.
+Case 폴더에서:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=2 \
+  python analysis/pipeline.py analyze --split EVAL \
+  --private /path/to/case021-private \
+  --output /tmp/case021-eval-summary-new
+
+PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=2 \
+  python analysis/audit.py \
+  --private /path/to/case021-private \
+  --summary /tmp/case021-eval-summary-new \
+  --output /tmp/case021-eval-independent-audit-new
+```
+
+첫 코드는 저장된 16위치의 전체 vocabulary를 FP64로 계산합니다. 두 번째
+코드는 다른 정규화·합산 경로로 다시 확인합니다. `--split DEV`로 DEV도
+확인할 수 있습니다. `pipeline.py repeat`는 별도 반복 54개를 집계합니다.
+`intervention_analysis.py analyze`와 `audit_intervention.py`는 경계 교체
+결과를 따로 검산합니다. 모든 출력 폴더는 새로 만들어야 합니다.
+
+자료 흐름은 `main/<split>/<condition>/*_logits.npy` → 문서/위치 CSV →
+bootstrap·판정 → `analysis/figures.py`입니다. BF16 logits는 uint16 bit
+배열로 보관했으며 낮은 정밀도로 다시 변환한 값이 아닙니다. 블록 전체
+임시 배열은 정해진 비교 후 삭제했고, 통계·선택 위치·선택층 입력은 남겼습니다.
+
+## 3. GPU 재실행 조건
+
+기존 Qwen3-0.6B revision `c1899de289a04d12100db370d81485cdf75e47ca`와
+동일한 196개 D16 `.rpi4`가 필요합니다. 파일별 identity는
+[`artifact_manifest.json`](artifact_manifest.json)에 있습니다. 공개 후보에는
+모델·artifact·변환 dense weight가 들어 있지 않습니다. 파일이 없으면
+다운로드하거나 재양자화하지 말고 ARTIFACT_MISSING으로 종료해야 합니다.
+
+GPU 실행은 기존 Python3.12.14 / Torch2.13.0+cu130 / Transformers5.17.0 /
+vLLM0.29.0 환경을 읽기 전용으로 사용했습니다. 새 버전의 Marlin API에
+옛 positional 인자를 넘기지 않습니다. 실제 op와 binary identity,
+SM120, dtype·flags·SDPA 경로는 environment 및 preflight 기록을 참고합니다.
+
+새 소유 private 폴더에 `locations.json`으로 모델/artifact/역사적32-token
+ID 위치를 명시하고, 현재 bytes/hash와 GPU idle 상태를 먼저 확인합니다.
+새 run ID·장부·출력 폴더를 사용하고 `source/supervise.py`로만 주 worker를
+실행합니다. 과거 readiness를 새 머신의 검증으로 재사용하지 않습니다.
+P0 preflight → DEV main/repeat → DEV local/교체 → 선택 freeze → EVAL →
+별도 timing 순서입니다. EVAL worker는 source/input과 선택 freeze가
+일치하지 않으면 거절합니다. 전체 실행 명령은 각
+[`results/recorded/`](results/recorded/) worker의 `launch.json`에 있습니다.
+
+본 source bundle, 실제 실행 source, 분석 freeze와 Git base는 서로 다른
+identity입니다. 기존 동결 source를 고쳐 과거 해시를 그대로 붙이지 마세요.
+GPU 재실행은 새 요청에서 자원·예산을 다시 확인해야 하며, 이 문서나
+CPU quick 검사가 GPU 실행을 자동으로 시작하지 않습니다.
+
+## 4. 검사 범위와 이력
+
+[`results/summary/verification.json`](results/summary/verification.json)과
+[`provenance/verification_receipts/`](provenance/verification_receipts/)에 실제
+검사 범위를 남깁니다. 최초 CPU 독립 감사의 정규화 실패, 수정 전 source,
+GPU_BUSY로 worker를 시작하지 않은 이력도 보존합니다. 기존 2% gate와
+수치 허용 오차는 바꾸지 않았습니다. 원격 CI·원격 게시·Pages는 실행하지
+않았습니다.

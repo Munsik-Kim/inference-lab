@@ -1,0 +1,61 @@
+{
+  "recorded_utc": "2026-10-27T02:55:51.106865+00:00",
+  "nature": "Local timestamps and append-only worker receipts, not an external timestamp attestation",
+  "original_results_known_before_followup": true,
+  "freezes": {
+    "freeze_AB.json": {
+      "utc": "2026-10-27T02:27:18.100256+00:00",
+      "bundle_sha256": "ea552b944c2d813ff540f041a771e4dca697954453e5626ab3d4640f7e01cff1"
+    },
+    "freeze_AB_v2.json": {
+      "utc": "2026-10-27T02:34:36.761681+00:00",
+      "bundle_sha256": "42af9553524bb9276215565cf4f1876137286b4726418b7703ce09486f16d58c"
+    },
+    "freeze_C_preparation.json": {
+      "utc": "2026-10-27T02:40:08.542992+00:00",
+      "bundle_sha256": "6bc955d3d5f899ccd3c6ccf6f39183b16c699d2ee3483cf3b959375890e387c1"
+    },
+    "freeze_C_main.json": {
+      "utc": "2026-10-27T02:41:50.594038+00:00",
+      "bundle_sha256": "615b9b58d9353a734ac4a83d2a3221ea8a9b92367fa1db17ed899c08040980d9"
+    },
+    "freeze_C_final.json": {
+      "utc": "2026-10-27T02:41:51.542712+00:00",
+      "bundle_sha256": "e3e172b298b81574b486ebc765f5280747ab863fa899b7c3f5c7dcc5bf32e722"
+    }
+  },
+  "worker_times": [
+    {
+      "label": "p4a-v1",
+      "utc_start": "2026-10-27T02:27:41.214660+00:00",
+      "utc_end": "2026-10-27T02:33:29.218237+00:00"
+    },
+    {
+      "label": "p4b-v1",
+      "utc_start": "2026-10-27T02:34:37.579587+00:00",
+      "utc_end": "2026-10-27T02:34:38.714857+00:00"
+    },
+    {
+      "label": "p4a-v2",
+      "utc_start": "2026-10-27T02:36:29.769385+00:00",
+      "utc_end": "2026-10-27T02:39:43.115404+00:00"
+    },
+    {
+      "label": "gpu-inputs",
+      "utc_start": "2026-10-27T02:40:31.961954+00:00",
+      "utc_end": "2026-10-27T02:40:46.257569+00:00"
+    },
+    {
+      "label": "gpu-q27-b0",
+      "utc_start": "2026-10-27T02:45:00.283443+00:00",
+      "utc_end": "2026-10-27T02:45:17.565088+00:00"
+    }
+  ],
+  "correction_to_frozen_protocol_C_observed_sentence": "protocol_C.json retained a draft sentence saying only P4A timeout was known. Ledger shows successful P4A v2 completed02:39:43 UTC, before C preparation freeze02:40:08. Therefore both P4A/B results were known at all C freezes. No new projection outputs existed before C final freeze. This correction does not edit historical protocol bytes.",
+  "tables_observed_before_main_C": [
+    "original Case021",
+    "P4A v2",
+    "P4B"
+  ],
+  "original_primary_verdict": "INCONCLUSIVE"
+}

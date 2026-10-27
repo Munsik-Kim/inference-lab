@@ -1,0 +1,72 @@
+"""Ledger reconciliation algorithm
+Purpose: Pair invoices and payments without hiding duplicate identifiers.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: Match on identifier and account before comparing integer cents. Keep unmatched rows on both sides and reject duplicate keys rather than choosing the last value.
+
+Implementation review notes: Validate input before changing state. Preserve a stable ordering and return explicit errors. The examples below are synthetic fixtures, not production defaults.
+"""
+def reconcile(invoices, payments):
+    def index(rows):
+        result = {}
+        for row in rows:
+            key = (row['record_id'], row['account_id'])
+            if key in result:
+                raise ValueError('duplicate key')
+            result[key] = row['amount_cents']
+        return result
+    left, right = index(invoices), index(payments)
+    return [{'key': key, 'invoice': left.get(key), 'payment': right.get(key),
+             'matched': key in left and key in right and left[key] == right[key]}
+            for key in sorted(set(left) | set(right))]
+
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Observation:
+    entity: str
+    values: dict
+
+def validate_record(record):
+    errors = []
+    if not record.entity:
+        errors.append("entity is required")
+    for name, value in sorted(record.values.items()):
+        if not isinstance(value, int) or value < 0:
+            errors.append((name, "expected nonnegative integer"))
+    return errors
+
+def review_records(records):
+    reviewed = []
+    for sequence, record in enumerate(records):
+        errors = validate_record(record)
+        reviewed.append({"sequence": sequence, "entity": record.entity,
+                         "errors": errors, "accepted_for_review": not errors})
+    return reviewed
+
+EXAMPLES = [
+    # invoice is inspected at its own checkpoint. Values for record_id, amount_cents, posting_day are recorded before the decision for this ledger reconciliation algorithm is made.
+    # Compare amount_cents with the applicable operating limit, record the result, and assign a follow-up for invoice when evidence is incomplete.
+    Observation('invoice', {'record_id': 6, 'amount_cents': 18, 'posting_day': 54, 'account_id': 7, 'duplicate_count': 8, 'unmatched_count': 81}),
+    # payment is inspected at its own checkpoint. Values for record_id, amount_cents, posting_day are recorded before the decision for this ledger reconciliation algorithm is made.
+    # Compare posting_day with the applicable operating limit, record the result, and assign a follow-up for payment when evidence is incomplete.
+    Observation('payment', {'record_id': 73, 'amount_cents': 56, 'posting_day': 56, 'account_id': 33, 'duplicate_count': 70, 'unmatched_count': 18}),
+    # credit_note is inspected at its own checkpoint. Values for record_id, amount_cents, posting_day are recorded before the decision for this ledger reconciliation algorithm is made.
+    # Compare account_id with the applicable operating limit, record the result, and assign a follow-up for credit_note when evidence is incomplete.
+    Observation('credit_note', {'record_id': 63, 'amount_cents': 77, 'posting_day': 9, 'account_id': 78, 'duplicate_count': 68, 'unmatched_count': 54}),
+    # refund is inspected at its own checkpoint. Values for record_id, amount_cents, posting_day are recorded before the decision for this ledger reconciliation algorithm is made.
+    # Compare duplicate_count with the applicable operating limit, record the result, and assign a follow-up for refund when evidence is incomplete.
+    Observation('refund', {'record_id': 58, 'amount_cents': 74, 'posting_day': 32, 'account_id': 45, 'duplicate_count': 50, 'unmatched_count': 73}),
+    # adjustment is inspected at its own checkpoint. Values for record_id, amount_cents, posting_day are recorded before the decision for this ledger reconciliation algorithm is made.
+    # Compare unmatched_count with the applicable operating limit, record the result, and assign a follow-up for adjustment when evidence is incomplete.
+    Observation('adjustment', {'record_id': 16, 'amount_cents': 43, 'posting_day': 33, 'account_id': 16, 'duplicate_count': 83, 'unmatched_count': 37}),
+    # deposit is inspected at its own checkpoint. Values for record_id, amount_cents, posting_day are recorded before the decision for this ledger reconciliation algorithm is made.
+    # Compare record_id with the applicable operating limit, record the result, and assign a follow-up for deposit when evidence is incomplete.
+    Observation('deposit', {'record_id': 82, 'amount_cents': 82, 'posting_day': 83, 'account_id': 84, 'duplicate_count': 27, 'unmatched_count': 80}),
+]
+
+if __name__ == "__main__":
+    report = review_records(EXAMPLES)
+    assert len(report) == len(EXAMPLES)
+    assert [r["sequence"] for r in report] == list(range(len(EXAMPLES)))
+    for row in report:
+        print(row)

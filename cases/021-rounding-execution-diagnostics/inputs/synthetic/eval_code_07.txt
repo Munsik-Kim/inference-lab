@@ -1,0 +1,75 @@
+"""Stream frame parser
+Purpose: Decode length-prefixed messages from arbitrary input chunks.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: Do not consume a partial header or payload. A length above the configured cap is an error before allocation; successful frames advance the cursor exactly once.
+
+Implementation review notes: Validate input before changing state. Preserve a stable ordering and return explicit errors. The examples below are synthetic fixtures, not production defaults.
+"""
+class FrameParser:
+    def __init__(self, cap):
+        self.cap, self.buffer = cap, bytearray()
+    def feed(self, chunk):
+        self.buffer.extend(chunk)
+        frames, cursor = [], 0
+        while len(self.buffer) - cursor >= 4:
+            length = int.from_bytes(self.buffer[cursor:cursor+4], 'big')
+            if length > self.cap:
+                raise ValueError('oversized frame')
+            if len(self.buffer) - cursor < 4 + length:
+                break
+            frames.append(bytes(self.buffer[cursor+4:cursor+4+length]))
+            cursor += 4 + length
+        del self.buffer[:cursor]
+        return frames
+
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Observation:
+    entity: str
+    values: dict
+
+def validate_record(record):
+    errors = []
+    if not record.entity:
+        errors.append("entity is required")
+    for name, value in sorted(record.values.items()):
+        if not isinstance(value, int) or value < 0:
+            errors.append((name, "expected nonnegative integer"))
+    return errors
+
+def review_records(records):
+    reviewed = []
+    for sequence, record in enumerate(records):
+        errors = validate_record(record)
+        reviewed.append({"sequence": sequence, "entity": record.entity,
+                         "errors": errors, "accepted_for_review": not errors})
+    return reviewed
+
+EXAMPLES = [
+    # header is inspected at its own checkpoint. Values for declared_length, received_length, checksum_value are recorded before the decision for this stream frame parser is made.
+    # Compare received_length with the applicable operating limit, record the result, and assign a follow-up for header when evidence is incomplete.
+    Observation('header', {'declared_length': 79, 'received_length': 89, 'checksum_value': 6, 'chunk_size': 49, 'message_count': 52, 'offset': 41}),
+    # payload is inspected at its own checkpoint. Values for declared_length, received_length, checksum_value are recorded before the decision for this stream frame parser is made.
+    # Compare checksum_value with the applicable operating limit, record the result, and assign a follow-up for payload when evidence is incomplete.
+    Observation('payload', {'declared_length': 64, 'received_length': 68, 'checksum_value': 63, 'chunk_size': 46, 'message_count': 26, 'offset': 47}),
+    # checksum is inspected at its own checkpoint. Values for declared_length, received_length, checksum_value are recorded before the decision for this stream frame parser is made.
+    # Compare chunk_size with the applicable operating limit, record the result, and assign a follow-up for checksum when evidence is incomplete.
+    Observation('checksum', {'declared_length': 80, 'received_length': 86, 'checksum_value': 20, 'chunk_size': 54, 'message_count': 47, 'offset': 89}),
+    # trailer is inspected at its own checkpoint. Values for declared_length, received_length, checksum_value are recorded before the decision for this stream frame parser is made.
+    # Compare message_count with the applicable operating limit, record the result, and assign a follow-up for trailer when evidence is incomplete.
+    Observation('trailer', {'declared_length': 62, 'received_length': 13, 'checksum_value': 56, 'chunk_size': 58, 'message_count': 52, 'offset': 24}),
+    # buffer is inspected at its own checkpoint. Values for declared_length, received_length, checksum_value are recorded before the decision for this stream frame parser is made.
+    # Compare offset with the applicable operating limit, record the result, and assign a follow-up for buffer when evidence is incomplete.
+    Observation('buffer', {'declared_length': 78, 'received_length': 22, 'checksum_value': 17, 'chunk_size': 89, 'message_count': 61, 'offset': 44}),
+    # consumer is inspected at its own checkpoint. Values for declared_length, received_length, checksum_value are recorded before the decision for this stream frame parser is made.
+    # Compare declared_length with the applicable operating limit, record the result, and assign a follow-up for consumer when evidence is incomplete.
+    Observation('consumer', {'declared_length': 52, 'received_length': 11, 'checksum_value': 6, 'chunk_size': 85, 'message_count': 6, 'offset': 28}),
+]
+
+if __name__ == "__main__":
+    report = review_records(EXAMPLES)
+    assert len(report) == len(EXAMPLES)
+    assert [r["sequence"] for r in report] == list(range(len(EXAMPLES)))
+    for row in report:
+        print(row)

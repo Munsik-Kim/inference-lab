@@ -1,0 +1,19 @@
+Community microgrid
+Purpose: Explain dispatch decisions when a village balances solar power and storage.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: The controller preserves a minimum battery reserve for the clinic pump. An optimistic solar forecast cannot erase a measured storage deficit.
+
+
+Checkpoint 1: solar roof. solar_roof is inspected at its own checkpoint. Values for generation, demand, state_of_charge are recorded before the decision for this community microgrid is made. In the illustrative record, generation is 3; demand is 88; state of charge is 85; inverter temperature is 45; reserve hours is 33; forecast error is 35. Compare demand with the applicable operating limit, record the result, and assign a follow-up for solar_roof when evidence is incomplete.
+
+Checkpoint 2: battery. battery is inspected at its own checkpoint. Values for generation, demand, state_of_charge are recorded before the decision for this community microgrid is made. In the illustrative record, generation is 3; demand is 25; state of charge is 61; inverter temperature is 80; reserve hours is 53; forecast error is 72. Compare state_of_charge with the applicable operating limit, record the result, and assign a follow-up for battery when evidence is incomplete.
+
+Checkpoint 3: inverter. inverter is inspected at its own checkpoint. Values for generation, demand, state_of_charge are recorded before the decision for this community microgrid is made. In the illustrative record, generation is 67; demand is 32; state of charge is 39; inverter temperature is 64; reserve hours is 50; forecast error is 35. Compare inverter_temperature with the applicable operating limit, record the result, and assign a follow-up for inverter when evidence is incomplete.
+
+Checkpoint 4: clinic pump. clinic_pump is inspected at its own checkpoint. Values for generation, demand, state_of_charge are recorded before the decision for this community microgrid is made. In the illustrative record, generation is 14; demand is 35; state of charge is 29; inverter temperature is 13; reserve hours is 75; forecast error is 14. Compare reserve_hours with the applicable operating limit, record the result, and assign a follow-up for clinic_pump when evidence is incomplete.
+
+Checkpoint 5: school circuit. school_circuit is inspected at its own checkpoint. Values for generation, demand, state_of_charge are recorded before the decision for this community microgrid is made. In the illustrative record, generation is 14; demand is 70; state of charge is 79; inverter temperature is 7; reserve hours is 49; forecast error is 11. Compare forecast_error with the applicable operating limit, record the result, and assign a follow-up for school_circuit when evidence is incomplete.
+
+Checkpoint 6: backup generator. backup_generator is inspected at its own checkpoint. Values for generation, demand, state_of_charge are recorded before the decision for this community microgrid is made. In the illustrative record, generation is 23; demand is 76; state of charge is 63; inverter temperature is 19; reserve hours is 52; forecast error is 49. Compare generation with the applicable operating limit, record the result, and assign a follow-up for backup_generator when evidence is incomplete.
+
+The report separates an observation, a decision, and a follow-up. An observation records what was measured at a particular checkpoint. A decision applies the stated rule to that evidence. A follow-up identifies what must be checked next. Keeping these three fields separate makes uncertainty visible without pretending that an unobserved value was measured.

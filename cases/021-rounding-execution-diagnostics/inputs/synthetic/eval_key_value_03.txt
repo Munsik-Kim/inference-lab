@@ -1,0 +1,85 @@
+Rail inspection register
+Purpose: Define inspection notes for a short maintenance railway.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: A gauge defect is escalated before reopening a track section. Replacing a missing fastener does not automatically resolve a neighboring alignment defect.
+
+record_format = sectioned key-value register
+review_policy = retain original observations and append corrections
+
+[record_1]
+record_id = 1
+entity = switch
+observations.gauge_error = 70
+observations.fastener_count = 4
+observations.wear_depth = 21
+observations.drainage_depth = 11
+observations.inspection_age = 27
+observations.defect_length = 20
+review_note = switch is inspected at its own checkpoint. Values for gauge_error, fastener_count, wear_depth are recorded before the decision for this rail inspection register is made.
+evidence_rule = A gauge defect is escalated before reopening a track section. Replacing a missing fastener does not automatically resolve a neighboring alignment defect.
+next_action = Compare fastener_count with the applicable operating limit, record the result, and assign a follow-up for switch when evidence is incomplete.
+
+[record_2]
+record_id = 2
+entity = crossing
+observations.gauge_error = 18
+observations.fastener_count = 35
+observations.wear_depth = 9
+observations.drainage_depth = 78
+observations.inspection_age = 55
+observations.defect_length = 67
+review_note = crossing is inspected at its own checkpoint. Values for gauge_error, fastener_count, wear_depth are recorded before the decision for this rail inspection register is made.
+evidence_rule = The reviewer preserves the measured fastener_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare wear_depth with the applicable operating limit, record the result, and assign a follow-up for crossing when evidence is incomplete.
+
+[record_3]
+record_id = 3
+entity = rail_joint
+observations.gauge_error = 11
+observations.fastener_count = 80
+observations.wear_depth = 8
+observations.drainage_depth = 81
+observations.inspection_age = 87
+observations.defect_length = 58
+review_note = rail_joint is inspected at its own checkpoint. Values for gauge_error, fastener_count, wear_depth are recorded before the decision for this rail inspection register is made.
+evidence_rule = The reviewer preserves the measured wear_depth and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare drainage_depth with the applicable operating limit, record the result, and assign a follow-up for rail_joint when evidence is incomplete.
+
+[record_4]
+record_id = 4
+entity = sleeper
+observations.gauge_error = 48
+observations.fastener_count = 37
+observations.wear_depth = 81
+observations.drainage_depth = 87
+observations.inspection_age = 69
+observations.defect_length = 48
+review_note = sleeper is inspected at its own checkpoint. Values for gauge_error, fastener_count, wear_depth are recorded before the decision for this rail inspection register is made.
+evidence_rule = The reviewer preserves the measured drainage_depth and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare inspection_age with the applicable operating limit, record the result, and assign a follow-up for sleeper when evidence is incomplete.
+
+[record_5]
+record_id = 5
+entity = drainage_culvert
+observations.gauge_error = 17
+observations.fastener_count = 52
+observations.wear_depth = 43
+observations.drainage_depth = 12
+observations.inspection_age = 88
+observations.defect_length = 29
+review_note = drainage_culvert is inspected at its own checkpoint. Values for gauge_error, fastener_count, wear_depth are recorded before the decision for this rail inspection register is made.
+evidence_rule = The reviewer preserves the measured inspection_age and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare defect_length with the applicable operating limit, record the result, and assign a follow-up for drainage_culvert when evidence is incomplete.
+
+[record_6]
+record_id = 6
+entity = signal_post
+observations.gauge_error = 32
+observations.fastener_count = 55
+observations.wear_depth = 27
+observations.drainage_depth = 25
+observations.inspection_age = 69
+observations.defect_length = 37
+review_note = signal_post is inspected at its own checkpoint. Values for gauge_error, fastener_count, wear_depth are recorded before the decision for this rail inspection register is made.
+evidence_rule = The reviewer preserves the measured defect_length and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare gauge_error with the applicable operating limit, record the result, and assign a follow-up for signal_post when evidence is incomplete.

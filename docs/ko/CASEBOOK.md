@@ -33,6 +33,8 @@
 
 - [020 — 임베딩을 작게 보관하면 실행도 빨라질까?](#case-020)
 
+- [021 — 같은 INT4인데 왜 계산 결과가 달라질까?](#case-021)
+
 <a id="case-001"></a>
 ## 001 — 커널 선택 조건을 고치면 실행할 수 있는가?
 
@@ -704,3 +706,40 @@ BF16 가중치를 고정한 NVFP4 KV의 신규 합성 24과제에서 문법 제�
 같은 압축 표현을 A 전체 미리 계산·B 요청 복원·C 중복 제거 후 원 순서 복귀로 비교했습니다. 합성 LARGE/Z32에서 PyTorch allocated peak는 약304→81MiB였고, P4 H의7조건·30개 process block에서 C가 B보다 빠른 block은0/30이었습니다. 실제 N1024/4096 세션에서는 A가 B보다 세 block 모두 빨랐습니다. 공식 복원 코드를 재사용하고 fixture·계측·독립 CPU 검산을 구현했습니다.
 
 [Report](../../cases/020-optic-on-demand-decode/REPORT.ko.md) · [CPU quick/full](../../cases/020-optic-on-demand-decode/REPRODUCE.ko.md)
+
+<a id="case-021"></a>
+## Case021 — 같은 INT4인데 왜 계산 결과가 달라질까?
+
+### 1. 목표
+
+같은 artifact의 표현·dense/Marlin 실행·Q/K 후속 계산 정밀도를 구분합니다.
+
+### 2. 데이터셋
+
+Qwen3-0.6B D16 W4A16,196개 projection/group64; 합성 DEV8/EVAL24,128/512 prefix와16위치. P4/P5는 이미 본 자료의 사후 진단입니다.
+
+### 3. 가정과 이론
+
+중간 반올림 시점과 실행 순서가 값에 영향을 줄 수 있습니다. 국소 참조 정확도와 경로 간 일치도는 다릅니다.
+
+### 4. 실험 설계
+
+D0/D1/P×R0/R1의 원 forward와 동일 입력 local replay; P5 단일항 후보 A/B 및 층0/25×DEV2의 nested K grid.
+
+### 5. 검증 내용
+
+BF16 exact rounding, FP64/에너지 식, layout/beta/core 계약과 반복 bit/hash; 공개 CPU 검산은 집계/합성에 한정하고 private raw 감사와 구분합니다.
+
+### 6. 결과
+
+원 EVAL 평균 KL 감소 판정 INCONCLUSIVE. P5 A/B 판별406,626기록 좌표에서 D1/P 동일·A 대응. 네 희소 입력에서 K1/2 동일, 첫 차이는 고정 grid K8 또는64.
+
+### 7. 결과 해석
+
+406,626은 첫 block fixture좌표 수이며 독립 입력 수가 아닙니다. 개별 참조 오차 감소와 gap증가34/감소57/동일5가 공존합니다. ΔN/ΔC 증가 분류13/17/4는 전체 KL 인과 분해가 아닙니다.
+
+### 8. 결론
+
+같은 저장 표현도 실행 일치를 보장하지 않으며, FP32 중간 계산의 효과는 참조·관측 범위에 따라 읽어야 합니다. kernel bug/품질 개선/서빙 가속은 주장하지 않습니다.
+
+[Report](../../cases/021-rounding-execution-diagnostics/REPORT.ko.md) · [CPU quick/full](../../cases/021-rounding-execution-diagnostics/REPRODUCE.ko.md)

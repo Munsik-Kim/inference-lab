@@ -1,0 +1,120 @@
+# Case021 report — Separating representation, execution and propagation
+
+[한국어](REPORT.ko.md) · [Introduction](README.md) · [Reproduction](REPRODUCE.md)
+
+The same D16 INT4 artifact produced differences both when reconstruction arithmetic changed and when execution switched to Marlin. R1, which retains Q/K norm–RoPE intermediates in FP32, was closer to a local FP64 primitive reference on average. It did not consistently reduce the final disagreement between D1 and P. The primary decision is **INCONCLUSIVE**.
+
+## 1. Three linear paths and two rounding contracts
+
+The experiment reuses the local Qwen3-0.6B checkpoint and 196 group64 D16 artifacts. Current bytes/SHA256 and codes/gamma/alpha_inv/beta_inv were checked. All actual projection biases are absent. Embeddings, lm_head, norms and other unquantized modules remain the same.
+
+| Comparison | What changes | What it does not isolate |
+|---|---|---|
+| D0–D1 | Original `(codes*gamma)*alpha_inv` reconstruction versus BF16 combined-scale reconstruction | Only the scale cast |
+| D1–P | Dequantization, rounding and execution after matching signed codes and BF16 scale format | Only reduction order |
+| D0–P | Total difference from the original dense artifact reference | Quality relative to the original checkpoint weights |
+
+P calls the actual `torch.ops._C.marlin_gemm`; a separate profiler confirms the Marlin CUDA symbol and no dense fallback. The file's two's-complement nibbles are distinguished from Marlin's c+8 offset encoding. This is INT4 storage with BF16 MMA, not native INT4 MMA or the author's W4A4 kernel. Beta is applied once to the input in every path. See the [exact arithmetic contract](METHOD_CONTRACT.md).
+
+R0 computes norm statistics in FP32 but retains BF16 boundaries in norm output, learned weight multiplication and RoPE. R1 keeps that combined region in FP32 and casts final Q/K to BF16. It promotes R0's actual BF16 cos/sin values without recomputing frequencies. V, SDPA, softmax, residual and MLP do not change. Final Q/K dtype, shape and stride match; the observed rounding boundary is **DISTINCT**.
+
+## 2. Primary result: higher intermediate precision did not ensure closer paths
+
+There are 8 independently authored DEV and 24 EVAL source documents, using shared category templates for explanations, key-value records, code and JSON. A 128-token input is a prefix of the same document's 512-token input. These lengths are not independent documents. Execution is batch1 teacher-forcing prefill, in evaluation/inference mode, without cache or free generation.
+
+Every forward computes lm_head at all input positions before saving 16 fixed full-vocabulary rows. BF16 logits are preserved as their exact uint16 bits. Position means are computed first, then documents receive equal weight. KL uses natural logarithms, in nats.
+
+| Metric | EVAL512 |
+|---|---:|
+| E0: mean KL(D1_R0 ∥ P_R0) | 0.0006952504144 |
+| E1: mean KL(D1_R1 ∥ P_R1) | 0.0007815328033 |
+| Mean delta = E0−E1 | −0.0000862823889 |
+| Paired document bootstrap95% interval | [−0.0002068221560, +0.0000390900519] |
+| Positive / negative document deltas | 9 / 15 |
+| DEV-frozen tau_abs | 1e-10 |
+
+Mean R1 KL was about12.41% higher, but the interval includes zero, so the direction is unresolved. The 10,000-replicate paired bootstrap describes this 24-document synthetic corpus; it is not a population, simultaneous or quality guarantee. The 54 repeated forwards had identical same-path retained logits and r_repeat=0. That does not establish an error bound for every input.
+
+![Document comparisons](figures/02_rounding_discrepancy.png)
+
+Each line is a document. Fixed-D0_R0 drift and D1–P discrepancy use different references. NLL concerns the actual next token in the input; it is not a score of correct answers to these synthetic documents.
+
+## 3. Both format and execution differences remain
+
+The following R0 comparisons use16 selected positions per EVAL512 document. Relative RMSE means `sqrt(SSE/reference_energy)`; zero energy is explicitly UNDEFINED.
+
+| Comparison | Mean document KL | Median document relative_RMSE | Argmax flips /384 positions |
+|---|---:|---:|---:|
+| D0–D1 | 0.000993980 | 0.0189855 | 9 |
+| D1–P | 0.000695250 | 0.0166570 | 6 |
+| D0–P | 0.000971936 | 0.0195999 | 9 |
+
+![Block and logit differences](figures/01_representation_execution.png)
+
+Full-path block outputs have their own upstream histories. Their layerwise relative errors are not causal amplification factors. The vector identity for `a=D1−D0`, `b=P−D1` was checked in the same coordinates. The cross term was negative for all 24 EVAL512 R0 documents. Component differences can partially cancel; this is not a causal contribution estimate.
+
+## 4. Same-input local replay and one-boundary replacement
+
+The DEV512 full-block SSE/energy rule selected zero-based layers27 and25. All six local conditions receive the same saved D0_R0 block input and native position/cos/sin/mask context. There are 384 block replays:32 documents×2 layers×6 conditions. They are separate from the 384 main full-model forwards.
+
+Recorded boundaries include Q/K projection, norm, RoPE, attention, o_proj, MLP and block output. Same-path R0/R1 projected Q/K were also checked for equality at saved positions. Evidence supports **FORMAT_CHANGE_SUPPORTED**, **LOCAL_EXECUTION_DIFFERENCE_SUPPORTED** and **PROPAGATION_SENSITIVITY_SUPPORTED**. D1 and P already share R0, so **ALIGNMENT_SUPPORTED** is not established.
+
+Before EVAL, four replacement candidates were tested on DEV8: two layers×{post_RoPE_Q, block_output}. D1 recomputed the replacement from the current P block input. The largest absolute mean change selected layer25/block_output, without excluding candidates that worsened discrepancy.
+
+| Selected replacement | DEV8 | EVAL24 |
+|---|---:|---:|
+| KL change, after−before | −0.0000208599 | +0.0000302069 |
+| Documents improved / worsened | 5 / 3 | 10 / 14 |
+
+The secondary EVAL95% interval is [−0.0000193310,+0.0000843861]. A single boundary affected downstream output, but the DEV mean reduction did not repeat on EVAL.
+
+![Same-input replay and replacement](figures/03_same_input_local_replay.png)
+
+A post-observation CPU audit applied FP64 formulas to the saved Q/K and native cos/sin. All768 selected-position comparisons passed the original relative_RMSE≤0.01 criterion. Mean reference error was 0.00273146 for R0 and 0.00166340 for R1. This added audit did not change layer selection or the primary decision. Accuracy against a primitive reference and agreement between two execution paths answer different questions.
+
+## 5. Separate cost and memory measurements
+
+Cost workers use one fixed DEV512 document and three fresh processes per linear path. Hooks, dumps and profiling are removed. R0/R1 order alternates within each process, after three warm-ups per mode, with ten timed forwards per mode. [Cost overview](results/summary/cost_overview.md), [timing.csv](results/summary/timing.csv), [raw samples](results/summary/timing_raw.csv) and [memory.csv](results/summary/memory.csv) retain block points, first-call and load costs.
+
+Host timing includes event recording and completion wait. Event elapsed is stream time, not summed kernel busy time. R0 retains a no-op Python dispatch wrapper, so these are diagnostic forward costs, not uninstrumented HF serving benchmarks. R1's first call follows R0 in the same process and is not a separate cold context. Allocated/reserved bytes differ from whole-device VRAM; parent wall differs from GPU busy time. No speedup, TTFT or TPOT claim follows.
+
+## 6. Validation, history and limits
+
+P0 checked nibble/offset encoding, group64 axes, beta, bias fixtures, actual backend, finite values, no-op behavior and real CPU-copy hooks. In the validation DEV inputs, full logits were bit-identical under no-op, hook and mode restoration checks. The historical full32-token D0–P relative_RMSE remains 0.02605433, outside the unchanged0.02 gate. Old probe02/03 are not a controlled comparison with identical reduction settings; the historical greedy suffix was not rerun.
+
+Current driver621.01 versus historical610.88 is recorded as ENVIRONMENT_DRIFT. Existing Python/Torch/Transformers/vLLM environments were reused read-only, not validated as clean installations.
+
+Three current 32-token replay cycles under common flags gave full-logit relative_RMSE of 0.02661493 for D0–D1,0.01961746 for D1–P and 0.02605433 for D0–P. Historical probe03 recorded GEMM0.00307836/block0.00567335/full0.02605433; probe02 recorded matched-versus-primary0.02581311 and packed-versus-matched0.02259797. The current D1–P result below 2% is not presented as a controlled improvement over probe02.
+
+GPU gates paused for external work. One EVAL local-replay worker observed a foreign PID at its final device sample; its timing and whole-device memory are not treated as isolated measurements. An additional idle guard also failed while a newline-separated shell command continued to the supervisor. The supervisor independently passed its own idle gate before spawning; its before/after compute lists were empty. This control-flow defect is preserved, not rewritten as a passed guard. Other work was never stopped or changed. Endpoint samples do not prove continuous exclusivity. See [resource qualification](provenance/resource_qualification.json).
+
+The first independent CPU audit exceeded its fixed normalization tolerance with a sequential reduction over the large vocabulary. The failed source and receipt remain. A separate `math.fsum` normalization path passed with the same tolerance and was frozen before EVAL. Independent DEV/EVAL full selected-logit KL discrepancies were at most 7.70e-15/1.13e-14. The 384 EVAL replacement positions were also audited, with maximum difference1.10e-14.
+
+The small public logit subset covers DEV4×2 positions×6 conditions. All16 selected full-vocabulary rows for every main condition remain local. Public scalar aggregation is not a full-logit audit. Temporary full-block arrays were deleted after prescribed comparisons; aggregates, selected values and replay inputs remain. See [verification](results/summary/verification.json), [reproduction](REPRODUCE.md) and [preservation](provenance/preservation_after.json).
+
+The paper's §5.1/§6/Figure2/Table1 motivate inspection of rounding boundaries and static discrepancy. Its RL stacks and estimator differ from this0.6B same-HF/full-vocabulary diagnostic. The [source map](SOURCE_MAP.md) and [reuse map](REUSE_MAP.md) separate that background from direct work. Training, quality improvement, new quantization/kernel development, remote CI, publication and Pages were not run.
+
+## Actual execution and budget
+
+| Kind | Planned | Actual |
+|---|---:|---:|
+| Main DEV/EVAL | 96 / 288 | 96 / 288 |
+| Separate repeat | 54 | 54 |
+| Local block replay | 384 | 384 |
+| Replacement DEV/EVAL | 32 / 24 | 32 / 24 |
+| Timed full forward | 180 | 180 |
+| Cost warm-up / first mode call | 54 / 18 | 54 / 18 |
+
+Additional preflight full forwards: 38 (including 9 historical); historical isolated block/GEMM:9/9; replacement auxiliary blocks:58. No main condition is missing or aliased. All 34 GPU workers exited successfully. These denominators are not pooled as independent workloads.
+
+GPU worker parent wall: **1971.504192467s / 7200s**, remaining **5228.495807533s**. P0/P1/P2/P3: 155.279s / 629.819s / 719.352s / 467.053s.
+
+| Path | Timed allocated peak MiB | Reserved peak MiB |
+|---|---:|---:|
+| D0 | 1323.370 | 1384.000 |
+| D1 | 1320.370 | 1384.000 |
+| P | 705.091 | 1448.000 |
+
+Memory rows cover both R modes in each cost worker, aggregated over 3 blocks. They do not isolate R0/R1 memory. Process CPU and explicitly timed CPU audit costs are in [budget.json](results/summary/budget.json) and [cpu_cost.json](results/summary/cpu_cost.json).
+
+Memory inventory assigns integer IDs to unique storage but records duplicates as `alias` without a target ID. The CPU audit recomputed dtype×shape payload and sums of uniquely numbered storage; the sole nonempty alias is lm_head with matching embedding metadata. Runtime deduplication used actual device/data_ptr, but the stored record cannot independently reconstruct every pointer relationship. The initial post-hoc audit schema assumption failure is preserved.

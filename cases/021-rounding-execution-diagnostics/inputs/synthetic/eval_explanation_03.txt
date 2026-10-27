@@ -1,0 +1,19 @@
+Island ferry dispatch
+Purpose: Explain the relationship between a sailing window and passenger boarding.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: The dispatcher confirms channel depth before boarding begins. A full passenger list cannot justify departure outside the safe tide window.
+
+
+Checkpoint 1: north pier. north_pier is inspected at its own checkpoint. Values for tide_height, crosswind, visibility are recorded before the decision for this island ferry dispatch is made. In the illustrative record, tide height is 56; crosswind is 81; visibility is 25; berth depth is 76; boarding count is 43; reserve fuel is 68. Compare crosswind with the applicable operating limit, record the result, and assign a follow-up for north_pier when evidence is incomplete.
+
+Checkpoint 2: south pier. south_pier is inspected at its own checkpoint. Values for tide_height, crosswind, visibility are recorded before the decision for this island ferry dispatch is made. In the illustrative record, tide height is 88; crosswind is 81; visibility is 64; berth depth is 58; boarding count is 19; reserve fuel is 83. Compare visibility with the applicable operating limit, record the result, and assign a follow-up for south_pier when evidence is incomplete.
+
+Checkpoint 3: channel. channel is inspected at its own checkpoint. Values for tide_height, crosswind, visibility are recorded before the decision for this island ferry dispatch is made. In the illustrative record, tide height is 8; crosswind is 76; visibility is 82; berth depth is 49; boarding count is 48; reserve fuel is 19. Compare berth_depth with the applicable operating limit, record the result, and assign a follow-up for channel when evidence is incomplete.
+
+Checkpoint 4: berth. berth is inspected at its own checkpoint. Values for tide_height, crosswind, visibility are recorded before the decision for this island ferry dispatch is made. In the illustrative record, tide height is 23; crosswind is 52; visibility is 36; berth depth is 58; boarding count is 41; reserve fuel is 59. Compare boarding_count with the applicable operating limit, record the result, and assign a follow-up for berth when evidence is incomplete.
+
+Checkpoint 5: ramp. ramp is inspected at its own checkpoint. Values for tide_height, crosswind, visibility are recorded before the decision for this island ferry dispatch is made. In the illustrative record, tide height is 88; crosswind is 53; visibility is 74; berth depth is 59; boarding count is 46; reserve fuel is 59. Compare reserve_fuel with the applicable operating limit, record the result, and assign a follow-up for ramp when evidence is incomplete.
+
+Checkpoint 6: terminal. terminal is inspected at its own checkpoint. Values for tide_height, crosswind, visibility are recorded before the decision for this island ferry dispatch is made. In the illustrative record, tide height is 84; crosswind is 68; visibility is 40; berth depth is 42; boarding count is 21; reserve fuel is 68. Compare tide_height with the applicable operating limit, record the result, and assign a follow-up for terminal when evidence is incomplete.
+
+The report separates an observation, a decision, and a follow-up. An observation records what was measured at a particular checkpoint. A decision applies the stated rule to that evidence. A follow-up identifies what must be checked next. Keeping these three fields separate makes uncertainty visible without pretending that an unobserved value was measured.

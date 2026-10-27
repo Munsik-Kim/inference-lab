@@ -1,0 +1,127 @@
+**Case021 follow-up — Does a more accurate local calculation make two execution paths agree?**
+
+The same stored INT4 numbers can produce different results when rounding and execution differ. This follow-up separates closeness to a local FP64 expression from agreement between two execution paths.
+
+Three observations matter. Changing only P to R1 moved it farther from D1_R0 but closer to D1_R1. In 34 of 96 existing EVAL local Q/K cells, individual reference errors decreased while the D1–P gap grew. All structured projection fixtures produced identical D1/P outputs, while actual DEV activations retained small differences.
+
+The exact internal rounding or accumulation sequence responsible for those activation differences remains unresolved. The original full-model verdict stays **INCONCLUSIVE**. This is a post-hoc study of already observed DEV/EVAL documents, not a new holdout test.
+
+We ran one GPU input-preparation worker and nine projection workers, with **zero new full-model forwards**. Logits and local Q/K were reanalyzed on CPU. See [reproduction](REPRODUCE.md), [shared facts](facts.json), and the [Korean report](FOLLOWUP_REPORT.ko.md).
+
+**Execution and reference contracts**
+
+D0 preserves the original D16 `(codes*gamma)*alpha_inv` dense reconstruction. D1 forms a BF16 combined scale and reconstructs BF16 dense weights. P executes the same signed codes and BF16 scales through Marlin. D1 is not the original uncompressed checkpoint. P4C cores receive Z after the single beta multiplication; they do not apply beta again.
+
+R0 is native Q/K norm–RoPE. R1 retains the intermediate norm and rotary calculations in FP32, reuses the same norm weights, epsilon and native cos/sin values, and casts final Q/K to BF16. The original boundary is DISTINCT. Norm and RoPE were changed as a bundle; this follow-up does not separate their effects.
+
+**P4A: the fixed reference matters**
+
+The following directed KL values use all 151936 vocabulary entries, average 16 fixed positions within each 512-token document, then average the existing 24 EVAL documents equally. Units are natural-log nats; D1 is the first argument.
+
+| D1 reference / P candidate | P_R0 | P_R1 |
+|---|---:|---:|
+| D1_R0 | 0.0006952504 | 0.0008521777 |
+| D1_R1 | 0.0009130131 | 0.0007815328 |
+
+
+Within each row only P changes from R0 to R1. Positive differences mean closer agreement with that unchanged reference.
+
+| Fixed reference | Mean KL before − after P change | Post-hoc 95% interval | Positive / negative documents |
+|---|---:|---|---:|
+| D1_R0 | -0.0001569273 | [-0.0003351115, -0.0000262346] | 6 / 18 |
+| D1_R1 | +0.0001314803 | [+0.0000142300, +0.0002537435] | 16 / 8 |
+
+
+These are post-hoc descriptive paired-document percentile intervals with 10000 resamples, seed61027025. `K00−K10` changes the first argument and is not an improvement against one fixed reference. Symmetric JSD, using m=(p+q)/2 and stable logaddexp, is also retained:
+
+| D1 / P | P_R0 | P_R1 |
+|---|---:|---:|
+| D1_R0 | 0.0001740831 | 0.0002127459 |
+| D1_R1 | 0.0002282488 | 0.0001951464 |
+
+
+[D0_R0 drift](fixed_D0_drift_summary.csv) answers a different question. Getting closer to D1 is not the same as getting closer to D0_R0. DEV8, the auxiliary 128-token prefixes, categories and every document point remain in the tables. Prefix lengths are not pooled as independent documents.
+
+![Cross precision](figures_v2/01_cross_precision.png)
+
+Dots are document means over the 16 positions; red lines are means across documents. Display units are nats multiplied by1000. These are not confidence-interval bars.
+
+The original diagonal contrast replays to -0.0000862824, with original seed61027023 interval [-0.0002068222, 0.0000390901]. It includes zero. The original **INCONCLUSIVE** verdict and tau_abs=1e-10 remain unchanged; the follow-up bootstrap seed does not replace the original interval. The historical 32-token D0–P relative RMSE near0.02605433 still exceeds its original0.02 gate.
+
+**P4B: less individual error can mean a larger pair gap**
+
+The existing local replay gives D1/P the same D0_R0 block input. We checked all256 R0/R1 projection bit comparisons and the original cos/sin, positions, norm weights and epsilon. Layers25/27 each provide Q with16heads and K with8heads, head width128, at16 selected positions.
+
+Let u_D,u_P be the independent FP64 norm–RoPE expressions for the actual projection values, before the last BF16 cast. With d=u_P−u_D and n=(y_P−u_P)−(y_D−u_D), the identity is `y_P−y_D=d+n` and `gap²=d²+n²+2 dot(d,n)`. A negative cross term indicates cancellation at these coordinates, not an allocation of full-model causes.
+
+All96 EVAL cells reduce the sum of individual reference errors. Pair-gap SSE increases in34, decreases in57 and is unchanged in5. Of the34 increasing cells,24 have a negative R0 cross term that is more negative than R1; the other10 are retained. DEV has32 cells:14 increases,17 decreases,1 unchanged, with8 of the14 matching that cross-term pattern. The opposite pattern of larger individual error but smaller pair gap occurs in0 cells here.
+
+![Local decomposition](figures_v2/02_rounding_cancellation.png)
+
+Left/up points show reduced individual error but increased pair distance. The right panel preserves the contrary aggregate observation: total local pair-gap SSE falls with R1. The decomposition is exact on the selected coordinates; it does not identify the cause of full-model KL. We do not reconstruct attention from incomplete selected Q/K history.
+
+**P4C: three real projections and two FP64 expressions**
+
+The fixed q_proj layers0/25/27 all have I1024/O2048, group64 and no bias. M512 is fixed. Positive and negative one-hot probes cover all1024 input axes each. Within-group pairs, across-group pairs and64-term ±1/8 rows each use512 rows; all16 groups receive32 rows in the64-term fixture. This shape needs zero padding rows:0. Actual Z comes from the existing eight DEV D0_R0 block inputs via native input norm and one beta transport. No model-wide forward was needed.
+
+The two references are `Y_exact64=Z@(code*actual_BF16_scale).T` and `Y_dense64=Z@actual_D1_BF16_weight.T`. They describe this code/scale representation and this dense materialization, not model quality. We checked inverse scale layout, signed/offset nibbles, group axes and beta once. Every code×BF16-scale product was exactly representable in FP32, and direct nearest-even BF16 rounding matched every actual D1 weight bit. Scalar math.fsum dots checked900 row/column locations for both references.
+
+All seven structured fixtures are D1/P-identical for all three projections. All eight actual DEV inputs show differences. The recorded label is `MULTI_TERM_DIFFERENCE_OBSERVED`, but even the two-term and64-term structured controls agree. The number of terms alone, or one particular internal accumulation order, is therefore not established as the cause.
+
+Below, relative RMSE pools SSE and reference energy over the eight DEV inputs before taking the square root. Only the final column counts document-level directions.
+
+| Layer | D1 / dense64 | P / dense64 | D1 / exact64 | P / exact64 | P / D1 | P closer / D1 closer to exact64 |
+|---|---:|---:|---:|---:|---:|---:|
+| 0 | 0.0016639885 | 0.0016639880 | 0.0018738664 | 0.0018742570 | 0.0000720788 | 0 / 8 |
+| 25 | 0.0016593850 | 0.0016593844 | 0.0019215965 | 0.0019215596 | 0.0000795875 | 7 / 1 |
+| 27 | 0.0016627205 | 0.0016627200 | 0.0018840931 | 0.0018840620 | 0.0000782743 | 4 / 4 |
+
+
+P is closer to exact64 on0/8 documents at layer0,7/8 at layer25 and4/8 at layer27. The corresponding opposite counts are8/8,1/8 and4/8. These small local differences do not establish better full logits, capabilities or fidelity to an uncompressed checkpoint.
+
+![Projection oracles](figures_v2/03_projection_oracles.png)
+
+Large markers pool SSE/energy; small markers show each fixture. The symlog axis has a linear region around zero and retains exact zeros. Input families differ in value range and norm. First-block full BF16 outputs are retained; all180 subsequent output hashes match. Repeated processes are not independent models.
+
+**Verification, costs and preservation**
+
+NumPy versus independent math.fsum KL/JSD differs by at most 1.994e-15. Independent scalar local energy differs by at most 2.220e-16; projection scalar-dot versus matrix results differ by at most 0.0. Tolerances were not relaxed and negative residuals were not clamped. Fixtures cover overwriting, input/source mutation, BF16 ties and double rounding, nibble/axis errors, duplicate beta, position/head errors, zero energy and KL direction.
+
+Before GPU work, fake gate nonzero, exception and timeout paths proved zero worker creation and zero start-journal writes. The actual supervisor couples a passing gate directly to spawn: no compute PID, utilization0 and at least6144MiB free VRAM. Endpoint samples do not prove uninterrupted exclusivity. New GPU parent wall is 82.207145s of1200s; projection allocated peak is 49.321MiB of2048MiB. Neither metric is device-wide VRAM or GPU busy time. [Budget](../records/budget.json) separates CPU wall/process time/RSS and the cumulative campaign.
+
+The first P4A CPU attempt timed out after348.003570s. Its source, freeze, empty output and debit remain. Version2 reuses bounded cached normalizations with unchanged inputs, formulas, seed and tolerance under a new source freeze. The final C freeze occurred after P4A/B observations but before projection outputs; see [timeline](../records/observation_timeline.json).
+
+The preservation audit checks all931 original Case files, original Git state,1096 actually referenced raw files,3 used artifacts and selected runtime source/binaries. Current model checks cover small config/tokenizer files, shard existence/size and7 used norm vectors, not a fresh whole-shard hash. Existing environments and services were not modified. GPU runtime: Python3.12.14, Torch2.13.0+cu130, Transformers5.17.0, vLLM0.29.0. CPU analysis: Python3.11.15, NumPy1.26.4, Matplotlib3.10.9. Installs, upgrades and downloads:0.
+
+TF32 and FP16/BF16 reduced-precision reductions are disabled; Marlin FP32 reduce=true and atomic=false. Profiler evidence shows the actual Marlin kernel on RTX5080/sm120/driver621.01. New work consists of fixtures, core connections, supervision, FP64 audits and presentation. Marlin, Torch GEMM/allocator and the HF model remain reused implementations. Codex assisted coding, analysis and bilingual documentation.
+
+New holdout, separate norm/RoPE execution(P4D), RL, other models, generation, serving, speed sweeps, Git publication and site deployment are NOT_RUN. [P4D](P4D_DESIGN_ONLY.md) is design only. Any future setting choice needs a separate check on new documents. Full one-hot output arrays stay local because they can reveal transformed weights; they are excluded from the public-candidate manifest.
+
+| Block | Plan | Completed | Unit |
+|---|---:|---:|---|
+| P4A | 32 documents × 2 lengths | 64 | document–length rows; 320 old logits files |
+| P4A | 64 × 16 × 4 | 4096 | KL/JSD pair–position cells |
+| P4B | 32 × 2 layers × 2 Q/K × 2 R | 256 | local tensor rows, 128 paired cells |
+| P4C | 3 projections × 3 blocks | 9 | fresh operator processes |
+| P4C | 15 fixtures × 3 × 3 × 2 cores | 270 | main core calls |
+| P4C | 3 × 4 controls + 3 profiles | 15 | additional GEMM calls |
+| Input preparation | 24 native + 24 formula controls | 48 | input-norm calls; 24 beta transports |
+| Full-model input extraction | at most 8 if needed | 0 | full forwards |
+| New EVAL / P4D / generation | NOT_RUN | 0 | outside scope |
+
+
+[Protocol AB](../protocol.json), [protocol C](../protocol_C.json), [freeze records](../records/),
+[original paths and identity](../references/locations.json), [input hash references](../references/input_identity.json),
+[CPU replay receipt](<PRIVATE_LOCAL_ROOT>/replay_receipt.json), [current budget](../records/budget.json),
+[preservation receipt](../outputs/close_audit/preservation_receipt.json), [verification](../outputs/close_audit/verification.json).
+
+Original source bundle: `5876ea3c7a89ae77eda9f237059dc6101feeea834fe00df47ca9f715122841e7`.
+Original Git base/HEAD: `bb2ab39ba5e9f6cea7e4c7d122fa6b26e143e688`.
+Follow-up AB freeze: `ea552b944c2d813ff540f041a771e4dca697954453e5626ab3d4640f7e01cff1`.
+AB computation v2: `42af9553524bb9276215565cf4f1876137286b4726418b7703ce09486f16d58c`.
+Final C freeze: `e3e172b298b81574b486ebc765f5280747ab863fa899b7c3f5c7dcc5bf32e722`.
+These are separate source/config/input bundles, not new Git commits.
+
+
+
+Final ledger: 18 new CPU calculation workers, **789.183164s** parent wall including one failed attempt;10 GPU workers, **82.207145s**. Together with the original34 GPU workers, campaign wall is **2053.711338s/7200s**, leaving **5146.288662s**. All931 original Case files match at closeout, and no owned GPU process remains. Local work is complete; publication was not run.

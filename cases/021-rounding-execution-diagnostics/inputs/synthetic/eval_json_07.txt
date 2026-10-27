@@ -1,0 +1,100 @@
+{
+  "title": "Habitat census package",
+  "purpose": "Represent field observations without treating absent observations as absent animals",
+  "schema_version": 1,
+  "operating_rule": "A site with poor visibility is marked as limited coverage. Counts remain attached to survey effort so that a short visit is not compared as if it were a full census.",
+  "units": "illustrative dimensionless values; field names identify the intended quantity",
+  "records": [
+    {
+      "record_id": 1,
+      "entity": "wetland",
+      "observations": {
+        "survey_minutes": 45,
+        "observer_count": 12,
+        "species_count": 88,
+        "visibility": 71,
+        "rainfall": 60,
+        "sample_area": 31
+      },
+      "review_note": "wetland is inspected at its own checkpoint. Values for survey_minutes, observer_count, species_count are recorded before the decision for this habitat census package is made.",
+      "evidence_rule": "A site with poor visibility is marked as limited coverage. Counts remain attached to survey effort so that a short visit is not compared as if it were a full census.",
+      "next_action": "Compare observer_count with the applicable operating limit, record the result, and assign a follow-up for wetland when evidence is incomplete."
+    },
+    {
+      "record_id": 2,
+      "entity": "woodland",
+      "observations": {
+        "survey_minutes": 71,
+        "observer_count": 58,
+        "species_count": 87,
+        "visibility": 50,
+        "rainfall": 89,
+        "sample_area": 39
+      },
+      "review_note": "woodland is inspected at its own checkpoint. Values for survey_minutes, observer_count, species_count are recorded before the decision for this habitat census package is made.",
+      "evidence_rule": "The reviewer preserves the measured observer_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare species_count with the applicable operating limit, record the result, and assign a follow-up for woodland when evidence is incomplete."
+    },
+    {
+      "record_id": 3,
+      "entity": "meadow",
+      "observations": {
+        "survey_minutes": 86,
+        "observer_count": 23,
+        "species_count": 63,
+        "visibility": 89,
+        "rainfall": 26,
+        "sample_area": 67
+      },
+      "review_note": "meadow is inspected at its own checkpoint. Values for survey_minutes, observer_count, species_count are recorded before the decision for this habitat census package is made.",
+      "evidence_rule": "The reviewer preserves the measured species_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare visibility with the applicable operating limit, record the result, and assign a follow-up for meadow when evidence is incomplete."
+    },
+    {
+      "record_id": 4,
+      "entity": "streambank",
+      "observations": {
+        "survey_minutes": 64,
+        "observer_count": 70,
+        "species_count": 42,
+        "visibility": 16,
+        "rainfall": 41,
+        "sample_area": 12
+      },
+      "review_note": "streambank is inspected at its own checkpoint. Values for survey_minutes, observer_count, species_count are recorded before the decision for this habitat census package is made.",
+      "evidence_rule": "The reviewer preserves the measured visibility and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare rainfall with the applicable operating limit, record the result, and assign a follow-up for streambank when evidence is incomplete."
+    },
+    {
+      "record_id": 5,
+      "entity": "reedbed",
+      "observations": {
+        "survey_minutes": 54,
+        "observer_count": 46,
+        "species_count": 70,
+        "visibility": 17,
+        "rainfall": 23,
+        "sample_area": 27
+      },
+      "review_note": "reedbed is inspected at its own checkpoint. Values for survey_minutes, observer_count, species_count are recorded before the decision for this habitat census package is made.",
+      "evidence_rule": "The reviewer preserves the measured rainfall and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare sample_area with the applicable operating limit, record the result, and assign a follow-up for reedbed when evidence is incomplete."
+    },
+    {
+      "record_id": 6,
+      "entity": "rocky_slope",
+      "observations": {
+        "survey_minutes": 59,
+        "observer_count": 71,
+        "species_count": 80,
+        "visibility": 24,
+        "rainfall": 56,
+        "sample_area": 44
+      },
+      "review_note": "rocky_slope is inspected at its own checkpoint. Values for survey_minutes, observer_count, species_count are recorded before the decision for this habitat census package is made.",
+      "evidence_rule": "The reviewer preserves the measured sample_area and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare survey_minutes with the applicable operating limit, record the result, and assign a follow-up for rocky_slope when evidence is incomplete."
+    }
+  ],
+  "missing_value_policy": "Use null for an unobserved value. Never replace missing observations with zero. Keep the original record and append a dated correction."
+}

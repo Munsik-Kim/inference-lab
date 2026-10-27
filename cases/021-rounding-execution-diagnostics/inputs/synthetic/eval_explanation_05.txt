@@ -1,0 +1,19 @@
+Ambulance supply dispatch
+Purpose: Describe replenishment decisions for sealed emergency supply kits.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: An expired sterile item is replaced even if the kit is otherwise full. The dispatch record separates medical readiness from vehicle travel time.
+
+
+Checkpoint 1: depot. depot is inspected at its own checkpoint. Values for seal_status, expiry_days, item_count are recorded before the decision for this ambulance supply dispatch is made. In the illustrative record, seal status is 60; expiry days is 61; item count is 22; route minutes is 73; vehicle load is 70; restock delay is 53. Compare expiry_days with the applicable operating limit, record the result, and assign a follow-up for depot when evidence is incomplete.
+
+Checkpoint 2: ambulance. ambulance is inspected at its own checkpoint. Values for seal_status, expiry_days, item_count are recorded before the decision for this ambulance supply dispatch is made. In the illustrative record, seal status is 48; expiry days is 4; item count is 56; route minutes is 28; vehicle load is 28; restock delay is 78. Compare item_count with the applicable operating limit, record the result, and assign a follow-up for ambulance when evidence is incomplete.
+
+Checkpoint 3: clinic. clinic is inspected at its own checkpoint. Values for seal_status, expiry_days, item_count are recorded before the decision for this ambulance supply dispatch is made. In the illustrative record, seal status is 53; expiry days is 46; item count is 80; route minutes is 65; vehicle load is 28; restock delay is 13. Compare route_minutes with the applicable operating limit, record the result, and assign a follow-up for clinic when evidence is incomplete.
+
+Checkpoint 4: reserve store. reserve_store is inspected at its own checkpoint. Values for seal_status, expiry_days, item_count are recorded before the decision for this ambulance supply dispatch is made. In the illustrative record, seal status is 6; expiry days is 33; item count is 72; route minutes is 3; vehicle load is 71; restock delay is 49. Compare vehicle_load with the applicable operating limit, record the result, and assign a follow-up for reserve_store when evidence is incomplete.
+
+Checkpoint 5: inspection desk. inspection_desk is inspected at its own checkpoint. Values for seal_status, expiry_days, item_count are recorded before the decision for this ambulance supply dispatch is made. In the illustrative record, seal status is 37; expiry days is 29; item count is 52; route minutes is 66; vehicle load is 15; restock delay is 61. Compare restock_delay with the applicable operating limit, record the result, and assign a follow-up for inspection_desk when evidence is incomplete.
+
+Checkpoint 6: dispatch bay. dispatch_bay is inspected at its own checkpoint. Values for seal_status, expiry_days, item_count are recorded before the decision for this ambulance supply dispatch is made. In the illustrative record, seal status is 28; expiry days is 43; item count is 50; route minutes is 44; vehicle load is 26; restock delay is 8. Compare seal_status with the applicable operating limit, record the result, and assign a follow-up for dispatch_bay when evidence is incomplete.
+
+The report separates an observation, a decision, and a follow-up. An observation records what was measured at a particular checkpoint. A decision applies the stated rule to that evidence. A follow-up identifies what must be checked next. Keeping these three fields separate makes uncertainty visible without pretending that an unobserved value was measured.

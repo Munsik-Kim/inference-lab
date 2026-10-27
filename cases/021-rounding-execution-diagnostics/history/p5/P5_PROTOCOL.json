@@ -1,0 +1,99 @@
+{
+  "scope": "POSTHOC_DIAGNOSTIC",
+  "original_primary_verdict": "INCONCLUSIVE",
+  "original_and_P4_results_known": true,
+  "P5_derived_tables_seen": false,
+  "M": 512,
+  "I": 1024,
+  "O": 2048,
+  "group": 64,
+  "layers": [
+    0,
+    25
+  ],
+  "CPU_source_selection": "lexicographically first two DEV document IDs; no output-based document selection",
+  "seeds": {
+    "input_mask": 61027027,
+    "CPU_audit": 61027028,
+    "method_process": 61027029
+  },
+  "sign_tolerance": {
+    "atol": 1e-12,
+    "rtol": 1e-10,
+    "scale": "max absolute G/N/C across R0/R1 for this tensor",
+    "scope": "New P5 sign-classification tolerance frozen before derived P5 tables; original P4 exact-sign increase flag is also retained"
+  },
+  "energy_identity_rtol": 1e-10,
+  "scalar_atol": 1e-12,
+  "scalar_rtol": 1e-10,
+  "p5a_coordinate_limit_per_document": 4096,
+  "candidate_pool": {
+    "cap_per_projection": 4096,
+    "actual_scan_per_document": 1024,
+    "actual_order": "seeded distinct flat coordinates per lexicographic document; finite nonzero, deduplicate axis/bit retaining first",
+    "fixed_rows": 2048,
+    "fixed_axis_rule": "i%1024",
+    "fixed_value_rule": "[1,-1,.125,-.125,1.125,-1.125,1.5,-1.5,1.75,-1.75][(axis+i//1024)%10]",
+    "pool_order": "actual then fixed",
+    "challenge": "first up to512 rows with at least one finite A/B differing output, first differing output index, no GPU output used",
+    "CPU_chunk": "one candidate by2048 outputs"
+  },
+  "single_term": {
+    "fixtures_max": 5,
+    "process_blocks_per_projection": 3,
+    "main_calls_max": 60,
+    "controls": "POWER1/POWER_EIGHTH each512 selected axes, not all input axes",
+    "first_block_retention": 0,
+    "extra_calls_first_block_per_projection": {
+      "module_core_beta_contract": 4,
+      "profiler": 1
+    },
+    "other_preparation_calls": 0
+  },
+  "sparse": {
+    "conditional": "only B branch D",
+    "K": [
+      1,
+      2,
+      8,
+      64,
+      256,
+      1024
+    ],
+    "mask_seed_mapping": "SeedSequence[61027027,layer,document_index,512,1024],512 permutations; same prefix of each row permutation for every K",
+    "process_blocks_per_projection": 3,
+    "main_calls_max": 144,
+    "first_block_retention": 0,
+    "extra_calls_first_block_per_projection": {
+      "module_core_beta_contract": 4,
+      "profiler": 1
+    },
+    "oracle_chunk_rows": 64,
+    "preselected_exact_audit_coordinates_per_fixture": 8,
+    "posthoc_mismatch_or_near_midpoint_audit_max_per_fixture": 8,
+    "rounding_uncertainty": "FP64 absolute-dot error bound; exact dyadic subset resolves selected cells only"
+  },
+  "B_stopping_rules": {
+    "A": "CONTROL_MISMATCH => stop C",
+    "B": "D1 versus exact A unexplained => IMPLEMENTATION_UNRESOLVED",
+    "C": "Stable actual DEV coefficient one-term difference => C NOT_RUN_NOT_NEEDED",
+    "D": "Actual coefficient one-term equal,3 blocks stable => conditional C",
+    "E": "Unstable or resource failure => partial, no automatic expansion"
+  },
+  "GPU_gate": {
+    "compute_processes": 0,
+    "utilization_percent": 0,
+    "free_memory_MiB_min": 6144,
+    "allocated_peak_bytes_max": 2147483648,
+    "one_worker_at_a_time": true,
+    "prepost_samples_not_continuous_exclusivity": true
+  },
+  "budgets": {
+    "new_GPU_parent_seconds": 600,
+    "new_CPU_worker_seconds": 1200,
+    "disk_bytes": 536870912,
+    "campaign_seconds": 7200
+  },
+  "no_new_full_model_forward": true,
+  "no_download_install_upgrade_publication": true
+}

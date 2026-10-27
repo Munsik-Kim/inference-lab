@@ -1,0 +1,100 @@
+{
+  "title": "Field trip itinerary",
+  "purpose": "Describe a school visit with separate transport and learning checkpoints",
+  "schema_version": 1,
+  "operating_rule": "Every student group has an assigned adult at each transfer. A later bus arrival changes the schedule explicitly and does not remove a safety check.",
+  "units": "illustrative dimensionless values; field names identify the intended quantity",
+  "records": [
+    {
+      "record_id": 1,
+      "entity": "bus",
+      "observations": {
+        "arrival_minute": 37,
+        "departure_minute": 88,
+        "participant_count": 46,
+        "adult_count": 58,
+        "walking_distance": 49,
+        "capacity": 45
+      },
+      "review_note": "bus is inspected at its own checkpoint. Values for arrival_minute, departure_minute, participant_count are recorded before the decision for this field trip itinerary is made.",
+      "evidence_rule": "Every student group has an assigned adult at each transfer. A later bus arrival changes the schedule explicitly and does not remove a safety check.",
+      "next_action": "Compare departure_minute with the applicable operating limit, record the result, and assign a follow-up for bus when evidence is incomplete."
+    },
+    {
+      "record_id": 2,
+      "entity": "museum",
+      "observations": {
+        "arrival_minute": 67,
+        "departure_minute": 12,
+        "participant_count": 77,
+        "adult_count": 58,
+        "walking_distance": 88,
+        "capacity": 9
+      },
+      "review_note": "museum is inspected at its own checkpoint. Values for arrival_minute, departure_minute, participant_count are recorded before the decision for this field trip itinerary is made.",
+      "evidence_rule": "The reviewer preserves the measured departure_minute and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare participant_count with the applicable operating limit, record the result, and assign a follow-up for museum when evidence is incomplete."
+    },
+    {
+      "record_id": 3,
+      "entity": "garden",
+      "observations": {
+        "arrival_minute": 36,
+        "departure_minute": 71,
+        "participant_count": 78,
+        "adult_count": 56,
+        "walking_distance": 25,
+        "capacity": 48
+      },
+      "review_note": "garden is inspected at its own checkpoint. Values for arrival_minute, departure_minute, participant_count are recorded before the decision for this field trip itinerary is made.",
+      "evidence_rule": "The reviewer preserves the measured participant_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare adult_count with the applicable operating limit, record the result, and assign a follow-up for garden when evidence is incomplete."
+    },
+    {
+      "record_id": 4,
+      "entity": "workshop",
+      "observations": {
+        "arrival_minute": 46,
+        "departure_minute": 18,
+        "participant_count": 15,
+        "adult_count": 26,
+        "walking_distance": 74,
+        "capacity": 45
+      },
+      "review_note": "workshop is inspected at its own checkpoint. Values for arrival_minute, departure_minute, participant_count are recorded before the decision for this field trip itinerary is made.",
+      "evidence_rule": "The reviewer preserves the measured adult_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare walking_distance with the applicable operating limit, record the result, and assign a follow-up for workshop when evidence is incomplete."
+    },
+    {
+      "record_id": 5,
+      "entity": "lunch_point",
+      "observations": {
+        "arrival_minute": 57,
+        "departure_minute": 21,
+        "participant_count": 34,
+        "adult_count": 4,
+        "walking_distance": 46,
+        "capacity": 39
+      },
+      "review_note": "lunch_point is inspected at its own checkpoint. Values for arrival_minute, departure_minute, participant_count are recorded before the decision for this field trip itinerary is made.",
+      "evidence_rule": "The reviewer preserves the measured walking_distance and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare capacity with the applicable operating limit, record the result, and assign a follow-up for lunch_point when evidence is incomplete."
+    },
+    {
+      "record_id": 6,
+      "entity": "school_gate",
+      "observations": {
+        "arrival_minute": 50,
+        "departure_minute": 80,
+        "participant_count": 36,
+        "adult_count": 42,
+        "walking_distance": 27,
+        "capacity": 71
+      },
+      "review_note": "school_gate is inspected at its own checkpoint. Values for arrival_minute, departure_minute, participant_count are recorded before the decision for this field trip itinerary is made.",
+      "evidence_rule": "The reviewer preserves the measured capacity and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare arrival_minute with the applicable operating limit, record the result, and assign a follow-up for school_gate when evidence is incomplete."
+    }
+  ],
+  "missing_value_policy": "Use null for an unobserved value. Never replace missing observations with zero. Keep the original record and append a dated correction."
+}

@@ -1,0 +1,100 @@
+{
+  "title": "Film production schedule",
+  "purpose": "Represent a small shoot with location permissions and equipment dependencies",
+  "schema_version": 1,
+  "operating_rule": "A location permit is checked before setup begins. An incomplete shot can move to a later slot only when continuity and required equipment are explicitly reviewed.",
+  "units": "illustrative dimensionless values; field names identify the intended quantity",
+  "records": [
+    {
+      "record_id": 1,
+      "entity": "courtyard",
+      "observations": {
+        "scene_number": 43,
+        "setup_minutes": 71,
+        "take_count": 24,
+        "crew_count": 21,
+        "permit_end": 72,
+        "noise_limit": 38
+      },
+      "review_note": "courtyard is inspected at its own checkpoint. Values for scene_number, setup_minutes, take_count are recorded before the decision for this film production schedule is made.",
+      "evidence_rule": "A location permit is checked before setup begins. An incomplete shot can move to a later slot only when continuity and required equipment are explicitly reviewed.",
+      "next_action": "Compare setup_minutes with the applicable operating limit, record the result, and assign a follow-up for courtyard when evidence is incomplete."
+    },
+    {
+      "record_id": 2,
+      "entity": "studio",
+      "observations": {
+        "scene_number": 83,
+        "setup_minutes": 56,
+        "take_count": 81,
+        "crew_count": 66,
+        "permit_end": 16,
+        "noise_limit": 58
+      },
+      "review_note": "studio is inspected at its own checkpoint. Values for scene_number, setup_minutes, take_count are recorded before the decision for this film production schedule is made.",
+      "evidence_rule": "The reviewer preserves the measured setup_minutes and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare take_count with the applicable operating limit, record the result, and assign a follow-up for studio when evidence is incomplete."
+    },
+    {
+      "record_id": 3,
+      "entity": "staircase",
+      "observations": {
+        "scene_number": 83,
+        "setup_minutes": 59,
+        "take_count": 30,
+        "crew_count": 12,
+        "permit_end": 39,
+        "noise_limit": 79
+      },
+      "review_note": "staircase is inspected at its own checkpoint. Values for scene_number, setup_minutes, take_count are recorded before the decision for this film production schedule is made.",
+      "evidence_rule": "The reviewer preserves the measured take_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare crew_count with the applicable operating limit, record the result, and assign a follow-up for staircase when evidence is incomplete."
+    },
+    {
+      "record_id": 4,
+      "entity": "workshop",
+      "observations": {
+        "scene_number": 36,
+        "setup_minutes": 62,
+        "take_count": 40,
+        "crew_count": 40,
+        "permit_end": 66,
+        "noise_limit": 77
+      },
+      "review_note": "workshop is inspected at its own checkpoint. Values for scene_number, setup_minutes, take_count are recorded before the decision for this film production schedule is made.",
+      "evidence_rule": "The reviewer preserves the measured crew_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare permit_end with the applicable operating limit, record the result, and assign a follow-up for workshop when evidence is incomplete."
+    },
+    {
+      "record_id": 5,
+      "entity": "cafe",
+      "observations": {
+        "scene_number": 81,
+        "setup_minutes": 52,
+        "take_count": 36,
+        "crew_count": 74,
+        "permit_end": 65,
+        "noise_limit": 61
+      },
+      "review_note": "cafe is inspected at its own checkpoint. Values for scene_number, setup_minutes, take_count are recorded before the decision for this film production schedule is made.",
+      "evidence_rule": "The reviewer preserves the measured permit_end and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare noise_limit with the applicable operating limit, record the result, and assign a follow-up for cafe when evidence is incomplete."
+    },
+    {
+      "record_id": 6,
+      "entity": "roof",
+      "observations": {
+        "scene_number": 22,
+        "setup_minutes": 70,
+        "take_count": 36,
+        "crew_count": 18,
+        "permit_end": 20,
+        "noise_limit": 4
+      },
+      "review_note": "roof is inspected at its own checkpoint. Values for scene_number, setup_minutes, take_count are recorded before the decision for this film production schedule is made.",
+      "evidence_rule": "The reviewer preserves the measured noise_limit and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare scene_number with the applicable operating limit, record the result, and assign a follow-up for roof when evidence is incomplete."
+    }
+  ],
+  "missing_value_policy": "Use null for an unobserved value. Never replace missing observations with zero. Keep the original record and append a dated correction."
+}

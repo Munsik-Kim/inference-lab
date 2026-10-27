@@ -1,0 +1,19 @@
+Hill weather station
+Purpose: Explain why a station records observations before classifying a storm.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: A storm alert requires a sustained wind threshold or a rapid pressure drop. Missing rain measurements remain unknown and are never converted to dry weather.
+
+
+Checkpoint 1: ridge. ridge is inspected at its own checkpoint. Values for wind_speed, rainfall, air_pressure are recorded before the decision for this hill weather station is made. In the illustrative record, wind speed is 31; rainfall is 19; air pressure is 55; humidity is 12; battery voltage is 10; timestamp delay is 52. Compare rainfall with the applicable operating limit, record the result, and assign a follow-up for ridge when evidence is incomplete.
+
+Checkpoint 2: valley. valley is inspected at its own checkpoint. Values for wind_speed, rainfall, air_pressure are recorded before the decision for this hill weather station is made. In the illustrative record, wind speed is 39; rainfall is 83; air pressure is 21; humidity is 48; battery voltage is 4; timestamp delay is 32. Compare air_pressure with the applicable operating limit, record the result, and assign a follow-up for valley when evidence is incomplete.
+
+Checkpoint 3: mast. mast is inspected at its own checkpoint. Values for wind_speed, rainfall, air_pressure are recorded before the decision for this hill weather station is made. In the illustrative record, wind speed is 45; rainfall is 48; air pressure is 83; humidity is 33; battery voltage is 10; timestamp delay is 63. Compare humidity with the applicable operating limit, record the result, and assign a follow-up for mast when evidence is incomplete.
+
+Checkpoint 4: shelter. shelter is inspected at its own checkpoint. Values for wind_speed, rainfall, air_pressure are recorded before the decision for this hill weather station is made. In the illustrative record, wind speed is 70; rainfall is 24; air pressure is 20; humidity is 82; battery voltage is 6; timestamp delay is 18. Compare battery_voltage with the applicable operating limit, record the result, and assign a follow-up for shelter when evidence is incomplete.
+
+Checkpoint 5: gauge. gauge is inspected at its own checkpoint. Values for wind_speed, rainfall, air_pressure are recorded before the decision for this hill weather station is made. In the illustrative record, wind speed is 76; rainfall is 10; air pressure is 57; humidity is 21; battery voltage is 46; timestamp delay is 7. Compare timestamp_delay with the applicable operating limit, record the result, and assign a follow-up for gauge when evidence is incomplete.
+
+Checkpoint 6: logger. logger is inspected at its own checkpoint. Values for wind_speed, rainfall, air_pressure are recorded before the decision for this hill weather station is made. In the illustrative record, wind speed is 79; rainfall is 88; air pressure is 27; humidity is 51; battery voltage is 3; timestamp delay is 73. Compare wind_speed with the applicable operating limit, record the result, and assign a follow-up for logger when evidence is incomplete.
+
+The report separates an observation, a decision, and a follow-up. An observation records what was measured at a particular checkpoint. A decision applies the stated rule to that evidence. A follow-up identifies what must be checked next. Keeping these three fields separate makes uncertainty visible without pretending that an unobserved value was measured.

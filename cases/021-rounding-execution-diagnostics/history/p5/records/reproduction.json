@@ -1,0 +1,28 @@
+{
+  "tested_platform": "Linux/WSL",
+  "existing_readonly_cpu_environment": "Python3.11.15 NumPy1.26.4 Matplotlib3.10.9",
+  "Torch_required": false,
+  "install_upgrade": false,
+  "commands_executed_from_public_candidate": [
+    {
+      "command": "python -B source/public_cpu.py --root . --output NEW_EXTERNAL --quick",
+      "receipt": "records/public_quick_receipt.json"
+    },
+    {
+      "command": "python -B source/public_cpu.py --root . --output NEW_EXTERNAL",
+      "receipt": "records/public_full_receipt.json"
+    },
+    {
+      "command": "python -B tests/test_contracts_v3.py --output NEW_EXTERNAL",
+      "receipt": "records/public_contracts_receipt.json"
+    },
+    {
+      "command": "python -B tests/test_public.py --root . --output NEW_EXTERNAL",
+      "receipt": "records/public_mutations_receipt.json"
+    }
+  ],
+  "private_raw_replay": "records/private_replay_receipt.json",
+  "exact_local_commands": "Private records/worker_ledger.jsonl; logical public output names replace user absolute paths",
+  "GPU_calls": 0,
+  "external_reviewer_or_other_machine_reproduction": false
+}

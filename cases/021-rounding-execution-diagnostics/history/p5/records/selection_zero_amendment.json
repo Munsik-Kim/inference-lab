@@ -1,0 +1,13 @@
+{
+  "failed_attempt": "cpu-select",
+  "diagnostic": "records/cpu-scalar-diagnostic/detail.json",
+  "cause": "Fraction zero is canonical unsigned zero while vector RNE preserves negative zero",
+  "change": "Honor protocol numeric +0/-0 equality in scalar audit; retain raw bit predictions and both oracle bit columns. No nonzero mismatch accepted, no input/tolerance/seed change.",
+  "source_before": {
+    "bytes": 8510,
+    "sha256": "5103eb8205366f01f8ccbe438c6a72457df8da6ebe55870135109e9688f17cac"
+  },
+  "new_source": "source/prepare_v2.py",
+  "old_partial_inputs": "private_inputs/prepared",
+  "GPU_outputs_observed": false
+}

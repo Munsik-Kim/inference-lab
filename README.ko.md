@@ -124,3 +124,9 @@ DEV에서 BF16 KV·자유 출력은 5/8로 확대 기준 6/8에 미달했지만,
 ## 기여와 출처
 
 DIOVA는 **Deep-learning Inference Optimization, Validation & Analysis**의 약자입니다. 공개 모델·라이브러리에 비교 실행기, 모델 변경 도구와 검사·결과 화면을 연결했습니다. 원저자와 재사용 범위는 [기여·출처](docs/ko/PORTFOLIO.md#contribution-and-reuse)에 있습니다. OpenAI Codex가 구현·실행·분석·작성을 지원했습니다. 프로젝트 자료는 [Apache-2.0](LICENSE)을 따르며 사례별 고지에 upstream 조건을 남겼습니다. 실제 서비스 배포 적합성은 미평가입니다.
+
+## Case021 — 같은 INT4인데 왜 계산 결과가 달라질까?
+
+Qwen3-0.6B의 같은 압축 artifact를 dense/Marlin으로 실행했습니다. 검사한 단일항은 같았지만 실제 값을 결합하면 작은 차이가 남았습니다. Q/K 중간 정밀도를 높인 원24문서 결과는 **INCONCLUSIVE**입니다. 저장 표현·실행 차이·후속 계산 민감도를 구분합니다.
+
+[쉬운 설명](cases/021-rounding-execution-diagnostics/README.ko.md) · [보고서](cases/021-rounding-execution-diagnostics/REPORT.ko.md) · [공개 CPU 검산](cases/021-rounding-execution-diagnostics/REPRODUCE.ko.md)

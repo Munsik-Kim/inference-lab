@@ -1,0 +1,100 @@
+{
+  "title": "Exhibition object manifest",
+  "purpose": "Describe object movements and display prerequisites for a temporary exhibition",
+  "schema_version": 1,
+  "operating_rule": "An object can be installed only after its condition is signed off and its mount is checked. A transport receipt is not an installation approval.",
+  "units": "illustrative dimensionless values; field names identify the intended quantity",
+  "records": [
+    {
+      "record_id": 1,
+      "entity": "painting",
+      "observations": {
+        "object_number": 67,
+        "crate_number": 10,
+        "insured_value": 38,
+        "condition_score": 79,
+        "humidity_limit": 85,
+        "install_minutes": 85
+      },
+      "review_note": "painting is inspected at its own checkpoint. Values for object_number, crate_number, insured_value are recorded before the decision for this exhibition object manifest is made.",
+      "evidence_rule": "An object can be installed only after its condition is signed off and its mount is checked. A transport receipt is not an installation approval.",
+      "next_action": "Compare crate_number with the applicable operating limit, record the result, and assign a follow-up for painting when evidence is incomplete."
+    },
+    {
+      "record_id": 2,
+      "entity": "sculpture",
+      "observations": {
+        "object_number": 68,
+        "crate_number": 41,
+        "insured_value": 49,
+        "condition_score": 88,
+        "humidity_limit": 7,
+        "install_minutes": 87
+      },
+      "review_note": "sculpture is inspected at its own checkpoint. Values for object_number, crate_number, insured_value are recorded before the decision for this exhibition object manifest is made.",
+      "evidence_rule": "The reviewer preserves the measured crate_number and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare insured_value with the applicable operating limit, record the result, and assign a follow-up for sculpture when evidence is incomplete."
+    },
+    {
+      "record_id": 3,
+      "entity": "textile",
+      "observations": {
+        "object_number": 21,
+        "crate_number": 11,
+        "insured_value": 15,
+        "condition_score": 9,
+        "humidity_limit": 67,
+        "install_minutes": 76
+      },
+      "review_note": "textile is inspected at its own checkpoint. Values for object_number, crate_number, insured_value are recorded before the decision for this exhibition object manifest is made.",
+      "evidence_rule": "The reviewer preserves the measured insured_value and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare condition_score with the applicable operating limit, record the result, and assign a follow-up for textile when evidence is incomplete."
+    },
+    {
+      "record_id": 4,
+      "entity": "print",
+      "observations": {
+        "object_number": 47,
+        "crate_number": 5,
+        "insured_value": 75,
+        "condition_score": 15,
+        "humidity_limit": 60,
+        "install_minutes": 10
+      },
+      "review_note": "print is inspected at its own checkpoint. Values for object_number, crate_number, insured_value are recorded before the decision for this exhibition object manifest is made.",
+      "evidence_rule": "The reviewer preserves the measured condition_score and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare humidity_limit with the applicable operating limit, record the result, and assign a follow-up for print when evidence is incomplete."
+    },
+    {
+      "record_id": 5,
+      "entity": "model",
+      "observations": {
+        "object_number": 55,
+        "crate_number": 47,
+        "insured_value": 11,
+        "condition_score": 41,
+        "humidity_limit": 88,
+        "install_minutes": 46
+      },
+      "review_note": "model is inspected at its own checkpoint. Values for object_number, crate_number, insured_value are recorded before the decision for this exhibition object manifest is made.",
+      "evidence_rule": "The reviewer preserves the measured humidity_limit and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare install_minutes with the applicable operating limit, record the result, and assign a follow-up for model when evidence is incomplete."
+    },
+    {
+      "record_id": 6,
+      "entity": "display_mount",
+      "observations": {
+        "object_number": 39,
+        "crate_number": 4,
+        "insured_value": 71,
+        "condition_score": 34,
+        "humidity_limit": 67,
+        "install_minutes": 55
+      },
+      "review_note": "display_mount is inspected at its own checkpoint. Values for object_number, crate_number, insured_value are recorded before the decision for this exhibition object manifest is made.",
+      "evidence_rule": "The reviewer preserves the measured install_minutes and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare object_number with the applicable operating limit, record the result, and assign a follow-up for display_mount when evidence is incomplete."
+    }
+  ],
+  "missing_value_policy": "Use null for an unobserved value. Never replace missing observations with zero. Keep the original record and append a dated correction."
+}

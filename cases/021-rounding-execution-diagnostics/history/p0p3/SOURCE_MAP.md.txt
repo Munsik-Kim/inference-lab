@@ -1,0 +1,35 @@
+# Source map
+
+| Evidence | Read scope | Role here |
+|---|---|---|
+| [Ke, Cai and Wang, arXiv2610.32951v1](https://arxiv.org/abs/2610.32951v1), [PDF](https://arxiv.org/pdf/2610.32951v1) | §5.1, Figure2 definitions, §6, Table1 and discrepancy estimator | Motivation for checking where Q/K norm–RoPE intermediates are rounded; not an RL reproduction |
+| [Case013 at the fixed base](https://github.com/Munsik-Kim/inference-lab/tree/bb2ab39ba5e9f6cea7e4c7d122fa6b26e143e688/cases/013-dualquant-reference-quality) | REPORT, PACKED_PROBE, reference/paper INT4 source, probe02/03, artifact manifest and source freeze | Existing D16 representation, dense arithmetic, historical failures and pre-existing matched-scale option |
+| Installed Transformers5.17.0 `models/qwen3/modeling_qwen3.py` | RMSNorm, rotary embedding, apply_rotary_pos_emb, attention, decoder and causal LM forward | Actual R0, native SDPA interface and full-position lm_head contract |
+| Installed vLLM0.29.0 `_custom_ops.py`, `marlin_utils.py`, scalar types and `_C` binary | Named op signature, uint4b8, repack, group64 scale permutation and workspace | Actual P backend; source/binary hashes and kernel names in environment and preflight evidence |
+| Torch2.13.0 and installed CUDA runtime | Matrix multiplication, tensor operations, allocator and profiler | Existing implementation machinery, not developed in this case |
+
+The paper studies fixed-weight inference/training discrepancies across different
+stacks and then RL behavior. Its Q/K norm–RoPE intervention retains selected
+intermediates in FP32 until BF16 outputs. Figure2 also covers other regions
+that this case leaves unchanged. Section6 and Table1 show that changing
+precision in one region need not uniformly reduce discrepancy. Its sampled
+token estimator differs from our exact full-vocabulary KL at selected
+positions. Those model sizes, training outcomes and table values are not
+Case021 measurements.
+
+The official PDF is retained only in the private source-reading folder. Text,
+equations and table entries were read; the web screenshot service failed, so
+no claim of a successful rendered Figure2 inspection is made.
+
+The exact Case013 files used are preserved under
+[`provenance/case013_original/`](provenance/case013_original/) and indexed in
+[`provenance/preservation_before.json`](provenance/preservation_before.json).
+The old probe is never imported: its import-time ACTIVE_RUN lookup is replaced
+with explicit CLI paths. No source solver or quantizer is executed.
+
+Model, current artifact and runtime identities are recorded in
+[`artifact_manifest.json`](artifact_manifest.json) and
+[`environment.json`](environment.json). The local source bundle is identified
+by [`provenance/freeze_v1.json`](provenance/freeze_v1.json), separately from the
+base Git commit. Existing probe02 and probe03 used different settings and are
+not treated as a controlled experiment with each other.
