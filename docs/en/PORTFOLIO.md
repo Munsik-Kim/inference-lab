@@ -15,6 +15,14 @@ The implementations relate to local AI execution, inference optimization and qua
 
 [Featured work and runnable tools](https://munsik-kim.github.io/inference-lab/en/index.html#featured-stories) · [Compare your own records](../../packages/diova-compare/examples/compare/README.md)
 
+## Start with the problem you care about
+
+Read featured projects A, B and C first, then follow the implementation and tests that match your interests. The homepage groups all 21 cases into **execution and memory / answers and reliability / numerical research**. These are reading routes, not performance rankings across different experiments.
+
+Recent [Case020](../../cases/020-optic-on-demand-decode/README.md) compares memory, call costs and reuse when reconstructing only requested embeddings. [Case021](../../cases/021-rounding-execution-diagnostics/README.md) investigates differences between dense and Marlin execution of the same INT4 representation. Whether higher intermediate precision reduces the mean distribution gap remains **INCONCLUSIVE**; the local single-term and multi-term probes remain separate from that primary verdict.
+
+The contribution table and individual source maps distinguish my fixtures, adapters, measurement and audit tools from reused models, paper methods and libraries. Auditing saved records does not establish a new model run or reproduction on another device.
+
 ## Featured A · Smaller artifacts through actual requests
 
 Connected Case008 Q’s **conversion with an existing compression method (GPTQ) → inspection of converted and saved model files (artifacts) → restart in a new process** to Case009’s **comparison of request time, memory and answer quality**. [Conversion](../../tools/modelpack/quantized.py) · [Artifact checks](../../tools/modelpack/qartifact.py) · [Serving runner](../../cases/009-q-serving-quality/scripts/serving.py).

@@ -10,6 +10,26 @@ source links and JSON downloads. Case008 has separate Q storage/runtime and R fi
 
 Published viewer: [한국어](https://munsik-kim.github.io/inference-lab/ko/index.html) · [English](https://munsik-kim.github.io/inference-lab/en/index.html). The same code supports the offline build below.
 
+## Portfolio reading routes
+
+The homepage leads from a short engineering introduction to featured work A/B/C,
+verified Case020/021 findings, contribution/code links and the full 21-case index.
+The index has three editorial topics and a text filter; every case remains visible
+without JavaScript. Case006–021 link directly to their bilingual detail pages;
+Case001–005 link to their original GitHub casebook notes.
+
+`tools/showcase/portfolio.py` builds these routes and reads recent numbers from the
+existing verified case loaders. `portfolio.js` only filters existing text, restores
+deep links into collapsed research records and preserves fragments on language
+switches. It makes no network request and uses no storage or analytics. All prior
+home study sections and their anchors remain available in native details elements.
+The scientific case renderers and raw evidence are unchanged. Tests cover complete
+case mapping, source-derived findings, escaping and progressive enhancement.
+
+Use the source build/check commands below and the optional browser checks separately.
+A local build or CPU pass does not deploy Pages. Publication requires the existing
+manual main/publish=true workflow and a subsequent check of the deployed artifact.
+
 From the repository root, with Python 3.12:
 
 ```bash

@@ -15,6 +15,14 @@
 
 [대표작과 직접 실행하기](https://munsik-kim.github.io/inference-lab/ko/index.html#featured-stories) · [내 결과 비교 예제](../../packages/diova-compare/examples/compare/README.ko.md)
 
+## 관심 있는 문제에서 시작하기
+
+처음에는 아래 대표작 A·B·C를 읽고, 관심이 맞으면 구현 코드와 테스트로 이어가세요. 전체 21개 사례는 홈페이지에서 **실행 비용·메모리 / 답변·작업 신뢰성 / 수치·연구 구현**으로 찾아볼 수 있습니다. 이 분류는 읽는 순서를 돕기 위한 것으로, 서로 다른 실험을 성능 순위로 비교하지 않습니다.
+
+최근 [Case020](../../cases/020-optic-on-demand-decode/README.ko.md)은 필요한 임베딩만 복원할 때의 메모리·호출·재사용 비용을 비교했습니다. [Case021](../../cases/021-rounding-execution-diagnostics/README.ko.md)은 같은 INT4 표현을 dense와 Marlin으로 실행할 때 남는 차이를 조사했습니다. 중간 정밀도를 높이면 평균 분포 차이가 줄어드는지는 **INCONCLUSIVE**로 남았으며, 단일항과 여러 항의 국소 진단은 이 원 판정과 구분합니다.
+
+제가 만든 fixture·adapter·계측·감사 도구와 재사용한 모델·논문 방법·라이브러리는 아래 기여 표와 각 사례의 출처에서 구분합니다. 기록 검산은 새로운 모델 실행이나 다른 장치에서의 재현을 뜻하지 않습니다.
+
 ## 대표작 A · 모델을 작게 저장하고 실제 요청까지 실행하기
 
 Case008 Q의 **기존 압축 방법(GPTQ)으로 변환 → 변환해 저장한 모델 파일(artifact) 검사 → 새로 시작한 프로그램에서 재실행**을 Case009의 **실제 요청 시간·메모리·답변 품질 비교**로 연결했습니다. [변환 코드](../../tools/modelpack/quantized.py) · [저장본 검사](../../tools/modelpack/qartifact.py) · [실제 요청 실행기](../../cases/009-q-serving-quality/scripts/serving.py).

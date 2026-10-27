@@ -1,5 +1,5 @@
 """Case014 artifact, unit, language and untouched-guide display contracts."""
-import copy,json,sys,tempfile,unittest
+import copy,json,re,sys,tempfile,unittest
 from pathlib import Path
 from html.parser import HTMLParser
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'tools/showcase'))
@@ -32,7 +32,9 @@ class Case014Display(unittest.TestCase):
         for lang in ['ko','en']:
             html=(self.site/lang/'case014.html').read_text()
             for key in SECTIONS:self.assertIn('id="'+key+'"',html);self.assertIn('href="#'+key+'"',html)
-            self.assertNotIn('<script',html);self.assertIn('../'+('en' if lang=='ko' else 'ko')+'/case014.html',html)
+            self.assertEqual(re.findall(r'<script\b[^>]*src="([^"]+)"[^>]*>',html),['../assets/portfolio.js'])
+            self.assertNotRegex(html,r'<script\b(?![^>]*\bsrc=)[^>]*>')
+            self.assertIn('../'+('en' if lang=='ko' else 'ko')+'/case014.html',html)
             home=(self.site/lang/'index.html').read_text();self.assertEqual(home.count('id="compensation-study"'),1);self.assertEqual(home.count('class="archive-number">014'),1)
             self.assertIn('id="featured-stories"',home);self.assertIn('qwen3-4b.html',home)
     def test_units_core_bytes_and_primary_retained(self):
