@@ -26,6 +26,7 @@ from case017 import load_case017, render_case017, home_case017, check_evidence_d
 from case019 import load_case019, render_case019, home_case019, SOURCE_COPIES as C19_SOURCES, FIGURES as C19_FIGURES, SECTIONS as C19_SECTIONS
 from case021 import load_case021, render_case021, home_case021, SOURCE_COPIES as C21_SOURCES, FIGURES as C21_FIGURES, SECTIONS as C21_SECTIONS
 from case020 import load_case020, render_case020, home_case020, SOURCE_COPIES as C20_SOURCES, FIGURES as C20_FIGURES, SECTIONS as C20_SECTIONS
+from portfolio import latest as portfolio_latest
 from practical import load_practical, render as practical_render, PAGES as GUIDE_PAGES, COMPARE_EXAMPLES
 
 EXPECTED = {'en/case008.html','ko/case008.html','data/case008.json','assets/case008.css','assets/case008.js','index.html','en/index.html','ko/index.html','en/guide.html','ko/guide.html','en/case006.html','ko/case006.html',
@@ -34,13 +35,15 @@ EXPECTED = {'en/case008.html','ko/case008.html','data/case008.json','assets/case
             'data/case006.json','data/case007.json','build_manifest.json'}
 class Links(HTMLParser):
     def __init__(self):
-        super().__init__();self.links=[];self.ids=set()
+        super().__init__();self.links=[];self.ids=set();self.metadata=[]
     def handle_starttag(self, tag, attrs):
         a=dict(attrs)
+        if tag=='link' and a.get('rel') in ('canonical','alternate'):
+            self.metadata.append(a)
         if 'id' in a:
             require(a['id'] not in self.ids, 'Duplicate HTML id');self.ids.add(a['id'])
         for key in ('src','href'):
-            if a.get(key):self.links.append((tag,a[key]))
+            if a.get(key):self.links.append(('metadata' if tag=='link' and a.get('rel') in ('canonical','alternate') else tag,a[key]))
 
 class Regions(HTMLParser):
     """Collect visible text and links in named generated HTML regions."""
@@ -152,7 +155,7 @@ def check(root: Path, site: Path) -> dict:
         expected |= {'en/case017.html','ko/case017.html','data/case017.json','assets/case017.css','assets/case017.js',C17_ARCHIVE}
         expected |= {'sources/'+name for name in C17_SOURCES} | set(C17_FIGURES)
     expected |= {lang+'/'+page+'.html' for lang in ('ko','en') for page in GUIDE_PAGES}
-    expected |= {'data/practical-guide.json','assets/practical-guide.css'}
+    expected |= {'data/practical-guide.json','assets/practical-guide.css','assets/portfolio.css','assets/portfolio.js'}
     expected |= set(COMPARE_EXAMPLES)
     require(set(paths)==expected, 'Unexpected/missing deploy artifact member')
     m=read(site/'build_manifest.json')
@@ -172,6 +175,7 @@ def check(root: Path, site: Path) -> dict:
         for page in GUIDE_PAGES:
             require(practical_render(root,practical,lang,page) in (site/lang/(page+'.html')).read_text(), 'Practical guide rendering mismatch')
         require(practical_render(root,practical,lang,'featured') in (site/lang/'index.html').read_text(), 'Practical home stories mismatch')
+        require(portfolio_latest(data20,data21,lang) in (site/lang/'index.html').read_text(), 'Portfolio recent findings/source mismatch')
     if data21:
         require(read(site/'data/case021.json')==data21,'Case021 data/source mismatch')
         require(m['case021_units']['source_files']==data21['display_source_files'],'Case021 source identity')
@@ -384,9 +388,20 @@ def check(root: Path, site: Path) -> dict:
     for name,path in paths.items():
         if path.suffix!='.html':continue
         parser=Links();parser.feed(path.read_text())
+        shared_page=name!='index.html' and not name.endswith('/case012-images.html')
+        if shared_page:
+            lang,page=name.split('/')
+            base='https://munsik-kim.github.io/inference-lab/'
+            expected_meta=[{'rel':'canonical','href':base+name},
+                {'rel':'alternate','hreflang':'ko','href':base+'ko/'+page},
+                {'rel':'alternate','hreflang':'en','href':base+'en/'+page}]
+            require(parser.metadata==expected_meta,'Canonical/language metadata mismatch')
         for tag,url in parser.links:
             u=urlsplit(url)
             if u.scheme:
+                if tag=='metadata':
+                    require(shared_page and parser.metadata==expected_meta,'Unexpected absolute metadata link')
+                    continue
                 citation=(name in ('ko/case014.html','en/case014.html') and u.hostname in ('arxiv.org','huggingface.co')) or (
                     name in ('ko/case019.html','en/case019.html') and url=='https://arxiv.org/abs/2610.29864v1') or (
                     name in ('ko/case020.html','en/case020.html') and url=='https://arxiv.org/abs/2610.31309') or (

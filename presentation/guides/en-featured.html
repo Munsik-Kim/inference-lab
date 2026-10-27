@@ -5,9 +5,9 @@
       <p class="story-source">A · From conversion to requests · Case008 Q + Case009</p>
       <h3><a href="case008.html#track-q">Store a smaller model and run actual requests</a></h3>
       <p>Connected existing compression (GPTQ) to the model runner, implementing saved-file checks and execution in a new process.</p>
-      <p class="story-metric"><span>Qwen3-4B weight files · Case008 Q</span><strong>{{weight_files}}</strong><span>{{file_reduction}} smaller</span><span class="metric-label">Whole-GPU memory during execution · Case009</span><strong>{{memory_saved_gib}} saved</strong><span>{{memory_bf16_gib}} → {{memory_w4_gib}}<br>{{memory_saved_percent}} lower within matching rounds</span></p>
-      <p>File size and runtime memory come from separate experiments. VRAM uses the highest one-second samples over {{memory_rounds}} rounds on the RTX 5080, with prearranged GPU execution (graph) and the same 4 GiB cache budget. Samples include startup, warmup and desktop use.</p>
-      <p>Lost correct answers and abnormal evaluation-process exits remain in the records.</p>
+      <p class="story-metric"><span>Qwen3-4B weight files · Case008 Q</span><strong>{{weight_files}}</strong><span>{{file_reduction}} smaller · file size</span></p>
+      <p class="scope">File size differs from runtime memory and answer quality. Lost correct answers and abnormal exits remain in the records.</p>
+      <details><summary>Separately measured runtime memory and conditions</summary><p class="story-metric"><span>Whole-GPU memory · Case009</span><strong>{{memory_saved_gib}} saved</strong><span>{{memory_bf16_gib}} → {{memory_w4_gib}}<br>{{memory_saved_percent}} lower within matching rounds</span></p><p>Highest one-second samples over {{memory_rounds}} rounds on the RTX 5080, with graph execution and the same 4 GiB cache budget. Includes startup, warmup and desktop use. This is separate from Case008 file size.</p></details>
       <div class="actions"><a href="case008.html#track-q">Compression, storage and reload code</a><a href="qwen3-4b.html#device-memory">VRAM values, conditions and sources</a></div>
     </article>
     <article class="story">

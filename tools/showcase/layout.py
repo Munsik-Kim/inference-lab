@@ -12,6 +12,7 @@ from case018 import home_case018
 from case019 import home_case019
 from case020 import home_case020
 from case021 import home_case021
+from portfolio import hero as portfolio_hero, latest as portfolio_latest, catalog as portfolio_catalog, reader_note
 
 C8_PATH = 'cases/008-build-reconstruct-reload'
 C8_REVISION = '9bc8b8fced8dfd5147f9bfdc67564eda04670810'
@@ -51,6 +52,9 @@ def related_cases(lang: str, page: str) -> str:
         'case017': [('case015.html#p2-recovery', '앞선 선택 실패 복구 진단', 'Earlier selected-failure recovery diagnosis'), ('case016.html#storage', '실제 NVFP4 KV 저장·서빙 검증', 'Native NVFP4 KV storage and serving verification')],
         'case016': [('case017.html#overview', '후속 합성 업무의 호출 규칙·완주 비용', 'Follow-up action contracts and workflow costs'), ('case009.html#serving', '별도 가중치 압축 모델의 서빙 비교', 'Serving a separate weight-compressed model'), ('case015.html#overview', '별도 도구 인터페이스 회귀시험', 'Separate tool-interface regression')],
         'case015': [('case013.html#overview', '앞선 INT4 도구 품질 진단', 'Earlier INT4 tool quality diagnostics'), ('qwen3-4b.html#mitigation', '별도 도구 계약 완화 연구', 'Separate tool-contract mitigation study')],
+        'case019': [('case021.html#rounding', '국소 오차와 경로 일치도의 차이', 'Local accuracy and agreement between paths'), ('case014.html#overview', '별도 모델 가중치 보정 실험', 'Separate model weight-compensation study')],
+        'case020': [('case021.html#overview', '같은 압축 표현의 계산 차이', 'Execution differences in a shared compressed representation'), ('case009.html#serving', '실제 모델 요청 비용 비교', 'Actual model request costs')],
+        'case021': [('case020.html#overview', '작은 저장량과 실행 비용의 차이', 'Smaller storage and execution costs'), ('case013.html#overview', '앞선 INT4 품질 진단', 'Earlier INT4 quality diagnostics')],
     }
     if page not in pairs:
         return ''
@@ -94,13 +98,8 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
         diagram += f'<div class="group-strip" role="img" aria-label="{escape(name)}: {text("removedGroups")} {escape(str(list(removed)))}">'
         diagram += ''.join(f'<span class="group-cell {"removed" if i in removed else "retained"}" aria-hidden="true"></span>' for i in range(16))+'</div></div>'
     diagram += '<div class="diagram-key"><span><i class="key-retained"></i>'+text('retained')+'</span><span><i class="key-removed"></i>'+text('removedGroups')+'</span></div>'
-    out = '<section class="cap-hero"><p class="eyebrow">'+text('homeAuthor')+'</p>'
-    out += '<p class="brand-definition" lang="en">Deep-learning Inference Optimization, Validation &amp; Analysis</p>'
-    out += '<h1>'+text('homeHeroTitle')+'</h1><p class="hero-subtitle">'+text('homeHeroSubtitle')+'</p><p class="lede">'+text('homeOutcomeIntro')+'</p>'
-    out += '<div class="actions home-jumps">'
-    for url, label in [('llm-guide.html','모델별 안내' if lang=='ko' else 'Model guides'),('#featured-stories','대표 구현 · 직접 사용하기' if lang=='ko' else 'Featured work · try it')]:
-        out += anchor(url,label,'reading-link')
-    out += '</div></section>'+practical_stories
+    out = portfolio_hero(t,lang,len(case_paths))+practical_stories
+    out += portfolio_latest(data20,data21,lang)+reader_note(lang)
     out += '<section id="collaboration" class="model-entry home-model-guides"><h2>'+text('collaboration')+'</h2><p>'+text('collaborationIntro')+'</p><ul>'
     work = ('내 그래픽카드에서 쓸 모델·실행 설정을 비교하고 느린 구간 찾기', '모델을 바꾼 뒤 전에 되던 답변·도구 작업이 계속 되는지 확인', '흩어진 실행 결과를 같은 질문끼리 비교하는 도구와 재실행 안내로 정리') if lang=='ko' else ('Compare models and execution settings for your graphics card; find slow operations', 'Check whether previously working answers and tool tasks still work after a model change', 'Turn scattered execution results into matched-question comparison tools and rerun instructions')
     out += ''.join('<li>'+escape(item)+'</li>' for item in work)+'</ul>'+anchor('https://github.com/Munsik-Kim/inference-lab/issues',t['contact'])+'</section>'
@@ -128,6 +127,7 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     if data15:
         out += '<tr><td>'+('API 이름 변경·실제 상태·생성 전 관측 회귀시험' if lang=='ko' else 'API rename, actual state and pre-generation observation regression')+'</td><td>Qwen · PyTorch · Transformers · Python stdlib</td><td>'+anchor('../sources/case015-a1-runner.py.txt','Code')+' · '+anchor('../sources/case015-a1-tests.py.txt','Tests')+'</td></tr>'
     out += '</tbody></table></div></div><p>'+anchor(docs+'PORTFOLIO.md#code-tour',t['stackEvidence'],'text-link')+'</p></details></section>'
+    out += '<details class="research-records"><summary>'+('사례별 상세 요약과 이전 연구 기록 펼치기' if lang=='ko' else 'Open detailed case summaries and earlier research')+'</summary><p>'+('아래에는 기존 사례 요약을 그대로 남겼습니다. 특정 주제를 찾으려면 다음의 전체 사례 목록을 이용하세요.' if lang=='ko' else 'Existing case summaries remain here. Use the case index below to find a specific topic.')+'</p>'
     out += home_case018(data18, lang) if data18 else ''
     out += home_case019(data19, lang) if data19 else ''
     out += home_case020(data20, lang) if data20 else ''
@@ -136,14 +136,13 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     out += home_case016(data16, lang) if data16 else ''
     out += home_case015(data15, lang) if data15 else ''
     out += home_case014(data14, lang) if data14 else ''
-    out += '<details class="research-records"><summary>'+('다른 구현과 연구 기록 펼쳐 읽기' if lang=='ko' else 'Explore other implementations and research records')+'</summary>'
     out += '<span id="studies" class="home-anchor" aria-hidden="true"></span><section id="projects" class="studies"><div class="section-heading"><div><p class="eyebrow">IMPLEMENTATION & RESEARCH RECORDS</p><h2>'+text('navProjects')+'</h2></div><p>'+text('studiesIntro')+'</p></div><div class="cards">'
     if data8 is None:
         raise ValueError('Missing Case008 display data')
     metrics = output_metrics(data8)
     modelpack = f'https://github.com/Munsik-Kim/inference-lab/blob/{C8_REVISION}/tools/modelpack/'
     out += '<article id="case008-report" class="card study-card featured-project"><div class="card-heading"><span class="case-number">008</span><span class="category">'+text('category8')+'</span></div>'
-    out += '<h3>'+anchor('case008.html',t['outputTitle8'])+'</h3><p class="card-intro">'+text('outputIntro8')+'</p><div class="project-outputs">'
+    out += '<h3>'+anchor('case008.html',t['outputTitle8'])+'</h3><p class="card-intro">'+text('outputIntro8')+'</p><p>'+anchor('https://github.com/Munsik-Kim/inference-lab/blob/main/docs/'+lang+'/CASEBOOK.md#case-008','기존 실험 노트' if lang=='ko' else 'Original experiment notes')+'</p><div class="project-outputs">'
     for track in ('Q','R'):
         isq = track == 'Q'; key = 'output'+track
         title = t[key+'Title'].format(reduction=metrics['reduction'])
@@ -181,13 +180,8 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     for url, key in [('llm-guide.html','navModels'),('measurements.html','navMeasurements'),('guide.html','guide'),(docs+'START_HERE.md','beginner'),(docs+'GLOSSARY.md','glossary')]:
         reading += anchor(url,t[key]+' ↗','reading-link')
     reading += '</div></section>'
-    out += '<section class="archive" id="cases"><div class="section-heading"><div><p class="eyebrow">CASE ARCHIVE</p><h2>'+text('cases')+'</h2></div>'+anchor(docs+'CASEBOOK.md',t['casebook'],'text-link')+'</div><ol class="case-list">'
-    out += '</ol><details><summary>'+text('archiveEarlier')+'</summary><ol class="case-list">'
-    for i,(path,name) in enumerate(zip(case_paths,names),1):
-        if i == 6: out += '</ol></details><ol class="case-list">'
-        url=f'case{i:03}.html' if i>=9 else docs+f'CASEBOOK.md#case-{i:03}'
-        out += '<li>'+anchor(url,name,'case-name')+f'<span class="archive-number">{i:03}</span><span class="archive-arrow" aria-hidden="true">↗</span></li>'
-    out += '</ol></section>'+reading
+    out += portfolio_catalog(case_paths,names,lang)
+    out += '<p class="scope">'+('초기 구현의 원래 실험 노트: ' if lang=='ko' else 'Original notes for the early implementations: ')+anchor(docs+'CASEBOOK.md#case-006','Case006')+' · '+anchor(docs+'CASEBOOK.md#case-007','Case007')+'</p>'+reading
     return out
 
 

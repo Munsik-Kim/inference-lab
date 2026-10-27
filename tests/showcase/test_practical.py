@@ -85,7 +85,8 @@ class PracticalGuide(unittest.TestCase):
                 self.assertEqual(p.headings.count(1),1)
                 self.assertTrue(all(b<=a+1 for a,b in zip(p.headings,p.headings[1:])),page)
                 self.assertIn('../'+('ko' if lang=='en' else 'en')+'/'+page+'.html',p.links)
-                self.assertNotIn('<script',html)
+                self.assertEqual(re.findall(r'<script\b[^>]*src="([^"]+)"[^>]*>',html), ['../assets/portfolio.js'])
+                self.assertNotRegex(html,r'<script\b(?![^>]*\bsrc=)[^>]*>')
                 self.assertNotIn('{{',html)
                 if page == 'compare':
                     self.assertIn('Synthetic CPU example' if lang=='en' else '합성 CPU 예제',html)

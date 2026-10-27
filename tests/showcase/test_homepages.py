@@ -110,7 +110,9 @@ class Homepages(unittest.TestCase):
     def test_essential_content_is_static_and_anchors_survive(self):
         for lang in ('en','ko'):
             html = (self.site/lang/'index.html').read_text();page=check_capabilities(html,ROOT)
-            self.assertEqual(page.h1_count,1);self.assertEqual(page.scripts,[])
+            self.assertEqual(page.h1_count,1)
+            self.assertEqual(page.scripts,['../assets/portfolio.js'])
+            self.assertNotIn('data/case',html)  # All content remains in static HTML.
             text=' '.join(page.text)
             for term in ('Python','PyTorch','Transformers','vLLM','NumPy'):
                 self.assertIn(term,text)

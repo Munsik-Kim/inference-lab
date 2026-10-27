@@ -6,9 +6,9 @@
       <p class="story-source">A · 모델 변환에서 실제 요청까지 · Case008 Q + Case009</p>
       <h3><a href="case008.html#track-q">모델을 작게 저장하고 실제 요청까지 실행하기</a></h3>
       <p>기존 압축 기술(GPTQ)을 모델 실행 프로그램과 연결하고, 저장 파일 검사와 새 프로그램에서의 재실행을 구현했습니다.</p>
-      <p class="story-metric"><span>Qwen3-4B 가중치 파일 · Case008 Q</span><strong>{{weight_files}}</strong><span>{{file_reduction}} 감소</span><span class="metric-label">실행 중 GPU 전체 메모리 · Case009</span><strong>{{memory_saved_gib}} 절감</strong><span>{{memory_bf16_gib}} → {{memory_w4_gib}}<br>같은 라운드끼리 {{memory_saved_percent}} 감소</span></p>
-      <p>파일 크기와 실행 메모리는 별도 실험입니다. VRAM은 RTX 5080에서 GPU 작업을 미리 준비한 실행(graph), 같은 캐시 예산 4 GiB로 비교한 {{memory_rounds}}라운드의 1초 간격 최고 표본값입니다. 시작·준비 실행·바탕화면 사용량을 포함합니다.</p>
-      <p>정답 손실과 평가 프로그램의 비정상 종료도 원기록에 남겼습니다.</p>
+      <p class="story-metric"><span>Qwen3-4B 가중치 파일 · Case008 Q</span><strong>{{weight_files}}</strong><span>{{file_reduction}} 감소 · 파일 크기</span></p>
+      <p class="scope">파일 크기는 실행 메모리나 답변 품질과 다릅니다. 정답 손실과 비정상 종료도 원기록에 남겼습니다.</p>
+      <details><summary>별도로 측정한 실행 메모리와 조건</summary><p class="story-metric"><span>GPU 전체 메모리 · Case009</span><strong>{{memory_saved_gib}} 절감</strong><span>{{memory_bf16_gib}} → {{memory_w4_gib}}<br>같은 라운드끼리 {{memory_saved_percent}} 감소</span></p><p>RTX 5080의 graph 실행, 같은 캐시 예산 4 GiB, {{memory_rounds}}라운드의 1초 간격 최고 표본값입니다. 시작·준비 실행·바탕화면 사용량을 포함합니다. Case008의 파일 크기와는 별도 실험입니다.</p></details>
       <div class="actions"><a href="case008.html#track-q">압축·저장·재실행 구현</a><a href="qwen3-4b.html#device-memory">VRAM 수치·조건·원자료</a></div>
     </article>
     <article class="story">

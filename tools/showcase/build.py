@@ -77,7 +77,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
     require(set(languages['en']) == set(languages['ko']), 'Missing language counterpart key')
     template = Template((root/'presentation/templates/page.html').read_text())
     files = {}
-    for name in ('style.css','study.css','case008.css','case008.js','app.js','state.js','icon.svg'):
+    for name in ('style.css','study.css','case008.css','case008.js','app.js','state.js','icon.svg','portfolio.css','portfolio.js'):
         files['assets/'+name] = (root/'presentation/assets'/name).read_bytes()
     for case, data in payloads.items():
         files['data/'+case+'.js'] = ('window.EVIDENCE = '+script_json(data)+';\n').encode()
@@ -324,7 +324,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                       **dict(zip(GUIDE_PAGES,GUIDE_TITLES[lang]))}
             page_title = titles[page]
             description = t['pageDescriptions'].get(page,t['pageDescriptions']['case'])
-            html=template.substitute(lang=lang,title=escape(page_title),description=escape(description,quote=True),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=language_label,body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),license_label='Code license (Apache-2.0)' if lang=='en' else '코드 이용 조건 (Apache-2.0)',notice=notice,notice_label='Sources and terms (NOTICE)' if lang=='en' else '출처·이용 조건 (NOTICE)',scripts=scripts)
+            html=template.substitute(lang=lang,title=escape(page_title),description=escape(description,quote=True),brand=escape(t['brand']),brand_expansion=escape(t['brandExpansion']),navigation=navigation,navlabel=t['navigation'],asset_prefix='..',case=page,skip='Skip to content' if lang=='en' else '본문으로 이동',other=other,page=page+'.html',language=language_label,body=body,footer=t['foot'],license=source_url(rev,'LICENSE'),license_label='Code license (Apache-2.0)' if lang=='en' else '코드 이용 조건 (Apache-2.0)',notice=notice,notice_label='Sources and terms (NOTICE)' if lang=='en' else '출처·이용 조건 (NOTICE)',scripts=scripts,portfolio_label='Role and implementation map' if lang=='en' else '역할·구현·기술 판단',repo_label='Code on GitHub' if lang=='en' else 'GitHub 코드')
             if page in ('index', *GUIDE_PAGES):
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/practical-guide.css"></head>')
             if page in ('case006','case007','case010','case011','case013','case014','case015','case016','case017','case018','case019','case020','case021'):
@@ -349,6 +349,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/case011.css"></head>')
             if page == 'case008':
                 html=html.replace('</head>', '<link rel="stylesheet" href="../assets/case008.css"></head>')
+            html=html.replace('</head>', '<link rel="stylesheet" href="../assets/portfolio.css"></head>')
             files[f'{lang}/{page}.html']=html.encode()
         if data12:
             files[f'{lang}/case012-images.html'] = image_viewer(root, data12, lang).encode()
