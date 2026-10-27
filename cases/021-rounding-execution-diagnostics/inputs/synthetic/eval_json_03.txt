@@ -1,0 +1,100 @@
+{
+  "title": "Warehouse inspection package",
+  "purpose": "Describe warehouse aisle observations and follow-up assignments",
+  "schema_version": 1,
+  "operating_rule": "Fire exits must remain clear even during loading. A temporary obstruction receives an owner and a removal deadline rather than a permanent exception flag.",
+  "units": "illustrative dimensionless values; field names identify the intended quantity",
+  "records": [
+    {
+      "record_id": 1,
+      "entity": "aisle_a",
+      "observations": {
+        "clear_width": 73,
+        "stack_height": 59,
+        "damaged_units": 7,
+        "occupancy_minutes": 84,
+        "inspection_round": 45,
+        "priority": 79
+      },
+      "review_note": "aisle_a is inspected at its own checkpoint. Values for clear_width, stack_height, damaged_units are recorded before the decision for this warehouse inspection package is made.",
+      "evidence_rule": "Fire exits must remain clear even during loading. A temporary obstruction receives an owner and a removal deadline rather than a permanent exception flag.",
+      "next_action": "Compare stack_height with the applicable operating limit, record the result, and assign a follow-up for aisle_a when evidence is incomplete."
+    },
+    {
+      "record_id": 2,
+      "entity": "aisle_b",
+      "observations": {
+        "clear_width": 65,
+        "stack_height": 48,
+        "damaged_units": 54,
+        "occupancy_minutes": 24,
+        "inspection_round": 77,
+        "priority": 33
+      },
+      "review_note": "aisle_b is inspected at its own checkpoint. Values for clear_width, stack_height, damaged_units are recorded before the decision for this warehouse inspection package is made.",
+      "evidence_rule": "The reviewer preserves the measured stack_height and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare damaged_units with the applicable operating limit, record the result, and assign a follow-up for aisle_b when evidence is incomplete."
+    },
+    {
+      "record_id": 3,
+      "entity": "loading_lane",
+      "observations": {
+        "clear_width": 59,
+        "stack_height": 77,
+        "damaged_units": 57,
+        "occupancy_minutes": 67,
+        "inspection_round": 57,
+        "priority": 10
+      },
+      "review_note": "loading_lane is inspected at its own checkpoint. Values for clear_width, stack_height, damaged_units are recorded before the decision for this warehouse inspection package is made.",
+      "evidence_rule": "The reviewer preserves the measured damaged_units and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare occupancy_minutes with the applicable operating limit, record the result, and assign a follow-up for loading_lane when evidence is incomplete."
+    },
+    {
+      "record_id": 4,
+      "entity": "fire_exit",
+      "observations": {
+        "clear_width": 3,
+        "stack_height": 77,
+        "damaged_units": 71,
+        "occupancy_minutes": 23,
+        "inspection_round": 52,
+        "priority": 8
+      },
+      "review_note": "fire_exit is inspected at its own checkpoint. Values for clear_width, stack_height, damaged_units are recorded before the decision for this warehouse inspection package is made.",
+      "evidence_rule": "The reviewer preserves the measured occupancy_minutes and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare inspection_round with the applicable operating limit, record the result, and assign a follow-up for fire_exit when evidence is incomplete."
+    },
+    {
+      "record_id": 5,
+      "entity": "pallet_rack",
+      "observations": {
+        "clear_width": 30,
+        "stack_height": 59,
+        "damaged_units": 16,
+        "occupancy_minutes": 48,
+        "inspection_round": 48,
+        "priority": 61
+      },
+      "review_note": "pallet_rack is inspected at its own checkpoint. Values for clear_width, stack_height, damaged_units are recorded before the decision for this warehouse inspection package is made.",
+      "evidence_rule": "The reviewer preserves the measured inspection_round and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare priority with the applicable operating limit, record the result, and assign a follow-up for pallet_rack when evidence is incomplete."
+    },
+    {
+      "record_id": 6,
+      "entity": "charging_area",
+      "observations": {
+        "clear_width": 59,
+        "stack_height": 71,
+        "damaged_units": 54,
+        "occupancy_minutes": 19,
+        "inspection_round": 73,
+        "priority": 72
+      },
+      "review_note": "charging_area is inspected at its own checkpoint. Values for clear_width, stack_height, damaged_units are recorded before the decision for this warehouse inspection package is made.",
+      "evidence_rule": "The reviewer preserves the measured priority and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare clear_width with the applicable operating limit, record the result, and assign a follow-up for charging_area when evidence is incomplete."
+    }
+  ],
+  "missing_value_policy": "Use null for an unobserved value. Never replace missing observations with zero. Keep the original record and append a dated correction."
+}

@@ -1,0 +1,85 @@
+Laboratory freezer audit
+Purpose: Define independent checks for cold storage and specimen identity.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: An alarm acknowledgement never substitutes for a temperature recovery record. A moved vial keeps its original identifier and receives a separate location history.
+
+record_format = sectioned key-value register
+review_policy = retain original observations and append corrections
+
+[record_1]
+record_id = 1
+entity = rack_one
+observations.temperature = 38
+observations.alarm_delay = 89
+observations.door_open_seconds = 60
+observations.vial_count = 29
+observations.frost_depth = 28
+observations.transfer_minutes = 48
+review_note = rack_one is inspected at its own checkpoint. Values for temperature, alarm_delay, door_open_seconds are recorded before the decision for this laboratory freezer audit is made.
+evidence_rule = An alarm acknowledgement never substitutes for a temperature recovery record. A moved vial keeps its original identifier and receives a separate location history.
+next_action = Compare alarm_delay with the applicable operating limit, record the result, and assign a follow-up for rack_one when evidence is incomplete.
+
+[record_2]
+record_id = 2
+entity = rack_two
+observations.temperature = 75
+observations.alarm_delay = 14
+observations.door_open_seconds = 17
+observations.vial_count = 8
+observations.frost_depth = 69
+observations.transfer_minutes = 26
+review_note = rack_two is inspected at its own checkpoint. Values for temperature, alarm_delay, door_open_seconds are recorded before the decision for this laboratory freezer audit is made.
+evidence_rule = The reviewer preserves the measured alarm_delay and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare door_open_seconds with the applicable operating limit, record the result, and assign a follow-up for rack_two when evidence is incomplete.
+
+[record_3]
+record_id = 3
+entity = control_vial
+observations.temperature = 83
+observations.alarm_delay = 29
+observations.door_open_seconds = 60
+observations.vial_count = 56
+observations.frost_depth = 53
+observations.transfer_minutes = 67
+review_note = control_vial is inspected at its own checkpoint. Values for temperature, alarm_delay, door_open_seconds are recorded before the decision for this laboratory freezer audit is made.
+evidence_rule = The reviewer preserves the measured door_open_seconds and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare vial_count with the applicable operating limit, record the result, and assign a follow-up for control_vial when evidence is incomplete.
+
+[record_4]
+record_id = 4
+entity = alarm_probe
+observations.temperature = 48
+observations.alarm_delay = 73
+observations.door_open_seconds = 66
+observations.vial_count = 84
+observations.frost_depth = 80
+observations.transfer_minutes = 28
+review_note = alarm_probe is inspected at its own checkpoint. Values for temperature, alarm_delay, door_open_seconds are recorded before the decision for this laboratory freezer audit is made.
+evidence_rule = The reviewer preserves the measured vial_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare frost_depth with the applicable operating limit, record the result, and assign a follow-up for alarm_probe when evidence is incomplete.
+
+[record_5]
+record_id = 5
+entity = door_gasket
+observations.temperature = 16
+observations.alarm_delay = 16
+observations.door_open_seconds = 88
+observations.vial_count = 84
+observations.frost_depth = 34
+observations.transfer_minutes = 67
+review_note = door_gasket is inspected at its own checkpoint. Values for temperature, alarm_delay, door_open_seconds are recorded before the decision for this laboratory freezer audit is made.
+evidence_rule = The reviewer preserves the measured frost_depth and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare transfer_minutes with the applicable operating limit, record the result, and assign a follow-up for door_gasket when evidence is incomplete.
+
+[record_6]
+record_id = 6
+entity = backup_unit
+observations.temperature = 8
+observations.alarm_delay = 15
+observations.door_open_seconds = 19
+observations.vial_count = 74
+observations.frost_depth = 55
+observations.transfer_minutes = 71
+review_note = backup_unit is inspected at its own checkpoint. Values for temperature, alarm_delay, door_open_seconds are recorded before the decision for this laboratory freezer audit is made.
+evidence_rule = The reviewer preserves the measured transfer_minutes and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare temperature with the applicable operating limit, record the result, and assign a follow-up for backup_unit when evidence is incomplete.

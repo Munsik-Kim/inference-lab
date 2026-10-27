@@ -1,0 +1,112 @@
+# Reproducing Case021
+
+CPU record verification and a new GPU experiment are different operations.
+This is an unpublished local candidate. No command automatically downloads a
+model or dataset.
+
+## Small public evidence: CPU only
+
+From the repository root, choose an output directory that does not exist:
+
+```bash
+CASE=cases/021-rounding-execution-diagnostics
+PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=2 \
+  python "$CASE/analysis/verify.py" \
+  --output /tmp/case021-public-check-new --figures
+```
+
+Only NumPy and Matplotlib are needed. An optional separate CPU environment:
+
+```bash
+python3.11 -m venv /tmp/case021-cpu-new
+/tmp/case021-cpu-new/bin/python -m pip install \
+  -r cases/021-rounding-execution-diagnostics/requirements-cpu.txt
+```
+
+The actual CPU checks reused an existing environment read-only:
+Python3.11.15, NumPy1.26.4, Matplotlib3.10.9. A clean environment installation
+and another machine were not tested. Verification ran on Linux/WSL, not
+native Windows.
+
+The quick path checks source/input/public hashes, preserved Case013 files,
+384 main forward metadata records and full-position lm_head geometry. It
+recomputes document statistics, bootstrap decisions, worker debits and timing
+statistics. It also runs unit tests and independently computes full-vocabulary
+KL from the actual public DEV4 documents ×2 positions ×6 conditions subset.
+Three PNG/SVG figures can be regenerated. Figure byte equality is not a
+scientific acceptance criterion.
+
+This is **not** a full local EVAL logit audit. Full scalar record aggregation
+and small-subset logit verification have different coverage. No Torch install
+or CUDA context is required.
+
+## Full local selected-logit audit
+
+The original full local evidence remains at:
+
+`<PRIVATE_LOCAL_ROOT>`
+
+The main-logit commands below accept a relocated evidence directory through
+`--private`. Historical replacement receipts contain absolute paths; those
+additional audits require the original location or a separate mapping adapter.
+Automatic relocation of replacement receipts was not tested. From the Case folder:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=2 \
+  python analysis/pipeline.py analyze --split EVAL \
+  --private /path/to/case021-private \
+  --output /tmp/case021-eval-summary-new
+
+PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=2 \
+  python analysis/audit.py \
+  --private /path/to/case021-private \
+  --summary /tmp/case021-eval-summary-new \
+  --output /tmp/case021-eval-independent-audit-new
+```
+
+The first path computes FP64 statistics from all retained16 positions and the
+entire vocabulary. The second uses a separate normalization/reduction path.
+Use DEV for the development split. `pipeline.py repeat` handles the separate54
+repeat forwards. `intervention_analysis.py analyze` and
+`audit_intervention.py` handle the boundary replacements separately.
+
+The flow is `main/<split>/<condition>/*_logits.npy` → document/position CSVs
+→ bootstrap/decision → `analysis/figures.py`. BF16 logits are stored as uint16
+bits, without a lower-precision conversion. Temporary full block arrays were
+removed after the fixed comparisons; scalar statistics, selected positions
+and selected-layer replay inputs remain. Every output directory must be new.
+
+## Requirements for another GPU run
+
+The exact local Qwen3-0.6B revision
+`c1899de289a04d12100db370d81485cdf75e47ca` and 196 matching D16 `.rpi4` files
+are required. Their identities are in [artifact_manifest.json](artifact_manifest.json).
+Weights, private artifacts and reconstructed dense weights are not included.
+Missing files mean ARTIFACT_MISSING, not automatic download or requantization.
+
+The actual GPU runtime was reused read-only: Python3.12.14,
+Torch2.13.0+cu130, Transformers5.17.0 and vLLM0.29.0. The adapter checks the
+installed named Marlin API. Environment/preflight evidence records SM120,
+binary identity, dtype, flags and the actual SDPA path.
+
+Use a new owned private directory, explicit `locations.json`, current file
+identity checks, a fresh budget ledger and an idle-GPU check. Run the primary
+worker through `source/supervise.py`. Do not treat an old readiness receipt as
+verification of another machine. The order is P0 → DEV main/repeats → DEV
+local/replacement checks → selection freeze → EVAL → separate cost workers.
+EVAL rejects mismatched source/input/selection identities. Exact executed
+commands are in each worker's `launch.json` under
+[results/recorded](results/recorded/).
+
+The primary source bundle, supplemental diagnostics, analysis freeze and Git
+base are separate identities. Changing frozen source requires a new identity.
+Neither this guide nor CPU verification starts another GPU run automatically.
+
+## Receipts and limits
+
+[verification.json](results/summary/verification.json) and
+[verification receipts](provenance/verification_receipts/) describe the actual
+coverage. The first independent CPU normalization failure and its old source
+are preserved, as is a GPU_BUSY gate stop before any EVAL worker started.
+The historical 2% threshold and numeric tolerances were not relaxed. Remote CI,
+publication and Pages were not run.

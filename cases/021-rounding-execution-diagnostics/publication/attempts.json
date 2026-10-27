@@ -1,0 +1,21 @@
+{
+  "scope": "Publication CPU attempts; originals and tolerances unchanged",
+  "failures": [
+    {
+      "attempt": "public-quick-01",
+      "cause": "New text assertion expected fixed decimal while report used10 significant digits; primary mutation touched128 row outside the then512 aggregate check.",
+      "fix": "Use the actual documented display precision and independently validate delta=E0-E1 on every primary row."
+    },
+    {
+      "attempt": "portfolio-01",
+      "cause": "Python3.11 cannot parse existing repository Python3.12 f-strings.",
+      "fix": "Use existing read-only Python3.12.12 CPU base, no old source modification."
+    },
+    {
+      "attempt": "portfolio-02",
+      "cause": "Isolated -I removes script-dir imports used by the pre-existing showcase entrypoint.",
+      "fix": "Use its existing -B invocation with PYTHONPATH removed; new public Case021 wrapper supports -I."
+    }
+  ],
+  "new_GPU": 0
+}

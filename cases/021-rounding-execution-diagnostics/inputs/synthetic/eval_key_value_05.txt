@@ -1,0 +1,85 @@
+Battery cycling worksheet
+Purpose: Separate test conditions from acceptance decisions for rechargeable cells.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: Capacity is compared at the same discharge rate and rest interval. A warm cell is allowed to cool before resistance measurements are accepted.
+
+record_format = sectioned key-value register
+review_policy = retain original observations and append corrections
+
+[record_1]
+record_id = 1
+entity = cell_a
+observations.capacity = 16
+observations.internal_resistance = 72
+observations.cycle_count = 68
+observations.rest_minutes = 9
+observations.surface_temperature = 59
+observations.cutoff_voltage = 48
+review_note = cell_a is inspected at its own checkpoint. Values for capacity, internal_resistance, cycle_count are recorded before the decision for this battery cycling worksheet is made.
+evidence_rule = Capacity is compared at the same discharge rate and rest interval. A warm cell is allowed to cool before resistance measurements are accepted.
+next_action = Compare internal_resistance with the applicable operating limit, record the result, and assign a follow-up for cell_a when evidence is incomplete.
+
+[record_2]
+record_id = 2
+entity = cell_b
+observations.capacity = 63
+observations.internal_resistance = 42
+observations.cycle_count = 43
+observations.rest_minutes = 31
+observations.surface_temperature = 15
+observations.cutoff_voltage = 68
+review_note = cell_b is inspected at its own checkpoint. Values for capacity, internal_resistance, cycle_count are recorded before the decision for this battery cycling worksheet is made.
+evidence_rule = The reviewer preserves the measured internal_resistance and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare cycle_count with the applicable operating limit, record the result, and assign a follow-up for cell_b when evidence is incomplete.
+
+[record_3]
+record_id = 3
+entity = cell_c
+observations.capacity = 68
+observations.internal_resistance = 77
+observations.cycle_count = 65
+observations.rest_minutes = 79
+observations.surface_temperature = 16
+observations.cutoff_voltage = 44
+review_note = cell_c is inspected at its own checkpoint. Values for capacity, internal_resistance, cycle_count are recorded before the decision for this battery cycling worksheet is made.
+evidence_rule = The reviewer preserves the measured cycle_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare rest_minutes with the applicable operating limit, record the result, and assign a follow-up for cell_c when evidence is incomplete.
+
+[record_4]
+record_id = 4
+entity = reference_cell
+observations.capacity = 24
+observations.internal_resistance = 56
+observations.cycle_count = 70
+observations.rest_minutes = 64
+observations.surface_temperature = 6
+observations.cutoff_voltage = 27
+review_note = reference_cell is inspected at its own checkpoint. Values for capacity, internal_resistance, cycle_count are recorded before the decision for this battery cycling worksheet is made.
+evidence_rule = The reviewer preserves the measured rest_minutes and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare surface_temperature with the applicable operating limit, record the result, and assign a follow-up for reference_cell when evidence is incomplete.
+
+[record_5]
+record_id = 5
+entity = charger
+observations.capacity = 87
+observations.internal_resistance = 38
+observations.cycle_count = 54
+observations.rest_minutes = 33
+observations.surface_temperature = 84
+observations.cutoff_voltage = 79
+review_note = charger is inspected at its own checkpoint. Values for capacity, internal_resistance, cycle_count are recorded before the decision for this battery cycling worksheet is made.
+evidence_rule = The reviewer preserves the measured surface_temperature and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare cutoff_voltage with the applicable operating limit, record the result, and assign a follow-up for charger when evidence is incomplete.
+
+[record_6]
+record_id = 6
+entity = thermal_probe
+observations.capacity = 23
+observations.internal_resistance = 49
+observations.cycle_count = 25
+observations.rest_minutes = 83
+observations.surface_temperature = 47
+observations.cutoff_voltage = 9
+review_note = thermal_probe is inspected at its own checkpoint. Values for capacity, internal_resistance, cycle_count are recorded before the decision for this battery cycling worksheet is made.
+evidence_rule = The reviewer preserves the measured cutoff_voltage and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare capacity with the applicable operating limit, record the result, and assign a follow-up for thermal_probe when evidence is incomplete.

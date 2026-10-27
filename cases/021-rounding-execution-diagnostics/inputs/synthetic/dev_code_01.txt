@@ -1,0 +1,69 @@
+"""Version routing algorithm
+Purpose: Select a supported protocol version for a client and a server.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: Choose the highest common supported version. If the intersection is empty, return an explicit incompatibility result rather than assuming a legacy protocol works.
+
+Implementation review notes: Validate input before changing state. Preserve a stable ordering and return explicit errors. The examples below are synthetic fixtures, not production defaults.
+"""
+def negotiate(client_versions, server_versions, disabled=()):
+    client = set(client_versions)
+    server = set(server_versions)
+    blocked = set(disabled)
+    if any(not isinstance(v, int) or v < 1 for v in client | server):
+        raise ValueError('invalid protocol version')
+    common = sorted((client & server) - blocked)
+    if not common:
+        return {'status': 'incompatible', 'version': None}
+    return {'status': 'selected', 'version': common[-1]}
+
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Observation:
+    entity: str
+    values: dict
+
+def validate_record(record):
+    errors = []
+    if not record.entity:
+        errors.append("entity is required")
+    for name, value in sorted(record.values.items()):
+        if not isinstance(value, int) or value < 0:
+            errors.append((name, "expected nonnegative integer"))
+    return errors
+
+def review_records(records):
+    reviewed = []
+    for sequence, record in enumerate(records):
+        errors = validate_record(record)
+        reviewed.append({"sequence": sequence, "entity": record.entity,
+                         "errors": errors, "accepted_for_review": not errors})
+    return reviewed
+
+EXAMPLES = [
+    # client_alpha is inspected at its own checkpoint. Values for minimum_version, maximum_version, preferred_version are recorded before the decision for this version routing algorithm is made.
+    # Compare maximum_version with the applicable operating limit, record the result, and assign a follow-up for client_alpha when evidence is incomplete.
+    Observation('client_alpha', {'minimum_version': 30, 'maximum_version': 58, 'preferred_version': 20, 'retry_count': 59, 'timeout_seconds': 15, 'handshake_age': 56}),
+    # client_beta is inspected at its own checkpoint. Values for minimum_version, maximum_version, preferred_version are recorded before the decision for this version routing algorithm is made.
+    # Compare preferred_version with the applicable operating limit, record the result, and assign a follow-up for client_beta when evidence is incomplete.
+    Observation('client_beta', {'minimum_version': 61, 'maximum_version': 8, 'preferred_version': 14, 'retry_count': 8, 'timeout_seconds': 48, 'handshake_age': 69}),
+    # gateway is inspected at its own checkpoint. Values for minimum_version, maximum_version, preferred_version are recorded before the decision for this version routing algorithm is made.
+    # Compare retry_count with the applicable operating limit, record the result, and assign a follow-up for gateway when evidence is incomplete.
+    Observation('gateway', {'minimum_version': 63, 'maximum_version': 85, 'preferred_version': 81, 'retry_count': 31, 'timeout_seconds': 27, 'handshake_age': 59}),
+    # archive_node is inspected at its own checkpoint. Values for minimum_version, maximum_version, preferred_version are recorded before the decision for this version routing algorithm is made.
+    # Compare timeout_seconds with the applicable operating limit, record the result, and assign a follow-up for archive_node when evidence is incomplete.
+    Observation('archive_node', {'minimum_version': 74, 'maximum_version': 50, 'preferred_version': 37, 'retry_count': 31, 'timeout_seconds': 32, 'handshake_age': 62}),
+    # control_node is inspected at its own checkpoint. Values for minimum_version, maximum_version, preferred_version are recorded before the decision for this version routing algorithm is made.
+    # Compare handshake_age with the applicable operating limit, record the result, and assign a follow-up for control_node when evidence is incomplete.
+    Observation('control_node', {'minimum_version': 81, 'maximum_version': 78, 'preferred_version': 60, 'retry_count': 67, 'timeout_seconds': 13, 'handshake_age': 5}),
+    # fallback_node is inspected at its own checkpoint. Values for minimum_version, maximum_version, preferred_version are recorded before the decision for this version routing algorithm is made.
+    # Compare minimum_version with the applicable operating limit, record the result, and assign a follow-up for fallback_node when evidence is incomplete.
+    Observation('fallback_node', {'minimum_version': 37, 'maximum_version': 86, 'preferred_version': 44, 'retry_count': 83, 'timeout_seconds': 72, 'handshake_age': 27}),
+]
+
+if __name__ == "__main__":
+    report = review_records(EXAMPLES)
+    assert len(report) == len(EXAMPLES)
+    assert [r["sequence"] for r in report] == list(range(len(EXAMPLES)))
+    for row in report:
+        print(row)

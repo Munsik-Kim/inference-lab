@@ -1,0 +1,85 @@
+Equipment handover record
+Purpose: Track custody and inspection for portable survey instruments.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: The receiver checks the serial number and signs for physical condition separately. An intact transport box does not establish that an instrument remains calibrated.
+
+record_format = sectioned key-value register
+review_policy = retain original observations and append corrections
+
+[record_1]
+record_id = 1
+entity = tripod
+observations.serial_suffix = 29
+observations.calibration_days = 12
+observations.shock_count = 5
+observations.custody_days = 82
+observations.charge_percent = 53
+observations.inspection_minutes = 14
+review_note = tripod is inspected at its own checkpoint. Values for serial_suffix, calibration_days, shock_count are recorded before the decision for this equipment handover record is made.
+evidence_rule = The receiver checks the serial number and signs for physical condition separately. An intact transport box does not establish that an instrument remains calibrated.
+next_action = Compare calibration_days with the applicable operating limit, record the result, and assign a follow-up for tripod when evidence is incomplete.
+
+[record_2]
+record_id = 2
+entity = level
+observations.serial_suffix = 79
+observations.calibration_days = 4
+observations.shock_count = 12
+observations.custody_days = 26
+observations.charge_percent = 25
+observations.inspection_minutes = 78
+review_note = level is inspected at its own checkpoint. Values for serial_suffix, calibration_days, shock_count are recorded before the decision for this equipment handover record is made.
+evidence_rule = The reviewer preserves the measured calibration_days and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare shock_count with the applicable operating limit, record the result, and assign a follow-up for level when evidence is incomplete.
+
+[record_3]
+record_id = 3
+entity = prism
+observations.serial_suffix = 28
+observations.calibration_days = 49
+observations.shock_count = 38
+observations.custody_days = 8
+observations.charge_percent = 57
+observations.inspection_minutes = 40
+review_note = prism is inspected at its own checkpoint. Values for serial_suffix, calibration_days, shock_count are recorded before the decision for this equipment handover record is made.
+evidence_rule = The reviewer preserves the measured shock_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare custody_days with the applicable operating limit, record the result, and assign a follow-up for prism when evidence is incomplete.
+
+[record_4]
+record_id = 4
+entity = rangefinder
+observations.serial_suffix = 57
+observations.calibration_days = 29
+observations.shock_count = 85
+observations.custody_days = 12
+observations.charge_percent = 87
+observations.inspection_minutes = 46
+review_note = rangefinder is inspected at its own checkpoint. Values for serial_suffix, calibration_days, shock_count are recorded before the decision for this equipment handover record is made.
+evidence_rule = The reviewer preserves the measured custody_days and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare charge_percent with the applicable operating limit, record the result, and assign a follow-up for rangefinder when evidence is incomplete.
+
+[record_5]
+record_id = 5
+entity = battery_case
+observations.serial_suffix = 85
+observations.calibration_days = 45
+observations.shock_count = 79
+observations.custody_days = 20
+observations.charge_percent = 60
+observations.inspection_minutes = 17
+review_note = battery_case is inspected at its own checkpoint. Values for serial_suffix, calibration_days, shock_count are recorded before the decision for this equipment handover record is made.
+evidence_rule = The reviewer preserves the measured charge_percent and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare inspection_minutes with the applicable operating limit, record the result, and assign a follow-up for battery_case when evidence is incomplete.
+
+[record_6]
+record_id = 6
+entity = transport_box
+observations.serial_suffix = 64
+observations.calibration_days = 58
+observations.shock_count = 62
+observations.custody_days = 24
+observations.charge_percent = 75
+observations.inspection_minutes = 45
+review_note = transport_box is inspected at its own checkpoint. Values for serial_suffix, calibration_days, shock_count are recorded before the decision for this equipment handover record is made.
+evidence_rule = The reviewer preserves the measured inspection_minutes and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare serial_suffix with the applicable operating limit, record the result, and assign a follow-up for transport_box when evidence is incomplete.

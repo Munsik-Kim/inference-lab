@@ -1,0 +1,288 @@
+{
+  "backend": {
+    "cuda_kernel_names": [
+      "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1})",
+      "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})",
+      "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<c10::BFloat16> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<c10::BFloat16> const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<c10::BFloat16> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<c10::BFloat16> const&)::{lambda(int)#1})",
+      "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>)",
+      "void marlin::Marlin<1125899906909960l, 1125899907892224l, 1125899906909960l, 1125899906909960l, 128, 1, 4, 8, false, 4, 4, false>(int4 const*, int4 const*, int4*, int4*, int4 const*, float const*, int4 const*, float const*, int4 const*, int const*, int, int, int, int, int, int*, bool, bool, bool, int)"
+    ],
+    "actual_op": "torch.ops._C.marlin_gemm",
+    "fallback": false,
+    "profile_only": true
+  },
+  "rounding": {
+    "boundaries": [
+      {
+        "tensor": "q",
+        "fp64": {
+          "SSE": 0.14709534455126322,
+          "reference_energy": 52703.50259839439,
+          "relative_RMSE": 0.0016706278791477332,
+          "energy_status": "DEFINED",
+          "MAE_sum": 18.082318141816266,
+          "elements": 10240,
+          "max_abs": 0.061932983368059524,
+          "finite": true
+        },
+        "r0_r1": {
+          "SSE": 65.80238672723371,
+          "reference_energy": 5224973.726562653,
+          "relative_RMSE": 0.003548777472904479,
+          "energy_status": "DEFINED",
+          "MAE_sum": 2782.7963011078537,
+          "elements": 1048576,
+          "max_abs": 0.25,
+          "finite": true
+        },
+        "r0_stride": [
+          1048576,
+          128,
+          2048,
+          1
+        ],
+        "r1_stride": [
+          1048576,
+          128,
+          2048,
+          1
+        ]
+      },
+      {
+        "tensor": "k",
+        "fp64": {
+          "SSE": 6.371114348458368,
+          "reference_energy": 2384306.0407607295,
+          "relative_RMSE": 0.0016346572326648233,
+          "energy_status": "DEFINED",
+          "MAE_sum": 25.976849584934428,
+          "elements": 5120,
+          "max_abs": 0.7908089504921918,
+          "finite": true
+        },
+        "r0_r1": {
+          "SSE": 1696.2694059586215,
+          "reference_energy": 201327182.14687195,
+          "relative_RMSE": 0.002902660259954462,
+          "energy_status": "DEFINED",
+          "MAE_sum": 2977.4763872921467,
+          "elements": 524288,
+          "max_abs": 2.0,
+          "finite": true
+        },
+        "r0_stride": [
+          524288,
+          128,
+          1024,
+          1
+        ],
+        "r1_stride": [
+          524288,
+          128,
+          1024,
+          1
+        ]
+      }
+    ],
+    "R0_norm_output_dtype": "torch.bfloat16",
+    "R1_norm_output_dtype": "torch.float32",
+    "native_cos_dtype": "torch.bfloat16",
+    "R1_observed": {
+      "self_attn.q_norm.output": {
+        "dtype": "torch.float32",
+        "shape": [
+          1,
+          512,
+          16,
+          128
+        ],
+        "stride": [
+          1048576,
+          2048,
+          128,
+          1
+        ],
+        "contiguous": true
+      },
+      "self_attn.k_norm.output": {
+        "dtype": "torch.float32",
+        "shape": [
+          1,
+          512,
+          8,
+          128
+        ],
+        "stride": [
+          524288,
+          1024,
+          128,
+          1
+        ],
+        "contiguous": true
+      },
+      "pre_rope_q": {
+        "dtype": "torch.float32",
+        "shape": [
+          1,
+          16,
+          512,
+          128
+        ],
+        "stride": [
+          1048576,
+          128,
+          2048,
+          1
+        ],
+        "contiguous": false
+      },
+      "pre_rope_k": {
+        "dtype": "torch.float32",
+        "shape": [
+          1,
+          8,
+          512,
+          128
+        ],
+        "stride": [
+          524288,
+          128,
+          1024,
+          1
+        ],
+        "contiguous": false
+      },
+      "cos": {
+        "dtype": "torch.bfloat16",
+        "shape": [
+          1,
+          512,
+          128
+        ],
+        "stride": [
+          65536,
+          128,
+          1
+        ],
+        "contiguous": true
+      },
+      "sin": {
+        "dtype": "torch.bfloat16",
+        "shape": [
+          1,
+          512,
+          128
+        ],
+        "stride": [
+          65536,
+          128,
+          1
+        ],
+        "contiguous": true
+      },
+      "post_rope_q": {
+        "dtype": "torch.bfloat16",
+        "shape": [
+          1,
+          16,
+          512,
+          128
+        ],
+        "stride": [
+          1048576,
+          128,
+          2048,
+          1
+        ],
+        "contiguous": false
+      },
+      "post_rope_k": {
+        "dtype": "torch.bfloat16",
+        "shape": [
+          1,
+          8,
+          512,
+          128
+        ],
+        "stride": [
+          524288,
+          128,
+          1024,
+          1
+        ],
+        "contiguous": false
+      }
+    },
+    "attention_dtype": "torch.bfloat16"
+  },
+  "no_op": {
+    "document": "dev_explanation_00",
+    "self_repeats": [
+      {
+        "SSE": 0.0,
+        "reference_energy": 1073750889.2442868,
+        "relative_RMSE": 0.0,
+        "MAE_sum": 0.0,
+        "elements": 77791232,
+        "max_abs": 0.0,
+        "finite": true,
+        "bit_identical": true
+      },
+      {
+        "SSE": 0.0,
+        "reference_energy": 1073750889.2442868,
+        "relative_RMSE": 0.0,
+        "MAE_sum": 0.0,
+        "elements": 77791232,
+        "max_abs": 0.0,
+        "finite": true,
+        "bit_identical": true
+      },
+      {
+        "SSE": 0.0,
+        "reference_energy": 1073750889.2442868,
+        "relative_RMSE": 0.0,
+        "MAE_sum": 0.0,
+        "elements": 77791232,
+        "max_abs": 0.0,
+        "finite": true,
+        "bit_identical": true
+      }
+    ],
+    "criterion": 1e-07,
+    "bit_identical_required": true,
+    "noop": {
+      "SSE": 0.0,
+      "reference_energy": 1073750889.2442868,
+      "relative_RMSE": 0.0,
+      "MAE_sum": 0.0,
+      "elements": 77791232,
+      "max_abs": 0.0,
+      "finite": true,
+      "bit_identical": true
+    },
+    "hook": {
+      "SSE": 0.0,
+      "reference_energy": 1073750889.2442868,
+      "relative_RMSE": 0.0,
+      "MAE_sum": 0.0,
+      "elements": 77791232,
+      "max_abs": 0.0,
+      "finite": true,
+      "bit_identical": true
+    },
+    "hooked_layers": 28
+  },
+  "flags": {
+    "allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "allow_bf16_reduced_precision_reduction": false,
+    "allow_fp16_reduced_precision_reduction": false,
+    "marlin_use_fp32_reduce": true,
+    "marlin_use_atomic_add": false,
+    "threads": 2,
+    "attention_backend": "sdpa",
+    "eager": true,
+    "inference_mode": true
+  }
+}

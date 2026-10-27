@@ -1,0 +1,37 @@
+# Q/K norm과 RoPE 분리: 설계만, 실행하지 않음
+
+Status: **NOT_RUN / DESIGN_ONLY**. No new condition, document, holdout or GPU
+call is authorized by this note.
+
+다음 별도 연구에서는 같은 projection Q/K, native cos/sin, norm weight,
+epsilon, mask/head mapping을 고정하고 아래 네 계산 계약을 검토할 수 있습니다.
+기존 EVAL24는 이미 본 사후 자료이므로 새 확인 집합이라고 부르지 않습니다.
+
+| Cell | Norm arithmetic | RoPE arithmetic |
+|---|---|---|
+| N0/P0 | 기존 norm의 BF16 중간 경계 | 입력 BF16, native BF16 곱·합 |
+| N1/P0 | 통계·정규화·weight 곱 FP32 | norm 결과를 BF16으로 내린 뒤 native RoPE |
+| N0/P1 | 기존 norm 결과 BF16 | 같은 값을 FP32로 올려 RoPE, 마지막 Q/K BF16 |
+| N1/P1 | norm 중간값 FP32 | FP32 값을 이어받아 RoPE, 마지막 Q/K BF16 |
+
+N1/P0에는 RoPE 입구의 cast가 있고 N1/P1에는 없습니다. 따라서 네 셀의
+상호작용을 공개하고, 각 차이를 서로 독립인 두 원인의 순수 기여율이라고
+부르지 않아야 합니다. 실제 native dtype 경계·stride·no-op·복원 검증이 먼저입니다.
+원 native cos/sin을 그대로 사용하고 새 주파수를 계산하지 않습니다.
+
+이번 P4A/B/C는 이 네 셀을 실행하거나 새 정책을 선택하지 않습니다.
+새 배포 권고나 개선 확인에는 별도 승인, 새로운 문서, 고정 분석 계획과
+자원 예산이 필요합니다. 원래의 INCONCLUSIVE 판정은 유지합니다.
+
+## English
+
+This is a design note, not an experiment. The four cells would vary normalization
+and RoPE arithmetic while preserving the same projected Q/K, norm parameters,
+native rotary values and final BF16 attention inputs. N1/P0 casts at the RoPE
+entrance; N1/P1 carries FP32 through. That interface difference must be explicit
+and the interaction reported. It prevents interpreting cell differences as
+unique, additive causal contributions.
+
+No four-cell run, new holdout, policy selection, RL, other model, serving or
+publication is performed here. A future confirmation requires separately
+authorized fresh documents and a fixed protocol.

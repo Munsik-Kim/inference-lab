@@ -1,0 +1,180 @@
+{
+  "case": "021-rounding-execution-diagnostics",
+  "created_utc": "2026-10-27T00:54:50.874705+00:00",
+  "base_git": "bb2ab39ba5e9f6cea7e4c7d122fa6b26e143e688",
+  "study": "Post-Case013 diagnostic, not preregistration before historical observations",
+  "model": "Qwen/Qwen3-0.6B",
+  "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "artifact": "Same existing D16, group64, 196 projections, activation4=False",
+  "linear": {
+    "D0": "BF16(((codes in original scale dtype)*gamma)*alpha_inv); z=BF16(FP32(x)*beta_inv); original dense bias contract",
+    "D1": "s16=BF16(FP32(alpha_inv)*FP32(gamma)); W=BF16(FP32(codes)*FP32(s16)); same z",
+    "P": "signed codes+8, transpose I,O, pack8 into int32, gptq_marlin_repack; group64 permuted BF16 combined scales; same z; use_fp32_reduce=True, use_atomic_add=False; postbias only if present"
+  },
+  "rounding": {
+    "R0": "Native HF Q/K norm and RoPE; statistics FP32, intermediate BF16 boundaries",
+    "R1": "Q/K norm and RoPE intermediates FP32; native cos/sin promoted; final Q/K BF16 with native layout",
+    "scope": "No V/attention/softmax/residual/MLP/cache/GEMM changes"
+  },
+  "seeds": {
+    "input": 61027021,
+    "order": 61027022,
+    "bootstrap": 61027023,
+    "historical_gemm": 610134
+  },
+  "input_manifest": {
+    "bytes": 21612,
+    "sha256": "88b18adee5c0ddd638ce57596f81bfcd0a7ebee6384d9dcf06a816ae9fddd914"
+  },
+  "input_draft_history": "First pre-output draft retained privately; code documents received distinct algorithms before final input freeze; no model outputs seen",
+  "execution": {
+    "batch": 1,
+    "lengths": [
+      128,
+      512
+    ],
+    "dtype": "BF16",
+    "attention": "sdpa",
+    "use_cache": false,
+    "logits_to_keep": 0,
+    "all_lm_head_positions": true,
+    "condition_order": [
+      "D1_R1",
+      "D0_R0",
+      "P_R0",
+      "D1_R0",
+      "P_R1",
+      "D0_R1"
+    ],
+    "document_order": {
+      "DEV": [
+        "dev_explanation_00",
+        "dev_code_01",
+        "dev_json_00",
+        "dev_explanation_01",
+        "dev_code_00",
+        "dev_json_01",
+        "dev_key_value_01",
+        "dev_key_value_00"
+      ],
+      "EVAL": [
+        "eval_code_05",
+        "eval_code_06",
+        "eval_code_04",
+        "eval_explanation_03",
+        "eval_key_value_07",
+        "eval_key_value_03",
+        "eval_code_03",
+        "eval_key_value_06",
+        "eval_json_07",
+        "eval_key_value_05",
+        "eval_json_02",
+        "eval_json_04",
+        "eval_key_value_04",
+        "eval_json_06",
+        "eval_explanation_06",
+        "eval_code_02",
+        "eval_explanation_02",
+        "eval_explanation_05",
+        "eval_key_value_02",
+        "eval_json_03",
+        "eval_explanation_04",
+        "eval_json_05",
+        "eval_explanation_07",
+        "eval_code_07"
+      ]
+    },
+    "no_autocast": true,
+    "no_compile": true,
+    "no_cuda_graph": true
+  },
+  "counts": {
+    "main_DEV": 96,
+    "main_EVAL": 288,
+    "main_total": 384,
+    "repeat_max": 54,
+    "local_block_replay_max": 384,
+    "optional_intervention_DEV_max": 32,
+    "optional_intervention_EVAL_max": 24,
+    "timing_workers_max": 9,
+    "timed_full_forward_max": 180,
+    "timing_warmup_max": 54,
+    "timing_cold_max": 18,
+    "historical_full_planned": 9
+  },
+  "numeric": {
+    "FP64_loop_vector_rtol": 1e-10,
+    "FP64_loop_vector_atol": 1e-12,
+    "BF16_primitive_relative_RMSE": 0.01,
+    "exact_zero_max_abs": 1e-06,
+    "historical_full32_gate": 0.02,
+    "energy_zero": "UNDEFINED, absolute metrics retained",
+    "no_op": "bit-identical if own 3 repeats bit-identical; otherwise relRMSE<=max(1e-7,10*self repeat maximum)",
+    "tau_abs": "max(1e-10,10*max repeat delta deviation relative to repeat0) before EVAL"
+  },
+  "primary": {
+    "estimand": "mean_document [KL(D1_R0||P_R0)-KL(D1_R1||P_R1)]",
+    "split": "EVAL",
+    "length": 512,
+    "positions": [
+      30,
+      60,
+      90,
+      120,
+      150,
+      180,
+      210,
+      240,
+      271,
+      301,
+      331,
+      361,
+      391,
+      421,
+      451,
+      481
+    ],
+    "normalization": "FP64 full vocabulary logsumexp, 16 positions per document then equal document weight",
+    "bootstrap": "paired documents,10000,seed61027023,percentile95%,NumPy linear",
+    "negative_kl": "raw retained; meaningful negative rejects normalization",
+    "effect_rules": {
+      "REDUCED": "CI_low>0 and abs(mean_delta)>tau_abs",
+      "INCREASED": "CI_high<0 and abs(mean_delta)>tau_abs",
+      "NUMERICALLY_UNRESOLVED": "abs(mean_delta)<=tau_abs or audit resolution insufficient",
+      "INCONCLUSIVE": "otherwise",
+      "NOT_RUN": "missing verified paired estimand",
+      "NO_DISTINCT_BOUNDARY": "only if experimentally confirmed identical boundary"
+    }
+  },
+  "layer_selection": "sum DEV512 full-block D1_R0-P_R0 SSE / sum D1_R0 energy, top2, earlier layer tie",
+  "intervention": "optional; implement only if independently validated before EVAL, otherwise explicit NOT_RUN decision",
+  "eval_gate": [
+    "DEV complete",
+    "selected2layers",
+    "intervention decision",
+    "no-op and R boundary",
+    "tau_abs",
+    "analysis source/config/input hashes"
+  ],
+  "cost": "separate hook-free full512 same-call host/event dual timer; host includes event record and completion wait; no TTFT/TPOT claim",
+  "budget": {
+    "gpu_global_seconds": 7200,
+    "stage_seconds": {
+      "P0": 1200,
+      "P1": 2400,
+      "P2": 2400,
+      "P3": 1200
+    },
+    "one_worker": true,
+    "new_disk_cap_bytes": 8589934592,
+    "target_headroom_bytes": 2147483648
+  },
+  "storage": {
+    "selected_main_BF16_logits_bytes": 1866989568,
+    "selected_repeat_BF16_logits_bytes": 262545408,
+    "full_hidden_scratch": "Incremental pair comparisons; remove only task-owned full hidden arrays after all required pairs/selected replay input copied. At most four EVAL condition sets (~3.52GB) simultaneously. Retain full-vocabulary selected logits locally.",
+    "public": "synthetic inputs, sources, scalar raw, selected DEV4 x 2positions audit subset; no model/artifact/dense weights"
+  },
+  "publication_authorized": false,
+  "model_download_authorized": false
+}

@@ -1,0 +1,105 @@
+{
+  "execution_status": "COMPLETE",
+  "rounding_effect": "INCONCLUSIVE",
+  "rounding_boundary_status": "DISTINCT",
+  "primary512": {
+    "document_count": 24,
+    "mean_delta": -8.628238891276828e-05,
+    "ci_low": -0.00020682215602405986,
+    "ci_high": 3.9090051880538026e-05,
+    "replicates": 10000,
+    "seed": 61027023,
+    "quantile": "linear"
+  },
+  "mean_E0": 0.0006952504143582814,
+  "mean_E1": 0.0007815328032710498,
+  "relative_delta": -0.12410260696127341,
+  "tau_abs": 1e-10,
+  "r_repeat": 0.0,
+  "documents_delta_positive": 9,
+  "documents_delta_negative": 15,
+  "counts": {
+    "main": 384,
+    "repeat": 54,
+    "local_block": 384,
+    "timed_full": 180,
+    "timing_cold": 18,
+    "timing_warmup": 54,
+    "timing_workers": 9,
+    "optional_replacement": 56,
+    "intervention_DEV": 32,
+    "intervention_EVAL": 24,
+    "preflight_full": 38,
+    "historical_isolated_block": 9,
+    "intervention_auxiliary_block": 58
+  },
+  "planned": {
+    "main_DEV": 96,
+    "main_EVAL": 288,
+    "main_total": 384,
+    "repeat_max": 54,
+    "local_block_replay_max": 384,
+    "optional_intervention_DEV_max": 32,
+    "optional_intervention_EVAL_max": 24,
+    "timing_workers_max": 9,
+    "timed_full_forward_max": 180,
+    "timing_warmup_max": 54,
+    "timing_cold_max": 18,
+    "historical_full_planned": 9
+  },
+  "selected_layers": [
+    27,
+    25
+  ],
+  "intervention": {
+    "status": "SELECTED",
+    "candidate": {
+      "layer": 25,
+      "boundary": "block_output"
+    },
+    "selection_rule": "largest absolute DEV mean KL change; ties earlier layer then post_RoPE_Q",
+    "dev_summary": {
+      "bytes": 1500,
+      "sha256": "0f2425868eaa23e1a9c266ae6811e6ce2b40f182f256518b376fdf55303b6064"
+    },
+    "preflight": {
+      "bytes": 2952,
+      "sha256": "22e741bab31044da8f1dcabf0b170f87a4dd0a60704a9add6567c6385b44fd8c"
+    },
+    "source_bundle_sha256": "4b8b55a7be8eff10e70491b5af371002f80bb102d090f057eac487f4dee90943"
+  },
+  "mechanisms": [
+    "FORMAT_CHANGE_SUPPORTED",
+    "LOCAL_EXECUTION_DIFFERENCE_SUPPORTED",
+    "PROPAGATION_SENSITIVITY_SUPPORTED"
+  ],
+  "alignment": "NOT_ESTABLISHED: D0/D1/P already share the same R0 attention implementation",
+  "historical_gate": "Unchanged0.02; D0-P full32 remains outside",
+  "publication_status": "LOCAL_ONLY",
+  "gpu_source_bundle_sha256": "5876ea3c7a89ae77eda9f237059dc6101feeea834fe00df47ca9f715122841e7",
+  "selection_freeze": {
+    "bytes": 8732,
+    "sha256": "4b4d0aa45a60335c1802b07b448b3c8ca85fb7bfbb988b5bfaef009fa6aa01f3"
+  },
+  "budget": {
+    "global_cap_seconds": 7200,
+    "worker_count": 34,
+    "worker_wall_seconds": 1971.5041924670022,
+    "remaining_seconds": 5228.495807532998,
+    "stage_wall_seconds": {
+      "P0": 155.27901403700162,
+      "P1": 629.819485389,
+      "P2": 719.3523944449989,
+      "P3": 467.0532985960017
+    },
+    "stage_caps_seconds": {
+      "P0": 1200,
+      "P1": 2400,
+      "P2": 2400,
+      "P3": 1200
+    },
+    "worker_cpu_user_seconds": 512.868405,
+    "worker_cpu_system_seconds": 185.764068,
+    "meaning": "Parent spawn-through-exit wall, not GPU busy time; CPU-only analysis is separate"
+  }
+}

@@ -1,0 +1,523 @@
+{
+  "scope": "POSTHOC_DIAGNOSTIC",
+  "original_primary_verdict": "INCONCLUSIVE",
+  "original_primary": {
+    "mean_E0": 0.0006952504143582814,
+    "mean_E1": 0.0007815328032710498,
+    "primary512": {
+      "document_count": 24,
+      "mean_delta": -8.628238891276828e-05,
+      "ci_low": -0.00020682215602405986,
+      "ci_high": 3.9090051880538026e-05,
+      "replicates": 10000,
+      "seed": 61027023,
+      "quantile": "linear"
+    },
+    "tau_abs": 1e-10,
+    "historical_gate": "Unchanged0.02; D0-P full32 remains outside",
+    "gpu_source_bundle_sha256": "5876ea3c7a89ae77eda9f237059dc6101feeea834fe00df47ca9f715122841e7"
+  },
+  "A": {
+    "scope": "Existing P4 posthoc reaggregation",
+    "local_tensor_pairs": 128,
+    "local_documents": 32,
+    "component_groups": [
+      {
+        "split": "original_DEV_posthoc",
+        "classification": "DN_NONPOS_DC_POS",
+        "cells": 5,
+        "sum_delta_G": 0.0002353786985622719,
+        "sum_delta_N": -0.0004384448022233852,
+        "sum_delta_C": 0.0006738235007856572,
+        "P4_negative_cross_weakening_count": 4
+      },
+      {
+        "split": "original_DEV_posthoc",
+        "classification": "DN_POS_DC_POS",
+        "cells": 7,
+        "sum_delta_G": 0.012473483799340102,
+        "sum_delta_N": 0.011422099486275192,
+        "sum_delta_C": 0.0010513843130649095,
+        "P4_negative_cross_weakening_count": 4
+      },
+      {
+        "split": "original_DEV_posthoc",
+        "classification": "DN_POS_DC_NONPOS",
+        "cells": 2,
+        "sum_delta_G": 0.0013308525088433498,
+        "sum_delta_N": 0.001589596367455034,
+        "sum_delta_C": -0.0002587438586116841,
+        "P4_negative_cross_weakening_count": 0
+      },
+      {
+        "split": "original_DEV_posthoc",
+        "classification": "NEAR_TOLERANCE_OR_OTHER",
+        "cells": 0,
+        "sum_delta_G": 0.0,
+        "sum_delta_N": 0.0,
+        "sum_delta_C": 0.0,
+        "P4_negative_cross_weakening_count": 0
+      },
+      {
+        "split": "original_DEV_posthoc",
+        "classification": "NOT_INCREASE_OR_NEAR_TOLERANCE",
+        "cells": 18,
+        "sum_delta_G": -0.012266693869378287,
+        "sum_delta_N": -0.009921947285689582,
+        "sum_delta_C": -0.002344746583688705,
+        "P4_negative_cross_weakening_count": 4
+      },
+      {
+        "split": "original_EVAL_posthoc",
+        "classification": "DN_NONPOS_DC_POS",
+        "cells": 13,
+        "sum_delta_G": 0.010367996263994428,
+        "sum_delta_N": -0.007877323993552753,
+        "sum_delta_C": 0.01824532025754718,
+        "P4_negative_cross_weakening_count": 12
+      },
+      {
+        "split": "original_EVAL_posthoc",
+        "classification": "DN_POS_DC_POS",
+        "cells": 17,
+        "sum_delta_G": 0.020442408305825666,
+        "sum_delta_N": 0.01755418182042025,
+        "sum_delta_C": 0.0028882264854054114,
+        "P4_negative_cross_weakening_count": 12
+      },
+      {
+        "split": "original_EVAL_posthoc",
+        "classification": "DN_POS_DC_NONPOS",
+        "cells": 4,
+        "sum_delta_G": 0.014165968630550196,
+        "sum_delta_N": 0.016308764350995552,
+        "sum_delta_C": -0.0021427957204453543,
+        "P4_negative_cross_weakening_count": 0
+      },
+      {
+        "split": "original_EVAL_posthoc",
+        "classification": "NEAR_TOLERANCE_OR_OTHER",
+        "cells": 0,
+        "sum_delta_G": 0.0,
+        "sum_delta_N": 0.0,
+        "sum_delta_C": 0.0,
+        "P4_negative_cross_weakening_count": 0
+      },
+      {
+        "split": "original_EVAL_posthoc",
+        "classification": "NOT_INCREASE_OR_NEAR_TOLERANCE",
+        "cells": 62,
+        "sum_delta_G": -0.1798722229170835,
+        "sum_delta_N": -0.12033381409984564,
+        "sum_delta_C": -0.05953840881723785,
+        "P4_negative_cross_weakening_count": 9
+      }
+    ],
+    "ULP_documents": 24,
+    "ULP_elements": 25165824,
+    "ULP_numeric_mismatches": 7823,
+    "ULP_step1": 7496,
+    "ULP_step2": 133,
+    "ULP_step_gt2": 194,
+    "ULP_max": 27892
+  },
+  "B": {
+    "branch": "D",
+    "status": "ACTUAL_SINGLE_TERM_NOT_OBSERVED",
+    "control_numeric_mismatch": 0,
+    "D1_A_numeric_mismatch": 0,
+    "actual_coefficient_D1_P_mismatch": 0,
+    "repeat_comparisons": 40,
+    "all_repeat_hashes_equal": true,
+    "conditional_C": "RUN_FROZEN_GRID",
+    "scope": "Same inputs repeated across processes, no independent model samples",
+    "output_zero_padding_not_in_denominator": true,
+    "candidate_fit_totals_nonoverlapping_all_valid_P": {
+      "coordinates": 10485760,
+      "discriminating_coordinates": 406626,
+      "A_only": 406626,
+      "B_only": 0,
+      "both": 10079134,
+      "neither": 0,
+      "undefined": 0
+    }
+  },
+  "C": {
+    "first_observation": [
+      {
+        "layer": 0,
+        "document_id": "dev_code_00",
+        "first_observed_K": 64,
+        "conditions": [
+          {
+            "K": 1,
+            "numeric_mismatch": 0,
+            "max_steps": 0,
+            "norm64": 195.70655843349806
+          },
+          {
+            "K": 2,
+            "numeric_mismatch": 0,
+            "max_steps": 0,
+            "norm64": 297.82116832107596
+          },
+          {
+            "K": 8,
+            "numeric_mismatch": 0,
+            "max_steps": 0,
+            "norm64": 595.2211550005879
+          },
+          {
+            "K": 64,
+            "numeric_mismatch": 16,
+            "max_steps": 64,
+            "norm64": 1658.8354157889312
+          },
+          {
+            "K": 256,
+            "numeric_mismatch": 97,
+            "max_steps": 2,
+            "norm64": 3259.988363036533
+          },
+          {
+            "K": 1024,
+            "numeric_mismatch": 353,
+            "max_steps": 17,
+            "norm64": 6528.556094824559
+          }
+        ]
+      },
+      {
+        "layer": 0,
+        "document_id": "dev_code_01",
+        "first_observed_K": 8,
+        "conditions": [
+          {
+            "K": 1,
+            "numeric_mismatch": 0,
+            "max_steps": 0,
+            "norm64": 195.94898535393241
+          },
+          {
+            "K": 2,
+            "numeric_mismatch": 0,
+            "max_steps": 0,
+            "norm64": 276.2005312054341
+          },
+          {
+            "K": 8,
+            "numeric_mismatch": 1,
+            "max_steps": 1,
+            "norm64": 587.701083658559
+          },
+          {
+            "K": 64,
+            "numeric_mismatch": 11,
+            "max_steps": 1,
+            "norm64": 1641.9758557932958
+          },
+          {
+            "K": 256,
+            "numeric_mismatch": 90,
+            "max_steps": 3,
+            "norm64": 3258.3699877563618
+          },
+          {
+            "K": 1024,
+            "numeric_mismatch": 332,
+            "max_steps": 2,
+            "norm64": 6509.82710706825
+          }
+        ]
+      },
+      {
+        "layer": 25,
+        "document_id": "dev_code_00",
+        "first_observed_K": 64,
+        "conditions": [
+          {
+            "K": 1,
+            "numeric_mismatch": 0,
+            "max_steps": 0,
+            "norm64": 8032.68745961098
+          },
+          {
+            "K": 2,
+            "numeric_mismatch": 0,
+            "max_steps": 0,
+            "norm64": 12291.651963784756
+          },
+          {
+            "K": 8,
+            "numeric_mismatch": 0,
+            "max_steps": 0,
+            "norm64": 26058.11366654636
+          },
+          {
+            "K": 64,
+            "numeric_mismatch": 17,
+            "max_steps": 1,
+            "norm64": 75117.85399873575
+          },
+          {
+            "K": 256,
+            "numeric_mismatch": 97,
+            "max_steps": 4,
+            "norm64": 150091.24571595763
+          },
+          {
+            "K": 1024,
+            "numeric_mismatch": 365,
+            "max_steps": 33,
+            "norm64": 301117.44333742897
+          }
+        ]
+      },
+      {
+        "layer": 25,
+        "document_id": "dev_code_01",
+        "first_observed_K": 64,
+        "conditions": [
+          {
+            "K": 1,
+            "numeric_mismatch": 0,
+            "max_steps": 0,
+            "norm64": 9655.334847514492
+          },
+          {
+            "K": 2,
+            "numeric_mismatch": 0,
+            "max_steps": 0,
+            "norm64": 13024.7487587713
+          },
+          {
+            "K": 8,
+            "numeric_mismatch": 0,
+            "max_steps": 0,
+            "norm64": 26916.883641107837
+          },
+          {
+            "K": 64,
+            "numeric_mismatch": 20,
+            "max_steps": 2,
+            "norm64": 74486.39350192266
+          },
+          {
+            "K": 256,
+            "numeric_mismatch": 88,
+            "max_steps": 4,
+            "norm64": 149919.5639719455
+          },
+          {
+            "K": 1024,
+            "numeric_mismatch": 338,
+            "max_steps": 44,
+            "norm64": 300258.40679662704
+          }
+        ]
+      }
+    ],
+    "actual_input_conditions": 24,
+    "repeats": 96,
+    "all_repeat_bits_equal": true,
+    "P4_K1024_comparisons": [
+      {
+        "layer": 0,
+        "document_id": "dev_code_00",
+        "method": "D1",
+        "same_input_hash": true,
+        "same_output_bits": true,
+        "scope": "Across P4/P5 time and process; not one-worker controlled comparison"
+      },
+      {
+        "layer": 0,
+        "document_id": "dev_code_00",
+        "method": "P",
+        "same_input_hash": true,
+        "same_output_bits": true,
+        "scope": "Across P4/P5 time and process; not one-worker controlled comparison"
+      },
+      {
+        "layer": 0,
+        "document_id": "dev_code_01",
+        "method": "D1",
+        "same_input_hash": true,
+        "same_output_bits": true,
+        "scope": "Across P4/P5 time and process; not one-worker controlled comparison"
+      },
+      {
+        "layer": 0,
+        "document_id": "dev_code_01",
+        "method": "P",
+        "same_input_hash": true,
+        "same_output_bits": true,
+        "scope": "Across P4/P5 time and process; not one-worker controlled comparison"
+      },
+      {
+        "layer": 25,
+        "document_id": "dev_code_00",
+        "method": "D1",
+        "same_input_hash": true,
+        "same_output_bits": true,
+        "scope": "Across P4/P5 time and process; not one-worker controlled comparison"
+      },
+      {
+        "layer": 25,
+        "document_id": "dev_code_00",
+        "method": "P",
+        "same_input_hash": true,
+        "same_output_bits": true,
+        "scope": "Across P4/P5 time and process; not one-worker controlled comparison"
+      },
+      {
+        "layer": 25,
+        "document_id": "dev_code_01",
+        "method": "D1",
+        "same_input_hash": true,
+        "same_output_bits": true,
+        "scope": "Across P4/P5 time and process; not one-worker controlled comparison"
+      },
+      {
+        "layer": 25,
+        "document_id": "dev_code_01",
+        "method": "P",
+        "same_input_hash": true,
+        "same_output_bits": true,
+        "scope": "Across P4/P5 time and process; not one-worker controlled comparison"
+      }
+    ],
+    "oracle_exact_audit_rows": 768,
+    "exact_midpoint_ties": 264,
+    "FP64_round_disagreements_on_audit": 0,
+    "remaining_UNRESOLVED_per_oracle_condition": 231110,
+    "scope": "Fixed nested masks; K and input norm vary together. No universal threshold or internal rounding-order proof."
+  },
+  "counts": {
+    "P5A_local_tensor_pairs": 128,
+    "P5A_original_documents": 32,
+    "P5A_P4_projection_document_layer_pairs": 24,
+    "P5A_P4_output_elements": 25165824,
+    "planned_B_workers": 6,
+    "actual_B_workers": 6,
+    "B_fixture_projection_conditions": 10,
+    "B_valid_rows_per_condition": 512,
+    "B_main_calls": 60,
+    "B_repeat_hash_comparisons": 40,
+    "B_selected_challenge_coordinates": 1024,
+    "planned_conditional_C_workers": 6,
+    "actual_C_workers": 6,
+    "C_input_conditions": 24,
+    "C_main_calls": 144,
+    "C_repeat_hash_comparisons": 96,
+    "module_core_contract_calls": 16,
+    "profiler_calls": 4,
+    "other_preparation_calls": 0,
+    "main_calls_total": 204,
+    "new_full_model_forwards": 0,
+    "input_extraction_forwards": 0,
+    "new_model_or_document_samples": 0,
+    "GPU_computational_workers": 12,
+    "GPU_blocked_before_spawn": 1,
+    "GPU_availability_wait_records": 1,
+    "GPU_closeout_query_records": 1,
+    "all_core_calls": 224
+  },
+  "budget": {
+    "old_campaign_GPU_parent_seconds": 2053.7113375610024,
+    "old_campaign_GPU_workers": 44,
+    "caps": {
+      "new_GPU": 600,
+      "new_CPU": 1200,
+      "campaign_GPU": 7200
+    },
+    "ledger_identity": {
+      "bytes": 52411,
+      "sha256": "c04124d2a1aec229f84eb5921007012d1f88dee578d41f1fdb02d737c1393092"
+    },
+    "scope": "Computational workers and read-only GPU gate/wait/closeout; code/document editing wall NOT_MEASURED separately. Historical P4 ledger definition preserved.",
+    "GPU": {
+      "records": 15,
+      "spawned_workers": 12,
+      "parent_wall_seconds": 229.25260680900828,
+      "child_CPU_user_seconds": 65.084143,
+      "child_CPU_system_seconds": 9.611431,
+      "parent_CPU_seconds": 0.9342292,
+      "maximum_child_peak_RSS_KiB": 1630140,
+      "nonzero_exit_records": [
+        "gpu-C-l0-b0"
+      ]
+    },
+    "CPU": {
+      "records": 21,
+      "spawned_workers": 21,
+      "parent_wall_seconds": 61.07745790700574,
+      "child_CPU_user_seconds": 49.459607,
+      "child_CPU_system_seconds": 15.639434,
+      "parent_CPU_seconds": 0.1296313,
+      "maximum_child_peak_RSS_KiB": 253072,
+      "nonzero_exit_records": [
+        "cpu-fixtures",
+        "cpu-select"
+      ]
+    },
+    "campaign_GPU_parent_seconds": 2282.9639443700107,
+    "remaining_campaign_seconds": 4917.036055629989,
+    "remaining_P5_GPU_seconds": 370.7473931909917,
+    "remaining_P5_CPU_seconds": 1138.9225420929943
+  },
+  "source_GPU_bundle": "7ae5fd4260fbbd01d35e203a0175ed642b9c6dcb832da956a6063936ad45c86c",
+  "source_C_gate_bundle": "6819ce9ad9c6cebabf9a7db3f289156ca1812bc43a5f0df33a18c82772e63f14",
+  "protocol_identity": {
+    "bytes": 3452,
+    "sha256": "c0d84da9923055e4997f2b133583643a054f375bc92e03fab1f810da8e60f008"
+  },
+  "input_manifest_identity": {
+    "bytes": 1248145,
+    "sha256": "86ba4afec66adf16a15c3a1a33f06f238dcdabb64456653d403b04c2e371969c"
+  },
+  "CPU_candidate_selection": {
+    "documents": [
+      "dev_code_00",
+      "dev_code_01"
+    ],
+    "pool_rows": {
+      "0": 4074,
+      "25": 4094
+    },
+    "actual_rows": {
+      "0": 2026,
+      "25": 2046
+    },
+    "challenge_valid_rows": {
+      "0": 512,
+      "25": 512
+    },
+    "exact_scalar_coordinates": 384,
+    "nonfinite_exclusions": [],
+    "new_GPU_outputs_seen": false,
+    "A_B_hypotheses": "Arithmetic discriminators only; neither assumed to be the Marlin implementation"
+  },
+  "actual_B_coefficient_document_coverage": [
+    "dev_code_00"
+  ],
+  "C_document_coverage": [
+    "dev_code_00",
+    "dev_code_01"
+  ],
+  "max_allocated_peak_bytes": 50668032,
+  "max_reserved_peak_bytes": 81788928,
+  "C_oracle_SSE_order": {
+    "dense64": {
+      "P_lower_SSE": 11,
+      "D1_lower_SSE": 2,
+      "equal_SSE": 11,
+      "scope": "Raw descriptive SSE ordering across24 fixed conditions, no effect threshold or independent workload claim"
+    },
+    "exact64": {
+      "P_lower_SSE": 7,
+      "D1_lower_SSE": 6,
+      "equal_SSE": 11,
+      "scope": "Raw descriptive SSE ordering across24 fixed conditions, no effect threshold or independent workload claim"
+    }
+  }
+}

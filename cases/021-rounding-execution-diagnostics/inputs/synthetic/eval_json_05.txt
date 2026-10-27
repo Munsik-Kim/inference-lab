@@ -1,0 +1,100 @@
+{
+  "title": "Route closure notice",
+  "purpose": "Represent a road maintenance closure and the routes that remain available",
+  "schema_version": 1,
+  "operating_rule": "Emergency access is reviewed independently from general traffic. The detour notice states a start and an end time instead of assuming a closure lasts all day.",
+  "units": "illustrative dimensionless values; field names identify the intended quantity",
+  "records": [
+    {
+      "record_id": 1,
+      "entity": "bridge",
+      "observations": {
+        "start_hour": 76,
+        "end_hour": 26,
+        "vehicle_limit": 24,
+        "lane_count": 24,
+        "detour_minutes": 10,
+        "notice_days": 9
+      },
+      "review_note": "bridge is inspected at its own checkpoint. Values for start_hour, end_hour, vehicle_limit are recorded before the decision for this route closure notice is made.",
+      "evidence_rule": "Emergency access is reviewed independently from general traffic. The detour notice states a start and an end time instead of assuming a closure lasts all day.",
+      "next_action": "Compare end_hour with the applicable operating limit, record the result, and assign a follow-up for bridge when evidence is incomplete."
+    },
+    {
+      "record_id": 2,
+      "entity": "junction",
+      "observations": {
+        "start_hour": 30,
+        "end_hour": 87,
+        "vehicle_limit": 81,
+        "lane_count": 37,
+        "detour_minutes": 8,
+        "notice_days": 81
+      },
+      "review_note": "junction is inspected at its own checkpoint. Values for start_hour, end_hour, vehicle_limit are recorded before the decision for this route closure notice is made.",
+      "evidence_rule": "The reviewer preserves the measured end_hour and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare vehicle_limit with the applicable operating limit, record the result, and assign a follow-up for junction when evidence is incomplete."
+    },
+    {
+      "record_id": 3,
+      "entity": "depot",
+      "observations": {
+        "start_hour": 71,
+        "end_hour": 85,
+        "vehicle_limit": 15,
+        "lane_count": 4,
+        "detour_minutes": 4,
+        "notice_days": 28
+      },
+      "review_note": "depot is inspected at its own checkpoint. Values for start_hour, end_hour, vehicle_limit are recorded before the decision for this route closure notice is made.",
+      "evidence_rule": "The reviewer preserves the measured vehicle_limit and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare lane_count with the applicable operating limit, record the result, and assign a follow-up for depot when evidence is incomplete."
+    },
+    {
+      "record_id": 4,
+      "entity": "school_turn",
+      "observations": {
+        "start_hour": 89,
+        "end_hour": 49,
+        "vehicle_limit": 16,
+        "lane_count": 63,
+        "detour_minutes": 13,
+        "notice_days": 16
+      },
+      "review_note": "school_turn is inspected at its own checkpoint. Values for start_hour, end_hour, vehicle_limit are recorded before the decision for this route closure notice is made.",
+      "evidence_rule": "The reviewer preserves the measured lane_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare detour_minutes with the applicable operating limit, record the result, and assign a follow-up for school_turn when evidence is incomplete."
+    },
+    {
+      "record_id": 5,
+      "entity": "service_lane",
+      "observations": {
+        "start_hour": 43,
+        "end_hour": 72,
+        "vehicle_limit": 60,
+        "lane_count": 47,
+        "detour_minutes": 88,
+        "notice_days": 21
+      },
+      "review_note": "service_lane is inspected at its own checkpoint. Values for start_hour, end_hour, vehicle_limit are recorded before the decision for this route closure notice is made.",
+      "evidence_rule": "The reviewer preserves the measured detour_minutes and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare notice_days with the applicable operating limit, record the result, and assign a follow-up for service_lane when evidence is incomplete."
+    },
+    {
+      "record_id": 6,
+      "entity": "detour",
+      "observations": {
+        "start_hour": 20,
+        "end_hour": 55,
+        "vehicle_limit": 46,
+        "lane_count": 58,
+        "detour_minutes": 16,
+        "notice_days": 89
+      },
+      "review_note": "detour is inspected at its own checkpoint. Values for start_hour, end_hour, vehicle_limit are recorded before the decision for this route closure notice is made.",
+      "evidence_rule": "The reviewer preserves the measured notice_days and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare start_hour with the applicable operating limit, record the result, and assign a follow-up for detour when evidence is incomplete."
+    }
+  ],
+  "missing_value_policy": "Use null for an unobserved value. Never replace missing observations with zero. Keep the original record and append a dated correction."
+}

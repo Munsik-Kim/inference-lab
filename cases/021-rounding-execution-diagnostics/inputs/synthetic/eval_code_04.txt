@@ -1,0 +1,73 @@
+"""Configuration validation algorithm
+Purpose: Validate a small configuration before opening any service resources.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: Collect every field error in a stable order. An unknown field is reported separately from a missing required field so that a misspelling cannot silently select a default.
+
+Implementation review notes: Validate input before changing state. Preserve a stable ordering and return explicit errors. The examples below are synthetic fixtures, not production defaults.
+"""
+def validate_config(config, limits):
+    errors = []
+    for name in sorted(set(config) - set(limits)):
+        errors.append((name, 'unknown'))
+    for name, (lower, upper) in sorted(limits.items()):
+        if name not in config:
+            errors.append((name, 'missing'))
+            continue
+        value = config[name]
+        if type(value) is not int:
+            errors.append((name, 'not integer'))
+        elif not lower <= value <= upper:
+            errors.append((name, 'outside inclusive limits'))
+    return errors
+
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Observation:
+    entity: str
+    values: dict
+
+def validate_record(record):
+    errors = []
+    if not record.entity:
+        errors.append("entity is required")
+    for name, value in sorted(record.values.items()):
+        if not isinstance(value, int) or value < 0:
+            errors.append((name, "expected nonnegative integer"))
+    return errors
+
+def review_records(records):
+    reviewed = []
+    for sequence, record in enumerate(records):
+        errors = validate_record(record)
+        reviewed.append({"sequence": sequence, "entity": record.entity,
+                         "errors": errors, "accepted_for_review": not errors})
+    return reviewed
+
+EXAMPLES = [
+    # listener is inspected at its own checkpoint. Values for port, retry_limit, timeout_ms are recorded before the decision for this configuration validation algorithm is made.
+    # Compare retry_limit with the applicable operating limit, record the result, and assign a follow-up for listener when evidence is incomplete.
+    Observation('listener', {'port': 62, 'retry_limit': 9, 'timeout_ms': 45, 'queue_limit': 60, 'batch_size': 64, 'retention_days': 63}),
+    # storage is inspected at its own checkpoint. Values for port, retry_limit, timeout_ms are recorded before the decision for this configuration validation algorithm is made.
+    # Compare timeout_ms with the applicable operating limit, record the result, and assign a follow-up for storage when evidence is incomplete.
+    Observation('storage', {'port': 32, 'retry_limit': 52, 'timeout_ms': 6, 'queue_limit': 66, 'batch_size': 59, 'retention_days': 19}),
+    # logger is inspected at its own checkpoint. Values for port, retry_limit, timeout_ms are recorded before the decision for this configuration validation algorithm is made.
+    # Compare queue_limit with the applicable operating limit, record the result, and assign a follow-up for logger when evidence is incomplete.
+    Observation('logger', {'port': 6, 'retry_limit': 77, 'timeout_ms': 34, 'queue_limit': 86, 'batch_size': 12, 'retention_days': 58}),
+    # scheduler is inspected at its own checkpoint. Values for port, retry_limit, timeout_ms are recorded before the decision for this configuration validation algorithm is made.
+    # Compare batch_size with the applicable operating limit, record the result, and assign a follow-up for scheduler when evidence is incomplete.
+    Observation('scheduler', {'port': 82, 'retry_limit': 84, 'timeout_ms': 7, 'queue_limit': 22, 'batch_size': 70, 'retention_days': 44}),
+    # monitor is inspected at its own checkpoint. Values for port, retry_limit, timeout_ms are recorded before the decision for this configuration validation algorithm is made.
+    # Compare retention_days with the applicable operating limit, record the result, and assign a follow-up for monitor when evidence is incomplete.
+    Observation('monitor', {'port': 33, 'retry_limit': 10, 'timeout_ms': 7, 'queue_limit': 82, 'batch_size': 12, 'retention_days': 83}),
+    # healthcheck is inspected at its own checkpoint. Values for port, retry_limit, timeout_ms are recorded before the decision for this configuration validation algorithm is made.
+    # Compare port with the applicable operating limit, record the result, and assign a follow-up for healthcheck when evidence is incomplete.
+    Observation('healthcheck', {'port': 58, 'retry_limit': 48, 'timeout_ms': 43, 'queue_limit': 44, 'batch_size': 5, 'retention_days': 75}),
+]
+
+if __name__ == "__main__":
+    report = review_records(EXAMPLES)
+    assert len(report) == len(EXAMPLES)
+    assert [r["sequence"] for r in report] == list(range(len(EXAMPLES)))
+    for row in report:
+        print(row)

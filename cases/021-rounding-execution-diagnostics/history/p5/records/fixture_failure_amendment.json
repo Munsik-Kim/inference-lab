@@ -1,0 +1,27 @@
+{
+  "attempt": "cpu-fixtures",
+  "cause": "NumPy1.26 scalar uint32 left shift promoted to int64; view float32 of0d failed",
+  "fix": "Explicit uint32 shift amount; arithmetic unchanged; original failed source and receipt retained",
+  "new_modules": [
+    "arithmetic_v2.py",
+    "supervise_v2.py",
+    "p5a_v2.py",
+    "test_contracts_v2.py"
+  ],
+  "first_source": {
+    "source/arithmetic.py": {
+      "bytes": 4793,
+      "sha256": "5e5ac5c2a354e1f4e26bccb98ff4fef0f1ffb7994271a6db431cd6a25a41c564"
+    },
+    "tests/test_contracts.py": {
+      "bytes": 5824,
+      "sha256": "4f9e4f6a4ce5673a06b68c83c1d0089ce7e5c4a7e5a0b1639a1876c60e449524"
+    },
+    "source/supervise.py": {
+      "bytes": 6334,
+      "sha256": "a59fd8f1c79e3fdc23272c82df234e83da9f7fafd657bcba8dd36348379ae680"
+    }
+  },
+  "GPU_started": false,
+  "derived_P5_tables_observed": false
+}

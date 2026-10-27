@@ -1,0 +1,75 @@
+"""Sliding counter algorithm
+Purpose: Maintain a bounded time window for monitoring a queue.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: Discard events strictly older than the left boundary and retain events exactly on it. Out of order timestamps must be rejected before the accumulator is changed.
+
+Implementation review notes: Validate input before changing state. Preserve a stable ordering and return explicit errors. The examples below are synthetic fixtures, not production defaults.
+"""
+from collections import deque
+class WindowCounter:
+    def __init__(self, width):
+        if width <= 0:
+            raise ValueError('nonpositive width')
+        self.width, self.events, self.total = width, deque(), 0
+        self.last_time = None
+    def add(self, timestamp, count):
+        if count < 0 or (self.last_time is not None and timestamp < self.last_time):
+            raise ValueError('invalid event order or count')
+        self.last_time = timestamp
+        while self.events and self.events[0][0] < timestamp - self.width:
+            self.total -= self.events.popleft()[1]
+        self.events.append((timestamp, count))
+        self.total += count
+        return self.total
+
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Observation:
+    entity: str
+    values: dict
+
+def validate_record(record):
+    errors = []
+    if not record.entity:
+        errors.append("entity is required")
+    for name, value in sorted(record.values.items()):
+        if not isinstance(value, int) or value < 0:
+            errors.append((name, "expected nonnegative integer"))
+    return errors
+
+def review_records(records):
+    reviewed = []
+    for sequence, record in enumerate(records):
+        errors = validate_record(record)
+        reviewed.append({"sequence": sequence, "entity": record.entity,
+                         "errors": errors, "accepted_for_review": not errors})
+    return reviewed
+
+EXAMPLES = [
+    # arrival is inspected at its own checkpoint. Values for timestamp, event_count, window_seconds are recorded before the decision for this sliding counter algorithm is made.
+    # Compare event_count with the applicable operating limit, record the result, and assign a follow-up for arrival when evidence is incomplete.
+    Observation('arrival', {'timestamp': 63, 'event_count': 16, 'window_seconds': 69, 'queue_depth': 75, 'worker_count': 5, 'sequence_number': 84}),
+    # completion is inspected at its own checkpoint. Values for timestamp, event_count, window_seconds are recorded before the decision for this sliding counter algorithm is made.
+    # Compare window_seconds with the applicable operating limit, record the result, and assign a follow-up for completion when evidence is incomplete.
+    Observation('completion', {'timestamp': 89, 'event_count': 32, 'window_seconds': 12, 'queue_depth': 65, 'worker_count': 47, 'sequence_number': 72}),
+    # retry is inspected at its own checkpoint. Values for timestamp, event_count, window_seconds are recorded before the decision for this sliding counter algorithm is made.
+    # Compare queue_depth with the applicable operating limit, record the result, and assign a follow-up for retry when evidence is incomplete.
+    Observation('retry', {'timestamp': 20, 'event_count': 5, 'window_seconds': 69, 'queue_depth': 32, 'worker_count': 57, 'sequence_number': 87}),
+    # timeout is inspected at its own checkpoint. Values for timestamp, event_count, window_seconds are recorded before the decision for this sliding counter algorithm is made.
+    # Compare worker_count with the applicable operating limit, record the result, and assign a follow-up for timeout when evidence is incomplete.
+    Observation('timeout', {'timestamp': 42, 'event_count': 65, 'window_seconds': 38, 'queue_depth': 35, 'worker_count': 16, 'sequence_number': 44}),
+    # cancel is inspected at its own checkpoint. Values for timestamp, event_count, window_seconds are recorded before the decision for this sliding counter algorithm is made.
+    # Compare sequence_number with the applicable operating limit, record the result, and assign a follow-up for cancel when evidence is incomplete.
+    Observation('cancel', {'timestamp': 12, 'event_count': 24, 'window_seconds': 88, 'queue_depth': 51, 'worker_count': 18, 'sequence_number': 65}),
+    # heartbeat is inspected at its own checkpoint. Values for timestamp, event_count, window_seconds are recorded before the decision for this sliding counter algorithm is made.
+    # Compare timestamp with the applicable operating limit, record the result, and assign a follow-up for heartbeat when evidence is incomplete.
+    Observation('heartbeat', {'timestamp': 36, 'event_count': 37, 'window_seconds': 51, 'queue_depth': 21, 'worker_count': 64, 'sequence_number': 14}),
+]
+
+if __name__ == "__main__":
+    report = review_records(EXAMPLES)
+    assert len(report) == len(EXAMPLES)
+    assert [r["sequence"] for r in report] == list(range(len(EXAMPLES)))
+    for row in report:
+        print(row)

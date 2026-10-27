@@ -1,0 +1,52 @@
+{
+  "split": "DEV",
+  "full_forwards": 32,
+  "candidates": [
+    {
+      "layer": 25,
+      "boundary": "post_RoPE_Q",
+      "documents": 8,
+      "mean_KL_change": 1.872978108175686e-05,
+      "mean_baseline_KL": 0.0008993083707928967,
+      "mean_replaced_KL": 0.0009180381518746536,
+      "improved_documents": 5,
+      "worsened_documents": 3
+    },
+    {
+      "layer": 25,
+      "boundary": "block_output",
+      "documents": 8,
+      "mean_KL_change": -2.085992065703892e-05,
+      "mean_baseline_KL": 0.0008993083707928967,
+      "mean_replaced_KL": 0.0008784484501358578,
+      "improved_documents": 5,
+      "worsened_documents": 3
+    },
+    {
+      "layer": 27,
+      "boundary": "post_RoPE_Q",
+      "documents": 8,
+      "mean_KL_change": 1.95145727289864e-06,
+      "mean_baseline_KL": 0.0008993083707928967,
+      "mean_replaced_KL": 0.0009012598280657955,
+      "improved_documents": 4,
+      "worsened_documents": 3
+    },
+    {
+      "layer": 27,
+      "boundary": "block_output",
+      "documents": 8,
+      "mean_KL_change": 7.5415938604820025e-06,
+      "mean_baseline_KL": 0.0008993083707928967,
+      "mean_replaced_KL": 0.0009068499646533788,
+      "improved_documents": 4,
+      "worsened_documents": 4
+    }
+  ],
+  "positive_change": "More discrepancy; negative change means less discrepancy",
+  "scope": "One-boundary downstream sensitivity; reference value recomputed from the current P block input",
+  "selected": {
+    "layer": 25,
+    "boundary": "block_output"
+  }
+}

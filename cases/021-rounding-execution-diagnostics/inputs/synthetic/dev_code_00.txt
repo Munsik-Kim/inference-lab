@@ -1,0 +1,72 @@
+"""Inventory reservation algorithm
+Purpose: Implement deterministic allocation without creating stock that does not exist.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: Allocate at most the nonnegative usable stock. Preserve request order for equal priorities and record shortages instead of silently removing incomplete orders.
+
+Implementation review notes: Validate input before changing state. Preserve a stable ordering and return explicit errors. The examples below are synthetic fixtures, not production defaults.
+"""
+def reserve(stock, requests):
+    remaining = dict(stock)
+    decisions = []
+    ordered = sorted(enumerate(requests), key=lambda row: (-row[1]['priority'], row[0]))
+    for original_index, request in ordered:
+        item = request['item']
+        amount = request['quantity']
+        if amount < 0:
+            raise ValueError('negative request')
+        granted = min(amount, max(0, remaining.get(item, 0)))
+        remaining[item] = remaining.get(item, 0) - granted
+        decisions.append((original_index, item, granted, amount - granted))
+    return sorted(decisions), remaining
+
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Observation:
+    entity: str
+    values: dict
+
+def validate_record(record):
+    errors = []
+    if not record.entity:
+        errors.append("entity is required")
+    for name, value in sorted(record.values.items()):
+        if not isinstance(value, int) or value < 0:
+            errors.append((name, "expected nonnegative integer"))
+    return errors
+
+def review_records(records):
+    reviewed = []
+    for sequence, record in enumerate(records):
+        errors = validate_record(record)
+        reviewed.append({"sequence": sequence, "entity": record.entity,
+                         "errors": errors, "accepted_for_review": not errors})
+    return reviewed
+
+EXAMPLES = [
+    # washer is inspected at its own checkpoint. Values for available, requested, reserved are recorded before the decision for this inventory reservation algorithm is made.
+    # Compare requested with the applicable operating limit, record the result, and assign a follow-up for washer when evidence is incomplete.
+    Observation('washer', {'available': 10, 'requested': 17, 'reserved': 23, 'damaged': 35, 'returned': 54, 'priority': 39}),
+    # bolt is inspected at its own checkpoint. Values for available, requested, reserved are recorded before the decision for this inventory reservation algorithm is made.
+    # Compare reserved with the applicable operating limit, record the result, and assign a follow-up for bolt when evidence is incomplete.
+    Observation('bolt', {'available': 16, 'requested': 54, 'reserved': 53, 'damaged': 7, 'returned': 37, 'priority': 78}),
+    # nut is inspected at its own checkpoint. Values for available, requested, reserved are recorded before the decision for this inventory reservation algorithm is made.
+    # Compare damaged with the applicable operating limit, record the result, and assign a follow-up for nut when evidence is incomplete.
+    Observation('nut', {'available': 89, 'requested': 31, 'reserved': 43, 'damaged': 48, 'returned': 42, 'priority': 71}),
+    # bracket is inspected at its own checkpoint. Values for available, requested, reserved are recorded before the decision for this inventory reservation algorithm is made.
+    # Compare returned with the applicable operating limit, record the result, and assign a follow-up for bracket when evidence is incomplete.
+    Observation('bracket', {'available': 63, 'requested': 73, 'reserved': 61, 'damaged': 64, 'returned': 8, 'priority': 67}),
+    # gasket is inspected at its own checkpoint. Values for available, requested, reserved are recorded before the decision for this inventory reservation algorithm is made.
+    # Compare priority with the applicable operating limit, record the result, and assign a follow-up for gasket when evidence is incomplete.
+    Observation('gasket', {'available': 67, 'requested': 27, 'reserved': 61, 'damaged': 37, 'returned': 30, 'priority': 24}),
+    # spring is inspected at its own checkpoint. Values for available, requested, reserved are recorded before the decision for this inventory reservation algorithm is made.
+    # Compare available with the applicable operating limit, record the result, and assign a follow-up for spring when evidence is incomplete.
+    Observation('spring', {'available': 10, 'requested': 3, 'reserved': 54, 'damaged': 37, 'returned': 83, 'priority': 12}),
+]
+
+if __name__ == "__main__":
+    report = review_records(EXAMPLES)
+    assert len(report) == len(EXAMPLES)
+    assert [r["sequence"] for r in report] == list(range(len(EXAMPLES)))
+    for row in report:
+        print(row)

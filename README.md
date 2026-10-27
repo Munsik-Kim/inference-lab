@@ -123,3 +123,9 @@ The [implementation / upstream technology / code / tests table](docs/en/PORTFOLI
 ## Contribution and sources
 
 DIOVA stands for **Deep-learning Inference Optimization, Validation & Analysis**. The project connects comparison runners, model-changing tools, checks and result screens to public models and libraries. The [contribution and source notes](docs/en/PORTFOLIO.md#contribution-and-reuse) identify authors and reused work. OpenAI Codex assisted implementation, execution, analysis and writing. [Apache-2.0](LICENSE) applies to project materials; case notices retain upstream terms. Production deployment suitability has not been assessed.
+
+## Case021 — Why can the same INT4 artifact produce different results?
+
+The same Qwen3-0.6B compressed artifact was executed through dense and Marlin paths. Tested single terms matched; combining actual values left small differences. The original24-document Q/K precision-effect verdict remains **INCONCLUSIVE**. Representation, execution and later sensitivity are kept distinct.
+
+[Plain explanation](cases/021-rounding-execution-diagnostics/README.md) · [Report](cases/021-rounding-execution-diagnostics/REPORT.md) · [Public CPU checks](cases/021-rounding-execution-diagnostics/REPRODUCE.md)

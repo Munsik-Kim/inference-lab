@@ -1,0 +1,100 @@
+{
+  "utc": "2026-10-27T00:55:04.399587+00:00",
+  "python": "3.12.14 (main, Sep  2 2026, 23:27:36) [GCC 15.3.0]",
+  "executable": "<PRIVATE_LOCAL_ROOT>/dualquant_5080_long_agent_20261013/.venv-reference/bin/python",
+  "sys_path": [
+    "<PRIVATE_LOCAL_ROOT>/source",
+    "<PRIVATE_LOCAL_ROOT>/inference-lab/.venv-case002/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages",
+    "<PRIVATE_LOCAL_ROOT>/inference-lab/.venv-case002/lib/python312.zip",
+    "<PRIVATE_LOCAL_ROOT>/inference-lab/.venv-case002/lib/python3.12",
+    "<PRIVATE_LOCAL_ROOT>/inference-lab/.venv-case002/lib/python3.12/lib-dynload",
+    "<PRIVATE_LOCAL_ROOT>/dualquant_5080_long_agent_20261013/.venv-reference/lib/python3.12/site-packages",
+    "<PRIVATE_LOCAL_ROOT>/inference-lab/.venv-case002/lib/python3.12/site-packages"
+  ],
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "versions": {
+    "torch": "2.13.0",
+    "transformers": "5.17.0",
+    "vllm": "0.29.0",
+    "numpy": "2.3.5",
+    "safetensors": "0.8.0"
+  },
+  "torch_cuda": "13.0",
+  "gpu_name": "NVIDIA GeForce RTX 5080",
+  "capability": [
+    12,
+    0
+  ],
+  "device_properties": "_CudaDeviceProperties(name='NVIDIA GeForce RTX 5080', major=12, minor=0, total_memory=16275MB, multi_processor_count=84, uuid=0c06b35c-9f8e-8655-2f36-08c51ee96e0b, pci_bus_id=1, pci_device_id=0, pci_domain_id=0, L2_cache_size=64MB)",
+  "flags": {
+    "allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "allow_bf16_reduced_precision_reduction": false,
+    "allow_fp16_reduced_precision_reduction": false,
+    "marlin_use_fp32_reduce": true,
+    "marlin_use_atomic_add": false,
+    "threads": 2,
+    "attention_backend": "sdpa",
+    "eager": true,
+    "inference_mode": true
+  },
+  "runtime_sources": {
+    "<PRIVATE_LOCAL_ROOT>/inference-lab/.venv-case002/lib/python3.12/site-packages/transformers/models/qwen3/modeling_qwen3.py": {
+      "bytes": 23039,
+      "sha256": "cbb7f2dc274c2f5592746c0dc6985ca50353efa07376f92cc922b77680a74f69"
+    },
+    "<PRIVATE_LOCAL_ROOT>/inference-lab/.venv-case002/lib/python3.12/site-packages/torch/__init__.py": {
+      "bytes": 111841,
+      "sha256": "cf40c075c95864036e835795756d69b8cccfafa76f3bcde5eba9d06065ccd3d1"
+    },
+    "<PRIVATE_LOCAL_ROOT>/inference-lab/.venv-case002/lib/python3.12/site-packages/vllm/__init__.py": {
+      "bytes": 3661,
+      "sha256": "fd3708e5a13abe98c566afd79a6b1987cef70c0548bb19c1218ff6a7f9d43346"
+    },
+    "<PRIVATE_LOCAL_ROOT>/inference-lab/.venv-case002/lib/python3.12/site-packages/vllm/_custom_ops.py": {
+      "bytes": 127341,
+      "sha256": "d384c2684db4b605031266acd6f8c0235df773ba89c91852d697aed02108baa1"
+    },
+    "<PRIVATE_LOCAL_ROOT>/inference-lab/.venv-case002/lib/python3.12/site-packages/vllm/model_executor/layers/quantization/utils/marlin_utils.py": {
+      "bytes": 26649,
+      "sha256": "6f91cbf2b0ae276abd4b57b80b20f260307f9df3e24d40ee2b0abf76f4c7f100"
+    }
+  },
+  "marlin_binaries": {
+    "<PRIVATE_LOCAL_ROOT>/inference-lab/.venv-case002/lib/python3.12/site-packages/vllm/_C_stable_libtorch.abi3.so": {
+      "bytes": 81090008,
+      "sha256": "0375f3ec05f823961476dfe3450cb67df385eb9541eeed29e5daccc28a142ecb"
+    }
+  },
+  "cache_environment": {
+    "HF_HOME": "<PRIVATE_LOCAL_ROOT>/cache/HF_HOME",
+    "XDG_CACHE_HOME": "<PRIVATE_LOCAL_ROOT>/cache/XDG_CACHE_HOME",
+    "TRITON_CACHE_DIR": "<PRIVATE_LOCAL_ROOT>/cache/TRITON_CACHE_DIR",
+    "CUDA_CACHE_PATH": "<PRIVATE_LOCAL_ROOT>/cache/CUDA_CACHE_PATH",
+    "PYTORCH_CUDA_ALLOC_CONF": null,
+    "OMP_NUM_THREADS": "2",
+    "MKL_NUM_THREADS": "2",
+    "OPENBLAS_NUM_THREADS": "2"
+  },
+  "environment_reuse": "Read-only inherited existing runtime; not a clean environment",
+  "historical_driver": "610.88",
+  "driver_status": "See parent telemetry; environment drift is reported separately"
+}

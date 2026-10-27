@@ -1,0 +1,74 @@
+"""Tree traversal algorithm
+Purpose: Walk a directory-like tree while preventing accidental cycles.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: Mark a node before visiting its children. Encountering an already active node signals a cycle; encountering a completed shared node can reuse its recorded summary.
+
+Implementation review notes: Validate input before changing state. Preserve a stable ordering and return explicit errors. The examples below are synthetic fixtures, not production defaults.
+"""
+def postorder(graph, root):
+    active, complete, result = set(), set(), []
+    def visit(node):
+        if node in active:
+            raise ValueError('cycle')
+        if node in complete:
+            return
+        active.add(node)
+        for child in graph.get(node, []):
+            visit(child)
+        active.remove(node)
+        complete.add(node)
+        result.append(node)
+    visit(root)
+    return result
+
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Observation:
+    entity: str
+    values: dict
+
+def validate_record(record):
+    errors = []
+    if not record.entity:
+        errors.append("entity is required")
+    for name, value in sorted(record.values.items()):
+        if not isinstance(value, int) or value < 0:
+            errors.append((name, "expected nonnegative integer"))
+    return errors
+
+def review_records(records):
+    reviewed = []
+    for sequence, record in enumerate(records):
+        errors = validate_record(record)
+        reviewed.append({"sequence": sequence, "entity": record.entity,
+                         "errors": errors, "accepted_for_review": not errors})
+    return reviewed
+
+EXAMPLES = [
+    # root is inspected at its own checkpoint. Values for node_id, parent_id, child_count are recorded before the decision for this tree traversal algorithm is made.
+    # Compare parent_id with the applicable operating limit, record the result, and assign a follow-up for root when evidence is incomplete.
+    Observation('root', {'node_id': 75, 'parent_id': 32, 'child_count': 88, 'depth': 5, 'byte_count': 23, 'visit_order': 49}),
+    # drafts is inspected at its own checkpoint. Values for node_id, parent_id, child_count are recorded before the decision for this tree traversal algorithm is made.
+    # Compare child_count with the applicable operating limit, record the result, and assign a follow-up for drafts when evidence is incomplete.
+    Observation('drafts', {'node_id': 87, 'parent_id': 2, 'child_count': 25, 'depth': 49, 'byte_count': 9, 'visit_order': 25}),
+    # approved is inspected at its own checkpoint. Values for node_id, parent_id, child_count are recorded before the decision for this tree traversal algorithm is made.
+    # Compare depth with the applicable operating limit, record the result, and assign a follow-up for approved when evidence is incomplete.
+    Observation('approved', {'node_id': 30, 'parent_id': 27, 'child_count': 75, 'depth': 33, 'byte_count': 71, 'visit_order': 54}),
+    # archive is inspected at its own checkpoint. Values for node_id, parent_id, child_count are recorded before the decision for this tree traversal algorithm is made.
+    # Compare byte_count with the applicable operating limit, record the result, and assign a follow-up for archive when evidence is incomplete.
+    Observation('archive', {'node_id': 3, 'parent_id': 79, 'child_count': 78, 'depth': 3, 'byte_count': 36, 'visit_order': 56}),
+    # attachments is inspected at its own checkpoint. Values for node_id, parent_id, child_count are recorded before the decision for this tree traversal algorithm is made.
+    # Compare visit_order with the applicable operating limit, record the result, and assign a follow-up for attachments when evidence is incomplete.
+    Observation('attachments', {'node_id': 33, 'parent_id': 24, 'child_count': 31, 'depth': 59, 'byte_count': 85, 'visit_order': 47}),
+    # exports is inspected at its own checkpoint. Values for node_id, parent_id, child_count are recorded before the decision for this tree traversal algorithm is made.
+    # Compare node_id with the applicable operating limit, record the result, and assign a follow-up for exports when evidence is incomplete.
+    Observation('exports', {'node_id': 74, 'parent_id': 70, 'child_count': 35, 'depth': 14, 'byte_count': 77, 'visit_order': 75}),
+]
+
+if __name__ == "__main__":
+    report = review_records(EXAMPLES)
+    assert len(report) == len(EXAMPLES)
+    assert [r["sequence"] for r in report] == list(range(len(EXAMPLES)))
+    for row in report:
+        print(row)

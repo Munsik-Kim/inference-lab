@@ -1,0 +1,100 @@
+{
+  "title": "Sensor calibration package",
+  "purpose": "Record a calibration series with independent reference and device readings",
+  "schema_version": 1,
+  "operating_rule": "A calibration point keeps both raw readings and the correction. Results outside tolerance are retained so the record does not become a list of successful points only.",
+  "units": "illustrative dimensionless values; field names identify the intended quantity",
+  "records": [
+    {
+      "record_id": 1,
+      "entity": "reference_meter",
+      "observations": {
+        "reference_value": 10,
+        "observed_value": 39,
+        "tolerance": 76,
+        "dwell_seconds": 4,
+        "ambient_temperature": 60,
+        "repeat_number": 24
+      },
+      "review_note": "reference_meter is inspected at its own checkpoint. Values for reference_value, observed_value, tolerance are recorded before the decision for this sensor calibration package is made.",
+      "evidence_rule": "A calibration point keeps both raw readings and the correction. Results outside tolerance are retained so the record does not become a list of successful points only.",
+      "next_action": "Compare observed_value with the applicable operating limit, record the result, and assign a follow-up for reference_meter when evidence is incomplete."
+    },
+    {
+      "record_id": 2,
+      "entity": "probe_one",
+      "observations": {
+        "reference_value": 38,
+        "observed_value": 69,
+        "tolerance": 12,
+        "dwell_seconds": 4,
+        "ambient_temperature": 62,
+        "repeat_number": 85
+      },
+      "review_note": "probe_one is inspected at its own checkpoint. Values for reference_value, observed_value, tolerance are recorded before the decision for this sensor calibration package is made.",
+      "evidence_rule": "The reviewer preserves the measured observed_value and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare tolerance with the applicable operating limit, record the result, and assign a follow-up for probe_one when evidence is incomplete."
+    },
+    {
+      "record_id": 3,
+      "entity": "probe_two",
+      "observations": {
+        "reference_value": 20,
+        "observed_value": 62,
+        "tolerance": 14,
+        "dwell_seconds": 26,
+        "ambient_temperature": 25,
+        "repeat_number": 80
+      },
+      "review_note": "probe_two is inspected at its own checkpoint. Values for reference_value, observed_value, tolerance are recorded before the decision for this sensor calibration package is made.",
+      "evidence_rule": "The reviewer preserves the measured tolerance and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare dwell_seconds with the applicable operating limit, record the result, and assign a follow-up for probe_two when evidence is incomplete."
+    },
+    {
+      "record_id": 4,
+      "entity": "zero_source",
+      "observations": {
+        "reference_value": 16,
+        "observed_value": 80,
+        "tolerance": 48,
+        "dwell_seconds": 21,
+        "ambient_temperature": 44,
+        "repeat_number": 19
+      },
+      "review_note": "zero_source is inspected at its own checkpoint. Values for reference_value, observed_value, tolerance are recorded before the decision for this sensor calibration package is made.",
+      "evidence_rule": "The reviewer preserves the measured dwell_seconds and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare ambient_temperature with the applicable operating limit, record the result, and assign a follow-up for zero_source when evidence is incomplete."
+    },
+    {
+      "record_id": 5,
+      "entity": "span_source",
+      "observations": {
+        "reference_value": 73,
+        "observed_value": 89,
+        "tolerance": 12,
+        "dwell_seconds": 31,
+        "ambient_temperature": 50,
+        "repeat_number": 62
+      },
+      "review_note": "span_source is inspected at its own checkpoint. Values for reference_value, observed_value, tolerance are recorded before the decision for this sensor calibration package is made.",
+      "evidence_rule": "The reviewer preserves the measured ambient_temperature and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare repeat_number with the applicable operating limit, record the result, and assign a follow-up for span_source when evidence is incomplete."
+    },
+    {
+      "record_id": 6,
+      "entity": "chamber",
+      "observations": {
+        "reference_value": 60,
+        "observed_value": 37,
+        "tolerance": 42,
+        "dwell_seconds": 11,
+        "ambient_temperature": 11,
+        "repeat_number": 67
+      },
+      "review_note": "chamber is inspected at its own checkpoint. Values for reference_value, observed_value, tolerance are recorded before the decision for this sensor calibration package is made.",
+      "evidence_rule": "The reviewer preserves the measured repeat_number and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.",
+      "next_action": "Compare reference_value with the applicable operating limit, record the result, and assign a follow-up for chamber when evidence is incomplete."
+    }
+  ],
+  "missing_value_policy": "Use null for an unobserved value. Never replace missing observations with zero. Keep the original record and append a dated correction."
+}

@@ -1,0 +1,85 @@
+Cold chain transfer record
+Purpose: Describe temperature evidence when sealed packages move between stores.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: A logger gap is reviewed as missing evidence, not a compliant temperature. Receiving staff record both package condition and the time the package reached cold storage.
+
+record_format = sectioned key-value register
+review_policy = retain original observations and append corrections
+
+[record_1]
+record_id = 1
+entity = loading_dock
+observations.minimum_temperature = 23
+observations.maximum_temperature = 37
+observations.transit_minutes = 77
+observations.logger_gap = 37
+observations.seal_count = 36
+observations.remaining_hold_hours = 47
+review_note = loading_dock is inspected at its own checkpoint. Values for minimum_temperature, maximum_temperature, transit_minutes are recorded before the decision for this cold chain transfer record is made.
+evidence_rule = A logger gap is reviewed as missing evidence, not a compliant temperature. Receiving staff record both package condition and the time the package reached cold storage.
+next_action = Compare maximum_temperature with the applicable operating limit, record the result, and assign a follow-up for loading_dock when evidence is incomplete.
+
+[record_2]
+record_id = 2
+entity = insulated_box
+observations.minimum_temperature = 30
+observations.maximum_temperature = 72
+observations.transit_minutes = 52
+observations.logger_gap = 39
+observations.seal_count = 73
+observations.remaining_hold_hours = 77
+review_note = insulated_box is inspected at its own checkpoint. Values for minimum_temperature, maximum_temperature, transit_minutes are recorded before the decision for this cold chain transfer record is made.
+evidence_rule = The reviewer preserves the measured maximum_temperature and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare transit_minutes with the applicable operating limit, record the result, and assign a follow-up for insulated_box when evidence is incomplete.
+
+[record_3]
+record_id = 3
+entity = transport_van
+observations.minimum_temperature = 33
+observations.maximum_temperature = 11
+observations.transit_minutes = 8
+observations.logger_gap = 69
+observations.seal_count = 64
+observations.remaining_hold_hours = 19
+review_note = transport_van is inspected at its own checkpoint. Values for minimum_temperature, maximum_temperature, transit_minutes are recorded before the decision for this cold chain transfer record is made.
+evidence_rule = The reviewer preserves the measured transit_minutes and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare logger_gap with the applicable operating limit, record the result, and assign a follow-up for transport_van when evidence is incomplete.
+
+[record_4]
+record_id = 4
+entity = receiving_desk
+observations.minimum_temperature = 69
+observations.maximum_temperature = 19
+observations.transit_minutes = 49
+observations.logger_gap = 57
+observations.seal_count = 39
+observations.remaining_hold_hours = 78
+review_note = receiving_desk is inspected at its own checkpoint. Values for minimum_temperature, maximum_temperature, transit_minutes are recorded before the decision for this cold chain transfer record is made.
+evidence_rule = The reviewer preserves the measured logger_gap and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare seal_count with the applicable operating limit, record the result, and assign a follow-up for receiving_desk when evidence is incomplete.
+
+[record_5]
+record_id = 5
+entity = freezer
+observations.minimum_temperature = 26
+observations.maximum_temperature = 87
+observations.transit_minutes = 46
+observations.logger_gap = 2
+observations.seal_count = 42
+observations.remaining_hold_hours = 50
+review_note = freezer is inspected at its own checkpoint. Values for minimum_temperature, maximum_temperature, transit_minutes are recorded before the decision for this cold chain transfer record is made.
+evidence_rule = The reviewer preserves the measured seal_count and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare remaining_hold_hours with the applicable operating limit, record the result, and assign a follow-up for freezer when evidence is incomplete.
+
+[record_6]
+record_id = 6
+entity = shelf
+observations.minimum_temperature = 73
+observations.maximum_temperature = 64
+observations.transit_minutes = 7
+observations.logger_gap = 56
+observations.seal_count = 28
+observations.remaining_hold_hours = 16
+review_note = shelf is inspected at its own checkpoint. Values for minimum_temperature, maximum_temperature, transit_minutes are recorded before the decision for this cold chain transfer record is made.
+evidence_rule = The reviewer preserves the measured remaining_hold_hours and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare minimum_temperature with the applicable operating limit, record the result, and assign a follow-up for shelf when evidence is incomplete.

@@ -1,0 +1,210 @@
+{
+  "execution_status": "COMPLETE",
+  "p5a_status": "COMPLETE",
+  "p5b_status": "COMPLETE",
+  "p5c_status": "COMPLETE_CONDITIONAL_BRANCH_D",
+  "original_primary_verdict": "INCONCLUSIVE",
+  "study_scope": "POSTHOC_DIAGNOSTIC",
+  "single_term_difference": "NOT_OBSERVED",
+  "candidate_fit": {
+    "coordinates": 10485760,
+    "discriminating_coordinates": 406626,
+    "A_only": 406626,
+    "B_only": 0,
+    "both": 10079134,
+    "neither": 0,
+    "undefined": 0
+  },
+  "sparse_difference": [
+    {
+      "layer": 0,
+      "document_id": "dev_code_00",
+      "first_observed_K": 64,
+      "conditions": [
+        {
+          "K": 1,
+          "numeric_mismatch": 0,
+          "max_steps": 0,
+          "norm64": 195.70655843349806
+        },
+        {
+          "K": 2,
+          "numeric_mismatch": 0,
+          "max_steps": 0,
+          "norm64": 297.82116832107596
+        },
+        {
+          "K": 8,
+          "numeric_mismatch": 0,
+          "max_steps": 0,
+          "norm64": 595.2211550005879
+        },
+        {
+          "K": 64,
+          "numeric_mismatch": 16,
+          "max_steps": 64,
+          "norm64": 1658.8354157889312
+        },
+        {
+          "K": 256,
+          "numeric_mismatch": 97,
+          "max_steps": 2,
+          "norm64": 3259.988363036533
+        },
+        {
+          "K": 1024,
+          "numeric_mismatch": 353,
+          "max_steps": 17,
+          "norm64": 6528.556094824559
+        }
+      ]
+    },
+    {
+      "layer": 0,
+      "document_id": "dev_code_01",
+      "first_observed_K": 8,
+      "conditions": [
+        {
+          "K": 1,
+          "numeric_mismatch": 0,
+          "max_steps": 0,
+          "norm64": 195.94898535393241
+        },
+        {
+          "K": 2,
+          "numeric_mismatch": 0,
+          "max_steps": 0,
+          "norm64": 276.2005312054341
+        },
+        {
+          "K": 8,
+          "numeric_mismatch": 1,
+          "max_steps": 1,
+          "norm64": 587.701083658559
+        },
+        {
+          "K": 64,
+          "numeric_mismatch": 11,
+          "max_steps": 1,
+          "norm64": 1641.9758557932958
+        },
+        {
+          "K": 256,
+          "numeric_mismatch": 90,
+          "max_steps": 3,
+          "norm64": 3258.3699877563618
+        },
+        {
+          "K": 1024,
+          "numeric_mismatch": 332,
+          "max_steps": 2,
+          "norm64": 6509.82710706825
+        }
+      ]
+    },
+    {
+      "layer": 25,
+      "document_id": "dev_code_00",
+      "first_observed_K": 64,
+      "conditions": [
+        {
+          "K": 1,
+          "numeric_mismatch": 0,
+          "max_steps": 0,
+          "norm64": 8032.68745961098
+        },
+        {
+          "K": 2,
+          "numeric_mismatch": 0,
+          "max_steps": 0,
+          "norm64": 12291.651963784756
+        },
+        {
+          "K": 8,
+          "numeric_mismatch": 0,
+          "max_steps": 0,
+          "norm64": 26058.11366654636
+        },
+        {
+          "K": 64,
+          "numeric_mismatch": 17,
+          "max_steps": 1,
+          "norm64": 75117.85399873575
+        },
+        {
+          "K": 256,
+          "numeric_mismatch": 97,
+          "max_steps": 4,
+          "norm64": 150091.24571595763
+        },
+        {
+          "K": 1024,
+          "numeric_mismatch": 365,
+          "max_steps": 33,
+          "norm64": 301117.44333742897
+        }
+      ]
+    },
+    {
+      "layer": 25,
+      "document_id": "dev_code_01",
+      "first_observed_K": 64,
+      "conditions": [
+        {
+          "K": 1,
+          "numeric_mismatch": 0,
+          "max_steps": 0,
+          "norm64": 9655.334847514492
+        },
+        {
+          "K": 2,
+          "numeric_mismatch": 0,
+          "max_steps": 0,
+          "norm64": 13024.7487587713
+        },
+        {
+          "K": 8,
+          "numeric_mismatch": 0,
+          "max_steps": 0,
+          "norm64": 26916.883641107837
+        },
+        {
+          "K": 64,
+          "numeric_mismatch": 20,
+          "max_steps": 2,
+          "norm64": 74486.39350192266
+        },
+        {
+          "K": 256,
+          "numeric_mismatch": 88,
+          "max_steps": 4,
+          "norm64": 149919.5639719455
+        },
+        {
+          "K": 1024,
+          "numeric_mismatch": 338,
+          "max_steps": 44,
+          "norm64": 300258.40679662704
+        }
+      ]
+    }
+  ],
+  "mechanism_conclusion": "No D1/P single-term difference in the tested fixed and actual coefficients. Differences appear only at multi-term masks in this grid. Internal arithmetic order, partial sums and scale placement are not isolated. This does not explain all historical logits drift.",
+  "public_readiness": "LOCAL_CANDIDATE_READY",
+  "new_gpu_parent_wall": 229.25260680900828,
+  "campaign_wall": 2282.9639443700107,
+  "remaining_budget": 4917.036055629989,
+  "new_cpu_wall": 61.07745790700574,
+  "preservation_status": "UNCHANGED",
+  "not_run": [
+    "new full-model forward",
+    "new training/generation/serving",
+    "new model/data or installation/upgrade",
+    "norm-only/RoPE-only separation",
+    "new holdout",
+    "kernel changes or speed sweep",
+    "Git stage/commit/push/PR/merge",
+    "remote CI/publication/Pages/Drive"
+  ],
+  "GPU_diagnostics_closed": true
+}

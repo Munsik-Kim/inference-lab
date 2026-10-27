@@ -11,6 +11,7 @@ from case017 import home_case017
 from case018 import home_case018
 from case019 import home_case019
 from case020 import home_case020
+from case021 import home_case021
 
 C8_PATH = 'cases/008-build-reconstruct-reload'
 C8_REVISION = '9bc8b8fced8dfd5147f9bfdc67564eda04670810'
@@ -73,7 +74,7 @@ def output_metrics(data8: dict) -> dict[str, str]:
 
 def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
          revision: str, data8: dict | None = None, data9: dict | None = None, data10: dict | None = None, data11: dict | None = None, data12: dict | None = None, data13: dict | None = None,
-         practical_stories: str = '', data14: dict | None = None, data15: dict | None = None, data16: dict | None = None, data17: dict | None = None, data18: dict | None = None, data19: dict | None = None, data20: dict | None = None) -> str:
+         practical_stories: str = '', data14: dict | None = None, data15: dict | None = None, data16: dict | None = None, data17: dict | None = None, data18: dict | None = None, data19: dict | None = None, data20: dict | None = None, data21: dict | None = None) -> str:
     if len(case_paths) != len(names):
         raise ValueError('Every case needs a translated archive title')
     docs = f'https://github.com/Munsik-Kim/inference-lab/blob/main/docs/{lang}/'
@@ -130,6 +131,7 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     out += home_case018(data18, lang) if data18 else ''
     out += home_case019(data19, lang) if data19 else ''
     out += home_case020(data20, lang) if data20 else ''
+    out += home_case021(data21, lang) if data21 else ''
     out += home_case017(data17, lang) if data17 else ''
     out += home_case016(data16, lang) if data16 else ''
     out += home_case015(data15, lang) if data15 else ''

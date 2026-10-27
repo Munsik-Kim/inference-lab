@@ -1,0 +1,120 @@
+# Case021 보고서 — 표현·실행·전파의 차이를 나누어 보기
+
+[English](REPORT.md) · [쉬운 소개](README.ko.md) · [재현](REPRODUCE.ko.md)
+
+같은 D16 INT4 artifact에서도 복원 형식과 실행 경로에 따른 차이가 관측됐습니다. Q/K norm–RoPE 중간값을 FP32로 유지하는 R1은 개별 primitive의 FP64 참조에 더 가까웠지만, D1과 P의 최종 분포 차이를 일관되게 줄이지는 않았습니다. 주 판정은 **INCONCLUSIVE**입니다.
+
+## 1. 무엇을 비교했는가
+
+기존 Qwen3-0.6B checkpoint와 196개 group64 D16 artifact를 읽기 전용으로 사용했습니다. 모든 artifact의 현재 bytes/SHA256과 내부 codes/gamma/alpha_inv/beta_inv를 확인했습니다. 실제 projection에는 bias가 없었습니다. embedding·lm_head·norm 등 나머지 모듈은 동일합니다.
+
+| 비교 | 포함되는 차이 | 해석하면 안 되는 것 |
+|---|---|---|
+| D0–D1 | `(codes*gamma)*alpha_inv`와 BF16 combined-scale 복원 간 차이 | scale cast 하나의 순수 효과 |
+| D1–P | 같은 signed codes와 BF16 scale 이후 남는 dequantization·rounding·실행 차이 | 누적 순서 하나의 순수 효과 |
+| D0–P | 원 dense 참조와 packed 실행의 전체 차이 | 원 checkpoint 또는 원 미압축 weight의 품질 차이 |
+
+P는 실제 `torch.ops._C.marlin_gemm`과 Marlin CUDA symbol을 확인했습니다. signed INT4의 two's-complement 파일 형식과 Marlin의 c+8 offset 형식을 구분했습니다. INT4 저장/BF16 MMA이며 native INT4 MMA나 저자 W4A4 kernel은 아닙니다. beta는 세 경로 모두 입력에 한 번 적용합니다. 전체 식은 [방법 계약](METHOD_CONTRACT.md)에 있습니다.
+
+R0의 norm 통계는 FP32지만 이후 norm 출력·weight 곱·RoPE에는 BF16 경계가 있습니다. R1은 norm–RoPE 중간 계산을 FP32로 유지하고 마지막 Q/K만 BF16으로 내립니다. R0가 만든 실제 BF16 cos/sin을 승격해 사용하며 주파수를 다시 계산하지 않습니다. V·SDPA·softmax·residual·MLP는 바꾸지 않았습니다. Q/K shape/stride와 최종 dtype이 같고 두 경계가 실제로 다름을 확인했습니다: `DISTINCT`.
+
+## 2. 주 결과: 정밀도를 높여도 경로 간 거리가 줄지는 않았다
+
+독립 작성한 합성 문서는 DEV8, EVAL24개이며 설명/key-value/code/JSON의 공통 category template을 사용합니다. 같은 문서의 128 길이는 512의 prefix입니다. 두 길이를 독립 문서로 세지 않습니다. batch1/eval/inference_mode/use_cache=False의 teacher-forcing prefill이며 자유 생성은 없습니다.
+
+모든 위치의 lm_head를 계산한 뒤 고정 16위치의 full-vocabulary logits를 저장했습니다. BF16 값은 uint16 bit 배열로 보존했습니다. 16위치 평균을 문서별로 구하고, EVAL512의 24문서에 같은 가중치를 줬습니다. KL은 자연로그 단위(nats)입니다.
+
+| 지표 | EVAL512 결과 |
+|---|---:|
+| E0 = 평균 KL(D1_R0 ∥ P_R0) | 0.0006952504144 |
+| E1 = 평균 KL(D1_R1 ∥ P_R1) | 0.0007815328033 |
+| 평균 delta = E0−E1 | −0.0000862823889 |
+| 문서 paired bootstrap 95% 구간 | [−0.0002068221560, +0.0000390900519] |
+| delta 양수 / 음수 | 9 / 15문서 |
+| DEV 반복으로 동결한 tau_abs | 1e-10 |
+
+R1 평균 KL은 약12.41% 높았지만, 구간이 0을 포함하므로 증가 방향도 확정하지 않습니다. bootstrap은 24문서를 묶어서 10,000회 재표집한 기술적 불확실성 표시입니다. 일반 사용자 업무 모집단이나 모델 품질 보장이 아닙니다. 반복 54회에서 같은 경로의 저장 logits는 동일했고 r_repeat=0이었지만, 이것이 모든 입력의 오차 상한을 증명하지는 않습니다.
+
+![문서별 비교](figures/02_rounding_discrepancy.png)
+
+선 하나가 문서 하나입니다. 고정 D0_R0 대비 drift와 D1–P의 차이는 다른 기준이므로 합치지 않습니다. NLL은 입력에서 실제 다음 token의 likelihood이고 합성 문서의 정답 능력 점수가 아닙니다.
+
+## 3. 표현 차이와 실행 차이가 모두 남았다
+
+EVAL512에서 R0의 선택16위치를 비교했습니다. relative_RMSE는 `sqrt(SSE/reference_energy)`이며, energy가0이면 UNDEFINED로 남깁니다.
+
+| 비교 | 문서 평균 KL | 문서 relative_RMSE 중앙값 | argmax flip / 384위치 |
+|---|---:|---:|---:|
+| D0–D1 | 0.000993980 | 0.0189855 | 9 |
+| D1–P | 0.000695250 | 0.0166570 | 6 |
+| D0–P | 0.000971936 | 0.0195999 | 9 |
+
+![블록과 logits 차이](figures/01_representation_execution.png)
+
+블록 그림은 각 경로가 자기 이전 계산을 거친 출력입니다. 층별 상대오차 비율을 원인 증폭률로 해석하지 않습니다. 같은 좌표에서 `a=D1−D0`, `b=P−D1`의 벡터 합성식을 검산했습니다. EVAL512 R0의24문서 모두 cross term이 음수였습니다. 성분 차이가 부분적으로 상쇄될 수 있다는 뜻이며, 원인 기여율이 아닙니다.
+
+## 4. 같은 입력의 local replay와 경계 교체
+
+DEV512 전체 block token의 D1–P SSE/energy로 0-based 층27과25를 골랐습니다. 모든 local 조건은 저장된 D0_R0의 같은 block input·position·cos/sin·mask를 받습니다. 32문서×2층×6조건=384 block replay입니다. 이는 본 full forward384회와 다른 분모입니다.
+
+Q/K projection, norm, RoPE, attention, o_proj, MLP, block output을 따로 보존했습니다. 같은 linear 경로의 R0/R1 Q/K projection이 실제로 같은지도 선택 위치에서 확인했습니다. 관측 근거는 `FORMAT_CHANGE_SUPPORTED`, `LOCAL_EXECUTION_DIFFERENCE_SUPPORTED`, `PROPAGATION_SENSITIVITY_SUPPORTED`와 연결합니다. D1과 P는 원래 같은 R0를 쓰므로 `ALIGNMENT_SUPPORTED`는 주장하지 않습니다.
+
+EVAL을 보기 전에 DEV8에서 2층×{post_RoPE_Q, block_output}의4후보를 검사했습니다. 현재 P의 block input으로 D1 대응값을 새로 계산해 한 경계만 교체했습니다. 평균 변화의 절대값으로 고른 후보는 층25의 block_output입니다. 개선한 후보만 고르는 규칙을 쓰지 않았습니다.
+
+| 선택된 교체 | DEV8 | EVAL24 |
+|---|---:|---:|
+| KL 변화: 교체 후−전 | −0.0000208599 | +0.0000302069 |
+| 차이가 감소 / 증가한 문서 | 5 / 3 | 10 / 14 |
+
+EVAL 변화의 보조95% 구간은 [−0.0000193310,+0.0000843861]입니다. 한 경계 교체에 결과가 반응했지만, DEV에서 보인 평균 감소는 EVAL에서 반복되지 않았습니다.
+
+![같은 입력의 replay와 교체](figures/03_same_input_local_replay.png)
+
+추가 CPU 감사는 실제 저장한 Q/K와 native cos/sin을 FP64 식에 넣었습니다. 선택 위치의768개 비교 모두 원래 relative_RMSE≤0.01 기준을 통과했습니다. R0 평균0.00273146, R1 평균0.00166340으로 R1이 이 참조에 더 가까웠습니다. 이 감사는 EVAL 관측 뒤 추가한 확인이며, 선택·주 판정에는 사용하지 않았습니다. 개별 계산의 참조 정확도와 두 경로 사이의 일치도는 다른 질문입니다.
+
+## 5. 별도 실행 비용과 메모리
+
+비용은 고정 DEV1 문서512, 경로별 fresh process3개에서 측정했습니다. dump/hook/profiler를 제거했고 각 process 안에서 R0/R1 순서를 교대했습니다. 각 모드3회 warm-up,10회 timed forward입니다. 정확한 원점과 cold/load 비용은 [timing.csv](results/summary/timing.csv), [원 sample](results/summary/timing_raw.csv), [memory.csv](results/summary/memory.csv)에 있습니다. 쉬운 집계는 [비용 요약](results/summary/cost_overview.md)을 참고합니다.
+
+host 값은 같은 호출의 event record와 완료 wait를 포함합니다. CUDA event는 stream elapsed이며 순수 kernel busy time이 아닙니다. R0에도 native 산술을 호출하는 no-op Python wrapper가 있어 무계측 HF 서비스 성능으로 읽지 않습니다. R1의 첫 호출은 같은 process의 R0 다음이므로 독립 cold context가 아닙니다. allocated/reserved는 장치 전체 VRAM과 다르고, worker wall은 GPU busy time과 다릅니다. 속도 개선·TTFT·TPOT를 입증하는 실험이 아닙니다.
+
+## 6. 검증·이력·관측 한계
+
+P0의 nibble/offset·group64 축·beta·bias fixture, 실제 backend, finite, no-op와 실제 CPU-copy hook 검증을 통과한 뒤 본 실행을 진행했습니다. no-op/hook·mode 복원 검증은 해당 DEV 입력에서 full logits bit-identical이었습니다. 과거32-token D0–P relative_RMSE는 새 replay에서도0.02605433으로 기존0.02 gate 밖입니다. 이 gate를 완화하지 않았습니다. 과거 probe02/03을 같은 reduction 설정의 통제 비교로 취급하지 않았고 옛 greedy suffix를 새로 실행하지 않았습니다.
+
+현재 driver621.01과 과거610.88의 차이는 ENVIRONMENT_DRIFT입니다. 기존 Python/Torch/Transformers/vLLM 환경을 읽기 전용으로 재사용했습니다. 새로운 clean environment 검증은 아닙니다.
+
+동일한 현재 flags로 실행한32-token replay3회에서 full-logit relative_RMSE는 D0–D1=0.02661493, D1–P=0.01961746, D0–P=0.02605433이었습니다. 과거 probe03의 GEMM0.00307836/block0.00567335/full0.02605433, probe02의 matched-vs-primary0.02581311/packed-vs-matched0.02259797은 별도 역사적 기록입니다. 새 D1–P가2% 아래라는 한 결과를 과거 probe02의 통제된 개선으로 주장하지 않습니다.
+
+GPU resource gate가 외부 작업 때문에 실행을 보류한 이력이 있습니다. EVAL local replay 한 worker의 종료 표본에서 외부 PID가 발견돼 해당 실행의 시간·장치 전체 메모리는 독점 측정값으로 해석하지 않습니다. 추가 idle guard가 실패했는데 shell의 다음 명령이 실행된 제어 결함도 기록했습니다. 실제 intervention supervisor는 별도로 idle gate를 통과한 뒤 실행했고 전후 compute 목록이 비어 있었습니다. 다른 작업은 종료하거나 변경하지 않았습니다. 전후 표본만으로 연속 독점을 보장하지 않습니다. [자원 이력](provenance/resource_qualification.json)을 참고합니다.
+
+첫 독립 CPU 감사는 긴 vocabulary의 순차 정규화 합산 때문에 고정 tolerance를 넘었습니다. 실패 source와 receipt를 남기고, `math.fsum` 기반의 다른 합산 경로로 수정한 후 같은 tolerance로 통과했습니다. EVAL 선택 전에 이 분석 source를 동결했습니다. 주 DEV/EVAL 전체 selected logits의 독립 KL 검산 최대 차이는 각각7.70e-15/1.13e-14입니다. 교체 EVAL도384위치 모두 검산했고 최대차이는1.10e-14입니다.
+
+공개 후보의 작은 logits subset은 DEV4×2위치×6조건입니다. 전체384조건의 모든16위치 logits는 로컬에 남깁니다. 공개 통계 재집계를 전체 KL raw 재계산이라고 부르지 않습니다. full block 임시 배열은 정해진 비교 후 지웠으며 집계·선택 위치·replay 입력은 보존했습니다. 원형·source·input·분모·예산 검산 범위는 [verification](results/summary/verification.json), [재현 안내](REPRODUCE.ko.md), [보존 대조](provenance/preservation_after.json)에 있습니다.
+
+원문의 §5.1/§6/Figure2/Table1은 반올림 경계와 static discrepancy를 살펴보는 배경입니다. 이번 모델·정확한 full-vocabulary KL·동일 HF attention 경로는 원문의 RL 실행 스택과 다릅니다. [출처 대응](SOURCE_MAP.md)과 [직접 구현/재사용](REUSE_MAP.md)을 분리했습니다. 학습·품질 개선·새 양자화/커널·원격 CI·게시·Pages는 실행하지 않았습니다.
+
+## 실제 실행 수와 예산
+
+| Kind | Planned | Actual |
+|---|---:|---:|
+| Main DEV/EVAL | 96 / 288 | 96 / 288 |
+| Separate repeat | 54 | 54 |
+| Local block replay | 384 | 384 |
+| Replacement DEV/EVAL | 32 / 24 | 32 / 24 |
+| Timed full forward | 180 | 180 |
+| Cost warm-up / first mode call | 54 / 18 | 54 / 18 |
+
+추가 preflight full forward는38회(역사적 replay9회 포함), 역사적 단독 block/GEMM은9/9회, 교체용 보조 block은58회입니다. 본 조건 누락·alias는0개이며34개 GPU worker는 모두 정상 종료했습니다. 이 분모들을 독립 workload 수로 합치지 않습니다.
+
+GPU worker parent wall: **1971.504192467s / 7200s**, remaining **5228.495807533s**. P0/P1/P2/P3: 155.279s / 629.819s / 719.352s / 467.053s.
+
+| Path | Timed allocated peak MiB | Reserved peak MiB |
+|---|---:|---:|
+| D0 | 1323.370 | 1384.000 |
+| D1 | 1320.370 | 1384.000 |
+| P | 705.091 | 1448.000 |
+
+메모리는 각 비용 worker의 R0/R1 전체 구간을 함께 측정한 값이며3개 block을 요약했습니다. R모드별 peak나 장치 전체 VRAM으로 읽지 않습니다. GPU worker의 process CPU 시간과 명시적으로 잰 CPU 감사 시간은 [budget.json](results/summary/budget.json), [cpu_cost.json](results/summary/cpu_cost.json)에서 구분합니다.
+
+메모리 inventory는 고유 storage를 번호로, 중복은 대상 번호 없이 `alias`로 기록했습니다. CPU 감사는 dtype×shape payload와 고유 번호의 storage 합계를 다시 계산했으며, 비어 있지 않은 alias는 lm_head 하나로 embedding과 shape/bytes가 맞았습니다. 원 실행은 실제 device/data_ptr로 중복을 제거했지만, 저장 기록만으로 모든 포인터 연결을 독립 재구성할 수는 없습니다. 이 한계를 숨기지 않고 첫 감사의 형식 가정 실패도 보존했습니다.

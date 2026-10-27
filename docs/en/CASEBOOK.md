@@ -33,6 +33,8 @@ Each case follows **objective → dataset → assumptions and theory → experim
 
 - [020 — Does Smaller Embedding Storage Also Run Faster?](#case-020)
 
+- [021 — Why can the same INT4 artifact produce different results?](#case-021)
+
 <a id="case-001"></a>
 ## 001 — Can a kernel-selection change unblock execution?
 
@@ -708,3 +710,40 @@ An independent two-layer linear CPU model separates directional alignment from p
 Compared A precomputed lookup, B requested-row decoding and C per-call deduplication/order restoration of the same representation. Synthetic LARGE/Z32 PyTorch allocated peak was about304→81MiB. C beat B in0/30 primary H process-block comparisons across7 conditions; actual N1024/4096 sessions favored A over B in all three blocks. Official decoding is reused; fixtures, measurement and independent CPU checks were implemented.
 
 [Report](../../cases/020-optic-on-demand-decode/REPORT.md) · [CPU quick/full](../../cases/020-optic-on-demand-decode/REPRODUCE.md)
+
+<a id="case-021"></a>
+## Case021 — Why can the same INT4 artifact produce different results?
+
+### 1. Objective
+
+Separate representation, dense/Marlin execution and later Q/K precision for one artifact.
+
+### 2. Dataset
+
+Qwen3-0.6B D16 W4A16,196 projections/group64; synthetic DEV8/EVAL24 with128/512 prefixes and16 positions. P4/P5 are post-hoc diagnostics on observed data.
+
+### 3. Assumptions and theory
+
+Rounding boundaries and execution can change values. Local reference accuracy differs from agreement between paths.
+
+### 4. Experiment design
+
+Original D0/D1/P×R0/R1 forwards and common-input local replay; P5 single-term A/B candidates and nested K grid for layers0/25 × two DEV documents.
+
+### 5. Validation
+
+Exact BF16 rounding, FP64/energy identities, layout/beta/core contracts and repeat hashes. Public CPU checks cover aggregates/synthetics, separately from private raw audits.
+
+### 6. Results
+
+Original EVAL KL-reduction verdict: INCONCLUSIVE. D1/P matched A on406,626 discriminating first-block coordinate records. Sparse K1/2 matched; first differences in the fixed grid appeared at K8 or64.
+
+### 7. Interpretation
+
+406,626 counts fixture coordinates, not independent inputs. Individual reference errors fell while local gaps increased34/decreased57/tied5. The13/17/4 ΔN/ΔC classes are not full-model KL causal contributions.
+
+### 8. Conclusion
+
+A shared representation does not guarantee execution agreement; interpret higher intermediate precision relative to its reference and observed scope. No kernel-bug, quality or serving-speed claim.
+
+[Report](../../cases/021-rounding-execution-diagnostics/REPORT.md) · [CPU quick/full](../../cases/021-rounding-execution-diagnostics/REPRODUCE.md)

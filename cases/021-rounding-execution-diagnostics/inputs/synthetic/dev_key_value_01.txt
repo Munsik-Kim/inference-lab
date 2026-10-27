@@ -1,0 +1,85 @@
+Greenhouse ventilation sheet
+Purpose: Specify how a grower records ventilation decisions in separate growing zones.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: Ventilation responds to measured leaf and air conditions. A dry sensor must be inspected before an irrigation cycle is added to the schedule.
+
+record_format = sectioned key-value register
+review_policy = retain original observations and append corrections
+
+[record_1]
+record_id = 1
+entity = tomato_bay
+observations.air_temperature = 56
+observations.leaf_temperature = 56
+observations.humidity = 25
+observations.vent_fraction = 79
+observations.soil_moisture = 69
+observations.fan_hours = 48
+review_note = tomato_bay is inspected at its own checkpoint. Values for air_temperature, leaf_temperature, humidity are recorded before the decision for this greenhouse ventilation sheet is made.
+evidence_rule = Ventilation responds to measured leaf and air conditions. A dry sensor must be inspected before an irrigation cycle is added to the schedule.
+next_action = Compare leaf_temperature with the applicable operating limit, record the result, and assign a follow-up for tomato_bay when evidence is incomplete.
+
+[record_2]
+record_id = 2
+entity = herb_bay
+observations.air_temperature = 77
+observations.leaf_temperature = 45
+observations.humidity = 47
+observations.vent_fraction = 34
+observations.soil_moisture = 62
+observations.fan_hours = 28
+review_note = herb_bay is inspected at its own checkpoint. Values for air_temperature, leaf_temperature, humidity are recorded before the decision for this greenhouse ventilation sheet is made.
+evidence_rule = The reviewer preserves the measured leaf_temperature and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare humidity with the applicable operating limit, record the result, and assign a follow-up for herb_bay when evidence is incomplete.
+
+[record_3]
+record_id = 3
+entity = seedling_bay
+observations.air_temperature = 18
+observations.leaf_temperature = 83
+observations.humidity = 20
+observations.vent_fraction = 45
+observations.soil_moisture = 27
+observations.fan_hours = 8
+review_note = seedling_bay is inspected at its own checkpoint. Values for air_temperature, leaf_temperature, humidity are recorded before the decision for this greenhouse ventilation sheet is made.
+evidence_rule = The reviewer preserves the measured humidity and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare vent_fraction with the applicable operating limit, record the result, and assign a follow-up for seedling_bay when evidence is incomplete.
+
+[record_4]
+record_id = 4
+entity = east_vent
+observations.air_temperature = 3
+observations.leaf_temperature = 34
+observations.humidity = 45
+observations.vent_fraction = 72
+observations.soil_moisture = 14
+observations.fan_hours = 77
+review_note = east_vent is inspected at its own checkpoint. Values for air_temperature, leaf_temperature, humidity are recorded before the decision for this greenhouse ventilation sheet is made.
+evidence_rule = The reviewer preserves the measured vent_fraction and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare soil_moisture with the applicable operating limit, record the result, and assign a follow-up for east_vent when evidence is incomplete.
+
+[record_5]
+record_id = 5
+entity = west_vent
+observations.air_temperature = 53
+observations.leaf_temperature = 18
+observations.humidity = 75
+observations.vent_fraction = 82
+observations.soil_moisture = 18
+observations.fan_hours = 29
+review_note = west_vent is inspected at its own checkpoint. Values for air_temperature, leaf_temperature, humidity are recorded before the decision for this greenhouse ventilation sheet is made.
+evidence_rule = The reviewer preserves the measured soil_moisture and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare fan_hours with the applicable operating limit, record the result, and assign a follow-up for west_vent when evidence is incomplete.
+
+[record_6]
+record_id = 6
+entity = roof_sensor
+observations.air_temperature = 76
+observations.leaf_temperature = 52
+observations.humidity = 88
+observations.vent_fraction = 89
+observations.soil_moisture = 54
+observations.fan_hours = 67
+review_note = roof_sensor is inspected at its own checkpoint. Values for air_temperature, leaf_temperature, humidity are recorded before the decision for this greenhouse ventilation sheet is made.
+evidence_rule = The reviewer preserves the measured fan_hours and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare air_temperature with the applicable operating limit, record the result, and assign a follow-up for roof_sensor when evidence is incomplete.

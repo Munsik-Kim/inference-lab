@@ -1,0 +1,85 @@
+Backup restoration runbook
+Purpose: Record the recovery requirements of a local document archive.
+This is an invented example with no real people, facilities, or measurements. The numeric values are illustrative, not operating advice.
+Operating rule: A backup is usable only after a sample restore and checksum comparison. A successful copy command does not prove that the catalog can be recovered.
+
+record_format = sectioned key-value register
+review_policy = retain original observations and append corrections
+
+[record_1]
+record_id = 1
+entity = catalog
+observations.retention_days = 28
+observations.verified_files = 39
+observations.unreadable_files = 7
+observations.restore_minutes = 59
+observations.snapshot_age = 28
+observations.available_space = 6
+review_note = catalog is inspected at its own checkpoint. Values for retention_days, verified_files, unreadable_files are recorded before the decision for this backup restoration runbook is made.
+evidence_rule = A backup is usable only after a sample restore and checksum comparison. A successful copy command does not prove that the catalog can be recovered.
+next_action = Compare verified_files with the applicable operating limit, record the result, and assign a follow-up for catalog when evidence is incomplete.
+
+[record_2]
+record_id = 2
+entity = media_index
+observations.retention_days = 49
+observations.verified_files = 77
+observations.unreadable_files = 59
+observations.restore_minutes = 45
+observations.snapshot_age = 86
+observations.available_space = 81
+review_note = media_index is inspected at its own checkpoint. Values for retention_days, verified_files, unreadable_files are recorded before the decision for this backup restoration runbook is made.
+evidence_rule = The reviewer preserves the measured verified_files and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare unreadable_files with the applicable operating limit, record the result, and assign a follow-up for media_index when evidence is incomplete.
+
+[record_3]
+record_id = 3
+entity = checksum_log
+observations.retention_days = 2
+observations.verified_files = 23
+observations.unreadable_files = 39
+observations.restore_minutes = 40
+observations.snapshot_age = 33
+observations.available_space = 64
+review_note = checksum_log is inspected at its own checkpoint. Values for retention_days, verified_files, unreadable_files are recorded before the decision for this backup restoration runbook is made.
+evidence_rule = The reviewer preserves the measured unreadable_files and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare restore_minutes with the applicable operating limit, record the result, and assign a follow-up for checksum_log when evidence is incomplete.
+
+[record_4]
+record_id = 4
+entity = nightly_copy
+observations.retention_days = 65
+observations.verified_files = 34
+observations.unreadable_files = 28
+observations.restore_minutes = 58
+observations.snapshot_age = 41
+observations.available_space = 7
+review_note = nightly_copy is inspected at its own checkpoint. Values for retention_days, verified_files, unreadable_files are recorded before the decision for this backup restoration runbook is made.
+evidence_rule = The reviewer preserves the measured restore_minutes and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare snapshot_age with the applicable operating limit, record the result, and assign a follow-up for nightly_copy when evidence is incomplete.
+
+[record_5]
+record_id = 5
+entity = offline_copy
+observations.retention_days = 4
+observations.verified_files = 33
+observations.unreadable_files = 11
+observations.restore_minutes = 17
+observations.snapshot_age = 19
+observations.available_space = 50
+review_note = offline_copy is inspected at its own checkpoint. Values for retention_days, verified_files, unreadable_files are recorded before the decision for this backup restoration runbook is made.
+evidence_rule = The reviewer preserves the measured snapshot_age and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare available_space with the applicable operating limit, record the result, and assign a follow-up for offline_copy when evidence is incomplete.
+
+[record_6]
+record_id = 6
+entity = restore_station
+observations.retention_days = 45
+observations.verified_files = 18
+observations.unreadable_files = 70
+observations.restore_minutes = 18
+observations.snapshot_age = 16
+observations.available_space = 20
+review_note = restore_station is inspected at its own checkpoint. Values for retention_days, verified_files, unreadable_files are recorded before the decision for this backup restoration runbook is made.
+evidence_rule = The reviewer preserves the measured available_space and the original record identifier. A correction is appended with its reason; the earlier observation remains readable.
+next_action = Compare retention_days with the applicable operating limit, record the result, and assign a follow-up for restore_station when evidence is incomplete.
