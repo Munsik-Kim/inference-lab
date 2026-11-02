@@ -74,7 +74,10 @@ class Homepages(unittest.TestCase):
 
     def test_four_entries_have_the_same_reading_order(self):
         for name in ('README.md','README.ko.md'):
-            check_order((ROOT/name).read_text())
+            text=(ROOT/name).read_text()
+            for fragment in ('capabilities','tech-stack','projects'):self.assertIn('id="'+fragment+'"',text)
+            self.assertIn('PORTFOLIO.md',text)
+            self.assertIn('compare.html#run',text)
         for lang in ('en','ko'):
             check_order((self.site/lang/'index.html').read_text())
 
@@ -180,7 +183,11 @@ class Homepages(unittest.TestCase):
         self.assertNotEqual(m['reduction'],output_metrics(changed)['reduction'])
         for lang in ('en','ko'):
             doc=(ROOT/('README.md' if lang=='en' else 'README.ko.md')).read_text()
-            for value in (m['reduction']+'%',m['weight_files']):self.assertIn(value,doc)
+            # The entry README links the canonical detail; source-derived numbers
+            # remain checked on the homepage and detailed case instead of copied.
+            self.assertIn('case008.html#track-q',doc)
+            for value in (m['reduction']+'%',m['weight_files']):
+                self.assertIn(value,(self.site/lang/'index.html').read_text())
             self.assertNotIn(m['recovery'],doc)
             for structure in d['tracks']['R']['structures'].values():
                 self.assertIn(f"{100*structure['recovery']['pooled_recovery']:.2f}%",(self.site/lang/'case008.html').read_text())

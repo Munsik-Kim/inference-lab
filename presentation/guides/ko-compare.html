@@ -9,7 +9,12 @@
   <section id="run">
     <h2>1. 두 파일 준비 → 형식 검사(validate) → 비교(compare)</h2>
     <p><a href="../examples/compare/baseline.jsonl" download>변경 전 결과(baseline) JSONL 받기</a> · <a href="../examples/compare/candidate.jsonl" download>변경 후 결과(candidate) JSONL 받기</a>. JSONL은 한 줄에 질문 하나의 결과를 담는 텍스트 파일입니다. 전체 저장소를 받은 뒤 루트에서 Python 3.10 이상으로 실행하세요. 매번 새 전용 환경과 출력 경로를 사용합니다.</p>
-    <pre><code>EXAMPLE_ROOT=$(mktemp -d)
+    <p>두 JSONL의 내용은 아래처럼 질문별로 대응합니다. 표는 읽기용 요약이며, 실행에는 연결된 전체 JSONL을 사용합니다.</p><div class="scroll guide-table" role="region" tabindex="0" aria-label="인공 예제에서 각 질문의 맞음·틀림 변화"><table><caption>공개 합성 네 쌍 · 실제 모델 측정과 별도</caption><thead><tr><th scope="col">ID · 질문</th><th scope="col">정답</th><th scope="col">기준선 → 후보</th><th scope="col">읽는 법</th></tr></thead><tbody>
+      <tr><th scope="row">sum-01 · 2 + 2</th><td>4</td><td>4 → 5</td><td>정답 손실</td></tr>
+      <tr><th scope="row">sum-02 · 3 + 5</th><td>8</td><td>7 → 8</td><td>새 정답</td></tr>
+      <tr><th scope="row">sum-03 · 6 + 1</th><td>7</td><td>6 → 9</td><td>다른 오답</td></tr>
+      <tr><th scope="row">sum-04 · 4 + 5</th><td>9</td><td>9 → 9</td><td>둘 다 정답</td></tr>
+    </tbody></table></div><pre><code>EXAMPLE_ROOT=$(mktemp -d)
 python3 -m venv "$EXAMPLE_ROOT/venv"
 "$EXAMPLE_ROOT/venv/bin/python" -m pip install --no-deps ./packages/diova-compare
 "$EXAMPLE_ROOT/venv/bin/diova-compare" validate --input packages/diova-compare/examples/compare/baseline.jsonl
@@ -21,12 +26,7 @@ python3 -m venv "$EXAMPLE_ROOT/venv"
   <section id="reading">
     <h2>2. 정답률이 같아도 잃은 답을 찾습니다</h2>
     <p>정답은 기준선 답변을 복사하지 않고 두 정수의 합으로 정했습니다. 답은 공백을 제거한 십진 정수 문자열입니다.</p>
-    <div class="scroll guide-table" role="region" tabindex="0" aria-label="인공 예제에서 각 질문의 맞음·틀림 변화"><table><caption>공개 합성 네 쌍 · 실제 모델 측정과 별도</caption><thead><tr><th scope="col">ID · 질문</th><th scope="col">정답</th><th scope="col">기준선 → 후보</th><th scope="col">읽는 법</th></tr></thead><tbody>
-      <tr><th scope="row">sum-01 · 2 + 2</th><td>4</td><td>4 → 5</td><td>정답 손실</td></tr>
-      <tr><th scope="row">sum-02 · 3 + 5</th><td>8</td><td>7 → 8</td><td>새 정답</td></tr>
-      <tr><th scope="row">sum-03 · 6 + 1</th><td>7</td><td>6 → 9</td><td>다른 오답</td></tr>
-      <tr><th scope="row">sum-04 · 4 + 5</th><td>9</td><td>9 → 9</td><td>둘 다 정답</td></tr>
-    </tbody></table></div>
+
     <p>양쪽 정답은 2/4입니다. 이전에 맞혔다가 틀린 답 <code>correct_to_wrong=1</code>, 새로 맞힌 답 <code>wrong_to_correct=1</code>, 다른 오답으로 바뀐 답 <code>wrong_to_wrong=1</code>, 전체 답변 변경 <code>all_answer_disagreement=3</code>으로 같은 평균 속의 변화를 나눕니다.</p>
     <ul><li><code>report.md</code>: 과제별 요약부터 읽기.</li><li><code>report.json</code>: 실행 설정, 집계와 모든 입력 쌍 확인.</li><li><code>pairs.csv</code>: 어떤 질문에서 잃거나 회복했는지 행별 확인.</li></ul>
     <p>네 개의 합성 입력으로 계산한 통계 구간은 이 예제의 요약이며, 모델 우열이나 실제 업무의 일반화 근거가 아닙니다.</p>
@@ -63,7 +63,7 @@ PY
   <section id="judgment"><h2>5. 이렇게 만들었고, 여기까지 확인합니다</h2>
     <ul><li><strong>선택:</strong> 평균과 함께 입력별 정답 손실·회복을 나누고 원 실행 실패 상태를 남깁니다.</li><li><strong>대안:</strong> 평균 정답률만 비교하면 이 예제처럼 이전에 맞혔던 문제를 틀리게 된 변화가 가려집니다.</li><li><strong>근거:</strong> <a href="../sources/diova-compare-core.py.txt">실제 집계 코드</a>와 <a href="../sources/diova-compare-tests.py.txt">정답 변화·입력 짝 검사(pairing)·실패 보존 테스트</a>에서 어떤 입력을 받고 어떻게 집계하는지 확인할 수 있습니다.</li><li><strong>한계·다음 기준:</strong> 새 업무에 적용하려면 사용자가 제공한 채점 기준과 같은 질문을 식별하는 규칙부터 확인해야 합니다. 현재 설계 설명이며 당시 대안 실험을 추가로 주장하지 않습니다.</li></ul>
   </section>
-  <section id="demo"><h2>6. 60–90초 시연 동선</h2>
+  <section id="demo"><h2>6. 직접 확인하는 순서</h2>
     <ol><li>같은 정답률도 개별 손실을 숨긴다는 문제를 소개합니다.</li><li>위 두 파일의 validate와 compare를 실제로 실행합니다. CPU 합성 예제라고 밝힙니다.</li><li>생성된 report.md와 pairs.csv에서 sum-01의 손실, sum-02의 회복을 확인합니다.</li><li>연결된 코드와 테스트에서 입력 거절·실패 보존의 근거를 엽니다.</li></ol>
     <p>영상 플레이어가 아니라 실행 가능한 시연 안내입니다. 기존 GPU 실험 기록을 읽으려면 <a href="case009.html#quality">Case009 품질 기록</a>과 <a href="qwen3-4b.html#mitigation">Case013 후속</a>으로 별도 구분합니다.</p>
   </section>

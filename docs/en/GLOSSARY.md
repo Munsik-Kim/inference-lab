@@ -31,6 +31,8 @@ A processor that runs many numerical operations in parallel. These cases use an 
 
 [Related case 001](CASEBOOK.md#case-001).
 
+**Memory tables:** resident tensors stay between calls; temporary allocations appear during computation. Allocated peak is the maximum PyTorch-recorded allocation; reserved includes space held for reuse. Neither is the same as a whole-device VRAM sample. [Case020](CASEBOOK.md#case-020).
+
 <a id="quantization"></a>
 ## Quantization
 

@@ -2,6 +2,7 @@
 from pathlib import Path
 import sys,unittest,tempfile,json
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'tools/showcase'))
+from reader import reading_layout
 from case021 import load_case021,render_case021,home_case021,SECTIONS
 from build import build,validate_case_ids
 from check import check
@@ -25,7 +26,7 @@ class Case021(unittest.TestCase):
   for lang,other in [('ko','en'),('en','ko')]:
    home=(self.site/lang/'index.html').read_text();html=(self.site/lang/'case021.html').read_text()
    self.assertIn(home_case021(self.data,lang),home);self.assertIn('case020.html',home);self.assertIn('href="case021.html"',home)
-   self.assertIn('../'+other+'/case021.html',html);self.assertIn(render_case021(self.data,lang),html)
+   self.assertIn('../'+other+'/case021.html',html);self.assertIn(reading_layout(render_case021(self.data,lang),'case021',lang),html)
    for s in SECTIONS:self.assertIn('id="'+s+'"',html)
    for v in ['INCONCLUSIVE','406,626','4,102','1,018','ΔG=ΔN+ΔC','A=R_BF16','K1024','nats','CPU']:self.assertIn(v,html)
    self.assertNotIn('/home/',html);self.assertIn('<noscript>',html)

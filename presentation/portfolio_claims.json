@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "role": "Current editorial map. Existing experiment manifests and gates remain authoritative. Source hashes are not new scientific validation.",
+  "checked_date": "2026-11-02",
+  "claims": [
+    {
+      "claim_id": "featured-A-files",
+      "source_path": "cases/008-build-reconstruct-reload/results/derived/summary.json",
+      "source_sha256": "f690d1d4dc44d87eb5003518d9f7e60eb9cf2b2305eb978a6385e23a885c5ece",
+      "metric_key": "tracks.Q.weight_bytes",
+      "unit": "decimal GB",
+      "scope": "Qwen3-4B, Case008 Q weight files; separate from allocated and device memory",
+      "rendered_by": "layout.output_metrics"
+    },
+    {
+      "claim_id": "featured-A-device",
+      "source_path": "cases/009-q-serving-quality/results/derived/serving_summary.json",
+      "source_sha256": "5f3559a7268f09ee2c9df51cbdb031e9022779b7906036b3b72c5f8a78fdbe98",
+      "metric_key": "processes / matching graph round IDs",
+      "unit": "GiB, sampled maximum, one-second samples",
+      "scope": "Case009 graph, fixed 4GiB cache, three rounds; includes startup/warmup/desktop",
+      "rendered_by": "practical.graph_memory_pairs"
+    },
+    {
+      "claim_id": "featured-C-endpoints",
+      "source_path": "cases/018-agent-state-recovery/publication/summary/project.json",
+      "source_sha256": "c84136fb3f329d28e5519fd11b7b06e550fd18cc1dc2ad046bb3f238d9009f87",
+      "metric_key": "phases[1].groups[kv=K0,policy=R0].Q/W/episodes",
+      "unit": "tasks",
+      "scope": "HOLDOUT BF16 KV; Q state/procedure and W accurate report are different endpoints",
+      "rendered_by": "portfolio.recovery_finding -> case018.display_facts"
+    },
+    {
+      "claim_id": "recent-020",
+      "source_path": "cases/020-optic-on-demand-decode/summary/facts.json",
+      "source_sha256": "b5853c10966dce1f1ad753b7f51d6aaa5b4348c005a68236feae766adee06a8b",
+      "metric_key": "P4_C_faster_blocks / P4_C_B_block_comparisons",
+      "unit": "process blocks",
+      "scope": "P4 H, 7 synthetic conditions; not independent user workloads",
+      "rendered_by": "portfolio.latest"
+    },
+    {
+      "claim_id": "recent-021",
+      "source_path": "cases/021-rounding-execution-diagnostics/summary/facts.json",
+      "source_sha256": "bb71af53e412f2f03fde3b93e765dd755dafdaa4220fe9c1d987ff57ae6a54c3",
+      "metric_key": "original_primary_verdict / primary_documents",
+      "unit": "documents and unchanged primary verdict",
+      "scope": "Qwen3-0.6B EVAL512; posthoc local probes are separate",
+      "rendered_by": "portfolio.latest"
+    },
+    {
+      "claim_id": "tool-B-example",
+      "source_path": "packages/diova-compare/examples/compare/baseline.jsonl",
+      "source_sha256": "c1c4778351fb5e47d5b1fc2caf0983777ad2b3275ce4362ade725b4e22b8fb8a",
+      "metric_key": "four paired synthetic arithmetic records with candidate.jsonl",
+      "unit": "synthetic input pairs",
+      "scope": "2/4 both, one loss and one gain; not a model performance measurement",
+      "rendered_by": "portfolio.comparison_finding; actual CPU CLI receipt outside repository",
+      "companion_source": {
+        "path": "packages/diova-compare/examples/compare/candidate.jsonl",
+        "sha256": "a1a658373cea86e8fffa2bbb2090f3a03d824a506ae1d7b95324b609cdc4fb14"
+      }
+    }
+  ],
+  "catalogue": {
+    "coverage": "001–021, one primary topic per case",
+    "source": "docs/ko/CASEBOOK.md and docs/en/CASEBOOK.md",
+    "observation_renderer": "portfolio.OBSERVATIONS"
+  },
+  "public_research_sources": [
+    {
+      "repository": "teacher-error-geometry-lab",
+      "url": "https://github.com/Munsik-Kim/teacher-error-geometry-lab/blob/main/README.md",
+      "scope": "Public README read at edit time; not peer review, new execution, or deployment evidence"
+    },
+    {
+      "repository": "rtpa-research",
+      "url": "https://github.com/Munsik-Kim/rtpa-research/blob/main/README.md",
+      "scope": "Public README read at edit time; not peer review, new execution, or deployment evidence"
+    },
+    {
+      "repository": "coupling-matters-dllm",
+      "url": "https://github.com/Munsik-Kim/coupling-matters-dllm/blob/main/README.md",
+      "scope": "Public README read at edit time; not peer review, new execution, or deployment evidence"
+    },
+    {
+      "repository": "fdca-visual-token",
+      "url": "https://github.com/Munsik-Kim/fdca-visual-token/blob/main/README.md",
+      "scope": "Public README read at edit time; not peer review, new execution, or deployment evidence"
+    },
+    {
+      "repository": "direction-scale-archive",
+      "url": "https://github.com/Munsik-Kim/direction-scale-archive/blob/main/README.md",
+      "scope": "Public README read at edit time; not peer review, new execution, or deployment evidence"
+    },
+    {
+      "repository": "rcfs-dq",
+      "url": "https://github.com/Munsik-Kim/rcfs-dq/blob/main/README.md",
+      "scope": "Public README read at edit time; not peer review, new execution, or deployment evidence"
+    },
+    {
+      "repository": "inference-engineering-kit",
+      "url": "https://github.com/Munsik-Kim/inference-engineering-kit/blob/main/README.md",
+      "scope": "Public README read at edit time; not peer review, new execution, or deployment evidence"
+    }
+  ]
+}

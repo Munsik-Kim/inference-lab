@@ -7,6 +7,8 @@ from string import Template
 import hashlib
 import subprocess
 from common import ROOT, C6, C7, SUP, json_text, read, new_output, require, sha, script_json, source_manifest
+from reader import reading_layout
+from portfolio import comparison_finding
 from data import load, source_url
 from layout import home, language_index, report8_url, site_navigation, related_cases, C8_PATH, C8_REVISION
 from study import render as study_render, method_labels
@@ -206,7 +208,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
         for page in ('index','case008','case007','case006','guide')+GUIDE_PAGES+(('case009',) if data9 else ())+(('case010',) if data10 else ())+(('case011',) if data11 else ())+(('case012','case012-annotate') if data12 else ())+(('case013',) if data13 else ())+(('case014',) if data14 else ())+(('case015',) if data15 else ())+(('case016',) if data16 else ())+(('case017',) if data17 else ())+(('case018',) if data18 else ())+(('case019',) if data19 else ())+(('case020',) if data20 else ())+(('case021',) if data21 else ()):
             scripts = ''
             if page == 'index':
-                body = home(t, lang, payloads, case_paths, names[lang], rev, data8, data9, data10, data11, data12, data13, practical_render(root, practical, lang, 'featured'), data14=data14, data15=data15, data16=data16, data17=data17, data18=data18, data19=data19, data20=data20, data21=data21)
+                body = home(t, lang, payloads, case_paths, names[lang], rev, data8, data9, data10, data11, data12, data13, practical_render(root, practical, lang, 'featured').replace('<!-- comparison-finding -->', comparison_finding(root, lang)), data14=data14, data15=data15, data16=data16, data17=data17, data18=data18, data19=data19, data20=data20, data21=data21)
             elif page in GUIDE_PAGES:
                 body = practical_render(root, practical, lang, page)
             elif page == 'case021':
@@ -288,6 +290,7 @@ def build(root: Path, output: Path, base_path: str = '/') -> dict:
                 page_rev = 'Synthetic CPU example; no model execution or historical GPU measurement' if lang=='en' else '합성 CPU 예제: 모델 실행이나 과거 GPU 실측 자료가 아님'
             elif page == 'index':
                 page_rev = ('Source checksums for each case are in the page-build record; guide evidence version ' if lang=='en' else '사례별 원자료 내용 대조값은 화면 빌드 기록에 수록. 사용 안내의 근거 버전 ')+practical['evidence_revision']
+            body = reading_layout(body, page, lang)
             body+=related_cases(lang,page)
             source_help = 'Use these versions and file checksums (hashes) to trace the records behind this page and compare file contents.' if lang=='en' else '이 화면이 어떤 기록과 코드 버전을 참고했는지 확인할 수 있습니다. 파일 내용 대조값(해시)은 같은 파일인지 비교하는 데 씁니다.'
             body+=f'<details class="provenance"><summary>{t["evidence"]}</summary><p class="small">{source_help}</p><p class="small">{t["evidence"]}: <code>{page_rev}</code> · '+link('../build_manifest.json',t['presentation'])+'</p></details>'

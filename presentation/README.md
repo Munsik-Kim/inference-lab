@@ -12,19 +12,13 @@ Published viewer: [한국어](https://munsik-kim.github.io/inference-lab/ko/inde
 
 ## Portfolio reading routes
 
-The homepage leads from a short engineering introduction to featured work A/B/C,
-verified Case020/021 findings, contribution/code links and the full 21-case index.
-The index has three editorial topics and a text filter; every case remains visible
-without JavaScript. Case006–021 link directly to their bilingual detail pages;
-Case001–005 link to their original GitHub casebook notes.
+The home order is introduction → selected A/B/C → recent diagnostics → CPU tools → public research map → all 21 cases → contribution/code/test map → model guides and retained historical summaries. Main navigation uses five consistent destinations: selected work, tools, research, cases and about. A visitor can review the engineering, run a model-free example, or inspect research assumptions and records.
 
-`tools/showcase/portfolio.py` builds these routes and reads recent numbers from the
-existing verified case loaders. `portfolio.js` only filters existing text, restores
-deep links into collapsed research records and preserves fragments on language
-switches. It makes no network request and uses no storage or analytics. All prior
-home study sections and their anchors remain available in native details elements.
-The scientific case renderers and raw evidence are unchanged. Tests cover complete
-case mapping, source-derived findings, escaping and progressive enhancement.
+`tools/showcase/portfolio.py` uses verified loaders for numerical findings. The catalogue provides number order, question titles, one-line observations and three topic filters. Cases006–021 have local detail pages; Cases001–005 open the original GitHub notes. All remain readable without JavaScript. `portfolio_claims.json` is the editorial source map, separate from frozen experiment manifests.
+
+`reader.py` wraps existing local contents links, preserving original IDs and scientific bodies. On desktop it provides a reading rail; mobile has a native contents disclosure. `portfolio.js` enhances navigation, deep links, language fragments, code-copy feedback and existing-text filtering. It performs no network request and adds no storage or analytics. No-JavaScript readers retain all content and links. Original result explorers keep their own controls.
+
+The current guide roles are root README (entry), START_HERE (route selection), PORTFOLIO (decisions and code), CASEBOOK (all cases), GETTING_STARTED (CPU records versus GPU reruns), LLM_GUIDE (tested model settings), and GLOSSARY (terms). Historical source/run reports and their manifests are not rewritten.
 
 Use the source build/check commands below and the optional browser checks separately.
 A local build or CPU pass does not deploy Pages. Publication requires the existing
@@ -170,3 +164,26 @@ The optional guide browser checker starts its own temporary Edge profile and use
 matching its browser identity. It does not attach to a fixed debugging port.
 Browser screenshots, actual CLI reports and a reading demo belong to the external
 review directory, with their execution/visual-review status recorded in HANDOFF.
+
+
+## Portfolio reading and browser review
+
+The current home has five destinations: selected work, tools, research, all cases,
+and about. `portfolio_claims.json` connects prominent statements to existing
+source records; it does not replace experimental manifests. `reader.py` adds
+shared contents, breadcrumbs and original-size figure links without editing the
+scientific body.
+
+After serving a checked build locally, the existing Node/Edge environment can run:
+
+```text
+node tools/showcase/portfolio_browser_check.cjs http://localhost:8767/ NEW_EXTERNAL_OUTPUT
+```
+
+This dependency-free CDP review uses installed Microsoft Edge on Windows and
+creates an owned temporary browser profile. It covers both languages, mobile and
+desktop layouts, case coverage, filters, language/deep links, keyboard controls,
+and JavaScript-off content. Review the saved PNGs as well as the JSON receipt.
+The browser's implicit host-root `/favicon.ico` fallback is reported separately
+from failed project resources; it is not a missing project asset. This is an
+internal screen and interaction review, not an accessibility certification.

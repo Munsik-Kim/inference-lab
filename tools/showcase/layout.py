@@ -12,7 +12,7 @@ from case018 import home_case018
 from case019 import home_case019
 from case020 import home_case020
 from case021 import home_case021
-from portfolio import hero as portfolio_hero, latest as portfolio_latest, catalog as portfolio_catalog, reader_note
+from portfolio import hero as portfolio_hero, latest as portfolio_latest, catalog as portfolio_catalog, reader_note, tools_section, research_map, recovery_finding
 
 C8_PATH = 'cases/008-build-reconstruct-reload'
 C8_REVISION = '9bc8b8fced8dfd5147f9bfdc67564eda04670810'
@@ -30,8 +30,8 @@ def anchor(url: str, label: str, cls: str = '') -> str:
 
 
 def site_navigation(lang: str, page: str) -> str:
-    labels = ('홈', '모델별 안내', '전체 사례', '재현 방법') if lang == 'ko' else ('Home', 'Model guides', 'All cases', 'Reproduce')
-    targets = ('index.html', 'llm-guide.html', 'index.html#cases', 'guide.html')
+    labels = ('대표작', '도구', '연구', '전체 사례', '소개') if lang == 'ko' else ('Selected work', 'Tools', 'Research', 'All cases', 'About')
+    targets = tuple('index.html#'+v for v in ('featured-stories','tools','research','cases','about'))
     return ''.join('<a'+(' aria-current="page"' if target == page+'.html' else '')
                    +' href="'+target+'">'+escape(label)+'</a>' for target,label in zip(targets, labels))
 
@@ -98,8 +98,11 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
         diagram += f'<div class="group-strip" role="img" aria-label="{escape(name)}: {text("removedGroups")} {escape(str(list(removed)))}">'
         diagram += ''.join(f'<span class="group-cell {"removed" if i in removed else "retained"}" aria-hidden="true"></span>' for i in range(16))+'</div></div>'
     diagram += '<div class="diagram-key"><span><i class="key-retained"></i>'+text('retained')+'</span><span><i class="key-removed"></i>'+text('removedGroups')+'</span></div>'
-    out = portfolio_hero(t,lang,len(case_paths))+practical_stories
-    out += portfolio_latest(data20,data21,lang)+reader_note(lang)
+    featured, separator, model_guides = practical_stories.partition('<section class="model-entry home-model-guides"')
+    featured = featured.replace('<!-- recovery-finding -->', recovery_finding(data18,lang))
+    out = portfolio_hero(t,lang,len(case_paths))+featured
+    out += portfolio_latest(data20,data21,lang)+tools_section(lang)+research_map(lang)
+    out += portfolio_catalog(case_paths,names,lang)+reader_note(lang)
     out += '<section id="collaboration" class="model-entry home-model-guides"><h2>'+text('collaboration')+'</h2><p>'+text('collaborationIntro')+'</p><ul>'
     work = ('내 그래픽카드에서 쓸 모델·실행 설정을 비교하고 느린 구간 찾기', '모델을 바꾼 뒤 전에 되던 답변·도구 작업이 계속 되는지 확인', '흩어진 실행 결과를 같은 질문끼리 비교하는 도구와 재실행 안내로 정리') if lang=='ko' else ('Compare models and execution settings for your graphics card; find slow operations', 'Check whether previously working answers and tool tasks still work after a model change', 'Turn scattered execution results into matched-question comparison tools and rerun instructions')
     out += ''.join('<li>'+escape(item)+'</li>' for item in work)+'</ul>'+anchor('https://github.com/Munsik-Kim/inference-lab/issues',t['contact'])+'</section>'
@@ -127,7 +130,8 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     if data15:
         out += '<tr><td>'+('API 이름 변경·실제 상태·생성 전 관측 회귀시험' if lang=='ko' else 'API rename, actual state and pre-generation observation regression')+'</td><td>Qwen · PyTorch · Transformers · Python stdlib</td><td>'+anchor('../sources/case015-a1-runner.py.txt','Code')+' · '+anchor('../sources/case015-a1-tests.py.txt','Tests')+'</td></tr>'
     out += '</tbody></table></div></div><p>'+anchor(docs+'PORTFOLIO.md#code-tour',t['stackEvidence'],'text-link')+'</p></details></section>'
-    out += '<details class="research-records"><summary>'+('사례별 상세 요약과 이전 연구 기록 펼치기' if lang=='ko' else 'Open detailed case summaries and earlier research')+'</summary><p>'+('아래에는 기존 사례 요약을 그대로 남겼습니다. 특정 주제를 찾으려면 다음의 전체 사례 목록을 이용하세요.' if lang=='ko' else 'Existing case summaries remain here. Use the case index below to find a specific topic.')+'</p>'
+    out += separator+model_guides
+    out += '<details class="research-records"><summary>'+('사례별 상세 요약과 이전 연구 기록 펼치기' if lang=='ko' else 'Open detailed case summaries and earlier research')+'</summary><p>'+('아래에는 기존 사례 요약을 그대로 남겼습니다. 특정 주제를 찾으려면 위의 전체 사례 목록을 이용하세요.' if lang=='ko' else 'Existing case summaries remain here. Use the case index above to find a specific topic.')+'</p>'
     out += home_case018(data18, lang) if data18 else ''
     out += home_case019(data19, lang) if data19 else ''
     out += home_case020(data20, lang) if data20 else ''
@@ -180,7 +184,6 @@ def home(t: dict, lang: str, payloads: dict, case_paths: list, names: list,
     for url, key in [('llm-guide.html','navModels'),('measurements.html','navMeasurements'),('guide.html','guide'),(docs+'START_HERE.md','beginner'),(docs+'GLOSSARY.md','glossary')]:
         reading += anchor(url,t[key]+' ↗','reading-link')
     reading += '</div></section>'
-    out += portfolio_catalog(case_paths,names,lang)
     out += '<p class="scope">'+('초기 구현의 원래 실험 노트: ' if lang=='ko' else 'Original notes for the early implementations: ')+anchor(docs+'CASEBOOK.md#case-006','Case006')+' · '+anchor(docs+'CASEBOOK.md#case-007','Case007')+'</p>'+reading
     return out
 

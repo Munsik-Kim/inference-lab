@@ -6,6 +6,10 @@
 
 [모델별 실전 안내서](LLM_GUIDE.md)에서 Qwen3-4B의 검증된 실행 경로와 품질·실패·완화 기록을 연결합니다.
 
+이 문서는 **기술 판단과 구현 근거**를 읽는 곳입니다. 설치는 [실행 안내](GETTING_STARTED.md), 전체 사례는 [CASEBOOK](CASEBOOK.md), 공개된 이론·연구는 [연구 지도](https://munsik-kim.github.io/inference-lab/ko/index.html#research)로 구분합니다.
+
+[대표작](#대표작-a--모델을-작게-저장하고-실제-요청까지-실행하기)] · [Code / tests](#code-tour) · [기여·재사용 / Contribution](#contribution-and-reuse)
+
 ## 30초 소개
 
 <!-- claims: c008-tracks c008-artifact-implementation c007-implementation -->
@@ -100,7 +104,8 @@ Qwen3-0.6B의 한 MLP를 줄인 저장본의 구조 복원은 [코드 읽는 순
 2. **행렬 크기를 줄입니다.** [`sliced`](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/007-interaction-aware-mlp-pruning/src/surgery.py#L6)는 남긴 그룹을 gate/up 행과 down 열에 대응시킵니다. `masked`가 비교 기준을 만들고 `replace_mlp`는 `finally`에서 원래 모듈을 복구합니다. [배열 크기·편향·계산 일치 테스트](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/007-interaction-aware-mlp-pruning/tests/test_core.py#L62)가 이 연결을 검사합니다.
 3. **불완전한 근거를 거절합니다.** [`assess`](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/src/validity.py#L10)는 전체 출력과 실행 경로 검사 결과를 요구합니다. [같은 질문을 짝짓는 원래 테스트](https://github.com/Munsik-Kim/inference-lab/blob/bc1da81a82bff2e2827c5b4cabc9082cb6db5484/cases/006-attention-decision-stability/tests/test_core.py#L249)는 누락·중복·서로 다른 입력의 결합을 거절합니다. 새 [화면 검사기](../../tools/showcase/check.py)는 표시용 데이터를 보존된 원자료와 대조합니다.
 
-## 60–90초 시연 대본
+<a id="6090초-시연-대본"></a>
+## 직접 확인하는 순서
 
 *CPU 합성 예제를 실제로 실행하며 보여줄 동선입니다. 이 문서는 녹화 영상이 아닙니다.*
 
@@ -146,62 +151,31 @@ OpenAI Codex가 구현·로컬 실행·테스트·분석·문서 작성을 지�
 근거는 특정 모델·장치 하나에서 수행한 합성 실험과 Case009의 별도 공식 과제 결과입니다. 실제 서비스 배포 적합성은 **미평가(`NOT_ASSESSED`)**입니다. CPU 검산은 저장된 개별 수치를 다시 계산합니다. 제외된 전체 배열을 복구하거나 GPU 모델 실행을 독립적으로 반복하는 절차는 [재현 안내](GETTING_STARTED.md)에서 따로 설명합니다.
 
 
-## Case010 — state 저장과 실패 보존
-
-모델이 입력마다 갱신하는 기억(recurrent state)을 적은 비트로 묶어 저장하고, 저장 오차의 보정값을 다음 계산에 전달하는 residual transport를 연결했습니다. 각 행의 갱신을 함께 완료하고 실패 상태도 저장해 재시작 때 실패가 사라지지 않게 했습니다. [v2 구현](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py), [새 프로세스 합성 테스트](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py), [저장 예산과 판독 길이 비교](../../cases/010-ckda-finite-precision-memory-horizon/REPORT.ko.md) 순서로 확인할 수 있습니다. [CPU 검산 안내](GETTING_STARTED.md#case010-cpu). ComplexKDA의 상태 갱신·학습 모델과 이 프로젝트의 저장·복원 코드(codec)·평가 도구는 [출처 안내](../../cases/010-ckda-finite-precision-memory-horizon/NOTICE.md)에 구분했습니다.
-
-## Case011 — 같은 상태에서 판독층만 교체하기
-
-세 가지 답변 판독층(readout)이 같은 저장 상태를 읽게 했습니다. 변경한 두 숫자 배열의 크기와 원본 모델의 파일 지문을 검사하고 새 프로그램에서 다시 적용합니다. [모델 상태를 읽는 연결 코드](../../cases/011-frozen-state-readout-adaptation/source/adapter.py) → [변경 가중치 파일을 읽어 적용하는 코드](../../cases/011-frozen-state-readout-adaptation/source/head_patch.py) → [저장·재적용 규칙 테스트](../../cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) → [독립 검산기](../../cases/011-frozen-state-readout-adaptation/analysis/audit.py) 순서로 읽을 수 있습니다.
-
-모델의 변화하는 기억에 추가한 저장량은 0 B입니다. 가중치를 맞추는 데 쓰지 않은 위치의 정답 확률 손실(교차 엔트로피, CE; 낮을수록 좋음)은 개선됐습니다. 그러나 INT8 저장에서는 세 모델 저장본 모두 첫 오답 전까지 연속해서 맞힌 평균 길이가 줄었습니다. [쉬운 화면](https://munsik-kim.github.io/inference-lab/ko/case011.html) · [상세 결과·가중치 적합 계산의 종료 상태](../../cases/011-frozen-state-readout-adaptation/REPORT.ko.md) · [CPU 실행](GETTING_STARTED.md#case011-cpu). PyTorch/NumPy와 ComplexKDA의 역할은 [기여·출처](../../cases/011-frozen-state-readout-adaptation/NOTICE.md)에 있습니다.
-
-
-## Case 013 — INT4 스케일 보존과 품질 검산
-
-[4비트 변환·모델 연결 코드](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [4비트 값을 묶어 저장·복원하는 코드](../../cases/013-dualquant-reference-quality/source/reference_int4.py) · [저장한 개별 수치 검산](../../cases/013-dualquant-reference-quality/analysis/audit.py)
-
-<!-- case014-entry -->
-## Case014 — 자체 경로 보정과 전층 품질
-
-앞선 층을 압축하면서 달라진 중간 계산값을 다음 층에서 수집하고, 64비트 계산(FP64)으로 오차 보정값을 맞춘 뒤 INT4 저장·독립 재로딩을 구현했습니다. 오차 원인을 세 항으로 나누고 같은 문서 구간의 전후 결과를 검산합니다. PG19의 텍스트 품질 이득과 ArXiv에서 확인된 한계를 함께 남겼습니다.
-
-[구현 설명](../../cases/014-quantization-compensation/PORTFOLIO.md) · [코드](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [테스트](../../cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) · [모델 없는 CPU 검산](../../cases/014-quantization-compensation/REPRODUCE.md)
-
-<!-- case015-entry -->
+<a id="api-이름-변경-회귀시험"></a>
+<a id="case-013--int4-스케일-보존과-품질-검산"></a>
+<a id="case010--state-저장과-실패-보존"></a>
+<a id="case011--같은-상태에서-판독층만-교체하기"></a>
+<a id="case014--자체-경로-보정과-전층-품질"></a>
 <a id="case015-cpu"></a>
-## API 이름 변경 회귀시험
-
-도구 이름만 바뀌어도 AI가 같은 일을 끝내는지 확인합니다. 예제 작업은 **구매한 개수와 개당 가격을 읽고→총금액을 계산하고→저장한 뒤→맞게 기록됐는지 확인**하는 일입니다. 기능과 입력 형식은 유지하고 `read_order`를 `readOrder`처럼 이름 표기만 바꿉니다. 16개 문제에서 BF16은 **15/16→16/16**, RTN은 **16/16→16/16**, D16은 **12/16→12/16**이었습니다. [작업·용어 안내](../../cases/015-tool-interface-sensitivity/README.ko.md)에서 주문(구매 내역)·단가(개당 가격)와 결과표 읽는 법을 설명합니다. 기존 시험 P1과 새 응용시험 A1의 각 96회는 별도로 집계합니다.
-<!-- case016-entry -->
+<a id="case016--같은-kv-메모리에서-수용량과-요청-비용-검증"></a>
 <a id="case016-cpu"></a>
-## Case016 — 같은 KV 메모리에서 수용량과 요청 비용 검증
+<a id="case017--도구-호출-규칙과-업무-완주-비용"></a>
+<a id="case018--상태-복구와-최종-보고는-함께-맞을까"></a>
+<a id="case019--손실은-그대로인데-학습은-진행될까"></a>
+## 추가 구현과 연구의 근거
 
-RTX 5080에서 실제 NVFP4 KV 저장·읽기 검사와 고정 pool 비교 도구를 구현했습니다. 같은 약4GiB 캐시에서 token 수용량은 3.56배였고, 16K 입력의 동시 요청2/4에서 처리량 비율(F4/B16)은 1.21/1.35배였습니다. 모든 조건이 빨라진 것은 아니며 원 agent 기준선 실패도 보존했습니다.
+수치를 이 문서에 반복하지 않고 사례별 정본으로 연결합니다. Case017의 기준 누락·추가 비용, Case018의 Q/W 구분, Case021의 INCONCLUSIVE는 해당 원기록에서 확인하세요.
 
-[Report](../../cases/016-kv-agent-bench/REPORT.ko.md) · [CPU commands](../../cases/016-kv-agent-bench/REPRODUCE.ko.md) · [Implementation](../../cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/runner.py)
-
-## Case017 — 도구 호출 규칙과 업무 완주 비용
-
-도구 호출 규칙이 실제 저장·검증·최종 답의 완료를 얼마나 바꾸는지 비교하는 평가기를 구현했습니다. 상품 합계 기록·창고 이동·문서 정보 변경을 소유한 가상 기록에서 시험합니다.
-
-BF16 가중치를 고정한 NVFP4 KV의 신규 합성 24과제에서 문법 제약은 완주 7/24→15/24, 상태 정확 7/24→22/24를 기록했습니다. 회복 8개·손실 0개와 함께 추가 실행 비용과 남은 실패도 추적했습니다. 완주 수가 늘면서 전체 실행 비용도 늘었습니다. 실패를 포함한 24개 실행의 비용을 완주 수로 나누면 입력 토큰은 약 3.62%, 출력 토큰은 12.36%, 한 과제 실행 시간(episode wall)은 11.27% 증가했습니다.
-
-확대 기준 이탈: 설정 점검용 DEV에서 BF16 KV+C0의 완주는 5/8로 원안의 6/8 기준에 미달했습니다. 당시 로컬 계획과 실행 코드가 이 성공 조건을 누락하고 완료·동결·봉인만 검사해 P2를 진행했습니다. 별도 면제 승인 기록은 확인하지 못했습니다. 이 경위를 공개하며, P2는 해당 기준을 통과한 확인시험이 아닌 신규 합성 과제의 탐색적 측정으로 제시합니다.
-
-[Report](../../cases/017-agent-contract-cost-bench/REPORT.ko.md) · [CPU command and scope](../../cases/017-agent-contract-cost-bench/REPRODUCE.ko.md) · [Strict parser](../../cases/017-agent-contract-cost-bench/src/agent_contract_cost/contracts.py) · [Independent auditor](../../cases/017-agent-contract-cost-bench/src/agent_contract_cost/audit.py)
-
-<!-- case018-entry -->
-## Case018 — 상태 복구와 최종 보고는 함께 맞을까?
-
-재고의 잘못된 대상·중복·부분 차감을 복구한 뒤 저장 상태와 최종 수량 보고를 함께 검사했습니다. 신규 합성24과제에서 BF16 KV는 두 정책 모두 Q24/W0, NVFP4 KV는 Q19/W5였습니다. 최신 검증 가드가 부적격 final 수용을 막아도 복구·정확 보고가 개선되지는 않았습니다. 현재 수량 재관측과 최종 보고의 관계는 별도 사후 관측 분석입니다.
-
-[Report](../../cases/018-agent-state-recovery/REPORT.ko.md) · [CPU replay](../../cases/018-agent-state-recovery/REPRODUCE.ko.md)
-
-<!-- case019-entry -->
-
-## Case019 — 손실은 그대로인데 학습은 진행될까?
-
-두 층 선형망을 CPU로 독립 구현해 방향 정렬과 예측 크기 성장의 시간을 나누어 관측하고, 학습 중 같은 크기를 보존한 방향 개입을 비교했습니다. 원문 부분 수치 재현과 자체 통제 실험, 반대 결과를 함께 읽을 수 있습니다.
-
-[Report](../../cases/019-silent-alignment-dynamics/REPORT.ko.md) · [CPU quick/full](../../cases/019-silent-alignment-dynamics/REPRODUCE.ko.md)
+| 사례 | 구현·관측 정본 | 설계·해석 |
+|---|---|---|
+| 010 | [Case 010 — 저정밀 recurrent state의 저장·재시작과 기억 수명](../../cases/010-ckda-finite-precision-memory-horizon/README.ko.md) | [CASEBOOK](CASEBOOK.md#case-010) |
+| 011 | [Case 011 — 상태를 고정한 판독층 보정과 길이 외삽](../../cases/011-frozen-state-readout-adaptation/README.ko.md) | [CASEBOOK](CASEBOOK.md#case-011) |
+| 013 | [Case 013 — 가중치 오차가 줄면 실제 답변도 좋아질까?](../../cases/013-dualquant-reference-quality/README.ko.md) | [CASEBOOK](CASEBOOK.md#case-013) |
+| 014 | [Case 014 — 같은 INT4 저장량으로 모델 품질 개선하기](../../cases/014-quantization-compensation/README.ko.md) | [CASEBOOK](CASEBOOK.md#case-014) |
+| 015 | [Case015 — 같은 도구, 다른 이름](../../cases/015-tool-interface-sensitivity/README.ko.md) | [CASEBOOK](CASEBOOK.md#case-015) |
+| 016 | [Case016 — RTX 5080에서 NVFP4 KV 캐시 검증: 같은 메모리로 더 긴 문맥을 수용할 수 있을까?](../../cases/016-kv-agent-bench/README.ko.md) | [CASEBOOK](CASEBOOK.md#case-016) |
+| 017 | [Case017 — 도구 호출 규칙과 업무 완주 비용](../../cases/017-agent-contract-cost-bench/README.ko.md) | [CASEBOOK](CASEBOOK.md#case-017) |
+| 018 | [Case018 — 재고 복구와 완료 보고를 따로 검사했습니다](../../cases/018-agent-state-recovery/README.ko.md) | [CASEBOOK](CASEBOOK.md#case-018) |
+| 019 | [Case019 — 손실은 그대로인데 학습은 진행될까?](../../cases/019-silent-alignment-dynamics/README.ko.md) | [CASEBOOK](CASEBOOK.md#case-019) |
+| 020 | [Case020 — 임베딩을 작게 보관하면 실행도 빨라질까?](../../cases/020-optic-on-demand-decode/README.ko.md) | [CASEBOOK](CASEBOOK.md#case-020) |
+| 021 | [Case021 — 같은 INT4인데 왜 계산 결과가 달라질까?](../../cases/021-rounding-execution-diagnostics/README.ko.md) | [CASEBOOK](CASEBOOK.md#case-021) |

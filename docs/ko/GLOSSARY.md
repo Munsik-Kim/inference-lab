@@ -31,6 +31,8 @@ LLM은 많은 텍스트로 학습해 글의 점수를 계산하거나 글을 생
 
 [관련 사례 001](CASEBOOK.md#case-001).
 
+**메모리 표의 구분:** 상주(resident)는 호출 사이에도 남는 숫자 배열, 임시 할당은 계산 중 만들어졌다가 해제되는 배열입니다. allocated peak는 PyTorch가 할당했다고 기록한 최대값이고 reserved는 재사용을 위해 확보한 영역도 포함합니다. 장치 전체 VRAM 표본과 같은 숫자가 아닙니다. [Case020](CASEBOOK.md#case-020).
+
 <a id="quantization"></a>
 ## 양자화(quantization)
 

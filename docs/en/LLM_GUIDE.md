@@ -2,6 +2,8 @@
 
 English summary | [한국어](../ko/LLM_GUIDE.md) · [Home](../../README.md)
 
+This guide locates **execution conditions for tested models and settings**. To start without a model, use the [CPU answer-comparison example](https://munsik-kim.github.io/inference-lab/en/compare.html#run). For implementation contributions, use [PORTFOLIO](PORTFOLIO.md).
+
 If you want to run a model on your own PC, start by asking whether it fits in GPU memory, how long answers take, and whether it performs your task correctly. This guide uses saved Qwen measurements on an RTX 5080 to show how to check those questions. Open-weight models publish their learned number arrays (weights); their usage terms still apply.
 
 For a recruiter or technical collaborator, the connected code demonstrates model-file conversion and restart checks, request measurement, and answer/tool-action evaluation. These relate to local AI execution, model optimization and quality regression testing. [Capabilities and source evidence](PORTFOLIO.md) explain the work that can be discussed.
