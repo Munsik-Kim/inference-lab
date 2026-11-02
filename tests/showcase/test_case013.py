@@ -5,6 +5,7 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'tools/showcase'))
 from build import build
 from check import check
+from reader import reading_layout
 from case013 import load_case013, render_case013, SECTIONS, C13
 
 class Case013Display(unittest.TestCase):
@@ -29,7 +30,7 @@ class Case013Display(unittest.TestCase):
         for lang in ['en','ko']:
             html=(self.site/lang/'case013.html').read_text()
             for name in SECTIONS:self.assertIn('id="'+name+'"',html);self.assertIn('href="#'+name+'"',html)
-            self.assertIn(render_case013(self.data,lang),html)
+            self.assertIn(reading_layout(render_case013(self.data,lang),'case013',lang),html)
             self.assertIn('6/8',html);self.assertIn('0/8',html);self.assertIn('2.61%',html)
             self.assertIn('../'+('ko' if lang=='en' else 'en')+'/case013.html',html)
             self.assertIn('case013-report-'+lang+'.md.txt',html)

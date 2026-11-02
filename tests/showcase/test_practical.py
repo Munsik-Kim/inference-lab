@@ -70,7 +70,7 @@ class PracticalGuide(unittest.TestCase):
             hero=home[home.index('<section class="cap-hero">'):home.index('id="featured-stories"')]
             self.assertEqual(hero.count('class="reading-link"'),2)
             self.assertNotIn('core-tech',hero)
-            self.assertIn('href="llm-guide.html"',hero)
+            self.assertIn('href="compare.html#run"',hero)
             self.assertIn('href="#featured-stories"',hero)
             stories=home[home.index('id="featured-stories"'):home.index('id="contributions"')]
             self.assertEqual(stories.count('<article class="story">'),3)
@@ -145,14 +145,14 @@ class PracticalGuide(unittest.TestCase):
     def test_reader_order_common_routes_and_page_metadata(self):
         for lang in ('ko','en'):
             html=(self.site/lang/'index.html').read_text()
-            positions=[html.index('id="'+name+'"') for name in ('featured-stories','model-guides','collaboration','contributions','capabilities','tech-stack','compensation-study','projects','cases')]
+            positions=[html.index('id="'+name+'"') for name in ('featured-stories','latest-work','tools','research','cases','about','collaboration','contributions','capabilities','tech-stack','model-guides','compensation-study','projects')]
             self.assertEqual(positions,sorted(positions))
             for page in self.site.joinpath(lang).glob('*.html'):
                 text=page.read_text()
                 if 'class="site-header"' not in text:continue  # retained image-review tool
                 nav=text.split('<header class="site-header">',1)[1].split('</nav>',1)[0].split('<nav ',1)[1]
                 p=Structure();p.feed('<nav '+nav+'</nav>')
-                self.assertEqual(p.links,['index.html','llm-guide.html','index.html#cases','guide.html'],page.name)
+                self.assertEqual(p.links,['index.html#featured-stories','index.html#tools','index.html#research','index.html#cases','index.html#about'],page.name)
                 title=re.search(r'<title>(.*?)</title>',text)[1]
                 self.assertIn('property="og:title" content="'+title+'"',text)
                 self.assertRegex(text,r'<meta name="description" content="[^\"]+">')

@@ -7,6 +7,8 @@ import re
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
+from reader import reading_layout
+from portfolio import recovery_finding, comparison_finding
 from common import ROOT, read, require, sha, json_text, new_output
 from data import load
 from case008 import load_case008, render_case008
@@ -173,8 +175,11 @@ def check(root: Path, site: Path) -> dict:
     require(m['practical_guide_units']['source_manifest_sha256']==sha(root/'presentation/practical_sources.json'), 'Wrong practical guide manifest')
     for lang in ('ko','en'):
         for page in GUIDE_PAGES:
-            require(practical_render(root,practical,lang,page) in (site/lang/(page+'.html')).read_text(), 'Practical guide rendering mismatch')
-        require(practical_render(root,practical,lang,'featured') in (site/lang/'index.html').read_text(), 'Practical home stories mismatch')
+            require(reading_layout(practical_render(root,practical,lang,page),page,lang) in (site/lang/(page+'.html')).read_text(), 'Practical guide rendering mismatch')
+        featured, separator, guides = practical_render(root,practical,lang,'featured').partition('<section class="model-entry home-model-guides"')
+        featured = featured.replace('<!-- recovery-finding -->', recovery_finding(data18,lang)).replace('<!-- comparison-finding -->', comparison_finding(root,lang))
+        home_html = (site/lang/'index.html').read_text()
+        require(featured in home_html and separator+guides in home_html, 'Practical home stories mismatch')
         require(portfolio_latest(data20,data21,lang) in (site/lang/'index.html').read_text(), 'Portfolio recent findings/source mismatch')
     if data21:
         require(read(site/'data/case021.json')==data21,'Case021 data/source mismatch')
@@ -184,7 +189,7 @@ def check(root: Path, site: Path) -> dict:
         for name,path in C21_FIGURES.items():require((site/name).read_bytes()==(root/path).read_bytes(),'Case021 figure copy')
         for lang in ('ko','en'):
             html=(site/lang/'case021.html').read_text();parser=Links();parser.feed(html)
-            require(render_case021(data21,lang) in html and set(C21_SECTIONS)<=parser.ids,'Case021 render/anchors')
+            require(reading_layout(render_case021(data21,lang),'case021',lang) in html and set(C21_SECTIONS)<=parser.ids,'Case021 render/anchors')
             require(home_case021(data21,lang) in (site/lang/'index.html').read_text(),'Case021 home entry')
             require('<noscript>' in html and '/home/' not in html,'Case021 static/private scope')
     if data20:
@@ -196,7 +201,7 @@ def check(root: Path, site: Path) -> dict:
         for name,path in C20_FIGURES.items():require((site/name).read_bytes()==(root/path).read_bytes(),'Case020 figure copy')
         for lang in ('en','ko'):
             html=(site/lang/'case020.html').read_text();parser=Links();parser.feed(html)
-            require(render_case020(data20,lang) in html and set(C20_SECTIONS)<=parser.ids,'Case020 render/anchors')
+            require(reading_layout(render_case020(data20,lang),'case020',lang) in html and set(C20_SECTIONS)<=parser.ids,'Case020 render/anchors')
             require(home_case020(data20,lang) in (site/lang/'index.html').read_text(),'Case020 homepage entry')
             require('<noscript>' in html and '/home/' not in html,'Case020 static/private path boundary')
     if data19:
@@ -208,7 +213,7 @@ def check(root: Path, site: Path) -> dict:
         for name,path in C19_FIGURES.items():require((site/name).read_bytes()==(root/path).read_bytes(),'Case019 figure copy')
         for lang in ('en','ko'):
             html=(site/lang/'case019.html').read_text();parser=Links();parser.feed(html)
-            require(render_case019(data19,lang) in html and set(C19_SECTIONS)<=parser.ids,'Case019 render and anchors')
+            require(reading_layout(render_case019(data19,lang),'case019',lang) in html and set(C19_SECTIONS)<=parser.ids,'Case019 render and anchors')
             require(home_case019(data19,lang) in (site/lang/'index.html').read_text(),'Case019 home link')
             require('/home/' not in html and '<noscript>' in html,'Case019 offline/safe-link contract')
     if data18:
@@ -219,7 +224,7 @@ def check(root: Path, site: Path) -> dict:
         require((site/C18_ARCHIVE).read_bytes()==(root/C18_ARCHIVE_SOURCE).read_bytes(),'Case018 archive differs')
         for lang in ('en','ko'):
             html=(site/lang/'case018.html').read_text();parser=Links();parser.feed(html)
-            require(render_case018(data18,lang) in html and set(C18_SECTIONS)<=parser.ids,'Case018 render/anchor contract')
+            require(reading_layout(render_case018(data18,lang),'case018',lang) in html and set(C18_SECTIONS)<=parser.ids,'Case018 render/anchor contract')
             require(home_case018(data18,lang) in (site/lang/'index.html').read_text(),'Case018 home entry')
     if data17:
         require(read(site/'data/case017.json')==data17,'Case017 raw/display mismatch')
@@ -230,7 +235,7 @@ def check(root: Path, site: Path) -> dict:
         require((site/C17_ARCHIVE).read_bytes()==(root/C17_ARCHIVE_SOURCE).read_bytes(),'Case017 lossless evidence copy')
         for lang in ('en','ko'):
             html=(site/lang/'case017.html').read_text();parser=Links();parser.feed(html)
-            require(render_case017(data17,lang) in html and set(C17_SECTIONS)<=parser.ids,'Case017 rendering/anchors')
+            require(reading_layout(render_case017(data17,lang),'case017',lang) in html and set(C17_SECTIONS)<=parser.ids,'Case017 rendering/anchors')
             require(home_case017(data17,lang) in (site/lang/'index.html').read_text(),'Case017 home entry')
             require(html.index('case017-deviation')<html.index('id="workflow"'),'Case017 deviation must be near first results')
     if data16:
@@ -240,7 +245,7 @@ def check(root: Path, site: Path) -> dict:
         for name,path in C16_FIGURES.items():require((site/name).read_bytes()==(root/path).read_bytes(),'Case016 figure changed')
         for lang in ('ko','en'):
             html=(site/lang/'case016.html').read_text();parser=Links();parser.feed(html)
-            require(render_case016(data16,lang) in html and set(C16_SECTIONS)<=parser.ids,'Case016 rendering/anchors')
+            require(reading_layout(render_case016(data16,lang),'case016',lang) in html and set(C16_SECTIONS)<=parser.ids,'Case016 rendering/anchors')
             require(home_case016(data16,lang) in (site/lang/'index.html').read_text(),'Case016 home entry')
             require('<script' not in render_case016(data16,lang),'Case016 core must work without JavaScript')
     if data15:
@@ -251,7 +256,7 @@ def check(root: Path, site: Path) -> dict:
         require(read(site/'data/case015-download.json')==data15['download'],'Case015 download metadata')
         for lang in ('ko','en'):
             html=(site/lang/'case015.html').read_text();parser=Links();parser.feed(html)
-            require(render_case015(data15,lang) in html and set(C15_SECTIONS)<=parser.ids,'Case015 rendering/anchors')
+            require(reading_layout(render_case015(data15,lang),'case015',lang) in html and set(C15_SECTIONS)<=parser.ids,'Case015 rendering/anchors')
             require(home_case015(data15,lang) in (site/lang/'index.html').read_text(),'Case015 home feature')
             require(html.count('class="a1-episode"')==96,'Case015 measured episode count')
             if data15.get('P2'):
@@ -267,7 +272,7 @@ def check(root: Path, site: Path) -> dict:
         require(read(site/'data/case014-download.json')==data14['download'],'Case014 download metadata mismatch')
         for lang in ('ko','en'):
             html=(site/lang/'case014.html').read_text();parser=Links();parser.feed(html)
-            require(render_case014(data14,lang) in html and set(C14_SECTIONS)<=parser.ids,'Case014 rendering/anchors')
+            require(reading_layout(render_case014(data14,lang),'case014',lang) in html and set(C14_SECTIONS)<=parser.ids,'Case014 rendering/anchors')
             require(home_case014(data14,lang) in (site/lang/'index.html').read_text(),'Case014 home feature')
     if data13:
         require(read(site/'data/case013.json')==data13, 'Case013 numeric/source mismatch')
@@ -278,7 +283,7 @@ def check(root: Path, site: Path) -> dict:
             require((site/name).read_bytes()==(root/path).read_bytes(), 'Changed Case013 figure')
         for lang in ('en','ko'):
             html=(site/lang/'case013.html').read_text(); parser=Links(); parser.feed(html)
-            require(render_case013(data13,lang) in html and set(C13_SECTIONS)<=parser.ids, 'Case013 rendering/anchors')
+            require(reading_layout(render_case013(data13,lang),'case013',lang) in html and set(C13_SECTIONS)<=parser.ids, 'Case013 rendering/anchors')
             require(home_case013(data13,lang) in (site/lang/'index.html').read_text(), 'Case013 home feature')
     if data12:
         require(read(site/'data/case012.json') == data12, 'Case012 numeric/source mismatch')
@@ -304,7 +309,7 @@ def check(root: Path, site: Path) -> dict:
         require((site/'assets/case012-review.css').read_bytes() == (root/C12/'demo/style.css').read_bytes(), 'Changed Case012 viewer CSS')
         for lang in ('en','ko'):
             html = (site/lang/'case012.html').read_text(); parser = Links(); parser.feed(html)
-            require(render_case012(data12,lang) in html and set(C12_SECTIONS) <= parser.ids, 'Case012 rendering/scope mismatch')
+            require(reading_layout(render_case012(data12,lang),'case012',lang) in html and set(C12_SECTIONS) <= parser.ids, 'Case012 rendering/scope mismatch')
             require(render_annotation(lang) in (site/lang/'case012-annotate.html').read_text(), 'Case012 human form mismatch')
             require(image_viewer(root,data12,lang) == (site/lang/'case012-images.html').read_text(), 'Case012 all-image viewer mismatch')
             home = (site/lang/'index.html').read_text()
@@ -317,7 +322,7 @@ def check(root: Path, site: Path) -> dict:
         for name,path in C10_SOURCES.items():
             require((site/'sources'/name).read_bytes()==(root/path).read_bytes(), 'Changed Case010 source copy: '+name)
         for lang in ('en','ko'):
-            require(render_case010(data10,lang) in (site/lang/'case010.html').read_text(), 'Case010 rendering/scope mismatch')
+            require(reading_layout(render_case010(data10,lang),'case010',lang) in (site/lang/'case010.html').read_text(), 'Case010 rendering/scope mismatch')
             home=(site/lang/'index.html').read_text()
             require(home_case010(data10,lang) in home, 'Missing Case010 home feature')
             require(home.count('id="memory-study"')==1, 'Duplicate Case010 home project')
@@ -337,7 +342,7 @@ def check(root: Path, site: Path) -> dict:
             require((site/name).read_bytes()==blob, 'Changed Case011 source-derived figure: '+name)
         for lang in ('en','ko'):
             html=(site/lang/'case011.html').read_text()
-            require(render_case011(data11,lang) in html, 'Case011 rendering/scope mismatch')
+            require(reading_layout(render_case011(data11,lang),'case011',lang) in html, 'Case011 rendering/scope mismatch')
             parser=Links();parser.feed(html)
             require(set(C11_SECTIONS)<=parser.ids, 'Missing Case011 section')
             home=(site/lang/'index.html').read_text()
@@ -357,11 +362,11 @@ def check(root: Path, site: Path) -> dict:
         for length in (128,1024):
             require((site/f'assets/serving-L{length}.svg').read_bytes()==(root/C9/f'figures/serving-L{length}.svg').read_bytes(),'Changed serving figure')
         for lang in ('en','ko'):
-            require(render_case009(data9,lang) in (site/lang/'case009.html').read_text(),'Case009 rendering/scope mismatch')
+            require(reading_layout(render_case009(data9,lang),'case009',lang) in (site/lang/'case009.html').read_text(),'Case009 rendering/scope mismatch')
     require(read(site/'data/case008.json') == data8, 'Case008 display mismatch')
     require(m['case008_source_manifest_sha256']==sha(root/'presentation/case008_sources.json'), 'Wrong Case008 source manifest')
     for lang in ('en','ko'):
-        require(render_case008(root,data8,lang) in (site/lang/'case008.html').read_text(), 'Case008 rendered values/scope mismatch')
+        require(reading_layout(render_case008(root,data8,lang),'case008',lang) in (site/lang/'case008.html').read_text(), 'Case008 rendered values/scope mismatch')
     payloads=load(root)
     for case,expected in payloads.items():
         require(read(site/f'data/{case}.json')==expected, 'Display numeric/source mismatch')

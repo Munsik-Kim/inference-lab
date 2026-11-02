@@ -1,78 +1,40 @@
-# DIOVA — Model compression, execution and evaluation
+# DIOVA · Model execution and change validation
 
-I built tools to run public AI models on a limited GPU and check changed answers and actual task results. The public implementations and measurements relate to **local model execution and optimization, quality checks after model changes, and tool-automation evaluation**.
+English | [한국어](README.ko.md)
 
-**Munsik Kim | DIOVA** · English | [한국어](README.ko.md)
+**Munsik Kim** · I build tools to run models, compare changed answers and diagnose failures. The work connects model storage and restart, matched-question evaluation and checks of actual task completion to code and auditable records.
 
-[Portfolio and model guides (Pages)](https://munsik-kim.github.io/inference-lab/en/index.html) · [Try it: compare your saved results](packages/diova-compare/examples/compare/README.md)
+[See selected work](https://munsik-kim.github.io/inference-lab/en/index.html#featured-stories) · [Run a model-free example](https://munsik-kim.github.io/inference-lab/en/compare.html#run)
 
-<a id="store-smaller-models-run-them-and-check-the-answers-that-changed"></a>
+## Choose a starting point
 
-## Featured work A · B · C
+| What you want to check | Next step |
+|---|---|
+| Engineering skills and my contribution | [Design decisions, code and tests](docs/en/PORTFOLIO.md) |
+| Changes in your two answer files | [diova-compare inputs and commands](packages/diova-compare/examples/compare/README.md) |
+| Research findings and scope | [Cases and records](docs/en/CASEBOOK.md), [public research map](https://munsik-kim.github.io/inference-lab/en/index.html#research) |
+
+## Selected work A · B · C
 
 <!-- claims: c008-tracks c008-artifact-implementation -->
-| Problem | Built here | Evidence / try it |
-|---|---|---|
-| A. Store a smaller model and run actual requests | Connected an existing compression method (GPTQ) to checks of saved model files, restart in a new process, and request comparison under matching conditions | [Case008 Q](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) → [Case009](https://munsik-kim.github.io/inference-lab/en/case009.html#serving) |
-| B. Compare changed answers on the same questions | Built diova-compare, an independent CPU tool: check that questions and answer keys match, list lost/new correct answers and other changes, and retain original run failures | [CPU example](packages/diova-compare/examples/compare/README.md) · [Code and tests](packages/diova-compare/README.md#implementation-and-checks) |
-| C. Verify tool workflow completion and execution costs | Replay saved state, observed validation and final answers; compare completion, failures and execution costs across call policies and KV configurations | [Case017 results and recorded episodes](cases/017-agent-contract-cost-bench/REPORT.md) · [CPU replay without a model](cases/017-agent-contract-cost-bench/REPRODUCE.md) · Earlier work: [Case013 follow-up](research/agent_tool_contract_repair_20261014/README.md) |
+| Work | What I implemented and where to check it |
+|---|---|
+| A. Reload a smaller model | GPTQ integration, file checks and fresh-process reload: [Case008 Q](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) → [Case009 request costs and quality](https://munsik-kim.github.io/inference-lab/en/case009.html#serving). File size, GPU memory and changed answers are different measurements. |
+| B. Changes hidden by an average | [diova-compare](https://munsik-kim.github.io/inference-lab/en/compare.html) checks matched inputs and reports lost and gained correct answers. Both runs score 2/4 in the small synthetic example, yet one correct answer is lost and another gained. |
+| C. Completion claims and actual state | [Case017 report](cases/017-agent-contract-cost-bench/REPORT.md) · [CPU replay](cases/017-agent-contract-cost-bench/REPRODUCE.md) · [earlier implementation](research/agent_tool_contract_repair_20261014/README.md). [Case018](cases/018-agent-state-recovery/README.md) separates state/procedure fit from accurate final reporting. Case017 is exploratory, retaining an omitted expansion criterion and added costs. |
 
-## Recorded storage and runtime memory
+Recent **Case020** asks whether lower residency also means faster calls. **Case021** investigates where execution paths using the same compressed representation diverge. Its overall mean KL-reduction verdict remains **INCONCLUSIVE**: this evidence does not establish a reduction. [Read recent diagnostics](https://munsik-kim.github.io/inference-lab/en/index.html#latest-work).
 
-Qwen3-4B-Instruct-2507 · RTX 5080 16GB · original BF16 → GPTQ W4A16. These rows have different measurement boundaries and execution conditions.
+## Tools you can use
 
-| Existing experiment / measurement | Original → compressed model | Meaning / conditions |
-|---|---|---|
-| [Case008 Q · weight files](https://munsik-kim.github.io/inference-lab/en/case008.html#q-evaluation) | **8.045 GB → 2.652 GB** | **67.0% smaller files**, decimal GB |
-| [Case008 Q · peak PyTorch GPU allocation](https://munsik-kim.github.io/inference-lab/en/qwen3-4b.html#storage) | **10.4868 → 5.3971 GiB** | About 48.5% lower; eager, one request, 1 GiB cache; includes initialization and execution |
-| [Case009 · highest whole-GPU memory samples](https://munsik-kim.github.io/inference-lab/en/qwen3-4b.html#device-memory) | **14.08–14.51 → 9.08–9.52 GiB** | **4.98–5.06 GiB / 34.4–35.8% lower** within matching rounds; graph, 4 GiB cache, three rounds, one-second samples |
+- **diova-compare:** compares two already-run and graded JSONL files on CPU. After `validate → compare`, start with `report.md`, then inspect changes by question in `pairs.csv`. It does not run models or create ground truth for free-form answers.
+- **[inference-engineering-kit](https://github.com/Munsik-Kim/inference-engineering-kit):** an installable evaluator with supported tasks and external-gold contracts. The default CPU path is separate from live model/HTTP execution; comparison reuses diova-compare. Its guide distinguishes [public v0.2.1](https://github.com/Munsik-Kim/inference-engineering-kit/releases/tag/v0.2.1) from current source.
 
-Case009 samples include startup, warmup and desktop use. Read its lost correct answers and abnormal evaluation-process exits in the [model guide](docs/en/LLM_GUIDE.md). Case008 R is a separate study reducing and restoring one block of Qwen3-0.6B.
+## All cases
 
-<!-- case016-entry -->
-## Case016 — Native KV capacity and request costs at the same memory budget
-
-Built native NVFP4 KV storage/read checks and a fixed-pool comparison tool on RTX5080. Token capacity was 3.56× at approximately4GiB; F4/B16 request-throughput ratios at16K concurrency2/4 were 1.21/1.35×. Other conditions were not uniformly faster; original agent-baseline failures remain preserved.
-
-[Report](cases/016-kv-agent-bench/REPORT.md) · [CPU](cases/016-kv-agent-bench/REPRODUCE.md) · [Code](cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/runner.py)
-
-<!-- case017-entry -->
-## Case017 — Agent Contract–Cost Bench
-
-We built a benchmark that checks saved state, validation observed after updates, and final answers on synthetic order, inventory and document tasks.
-
-With BF16 weights fixed on 24 new synthetic tasks, grammar-constrained output with native NVFP4 KV completed 15/24 versus 7/24 with free output; correct saved states rose from 7/24 to 22/24. Costs including failures and remaining errors are reported alongside these observations.
-
-BF16 KV/free output completed 5/8 DEV tasks, below the 6/8 expansion criterion. The local gate omitted this threshold and proceeded to P2; we disclose the deviation and treat P2 as exploratory.
-
-[Results and recorded episodes](cases/017-agent-contract-cost-bench/REPORT.md) · [CPU replay](cases/017-agent-contract-cost-bench/REPRODUCE.md) · [Protocol deviation](cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.md)
-
-<!-- case018-entry -->
-## Case018 — Checking inventory recovery and completion reports
-
-Built an inventory recovery environment and auditor that checks restored state separately from completion reports. On the same 24 synthetic tasks, both policies passed state/follow-up checks in 24/24 tasks with BF16 KV and 19/24 with NVFP4 KV; including validation and a correct report, counts were 0/24 and 5/24. Weights stayed BF16 in both configurations.
-
-[Results and recorded episodes](cases/018-agent-state-recovery/REPORT.md) · [CPU record replay](cases/018-agent-state-recovery/REPRODUCE.md)
-
-<!-- case020-entry -->
-## Case020 — Does Smaller Embedding Storage Also Run Faster?
-
-Compared precomputed lookup, request-time reconstruction and per-call deduplication of the same OPTIC representation. Synthetic-table PyTorch allocated peak fell from about 304 to 81 MiB, while deduplication won0/30 P4 process-block call comparisons. Precomputation was faster in actual1024/4096-call reuse sessions.
-
-[Plain explanation](cases/020-optic-on-demand-decode/README.md) · [Report](cases/020-optic-on-demand-decode/REPORT.md) · [CPU checks without a model](cases/020-optic-on-demand-decode/REPRODUCE.md)
-
-## Use or reproduce
-
-- Compare saved answers from your models: [prepare two files → validate → compare → reports](packages/diova-compare/examples/compare/README.md). Uses Python 3.10+ and CPU; you supply correctness judgments for free-form answers.
-- Run a local model: [model guides](docs/en/LLM_GUIDE.md). Current detailed coverage is Qwen3-4B, with English summaries and Korean detail; it does not validate every 16GB GPU or task.
-- Audit existing records: [reproduction](docs/en/GETTING_STARTED.md). CPU recalculation and original GPU runs are separate paths.
+These 21 cases use different models, questions and conditions. Case numbers are not rankings. [Search or browse by topic](https://munsik-kim.github.io/inference-lab/en/index.html#cases).
 
 <a id="capabilities"></a>
-<a id="tech-stack"></a>
-## Implementation and technology evidence
-
-The [implementation / upstream technology / code / tests table](docs/en/PORTFOLIO.md#implementation-map) shows the contributions; continue with the [code tour](docs/en/PORTFOLIO.md#code-tour). [Technical collaboration](docs/en/PORTFOLIO.md#technical-collaboration) describes work supported by the public implementations.
-
 <a id="case-006--trace-model-changes-question-by-question"></a>
 <a id="case-007--from-channel-selection-to-smaller-weight-matrices"></a>
 <a id="case-008--build-reconstruct-reload"></a>
@@ -81,22 +43,35 @@ The [implementation / upstream technology / code / tests table](docs/en/PORTFOLI
 <a id="case-012--image-generation-time-loops-vs-steps"></a>
 <a id="case-013--does-lower-weight-error-improve-real-answers"></a>
 <a id="case015--same-tools-different-interfaces"></a>
+<a id="case016--native-kv-capacity-and-request-costs-at-the-same-memory-budget"></a>
+<a id="case017--agent-contractcost-bench"></a>
+<a id="case018--checking-inventory-recovery-and-completion-reports"></a>
+<a id="case020--does-smaller-embedding-storage-also-run-faster"></a>
+<a id="case021--why-can-the-same-int4-artifact-produce-different-results"></a>
 <a id="compress-save-and-reload-models"></a>
+<a id="contribution-and-sources"></a>
+<a id="diova--model-compression-execution-and-evaluation"></a>
+<a id="featured-work-a--b--c"></a>
 <a id="follow-up--tool-names-and-verified-actions"></a>
+<a id="go-deeper"></a>
 <a id="gpu-inference-measurement-and-output-evaluation"></a>
+<a id="implementation-and-technology-evidence"></a>
 <a id="implementation-details-and-research-records"></a>
 <a id="new-measurement--longer-decode-and-client-concurrency"></a>
 <a id="project-implementation-and-upstream-components"></a>
+<a id="projects"></a>
 <a id="q--gptq-conversion-storage-and-fresh-runtime-execution"></a>
+<a id="questions-and-recorded-tools"></a>
 <a id="r--structure-aware-reload-and-fixed-weight-reconstruction"></a>
+<a id="recorded-storage-and-runtime-memory"></a>
 <a id="reproducible-analysis-and-result-explorers"></a>
 <a id="research-and-numerical-engineering--case014"></a>
+<a id="store-smaller-models-run-them-and-check-the-answers-that-changed"></a>
+<a id="tech-stack"></a>
 <a id="tech-stack-in-use"></a>
-<a id="projects"></a>
-## Questions and recorded tools
-
+<a id="use-or-reproduce"></a>
 <!-- claims: c007-implementation c006-implementation c006-readout c010-state-bytes -->
-| Question | What the case provides |
+| Question | Observation and implementation scope |
 |---|---|
 | [001 — What if a model will not run on the GPU?](docs/en/CASEBOOK.md#case-001) | A before/after check of an upstream execution-path fix. Terms: SM120, vLLM, W8A8. |
 | [002 — Do fewer bits save memory and time?](docs/en/CASEBOOK.md#case-002) | Official model comparisons on document extraction: lower resource use, but low task accuracy. Terms: BF16, FP8. |
@@ -115,17 +90,13 @@ The [implementation / upstream technology / code / tests table](docs/en/PORTFOLI
 | [015 — Can an AI finish the same task after a tool rename?](https://munsik-kim.github.io/inference-lab/en/case015.html#overview) | A purchase example: look up item count and price per item, calculate the total, save and validate it. Across 16 problems: BF16 15/16→16/16, RTN 16/16→16/16, D16 12/16→12/16. [Task, terms and CPU example](cases/015-tool-interface-sensitivity/README.md). |
 | [016 — Native NVFP4 KV capacity and serving costs?](cases/016-kv-agent-bench/README.md) | BF16 weights,same4GiB pool:native KV read/write,capacity,36-block throughput/queue/numerical sanity. |
 | [017 — Agent Contract–Cost Bench](cases/017-agent-contract-cost-bench/README.md) | Strict JSON, actual state, fresh validation and completion costs; exploratory measurement with a disclosed gate deviation. |
+| [018 — Do recovered state and final reports both agree?](docs/en/CASEBOOK.md#case-018) | Separates state/procedure fit Q from W, which also requires accurate reporting. |
+| [019 — Can learning progress while loss is flat?](docs/en/CASEBOOK.md#case-019) | Studies alignment, scale and loss through partial reproduction and original controls. |
+| [020 — Does smaller storage also run faster?](docs/en/CASEBOOK.md#case-020) | Separates synthetic-embedding residency, calls and measured reuse costs. |
+| [021 — Why can the same INT4 artifact differ?](docs/en/CASEBOOK.md#case-021) | Single terms matched; combinations differed. The overall precision effect remains INCONCLUSIVE. |
 
-## Go deeper
+## Guides and attribution
 
-[Start here](docs/en/START_HERE.md) · [Glossary](docs/en/GLOSSARY.md) · [All cases and sources](docs/en/CASEBOOK.md) · [Related work and implementation boundaries](docs/related-work/README.md)
+[START_HERE](docs/en/START_HERE.md) chooses a route; [PORTFOLIO](docs/en/PORTFOLIO.md) connects contributions and decisions to code; [CASEBOOK](docs/en/CASEBOOK.md) indexes all cases. Continue with [CPU audits versus GPU reruns](docs/en/GETTING_STARTED.md), [model guides](docs/en/LLM_GUIDE.md) or the [glossary](docs/en/GLOSSARY.md) as needed.
 
-## Contribution and sources
-
-DIOVA stands for **Deep-learning Inference Optimization, Validation & Analysis**. The project connects comparison runners, model-changing tools, checks and result screens to public models and libraries. The [contribution and source notes](docs/en/PORTFOLIO.md#contribution-and-reuse) identify authors and reused work. OpenAI Codex assisted implementation, execution, analysis and writing. [Apache-2.0](LICENSE) applies to project materials; case notices retain upstream terms. Production deployment suitability has not been assessed.
-
-## Case021 — Why can the same INT4 artifact produce different results?
-
-The same Qwen3-0.6B compressed artifact was executed through dense and Marlin paths. Tested single terms matched; combining actual values left small differences. The original24-document Q/K precision-effect verdict remains **INCONCLUSIVE**. Representation, execution and later sensitivity are kept distinct.
-
-[Plain explanation](cases/021-rounding-execution-diagnostics/README.md) · [Report](cases/021-rounding-execution-diagnostics/REPORT.md) · [Public CPU checks](cases/021-rounding-execution-diagnostics/REPRODUCE.md)
+DIOVA stands for Deep-learning Inference Optimization, Validation & Analysis. Public models, paper methods and runtimes are reused and distinguished from my adapters, evaluators and audits. OpenAI Codex assisted implementation, analysis and documentation. [Contribution and reuse](docs/en/PORTFOLIO.md#contribution-and-reuse) · [Apache-2.0](LICENSE) · [related work](docs/related-work/README.md). Per-case upstream terms, failures and unexecuted work remain recorded.

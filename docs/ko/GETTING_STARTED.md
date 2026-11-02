@@ -21,6 +21,10 @@
 
 [diova-compare 사용자 예제](../../packages/diova-compare/examples/compare/README.ko.md)는 가상 답변을 담은 작은 파일 두 개로 시작합니다. 입력 형식 검사(`validate`) → 같은 질문끼리 비교(`compare`) → 보고서 읽기 순서입니다. CPU와 별도 Python 3.10+ 환경에서 독립적으로 작동합니다. 같은 문서 형식인 JSONL(한 줄에 JSON 기록 하나)에 자기 답변과 정오 판정을 넣으면 됩니다. 모델 원시 점수나 모델 다운로드는 필요 없습니다. 아래 명령은 이 프로젝트의 과거 실험을 검산하는 경로입니다.
 
+<a id="설치-가능한-cpu-결과-비교"></a>
+
+[설치 계약과 전체 CLI](../../packages/diova-compare/README.ko.md) · [지원 과제용 Kit의 CPU 시작](https://github.com/Munsik-Kim/inference-engineering-kit/blob/main/QUICKSTART_CPU_KO.md). Kit의 기본 wheel과 별도 모델/HTTP 실행 의존성은 구분합니다.
+
 ## 설치 없이 공개 결과 화면 열기
 
 [한국어 홈](https://munsik-kim.github.io/inference-lab/ko/index.html) · [Case008 Q: 파일 축소·재실행](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) · [Case009: 서빙 비교](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving) · [Case017 모델 없는 CPU 재생](../../cases/017-agent-contract-cost-bench/REPRODUCE.ko.md). Pages 화면은 저장된 측정값을 보여주며 설치나 GPU가 필요 없습니다. 오프라인에서 보려면 아래처럼 로컬 빌드를 사용합니다.
@@ -179,9 +183,6 @@ ZIP만 풀었다면 먼저 그 안의 `006-attention-decision-stability` 디렉�
 
 [구조화 보고서](../../cases/008-build-reconstruct-reload/REPORT.ko.md)를 읽고 [코드·recipe·측정 자료 ZIP](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip)과 [메타데이터](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.json)를 내려받으세요. 압축 해제 루트에는 tools/modelpack과 사례 폴더가 함께 있습니다. `cases/008-build-reconstruct-reload/demo/index.html`을 열면 원래 영어 탐색기를 볼 수 있습니다. 한·영 사이트 요약은 Q의 파일·메모리와 R의 보정 전후를 보여주고, 원래 탐색기는 더 자세한 기록으로 이어집니다. [CPU 검사·원본 복원 명령(영어)](../../cases/008-build-reconstruct-reload/REPRODUCTION.md)은 향후 GPU 명령과 분리되어 있으며 모델 가중치는 포함하지 않습니다.
 
-## 설치 가능한 CPU 결과 비교
-
-[diova-compare](../../packages/diova-compare/README.ko.md)는 같은 입력의 결과를 검증하고 정답 전환·점수 변화를 계산합니다. 별도 CPU 환경에 설치하며 모델 runtime을 설치하지 않습니다. 실제 GPU 평가와 과거 결과 재계산은 evidence_kind로 구별합니다.
 
 ## 새 graph 요청 측정과 공식 품질 과제
 

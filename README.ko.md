@@ -1,78 +1,40 @@
-# DIOVA — 모델 압축·실행·결과 검사
+# DIOVA · 모델 실행과 변경 후 검증
 
-공개 AI 모델을 제한된 그래픽카드에서 실행하고, 변경 전후의 답변과 실제 작업 결과를 검사하는 도구를 만들었습니다. DIOVA의 공개 구현과 측정 기록은 **로컬 모델 실행·최적화, 변경 전후 품질 검사, 도구 자동화 평가**와 관련됩니다.
+[English](README.md) | 한국어
 
-**Munsik Kim | DIOVA** · [English](README.md) | 한국어
+**Munsik Kim** · 모델을 실행하고, 바뀐 답변과 실패 원인을 확인하는 도구를 만듭니다. 작은 모델의 저장·재시작, 같은 질문의 결과 비교, 실제 작업 완료 여부를 코드와 검산 기록으로 연결합니다.
 
-[포트폴리오·모델별 안내 (Pages)](https://munsik-kim.github.io/inference-lab/ko/index.html) · [직접 사용: 내 결과 비교 예제](packages/diova-compare/examples/compare/README.ko.md)
+[대표작과 결과 보기](https://munsik-kim.github.io/inference-lab/ko/index.html#featured-stories) · [모델 없이 작은 예제 실행](https://munsik-kim.github.io/inference-lab/ko/compare.html#run)
 
-<a id="모델을-작게-저장하고-실행하고-달라진-답변까지-확인합니다"></a>
+## 목적에 맞게 시작하기
+
+| 확인하고 싶은 것 | 다음 단계 |
+|---|---|
+| 기술 역량과 직접 만든 부분 | [설계 판단·코드·테스트](docs/ko/PORTFOLIO.md) |
+| 내 두 답변 파일의 변화 | [diova-compare 입력 예시와 실행](packages/diova-compare/examples/compare/README.ko.md) |
+| 연구의 결과와 적용 범위 | [전체 사례와 원자료](docs/ko/CASEBOOK.md), [공개 연구 지도](https://munsik-kim.github.io/inference-lab/ko/index.html#research) |
 
 ## 대표작 A · B · C
 
 <!-- claims: c008-tracks c008-artifact-implementation -->
-| 문제 | 직접 구현 | 근거·사용 경로 |
-|---|---|---|
-| A. 모델을 작게 저장하고 실제 요청까지 실행하기 | 기존 압축 방법(GPTQ)을 연결하고, 저장 파일 검사·새로 시작한 프로그램에서 재실행·동일 조건의 요청 비교 구현 | [Case008 Q](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) → [Case009](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving) |
-| B. 바꾼 모델의 답변을 같은 질문 기준으로 비교하기 | 독립 CPU 도구 diova-compare 제작: 질문·정답 기준이 같은지 검사하고, 잃은 정답·새 정답·그 밖의 변경과 원 실행 실패 표시 | [CPU 실행 예제](packages/diova-compare/examples/compare/README.ko.md) · [코드·테스트](packages/diova-compare/README.ko.md#구현) |
-| C. 도구 작업의 실제 완료와 실행 비용 확인 | 저장된 값·수정 후 검증 관측·최종 답을 함께 채점하고, 호출 정책과 KV 구성에 따른 완주·실패·비용을 재생 검사 | [Case017 결과와 실제 사건](cases/017-agent-contract-cost-bench/REPORT.ko.md) · [모델 없이 CPU 재생](cases/017-agent-contract-cost-bench/REPRODUCE.ko.md) · 앞선 연구: [Case013 후속 구현](research/agent_tool_contract_repair_20261014/README.ko.md) |
+| 작업 | 직접 구현한 것과 확인할 근거 |
+|---|---|
+| A. 작은 모델을 다시 실행 | GPTQ 변환 연결·파일 검사·새 프로세스 재로딩: [Case008 Q](https://munsik-kim.github.io/inference-lab/ko/case008.html#track-q) → [Case009 요청 비용·품질](https://munsik-kim.github.io/inference-lab/ko/case009.html#serving). 파일 크기, GPU 메모리, 정답 변화는 다른 측정입니다. |
+| B. 평균 뒤에 숨은 답변 변화 | [diova-compare](https://munsik-kim.github.io/inference-lab/ko/compare.html)의 입력 짝 검사와 질문별 정답 손실·회복 보고서. 같은 2/4 정답도 잃은 답 1개와 새 정답 1개가 다릅니다. 작은 합성 예제의 결과입니다. |
+| C. 완료 선언과 실제 상태 | [Case017 보고서](cases/017-agent-contract-cost-bench/REPORT.ko.md) · [CPU 재생](cases/017-agent-contract-cost-bench/REPRODUCE.ko.md) · [앞선 구현](research/agent_tool_contract_repair_20261014/README.ko.md). [Case018](cases/018-agent-state-recovery/README.ko.md)은 상태·후속 절차와 정확한 최종 보고를 분리합니다. Case017은 기준 누락을 공개한 탐색적 결과이며 추가 비용도 남겼습니다. |
 
-## 확인된 저장 공간·실행 메모리
+최근 **Case020**은 작은 상주량이 빠른 호출을 뜻하는지, **Case021**은 같은 압축 표현의 실행 차이가 어디서 생기는지 조사했습니다. Case021의 전체 평균 KL 감소 여부는 **INCONCLUSIVE**, 즉 이번 자료로 확정하지 못했습니다. [최근 진단 읽기](https://munsik-kim.github.io/inference-lab/ko/index.html#latest-work).
 
-Qwen3-4B-Instruct-2507 · RTX 5080 16GB · 원본 BF16 → 가중치를 4비트로 압축한 GPTQ W4A16. 아래 행은 측정 대상과 실행 조건이 다릅니다.
+## 바로 사용할 도구
 
-| 기존 실험·측정 대상 | 원본 → 압축 모델 | 의미·조건 |
-|---|---|---|
-| [Case008 Q · 가중치 파일](https://munsik-kim.github.io/inference-lab/ko/case008.html#q-evaluation) | **8.045 GB → 2.652 GB** | 파일 크기 **67.0% 감소**, 십진 GB |
-| [Case008 Q · PyTorch GPU 할당 최고값](https://munsik-kim.github.io/inference-lab/ko/qwen3-4b.html#storage) | **10.4868 → 5.3971 GiB** | 약 48.5% 감소. 연산을 매번 호출(eager)·요청 1개·캐시 1 GiB, 초기화·실행 포함 |
-| [Case009 · GPU 전체 메모리 최고 표본값](https://munsik-kim.github.io/inference-lab/ko/qwen3-4b.html#device-memory) | **14.08–14.51 → 9.08–9.52 GiB** | 같은 라운드끼리 **4.98–5.06 GiB·34.4–35.8% 감소**. GPU 작업 순서를 미리 준비(graph)·캐시 4 GiB·3라운드·1초 표본 |
+- **diova-compare:** 이미 실행·채점한 두 JSONL을 CPU로 비교합니다. `validate → compare` 뒤 `report.md`부터 읽고 `pairs.csv`에서 질문별 변화를 확인하세요. 모델 실행이나 자유 답변의 정답 생성은 하지 않습니다.
+- **[inference-engineering-kit](https://github.com/Munsik-Kim/inference-engineering-kit):** 지원 과제와 외부 정답 계약을 갖춘 설치형 평가 도구입니다. 기본 CPU 경로와 별도 모델/HTTP 실행을 구분하며 비교 기능에 diova-compare를 재사용합니다. [공개 v0.2.1](https://github.com/Munsik-Kim/inference-engineering-kit/releases/tag/v0.2.1)과 최신 source의 범위는 해당 안내에서 확인하세요.
 
-Case009는 시작·준비 실행·바탕화면 사용량을 포함한 표본입니다. 정답 손실과 평가 프로그램의 비정상 종료도 [모델별 안내](docs/ko/LLM_GUIDE.md)에서 함께 읽습니다. Case008 R은 별도 Qwen3-0.6B의 한 계산 블록을 줄이고 복원한 연구입니다.
+## 전체 사례
 
-<!-- case016-entry -->
-## Case016 — 같은 KV 메모리에서 수용량과 요청 비용 검증
-
-RTX 5080에서 실제 NVFP4 KV 저장·읽기 검사와 고정 pool 비교 도구를 구현했습니다. 같은 약4GiB 캐시에서 token 수용량은 3.56배였고, 16K 입력의 동시 요청2/4에서 처리량 비율(F4/B16)은 1.21/1.35배였습니다. 모든 조건이 빨라진 것은 아니며 원 agent 기준선 실패도 보존했습니다.
-
-[Report](cases/016-kv-agent-bench/REPORT.ko.md) · [CPU](cases/016-kv-agent-bench/REPRODUCE.ko.md) · [Code](cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/runner.py)
-
-<!-- case017-entry -->
-## Case017 — 도구 호출 규칙과 업무 완주 비용
-
-상품 합계 기록·창고 이동·문서 정보 변경을 시험하고, 저장된 값·수정 후 받은 검증 결과·최종 답을 함께 검사하는 평가기를 구현했습니다.
-
-BF16 가중치를 고정한 신규 합성 24과제에서, NVFP4 KV의 문법 제약은 자유 출력보다 완주 7/24→15/24, 상태 정확 7/24→22/24를 기록했습니다. 실패를 포함한 실행 비용과 남은 오류도 공개합니다.
-
-DEV에서 BF16 KV·자유 출력은 5/8로 확대 기준 6/8에 미달했지만, 로컬 gate의 기준 누락으로 P2가 진행됐습니다. 이 이탈을 공개한 탐색적 측정입니다.
-
-[결과·실제 사건](cases/017-agent-contract-cost-bench/REPORT.ko.md) · [CPU 재생](cases/017-agent-contract-cost-bench/REPRODUCE.ko.md) · [확대 기준 이탈 경위](cases/017-agent-contract-cost-bench/PROTOCOL_DEVIATION.ko.md)
-
-<!-- case018-entry -->
-## Case018 — 재고 복구와 완료 보고를 따로 검사했습니다
-
-재고 복구 환경과 검사 도구를 만들어 복구된 상태와 마지막 보고를 따로 확인했습니다. 같은 24개 합성 과제에서 두 정책 모두 상태·후속 검사 통과는 BF16 KV 24/24, NVFP4 KV 19/24였고, 검증·완료 보고까지 충족한 수는 각각 0/24, 5/24였습니다. 양쪽 가중치는 BF16으로 고정했습니다.
-
-[결과·실제 사건](cases/018-agent-state-recovery/REPORT.ko.md) · [모델 없이 검산하기](cases/018-agent-state-recovery/REPRODUCE.ko.md)
-
-<!-- case020-entry -->
-## Case020 — 임베딩을 작게 보관하면 실행도 빨라질까?
-
-같은 OPTIC 압축 표현을 전체 미리 계산·요청 복원·중복 제거 복원으로 비교했습니다. 합성 표의 PyTorch allocated peak는 약304→81MiB로 줄었지만, P4의30개 process block에서 중복 제거의 호출 속도 이득은0/30이었습니다. 실제1024/4096회 재사용 세션은 전체를 미리 계산한 방식이 더 빨랐습니다.
-
-[쉬운 설명](cases/020-optic-on-demand-decode/README.ko.md) · [보고서](cases/020-optic-on-demand-decode/REPORT.ko.md) · [모델 없이 CPU 검산](cases/020-optic-on-demand-decode/REPRODUCE.ko.md)
-
-## 직접 사용·재현
-
-- 내 모델의 저장된 답 비교: [두 파일 준비 → 검사 → 비교 → 보고서](packages/diova-compare/examples/compare/README.ko.md). Python 3.10+와 CPU로 실행하며, 자유 서술 답의 정오는 사용자가 제공합니다.
-- 로컬 모델 실행: [모델별 안내](docs/ko/LLM_GUIDE.md). 현재 상세 모델은 Qwen3-4B이며 모든 16GB GPU나 업무로 범위를 넓히지 않습니다.
-- 기존 기록 검산: [재현 안내](docs/ko/GETTING_STARTED.md). GPU 재실행과 저장 기록의 CPU 재계산을 구분합니다.
+21개 사례는 서로 다른 모델·질문·조건의 기록입니다. 번호는 성능 순위가 아닙니다. [사이트에서 검색·주제별 찾기](https://munsik-kim.github.io/inference-lab/ko/index.html#cases).
 
 <a id="capabilities"></a>
-<a id="tech-stack"></a>
-## 구현·사용 기술의 근거
-
-[직접 구현과 기존 기술·코드·테스트 표](docs/ko/PORTFOLIO.md#implementation-map)에서 기여를 확인하고, [코드 읽는 순서](docs/ko/PORTFOLIO.md#code-tour)로 이어갈 수 있습니다. [기술 협업 범위](docs/ko/PORTFOLIO.md#기술-협업-범위)는 현재 공개 구현이 보여주는 작업을 설명합니다.
-
 <a id="case-006--모델-변경을-질문별로-추적하는-평가-도구"></a>
 <a id="case-007--채널-선택부터-실제-행렬-축소까지"></a>
 <a id="case-008--모델을-변환하고-복구하고-다시-실행하기"></a>
@@ -81,23 +43,35 @@ DEV에서 BF16 KV·자유 출력은 5/8로 확대 기준 6/8에 미달했지만,
 <a id="case-012--이미지-생성-시간-어디에-계산을-더-쓸까"></a>
 <a id="case-013--가중치-오차가-줄면-실제-답변도-좋아질까"></a>
 <a id="case015--같은-도구-다른-이름"></a>
+<a id="case016--같은-kv-메모리에서-수용량과-요청-비용-검증"></a>
+<a id="case017--도구-호출-규칙과-업무-완주-비용"></a>
+<a id="case018--재고-복구와-완료-보고를-따로-검사했습니다"></a>
+<a id="case020--임베딩을-작게-보관하면-실행도-빨라질까"></a>
+<a id="case021--같은-int4인데-왜-계산-결과가-달라질까"></a>
+<a id="diova--모델-압축실행결과-검사"></a>
 <a id="gpu-추론-성능과-답변-비교"></a>
+<a id="projects"></a>
 <a id="q--gptq-변환저장새-runtime-실행"></a>
 <a id="r--구조가-달라진-모델의-저장재로딩과-가중치-보정"></a>
+<a id="tech-stack"></a>
 <a id="구현-기능"></a>
 <a id="구현-상세와-연구-기록"></a>
+<a id="구현사용-기술의-근거"></a>
 <a id="기술스택별-작업"></a>
+<a id="기여와-출처"></a>
+<a id="더-깊게-보기"></a>
 <a id="모델을-압축하고-저장하고-다시-실행합니다"></a>
+<a id="모델을-작게-저장하고-실행하고-달라진-답변까지-확인합니다"></a>
 <a id="새-측정--긴-decode와-동시-요청"></a>
 <a id="연구수치-엔지니어링--case014"></a>
 <a id="재계산-도구와-결과-탐색기"></a>
 <a id="직접-구현한-부분과-재사용한-기술"></a>
+<a id="직접-사용재현"></a>
+<a id="질문과-구현물"></a>
+<a id="확인된-저장-공간실행-메모리"></a>
 <a id="후속-구현--도구-이름-오류와-실제-작업-성공"></a>
-<a id="projects"></a>
-## 질문과 구현물
-
 <!-- claims: c007-implementation c006-implementation c006-readout c010-state-bytes -->
-| 쉬운 질문 | 이 사례에서 볼 수 있는 것 |
+| 쉬운 질문 | 관측과 구현 범위 |
 |---|---|
 | [001 — GPU에서 모델이 실행되지 않는다면?](docs/ko/CASEBOOK.md#case-001) | 기존 실행 경로 수정의 전후 비교 도구. 기술명: SM120, vLLM, W8A8. |
 | [002 — 적은 비트로 저장하면 메모리와 시간이 줄까?](docs/ko/CASEBOOK.md#case-002) | 공식 모델의 문서 추출 비교. 자원 사용은 줄었지만 과제 정답률은 낮았습니다. 기술명: BF16, FP8. |
@@ -116,17 +90,13 @@ DEV에서 BF16 KV·자유 출력은 5/8로 확대 기준 6/8에 미달했지만,
 | [015 — 도구 이름만 바뀌어도 AI가 같은 일을 끝낼까?](https://munsik-kim.github.io/inference-lab/ko/case015.html#overview) | 구매한 개수와 개당 가격을 조회해 총금액을 계산·저장·확인하는 예제로 비교합니다. 16개 문제에서 BF16 15/16→16/16, RTN 16/16→16/16, D16 12/16→12/16. [작업 설명·용어·CPU 예제](cases/015-tool-interface-sensitivity/README.ko.md). |
 | [016 — 실제 NVFP4 KV 저장과 동시 요청 비용은?](cases/016-kv-agent-bench/README.ko.md) | BF16 가중치·같은4GiB pool에서 KV 저장·읽기, token 수용량, 36개 block의 처리량·대기·수치 sanity 비교. |
 | [017 — 도구 호출 규칙과 업무 완주 비용](cases/017-agent-contract-cost-bench/README.ko.md) | 엄격한 JSON·실제 상태·최신 검증 관측·완주 비용. 확대 기준 누락을 공개한 탐색적 측정. |
+| [018 — 상태 복구와 최종 보고는 함께 맞을까?](docs/ko/CASEBOOK.md#case-018) | 상태·후속 절차 적합 Q와 정확 보고까지 요구하는 W를 분리합니다. |
+| [019 — 손실은 그대로인데 학습은 진행될까?](docs/ko/CASEBOOK.md#case-019) | 방향 정렬·크기·손실의 관계를 기존 이론의 부분 재현과 자체 대조로 검사합니다. |
+| [020 — 작게 보관하면 실행도 빨라질까?](docs/ko/CASEBOOK.md#case-020) | 합성 임베딩의 상주량·호출·실제 반복 사용 비용을 구분합니다. |
+| [021 — 같은 INT4인데 왜 값이 달라질까?](docs/ko/CASEBOOK.md#case-021) | 단일항은 같고 결합에서 차이. 중간 정밀도 증가의 전체 효과는 INCONCLUSIVE입니다. |
 
-## 더 깊게 보기
+## 안내 문서와 출처
 
-[처음 보는 분](docs/ko/START_HERE.md) · [용어집](docs/ko/GLOSSARY.md) · [전체 사례와 원자료](docs/ko/CASEBOOK.md) · [선행연구와 구현 대응](docs/related-work/README.ko.md)
+[처음 보는 분](docs/ko/START_HERE.md)은 목적별 길잡이, [PORTFOLIO](docs/ko/PORTFOLIO.md)는 기여·판단·코드 근거, [CASEBOOK](docs/ko/CASEBOOK.md)은 전체 색인입니다. [CPU 검산과 GPU 재실행](docs/ko/GETTING_STARTED.md), [모델별 실행 안내](docs/ko/LLM_GUIDE.md), [용어집](docs/ko/GLOSSARY.md)은 필요할 때 이어서 읽으세요.
 
-## 기여와 출처
-
-DIOVA는 **Deep-learning Inference Optimization, Validation & Analysis**의 약자입니다. 공개 모델·라이브러리에 비교 실행기, 모델 변경 도구와 검사·결과 화면을 연결했습니다. 원저자와 재사용 범위는 [기여·출처](docs/ko/PORTFOLIO.md#contribution-and-reuse)에 있습니다. OpenAI Codex가 구현·실행·분석·작성을 지원했습니다. 프로젝트 자료는 [Apache-2.0](LICENSE)을 따르며 사례별 고지에 upstream 조건을 남겼습니다. 실제 서비스 배포 적합성은 미평가입니다.
-
-## Case021 — 같은 INT4인데 왜 계산 결과가 달라질까?
-
-Qwen3-0.6B의 같은 압축 artifact를 dense/Marlin으로 실행했습니다. 검사한 단일항은 같았지만 실제 값을 결합하면 작은 차이가 남았습니다. Q/K 중간 정밀도를 높인 원24문서 결과는 **INCONCLUSIVE**입니다. 저장 표현·실행 차이·후속 계산 민감도를 구분합니다.
-
-[쉬운 설명](cases/021-rounding-execution-diagnostics/README.ko.md) · [보고서](cases/021-rounding-execution-diagnostics/REPORT.ko.md) · [공개 CPU 검산](cases/021-rounding-execution-diagnostics/REPRODUCE.ko.md)
+DIOVA는 Deep-learning Inference Optimization, Validation & Analysis입니다. 공개 모델·논문 방법·런타임을 재사용하며, 직접 작성한 연결·평가·검산 코드와 구분합니다. OpenAI Codex가 구현·분석·문서화를 지원했습니다. [기여·출처](docs/ko/PORTFOLIO.md#contribution-and-reuse) · [Apache-2.0](LICENSE) · [선행연구](docs/related-work/README.ko.md). 사례별 upstream 조건과 실패·미실행 기록을 유지합니다.

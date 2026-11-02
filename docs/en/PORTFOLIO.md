@@ -6,6 +6,10 @@ English | [한국어](../ko/PORTFOLIO.md) · [Home](../../README.md)
 
 [Practical model guides](LLM_GUIDE.md) connect verified Qwen3-4B execution paths with quality, failures and mitigation. English summaries link to the complete Korean detail.
 
+Use this page for **engineering decisions and implementation evidence**. Installation belongs in [GETTING_STARTED](GETTING_STARTED.md), the full index in [CASEBOOK](CASEBOOK.md), and public theoretical work in the [research map](https://munsik-kim.github.io/inference-lab/en/index.html#research).
+
+[대표작](#featured-a--smaller-artifacts-through-actual-requests)] · [Code / tests](#code-tour) · [기여·재사용 / Contribution](#contribution-and-reuse)
+
 ## A 30-second introduction
 
 <!-- claims: c008-tracks c008-artifact-implementation c007-implementation -->
@@ -146,62 +150,31 @@ You can start with the practical problem: which model or task is involved, what 
 The evidence covers specific models and one device, with synthetic studies and the separate official tasks in Case009. Production deployment is **not assessed (`NOT_ASSESSED`)**. CPU audits recalculate saved numerical values; they do not reconstruct excluded full arrays or independently repeat GPU model execution. The [reproduction guide](GETTING_STARTED.md) explains those separate requirements.
 
 
-## Case010 — State storage and failure persistence
-
-Built storage that packs the model’s changing memory (recurrent state) into fewer bits, carries a correction for storage error (residual transport), completes each row update together, and saves failures so a restart cannot silently erase them. Follow the [v2 implementation](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/source/online_v2.py), [fresh-process synthetic tests](../../cases/010-ckda-finite-precision-memory-horizon/versions/v2/tests/test_online_v2.py) and [byte-budget/readout comparison](../../cases/010-ckda-finite-precision-memory-horizon/REPORT.md). [CPU guide](GETTING_STARTED.md#case010-cpu). The [notice](../../cases/010-ckda-finite-precision-memory-horizon/NOTICE.md) separates ComplexKDA transitions and training from the project’s codec and evaluation tools.
-
-## Case011 — Replace the readout on the same state
-
-Three answer-reading layers (readouts) use the same saved state. The loader checks the two changed number arrays’ sizes and the identity of the original model before applying them in a new process. Read the [model-state reading adapter](../../cases/011-frozen-state-readout-adaptation/source/adapter.py), [saved-change loader](../../cases/011-frozen-state-readout-adaptation/source/head_patch.py), [save/reapply rule tests](../../cases/011-frozen-state-readout-adaptation/tests/test_fitting_patch.py) and [independent auditor](../../cases/011-frozen-state-readout-adaptation/analysis/audit.py) in that order.
-
-Additional storage for the model’s changing memory is 0 B. The correct-answer probability loss (cross-entropy, CE; lower is better) improved at positions outside those used for fitting. Even so, with INT8 storage, the average number of consecutive correct steps before the first error fell for all three model checkpoints. [Walkthrough](https://munsik-kim.github.io/inference-lab/en/case011.html) · [Detailed results and fitting-calculation exit status](../../cases/011-frozen-state-readout-adaptation/REPORT.md) · [CPU checks](GETTING_STARTED.md#case011-cpu). [Attribution](../../cases/011-frozen-state-readout-adaptation/NOTICE.md) distinguishes PyTorch/NumPy and ComplexKDA from the project integration.
-
-
-## Case 013 — Scale-preserving INT4 and quality readback
-
-[Four-bit conversion and model adapter](../../cases/013-dualquant-reference-quality/source/paper_int4.py) · [Pack and restore four-bit values](../../cases/013-dualquant-reference-quality/source/reference_int4.py) · [Recheck recorded numerical values](../../cases/013-dualquant-reference-quality/analysis/audit.py)
-
-<!-- case014-entry -->
-## Case014 — Own-trajectory compensation and full-model quality
-
-Collected at each next layer the intermediate values altered by earlier layer compression, fitted error corrections in 64-bit arithmetic (FP64), and built INT4 storage and independent reload. The analysis separates three sources of error and compares matching document excerpts. It retains the PG19 text-quality gain alongside the ArXiv limits.
-
-[Implementation](../../cases/014-quantization-compensation/PORTFOLIO.md) · [Code](../../cases/014-quantization-compensation/followups/p2_core/source/run_p2.py) · [Tests](../../cases/014-quantization-compensation/followups/p2_core/tests/test_p2.py) · [CPU reproduction](../../cases/014-quantization-compensation/REPRODUCE.md)
-
-<!-- case015-entry -->
+<a id="api-rename-regression-testing"></a>
+<a id="case-013--scale-preserving-int4-and-quality-readback"></a>
+<a id="case010--state-storage-and-failure-persistence"></a>
+<a id="case011--replace-the-readout-on-the-same-state"></a>
+<a id="case014--own-trajectory-compensation-and-full-model-quality"></a>
 <a id="case015-cpu"></a>
-## API rename regression testing
-
-Check whether an AI finishes the same task after a tool rename. The example is **read item count and price per item → calculate the purchase total → save it → validate the record**. Functions and input formats stay fixed; only names change, such as `read_order` to `readOrder`. Across 16 problems, BF16 was **15/16→16/16**, RTN **16/16→16/16**, and D16 **12/16→12/16**. The [task and terminology guide](../../cases/015-tool-interface-sensitivity/README.md) explains orders as purchase records, unit price as price per item, and how to read the results. The 96 runs of the earlier P1 study and the new A1 application are counted separately.
-<!-- case016-entry -->
+<a id="case016--native-kv-capacity-and-request-costs-at-the-same-memory-budget"></a>
 <a id="case016-cpu"></a>
-## Case016 — Native KV capacity and request costs at the same memory budget
+<a id="case017--agent-contractcost-bench"></a>
+<a id="case018--state-recovery-and-final-report-consistency"></a>
+<a id="case019--learning-before-the-loss-moves"></a>
+## More implementation and research evidence
 
-Built native NVFP4 KV storage/read checks and a fixed-pool comparison tool on RTX5080. Token capacity was 3.56× at approximately4GiB; F4/B16 request-throughput ratios at16K concurrency2/4 were 1.21/1.35×. Other conditions were not uniformly faster; original agent-baseline failures remain preserved.
+Follow the canonical case documents rather than duplicate result tables here. Case017 retains its gate deviation and added costs, Case018 separates Q/W, and Case021 retains INCONCLUSIVE.
 
-[Report](../../cases/016-kv-agent-bench/REPORT.md) · [CPU commands](../../cases/016-kv-agent-bench/REPRODUCE.md) · [Implementation](../../cases/016-kv-agent-bench/followups/nvfp4-technical-r1/src/nvfp4_technical/runner.py)
-
-## Case017 — Agent Contract–Cost Bench
-
-We built a benchmark that checks how tool call policies change completion of saved state, observed validation and final answers. It uses owned synthetic records for product totals, inventory transfers and document updates.
-
-With BF16 weights and native NVFP4 KV, grammar changes completion 7/24→15/24 and correct saved states 7/24→22/24 on 24 new synthetic tasks: 8 recoveries and 0 losses. Added execution costs and remaining failures are reported alongside the gain. More tasks completed, while total execution costs also increased. Dividing all 24 runs, including failures, by completions gives approximately 3.62% more input tokens, 12.36% more output tokens and 11.27% more episode-wall time per completion.
-
-Protocol deviation: BF16 KV with free output completed 5/8 DEV tasks, below the original 6/8 expansion criterion. The local plan and execution gate omitted this success threshold and proceeded to P2 after checking completion, freezing and sealing. No separate waiver approval was found. We disclose this deviation and present P2 as an exploratory measurement on new synthetic tasks.
-
-[Report](../../cases/017-agent-contract-cost-bench/REPORT.md) · [CPU command and scope](../../cases/017-agent-contract-cost-bench/REPRODUCE.md) · [Strict parser](../../cases/017-agent-contract-cost-bench/src/agent_contract_cost/contracts.py) · [Independent auditor](../../cases/017-agent-contract-cost-bench/src/agent_contract_cost/audit.py)
-
-<!-- case018-entry -->
-## Case018 — State Recovery and Final-Report Consistency
-
-Built an evaluator for wrong-target, duplicate and partial inventory recovery, checking saved state and final quantities. On24 new synthetic tasks, both policies scored Q24/W0 with BF16 KV and Q19/W5 with NVFP4 KV. The freshness guard blocked ineligible finals without improving repair or correct reporting. Quantity re-observation is a separate posthoc observational analysis.
-
-[Report](../../cases/018-agent-state-recovery/REPORT.md) · [CPU replay](../../cases/018-agent-state-recovery/REPRODUCE.md)
-
-<!-- case019-entry -->
-
-## Case019 — Learning Before the Loss Moves
-
-An independent two-layer linear CPU model separates directional alignment from prediction-amplitude growth, then compares checkpoint interventions at fixed prediction size. Partial numerical reproduction, local controls and reversed outcomes are distinguished.
-
-[Report](../../cases/019-silent-alignment-dynamics/REPORT.md) · [CPU quick/full](../../cases/019-silent-alignment-dynamics/REPRODUCE.md)
+| Case | Implementation and findings | Design and interpretation |
+|---|---|---|
+| 010 | [Case 010 — Finite-Precision Recurrent Memory: Storage, Restart, and Readout Horizon](../../cases/010-ckda-finite-precision-memory-horizon/README.md) | [CASEBOOK](CASEBOOK.md#case-010) |
+| 011 | [Case 011 — Frozen-State Readout Adaptation and Length Extrapolation](../../cases/011-frozen-state-readout-adaptation/README.md) | [CASEBOOK](CASEBOOK.md#case-011) |
+| 013 | [Case 013 — Does Lower Weight Error Improve Real Answers?](../../cases/013-dualquant-reference-quality/README.md) | [CASEBOOK](CASEBOOK.md#case-013) |
+| 014 | [Case 014 — Improving Model Quality at the Same INT4 Storage Budget](../../cases/014-quantization-compensation/README.md) | [CASEBOOK](CASEBOOK.md#case-014) |
+| 015 | [Case015 — Same Tools, Different Interfaces](../../cases/015-tool-interface-sensitivity/README.md) | [CASEBOOK](CASEBOOK.md#case-015) |
+| 016 | [Case016 — NVFP4 KV Cache on RTX5080: Storage, Correctness, and Serving Performance](../../cases/016-kv-agent-bench/README.md) | [CASEBOOK](CASEBOOK.md#case-016) |
+| 017 | [Case017 — Agent Contract–Cost Bench](../../cases/017-agent-contract-cost-bench/README.md) | [CASEBOOK](CASEBOOK.md#case-017) |
+| 018 | [Case018 — Checking inventory recovery and completion reports](../../cases/018-agent-state-recovery/README.md) | [CASEBOOK](CASEBOOK.md#case-018) |
+| 019 | [Case019 — Learning Before the Loss Moves](../../cases/019-silent-alignment-dynamics/README.md) | [CASEBOOK](CASEBOOK.md#case-019) |
+| 020 | [Case020 — Does Smaller Embedding Storage Also Run Faster?](../../cases/020-optic-on-demand-decode/README.md) | [CASEBOOK](CASEBOOK.md#case-020) |
+| 021 | [Case021 — Why can the same INT4 artifact produce different results?](../../cases/021-rounding-execution-diagnostics/README.md) | [CASEBOOK](CASEBOOK.md#case-021) |

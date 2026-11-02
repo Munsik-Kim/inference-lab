@@ -35,11 +35,14 @@ class Case017(unittest.TestCase):
             self.assertEqual(home.count('class="case017-deviation"'),1)
             for fragment in ('overview','results','episodes','reproduce','protocol-deviation'):
                 self.assertIn('href="case017.html#'+fragment+'"',home)
-            readme=(ROOT/('README.ko.md' if lang=='ko' else 'README.md')).read_text().split('<!-- case017-entry -->',1)[1]
+            readme=(ROOT/('README.ko.md' if lang=='ko' else 'README.md')).read_text()
             from html import escape
             for value in home_text(self.data,lang).values():
                 self.assertIn(escape(value),home)
-                self.assertIn(value,readme)
+
+            self.assertIn('cases/017-agent-contract-cost-bench/REPORT.',readme)
+            self.assertIn('cases/017-agent-contract-cost-bench/REPRODUCE.',readme)
+            self.assertIn('탐색적' if lang=='ko' else 'exploratory',readme)
             for value in ('7/24','15/24','22/24','5/8','6/8'):
                 self.assertIn(value,home)
             # Shortening the entry must preserve the full disclosure in detail.

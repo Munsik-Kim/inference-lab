@@ -21,6 +21,10 @@ The examples below are technical instructions for the tools I built. A successfu
 
 The [diova-compare user example](../../packages/diova-compare/examples/compare/README.md) starts with two small files of invented answers: check the input format (`validate`) → compare matching questions (`compare`) → read the reports. It runs independently on CPU in a separate Python 3.10+ environment. Put your saved answers and correctness judgments into the same documented format (JSONL: one JSON record per line). Raw model scores and model downloads are unnecessary. The later commands recheck this project’s historical experiments.
 
+<a id="installable-cpu-result-comparison"></a>
+
+[Installation contract and full CLI](../../packages/diova-compare/README.md) · [Kit CPU quickstart (Korean)](https://github.com/Munsik-Kim/inference-engineering-kit/blob/main/QUICKSTART_CPU_KO.md). The Kit’s base wheel is separate from live model/HTTP dependencies.
+
 ## Open the published result viewer
 
 [English home](https://munsik-kim.github.io/inference-lab/en/index.html) · [Case008 Q: smaller files and reload](https://munsik-kim.github.io/inference-lab/en/case008.html#track-q) · [Case009: serving comparison](https://munsik-kim.github.io/inference-lab/en/case009.html#serving) · [Case017 CPU replay without a model](../../cases/017-agent-contract-cost-bench/REPRODUCE.md). These Pages screens use saved measurements and require no installation or GPU. Use the local build below for offline viewing.
@@ -179,9 +183,6 @@ The earlier beginner-layer edit checked documentation, links and preservation on
 
 Read the [structured report](../../cases/008-build-reconstruct-reload/REPORT.md), then download the [code/recipe/evidence ZIP](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.zip) and [metadata](../../downloads/case008_build_reconstruct_reload_reviewed_publication_v2.json). The extracted root includes tools/modelpack and the case. Open `cases/008-build-reconstruct-reload/demo/index.html` locally for its original English viewer. The bilingual site summary shows Q storage/memory and R before/after repair; the original viewer retains detailed records. [CPU and historical-restore commands](../../cases/008-build-reconstruct-reload/REPRODUCTION.md) are distinct from future GPU commands and do not include model weights.
 
-## Installable CPU result comparison
-
-[diova-compare](../../packages/diova-compare/README.md) validates paired inputs and computes correctness transitions and score changes. Install it in a dedicated CPU environment without a model runtime. The `evidence_kind` field says whether a file contains a new measurement or a recalculation of historical records.
 
 ## New graph-serving and official-task study
 
